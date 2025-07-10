@@ -1,0 +1,10 @@
+﻿Categoria,Comentarios
+Presentación de la información,¿A quien le serviría mi app? ¿Qué tipo de problema debería resolver? ¿A quien iria dirigida?
+Soporte del problema,"Buscar alguna noticia, blog, articulo cientifico, video, comentarios en redes sociales"
+Plan de capacitación,"- ¿Como capacitar a las personas dado: 1) espacio cultural 2) nivel de educación 3) Espacio en que se haria 4) Posibles miedos de las personas, movidad laboral 5) Fases tendria la capacitacion 6) Pensar como se haria en el terreno."
+Presentación de su idea,"Incluir un video en el colab (enlazar ocn Youtube) maximo 4 o 5 minutos (depende del grupo) en el cual explican cómo se podria usar su idea. Zoom (grabar), Meet (grabar), Teams (grabar). tambien pensar en el plan de capacitación"
+Datos,Describir las fuentes de los datos (como se sacaron) y lo relevante con el preprocesamiento (explicarlo en terminos sencillos)
+Modelos,"- ¿Como es la arquitectura de su red neuronal?
+- ¿Como ajustaron los hiperparametros? Factor de aprendizaje, numero de capas, tipos de cadas (Conv, Pooling, Dense, dropout), regulación, callbacks, optimizer)"
+Recomendación: Probar otro modelo,"Probar SVM, probar arboles de decisión (algoritmo diferente a la RN)"
+,
