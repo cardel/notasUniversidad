@@ -42,7 +42,7 @@ Capa pooling
 
 Reduce el tamaño de los mapas, sin embargo hay perdida información, porque suele sacar promedios (average) o sacar máximos (max)
 
-![Untitled](Academico/Universidad/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled.png)
+![Untitled](Academico/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled.png)
 
 ## ¿Como funciona una red convolucional?
 
@@ -50,7 +50,7 @@ Reduce el tamaño de los mapas, sin embargo hay perdida información, porque sue
 
 Tomar un kernel de tamaño nxn, usualmente es 2x2, 3x3 y así, es una matriz cuadrada, esta se aplica una producto punto con una ventana deslizante, la cual es el stride
 
-![Untitled](Academico/Universidad/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%201.png)
+![Untitled](Academico/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%201.png)
 
 ---
 
@@ -58,7 +58,7 @@ Tomar un kernel de tamaño nxn, usualmente es 2x2, 3x3 y así, es una matriz cua
 
 Una capa de pooling toma un segmento del mapa de tamaño nxn y nos lo convierte un valor, existe dos tipos: que permite solapar (stride), sin solapamiento.
 
-![Untitled](Academico/Universidad/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%202.png)
+![Untitled](Academico/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%202.png)
 
 Lo que podemos ver es que se toma el máximo, para cada ventana.
 
@@ -78,11 +78,11 @@ Para esto debemos hacer flatten(), transformar la matriz en un vector 1D, en est
 
 Kernel gaussiano
 
-![Untitled](Academico/Universidad/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%203.png)
+![Untitled](Academico/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%203.png)
 
 Kernel sobel
 
-![Untitled](Academico/Universidad/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%204.png)
+![Untitled](Academico/2024-I/IA%20innovador%206e475b1c4af94d089299b50cd996aa08/Sesion%2020%20de%20Mayo%20Problemas%20con%20grandes%20datos%20y%20es%208fd7c5360ca64d62a76e08e5e46abc47/Untitled%204.png)
 
 # Resumen
 

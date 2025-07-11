@@ -38,7 +38,7 @@ Propiedad de escogencia voraz
 1. **Propiedad de escogencia voraz:** Escojo por la denominación mayor, una vez que no pueda continuo cn la siguiente en orden descendente
 2. En cada denominación va existir un ciclo que repite con las monedas de menor valor
 
-![image.png](Academico/Universidad/2025-1/Algoritmos%20II%201997fd794c28808fa03cdd0497ec66dd/Clase%205%20Algoritmos%20voraces%20y%20algoritmos%20sobre%20graf%201b57fd794c288050800dedc0a8bf1053/image.png)
+![image.png](Academico/2025-1/Algoritmos%20II%201997fd794c28808fa03cdd0497ec66dd/Clase%205%20Algoritmos%20voraces%20y%20algoritmos%20sobre%20graf%201b57fd794c288050800dedc0a8bf1053/image.png)
 
 # Algoritjo Dijsktra
 

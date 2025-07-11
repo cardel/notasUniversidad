@@ -2,7 +2,7 @@
 
 # Profiling
 
-[Notas_annotated.pdf](Academico/Universidad/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%204%20Profiling%201ac7fd794c288086b711f42f2c30173a/Notas_annotated.pdf)
+[Notas_annotated.pdf](Academico/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%204%20Profiling%201ac7fd794c288086b711f42f2c30173a/Notas_annotated.pdf)
 
 # Instalación ambientes Python
 

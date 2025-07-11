@@ -94,7 +94,7 @@ visualizar:
 	kcachegrind callgrind.out.*
 ```
 
-![image.png](Academico/Universidad/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%207%20Herramientas%20de%20profiling%20en%20Linux%201c17fd794c28800c908bd4a886881ea0/image.png)
+![image.png](Academico/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%207%20Herramientas%20de%20profiling%20en%20Linux%201c17fd794c28800c908bd4a886881ea0/image.png)
 
 # Perf
 
@@ -174,4 +174,4 @@ perf record -g -p 32752 sleep 5
 perf script report gecko
 ```
 
-![image.png](Academico/Universidad/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%207%20Herramientas%20de%20profiling%20en%20Linux%201c17fd794c28800c908bd4a886881ea0/image%201.png)
+![image.png](Academico/2025-1/Infraestructuras%201987fd794c28803a8c96f167ba527165/Semana%207%20Herramientas%20de%20profiling%20en%20Linux%201c17fd794c28800c908bd4a886881ea0/image%201.png)

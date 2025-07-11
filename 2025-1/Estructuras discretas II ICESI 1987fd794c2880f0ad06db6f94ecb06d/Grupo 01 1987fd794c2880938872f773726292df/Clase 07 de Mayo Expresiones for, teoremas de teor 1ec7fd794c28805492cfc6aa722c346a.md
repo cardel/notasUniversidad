@@ -2,13 +2,13 @@
 
 # Recursos
 
-[Colecciones y Expresiones for.pdf](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/Colecciones_y_Expresiones_for.pdf)
+[Colecciones y Expresiones for.pdf](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/Colecciones_y_Expresiones_for.pdf)
 
 # Expresiones for
 
-![image.png](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/image.png)
+![image.png](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/image.png)
 
-![image.png](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/image%201.png)
+![image.png](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2007%20de%20Mayo%20Expresiones%20for,%20teoremas%20de%20teor%201ec7fd794c28805492cfc6aa722c346a/image%201.png)
 
 ```scala
 object Ejemplo {

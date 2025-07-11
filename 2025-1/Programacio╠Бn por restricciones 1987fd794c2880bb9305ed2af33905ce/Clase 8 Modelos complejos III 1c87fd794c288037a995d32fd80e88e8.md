@@ -135,11 +135,11 @@ output ["Maria family : girls: ", show(maria_girls), "  boys: ", show(maria_boys
 
 Sin restricciones de simetria
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image.png)
 
 Con restricciones de simetría
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image%201.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image%201.png)
 
 # Restricciones reificadas
 
@@ -184,7 +184,7 @@ constraint all_different_reif(x,b) ;
 
 # Ejercicio restricciones reificadas
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image%202.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/image%202.png)
 
 ```prolog
 var 1..100: x1;

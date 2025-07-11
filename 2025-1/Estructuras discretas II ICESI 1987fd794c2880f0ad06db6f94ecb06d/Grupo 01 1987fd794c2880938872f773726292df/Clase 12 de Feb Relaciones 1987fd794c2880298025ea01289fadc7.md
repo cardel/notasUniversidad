@@ -21,4 +21,4 @@ Potencia
 
 $R^{n+1} = R^n \textrm{ o }  R, R¹ = R$
 
-[15-RelacionesEquivalencia.pdf](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2012%20de%20Feb%20Relaciones%201987fd794c2880298025ea01289fadc7/15-RelacionesEquivalencia.pdf)
+[15-RelacionesEquivalencia.pdf](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2012%20de%20Feb%20Relaciones%201987fd794c2880298025ea01289fadc7/15-RelacionesEquivalencia.pdf)

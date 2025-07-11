@@ -2,7 +2,7 @@
 
 # Material
 
-[Colecciones y Expresiones for.pdf](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2005%201987fd794c2880579c1dd2d08e062e7f/Clase%2007%20de%20Mayo%20Expresiones%20for,%20congruencias%20lin%201ec7fd794c2880d48507fdc3145e1b59/Colecciones_y_Expresiones_for.pdf)
+[Colecciones y Expresiones for.pdf](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2005%201987fd794c2880579c1dd2d08e062e7f/Clase%2007%20de%20Mayo%20Expresiones%20for,%20congruencias%20lin%201ec7fd794c2880d48507fdc3145e1b59/Colecciones_y_Expresiones_for.pdf)
 
 ```scala
 object Ejemplo {
@@ -52,7 +52,7 @@ def generadorC(x:Int, y:Int, z:Int):Seq[(Int,Int,Int)] = {
 
 # Expresiones for
 
-![image.png](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2005%201987fd794c2880579c1dd2d08e062e7f/Clase%2007%20de%20Mayo%20Expresiones%20for,%20congruencias%20lin%201ec7fd794c2880d48507fdc3145e1b59/image.png)
+![image.png](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2005%201987fd794c2880579c1dd2d08e062e7f/Clase%2007%20de%20Mayo%20Expresiones%20for,%20congruencias%20lin%201ec7fd794c2880d48507fdc3145e1b59/image.png)
 
 **Expresión `for` con múltiples generadores y condiciones**
 

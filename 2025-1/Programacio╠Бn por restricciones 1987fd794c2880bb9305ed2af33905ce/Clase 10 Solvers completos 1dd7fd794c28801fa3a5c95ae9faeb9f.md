@@ -9,7 +9,7 @@
 
 ## Reglas de reducción de dominios
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image.png)
 
 El dominio del sistema equivalente está contenido o es igual que el inicial
 
@@ -20,7 +20,7 @@ Ejemplos
 - Reglas de desigualdad (Transformación de desigualdades)
 - Eliminación de variables (cuando un variable tiene un valor especifico)
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%201.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%201.png)
 
 - Aplicación de las reglas se realiza sobre las partes de los CPS donde hay coincidencia
 - El resultado puede diferir del CSP inicial, sin embargo se conserva la equivalencia
@@ -34,7 +34,7 @@ Es el CSP resultante a medida que se aplican las reglas
 - Fallido: La ultima derivación nos lleva a un inconsistencia o bien una variables tiene dominio vacio
 - Establecido: La última derivación nos lleva un sistema no resuelto al cual no se le puede aplicar más reglas, es necesario aplicar búsqueda
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%202.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%202.png)
 
 - Este sistema está satisfecho porque se han encontrado los valores de las variables de decisión
 - Si el sistema es fallido, una las restricciones es falso, por ejemplo a = b o bien una variables tiene dominio vacio
@@ -42,7 +42,7 @@ Es el CSP resultante a medida que se aplican las reglas
 
 # Problemas de ecuaciones lineales
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%203.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2010%20Solvers%20completos%201dd7fd794c28801fa3a5c95ae9faeb9f/image%203.png)
 
 **Forma normal:**
 

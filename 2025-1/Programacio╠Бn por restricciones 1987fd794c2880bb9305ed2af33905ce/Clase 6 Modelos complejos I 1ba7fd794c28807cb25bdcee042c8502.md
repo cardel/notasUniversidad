@@ -44,7 +44,7 @@ List comprenhesion / set comprenhesion
 
 Sirven para generar listas y conjuntos
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%206%20Modelos%20complejos%20I%201ba7fd794c28807cb25bdcee042c8502/image.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%206%20Modelos%20complejos%20I%201ba7fd794c28807cb25bdcee042c8502/image.png)
 
 ---
 
@@ -58,7 +58,7 @@ MiniZinc provides four aggregation functions for arrays containing Boolean expre
 
 # Ejemplo
 
-![image.png](Academico/Universidad/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%206%20Modelos%20complejos%20I%201ba7fd794c28807cb25bdcee042c8502/image%201.png)
+![image.png](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%206%20Modelos%20complejos%20I%201ba7fd794c28807cb25bdcee042c8502/image%201.png)
 
 Escoger COIN-BC
 

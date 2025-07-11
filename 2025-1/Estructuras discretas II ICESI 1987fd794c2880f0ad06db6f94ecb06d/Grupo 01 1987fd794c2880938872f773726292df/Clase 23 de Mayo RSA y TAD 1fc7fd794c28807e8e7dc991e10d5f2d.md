@@ -133,4 +133,4 @@ class Racional(a:Int, b:Int) {
 }
 ```
 
-[2025-05-23-Note-17-43_annotated.pdf](Academico/Universidad/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2023%20de%20Mayo%20RSA%20y%20TAD%201fc7fd794c28807e8e7dc991e10d5f2d/2025-05-23-Note-17-43_annotated.pdf)
+[2025-05-23-Note-17-43_annotated.pdf](Academico/2025-1/Estructuras%20discretas%20II%20ICESI%201987fd794c2880f0ad06db6f94ecb06d/Grupo%2001%201987fd794c2880938872f773726292df/Clase%2023%20de%20Mayo%20RSA%20y%20TAD%201fc7fd794c28807e8e7dc991e10d5f2d/2025-05-23-Note-17-43_annotated.pdf)

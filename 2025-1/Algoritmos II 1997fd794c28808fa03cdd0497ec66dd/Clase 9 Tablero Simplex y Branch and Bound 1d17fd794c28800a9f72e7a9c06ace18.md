@@ -7,7 +7,7 @@ Recordando, el metodo
 1. Variables holgura
 2. Selecciona el función objetivo la que tiene mayor coeficiente y se saca de la base aquella cuyo valor de la variable a entrar es el menor positivo
 
-![image.png](Academico/Universidad/2025-1/Algoritmos%20II%201997fd794c28808fa03cdd0497ec66dd/Clase%209%20Tablero%20Simplex%20y%20Branch%20and%20Bound%201d17fd794c28800a9f72e7a9c06ace18/image.png)
+![image.png](Academico/2025-1/Algoritmos%20II%201997fd794c28808fa03cdd0497ec66dd/Clase%209%20Tablero%20Simplex%20y%20Branch%20and%20Bound%201d17fd794c28800a9f72e7a9c06ace18/image.png)
 
 El tablero Simplex es una herramienta clave en el algoritmo Simplex para resolver problemas de programación lineal. Este tablero organiza las restricciones, variables y la función objetivo en una matriz que permite realizar cálculos sistemáticos. El proceso de pivoteo, basado en la estrategia gaussiana, se utiliza para iterar hacia la solución óptima.
 

@@ -12,4 +12,4 @@
 
 [IA innovador](IA%20innovador.md)
 
-[Arquitecturas en la nube](Universidad/2024-I/Arquitecturas%20en%20la%20nube/Readme.md)
+[Arquitecturas en la nube](2024-I/Arquitecturas%20en%20la%20nube/Readme.md)
