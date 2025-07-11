@@ -1,12 +1,12 @@
 # Apuntes semestre
 
-[2023-II](2023-II.md)
+[2023-II](Universidad/2023-II/Readme.md)
 
-[2024-I](2024-I.md)
+[2024-I](Universidad/2024-I/Readme.md)
 
-[2024-II](2024-II.md)
+[2024-II](Universidad/2024-II/Readme.md)
 
-[2025-1](2025-1.md)
+[2025-I](Universidad/2025-1/Readme.md)
 
-[2025-II](2025-II.md)
+[2025-II](Universidad/2025-II/Readme.md)
 
