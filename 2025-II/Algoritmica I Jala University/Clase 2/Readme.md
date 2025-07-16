@@ -34,7 +34,7 @@ Secuencia de números
 
 Sumatorias
 Suma de una serie: geometrica o aritmetica
-![[Pasted image 20250714165857.png]]
+![](Pasted image 20250714165857.png)
 
 
 # Calculo de complejidad
@@ -57,5 +57,5 @@ Se toma como mejor caso la bifurcación que menos se demore (menos pasos tenga) 
 - Inicialización int i = ..
 - Repetición: comparación i<=n, incremento i++, instrucciones esto se repite tantas veces el ciclo se hace
 - Salida la ultima comparación (esta da falso)
-![[Pasted image 20250714173022.png]]
-![[Pasted image 20250714173131.png]]![[Pasted image 20250714173142.png]]
+![](Pasted image 20250714173022.png)
+![](Pasted image 20250714173131.png)![](Pasted image 20250714173142.png)

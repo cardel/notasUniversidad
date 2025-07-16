@@ -1,4 +1,4 @@
-![[images/Pasted image 20250710210354.png]]
+![](images/Pasted image 20250710210354.png)
 # onpremises
 
 Son sistemas que están en una ubicación local (servidores) en una organización

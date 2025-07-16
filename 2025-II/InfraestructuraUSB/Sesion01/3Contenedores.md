@@ -11,4 +11,4 @@ Generar configuraciones y acciones para que un conjunto de contenedores trabajen
 - AWS EKS: orquestación
 	- Generan instancias de EC2 que gestionar un cluster con Kubernetes (kubeadm)
 	- Configurar las redes y politicas para conenctar los componentes
-![[images/Pasted image 20250710204647.png]]
+![](images/Pasted image 20250710204647.png)

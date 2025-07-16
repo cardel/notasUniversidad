@@ -2,4 +2,4 @@
 Es la posibilidad de ejecutar código sin preocuparse por la configuración ni el servidor, AWS Lambda
 - Sirve para trabajar con código que se ejecuta con eventos: Petición (GET, POST, etc), algo que sucede dentro de AWS (Alguien sube un objeto a un s3)
 - Se tienen librerías para diferentes lenguajes de programación
--![[images/Pasted image 20250710204505.png]]
+-![](images/Pasted image 20250710204505.png)
