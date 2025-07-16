@@ -3,9 +3,9 @@
 |        |                      |                                                                                            |
 | ------ | -------------------- | ------------------------------------------------------------------------------------------ |
 | Sesion | Fecha                | Tema                                                                                       |
-| 1      | Thu, July 10, 2025   | Conceptos esenciales de las soluciones de software en la nube parte 1                      |
-| 2      | Tue, July 15, 2025   | Conceptos esenciales de las soluciones de software en la nube parte 2                      |
-| 3      | Thu, July 17, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 1                    |
+| 1      | Thu, July 10, 2025   | Conceptos esenciales de las soluciones de software en la nube                              |
+| 2      | Tue, July 15, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 1                    |
+| 3      | Thu, July 17, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 2                    |
 | 4      | Tue, July 22, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 2                    |
 | 5      | Thu, July 24, 2025   | Panorama de las arquitecturas de referencia en la nube (GCP, Azure, Oracle, AWS) - Parte 1 |
 | 6      | Tue, July 29, 2025   | Panorama de las arquitecturas de referencia en la nube (GCP, Azure, Oracle, AWS) - Parte 2 |

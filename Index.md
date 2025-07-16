@@ -8,5 +8,5 @@
 
 [2025-I](2025-1/Readme.md)
 
-[2025-II](2025-II/Readme.md)
+[2025-II](2025-II/Lista.md)
 
