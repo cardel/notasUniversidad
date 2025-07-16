@@ -205,7 +205,7 @@ Para un `n` dado:
 
 ### Costos individuales
 
-3+1+[4+4+⋯+4 (n veces)]+1+1+13 + 1 + \left[4 + 4 + \cdots + 4 \ (\text{n veces})\right] + 1 + 1 + 1
+$$3+1+[4+4+⋯+4 (n veces)]+1+1+13 + 1 + \left[4 + 4 + \cdots + 4 \ (\text{n veces})\right] + 1 + 1 + 1$$
 
 Desglosado:
 

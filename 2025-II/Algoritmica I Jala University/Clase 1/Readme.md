@@ -1,4 +1,4 @@
-```markdown
+
 # Resumen: Fundamentos de Algoritmia
 
 ## 1. Introducción
