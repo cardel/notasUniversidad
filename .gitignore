@@ -15,12 +15,9 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+## Obsidian
 
-### Obsidian ###
-# config dir
-.obsidian/
-
-### Windows ###
+.obsidian
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
