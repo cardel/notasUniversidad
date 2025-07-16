@@ -395,4 +395,4 @@ Sabemos que estás cansado, quizás aburrido, y puede que incluso hayas perdido 
 
 Sabemos que puede parecer mucha información, pero lo importante es que estas herramientas no solo son matemáticas abstractas; tienen aplicaciones reales. Desde optimizar programas hasta resolver problemas complejos, lo que estás aprendiendo aquí puede ser mucho más útil de lo que parece. ¿Quién sabe? Tal vez te sorprendas. ¡Ánimo, que ya estás más cerca de dominarlo!
 
-[2025-05-07-Note-18-00_annotated.pdf](2025-05-07-Note-18-00_annotated.pdf)
+[2025-05-07-Note-18-00_annotated.pdf](Clase%2007%20de%20Mayo%20Expresiones%20for,%20congruencias%20lin%201ec7fd794c2880d48507fdc3145e1b59/2025-05-07-Note-18-00_annotated.pdf)

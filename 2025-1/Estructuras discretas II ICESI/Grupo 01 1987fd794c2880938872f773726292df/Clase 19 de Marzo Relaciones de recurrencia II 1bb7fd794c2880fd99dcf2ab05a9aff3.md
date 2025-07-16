@@ -87,8 +87,8 @@ object Ejercicio3 {
 }
 ```
 
-[2025-03-19-Note-13-03_annotated.pdf](2025-03-19-Note-13-03_annotated.pdf)
+[2025-03-19-Note-13-03_annotated.pdf](Clase%2019%20de%20Marzo%20Relaciones%20de%20recurrencia%20II%201bb7fd794c2880fd99dcf2ab05a9aff3/2025-03-19-Note-13-03_annotated.pdf)
 
 # Solucion ecuaciones forma T(n) = aT(n/b) + f(n)
 
-[2025-03-19-Note-12-53_annotated.pdf](2025-03-19-Note-12-53_annotated.pdf)
+[2025-03-19-Note-12-53_annotated.pdf](Clase%2019%20de%20Marzo%20Relaciones%20de%20recurrencia%20II%201bb7fd794c2880fd99dcf2ab05a9aff3/2025-03-19-Note-12-53_annotated.pdf)

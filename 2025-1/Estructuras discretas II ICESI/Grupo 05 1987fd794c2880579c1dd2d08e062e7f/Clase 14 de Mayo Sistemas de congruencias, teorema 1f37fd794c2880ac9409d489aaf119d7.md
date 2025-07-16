@@ -66,7 +66,7 @@ Primero, calculamos **m = 3 * 5 * 7 = 105**.
 
 Por lo tanto, la solución es **x = 23 (mod 105)**, y todas las demás soluciones son de la forma **x ≡ 23 + 105k**, donde k es un entero.
 
-[2025-05-14-Note-17-19_annotated.pdf](2025-05-14-Note-17-19_annotated.pdf)
+[2025-05-14-Note-17-19_annotated.pdf](Clase%2014%20de%20Mayo%20Sistemas%20de%20congruencias,%20teorema%201f37fd794c2880ac9409d489aaf119d7/2025-05-14-Note-17-19_annotated.pdf)
 
 # Representación de enteros grandes
 
@@ -240,4 +240,4 @@ El documento aborda el **Teorema chino del residuo**, su explicación, aplicacio
 
 Este documento es una guía introductoria y práctica sobre el uso del Teorema chino del residuo, con énfasis en su utilidad para cálculos con enteros grandes y en aplicaciones computacionales.
 
-[2025-05-14-Note-17-39_annotated.pdf](2025-05-14-Note-17-39_annotated.pdf)
+[2025-05-14-Note-17-39_annotated.pdf](Clase%2014%20de%20Mayo%20Sistemas%20de%20congruencias,%20teorema%201f37fd794c2880ac9409d489aaf119d7/2025-05-14-Note-17-39_annotated.pdf)

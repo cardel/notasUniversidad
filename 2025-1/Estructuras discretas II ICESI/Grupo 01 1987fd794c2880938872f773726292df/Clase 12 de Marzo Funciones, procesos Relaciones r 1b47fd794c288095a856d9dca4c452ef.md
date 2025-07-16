@@ -60,6 +60,6 @@ Definición
 - En el caso de fibunnacci hay muchos llamados repetidos (que se pueden abordar con otras tecnicas)
 - Usualmente no se aplica optimización de cola
 
-[2025-03-12-Note-12-08_annotated.pdf](2025-03-12-Note-12-08_annotated.pdf)
+[2025-03-12-Note-12-08_annotated.pdf](Clase%2012%20de%20Marzo%20Funciones,%20procesos%20Relaciones%20r%201b47fd794c288095a856d9dca4c452ef/2025-03-12-Note-12-08_annotated.pdf)
 
 # Relaciones de recursiones

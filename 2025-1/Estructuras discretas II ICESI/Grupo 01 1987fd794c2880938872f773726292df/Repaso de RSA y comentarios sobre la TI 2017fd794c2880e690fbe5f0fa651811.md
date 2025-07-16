@@ -40,4 +40,4 @@ val res4: Int = 1
 
 Tener en cuenta un diseño apropiado de clase, por ejemplo
 
-[2025-05-28-Note-12-20_annotated.pdf](2025-05-28-Note-12-20_annotated.pdf)
+[2025-05-28-Note-12-20_annotated.pdf](Repaso%20de%20RSA%20y%20comentarios%20sobre%20la%20TI%202017fd794c2880e690fbe5f0fa651811/2025-05-28-Note-12-20_annotated.pdf)

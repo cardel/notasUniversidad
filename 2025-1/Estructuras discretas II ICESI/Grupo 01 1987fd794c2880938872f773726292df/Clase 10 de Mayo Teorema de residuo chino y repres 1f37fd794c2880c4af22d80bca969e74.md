@@ -2,7 +2,7 @@
 
 # Teorema de residuo chino
 
-[ResiduoChino_annotated.pdf](ResiduoChino_annotated.pdf)
+[ResiduoChino_annotated.pdf](Clase%2010%20de%20Mayo%20Teorema%20de%20residuo%20chino%20y%20repres%201f37fd794c2880c4af22d80bca969e74/ResiduoChino_annotated.pdf)
 
 El Teorema de Residuo Chino establece que si tenemos un conjunto de enteros positivos m1, m2, ..., mn que son primos relativos dos a dos (es decir, el máximo común divisor de cada par es 1), entonces el sistema de congruencias:
 
@@ -112,7 +112,7 @@ Por lo tanto, la solución única del sistema es x ≡ 23 (mod 60). Esto signifi
 
 # Representación numeros grandes
 
-[NumerosGrandes.pdf](NumerosGrandes.pdf)
+[NumerosGrandes.pdf](Clase%2010%20de%20Mayo%20Teorema%20de%20residuo%20chino%20y%20repres%201f37fd794c2880c4af22d80bca969e74/NumerosGrandes.pdf)
 
 La representación única de un entero mediante una n-tupla se basa en el Teorema del Residuo Chino. Este teorema permite descomponer un entero en una serie de residuos respecto a módulos primos relativos dos a dos, lo que garantiza que haya una correspondencia única entre el entero y la n-tupla de residuos.
 

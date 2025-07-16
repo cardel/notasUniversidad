@@ -46,7 +46,7 @@ Cacalcula el mensaje cifrado Ci = Mi^e mod n.
 
 [https://es.symbolab.com/solver/step-by-step/1819^{13} mod 2537?or=input](https://es.symbolab.com/solver/step-by-step/1819%5E%7B13%7D%20mod%202537?or=input) 
 
-[2025-05-23-Note-17-15_annotated.pdf](2025-05-23-Note-17-15_annotated.pdf)
+[2025-05-23-Note-17-15_annotated.pdf](Clase%2023%20de%20Mayo%20de%202025%20Criptografia%20y%20RSA%201fc7fd794c2880d9bff5d0b43f002b98/2025-05-23-Note-17-15_annotated.pdf)
 
 Para calcular 2545²⁷⁵³ mod 3233, seguiremos los siguientes pasos utilizando el **Teorema Chino del Resto (CRT)** y el **Pequeño Teorema de Fermat**:
 

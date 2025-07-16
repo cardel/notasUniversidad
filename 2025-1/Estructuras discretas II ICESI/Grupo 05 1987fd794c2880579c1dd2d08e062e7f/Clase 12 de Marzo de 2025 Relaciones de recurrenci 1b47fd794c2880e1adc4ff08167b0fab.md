@@ -199,4 +199,4 @@ object recurrencia1 {
 }
 ```
 
-[2025-03-12-Note-17-59_annotated.pdf](2025-03-12-Note-17-59_annotated.pdf)
+[2025-03-12-Note-17-59_annotated.pdf](Clase%2012%20de%20Marzo%20de%202025%20Relaciones%20de%20recurrenci%201b47fd794c2880e1adc4ff08167b0fab/2025-03-12-Note-17-59_annotated.pdf)

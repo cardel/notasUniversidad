@@ -8,7 +8,7 @@
 
 # Repaso relaciones de recurrencia homogeneas
 
-[Diapo1_annotated.pdf](Diapo1_annotated.pdf)
+[Diapo1_annotated.pdf](Clase%2019%20de%20Marzo%20Relaciones%20de%20recurrencia%20II%201bb7fd794c2880b59a6de210b7e0903c/Diapo1_annotated.pdf)
 
 ```scala
 object Ejercicio1 {
@@ -34,7 +34,7 @@ object Ejercicio1 {
 
 # Relaciones de recurrencia divide y vencerás
 
-[Diapo2_annotated.pdf](Diapo2_annotated.pdf)
+[Diapo2_annotated.pdf](Clase%2019%20de%20Marzo%20Relaciones%20de%20recurrencia%20II%201bb7fd794c2880b59a6de210b7e0903c/Diapo2_annotated.pdf)
 
 ```scala
 object Ejercicio2 {

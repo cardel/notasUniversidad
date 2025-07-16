@@ -92,13 +92,13 @@ Por lo tanto, la solución óptima es x1 = 0, x2 = 3, con Z = 15.
 
 ## Método de las dos fases
 
-[2025-04-10-Note-14-08_annotated.pdf](2025-04-10-Note-14-08_annotated.pdf)
+[2025-04-10-Note-14-08_annotated.pdf](Clase%209%20Tablero%20Simplex%20y%20Branch%20and%20Bound%201d17fd794c28800a9f72e7a9c06ace18/2025-04-10-Note-14-08_annotated.pdf)
 
 # Branch and bound
 
-![Mind map.png](Mind_map.png)
+![Mind map.png](Clase%209%20Tablero%20Simplex%20y%20Branch%20and%20Bound%201d17fd794c28800a9f72e7a9c06ace18/Mind_map.png)
 
-[2025-04-10-Note-15-31_annotated.pdf](2025-04-10-Note-15-31_annotated.pdf)
+[2025-04-10-Note-15-31_annotated.pdf](Clase%209%20Tablero%20Simplex%20y%20Branch%20and%20Bound%201d17fd794c28800a9f72e7a9c06ace18/2025-04-10-Note-15-31_annotated.pdf)
 
 ### Ejemplo de Branch and Bound con el Método Simplex
 

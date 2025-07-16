@@ -73,7 +73,7 @@ Resultado combinado: 11110000111100001010101010101010 (binario), 4042322162 (dec
 
 ```
 
-[2025-05-28-Note-16-39_annotated.pdf](2025-05-28-Note-16-39_annotated.pdf)
+[2025-05-28-Note-16-39_annotated.pdf](Clase%2028%20de%20Mayo%20Apuntes%20sobre%20la%20TI%202017fd794c28806ca073ce4670e180b8/2025-05-28-Note-16-39_annotated.pdf)
 
 # Anotaciones sobre el algoritmo de Huffman
 
@@ -84,4 +84,4 @@ Resultado combinado: 11110000111100001010101010101010 (binario), 4042322162 (dec
     3. Seguir las pautas vistas en clase con respecto a estructuración de archivos
 3. Tener en cuenta la estructura para codificar y decodificar
 
-[2025-05-28-Note-16-57_annotated.pdf](2025-05-28-Note-16-57_annotated.pdf)
+[2025-05-28-Note-16-57_annotated.pdf](Clase%2028%20de%20Mayo%20Apuntes%20sobre%20la%20TI%202017fd794c28806ca073ce4670e180b8/2025-05-28-Note-16-57_annotated.pdf)

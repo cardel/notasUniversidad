@@ -100,7 +100,7 @@ El resultado final es 2081^(937) mod 2537 = 712.
 
 Ejemplo STOP diapositivas
 
-[2025-05-23-Note-12-58_annotated.pdf](2025-05-23-Note-12-58_annotated.pdf)
+[2025-05-23-Note-12-58_annotated.pdf](Clase%2023%20de%20Mayo%20RSA%20y%20TAD%201fc7fd794c28807e8e7dc991e10d5f2d/2025-05-23-Note-12-58_annotated.pdf)
 
 # TAD
 
