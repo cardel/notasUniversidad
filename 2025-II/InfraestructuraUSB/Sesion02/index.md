@@ -1,2 +1,2 @@
-1. [Ejercicio](../Descripcion.md) 
-2. [Apuntes](Apuntes.md)
+1. [Taller en clase](../Descripcion.md) 
+2. [Apuntes de clase](Apuntes.md)

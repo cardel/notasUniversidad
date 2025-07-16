@@ -4,8 +4,8 @@
 | ------ | -------------------- | ------------------------------------------------------------------------------------------ |
 | Sesion | Fecha                | Tema                                                                                       |
 | 1      | Thu, July 10, 2025   | Conceptos esenciales de las soluciones de software en la nube                              |
-| 2      | Tue, July 15, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 1                    |
-| 3      | Thu, July 17, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 2                    |
+| 2      | Tue, July 15, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) I                            |
+| 3      | Thu, July 17, 2025   | Modelo de capas de prestación de servicios (FaaS) II                                       |
 | 4      | Tue, July 22, 2025   | Modelo de capas de prestación de servicios (IaaS, PaaS, SaaS) - Parte 2                    |
 | 5      | Thu, July 24, 2025   | Panorama de las arquitecturas de referencia en la nube (GCP, Azure, Oracle, AWS) - Parte 1 |
 | 6      | Tue, July 29, 2025   | Panorama de las arquitecturas de referencia en la nube (GCP, Azure, Oracle, AWS) - Parte 2 |
@@ -18,3 +18,5 @@
 # Clases
 
 1. [Clase 1 Introducción](Sesion01/Index.md)
+2. [Clase 2 Tipos de servicios PaaS, SaaS, IaaS](Sesion02/index.md)
+3. [Clase 3 Tipos de servicios FaaS](Sesion03/Index.md)

@@ -1,2 +1,2 @@
 # Contenido
-1.. [Index](Index.md)
+1. [Taller en clase](Index.md)
