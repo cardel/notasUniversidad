@@ -17,4 +17,4 @@
 | 12     | Wed, August 20, 2025 | Principios de diseño y de buena arquitectura de AWS                                        |
 # Clases
 
-1. [Clase 1 Introducción](Sesion%2001/Readme.md)
+1. [Clase 1 Introducción](Sesion01/Readme.md)
