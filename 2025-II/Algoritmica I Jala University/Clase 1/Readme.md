@@ -165,7 +165,7 @@ Esta estructura muestra por qué $T(n) = 2 \cdot T(n-1) + 1$:
 | n | T(n) | Fórmula       |  
 |---|------|---------------|  
 | 1 | 1    | $2^1 - 1 = 1$ |  
-| 2 | 3    | $2^2 - 1 = 3$ |  
+| 2 | 3 [chrome://vivaldi-webui/startpage?section=Speed-dials&background-color=#2e2f37](about:blank#blocked)   | $2^2 - 1 = 3$ |  
 | 3 | 7    | $2^3 - 1 = 7$ |  
 | 4 | 15   | $2^4 - 1 = 15$|  
 
