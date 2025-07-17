@@ -44,37 +44,31 @@ def lambda_handler(event, context):
         'body': 'Ejecución exitosa desde Lambda'  
     }  
 ```  
-  
+En este ejemplo vamos a consultar los detalles de la cuenta de usuario
 ```python
 import json
-
 import logging
-
 import boto3
 
-  
-
 logger = logging.getLogger()
-
 logger.setLevel(logging.INFO)
-
-patch_all()
+client = boto3.client('lambda')
 
   
 
 def lambda_handler(event, context):
 
-# TODO implement
-
-logger.info("Capturando evento en AWS Lambda")
-
-return {
-
-'statusCode': 200,
-
-'body': json.dumps('Hola desde Colombia!')
-
-}
+	# TODO implement
+	
+	logger.info("Capturando evento en AWS Lambda")
+	
+	response = client.get_account_settings()
+	
+	logger.info("Respuesta de get_account_settings: %s", response)	
+	return {	
+		'statusCode': 200,	
+		'body': json.dumps(response)
+	}
 ```
 
 ### 3.3 Validación funcional  
