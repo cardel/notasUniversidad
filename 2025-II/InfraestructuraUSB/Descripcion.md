@@ -19,4 +19,4 @@
 
 1. [Clase 1 Introducción](Sesion01/Index.md)
 2. [Clase 2 Tipos de servicios PaaS, SaaS, IaaS](Sesion02/index.md)
-3. [Clase 3 Tipos de servicios FaaS](Sesion03/Index.md)
+3. [Clase 3 Tipos de servicios FaaS / IAC](Sesion03/Index.md)
