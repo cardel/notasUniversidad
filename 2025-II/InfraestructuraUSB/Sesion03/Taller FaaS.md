@@ -71,6 +71,20 @@ def lambda_handler(event, context):
 	}
 ```
 
+### Pequeño ejercicio 1
+
+- Crear un bucket en s3 
+- Subir un archivo local a el
+
+### Pequeño ejercicio 2
+
+- Capturar evento GET y retorna una información
+- Capturar evento POST y retornar una información
+
+```bash
+curl -X GET https://ejemplo.com/api/recurso
+curl -X POST https://ejemplo.com/api/recurso
+```
 ### 3.3 Validación funcional  
 - Utilizar la pestaña "Pruebas" para generar evento de prueba estándar  
 - Ejecutar y verificar registros en CloudWatch Logs  
