@@ -74,7 +74,7 @@ def lambda_handler(event, context):
 ### Pequeño ejercicio 1
 
 - Crear un bucket en s3 
-- Subir un archivo local a el
+- Subir un archivo local (o creado) a el
 
 ### Pequeño ejercicio 2
 
@@ -82,6 +82,8 @@ Revisar https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-example
 
 - Capturar evento GET y retorna una información
 - Capturar evento POST y retornar una información
+- Rutas /hora da la hora actual
+- Rutas /saludo que me saluda
 
 ```bash
 curl -X GET https://ejemplo.com/api/recurso
