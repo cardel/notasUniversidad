@@ -78,6 +78,8 @@ def lambda_handler(event, context):
 
 ### Pequeño ejercicio 2
 
+Revisar https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-examples.html
+
 - Capturar evento GET y retorna una información
 - Capturar evento POST y retornar una información
 
