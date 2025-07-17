@@ -45,6 +45,38 @@ def lambda_handler(event, context):
     }  
 ```  
   
+```python
+import json
+
+import logging
+
+import boto3
+
+  
+
+logger = logging.getLogger()
+
+logger.setLevel(logging.INFO)
+
+patch_all()
+
+  
+
+def lambda_handler(event, context):
+
+# TODO implement
+
+logger.info("Capturando evento en AWS Lambda")
+
+return {
+
+'statusCode': 200,
+
+'body': json.dumps('Hola desde Colombia!')
+
+}
+```
+
 ### 3.3 Validación funcional  
 - Utilizar la pestaña "Pruebas" para generar evento de prueba estándar  
 - Ejecutar y verificar registros en CloudWatch Logs  

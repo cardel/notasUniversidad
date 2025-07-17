@@ -75,6 +75,10 @@ Nos permite desplegar aplicaciones pero en enfoque serverless (usa la infraestru
 | **Escalabilidad**     | Autoescalado vertical/horizontal     | Escalado automático (managed)       |
 | **Casos de uso**      | APIs, microservicios, web apps       | SPAs, apps móviles, Jamstack        |
 | **Precio**            | Pago por recursos usados (EC2, etc.) | Gratis para starters, pago por uso  |
+### AWS Ligthsail
+
+https://aws.amazon.com/free/compute/lightsail/
+
 ### AWS Codecommit
 https://docs.aws.amazon.com/codecommit/latest/userguide/getting-started-cc.html
 
