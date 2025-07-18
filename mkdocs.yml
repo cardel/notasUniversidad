@@ -1,7 +1,5 @@
 site_name: Notas Universidad
 
-docs_dir: .
-
 theme:
   name: "material"
   palette:
