@@ -1,4 +1,4 @@
-# Apuntes semestre
+# Lista de semestres
 
 [2023-II](2023-II/Readme.md)
 
