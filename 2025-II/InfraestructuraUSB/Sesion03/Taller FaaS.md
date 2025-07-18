@@ -78,6 +78,48 @@ Crear un nueva función lambda
 - Crear un bucket en s3 
 - Subir un archivo local (o creado) a el
 
+
+```python
+import json
+import logging
+import boto3
+
+# Configure logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Obtener el cliente de S3
+s3_client = boto3.client('s3')
+
+def lambda_handler(event, context):
+    """Manejador de Lambda para crear bucket y subir archivo."""
+    logger.info("Received event: %s", json.dumps(event))
+    
+    bucket_name = 'usb20252subirarchivosalvaje'
+    file_path = 'cuento.txt'
+    
+    try:
+        # Verificar si el bucket existe
+        if bucket_name in [b['Name'] for b in s3_client.list_buckets()['Buckets']]:
+            logger.info(f"Bucket {bucket_name} ya existe.")
+        else:
+            logger.info(f"Creando bucket {bucket_name}.")
+            s3_client.create_bucket(Bucket=bucket_name)
+        
+        # Subir archivo al bucket
+        s3_client.upload_file(file_path, bucket_name, 'cuento.txt')
+        logger.info(f"Archivo {file_path} subido al bucket {bucket_name}.")
+        
+    except Exception as e:
+        logger.error(f"Error en bucket {bucket_name}: {str(e)}")
+        raise  # Re-lanza la excepción para que AWS Lambda la registre
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps('¡Archivo subido exitosamente!')
+    }
+```
+
 ### Pequeño ejercicio 2
 
 Crear una nueva función lambda
@@ -92,6 +134,50 @@ Revisar https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-example
 ```bash
 curl -X GET https://ejemplo.com/api/recurso
 curl -X POST https://ejemplo.com/api/recurso
+```
+
+```python
+import json
+import logging
+from datetime import datetime
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+def lambda_handler(event, context):
+    logger.info("Received event: %s", json.dumps(event))
+    
+    method = event["requestContext"]["http"]["method"]
+    path = event["requestContext"]["http"]["path"]
+    logger.info(f"Received request: {method} {path}")
+
+    if path == '/saludo' and method == 'GET':
+        return {
+            'statusCode': 200,
+            'body': json.dumps('¡Hola te saludo desde get!')
+        }
+    elif path == '/saludo' and method == 'POST':
+        return {
+            'statusCode': 200,
+            'body': json.dumps('¡Hola te saludo desde post!')
+        }
+    elif path == '/hora' and method == 'GET':
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return {
+            'statusCode': 200,
+            'body': json.dumps(f'La hora actual en GET es: {current_time}')
+        }
+    elif path == '/hora' and method == 'POST':
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return {
+            'statusCode': 200,
+            'body': json.dumps(f'La hora actual en POST es: {current_time}')
+        }
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Otra ruta de la función Lambda')
+    }
 ```
 ### 3.3 Validación funcional  
 - Utilizar la pestaña "Pruebas" para generar evento de prueba estándar  
@@ -119,7 +205,10 @@ Guía desde la consola de Administración
    - Tipo de función: "Desencadenador HTTP"  
    - Stack de ejecución: Python  
    - Plan de hospedaje: Consumo (sin servidor)  
-  
+
+### Creación y configuración de las funciones
+
+![](guia.pdf)  
 ### 4.2 Implementación de función HTTP  
 ```python  
 import azure.functions as func  
