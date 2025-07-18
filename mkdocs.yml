@@ -5,7 +5,7 @@ theme:
   palette:
     # Modo oscuro - Azul más profundo
     - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+      scheme: default
       primary: cyan
       accent: light blue
       toggle:
@@ -13,7 +13,7 @@ theme:
         name: Modo claro
     # Modo claro - Azul claro
     - media: "(prefers-color-scheme: light)"
-      scheme: default
+      scheme: slate
       primary: light blue
       accent: light blue
       toggle:
@@ -48,6 +48,7 @@ markdown_extensions:
       permalink: true
 
 plugins:
+  - mkdocs-pdf
   - search
   - roamlinks
   - blog
