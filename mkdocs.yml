@@ -1,7 +1,6 @@
 site_name: Notas Universidad
 
-configs:
-  docs_dir: .
+docs_dir: .
 
 theme:
   name: "material"
