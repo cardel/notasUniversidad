@@ -1,4 +1,4 @@
-# Sesión 21 de Agosto: Introducción a la paralelización
+# Sesión 01: Introducción a la paralelización
 
 # ¿Porque programar en paralelo?
 

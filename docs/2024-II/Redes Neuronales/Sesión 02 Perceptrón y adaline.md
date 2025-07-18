@@ -1,4 +1,4 @@
-# Perceptrón y adaline
+# Sesión 02 Perceptrón y adaline
 
 # Perceptrón
 
@@ -15,7 +15,7 @@
 
 Problemas que sean linealmente separables, que una función lineal nos permita separarlos
 
-![image.png](Perceptro%CC%81n%20y%20adaline%20d418b36f356744ea89df2239a16d316d/image.png)
+![](PerceptronAdeline/image.png)
 
 ---
 

@@ -6,7 +6,7 @@
 
 [Sesión 04: Programación dinámica II](ADA%20II%20151f729da8db461bbddb3d7054987a96/Sesio%CC%81n%2004%20Programacio%CC%81n%20dina%CC%81mica%20II%203dec0d2f128541b1b513852bb1ee85e4.md)
 
-[Sesion 05: Programacion voraz](Sesion%2005%20Programacion%20voraz%200ff7fd794c288093b533f59fd210f2f8.md)
+[Sesion 05: Programacion voraz](ADA%20II/Sesion%2005%20Programacion%20voraz%200ff7fd794c288093b533f59fd210f2f8.md)
 
 [Sesión 06: Programación voraz II](ADA%20II%20151f729da8db461bbddb3d7054987a96/Sesio%CC%81n%2006%20Programacio%CC%81n%20voraz%20II%201067fd794c288018b670d3c1c7e2dc5e.md)
 

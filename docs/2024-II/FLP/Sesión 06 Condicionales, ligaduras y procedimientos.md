@@ -126,7 +126,7 @@ let
 No importa como llame (f 10) siempre me debe retornar el MISMO RESULTADO (Consistencia funcional)
 
 ---
-
+![](Imagenes/Untitled-2024-09-26-0829.png)
 Clausura
 
 Es la representación de un procedimiento (lambda)

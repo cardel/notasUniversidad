@@ -75,4 +75,4 @@ class Racional(Int: a, Int:b) {
 }
 ```
 
-![Untitled-2023-09-28-1347.png](1%20Abstraccio%CC%81n%20de%20datos%2070a4a402168a4e6d9c80f0dd9875269a/Untitled-2023-09-28-1347.png)
+![](imagenes/Untitled-2023-09-28-1347.png)

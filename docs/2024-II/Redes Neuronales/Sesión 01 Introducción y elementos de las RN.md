@@ -1,10 +1,10 @@
 # Introducción y elementos de las RN
 
-Aspectos biologicos de las redes neuronales (neuronas)
+Aspectos biológicos de las redes neuronales (neuronas)
 
 Una neurona tiene los siguiente elementos:
 
-- Soma o el cuerpo: Produce la energia y configura la reacción de la neurona (salida)
+- Soma o el cuerpo: Produce la energía y configura la reacción de la neurona (salida)
 - Dendritas: Entradas
 - Axones: Salidas
 
@@ -28,8 +28,7 @@ Modelo de red neuronal artificial
 
 - Nos inspiramos en el funcionamiento del cerebro humano
 
-![image.png](Introduccio%CC%81n%20y%20elementos%20de%20las%20RN%20c330f3aa892a474b8540253ba3507847/image.png)
-
+![](ElementosRN/image.png)
 El modelo de la red neuronal
 
 - Conjunto de entradas Xi
@@ -42,7 +41,7 @@ El modelo de la red neuronal
 
 Modelo matemático
 
-![image.png](Introduccio%CC%81n%20y%20elementos%20de%20las%20RN%20c330f3aa892a474b8540253ba3507847/image%201.png)
+![](ElementosRN/image%201.png)
 
 1. La salida es una combinación de las entradas con los pesos
 2. La combinación se evalua en una función de activación

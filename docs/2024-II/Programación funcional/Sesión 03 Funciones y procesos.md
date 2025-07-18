@@ -20,9 +20,9 @@ Procesos y funciones recursivas
 - Se espera que una función recursiva tenga un proceso recursivo, PERO NO SIEMPRE ES ASI
 - Normalmente se deben guardar los llamados en la pila
 
-![image.png](Sesio%CC%81n%2003%20Funciones%20y%20procesos%2052e7595d20b54995a586b504276a081f/image.png)
+![](images/image.png)
 
-![image.png](Sesio%CC%81n%2003%20Funciones%20y%20procesos%2052e7595d20b54995a586b504276a081f/image%201.png)
+![](images/image%201.png)
 
 ---
 
@@ -43,7 +43,7 @@ def f(n:Int):Int = {
 
 ```
 
-![image.png](Sesio%CC%81n%2003%20Funciones%20y%20procesos%2052e7595d20b54995a586b504276a081f/image%202.png)
+![](images/image%202.png)
 
 # Resumen
 
