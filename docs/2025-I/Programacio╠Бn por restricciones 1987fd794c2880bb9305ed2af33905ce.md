@@ -26,4 +26,4 @@
 
 [Clase 12: Solvers incompletos](Programacio%CC%81n%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2012%20Solvers%20incompletos%201eb7fd794c2880d7bce6c153b6df408e.md)
 
-[Clase 13: Propagación y búsqueda](Clase%2013%20Propagación%20y%20búsqueda%201f27fd794c28808fbfdffd0e56b64c5c.md)
+[Clase 13: Propagación y búsqueda](Programación%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%2013%20Propagación%20y%20búsqueda%201f27fd794c28808fbfdffd0e56b64c5c.md)

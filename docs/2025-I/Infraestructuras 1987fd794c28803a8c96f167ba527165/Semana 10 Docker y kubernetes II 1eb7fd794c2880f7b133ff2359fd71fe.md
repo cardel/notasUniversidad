@@ -2,7 +2,7 @@
 
 # Ejercicio
 
-[kube.zip](kube.zip)
+[kube.zip](Semana%2010%20Docker%20y%20kubernetes%20II%201eb7fd794c2880f7b133ff2359fd71fe/kube.zip)
 
 # Volumenes
 

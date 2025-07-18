@@ -685,7 +685,7 @@ Así, el vector `#(10 20 30 40 50 60)` contiene todos los valores de los campos 
 
 En resumen, la representación plana de un objeto en EOPL utiliza un vector unificado para almacenar todos los campos del objeto, optimizando el acceso a los datos y simplificando la estructura, mientras mantiene la compatibilidad con los principios de herencia de la programación orientada a objetos.
 
-[2025-05-22-Note-10-26_annotated.pdf](2025-05-22-Note-10-26_annotated.pdf)
+[2025-05-22-Note-10-26_annotated.pdf](Clase%2011%20Objetos%201fb7fd794c28803883b7fcab2731c27b/2025-05-22-Note-10-26_annotated.pdf)
 
 ### Resumen del documento: Clase 11 - Objetos en Programación Orientada a Objetos
 

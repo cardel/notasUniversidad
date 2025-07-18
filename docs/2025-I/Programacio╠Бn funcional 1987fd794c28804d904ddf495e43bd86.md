@@ -22,7 +22,7 @@
 
 [Clase 10: Introducción a Programación Concurrente (PC)](Programacio%CC%81n%20funcional%201987fd794c28804d904ddf495e43bd86/Clase%2010%20Introduccio%CC%81n%20a%20Programacio%CC%81n%20Concurrente%201dd7fd794c28806d9272c81db289eea9.md)
 
-[Clase 11: Complejidad de la paralelización](Clase%2011%20Complejidad%20de%20la%20paralelización%201e47fd794c2880d59253c26eeea3c8ef.md)
+[Clase 11: Complejidad de la paralelización](Programación%20funcional%201987fd794c28804d904ddf495e43bd86/Clase%2011%20Complejidad%20de%20la%20paralelización%201e47fd794c2880d59253c26eeea3c8ef.md)
 
 [Clase 12: Paralelismo de tareas](Programacio%CC%81n%20funcional%201987fd794c28804d904ddf495e43bd86/Clase%2012%20Paralelismo%20de%20tareas%201eb7fd794c2880a4be3df0129c48f741.md)
 

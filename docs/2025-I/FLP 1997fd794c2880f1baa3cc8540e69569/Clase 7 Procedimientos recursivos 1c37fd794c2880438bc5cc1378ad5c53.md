@@ -82,12 +82,12 @@ Modifico a evaluar-expresion para incluir el caso de letrec
       )
 ```
 
-[2025-03-27-Note-07-49_annotated.pdf](2025-03-27-Note-07-49_annotated.pdf)
+[2025-03-27-Note-07-49_annotated.pdf](Clase%207%20Procedimientos%20recursivos%201c37fd794c2880438bc5cc1378ad5c53/2025-03-27-Note-07-49_annotated.pdf)
 
 # Ejercicios
 
-[2025-03-27-Note-07-492_annotated.pdf](2025-03-27-Note-07-492_annotated.pdf)
+[2025-03-27-Note-07-492_annotated.pdf](Clase%207%20Procedimientos%20recursivos%201c37fd794c2880438bc5cc1378ad5c53/2025-03-27-Note-07-492_annotated.pdf)
 
-[ejercicio2_annotated.pdf](ejercicio2_annotated.pdf)
+[ejercicio2_annotated.pdf](Clase%207%20Procedimientos%20recursivos%201c37fd794c2880438bc5cc1378ad5c53/ejercicio2_annotated.pdf)
 
-[2025-03-27-Note-07-492_annotated.pdf](2025-03-27-Note-07-492_annotated%201.pdf)
+[2025-03-27-Note-07-492_annotated.pdf](Clase%207%20Procedimientos%20recursivos%201c37fd794c2880438bc5cc1378ad5c53/2025-03-27-Note-07-492_annotated%201.pdf)

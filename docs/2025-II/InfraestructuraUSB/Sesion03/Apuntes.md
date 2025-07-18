@@ -17,4 +17,3 @@ FaaS es un modelo de serverless, no vamos a montar infraestructura, es diferente
 | PaaS       | Parcialmente        | Sí                     | Parcialmente                       |
 | **FaaS**   | **No**              | **Sí**                 | **Sí** Depende de la capa gratuita |
 
-## Infraestructura como código IAC

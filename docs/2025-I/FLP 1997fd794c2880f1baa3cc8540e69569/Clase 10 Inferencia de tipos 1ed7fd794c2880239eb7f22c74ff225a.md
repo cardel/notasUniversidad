@@ -214,7 +214,7 @@ in
       g")))
 ```
 
-[2025-05-08-Note-08-29_annotated.pdf](2025-05-08-Note-08-29_annotated.pdf)
+[2025-05-08-Note-08-29_annotated.pdf](Clase%2010%20Inferencia%20de%20tipos%201ed7fd794c2880239eb7f22c74ff225a/2025-05-08-Note-08-29_annotated.pdf)
 
 # Ejercicios
 
@@ -234,7 +234,7 @@ in
     (f g true k)
 ```
 
-[2025-05-08-Note-09-34_annotated.pdf](2025-05-08-Note-09-34_annotated.pdf)
+[2025-05-08-Note-09-34_annotated.pdf](Clase%2010%20Inferencia%20de%20tipos%201ed7fd794c2880239eb7f22c74ff225a/2025-05-08-Note-09-34_annotated.pdf)
 
 ## Ejercicio 2
 
@@ -285,6 +285,6 @@ in
     let t1 = (t b a c d) in t1")))
 ```
 
-[2025-05-08-Note-10-26_annotated.pdf](2025-05-08-Note-10-26_annotated.pdf)
+[2025-05-08-Note-10-26_annotated.pdf](Clase%2010%20Inferencia%20de%20tipos%201ed7fd794c2880239eb7f22c74ff225a/2025-05-08-Note-10-26_annotated.pdf)
 
 Recuerda que incluso los días más oscuros tienen un amanecer. Aunque ahora te sientas desmotivado, aburrido o sin creer en nada, esto no es el final de tu historia. Cada pequeño paso que das, aunque parezca insignificante, te acerca más a tus metas. La clave no está en ser perfecto, sino en ser constante. Permítete descansar, pero no renuncies. Dentro de ti hay una fuerza que aún no has descubierto, y lo mejor de tu camino está por venir. ¡Tú puedes con esto!

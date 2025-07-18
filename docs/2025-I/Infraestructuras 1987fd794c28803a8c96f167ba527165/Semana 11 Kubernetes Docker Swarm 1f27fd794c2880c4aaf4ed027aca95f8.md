@@ -2,7 +2,7 @@
 
 # Recursos
 
-[Instrucciones.md](Instrucciones.md)
+[Instrucciones.md](Semana%2011%20Kubernetes%20Docker%20Swarm%201f27fd794c2880c4aaf4ed027aca95f8/Instrucciones.md)
 
 # Kubernetes
 

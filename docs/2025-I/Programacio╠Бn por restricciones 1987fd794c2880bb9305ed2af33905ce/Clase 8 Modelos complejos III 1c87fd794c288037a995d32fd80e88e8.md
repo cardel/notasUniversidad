@@ -49,11 +49,11 @@ output[
 
 Sin restricciones de simetria
 
-[arbol1.pdf](arbol1.pdf)
+[arbol1.pdf](Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/arbol1.pdf)
 
 Con restricciones de simetria
 
-[arbol2.pdf](arbol2.pdf)
+[arbol2.pdf](Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/arbol2.pdf)
 
 ```prolog
 %Grocery
@@ -79,11 +79,11 @@ output[
 
 Sin restricciones de simetría
 
-[grocery1.pdf](grocery1.pdf)
+[grocery1.pdf](Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/grocery1.pdf)
 
 Con restricciones de simetría
 
-[grocery2.pdf](grocery2.pdf)
+[grocery2.pdf](Clase%208%20Modelos%20complejos%20III%201c87fd794c288037a995d32fd80e88e8/grocery2.pdf)
 
 ```prolog
 

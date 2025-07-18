@@ -209,7 +209,7 @@ Guía desde la consola de Administración
 
 ### Creación y configuración de las funciones
 
-[Revisar guia](guia.pdf)  
+![](guia.pdf)
 ### 4.2 Implementación de función HTTP  
 ```python  
 import azure.functions as func

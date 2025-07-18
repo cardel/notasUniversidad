@@ -69,7 +69,7 @@ Variable más limitada primero cogiendo el minimo
 solve satisfy;
 ```
 
-[split2.pdf](split2.pdf)
+[split2.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split2.pdf)
 
 ## Método de bisección
 
@@ -77,7 +77,7 @@ solve satisfy;
 solve::int_search([x,y],first_fail,indomain_split) satisfy; 
 ```
 
-[splitbi.pdf](splitbi.pdf)
+[splitbi.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/splitbi.pdf)
 
 ## Por orden de entrada, valor mínimo
 
@@ -85,7 +85,7 @@ solve::int_search([x,y],first_fail,indomain_split) satisfy;
 solve :: int_search([x,y],input_order,indomain_min) satisfy;
 ```
 
-[split3.pdf](split3.pdf)
+[split3.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split3.pdf)
 
 ## Orden de entrada, valor máximo
 
@@ -93,7 +93,7 @@ solve :: int_search([x,y],input_order,indomain_min) satisfy;
 solve :: int_search([x,y],input_order,indomain_max) satisfy;
 ```
 
-[split4.pdf](split4.pdf)
+[split4.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split4.pdf)
 
 # Por la variable que tiene el valor más pequeño
 
@@ -102,7 +102,7 @@ solve :: int_search([x,y],smallest,indomain_max) satisfy;
 %solve :: int_search([x,y],smallest,indomain_max) satisfy;
 ```
 
-[split5.pdf](split5.pdf)
+[split5.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split5.pdf)
 
 [https://docs.minizinc.dev/en/stable/mzn_search.html#search-annotations](https://docs.minizinc.dev/en/stable/mzn_search.html#search-annotations)
 
