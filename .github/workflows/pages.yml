@@ -23,4 +23,5 @@ jobs:
       - run: pip install mkdocs-rss-plugin
       - run: pip install mkdocs-mermaid2-plugin
       - run: pip install pymdown-extensions
+      - run: pip install mkdocs-pdf
       - run: mkdocs gh-deploy --force

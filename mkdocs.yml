@@ -3,15 +3,6 @@ site_name: Notas Universidad
 theme:
   name: "material"
   palette:
-    # Modo claro - Azul claro
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: light blue
-      accent: light blue
-      toggle:
-        icon: material/weather-sunny
-        name: Modo oscuro
-
     # Modo oscuro - Azul más profundo
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
@@ -20,8 +11,14 @@ theme:
       toggle:
         icon: material/weather-night
         name: Modo claro
-
-# Extensions
+    # Modo claro - Azul claro
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: light blue
+      accent: light blue
+      toggle:
+        icon: material/weather-sunny
+        name: Modo oscuro# Extensions
 markdown_extensions:
   - pymdownx.pathconverter:
       tags: "a script img link object embed"
