@@ -6,7 +6,7 @@
 - [https://colab.research.google.com/drive/12zmbEPOGY7l8HmmYyUIfSKpmd-bSlS7P?usp=sharing](https://colab.research.google.com/drive/12zmbEPOGY7l8HmmYyUIfSKpmd-bSlS7P?usp=sharing)  Autoencoder MINST
 - [https://colab.research.google.com/drive/1FaUjYYh2udlgshczh38iRaMzGVn2MZBR?usp=sharing](https://colab.research.google.com/drive/1FaUjYYh2udlgshczh38iRaMzGVn2MZBR?usp=sharing) Autoencoder convolucional MINST
 
-[Semana_13_annotated.pdf](Sesio%CC%81n%2019%20de%20Junio%20Autoencoders%20I%20fa5ad69317024f858baca67c0784b01a/Semana_13_annotated.pdf)
+![Semana_13_annotated.pdf](Sesio%CC%81n%2019%20de%20Junio%20Autoencoders%20I%20fa5ad69317024f858baca67c0784b01a/Semana_13_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ## Autoencoders Parte I
 

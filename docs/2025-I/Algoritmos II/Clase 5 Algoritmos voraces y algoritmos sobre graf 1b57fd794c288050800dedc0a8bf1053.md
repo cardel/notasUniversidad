@@ -95,7 +95,7 @@ Resultado final:
 
 # Ejemplo Dijkstra
 
-[2025-03-13-Note-15-44_annotated.pdf](Clase%205%20Algoritmos%20voraces%20y%20algoritmos%20sobre%20graf%201b57fd794c288050800dedc0a8bf1053/2025-03-13-Note-15-44_annotated.pdf)
+![2025-03-13-Note-15-44_annotated.pdf](Clase%205%20Algoritmos%20voraces%20y%20algoritmos%20sobre%20graf%201b57fd794c288050800dedc0a8bf1053/2025-03-13-Note-15-44_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 1. **Algoritmo de Prim**
     

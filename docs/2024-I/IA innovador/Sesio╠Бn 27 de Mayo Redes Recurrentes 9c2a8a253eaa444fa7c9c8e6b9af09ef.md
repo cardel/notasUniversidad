@@ -2,7 +2,7 @@
 
 # Recursos
 
-[Redes Recurrentes.pdf](Sesio%CC%81n%2027%20de%20Mayo%20Redes%20Recurrentes%209c2a8a253eaa444fa7c9c8e6b9af09ef/Redes_Recurrentes.pdf)
+![Redes Recurrentes.pdf](Sesio%CC%81n%2027%20de%20Mayo%20Redes%20Recurrentes%209c2a8a253eaa444fa7c9c8e6b9af09ef/Redes_Recurrentes.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Redes recurrentes
 
@@ -96,4 +96,4 @@ Una de las redes más potentes para memorización es la 1D-Wavenet, que consiste
 4. Vimos una arquitectura Wavenet que tiene unas capas convolucionales (las convoluciones funcionan igual que las redes totalmente conectadas) con tiempo de dilación en factores de potencias de 2 incrementales, con la idea que las primeras capas tengan memoria a corto plazo y las siguiente a largo plazo.
 5. Vimos que en Keras las podemos implementar usando LSTM (especializada para redes recurrentes) y el parámetro return_sequences=True
 
-[Semana_10_annotated.pdf](Sesio%CC%81n%2027%20de%20Mayo%20Redes%20Recurrentes%209c2a8a253eaa444fa7c9c8e6b9af09ef/Semana_10_annotated.pdf)
+![Semana_10_annotated.pdf](Sesio%CC%81n%2027%20de%20Mayo%20Redes%20Recurrentes%209c2a8a253eaa444fa7c9c8e6b9af09ef/Semana_10_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

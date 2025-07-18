@@ -135,7 +135,7 @@ Podemos asegurar que V' es un cubrimiento de G y que |V'| = N + 2|C|. Por lo tan
 
 Si una instancia de 3-SAT es negativa, significa que en cualquier asignación de verdad hay al menos una cláusula que no se satisface. Consideremos la cláusula Ci = (li1 ∨ li2 ∨ li3). Para cubrir el triángulo asociado a esta cláusula, se necesitan al menos dos vértices del triángulo, por ejemplo, li2 y li3. Estos vértices cubren las tres aristas del triángulo y también las dos aristas de conexión correspondientes. Sin embargo, surge un problema: ¿cómo cubrir la arista de conexión restante? Por lo tanto, G es una instancia negativa de VC.
 
-[2025-05-22-Note-16-11_annotated.pdf](Clase%2010%20Ejemplos%20de%20demostracio%CC%81n%20NP-HARD%201fb7fd794c2880fc8129eeb42934713f/2025-05-22-Note-16-11_annotated.pdf)
+![2025-05-22-Note-16-11_annotated.pdf](Clase%2010%20Ejemplos%20de%20demostracio%CC%81n%20NP-HARD%201fb7fd794c2880fc8129eeb42934713f/2025-05-22-Note-16-11_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ### Resumen del Documento
 

@@ -1,6 +1,6 @@
 # Clase 6: Introducción a la optimización
 
-[2025-03-20-Note-14-45_annotated.pdf](Clase%206%20Introduccio%CC%81n%20a%20la%20optimizacio%CC%81n%201bc7fd794c288011afb3cd021bb436b6/2025-03-20-Note-14-45_annotated.pdf)
+![2025-03-20-Note-14-45_annotated.pdf](Clase%206%20Introduccio%CC%81n%20a%20la%20optimizacio%CC%81n%201bc7fd794c288011afb3cd021bb436b6/2025-03-20-Note-14-45_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ```mathematica
 var int: L; %Lechona

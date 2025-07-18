@@ -104,8 +104,8 @@ x, y, z,a, b, c >= 0
 
 # Método simplex
 
-[2025-04-03-Note-15-27_annotated.pdf](Clase%208%20Forma%20esta%CC%81ndar%20y%20Simplex%201ca7fd794c288017b2afc425c802c5a5/2025-04-03-Note-15-27_annotated.pdf)
+![2025-04-03-Note-15-27_annotated.pdf](Clase%208%20Forma%20esta%CC%81ndar%20y%20Simplex%201ca7fd794c288017b2afc425c802c5a5/2025-04-03-Note-15-27_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Ejercicio
 
-[ejemplo1_annotated.pdf](Clase%208%20Forma%20esta%CC%81ndar%20y%20Simplex%201ca7fd794c288017b2afc425c802c5a5/ejemplo1_annotated.pdf)
+![ejemplo1_annotated.pdf](Clase%208%20Forma%20esta%CC%81ndar%20y%20Simplex%201ca7fd794c288017b2afc425c802c5a5/ejemplo1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

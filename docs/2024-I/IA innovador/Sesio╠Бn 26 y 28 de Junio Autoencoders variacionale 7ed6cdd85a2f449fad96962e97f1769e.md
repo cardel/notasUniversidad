@@ -6,7 +6,7 @@
 
 [https://colab.research.google.com/drive/1M5Af6QwGZ135b0AIRiaX-RMD-C2-vHGv?usp=sharing](https://colab.research.google.com/drive/1M5Af6QwGZ135b0AIRiaX-RMD-C2-vHGv?usp=sharing) Generative adversarial network 
 
-[Semana_14_annotated.pdf](Sesio%CC%81n%2026%20y%2028%20de%20Junio%20Autoencoders%20variacionale%207ed6cdd85a2f449fad96962e97f1769e/Semana_14_annotated.pdf)
+![Semana_14_annotated.pdf](Sesio%CC%81n%2026%20y%2028%20de%20Junio%20Autoencoders%20variacionale%207ed6cdd85a2f449fad96962e97f1769e/Semana_14_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ## Apuntes de clase Autoencoders variacionales
 

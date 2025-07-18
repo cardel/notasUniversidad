@@ -16,7 +16,7 @@ $$
 x \in D_x \\ y \in D_y \\ z \in D_z \\ x . y = z \\ z \in Dz \cap [Dx.Dy]  \\ x \in D_x \cap int(D_z/D_y) \\ y \in D_y \cap int(D_z/D_x)
 $$
 
-[Notas1_annotated.pdf](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/Notas1_annotated.pdf)
+![Notas1_annotated.pdf](Academico/2025-1/Programacio╠Бn%20por%20restricciones%201987fd794c2880bb9305ed2af33905ce/Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/Notas1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ```
 % Use this editor as a MiniZinc scratch book
@@ -69,7 +69,7 @@ Variable más limitada primero cogiendo el minimo
 solve satisfy;
 ```
 
-[split2.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split2.pdf)
+![split2.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split2.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ## Método de bisección
 
@@ -77,7 +77,7 @@ solve satisfy;
 solve::int_search([x,y],first_fail,indomain_split) satisfy; 
 ```
 
-[splitbi.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/splitbi.pdf)
+![splitbi.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/splitbi.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ## Por orden de entrada, valor mínimo
 
@@ -85,7 +85,7 @@ solve::int_search([x,y],first_fail,indomain_split) satisfy;
 solve :: int_search([x,y],input_order,indomain_min) satisfy;
 ```
 
-[split3.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split3.pdf)
+![split3.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split3.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 ## Orden de entrada, valor máximo
 
@@ -93,7 +93,7 @@ solve :: int_search([x,y],input_order,indomain_min) satisfy;
 solve :: int_search([x,y],input_order,indomain_max) satisfy;
 ```
 
-[split4.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split4.pdf)
+![split4.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split4.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Por la variable que tiene el valor más pequeño
 
@@ -102,7 +102,7 @@ solve :: int_search([x,y],smallest,indomain_max) satisfy;
 %solve :: int_search([x,y],smallest,indomain_max) satisfy;
 ```
 
-[split5.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split5.pdf)
+![split5.pdf](Clase%204%20Generalidades%20de%20CSP%20II%201ac7fd794c2880b1a4f8f420bd4f13a4/split5.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 [https://docs.minizinc.dev/en/stable/mzn_search.html#search-annotations](https://docs.minizinc.dev/en/stable/mzn_search.html#search-annotations)
 

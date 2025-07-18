@@ -10,7 +10,7 @@ https://radimrehurek.com/gensim/models/word2vec.html
 
 [https://www.nltk.org/api/nltk.tokenize.html](https://www.nltk.org/api/nltk.tokenize.html) 
 
-[Semana_12_annotated.pdf](Sesio%CC%81n%2005%20de%20Junio%20Teoria%20Procesamiento%20de%20Lengua%20283e0b34848242e19700614acbeab275/Semana_12_annotated.pdf)
+![Semana_12_annotated.pdf](Sesio%CC%81n%2005%20de%20Junio%20Teoria%20Procesamiento%20de%20Lengua%20283e0b34848242e19700614acbeab275/Semana_12_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Notas de clase
 

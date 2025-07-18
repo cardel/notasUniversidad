@@ -2,7 +2,7 @@
 
 # Multiplicación de matrices
 
-[Notas1_annotated.pdf](Clase%203%20Multiplicacio%CC%81n%20de%20matrices%20y%20elementos%20pr%201a77fd794c28801cb7cfc90ad65736e3/Notas1_annotated.pdf)
+![Notas1_annotated.pdf](Clase%203%20Multiplicacio%CC%81n%20de%20matrices%20y%20elementos%20pr%201a77fd794c28801cb7cfc90ad65736e3/Notas1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Estructura de programación dinámica
 
@@ -123,4 +123,4 @@ Este enfoque permite resolver problemas complejos de optimización descomponién
 
 # Ejercicios
 
-[notas2_annotated.pdf](Clase%203%20Multiplicacio%CC%81n%20de%20matrices%20y%20elementos%20pr%201a77fd794c28801cb7cfc90ad65736e3/notas2_annotated.pdf)
+![notas2_annotated.pdf](Clase%203%20Multiplicacio%CC%81n%20de%20matrices%20y%20elementos%20pr%201a77fd794c28801cb7cfc90ad65736e3/notas2_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

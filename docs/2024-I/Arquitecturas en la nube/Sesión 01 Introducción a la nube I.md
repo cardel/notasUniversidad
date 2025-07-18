@@ -4,7 +4,7 @@ Fecha: 18 de Julio de 2024
 
 ## Recursos
 
-- [https://d1.awsstatic.com/es_ES/training-and-certification/docs-cloud-practitioner/AWS-Certified-Cloud-Practitioner_Sample-Questions.pdf](https://d1.awsstatic.com/es_ES/training-and-certification/docs-cloud-practitioner/AWS-Certified-Cloud-Practitioner_Sample-Questions.pdf) Ejemplo de examen de Cloud practioner
+- ![https://d1.awsstatic.com/es_ES/training-and-certification/docs-cloud-practitioner/AWS-Certified-Cloud-Practitioner_Sample-Questions.pdf](https://d1.awsstatic.com/es_ES/training-and-certification/docs-cloud-practitioner/AWS-Certified-Cloud-Practitioner_Sample-Questions.pdf){ type=application/pdf style="min-height:70vh;width:100%"} Ejemplo de examen de Cloud practioner
 - [https://pokeapi.co](https://pokeapi.co/) Ejemplo API
 - [https://www.educalive.com/blog/metodo-cornell-tomar-apuntes](https://www.educalive.com/blog/metodo-cornell-tomar-apuntes) Notas de Cornell
 - [https://developer.hashicorp.com/terraform](https://developer.hashicorp.com/terraform) Terraform (Infraestructura como codigo)

@@ -39,8 +39,8 @@ Los cruces de todas las restricciones (puntos donde se interceptan), todas las r
 
 ![image.png](Clase%207%20Me%CC%81todo%20gra%CC%81fico%201c37fd794c288005ac70f6f9d3d18646/image%203.png)
 
-[2025-03-27-Note-13-58_annotated.pdf](Clase%207%20Me%CC%81todo%20gra%CC%81fico%201c37fd794c288005ac70f6f9d3d18646/2025-03-27-Note-13-58_annotated.pdf)
+![2025-03-27-Note-13-58_annotated.pdf](Clase%207%20Me%CC%81todo%20gra%CC%81fico%201c37fd794c288005ac70f6f9d3d18646/2025-03-27-Note-13-58_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Ejercicio parcial semestre 2024-II
 
-[SolucionEjercicio_annotated.pdf](Clase%207%20Me%CC%81todo%20gra%CC%81fico%201c37fd794c288005ac70f6f9d3d18646/SolucionEjercicio_annotated.pdf)
+![SolucionEjercicio_annotated.pdf](Clase%207%20Me%CC%81todo%20gra%CC%81fico%201c37fd794c288005ac70f6f9d3d18646/SolucionEjercicio_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

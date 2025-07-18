@@ -40,7 +40,7 @@ Para verificar si este problema es arco consistente:
 
 Dado que para cada valor en el dominio de **X** existe al menos un valor en el dominio de **Y** que satisface la restricción, y viceversa, este problema es arco consistente.
 
-[Consistencia1_annotated.pdf](Clase%2011%20Consistencia%201e47fd794c2880fe9ec1f374d6016030/Consistencia1_annotated.pdf)
+![Consistencia1_annotated.pdf](Clase%2011%20Consistencia%201e47fd794c2880fe9ec1f374d6016030/Consistencia1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Hiper arco consistencia
 
@@ -107,7 +107,7 @@ Para que el problema sea hiper arco consistente, debemos comprobar que para cada
 
 Dado que para cada valor en el dominio de cada variable (**X**, **Y**, **Z**) existe al menos una combinación de valores en las otras variables que satisface todas las restricciones, este problema es hiper arco consistente.
 
-[Consistencia2_annotated.pdf](Clase%2011%20Consistencia%201e47fd794c2880fe9ec1f374d6016030/Consistencia2_annotated.pdf)
+![Consistencia2_annotated.pdf](Clase%2011%20Consistencia%201e47fd794c2880fe9ec1f374d6016030/Consistencia2_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Hiper arcoconsistencia direccional
 
