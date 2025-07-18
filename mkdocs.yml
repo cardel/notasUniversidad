@@ -23,6 +23,8 @@ theme:
 
 # Extensions
 markdown_extensions:
+  - pymdownx.pathconverter:
+      tags: "a script img link object embed"
   - attr_list
   - footnotes
   # - attr_list
