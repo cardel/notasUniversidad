@@ -212,12 +212,91 @@ Guía desde la consola de Administración
 [Revisar guia](guia.pdf)  
 ### 4.2 Implementación de función HTTP  
 ```python  
-import azure.functions as func  
-  
-def main(req: func.HttpRequest) -> func.HttpResponse:  
-    # Implementar respuesta básica  
-    return func.HttpResponse(  
-        "Función ejecutada correctamente",  
-        status_code=200  
-    )  
+import azure.functions as func
+import logging
+
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="hola", methods=["GET", "POST"])
+def usbhttpservice(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    name = req.params.get('name')
+    if not name:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            name = req_body.get('name')
+
+    if name:
+        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    else:
+        return func.HttpResponse(
+            "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+            status_code=200
+        )
 ```
+
+```json
+{
+    "version": "2.0",
+    "logging": {
+        "applicationInsights": {
+            "samplingSettings": {
+                "isEnabled": true,
+                "excludedTypes": "Request"
+            }
+        }
+    },
+    "extensionBundle": {
+        "id": "Microsoft.Azure.Functions.ExtensionBundle",
+        "version": "[4.0.0, 5.0.0)"
+    }
+}
+```
+
+### Pequeño ejercicio 1
+
+Crear un nueva función app para hacer acciones en el azure blob storage https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli&pivots=blob-storage-quickstart-scratch
+
+- Crear un bucket en Azure Blob Storage
+- Subir un archivo local (o creado) a el
+
+```python
+import azure.functions as func
+import logging
+import uuid
+from azure.identity import DefaultAzureCredential
+from azure.storage.blob import BlobServiceClient
+
+account_url = "https://ejemplo2025iiusbinfra.blob.core.windows.net"
+default_credential = DefaultAzureCredential()
+blob_service_client = BlobServiceClient(account_url, credential=default_credential)
+
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="storage", methods=["GET"])
+def blobstorage(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    
+    container_name = "micontenedor" + str(uuid.uuid4())
+    container_client = blob_service_client.create_container(container_name)
+    logging.info(f"Container '{container_name}' created successfully.")
+
+    blob_name = "cuento.txt"
+    blob_client = blob_service_client.get_blob_client(
+        container=container_name,
+        blob=blob_name
+    )
+
+    with open(blob_name, "rb") as data:
+        blob_client.upload_blob(data)
+
+    return func.HttpResponse(
+        "Se ha creado el blob storage correctamente.",
+        status_code=200
+    )
+```
+
