@@ -205,6 +205,7 @@ Guía desde la consola de Administración
    - Tipo de función: "Desencadenador HTTP"  
    - Stack de ejecución: Python  
    - Plan de hospedaje: Consumo (sin servidor)  
+   
 
 ### Creación y configuración de las funciones
 
