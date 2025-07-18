@@ -5,7 +5,7 @@ theme:
   palette:
     # Modo oscuro - Azul más profundo
     - media: "(prefers-color-scheme: dark)"
-      scheme: default
+      scheme: slate
       primary: cyan
       accent: light blue
       toggle:
@@ -13,12 +13,12 @@ theme:
         name: Modo claro
     # Modo claro - Azul claro
     - media: "(prefers-color-scheme: light)"
-      scheme: slate
+      scheme: default
       primary: light blue
       accent: light blue
       toggle:
         icon: material/weather-sunny
-        name: Modo oscuro# Extensions
+        name: Modo oscuro
 markdown_extensions:
   - pymdownx.pathconverter:
       tags: "a script img link object embed"
@@ -66,4 +66,4 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/mermaid/dist/mermaid.min.js
 extra_css:
-  - stylesheets/extra.css
+  - css/extra.css
