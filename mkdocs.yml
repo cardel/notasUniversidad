@@ -3,23 +3,23 @@ site_name: Notas Universidad
 theme:
   name: "material"
   palette:
-    # Light mode
+    # Modo claro - Azul claro
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: pink
-      accent: indigo
+      primary: light blue
+      accent: light blue
       toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
+        icon: material/weather-sunny
+        name: Modo oscuro
 
-    # Dark mode
+    # Modo oscuro - Azul más profundo
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: pink
-      accent: blue
+      primary: cyan
+      accent: light blue
       toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
+        icon: material/weather-night
+        name: Modo claro
 
 # Extensions
 markdown_extensions:
