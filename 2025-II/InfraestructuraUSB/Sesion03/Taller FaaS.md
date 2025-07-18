@@ -270,6 +270,7 @@ import logging
 import uuid
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
+import uuid
 
 account_url = "https://ejemplo2025iiusbinfra.blob.core.windows.net"
 default_credential = DefaultAzureCredential()
