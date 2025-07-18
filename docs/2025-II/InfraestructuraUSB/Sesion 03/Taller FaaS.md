@@ -211,7 +211,7 @@ Guía desde la consola de Administración
 
 En visual Studio instalar la extensión de Azure y Azure Functions
 
-![Documento guia](guia.pdf){ type=application/pdf, style="min-height:25vh;width:100%"}
+![Documento guia](guia.pdf){ type=application/pdf style="min-height:25vh;width:100%"}
 ### 4.2 Implementación de función HTTP  
 ```python  
 import azure.functions as func
