@@ -209,6 +209,8 @@ Guía desde la consola de Administración
 
 ### Creación y configuración de las funciones
 
+En visual Studio instalar la extensión de Azure y Azure Functions
+
 ![](guia.pdf)
 ### 4.2 Implementación de función HTTP  
 ```python  
