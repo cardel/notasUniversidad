@@ -37,6 +37,12 @@ docker compose up -d #levanta el servidor no-attach (proceso aparte)
 docker compose down #quiero bajar el servicio
 ```
 
+## Imagen de ejemplo
+
+```bash
+ docker pull cardel87/ejemplousb
+```
+
 
 ## Despliegue en AWS
 
@@ -57,7 +63,7 @@ Este documento contiene los pasos para desplegar una aplicación Flask contenida
 
 ```bash
 #obtener datos de la cuenta
-aws sts get-caller-identity --query Account --output text
+aws sts get-caller-identity --query Account 
 
 #obtener region
 aws configure get region
@@ -65,17 +71,15 @@ aws configure get region
 #obtener VPC
 aws ec2 describe-vpcs \
   --query "Vpcs[*].{ID:VpcId,CIDR:CidrBlock,IsDefault:IsDefault}" \
-  --output table
-
+  
 
 #obtener subredes
-aws ec2 describe-subnets --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock,AZ:AvailabilityZone}" --output table
-
+aws ec2 describe-subnets --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock,AZ:AvailabilityZone}"
 
 #obtener grupo de seguridad
 aws ec2 describe-security-groups \
   --query "SecurityGroups[*].{ID:GroupId,Name:GroupName}" \
-  --output table
+
 
 ```
 
@@ -94,6 +98,21 @@ Ingresa:
 - **Región** (por ejemplo, `us-east-1`)
 - **Formato**: `json` recomendado
 
+Tener en cuenta que el session token no se puede configurar por aqui
+
+### 1. 2 Alternativa
+
+#### En linux
+Editar el archivo de configuración ~/.aws/credentials
+
+No olvidar el archivo
+~/.aws/config
+
+#### En windows
+
+En Windows suponiendo que su usuario es pepito
+
+C:/Users/pepito/.aws/ Deben habilitar el explorador de Windows con archivos ocultos y del sistema, puede hacerse con CMD o Powershell
 
 ### 2. Crear repositorio en Amazon ECR
 
