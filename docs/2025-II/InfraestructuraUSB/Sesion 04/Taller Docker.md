@@ -29,7 +29,8 @@ python -m flask --host=0.0.0.0
 
 ### Implementación usando docker
 
-[https://gist.github.com/cardel/84254b214e11fbd15974a7a86a259699](https://gist.github.com/cardel/84254b214e11fbd15974a7a86a259699)
+- Aplicación de Docker https://gist.github.com/cardel/acd9a6dd7eddf608c4674dfe6131376d 
+- Archivos de configuración [https://gist.github.com/cardel/84254b214e11fbd15974a7a86a259699](https://gist.github.com/cardel/84254b214e11fbd15974a7a86a259699)
 
 ```bash
 docker compose up -d #levanta el servidor no-attach (proceso aparte)
