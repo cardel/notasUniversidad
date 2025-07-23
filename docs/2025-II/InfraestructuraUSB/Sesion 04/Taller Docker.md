@@ -390,3 +390,49 @@ Tener en cuenta https://www.toptal.com/developers/gitignore
 5. Se requiere aplicar el tag
 6. Se requiere subir la imagen al ACR
 7. Reiniciar el servicio
+
+### Action
+```yaml
+on:
+  push:
+    branches:
+      - master
+name: Deploy
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
+      
+      - name: 'Login Azure'
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'      
+      - name: 'Deploy to Azure Container Registry' 
+        run: |
+          az acr login --name taskapp
+          docker compose build
+          docker compose push
+		      az webapp restart \               --name flaskapp-web \
+                --resource-group grupito
+
+```
+
+### Azure credential
+```yaml
+
+  {
+      "clientId": "<Client ID>",
+      "clientSecret": "<Client Secret>",
+      "subscriptionId": "<Subscription ID>",
+      "tenantId": "<Tenant ID>"
+  }
+
+```
+
+Como conseguir esta información
+
+```bash
+az account show
+```
