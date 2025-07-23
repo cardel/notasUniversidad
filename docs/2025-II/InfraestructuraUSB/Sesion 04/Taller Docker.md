@@ -309,20 +309,46 @@ az webapp list
 az webapp list --query "[].name"
 
 #Configuro el webapp
-
+# Almaceno en dos variables el username y el password del recurso
 ACR_USERNAME=$(az acr credential show --name flaskapp --query "username" -o tsv)
 ACR_PASSWORD=$(az acr credential show --name flaskapp --query "passwords[0].value" -o tsv)
 
+##Configurar el contenedor
 az webapp config container set \
   --name flaskapp-web \
-  --resource-group usb20242 \
+  --resource-group <grupo> \
   --docker-custom-image-name flaskapp.azurecr.io/app:latest \
   --docker-registry-server-url https://flaskapp.azurecr.io \
   --docker-registry-server-user $ACR_USERNAME \
   --docker-registry-server-password $ACR_PASSWORD
-  
+
+## Abrir el puerto 5000
 az webapp config appsettings set \
-  --resource-group usb20242 \
+  --resource-group <grupo> \
   --name flaskapp-web \
   --settings WEBSITES_PORT=5000
+
+## Obtener la IP servicio
+az webapp show \
+  --name flaskapp-web  \
+  --resource-group <grupo> \
+  --query outboundIpAddresses
+
+## Obtener la HOST del servicio
+az webapp show \
+  --name flaskapp-web  \
+  --resource-group <grupo> \
+  --query defaultHostName
+
+```
+
+### Pruebas
+
+Suponiendo que la URL es https://flaskapp-web.azurewebsites.net
+
+```bash
+curl -X POST  https://flaskapp-web.azurewebsites.net/sub -d "a=10" -d "b=40" 
+
+ curl -X GET -G https://flaskapp-web.azurewebsites.net/mult -d "a=10" -d "b=40"
+
 ```
