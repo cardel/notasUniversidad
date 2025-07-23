@@ -352,3 +352,41 @@ curl -X POST  https://flaskapp-web.azurewebsites.net/sub -d "a=10" -d "b=40"
  curl -X GET -G https://flaskapp-web.azurewebsites.net/mult -d "a=10" -d "b=40"
 
 ```
+
+## Actualizar app
+Recordar flashapp es el nombre del ACR (tener presente si se usa otro)
+
+### Paso 1. Actualizar imagen
+```bash
+docker build -t flaskapp.azurecr.io/app .
+```
+
+### Paso 2 Subir contenedor
+
+```bash
+docker push flaskapp.azurecr.io/app:latest
+```
+
+### Paso 3: Reiniciar el Webapp
+
+```bash
+az webapp restart \
+  --name <nombre-webapp> \
+  --resource-group <grupo>
+```
+
+## Adicional CI/CD
+
+¿Como hacemos para que el aplicativo se despliegue en azure automáticamente?
+
+Tener en cuenta https://www.toptal.com/developers/gitignore 
+
+### Apuntes importantes
+
+1. Los recursos ya están creados
+2. Se requiere generar la imagen de docker
+3. Se requiere autenticarse en Azure
+4. Se requiere construir la imagen de docker
+5. Se requiere aplicar el tag
+6. Se requiere subir la imagen al ACR
+7. Reiniciar el servicio
