@@ -249,6 +249,10 @@ az group list --query "[].name"
 # En caso que no hayan grupos de recursos
 # az group create --name <nombre-grupo> --location eastus
 
+#Registrar el servicio
+az provider register --namespace Microsoft.ContainerRegistry
+
+
 #Crear el registro de contenedores (PAAS)
 az acr create --resource-group <nombre-grupo> --sku Basic --name flaskapp
 
