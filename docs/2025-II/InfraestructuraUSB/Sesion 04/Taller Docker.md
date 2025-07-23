@@ -259,13 +259,17 @@ az acr create --resource-group <nombre-grupo> --sku Basic --name flaskapp
 #<nombre-grupo> es el grupo de recursos
 # flaskapp es el nombre del contenedor
 
-#Autenticamos en el ACR
+# Revisar que esté creado
+az acr list --query "[].name"
+
+
+#Autenticamos en el ACR (Importante)
 az acr login --name flaskapp
 
 #Tag de la imagen en nuestro Docker local
-docker image ls #Revisar el nombre
+docker image ls #Revisar el nombre (tag)
 ':
-Y aqui buscar el nombre de la imagen, voy a suponer que es ejemplo-veb
+Y aqui buscar el nombre de la imagen, voy a suponer que es ejemplo-web
 '
 docker tag ejemplo-web flaskapp.azurecr.io/app
 
@@ -274,6 +278,7 @@ docker push flaskapp.azurecr.io/app
 
 #Verificamos
 az acr repository show --name flaskapp --repository app
+
 
 #Creamos el plan (asignamos capacidades a nuestro webapp)
 az appservice plan create \
