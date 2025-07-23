@@ -234,6 +234,7 @@ aws apprunner create-service \
 ### Recursos
 
 - AZ CLI https://learn.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest 
+- Tutorial [https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container?tabs=azure-cli&pivots=container-linux](https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container?tabs=azure-cli&pivots=container-linux "https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container?tabs=azure-cli&pivots=container-linux")
 
 ### Pasos
 ```bash
@@ -281,9 +282,10 @@ az acr repository show --name flaskapp --repository app
 
 
 #Creamos el plan (asignamos capacidades a nuestro webapp)
+# https://azure.microsoft.com/es-es/pricing/details/app-service/windows/
 az appservice plan create \
 	--name basico \
-	--resource-group usb20242 \
+	--resource-group <grupo> \
 	--sku B1 \
 	--is-linux \
 	--number-of-workers 2
@@ -291,12 +293,20 @@ az appservice plan create \
 #Habilito acceso de administrador al ACR
 az acr update --name flaskapp --admin-enabled true
 
+# Habilitar la suscripción
+az provider register --namespace Microsoft.Web
+
 #Creo el webapp
 az webapp create \
-	--resource-group usb20242 \
+	--resource-group <grupo> \
 	--plan basico \
 	--name flaskapp-web \
 	--deployment-container-image-name flaskapp-azurecr.io/app:latest
+
+#listar Webapps
+az webapp list
+
+az webapp list --query "[].name"
 
 #Configuro el webapp
 
