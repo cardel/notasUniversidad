@@ -162,7 +162,7 @@ Guarda lo siguiente como `task-definition.json`:
   "family": "flaskapp-task",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
-  "cpu": "256",
+  "cpu": "2",
   "memory": "512",
   "containerDefinitions": [
     {
@@ -208,30 +208,60 @@ Reemplaza:
 
 Si deseas una forma más sencilla de desplegar desde ECR:
 
+Archivo *apprunner-source.json*
+
+```json
+{
+  "ImageRepository": {
+    "ImageIdentifier": "cardel87/ejemplousb:latest",
+    "ImageRepositoryType": "DOCKER_HUB",
+    "ImageConfiguration": {
+      "Port": "5000"
+    }
+  },
+  "AutoDeploymentsEnabled": true
+}
+```
+
 ```bash
 aws apprunner create-service \
   --service-name flaskapp \
   --source-configuration file://apprunner-source.json
+```
+
 ## Despliegue Microsoft Azure
 
+### Recursos
+
+- AZ CLI https://learn.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest 
+
+### Pasos
 ```bash
-Autenticarse
+#Autenticarse
 az login --use-device-code
 
-#Creamos el grupo de recursos
-az acr create --resource-group usb20242 --sku Basic
+# Verificar login
+az account show
+
+#Obtener los grupos de rcursos
+az group list --query "[].name"
+
+# En caso que no hayan grupos de recursos
+# az group create --name <nombre-grupo> --location eastus
 
 #Crear el registro de contenedores (PAAS)
-az acr create --resource-group usb20242 --sku Basic --name flaskapp
+az acr create --resource-group <nombre-grupo> --sku Basic --name flaskapp
+
+#<nombre-grupo> es el grupo de recursos
+# flaskapp es el nombre del contenedor
 
 #Autenticamos en el ACR
 az acr login --name flaskapp
 
 #Tag de la imagen en nuestro Docker local
-docker ps -a #Revisar el nombre
+docker image ls #Revisar el nombre
 ':
-El nombre suele ser
-<carpeta> "-" web
+Y aqui buscar el nombre de la imagen, voy a suponer que es ejemplo-veb
 '
 docker tag ejemplo-web flaskapp.azurecr.io/app
 
