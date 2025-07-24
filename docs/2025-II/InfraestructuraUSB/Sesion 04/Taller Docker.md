@@ -391,48 +391,81 @@ Tener en cuenta https://www.toptal.com/developers/gitignore
 6. Se requiere subir la imagen al ACR
 7. Reiniciar el servicio
 
-### Action
+
+## Integrar con pipelines CI/CD
+
+1. Crear un repositorio de github
+2. Crear el pipeline para ejecutar los comandos para subir 
+3. Configurar los secretos del repositorio
+
+Revisar https://github.com/cardel/azureusb
+
+Para el caso de las credenciales
+
+```json
+{
+    "clientSecret":  "******",
+    "subscriptionId":  "******",
+    "tenantId":  "******",
+    "clientId":  "******"
+}
+```
+
+subscriptionID
+```bash
+az account show --query id
+```
+
+tenantID
+```
+az account show --query tenantId
+```
+
+Debemos generar una credencial
+```
+az ad sp create-for-rbac --name my-app-sp --role Contributor --scopes /subscriptions/<subscription-id> --sdk-auth
+```
+
+Workflow
+
 ```yaml
+name: build_and_push_image
+
 on:
   push:
-    branches:
-      - master
-name: Deploy
+    branches: [ "master" ]
+    paths:
+      - "**"
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@main
-      
-      - name: 'Login Azure'
-        uses: azure/login@v1
-        with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'      
-      - name: 'Deploy to Azure Container Registry' 
-        run: |
-          az acr login --name taskapp
-          docker compose build
-          docker compose push
-		      az webapp restart \               --name flaskapp-web \
-                --resource-group grupito
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-```
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-### Azure credential
-```yaml
+    - name: Login to ACR
+      run: |
+        az acr login --name ${{ secrets.ACR_NAME }}
 
-  {
-      "clientId": "<Client ID>",
-      "clientSecret": "<Client Secret>",
-      "subscriptionId": "<Subscription ID>",
-      "tenantId": "<Tenant ID>"
-  }
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.REPOSITORY }}:latest .
 
-```
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.REPOSITORY }}:latest
 
-Como conseguir esta información
+    - name: Restart Azure Webapp
+      run: |
+         az webapp restart \
+          --name ${{ secrets.APP_NAME }} \
+          --resource-group ${{secrets.RESOURCE_GROUP }}
 
-```bash
-az account show
 ```
