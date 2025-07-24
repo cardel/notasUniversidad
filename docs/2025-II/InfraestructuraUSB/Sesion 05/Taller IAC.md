@@ -10,19 +10,19 @@ graph TD
     direction LR
 
     subgraph Public_Subnet["Subred Pública (10.0.1.0/24)"]
-      direction TB
+      direction LR
       ec2[EC2 Instance: App]
     end
 
     subgraph Private_Subnet["Subred Privada (10.0.2.0/24)"]
       direction LR
       s3_bucket[S3 Bucket]
-      neptune_db[Amazon Neptune DB]
+      ec2_db[EC2 Instance: Postgres]
     end
   end
 
   ec2 --> s3_bucket
-  ec2 --> neptune_db
+  ec2 --> ec2_db
 
 ```
   
@@ -38,18 +38,21 @@ aws/
 ├── main.tf
 ├── variables.tf
 ├── outputs.tf
-└── ec2_user_data.sh
-
+├── ec2_user_data.sh
+├── api_user_data.sh
+└── postgres_user_data.sh
 ```
   
 ### Creación de Recursos  
 Archivo *main.tf*:  
 
-#### Proveedor
 
 ```hcl  
 provider "aws" {
   region = "us-east-1"
+  ignore_tags {
+    key_prefixes = ["aws:"] # opcional, si hay etiquetas restringidas
+  }
 }
 
 resource "aws_vpc" "main" {
@@ -84,18 +87,14 @@ resource "aws_route_table_association" "public_assoc" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
- 
-```  
-  
-#### EC2 (Subred publica) 
 
-```hcl
-  resource "aws_security_group" "ec2_sg" {
+resource "aws_security_group" "ec2_sg" {
   name        = "ec2_sg"
-  description = "Allow SSH and HTTP"
+  description = "Allow SSH, HTTP and PostgreSQL"
   vpc_id      = aws_vpc.main.id
 
   ingress {
+    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -103,12 +102,20 @@ resource "aws_route_table_association" "public_assoc" {
   }
 
   ingress {
+    description = "HTTP (API)"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "PostgreSQL access from app"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -117,85 +124,47 @@ resource "aws_route_table_association" "public_assoc" {
   }
 }
 
-resource "aws_instance" "app" {
-  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public.id
-  security_groups = [aws_security_group.ec2_sg.name]
 
-  user_data = file("ec2_user_data.sh")
+resource "aws_instance" "db_server" {
+  ami                         = "ami-0cbbe2c6a1bb2ad63" # Amazon Linux 2
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.private.id
+  vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
+  key_name                    = "vockey"
+  associate_public_ip_address = false
+  user_data                   = file("postgres_user_data.sh")
 
   tags = {
-    Name = "AppInstance"
+    Name = "PostgreSQL Server"
   }
 }
 
-```
-#### S3 y Neptune
+resource "aws_instance" "app_server" {
+  ami                         = "ami-0cbbe2c6a1bb2ad63"
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.public.id
+  vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
+  associate_public_ip_address = true
+  key_name                    = "vockey"
+  user_data                   = file("api_user_data.sh")
 
-```hcl
+  tags = {
+    Name = "API Server"
+  }
+}
+
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
 resource "aws_s3_bucket" "private_data" {
-  bucket = "mi-bucket-privado-terraform"
+  bucket = var.s3_bucket_name
+
   force_destroy = true
-}
-resource "aws_security_group" "neptune_sg" {
-  name   = "neptune_sg"
-  vpc_id = aws_vpc.main.id
-
-  ingress {
-    from_port       = 8182
-    to_port         = 8182
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ec2_sg.id]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  lifecycle {
+    ignore_changes = [object_lock_configuration]
   }
 }
-
-resource "aws_neptune_subnet_group" "neptune_subnet_group" {
-  name       = "neptune-subnet-group"
-  subnet_ids = [aws_subnet.private.id]
-}
-
-resource "aws_neptune_cluster" "neptune" {
-  cluster_identifier      = "neptune-cluster"
-  engine                  = "neptune"
-  neptune_subnet_group_name = aws_neptune_subnet_group.neptune_subnet_group.name
-  vpc_security_group_ids  = [aws_security_group.neptune_sg.id]
-}
-
-resource "aws_neptune_cluster_instance" "neptune_instance" {
-  count              = 1
-  identifier         = "neptune-instance-${count.index}"
-  cluster_identifier = aws_neptune_cluster.neptune.id
-  instance_class     = "db.r5.large"
-  apply_immediately  = true
-}
-
-```
-
-### Archivos de configuración
-Archivo *ec2_user_data.sh*:  
-```bash
-#!/bin/bash
-yum update -y
-yum install -y python3 zip unzip awscli
-pip3 install gremlinpython boto3
-
-# Variables de entorno
-export REGION=us-east-1
-export S3_BUCKET=mi-bucket-privado-terraform
-
-# Archivo de prueba
-echo "Consulta de prueba a Neptune y resultado guardado" > resultado.txt
-
-# Subir a S3
-aws s3 cp resultado.txt s3://$S3_BUCKET/
 
 ```
 ### Variables
@@ -225,6 +194,12 @@ variable "private_subnet_cidr" {
   default     = "10.0.2.0/24"
 }
 
+variable "private_subnet_b_cidr" {
+  description = "CIDR de la segunda subred privada"
+  type        = string
+  default     = "10.0.3.0/24"
+}
+
 variable "ec2_instance_type" {
   description = "Tipo de instancia EC2"
   type        = string
@@ -232,9 +207,15 @@ variable "ec2_instance_type" {
 }
 
 variable "ec2_ami_id" {
-  description = "AMI ID para la instancia EC2 (Amazon Linux 2)"
+  description = "AMI ID para las instancias EC2 (Amazon Linux 2)"
   type        = string
-  default     = "ami-0c55b159cbfafe1f0"
+  default     = "ami-0cbbe2c6a1bb2ad63"
+}
+
+variable "key_name" {
+  description = "Nombre de la clave SSH existente para acceder a las instancias EC2"
+  type        = string
+  default     = "vockey"
 }
 
 variable "s3_bucket_name" {
@@ -243,53 +224,155 @@ variable "s3_bucket_name" {
   default     = "mi-bucket-privado-terraform"
 }
 
-variable "neptune_instance_class" {
-  description = "Clase de instancia para Neptune"
-  type        = string
-  default     = "db.r5.large"
-}
 
 ```
 ### Archivos de debugging
 Archivo *outputs.tf*:  
 ```hcl
-output "vpc_id" {
-  description = "ID de la VPC creada"
-  value       = aws_vpc.main.id
+variable "aws_region" {
+  description = "Región de AWS donde se desplegará la infraestructura"
+  type        = string
+  default     = "us-east-1"
 }
 
-output "public_subnet_id" {
-  description = "ID de la subred pública"
-  value       = aws_subnet.public.id
+variable "vpc_cidr" {
+  description = "CIDR de la VPC principal"
+  type        = string
+  default     = "10.0.0.0/16"
 }
 
-output "private_subnet_id" {
-  description = "ID de la subred privada"
-  value       = aws_subnet.private.id
+variable "public_subnet_cidr" {
+  description = "CIDR de la subred pública"
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
-output "ec2_public_ip" {
-  description = "IP pública de la instancia EC2"
-  value       = aws_instance.app.public_ip
+variable "private_subnet_cidr" {
+  description = "CIDR de la subred privada"
+  type        = string
+  default     = "10.0.2.0/24"
 }
 
-output "s3_bucket_name" {
+variable "private_subnet_b_cidr" {
+  description = "CIDR de la segunda subred privada"
+  type        = string
+  default     = "10.0.3.0/24"
+}
+
+variable "ec2_instance_type" {
+  description = "Tipo de instancia EC2"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "ec2_ami_id" {
+  description = "AMI ID para las instancias EC2 (Amazon Linux 2)"
+  type        = string
+  default     = "ami-0cbbe2c6a1bb2ad63"
+}
+
+variable "key_name" {
+  description = "Nombre de la clave SSH existente para acceder a las instancias EC2"
+  type        = string
+  default     = "vockey"
+}
+
+variable "s3_bucket_name" {
   description = "Nombre del bucket S3 privado"
-  value       = aws_s3_bucket.private_data.bucket
+  type        = string
+  default     = "mi-bucket-privado-terraform"
 }
+```
+### Archivos de configuración
+Archivo *ec2_user_data.sh*:  
+```bash
+#!/bin/bash
+yum update -y
+yum install -y python3 zip unzip awscli
+pip3 install gremlinpython boto3
 
-output "neptune_endpoint" {
-  description = "Endpoint del clúster de Neptune"
-  value       = aws_neptune_cluster.neptune.endpoint
-}
+# Variables de entorno
+export REGION=us-east-1
+export S3_BUCKET=mi-bucket-privado-terraform
 
-output "neptune_reader_endpoint" {
-  description = "Reader endpoint del clúster de Neptune"
-  value       = aws_neptune_cluster.neptune.reader_endpoint
-}
+# Archivo de prueba
+echo "Consulta de prueba a Neptune y resultado guardado" > resultado.txt
+
+# Subir a S3
+aws s3 cp resultado.txt s3://$S3_BUCKET/
 
 ```
+Archivo *postgres_user_data.sh**
+```bash
 
+#!/bin/bash
+yum update -y
+amazon-linux-extras enable postgresql14
+yum install -y postgresql-server postgresql
+
+# Inicializar y arrancar PostgreSQL
+/usr/bin/postgresql-setup initdb
+systemctl enable postgresql
+systemctl start postgresql
+
+# Crear base y tablas
+sudo -u postgres psql <<EOF
+CREATE DATABASE empresa;
+\c empresa
+CREATE TABLE cliente (id SERIAL PRIMARY KEY, nombre VARCHAR(50));
+CREATE TABLE vendedor (id SERIAL PRIMARY KEY, nombre VARCHAR(50));
+CREATE TABLE factura (
+  id SERIAL PRIMARY KEY,
+  cliente_id INT REFERENCES cliente(id),
+  vendedor_id INT REFERENCES vendedor(id),
+  total NUMERIC
+);
+INSERT INTO cliente (nombre) VALUES ('Carlos'), ('Ana');
+INSERT INTO vendedor (nombre) VALUES ('Luis'), ('Laura');
+INSERT INTO factura (cliente_id, vendedor_id, total) VALUES (1, 1, 100.00), (2, 2, 200.00);
+EOF
+```
+Archivo * *api_user_data.sh*
+```bash
+
+#!/bin/bash
+yum update -y
+yum install -y python3 git python3-pip
+pip3 install flask psycopg2-binary
+
+DB_HOST='${aws_instance.db_server.private_ip}'
+# Crear API sencilla
+cat <<EOF > /home/ec2-user/api.py
+from flask import Flask, jsonify
+import psycopg2
+
+app = Flask(__name__)
+conn = psycopg2.connect(dbname='empresa', user='postgres', host='$DB_HOST', password='')
+
+@app.route("/clientes")
+def clientes():
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM cliente")
+    rows = cur.fetchall()
+    cur.close()
+    return jsonify(rows)
+
+@app.route("/facturas")
+def facturas():
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM factura")
+    rows = cur.fetchall()
+    cur.close()
+    return jsonify(rows)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80)
+EOF
+
+chmod +x /home/ec2-user/api.py
+nohup python3 /home/ec2-user/api.py &
+
+```
 ### Ejecución de Comandos  
 ```bash  
 
