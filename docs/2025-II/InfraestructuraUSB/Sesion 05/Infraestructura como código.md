@@ -54,6 +54,7 @@ resource "aws_instance" "web" {
 | Comunidad activa y módulos | Menos flexibilidad    |
 ### Estructura  de proyecto terraform
 
+
 ```bash
 terraform-project/  
 │  
@@ -175,14 +176,14 @@ Resources:
 
 ### **Comparación: Terraform vs. CloudFormation**  
 
-| **Criterio**         | **Terraform**                          | **CloudFormation**                     |
-|----------------------|----------------------------------------|----------------------------------------|
-| **Lenguaje**         | HCL (más legible)                      | JSON/YAML (verboso)                    |
-| **Multi-nube**       | Sí (AWS, Azure, GCP, etc.)            | Solo AWS                               |
-| **Estado**           | Guardado en backend (ej.: S3 + DynamoDB)| Gestionado por AWS (no accesible directamente) |
-| **Velocidad**        | Más rápido en despliegues complejos    | Más lento con stacks grandes           |
-| **Extensibilidad**   | Módulos de comunidad (Terraform Registry)| Macros y plantillas anidadas           |
-| **Costo**            | Gratis (solo costos de recursos AWS)   | Gratis (solo costos de recursos AWS)   |
+| **Criterio**       | **Terraform**                             | **CloudFormation**                             |
+| ------------------ | ----------------------------------------- | ---------------------------------------------- |
+| **Lenguaje**       | HCL (más legible)                         | JSON/YAML (verboso)                            |
+| **Multi-nube**     | Sí (AWS, Azure, GCP, etc.)                | Solo AWS                                       |
+| **Estado**         | Guardado en backend (ej.: S3 + DynamoDB)  | Gestionado por AWS (no accesible directamente) |
+| **Velocidad**      | Más rápido en despliegues complejos       | Más lento con stacks grandes                   |
+| **Extensibilidad** | Módulos de comunidad (Terraform Registry) | Macros y plantillas anidadas                   |
+| **Costo**          | Gratis (solo costos de recursos AWS)      | Gratis (solo costos de recursos AWS)           |
 
 ---
 
@@ -204,11 +205,11 @@ Resources:
 **¿Necesitas un ejemplo avanzado (ej.: EKS + RDS con CloudFormation)?**
 
 ### **Tabla Comparativa: IaC en AWS**
-| Herramienta       | Lenguaje | Enfoque                | Integración AWS           | Escenario Ideal          |
-|-------------------|----------|------------------------|---------------------------|--------------------------|
-| **Terraform**     | HCL      | Infraestructura multi-nube | Todos los servicios      | Entornos híbridos o multi-nube |
-| **CloudFormation**| JSON/YAML| Infraestructura AWS nativa | Soporte nativo           | Entornos 100% AWS        |
-| **Ansible**       | YAML     | Configuración y automatización | Módulos para EC2, IAM   | Post-despliegue y orquestación |
+| Herramienta        | Lenguaje  | Enfoque                        | Integración AWS       | Escenario Ideal                |
+| ------------------ | --------- | ------------------------------ | --------------------- | ------------------------------ |
+| **Terraform**      | HCL       | Infraestructura multi-nube     | Todos los servicios   | Entornos híbridos o multi-nube |
+| **CloudFormation** | JSON/YAML | Infraestructura AWS nativa     | Soporte nativo        | Entornos 100% AWS              |
+| **Ansible**        | YAML      | Configuración y automatización | Módulos para EC2, IAM | Post-despliegue y orquestación |
 
 ---
 
