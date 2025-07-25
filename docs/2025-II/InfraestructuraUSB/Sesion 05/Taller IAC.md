@@ -38,14 +38,13 @@ aws/
 ├── main.tf
 ├── variables.tf
 ├── outputs.tf
-├── ec2_user_data.sh
 ├── api_user_data.sh
 └── postgres_user_data.sh
 ```
   
 ### Creación de Recursos  
 Archivo *main.tf*:  
-
+La infraestructura del despligue
 
 ```hcl  
 provider "aws" {
@@ -169,6 +168,7 @@ resource "aws_s3_bucket" "private_data" {
 ```
 ### Variables
 Archivo *variables.tf*:  
+Este archivo permite almacenar variables que vamos utilizar en el archivo main.tf
 ```hcl
 variable "aws_region" {
   description = "Región de AWS donde se desplegará la infraestructura"
@@ -228,6 +228,7 @@ variable "s3_bucket_name" {
 ```
 ### Archivos de debugging
 Archivo *outputs.tf*:  
+Son salidas que se muestran en consola para el control del proceso
 ```hcl
 variable "aws_region" {
   description = "Región de AWS donde se desplegará la infraestructura"
@@ -284,27 +285,9 @@ variable "s3_bucket_name" {
 }
 ```
 ### Archivos de configuración
-Archivo *ec2_user_data.sh*:  
-```bash
-#!/bin/bash
-yum update -y
-yum install -y python3 zip unzip awscli
-pip3 install gremlinpython boto3
 
-# Variables de entorno
-export REGION=us-east-1
-export S3_BUCKET=mi-bucket-privado-terraform
-
-# Archivo de prueba
-echo "Consulta de prueba y resultado guardado" > resultado.txt
-
-# Subir a S3
-aws s3 cp resultado.txt s3://$S3_BUCKET/
-
-```
 Archivo *postgres_user_data.sh**
 ```bash
-
 #!/bin/bash
 yum update -y
 amazon-linux-extras enable postgresql14
@@ -332,9 +315,8 @@ INSERT INTO vendedor (nombre) VALUES ('Luis'), ('Laura');
 INSERT INTO factura (cliente_id, vendedor_id, total) VALUES (1, 1, 100.00), (2, 2, 200.00);
 EOF
 ```
-Archivo * *api_user_data.sh*
+Archivo  *api_user_data.sh*
 ```bash
-
 #!/bin/bash
 yum update -y
 yum install -y python3 git python3-pip
@@ -375,7 +357,6 @@ nohup python3 /home/ec2-user/api.py &
 ```
 ### Ejecución de Comandos  
 ```bash  
-
 terraform init  
 terraform plan  
 terraform apply  # Confirmar con 'yes'  
