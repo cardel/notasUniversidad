@@ -228,59 +228,36 @@ variable "s3_bucket_name" {
 Archivo *outputs.tf*:  
 Son salidas que se muestran en consola para el control del proceso
 ```hcl
-variable "aws_region" {
-  description = "Región de AWS donde se desplegará la infraestructura"
-  type        = string
-  default     = "us-east-1"
+output "vpc_id" {
+  description = "ID de la VPC creada"
+  value       = aws_vpc.main.id
 }
 
-variable "vpc_cidr" {
-  description = "CIDR de la VPC principal"
-  type        = string
-  default     = "10.0.0.0/16"
+output "public_subnet_id" {
+  description = "ID de la subred pública"
+  value       = aws_subnet.public.id
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR de la subred pública"
-  type        = string
-  default     = "10.0.1.0/24"
+output "private_subnet_id" {
+  description = "ID de la subred privada"
+  value       = aws_subnet.private.id
 }
 
-variable "private_subnet_cidr" {
-  description = "CIDR de la subred privada"
-  type        = string
-  default     = "10.0.2.0/24"
+output "ec2_public_ip" {
+  description = "IP pública de la instancia EC2 (API REST)"
+  value       = aws_instance.app_server.public_ip
 }
 
-variable "private_subnet_b_cidr" {
-  description = "CIDR de la segunda subred privada"
-  type        = string
-  default     = "10.0.3.0/24"
+output "ec2_private_ip_db" {
+  description = "IP privada de la instancia EC2 (PostgreSQL)"
+  value       = aws_instance.db_server.private_ip
 }
 
-variable "ec2_instance_type" {
-  description = "Tipo de instancia EC2"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "ec2_ami_id" {
-  description = "AMI ID para las instancias EC2 (Amazon Linux 2)"
-  type        = string
-  default     = "ami-0cbbe2c6a1bb2ad63"
-}
-
-variable "key_name" {
-  description = "Nombre de la clave SSH existente para acceder a las instancias EC2"
-  type        = string
-  default     = "vockey"
-}
-
-variable "s3_bucket_name" {
+output "s3_bucket_name" {
   description = "Nombre del bucket S3 privado"
-  type        = string
-  default     = "mi-bucket-privado-terraform"
+  value       = aws_s3_bucket.private_data.bucket
 }
+
 ```
 ### Archivos de configuración
 
