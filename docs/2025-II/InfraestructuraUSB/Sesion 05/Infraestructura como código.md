@@ -54,6 +54,7 @@ resource "aws_instance" "web" {
 | Comunidad activa y módulos | Menos flexibilidad    |
 ### Estructura  de proyecto terraform
 
+Un proyecto en terraform tiene la siguiente estructura:
 
 ```bash
 terraform-project/  
@@ -78,6 +79,7 @@ terraform-project/
 └── terraform.tfvars
 ```
 ---
+Enlace:
 https://developer.hashicorp.com/terraform
 ## **3. Ansible**
 
