@@ -1,5 +1,4 @@
 ## **1. Infraestructura como Código (IaC)**
-**Definición ampliada:**  
 La IaC permite definir y gestionar infraestructura de TI mediante archivos de configuración (código), en lugar de procesos manuales. Esto brinda **reproducibilidad**, **automatización** y **control de versiones** sobre recursos como servidores, redes y políticas de seguridad.
 
 **Beneficios clave:**  
