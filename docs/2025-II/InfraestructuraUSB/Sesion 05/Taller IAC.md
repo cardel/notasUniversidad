@@ -296,7 +296,7 @@ export REGION=us-east-1
 export S3_BUCKET=mi-bucket-privado-terraform
 
 # Archivo de prueba
-echo "Consulta de prueba a Neptune y resultado guardado" > resultado.txt
+echo "Consulta de prueba y resultado guardado" > resultado.txt
 
 # Subir a S3
 aws s3 cp resultado.txt s3://$S3_BUCKET/

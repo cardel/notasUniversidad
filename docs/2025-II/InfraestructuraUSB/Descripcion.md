@@ -22,3 +22,7 @@
 3. [Clase 3 Tipos de servicios FaaS](Sesion%2003/Contenido.md)
 4. [Clase 4 Aplicaciones en contenedores](Sesion%2004/Contenido.md)
 5. [Clase 5 Infraestructura como código](Sesion%2005/Contenido.md)
+
+
+## Recursos adicionales
+1. https://learn.epam.com/start AWS Cloud Practitioner Essentials

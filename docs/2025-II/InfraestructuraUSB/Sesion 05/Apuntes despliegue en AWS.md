@@ -56,15 +56,3 @@ Orquesta flujos de trabajo de CI/CD en múltiples etapas (fuente, construcción,
 | **CodePipeline**| Orquestación de CI/CD                | CloudFormation, GitHub Actions  | Visualización de flujos end-to-end        |
 
 ---
-
-### **Diagrama Conceptual**  
-```mermaid
-graph LR
-A[CodeCommit: Código Fuente] --> B[CodeBuild: Compilación]
-B --> C[CodeDeploy: Despliegue]
-A --> D[CodePipeline: Orquestación]
-D --> B
-D --> C
-```
-
-¿Necesitas profundizar en algún servicio en particular?
