@@ -526,6 +526,8 @@ variable "public_key_path" {
   description = "Path to your public SSH key"
   default     = "~/.ssh/id_rsa.pub"
 }
+#ruta C:/Users/pepito/.ssh/id_rsa.pub
+#ssh-keygen -t rsa
 
 variable "storage_account_name" {
   default = "privatestorageacc123"
