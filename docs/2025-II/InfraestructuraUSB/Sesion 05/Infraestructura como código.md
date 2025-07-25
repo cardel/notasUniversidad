@@ -51,6 +51,7 @@ resource "aws_instance" "web" {
 | Soporte multi-nube         | Solo AWS              |
 | Sintaxis más legible (HCL) | JSON/YAML más verboso |
 | Comunidad activa y módulos | Menos flexibilidad    |
+
 ### Estructura  de proyecto terraform
 
 Un proyecto en terraform tiene la siguiente estructura:
