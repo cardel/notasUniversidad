@@ -534,6 +534,10 @@ variable "cosmosdb_account_name" {
   default = "gremlinaccount123"
 }
 
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  default     = "Resultado comando <az account show --query id>"
+}
 ```
 ### Outputs.tf
 ```hcl
