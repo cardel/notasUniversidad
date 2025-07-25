@@ -47,10 +47,11 @@ Archivo *main.tf*:
 La infraestructura del despliegue
 
 ```hcl  
+
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
   ignore_tags {
-    key_prefixes = ["aws:"] # opcional, si hay etiquetas restringidas
+    key_prefixes = ["aws:"]
   }
 }
 
@@ -113,6 +114,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -125,11 +127,11 @@ resource "aws_security_group" "ec2_sg" {
 
 
 resource "aws_instance" "db_server" {
-  ami                         = "ami-0cbbe2c6a1bb2ad63" # Amazon Linux 2
-  instance_type               = "t2.micro"
+  ami                         = var.ec2_ami_id
+  instance_type               = var.ec2_instance_type
   subnet_id                   = aws_subnet.private.id
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
-  key_name                    = "vockey"
+  key_name                    = var.key_name
   associate_public_ip_address = false
   user_data                   = file("postgres_user_data.sh")
 
@@ -139,21 +141,17 @@ resource "aws_instance" "db_server" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                         = "ami-0cbbe2c6a1bb2ad63"
-  instance_type               = "t2.micro"
+  ami                         = var.ec2_ami_id
+  instance_type               = var.ec2_instance_type
   subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
   associate_public_ip_address = true
-  key_name                    = "vockey"
+  key_name                    = var.key_name
   user_data                   = file("api_user_data.sh")
 
   tags = {
     Name = "API Server"
   }
-}
-
-resource "random_id" "suffix" {
-  byte_length = 4
 }
 
 resource "aws_s3_bucket" "private_data" {
@@ -164,7 +162,6 @@ resource "aws_s3_bucket" "private_data" {
     ignore_changes = [object_lock_configuration]
   }
 }
-
 ```
 ### Variables
 Archivo *variables.tf*:  

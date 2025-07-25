@@ -1,6 +1,3 @@
-
-
-
 ## **1. Infraestructura como Código (IaC)**
 **Definición ampliada:**  
 La IaC permite definir y gestionar infraestructura de TI mediante archivos de configuración (código), en lugar de procesos manuales. Esto brinda **reproducibilidad**, **automatización** y **control de versiones** sobre recursos como servidores, redes y políticas de seguridad.
@@ -55,7 +52,30 @@ resource "aws_instance" "web" {
 | Soporte multi-nube         | Solo AWS              |
 | Sintaxis más legible (HCL) | JSON/YAML más verboso |
 | Comunidad activa y módulos | Menos flexibilidad    |
+### Estructura  de proyecto terraform
 
+```bash
+terraform-project/  
+│  
+├── main.tf # Configuración principal (recursos, proveedores, etc.)  
+├── variables.tf # Declaración de variables con tipos y descripciones  
+├── outputs.tf # Definición de salidas del módulo/proyecto  
+├── terraform.tfvars # Valores asignados a las variables  
+├── versions.tf # Requisitos de versión (Terraform y proveedor)  
+├── backend.tf # (opcional) Configuración de backend para el estado remoto  
+│  
+├── modules/ # (opcional) Módulos reutilizables definidos localmente  
+│ └── vpc/  
+│ ├── main.tf  
+│ ├── variables.tf  
+│ ├── outputs.tf  
+│  
+└── envs/ # (opcional) Configuración por entorno (dev, staging, prod)  
+├── dev/  
+│ └── terraform.tfvars  
+└── prod/  
+└── terraform.tfvars
+```
 ---
 https://developer.hashicorp.com/terraform
 ## **3. Ansible**
