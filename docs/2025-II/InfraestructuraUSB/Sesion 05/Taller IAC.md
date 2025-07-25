@@ -44,7 +44,7 @@ aws/
   
 ### Creación de Recursos  
 Archivo *main.tf*:  
-La infraestructura del despligue
+La infraestructura del despliegue
 
 ```hcl  
 provider "aws" {
@@ -223,8 +223,6 @@ variable "s3_bucket_name" {
   type        = string
   default     = "mi-bucket-privado-terraform"
 }
-
-
 ```
 ### Archivos de debugging
 Archivo *outputs.tf*:  
@@ -286,12 +284,11 @@ variable "s3_bucket_name" {
 ```
 ### Archivos de configuración
 
-Archivo *postgres_user_data.sh**
+Archivo *postgres_user_data.sh*
 ```bash
 #!/bin/bash
 yum update -y
-amazon-linux-extras enable postgresql14
-yum install -y postgresql-server postgresql
+yum install -y postgresql17-server postgresql17
 
 # Inicializar y arrancar PostgreSQL
 /usr/bin/postgresql-setup initdb
