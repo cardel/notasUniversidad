@@ -3,11 +3,24 @@
 Amazon Web Services (AWS) ofrece una suite de servicios de Inteligencia Artificial (IA) diseñados para resolver tareas específicas como el procesamiento de lenguaje natural, la síntesis de voz, el análisis de documentos y la creación de modelos de machine learning. A continuación se explican y comparan seis servicios destacados: **SageMaker, Polly, Textract, Comprehend, Kendra y Lex**.
 
 ---
+## Introducción
+- Sagemaker centraliza muchos de los procesos que se hacen en ML y Datascience
+	- Generar modelos ML
+	- Entrenamiento y ajuste
+	- Pipelines ML: Training - Adjust hyperparameters - Selection modelo
+- Requiere EC2 con GPU (costosas)
+	- Procesamiento CPU operaciones escalares: Multiplicaciones de valores, operaciones logicas, sumas, restas
+	- Procesamiento GPU trabaja vectores (tensores)
+- Integración: EC2 con GPU, Buckets s3 (guardar los modelos y las metricas)
 
 ## 1. Amazon SageMaker
 
 ### ¿Qué es?
 Amazon SageMaker es una plataforma completamente gestionada para crear, entrenar y desplegar modelos de machine learning a escala.
+- RStudio: Trabajo con R
+- Canvas: Construir flujos de ML: Carga de datos, procesaimiento, entrenamiento y análisis de métricas
+- Notebook: Estilo google colab (codificar) PAAS
+- Studio: Sirve para montar servicios de ML (modelo, selección, crear endpoints, configuran las EC2)
 
 ### Casos de uso
 - **Detección de fraude:** entrenar un modelo para identificar transacciones sospechosas.
@@ -21,6 +34,7 @@ Amazon SageMaker es una plataforma completamente gestionada para crear, entrenar
 
 ### ¿Qué es?
 Amazon Polly convierte texto en voz natural mediante tecnología de texto a voz (TTS). Soporta múltiples idiomas y ofrece voces realistas (neural TTS).
+Soporte para varios idiomas, puede probarse aquí, [https://us-east-1.console.aws.amazon.com/polly/home/SynthesizeSpeech](https://us-east-1.console.aws.amazon.com/polly/home/SynthesizeSpeech "https://us-east-1.console.aws.amazon.com/polly/home/synthesizespeech")
 
 ### Casos de uso
 - **Lectores para personas con discapacidad visual.**
@@ -34,7 +48,7 @@ Amazon Polly convierte texto en voz natural mediante tecnología de texto a voz 
 
 ### ¿Qué es?
 Amazon Textract extrae texto, tablas y campos de formularios desde documentos escaneados o imágenes utilizando OCR (Reconocimiento Óptico de Caracteres) con inteligencia artificial.
-
+https://us-east-1.console.aws.amazon.com/textract/home?region=us-east-1#/
 ### Casos de uso
 - **Digitalización de facturas o recibos con extracción automática de valores.**
 - **Procesamiento de formularios de seguros o bancarios.**
@@ -47,6 +61,7 @@ Amazon Textract extrae texto, tablas y campos de formularios desde documentos es
 
 ### ¿Qué es?
 Amazon Comprehend es un servicio de procesamiento de lenguaje natural (NLP) que extrae información y relaciones desde texto. Puede identificar sentimientos, entidades, temas y frases clave.
+[https://us-east-1.console.aws.amazon.com/comprehend/home?region=us-east-1#home](https://us-east-1.console.aws.amazon.com/comprehend/home?region=us-east-1#home "https://us-east-1.console.aws.amazon.com/comprehend/home?region=us-east-1#home")
 
 ### Casos de uso
 - **Análisis de opiniones de clientes (review mining).**
@@ -60,6 +75,7 @@ Amazon Comprehend es un servicio de procesamiento de lenguaje natural (NLP) que 
 
 ### ¿Qué es?
 Amazon Kendra es un motor de búsqueda empresarial inteligente que utiliza IA para responder preguntas usando contenido interno como documentos, wikis y sitios.
+https://us-east-1.console.aws.amazon.com/kendra/home?region=us-east-1#welcome
 
 ### Casos de uso
 - **Sistema de búsqueda inteligente en intranet empresarial.**
@@ -73,6 +89,8 @@ Amazon Kendra es un motor de búsqueda empresarial inteligente que utiliza IA pa
 
 ### ¿Qué es?
 Amazon Lex permite construir interfaces de conversación (chatbots y voicebots) usando los mismos modelos que Alexa. Integra reconocimiento de voz, lenguaje natural y gestión de diálogos.
+
+https://us-east-1.console.aws.amazon.com/lexv2/home?region=us-east-1#
 
 ### Casos de uso
 - **Chatbots para atención al cliente.**
@@ -103,3 +121,30 @@ Amazon Lex permite construir interfaces de conversación (chatbots y voicebots) 
 - **SageMaker + cualquier otro:** modelos personalizados integrados con otros servicios IA.
 
 ---
+Aquí tienes la información expandida con casos de uso para cada servicio:
+
+---
+
+### 7. Amazon Translate
+**Descripción:** Servicio de traducción automática neuronal que convierte texto de un idioma a otro.  
+https://us-east-1.console.aws.amazon.com/translate/home?region=us-east-1#welcome
+**Casos de uso:**  
+- **Localización de aplicaciones/web:** Traducir interfaces de usuario o contenido dinámico para mercados globales.  
+- **Soporte al cliente:** Automatizar respuestas multilingües en chats o correos electrónicos.  
+- **Análisis de contenido:** Procesar comentarios/reseñas en redes sociales en varios idiomas.  
+- **Documentación técnica:** Traducir manuales o guías para equipos distribuidos.  
+
+---
+
+### 8. Amazon Transcribe 
+https://us-east-1.console.aws.amazon.com/transcribe/home?region=us-east-1#realTimeTranscription
+**Descripción:** Convierte audio (grabaciones, vídeos) en texto mediante ASR (Automatic Speech Recognition).  
+**Casos de uso:**  
+- **Subtitulado automático:** Generar subtítulos para vídeos educativos o reuniones grabadas.  
+- **Accesibilidad:** Transcripción en tiempo real para personas con discapacidad auditiva.  
+- **Análisis de llamadas:** Extraer texto de llamadas de servicio para análisis de sentimiento.  
+- **Creación de actas:** Automatizar minutas de reuniones o conferencias.  
+- **Podcasts/Medios:** Convertir episodios en artículos indexables para SEO.  
+
+--- 
+
