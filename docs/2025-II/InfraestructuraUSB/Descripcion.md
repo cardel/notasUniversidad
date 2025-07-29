@@ -22,6 +22,7 @@
 3. [Clase 3 Tipos de servicios FaaS](Sesion%2003/Contenido.md)
 4. [Clase 4 Aplicaciones en contenedores](Sesion%2004/Contenido.md)
 5. [Clase 5 Infraestructura como código](Sesion%2005/Contenido.md)
+6. [Clase 6 Servicios de mensajería y Machine Learning](Sesion%2006/Contenido.md)
 
 
 ## Recursos adicionales
