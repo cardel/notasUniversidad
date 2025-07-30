@@ -9,6 +9,10 @@ Microsoft Azure ofrece un conjunto de servicios cognitivos y de machine learning
 ### ¿Qué es?
 Azure Machine Learning es una plataforma en la nube para crear, entrenar, probar y desplegar modelos de machine learning personalizados, incluyendo modelos de deep learning, automatización ML y MLOps.
 
+- Notebooks
+- Automated ML: Construcción de pipelines de ML gráfica
+- Generar endpoints para consumir modelos estilo API: llama, chat, ...
+
 ### Casos de uso
 - **Predicción de riesgo de crédito en bancos.**
 - **Detección de anomalías en sensores industriales.**
@@ -21,6 +25,7 @@ Azure Machine Learning es una plataforma en la nube para crear, entrenar, probar
 
 ### ¿Qué es?
 Servicio de conversión de texto a voz que forma parte de Azure Speech. Ofrece voces neuronales realistas y permite la personalización de voces propias.
+Tenemos el speech studio que nos ayuda a probar y ajustar el servicio
 
 ### Casos de uso
 - **Lectores automáticos para personas con discapacidad visual.**
@@ -34,7 +39,8 @@ Servicio de conversión de texto a voz que forma parte de Azure Speech. Ofrece v
 
 ### ¿Qué es?
 Servicio de extracción automática de texto, tablas y campos desde documentos escaneados (como PDFs, imágenes o formularios), basado en OCR con IA.
-
+Se conoce ahora como - Document Intelligence
+Podemos usar el Document Intelligence para analizar el servicio.
 ### Casos de uso
 - **Extracción de información de facturas, recibos y contratos.**
 - **Automatización de ingreso de datos desde formularios.**
@@ -46,7 +52,7 @@ Servicio de extracción automática de texto, tablas y campos desde documentos e
 ## 4. Azure Text Analytics
 
 ### ¿Qué es?
-Servicio de análisis de texto que identifica sentimientos, entidades, frases clave, idioma y relaciones semánticas. Es parte de Azure Cognitive Services.
+Servicio de análisis de texto que identifica sentimientos, entidades, frases clave, idioma y relaciones semánticas. Es parte de Azure Cognitive Services. Se conoce como ## Language Understanding
 
 ### Casos de uso
 - **Análisis de comentarios de clientes en e-commerce.**
@@ -84,14 +90,14 @@ Azure Bot Service permite construir, probar e implementar bots conversacionales 
 
 ## Comparación de servicios
 
-| Servicio en Azure                 | Equivalente AWS     | Tipo de IA               | ¿Entrenamiento personalizado? |
-|----------------------------------|----------------------|--------------------------|-------------------------------|
-| Azure Machine Learning           | SageMaker            | ML personalizado         | Sí                            |
-| Azure Text to Speech             | Polly                | Conversión texto a voz   | No (pero permite custom voice)|
-| Azure Form Recognizer            | Textract             | OCR inteligente          | Sí (modo "trained model")     |
-| Azure Text Analytics             | Comprehend           | Procesamiento de texto   | Parcial (con Custom Text)     |
-| Azure Cognitive Search           | Kendra               | Búsqueda semántica       | No (pero configurable)        |
-| Azure Bot Service + LUIS         | Lex                  | NLP conversacional       | Sí (entrenamiento de intents) |
+| Servicio en Azure        | Equivalente AWS | Tipo de IA             | ¿Entrenamiento personalizado?  |
+| ------------------------ | --------------- | ---------------------- | ------------------------------ |
+| Azure Machine Learning   | SageMaker       | ML personalizado       | Sí                             |
+| Azure Text to Speech     | Polly           | Conversión texto a voz | No (pero permite custom voice) |
+| Azure Form Recognizer    | Textract        | OCR inteligente        | Sí (modo "trained model")      |
+| Azure Text Analytics     | Comprehend      | Procesamiento de texto | Parcial (con Custom Text)      |
+| Azure Cognitive Search   | Kendra          | Búsqueda semántica     | No (pero configurable)         |
+| Azure Bot Service + LUIS | Lex             | NLP conversacional     | Sí (entrenamiento de intents)  |
 
 ---
 
