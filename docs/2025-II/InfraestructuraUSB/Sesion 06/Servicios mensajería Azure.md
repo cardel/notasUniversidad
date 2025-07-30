@@ -102,15 +102,15 @@ Azure SignalR es un servicio para **comunicación en tiempo real** entre servido
 
 ## Comparativa Azure vs AWS (Resumen)
 
-| Tipo de mensajería      | Azure                     | Equivalente AWS           |
-|-------------------------|---------------------------|----------------------------|
-| Cola empresarial         | Azure Service Bus         | Amazon SQS (FIFO)          |
-| Publicación/Suscripción | Service Bus Topics / Event Grid | Amazon SNS / EventBridge |
-| Streaming de eventos    | Azure Event Hubs          | Amazon Kinesis / EventBridge |
-| Push móviles            | Azure Notification Hubs   | Amazon SNS (Mobile Push)   |
-| Tiempo real frontend    | Azure SignalR Service     | AWS AppSync (con WebSockets) |
-| Bus de eventos SaaS     | Event Grid                | Amazon EventBridge         |
-| Mensajería tradicional  | Azure Relay (menos común) | AWS MQ                     |
+| Tipo de mensajería      | Azure                           | Equivalente AWS              |
+| ----------------------- | ------------------------------- | ---------------------------- |
+| Cola empresarial        | Azure Service Bus               | Amazon SQS (FIFO)            |
+| Publicación/Suscripción | Service Bus Topics / Event Grid | Amazon SNS / EventBridge     |
+| Streaming de eventos    | Azure Event Hubs                | Amazon Kinesis / EventBridge |
+| Push móviles            | Azure Notification Hubs         | Amazon SNS (Mobile Push)     |
+| Tiempo real frontend    | Azure SignalR Service           | AWS AppSync (con WebSockets) |
+| Bus de eventos SaaS     | Event Grid                      | Amazon EventBridge           |
+| Mensajería tradicional  | Azure Relay (menos común)       | AWS MQ                       |
 
 ---
 

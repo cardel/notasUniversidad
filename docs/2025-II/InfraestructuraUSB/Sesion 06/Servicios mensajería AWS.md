@@ -73,13 +73,13 @@ AWS MQ es un servicio gestionado que permite usar **brokers de mensajes tradicio
 
 ## Comparación de servicios
 
-| Servicio      | Modelo                 | Ordenamiento | Protocolos soportados     | Uso ideal                                  |
-|---------------|-------------------------|--------------|----------------------------|---------------------------------------------|
-| **SQS**       | Cola (point-to-point)   | FIFO (opcional) | Nativo AWS                | Procesos en segundo plano, desacoplamiento  |
-| **SNS**       | Pub/Sub                | No garantiza orden | HTTP, Email, SMS, SQS     | Notificaciones masivas, disparo de eventos  |
-| **EventBridge** | Bus de eventos        | No aplica     | JSON, SaaS, AWS events     | Automatización, integración de servicios    |
-| **AppSync**   | GraphQL + tiempo real   | Sí (cliente)  | WebSocket, HTTP            | Apps móviles, datos en tiempo real          |
-| **AWS MQ**    | Broker tradicional      | Sí            | AMQP, STOMP, JMS, MQTT     | Integración de aplicaciones legacy          |
+| Servicio        | Modelo                | Ordenamiento       | Protocolos soportados  | Uso ideal                                  |
+| --------------- | --------------------- | ------------------ | ---------------------- | ------------------------------------------ |
+| **SQS**         | Cola (point-to-point) | FIFO (opcional)    | Nativo AWS             | Procesos en segundo plano, desacoplamiento |
+| **SNS**         | Pub/Sub               | No garantiza orden | HTTP, Email, SMS, SQS  | Notificaciones masivas, disparo de eventos |
+| **EventBridge** | Bus de eventos        | No aplica          | JSON, SaaS, AWS events | Automatización, integración de servicios   |
+| **AppSync**     | GraphQL + tiempo real | Sí (cliente)       | WebSocket, HTTP        | Apps móviles, datos en tiempo real         |
+| **AWS MQ**      | Broker tradicional    | Sí                 | AMQP, STOMP, JMS, MQTT | Integración de aplicaciones legacy         |
 
 ---
 
@@ -121,3 +121,7 @@ Cada servicio puede usarse de forma aislada o combinada según la arquitectura d
 4. En Amazon Eventbridge https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/ crear la regla
 5. En la regla enviar a Amazon SNS y seleccionar el tópico creado
 6. Posteriormente en eventos capturar algun servicio S3 o EC2
+## Continuación
+
+7. Crear un API en APPsync
+8. Crear una regla en Amazon Eventbringe para enviar alli, la diferencia es que consumimos esta API (buffer, queue)
