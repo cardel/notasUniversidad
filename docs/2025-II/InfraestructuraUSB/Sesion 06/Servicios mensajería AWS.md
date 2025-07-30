@@ -114,3 +114,10 @@ Los servicios de mensajería de AWS cubren distintos estilos de comunicación:
 Cada servicio puede usarse de forma aislada o combinada según la arquitectura deseada.
 
 ---
+# Ejercicio
+1. En amazon SNS crear un topic  https://us-east-1.console.aws.amazon.com/sns/v3/home?region=us-east-1#/dashboard
+2. Posteriormente en el topic agrega su dirección de correo electrónico
+3. Aceptar el request en el correo electrónico
+4. En Amazon Eventbridge https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/ crear la regla
+5. En la regla enviar a Amazon SNS y seleccionar el tópico creado
+6. Posteriormente en eventos capturar algun servicio S3 o EC2
