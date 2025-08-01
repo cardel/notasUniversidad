@@ -17,6 +17,8 @@
 | 12     | Wed, August 20, 2025 | Examen de AWS practicioner                                    |
 # Clases
 
+## Parte 1: Introducción al cloud
+
 1. [Clase 1 Introducción](Sesion%2001/Contenido.md)
 2. [Clase 2 Tipos de servicios PaaS, SaaS, IaaS](Sesion%2002/Contenido.md)
 3. [Clase 3 Tipos de servicios FaaS](Sesion%2003/Contenido.md)
@@ -24,6 +26,9 @@
 5. [Clase 5 Infraestructura como código](Sesion%2005/Contenido.md)
 6. [Clase 6 Servicios de mensajería y Machine Learning](Sesion%2006/Contenido.md)
 
+## Parte 2: Curso AWS
+
+1. [Conceptos Cloud. Modelo de economía y servicios de AWS](Sesion%2007/Contenido.md)
 
 ## Recursos adicionales
 1. https://learn.epam.com/start AWS Cloud Practitioner Essentials
