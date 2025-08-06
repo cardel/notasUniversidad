@@ -28,7 +28,8 @@
 
 ## Parte 2: Curso AWS
 
-1. [Conceptos Cloud. Modelo de economía y servicios de AWS](Sesion%2007/Contenido.md)
+1. [Clase 7  Conceptos Cloud. Modelo de economía y servicios de AWS](Sesion%2007/Contenido.md)
+2. [Clase 8 Modelos de economía II, Infraestructura y redes](Sesion%2008/Contenido.md)
 
 ## Recursos adicionales
 1. https://learn.epam.com/start AWS Cloud Practitioner Essentials
