@@ -4,3 +4,4 @@
 3. [Clase 3 Relaciones recurrencia y estrategias algoritmicas](Clase%203/Contenido.md)
 4. [Clase 4 Algoritmos de ordenación](Readme.md)
 5. [Clase 5 Algoritmos de ordenación y búsqueda](Clase%204/Contenido.md)
+6. [Clase 6 Estructuras de datos I](Readme.md)
