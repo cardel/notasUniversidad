@@ -3,3 +3,5 @@
 3. [Catálogos y herramientas adicionales](Catálogos%20y%20herramientas%20adicionales.md)
 4. [Conceptos básicos](Conceptos%20básicos.md)
 5. [Amazon VPC](Amazon%20VPC.md)
+6. [Grupos de seguridad y ACL](Grupos%20de%20seguridad%20y%20ACL.md)
+7. [Route 53](Route%2053.md)
