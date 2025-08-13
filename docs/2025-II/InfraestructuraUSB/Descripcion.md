@@ -30,6 +30,7 @@
 
 1. [Clase 7  Conceptos Cloud. Modelo de economía y servicios de AWS](Sesion%2007/Contenido.md)
 2. [Clase 8 Modelos de economía II, Infraestructura y redes](Sesion%2008/Contenido.md)
+3. [Infraestructura y redes II, Redes y entrega de contenido](Sesion%2009/Contenido.md)
 
 ## Recursos adicionales
 1. https://learn.epam.com/start AWS Cloud Practitioner Essentials
