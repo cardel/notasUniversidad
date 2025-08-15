@@ -1,0 +1,6 @@
+1. [Introducción](Introducción.md)
+2. [EC2](EC2.md)
+3. [Optimización de costos de EC2](Optimización%20de%20costos%20de%20EC2.md)
+4. [Contenedores](Contenedores.md)
+5. [AWS Lambda](AWS%20Lambda.md)
+6. [AWS Beanstalk](AWS%20Beanstalk.md)
