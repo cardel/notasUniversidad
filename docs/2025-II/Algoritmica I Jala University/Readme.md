@@ -5,3 +5,4 @@
 4. [Clase 4 Algoritmos de ordenación](Readme.md)
 5. [Clase 5 Algoritmos de ordenación y búsqueda](Clase%204/Contenido.md)
 6. [Clase 6 Estructuras de datos I](Readme.md)
+7. [Clase 7 Estructuras de datos II](Clase%207/Contenido.md)
