@@ -33,6 +33,9 @@
 3. [Clase 9 Infraestructura y redes II, Redes y entrega de contenido](Sesion%2009/Contenido.md)
 4. [Clase 10 Computo](Sesion%2010/Contenido.md)
 5. [Clase 11 Almacenamiento](Sesion%2011/Contenido.md)
+6. [Clase 12 WAF y métricas](Sesion%2012/Contenido.md)
 
 ## Recursos adicionales
 1. https://learn.epam.com/start AWS Cloud Practitioner Essentials
+2. http://youtube.com/watch?v=x-igOJyLsCs Videos con preguntas
+3. https://www.youtube.com/watch?v=kN2l1h8-N7s Otro recurso

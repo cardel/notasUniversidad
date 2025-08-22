@@ -26,3 +26,9 @@ Buen rendimiento de lectura/escritura
 2. Replica automáticamente las tablas
 3. Ofrece una latencia uniforme
 4. No tiene limites de tamaño de tabla ni de rendimiento
+
+# Operaciones
+
+You can use the `Query` API operation in Amazon DynamoDB to find items based on primary key values. You must provide the name of the partition key attribute and a single value for that attribute. `Query` returns all items with that partition key value. Optionally, you can provide a sort key attribute and use a comparison operator to refine the search results.
+
+A `Scan` operation in Amazon DynamoDB reads every item in a table or a secondary index. By default, a `Scan` operation returns all of the data attributes for every item in the table or index.
