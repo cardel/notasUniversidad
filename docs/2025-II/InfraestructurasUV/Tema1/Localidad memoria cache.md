@@ -1,0 +1,5 @@
+**Localidad Temporal**: Significa que los datos o instrucciones que se están accediendo actualmente pueden ser necesitados nuevamente pronto. Por eso se almacenan en la caché para evitar buscarlos otra vez en la memoria principal.  
+**Ejemplo práctico**: En un bucle que suma los elementos de un array, la variable que acumula la suma (ej: `total += array[i]`) se accede repetidamente en cada iteración. Gracias a la localidad temporal, esta variable se mantiene en caché y no se necesita traer de la RAM en cada operación.
+
+**Localidad Espacial**: Significa que es probable que se necesiten más datos o instrucciones almacenados en posiciones de memoria cercanas a la que se está accediendo actualmente.  
+**Ejemplo práctico**: Al recorrer un array secuencialmente (ej: `for(i=0; i<n; i++) sum += array[i]`), cuando se accede a `array[i]`, la caché carga también los elementos adyacentes (`array[i+1]`, `array[i+2]`, etc.), porque es probable que se usen next. Esto reduce los accesos a RAM.
