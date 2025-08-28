@@ -1,4 +1,4 @@
-# Evaluaciones de expresiones
+# Evaluaciones de expresiones por valor
 
 En PF las expresiones se evalúan **de izquierda a derecha**  por ejemplo
 ```scala

@@ -1,3 +1,5 @@
+# Evaluación por nombre
+
 La evaluación por nombre únicamente evalua los argumentos **cuando se utilizan**
 
 ```scala
@@ -191,4 +193,4 @@ Nos da un **ciclo infinito** porque al evaluar, se evalua a y luego, b al intent
 
 **Conclusión:** La evaluación estricta (por valor) con valores por defecto previene errores de compilación, mientras que la evaluación por nombre difiere el problema hasta el momento de uso.
 
-Además la evaluación por valor evalua una sola vez los parametros, la evaluación por nombre cada vez que se usan, esto tiene el problema de que si es costoso calcular un valor, el rendimiento podría ser peor que por valor.
+Además la evaluación por valor evalua una sola vez los parametros, la evaluación por nombre cada vez que se usan, esto tiene el problema de que si es costoso calcular un valor, el rendimiento podría ser peor que por valor.z
