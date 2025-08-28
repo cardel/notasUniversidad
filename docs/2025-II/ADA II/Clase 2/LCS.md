@@ -114,3 +114,110 @@ $$
 	1. Calcule $m[0,j] \texttt{ y } m[i,0]$
 	2. Calcule toda la fila 1, luego 2, 3, y hasta n de izquierda a derecha
 	3. La solución está en ultima fila y ultima columna
+
+## Implementación
+```java
+import java.util.Arrays;
+
+public class Lcs {
+  public int[][] getLcsCost(String X, String Y) {
+    int filas = X.length()+1;
+    int columnas = Y.length()+1;
+    int[][] sol = new int[filas][columnas];
+    
+    //Soluciones triviales
+    for (int j = 0;  j < columnas; j++) {
+      sol[0][j] = 0;
+    }
+    for (int i = 0; i < filas; i++) {
+      sol[i][0] = 0;
+    }
+
+    for(int i=1; i<filas; i++) {
+      for(int j=1; j<columnas; j++) {
+        if( X.charAt(i-1) == Y.charAt(j-1)) {
+          sol[i][j] = sol[i-1][j-1]+1;
+        }
+        else{
+          sol[i][j] = Math.max(sol[i-1][j],sol[i][j-1]);
+        }
+      }
+    }
+    return sol;
+
+  }
+
+  public String getSolution(char[][] path, String X, String Y) {
+    String sol = "";
+    int i = X.length();
+    int j = Y.length();
+    while (true) {
+      if (path[i][j]=='x') {
+        return sol;
+      }
+      if (path[i][j] == 'd') {
+        sol = String.valueOf(X.charAt(i-1))+sol;
+        i--;
+        j--;
+      }
+      else{
+        if (path[i][j] == 'a') {
+          i--;
+        }
+        else{
+          j--;
+        }
+      }
+    }
+  }
+
+  public char[][] getLcsSolution(int[][] costos, String X, String Y) {
+    int filas = X.length()+1;
+    int columnas = Y.length()+1;
+    char[][] sol = new char[filas][columnas];
+    
+    //Soluciones triviales
+    for (int j = 0;  j < columnas; j++) {
+      sol[0][j] = 'x';
+    }
+    for (int i = 0; i < filas; i++) {
+      sol[i][0] = 'x';
+    }
+
+    for(int i=1; i<filas; i++) {
+      for(int j=1; j<columnas; j++) {
+        if( X.charAt(i-1) == Y.charAt(j-1)) {
+          sol[i][j] = 'd';
+        }
+        else{
+          if (costos[i-1][j] > costos[i][j-1]) {
+            sol[i][j]= 'a';
+          }
+          else{
+            sol[i][j] = 'i';
+          }
+        }
+      }
+    }
+    return sol;
+
+  }
+
+
+
+  public static void main(String[] args) {
+    Lcs objLcs = new Lcs();
+    String X = "ABBCAB";
+    String Y = "ABCBA";
+    int[][] sol = objLcs.getLcsCost(X,Y);
+    for (int[] row : sol) {
+      System.out.println(Arrays.toString(row));
+    }
+    char[][] path = objLcs.getLcsSolution(sol, X,Y);
+    for(char[] row: path){
+      System.out.println(Arrays.toString(row));
+    }
+    System.out.println(objLcs.getSolution(path,X,Y));
+  }
+}
+```
