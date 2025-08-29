@@ -1,1 +1,1 @@
-1. [Introducción a paralelización](Tema1/Contenido.md)
+1. [Clase 2 Introducción a paralelización](Tema1/Contenido.md)
