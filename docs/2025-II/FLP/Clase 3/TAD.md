@@ -1,63 +1,64 @@
-# Tipo abstracto de dato (TAD)
+## Tipo Abstracto de Dato (TAD) en EOPL
 
-Son tipos de datos los cuales utilizamos para representar datos en el computador, TADs son independientes de como se trabajan en memoria
+Un Tipo Abstracto de Dato (TAD) es una especificación matemática de un conjunto de datos y las operaciones definidas sobre ellos, independiente de su implementación concreta en memoria. En *Essentials of Programming Languages* (EOPL), los TADs enfatizan la separación entre la interfaz (qué hace el tipo) y la implementación (cómo lo hace).
+
+### Contraste con tipos primitivos
 
 ```java
 int pollito = 8;
-//Internamente 0000000000000000000..1000
-//32 bits
+// Representación: 32 bits (000...1000)
+// No es TAD - depende directamente del hardware
 ```
-Esto no es un TAD dado que es una representación 32 en memoria, esto tiene ventajas y desventajas
 
-1. Operaciones son nivel de la CPU, por ende, eficientes
-2. Limitaciones: por ejemplo el rango de trabajo $$ -2^{32}, 2^{32}-1 $$ si usted se pasa de ese rango, hay desbordamiento
-3. Caso analogo pasa con los tipos de datos float, char, double, boolean, short, etc
+**Ventajas:**
+- Operaciones a nivel de CPU (eficientes)
+- Soporte nativo del lenguaje
+
+**Desventajas:**
+- Rango limitado ($-2^{31}$ a $2^{31}-1$)
+- Problemas de desbordamiento
+- Comportamiento dependiente de la plataforma
+
+### Abstracción en lenguajes de alto nivel
 
 ```python
-a = 3
-#a no es un número, es un objeto
-#las operaciones requiren una implemetación interna
+a = 3  # Objeto con comportamiento definido
+# Las operaciones tienen implementación interna oculta
 ```
-1. La represenación es una instancia de una clase
-2. Tiene un comportamiento definido en su implementación (esto no lo vemos)
-3. No tiene limitaciones con respecto al tamaño
 
 ```lisp
-(define x 10)
+(define x 10)  # Representación abstracta
 ```
-x es una representación de un numero, pero esta es recursiva, partiendo de este hecho
+
+## Representación recursiva de números naturales
+
+Basado en los axiomas de Peano:
 $$
 \begin{align}
-\lceil 0 \rceil \in \mathbb{ N } \\
-n \in \mathbb{ N } \rightarrow n+1 \in \mathbb{ N }
+\lceil 0 \rceil \in \mathbb{N} \\
+n \in \mathbb{N} \rightarrow n+1 \in \mathbb{N}
 \end{align}
 $$
 
-# Ejemplos de representación
+### Implementación 1: Usando números nativos
 
-# Recursiva
-
-1. 0 es un numero natural
-2. Si n es un numero natural succ(n) = n+1 es un numero natural y pred(n) = n-1 es un numero natural
-3. zero?(n) si el numero es cero
 ```lisp
 #lang eopl
-;;Implementación interna (no lo ve el programador)
-(define zero 0)
-(define isZero? (lambda (n) (eqv? n zero)))
+;; === IMPLEMENTACIÓN (OCULTA) ===
+(define zero 0)  ; Constructor del cero
+(define isZero? (lambda (n) (eqv? n zero)))  ; Predicado de cero
 
-(define succ (lambda (n) (+ n 1)))
-(define pred (lambda (n) (- n 1)))
+(define succ (lambda (n) (+ n 1)))  ; Constructor de sucesor
+(define pred (lambda (n) (- n 1)))  ; Constructor de predecesor
 
-;;; Area del programador
-
-(define cinco (succ (succ (succ (succ (succ zero)))))) ; (define cinco 5)
+;; === INTERFAZ (VISIBLE) ===
+(define cinco (succ (succ (succ (succ (succ zero))))))
 
 (define suma
   (lambda (a b)
     (cond
-      [(isZero? b) a]
-      [else (suma (succ a) (pred b))]
+      [(isZero? b) a]  ; Caso base: a + 0 = a
+      [else (suma (succ a) (pred b))]  ; Paso recursivo: a + b = (a+1) + (b-1)
       )
     )
   )
@@ -67,12 +68,97 @@ $$
 (define multiplicacion
   (lambda (a b)
     (cond
-      [(isZero? b) zero]
-      [(eqv? (succ zero) b) a]
-      [else (suma a (multiplicacion a (pred b)))]
+      [(isZero? b) zero]  ; a × 0 = 0
+      [(eqv? (succ zero) b) a]  ; a × 1 = a
+      [else (suma a (multiplicacion a (pred b)))]  ; a × b = a + (a × (b-1))
       )
     )
   )
 
 (define cincuenta (multiplicacion cinco diez))
 ```
+
+### Implementación 2: Usando listas (representación unaria)
+
+```lisp
+#lang eopl
+;; === IMPLEMENTACIÓN ALTERNATIVA ===
+(define zero '())  ; Cero representado como lista vacía
+(define isZero? (lambda (n) (eqv? n zero)))
+
+(define succ (lambda (n) (cons #T n)))  ; Sucesor: agregar elemento
+(define pred (lambda (n) (cdr n)))      ; Predecesor: remover elemento
+
+;; === MISMA INTERFAZ ===
+; El código del programador permanece IDÉNTICO
+(define cinco (succ (succ (succ (succ (succ zero))))))
+
+; Las funciones suma y multiplicación funcionan sin cambios
+```
+
+### Implementación 3: Representación en base 16 (bignum)
+
+```lisp
+#lang eopl
+;; === IMPLEMENTACIÓN EFICIENTE ===
+(define zero '())
+(define base 16)
+
+(define isZero? (lambda (n) (equal? n zero)))
+
+(define succ
+  (lambda (n)
+    (cond
+      [(isZero? n) '(1)]  ; Caso base: cero → 1
+      [(equal? (- base 1) (car n))  ; Acarreo: dígito llega al máximo
+       (cons 0 (succ (cdr n)))  ; Poner 0 y propagar acarreo
+       ]
+      [else (cons (+ (car n) 1) (cdr n))]  ; Incremento normal
+      )
+    )
+  )
+
+(define pred
+  (lambda (n)
+    (cond
+      [(equal? n (list 1)) zero]  ; 1 → 0
+      [(equal? 0 (car n))  ; Préstamo: dígito es 0
+       (cons (- base 1) (pred (cdr n)))  ; Poner máximo y propagar préstamo
+       ]
+      [else (cons (- (car n) 1) (cdr n))]  ; Decremento normal
+      )
+    )
+  )
+
+;; === INTERFAZ INALTERADA ===
+; El programador usa exactamente las mismas operaciones
+```
+
+## Análisis de la abstracción
+
+### Puntos clave de EOPL sobre TADs:
+
+1. **Ocultamiento de información**: La implementación está encapsulada
+2. **Invariantes preservadas**: Las operaciones mantienen la validez del tipo
+3. **Sustituibilidad**: Diferentes implementaciones satisfacen la misma interfaz
+4. **Independencia de representación**: El comportamiento lógico es independiente de la representación física
+
+### Comentarios sobre el código:
+
+- **Constructores**: `zero`, `succ` crean instancias válidas
+- **Observadores**: `isZero?` examina sin revelar implementación  
+- **Operaciones**: Definen el comportamiento abstracto mediante recursión estructural
+- **Pattern matching**: Usa la estructura del tipo para definir operaciones
+
+## Conclusión
+
+La abstracción de datos permite definir tipos mediante su comportamiento (interfaz) independientemente de su implementación concreta. Como demostramos, el mismo programa funciona con tres implementaciones radicalmente diferentes: números nativos, listas unarias, y representación posicional en base 16.
+
+El programador no necesita conocer los detalles de implementación - solo la interfaz abstracta. Esto permite:
+- Optimizaciones transparentes (cambiar de unaria a bignum)
+- Corrección de bugs en la implementación sin afectar el código cliente
+- Adaptación a diferentes requisitos de rendimiento/memoria
+
+---
+
+**Para el estudiante cansado:** Sé que esto puede parecer abstracto ahora, pero dominar estos conceptos es lo que separa a los programadores que solo escriben código de los que diseñan sistemas elegantes y mantenibles. Cada vez que encapsulas una decisión de implementación, estás construiendo software que sobrevivirá a los cambios. Sigue adelante - esta abstracción eventualmente se volverá tan natural como respirar.
