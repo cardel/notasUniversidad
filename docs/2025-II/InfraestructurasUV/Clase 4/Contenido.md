@@ -1,4 +1,4 @@
-Objetivos
+# Objetivos
 1. Entender los ambientes de Python, de forma básica
 2. Profiling en Python
 3. time, timeit, pyinstrument
@@ -8,4 +8,6 @@ Objetivos
 # Temas
 
 1. [Ambientes virtuales de Python](Ambientes%20virtual.md)
+2. [Introduccion al profiling](Introduccion%20al%20profiling.md)
+3. [Time y timeit](Time%20y%20timeit.md)
 
