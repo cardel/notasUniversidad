@@ -4,10 +4,22 @@
 3. time, timeit, pyinstrument
 4. Resolver el problema de la clase pasa
 
+# Recursos
+
+Archivo requirements.txt
+
+```python
+numpy==2.3.3
+pyinstrument==5.1.1
+
+```
+
 
 # Temas
 
 1. [Ambientes virtuales de Python](Ambientes%20virtual.md)
 2. [Introduccion al profiling](Introduccion%20al%20profiling.md)
 3. [Time y timeit](Time%20y%20timeit.md)
+4. [cProfile](cProfile.md)
+5. [Pyinstrument](Pyinstrument.md)
 
