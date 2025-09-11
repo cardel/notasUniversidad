@@ -77,3 +77,5 @@ Especificación matemática de programas en un paradigma funcional, se utiliza p
 **exp3 = '(x (lambda (x) (lambda (y) x)))**
 - `(occurs-free? exp3 'x)` → `(or (occurs-free? 'x 'x) (occurs-free? '(lambda (x) ...) 'x))` → `(or #T #F)` → `#T` (x libre en el operador)
 - `(occurs-free? exp3 'y)` → `(or (occurs-free? 'x 'y) (occurs-free? '(lambda (x) ...) 'y))` → `(or #F #F)` → `#F` (y está ligado en el lambda interno y no aparece libre)
+
+# 
