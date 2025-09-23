@@ -1,6 +1,6 @@
-La programación funcional es un paradigma de programación que tiene los siguientes elementos:
+sdassdLa programación funcional es un paradigma de programación que tiene los siguientes elementos:
 
-1. Funciones determinan la programación, se orienta a las funciones y las relaciones entre ellas
+1. Funciones determinan la programación, se orienta a las funciones y las relacionesss entre ellas
 2. Tenemos ligaduras o nombres **que no cambian durante la ejecución**
 3. El uso de diferentes estrategias para resolver problemas, entre ellas tenemos el **reconocimiento de patrones, expresiones for, evaluación perezosa, entre otras.**
 4. Abstracción funcional: Utilizar diferentes herramientas para resolver problemas desde un alto nivel

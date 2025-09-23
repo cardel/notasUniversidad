@@ -3,3 +3,4 @@
 3. [Clase 3 Funciones y procesos](Clase3/Contenido.md)
 4. [Clase 4 Funciones de alto orden](Clase4/Contenido.md)
 5. [Clase 5 Funciones y datos](Clase5/Contenido.md)
+6. [Clase 6 Listas y reconocimiento de patrones](Clase6/Contenido.md)
