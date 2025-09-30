@@ -4,3 +4,4 @@
 4. [Clase 4 Funciones de alto orden](Clase4/Contenido.md)
 5. [Clase 5 Funciones y datos](Clase5/Contenido.md)
 6. [Clase 6 Listas y reconocimiento de patrones](Clase6/Contenido.md)
+7. [Clase 7 Tuplas y funciones sobre colecciones](Clase7/Clase%207%20Tuplas%20y%20funciones%20sobre%20colecciones.md)
