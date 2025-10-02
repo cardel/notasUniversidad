@@ -5,3 +5,5 @@
 3. [Clase 3 Multiplicación de matrices](Clase%203/Contenido.md)
 4. [Clase 4 Problema de la mochila y programación voraz 1](Clase%204/Clase%204%20Contenido.md) 
 5. [Clase 5 Problemas sobre grafos programación voraz II](Clase%205/Contenido.md)
+6. [Clase 6. Introduccion a optimizacion](Clase%206/Clase%206.%20Introduccion%20a%20optimizacion.md)
+7. [Clase 7. Forma holgura y Simplex](Clase%207/Clase%207.%20Forma%20holgura%20y%20Simplex.md)
