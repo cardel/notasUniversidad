@@ -4,3 +4,4 @@
 4. [Clase 5 Instrucciones AVX](Clase%205/Contenido.md)
 5. [Clase 6 Hilos y procesos en Python](Clase%206/Clase%206%20Hilos%20y%20procesos%20en%20Python.md)
 6. [Clase 7. OpenMP](Clase%207/Clase%207.%20OpenMP.md)
+7. [Clase 8. Profiling en Linux](Clase%208/Clase%208.%20Profiling%20en%20Linux.md)
