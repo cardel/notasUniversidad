@@ -5,4 +5,4 @@
 5. [Clase 5 Funciones y datos](Clase5/Contenido.md)
 6. [Clase 6 Listas y reconocimiento de patrones](Clase6/Contenido.md)
 7. [Clase 7 Tuplas y funciones sobre colecciones](Clase7/Clase%207%20Tuplas%20y%20funciones%20sobre%20colecciones.md)
-8. [Colecciones](Clase8/Colecciones.md)
+8. [Clase 8 Secuencias y expresiones for](Clase8/Clase%208%20Secuencias%20y%20expresiones%20for.md)
