@@ -1,0 +1,1 @@
+Deseo generar las tripletas x,y,z tales que $z^2 = x^2 + y^2$ que esten en el rango 1 y 1000, tambien quiero esta $z^3 = x^3 + y^3$, tambien $\sqrt{z} = \sqrt{x} + \sqrt{y}$  hacerlo con expresiones for

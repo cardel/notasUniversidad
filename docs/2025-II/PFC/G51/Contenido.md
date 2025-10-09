@@ -5,3 +5,4 @@
 5. [Clase 5 Funciones y datos](Clase%205/Contenido.md)
 6. [Clase 6 Listas y reconocimiento de patrones I](Clase%206/Clase%206%20Listas%20y%20reconocimiento%20de%20patrones%20I.md)
 7. [Clase 7 Tuplas y funciones alto orden map, filter y reduce](Clase%207/Clase%207%20Tuplas%20y%20funciones%20alto%20orden%20map,%20filter%20y%20reduce.md)
+8. [Clase 8. Colecciones y expresiones for](Clase%208/Clase%208.%20Colecciones%20y%20expresiones%20for.md)

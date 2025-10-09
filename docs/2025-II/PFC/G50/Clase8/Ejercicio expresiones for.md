@@ -34,11 +34,11 @@ val res109: Array[(Int, Int)] = Array((2,3), (2,9), (4,3), (4,9), (8,3), (8,9), 
 
 ```scala
 scala> for {
-     | x <- 1 to M
-     | y <- 1 to M
-     | if x%2 == 0 && y%3 == 0
-     | if ((2 to Math.ceil(Math.sqrt(x+y)).toInt).toList) forall (p => (x+y)%p != 0)
-     | }
-     | yield (x,y)
+      x <- 1 to M
+     y <- 1 to M
+     if x%2 == 0 && y%3 == 0
+     if ((2 to Math.ceil(Math.sqrt(x+y)).toInt).toList) forall (p => (x+y)%p != 0)
+      }
+      yield (x,y)
 val res110: IndexedSeq[(Int, Int)] = Vector((2,3), (2,9), (4,3), (4,9), (8,3), (8,9), (10,3), (10,9))
 ```
