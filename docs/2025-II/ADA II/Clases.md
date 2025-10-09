@@ -7,3 +7,4 @@
 5. [Clase 5 Problemas sobre grafos programación voraz II](Clase%205/Contenido.md)
 6. [Clase 6. Introduccion a optimizacion](Clase%206/Clase%206.%20Introduccion%20a%20optimizacion.md)
 7. [Clase 7. Forma holgura y Simplex](Clase%207/Clase%207.%20Forma%20holgura%20y%20Simplex.md)
+8. [Clase 8 Simplex no factible y programacion entera](Clase%208/Clase%208%20Simplex%20no%20factible%20y%20programacion%20entera.md)
