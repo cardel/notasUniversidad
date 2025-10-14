@@ -1,0 +1,1 @@
+Deseo generar de forma perezosa las tripletas de números (i,j,k) que cumple i es par, i es multiplo de j y k es primo usando evaluación perezosa
