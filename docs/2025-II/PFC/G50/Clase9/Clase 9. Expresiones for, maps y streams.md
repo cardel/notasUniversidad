@@ -10,3 +10,4 @@
 2. [Map](Map.md)
 3. [Evaluacion perezosa](Evaluacion%20perezosa.md)
 4. [Problema](Problema.md)
+5. [Resumen](Resumen.md)
