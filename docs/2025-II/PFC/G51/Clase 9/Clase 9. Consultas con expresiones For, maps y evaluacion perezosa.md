@@ -9,3 +9,4 @@
 2. [Maps](Maps.md)
 3. [Evaluacion perezosa](Evaluacion%20perezosa.md)
 4. [Ejercicio](Ejercicio.md)
+5. [Resumen](Resumen.md)
