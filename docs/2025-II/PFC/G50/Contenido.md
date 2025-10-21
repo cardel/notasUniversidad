@@ -1,3 +1,5 @@
+
+# Corte 1
 1. [Clase 1 Introducción a la programación funcional](Clase1/Contenido.md)
 2. [Clase 2 Elementos de programación funcional](Clase2/Contenido.md)
 3. [Clase 3 Funciones y procesos](Clase3/Contenido.md)
@@ -7,3 +9,5 @@
 7. [Clase 7 Tuplas y funciones sobre colecciones](Clase7/Clase%207%20Tuplas%20y%20funciones%20sobre%20colecciones.md)
 8. [Clase 8 Secuencias y expresiones for](Clase8/Clase%208%20Secuencias%20y%20expresiones%20for.md)
 9. [Clase 9. Expresiones for, maps y streams](Clase9/Clase%209.%20Expresiones%20for,%20maps%20y%20streams.md)
+
+# Corte 2
