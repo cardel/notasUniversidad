@@ -12,3 +12,4 @@
 2. [Paralelismo en JVM](Paralelismo%20en%20JVM.md)
 3. [Abstracciones de parelización Parallel](Abstracciones%20de%20parelización%20parallel.md)
 4. [Abstracción task](Abstracción%20task.md)
+5. [Ejercicio](Ejercicio.md)
