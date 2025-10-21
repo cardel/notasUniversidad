@@ -3,8 +3,8 @@
 
 1. Conceptos básicos de paralelización
 2. Concurrencia JVM
-3. Teoremas como la ley Ahmdal
-4. Librería Scalametter
+3. Abstracción parallel
+4. Abstracción task
 
 # Temas
 
