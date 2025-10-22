@@ -93,3 +93,26 @@ A continuación se muestra la estructura general de lo que usted debe entregar, 
 ```
 
 `(list-ref l a)` es una función de Racket que retorna el elemento en la posición  a de lista l. También se podía crear una función auxiliar que usara un contador y una lista, cuando este contador llegara a cero retornar el primer elemento.
+
+```scheme
+  (define apply-primitive)
+    (lambda (prim args)
+     (cases primitive prim
+      ; ....
+      (concat-exp () (append (car args) (cadr args))) 
+      (nth-exp () (search-val (car args) (cadr args)))
+      ; ....
+    )
+  )
+  
+  (define search-val
+	  (lambda (l val)
+		  (cond
+			  [(null? l) (eopl:error "Index bounds exception")]
+			  [(= 0 val) (car l)]
+			  [else (search-val (cdr l) (- n 1))]
+		  )	   
+	  )
+  )
+
+```
