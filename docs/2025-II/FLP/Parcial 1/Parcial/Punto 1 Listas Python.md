@@ -85,7 +85,7 @@ A continuación se muestra la estructura general de lo que usted debe entregar, 
     (lambda (prim args)
      (cases primitive prim
       ; ....
-      (concat-exp (append (car args) (cadr args))) 
+      (concat-exp () (append (car args) (cadr args))) 
       (nth-exp () (list-ref (car args) (cadr args)))
       ; ....
     )
