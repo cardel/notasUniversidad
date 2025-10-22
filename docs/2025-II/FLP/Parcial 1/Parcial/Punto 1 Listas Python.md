@@ -109,7 +109,7 @@ A continuación se muestra la estructura general de lo que usted debe entregar, 
 		  (cond
 			  [(null? l) (eopl:error "Index bounds exception")]
 			  [(= 0 val) (car l)]
-			  [else (search-val (cdr l) (- n 1))]
+			  [else (search-val (cdr l) (- val 1))]
 		  )	   
 	  )
   )
