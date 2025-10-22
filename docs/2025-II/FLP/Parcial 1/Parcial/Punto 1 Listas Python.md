@@ -92,4 +92,4 @@ A continuación se muestra la estructura general de lo que usted debe entregar, 
   )
 ```
 
-`(list-ref l a)` es una función de Racket que retorna el elemento en la posición  a de lista l.
+`(list-ref l a)` es una función de Racket que retorna el elemento en la posición  a de lista l. También se podía crear una función auxiliar que usara un contador y una lista, cuando este contador llegara a cero retornar el primer elemento.
