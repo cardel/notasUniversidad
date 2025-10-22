@@ -26,6 +26,22 @@ La estrategia
 
 ```scala
 package taller
+
+class ProductoCartesiano{
+
+  def productoVectorial(a: Vector[Int], b: Vector[Int], ini:Int, fin:Int): Vector[Int] = {
+     (ini until fin).map(i => a(i)*b(i)).toVector
+  }
+
+  def sumaVector(c:Vector[Int], ini:Int, fin:Int): Int = {
+    (ini until fin).foldLeft(0)((acc,x) => acc + c(x))
+  }
+
+}
+```
+
+```scala
+package taller
 import common._
 import scala.util.Random
 object App {
