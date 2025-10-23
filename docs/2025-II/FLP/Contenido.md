@@ -15,3 +15,4 @@
 ## Corte 2
 
 8. [Clase 9. Asignación y paso por referencia](Clase%209/Clase%209.%20Asignación%20y%20paso%20por%20referencia.md)
+9. [Clase 10 Introducción de tipos](Clase%2010/Clase%2010%20Introducción%20de%20tipos.md)

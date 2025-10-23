@@ -2,11 +2,11 @@
 (35 puntos) Se desea agregar al interpretador las listas al estilo Python, es decir, listas que pueden contener cualquier tipo de dato y que se representan como en el siguiente ejemplo: `[1][2][4][5]`, así mismo las primitivas `concat` para concatenar dos o más listas y `nth` para acceder a un elemento. Para esto se deben hacer cambios en la gramática, en la función eval-expression y se debe generar funciones auxiliares para trabajar con las listas.​
 
 ```scheme
-  let
+let
     x = [1,2,3]
     y = [4,5,6]
-    z = concat(x,y)
-    in [z, nth(z, 4)]
+    in let z = concat(x,y)
+    	in [z, nth(z, 4)]
 ```
 
 
