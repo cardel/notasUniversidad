@@ -8,6 +8,8 @@
 6. [Clase 7. OpenMP](Clase%207/Clase%207.%20OpenMP.md)
 7. [Clase 8. Profiling en Linux](Clase%208/Clase%208.%20Profiling%20en%20Linux.md)
 
+[Solucion primer examen](Parcial%201/Solucion.md)
+
 # Corte 2
 
 8. [Clase 10. Introduccion sistemas distribuidos](Clase%2010/Clase%2010.%20Introduccion%20sistemas%20distribuidos.md)
