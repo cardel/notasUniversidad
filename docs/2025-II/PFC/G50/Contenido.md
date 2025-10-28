@@ -11,3 +11,6 @@
 9. [Clase 9. Expresiones for, maps y streams](Clase9/Clase%209.%20Expresiones%20for,%20maps%20y%20streams.md)
 
 # Corte 2
+
+1. [Clase 10. Introducción paralelización](Clase10/Clase%2010.%20Introducción%20paralelización.md)
+2. [Clase 11. Complejidad programas paralelos](Clase11/Clase%2011.%20Complejidad%20programas%20paralelos.md)
