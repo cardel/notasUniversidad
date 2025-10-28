@@ -11,7 +11,7 @@ def factorial(n):
         return n * factorial(n - 1)
 ```
 
-Al ejecutar `factorial(100)` se observa que tarda **10 segundos** y genera más de **10⁶ marcos de llamada**.  
+Al ejecutar `factorial(100)` se observa que tarda **10 segundos** y al llamarlo varias veces se evidencian más de **10⁶ marcos de llamada**.  
 En contraste, al aplicar la decoración con `@lru_cache(maxsize=None)`:
 
 ```python
@@ -102,7 +102,7 @@ Por tanto, `factorial(100)` realiza exactamente **101 cálculos distintos**, uno
 
 ### 🔹 Efecto sobre la pila y el tiempo
 
-- Solo hay **101 marcos de pila activos**, uno por nivel de recursión.
+- Solo hay **un marco de pila activos**, uno por nivel de recursión.
     
 - Las llamadas repetidas son **instantáneas** porque se sirven desde memoria caché.
     

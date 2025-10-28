@@ -28,18 +28,19 @@ $$
 
 ## 2. Diseño del paralelismo (15 puntos)
 
-Supongamos que disponemos de ( T ) hilos y un arreglo ( A ) de longitud ( n ).
+Supongamos que disponemos de $T$ hilos y un arreglo $A$ de longitud $n$.
 
 Cada hilo puede procesar un segmento distinto de índices del arreglo de salida (promedios móviles).  
-Sin embargo, hay que tener cuidado con las **ventanas que cruzan los límites entre segmentos**, ya que cada promedio necesita los ( k ) elementos anteriores.
+Sin embargo, hay que tener cuidado con las **ventanas que cruzan los límites entre segmentos**, ya que cada promedio necesita los $k$ elementos anteriores.
 
 ### Estrategia:
 
+![](attachments/Pasted%20image%2020251028154344.png)
 1. Dividir el rango de índices de salida  $[k-1, n-1]$  en $T$ partes casi iguales.
     
 2. A cada hilo se le asigna un rango $[start_i, end_i)$.
     
-3. Para evitar errores en los bordes, cada hilo debe tener acceso a  $k-1$ elementos anteriores a su rango (copiados o accesibles).
+3. Para evitar errores en los bordes, cada hilo debe tener acceso a  $k-1$ elementos anteriores/posteriores a su rango (copiados o accesibles).
     
 
 ### Ejemplo:
