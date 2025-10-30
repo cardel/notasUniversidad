@@ -1,8 +1,13 @@
-# Ejemplo: Medición de Tiempo de Ejecución
+# Ejercicio: Producto Vectorial Paralelo
 
-Vamos a medir el **tiempo de ejecución** de sumar un arreglo en sus **versiones secuenciales y paralelas**.
+Dado el ejemplo anterior por profundidad, generar un programa que haga el **producto vectorial** de forma paralela.
 
-## Archivo Sumar.scala
+**Ejemplo:** 
+$a = \{1,2,3\}, b = \{4,5,6\}, a \cdot b = 1*4 + 2*5 + 3*6 = 32$
+
+## Solución
+
+### Archivo Sumar.scala
 
 ```scala
 package taller
@@ -11,18 +16,18 @@ import common._
 
 class Sumar {
 
-  def sumSegment(a: Array[Int], i: Int, f: Int): Int = {
-    (i until f).map(x => a(x)).sum
+  def sumSegment(a: Array[Int], b: Array[Int], i: Int, f: Int): Int = {
+    (i until f).map(x => a(x) * b(x)).sum
   }
 
-  def suma(a: Array[Int], i: Int, f: Int, prof: Int, cnt: Int = 0): Int = {
+  def suma(a: Array[Int], b: Array[Int], i: Int, f: Int, prof: Int, cnt: Int = 0): Int = {
     if (cnt >= prof) 
-        sumSegment(a, i, f)
+        sumSegment(a, b, i, f)
     else {
         val m: Int = (i + f) / 2
         val (s1, s2) = parallel (
-            suma(a, i, m, prof, cnt + 1),
-            suma(a, m, f, prof, cnt + 1)
+            suma(a, b, i, m, prof, cnt + 1),
+            suma(a, b, m, f, prof, cnt + 1)
         )
         s1 + s2
     }
@@ -30,7 +35,7 @@ class Sumar {
 }
 ```
 
-## Archivo principal
+### Archivo App.scala
 
 ```scala
 /*
@@ -43,22 +48,23 @@ object App {
   def main(args: Array[String]): Unit = {
     val objSumar = new Sumar()
     val size = 1000000
-    val arr = (1 to size).toArray
+    val arrA = (1 to size).toArray
+    val arrB = (1 to size).map(x => x * 2).toArray
 
     val t1 = withWarmer(new Warmer.Default) measure {
-      objSumar.suma(arr, 0, arr.length, 0) // Secuencial
+      objSumar.suma(arrA, arrB, 0, arrA.length, 0) // Secuencial
     }
     val t2 = withWarmer(new Warmer.Default) measure {
-      objSumar.suma(arr, 0, arr.length, 1) // Paralelo prof 1
+      objSumar.suma(arrA, arrB, 0, arrA.length, 1) // Paralelo prof 1
     }
     val t3 = withWarmer(new Warmer.Default) measure {
-      objSumar.suma(arr, 0, arr.length, 2) // Paralelo prof 2
+      objSumar.suma(arrA, arrB, 0, arrA.length, 2) // Paralelo prof 2
     }
     val t4 = withWarmer(new Warmer.Default) measure {
-      objSumar.suma(arr, 0, arr.length, 3) // Paralelo prof 3
+      objSumar.suma(arrA, arrB, 0, arrA.length, 3) // Paralelo prof 3
     }
     val t5 = withWarmer(new Warmer.Default) measure {
-      objSumar.suma(arr, 0, arr.length, 4) // Paralelo prof 4
+      objSumar.suma(arrA, arrB, 0, arrA.length, 4) // Paralelo prof 4
     }
     println(s"Tiempo Secuencial: $t1 ms")
     println(s"Tiempo Paralelo prof 1 (2 hilos): $t2 ms")
@@ -73,60 +79,49 @@ object App {
 
 ## Ejecución y Resultados
 
-Los resultados podemos verlos con el comando:
-
 ```bash
-./gradlew run
+Tiempo Secuencial: 11.097029 ms ms
+Tiempo Paralelo prof 1 (2 hilos): 6.365939 ms ms
+Tiempo Paralelo prof 2 (4 hilos): 5.579212 ms ms
+Tiempo Paralelo prof 3 (8 hilos): 5.548574 ms ms
+Tiempo Paralelo prof 4 (16 hilos): 9.574517 ms ms
 ```
-
-### Resultados obtenidos:
-
-**Primera ejecución:**
-```bash
-Tiempo Paralelo prof 1 (2 hilos): 9.429284 ms ms
-Tiempo Paralelo prof 2 (4 hilos): 12.5768 ms ms
-Tiempo Paralelo prof 3 (8 hilos): 5.458428 ms ms
-Tiempo Paralelo prof 4 (16 hilos): 5.788114 ms ms
-```
-
-**Segunda ejecución:**
-```bash
-Tiempo Paralelo prof 1 (2 hilos): 6.336951 ms ms
-Tiempo Paralelo prof 2 (4 hilos): 5.378118 ms ms
-Tiempo Paralelo prof 3 (8 hilos): 10.676476 ms ms
-Tiempo Paralelo prof 4 (16 hilos): 5.382075 ms ms
-```
-
-**Observación importante:** Los **resultados pueden variar** significativamente entre ejecuciones, por lo que es **necesario realizar varias mediciones** y tomar **promedios estadísticos** para obtener conclusiones confiables.
 
 ---
 
 ## Tabla de Resumen de Conceptos
 
-| Concepto | Descripción | Implementación | Observaciones |
-|----------|-------------|----------------|---------------|
-| **Suma secuencial** | Versión base sin paralelismo | `prof = 0` | Línea base para comparación |
-| **Paralelismo recursivo** | División del problema en subproblemas | Función `suma` con parámetro `prof` | Divide y vencerás paralelo |
-| **Profundidad de paralelismo** | Número de niveles de división | Parámetro `prof` | Controla el grado de paralelización |
-| **Hilos generados** | Cantidad de tareas paralelas | $2^{prof}$ hilos | Crecimiento exponencial |
-| **Medición comparativa** | Evaluación de diferentes configuraciones | Múltiples llamadas a `measure` | Benchmarking sistemático |
-| **Variabilidad de resultados** | Diferencias entre ejecuciones | Resultados inconsistentes | Necesidad de promedios estadísticos |
-| **Optimización con calentamiento** | Preparación de la JVM | `withWarmer(new Warmer.Default)` | Mediciones más estables |
+| Concepto | Descripción | Implementación | Resultados |
+|----------|-------------|----------------|------------|
+| **Producto vectorial** | Operación matemática entre vectores | $a \cdot b = \sum a_i \times b_i$ | Ejemplo: $1*4 + 2*5 + 3*6 = 32$ |
+| **Versión secuencial** | Implementación sin paralelismo | `prof = 0` | 11.097029 ms |
+| **Paralelismo nivel 1** | 2 hilos paralelos | `prof = 1` | 6.365939 ms |
+| **Paralelismo nivel 2** | 4 hilos paralelos | `prof = 2` | 5.579212 ms |
+| **Paralelismo nivel 3** | 8 hilos paralelos | `prof = 3` | 5.548574 ms |
+| **Paralelismo nivel 4** | 16 hilos paralelos | `prof = 4` | 9.574517 ms |
+| **Aceleración máxima** | Mejor tiempo vs secuencial | prof 3 vs prof 0 | ~2x aceleración |
+| **Sobrecarga** | Penalización por exceso de hilos | prof 4 vs prof 3 | ~72% más lento |
 
 **Conceptos importantes destacados:**
-- **Paralelismo recursivo**
-- **Profundidad de paralelización**
-- **Medición comparativa**
-- **Variabilidad de resultados**
-- **Promedios estadísticos**
-- **Configuraciones de hilos** ($2^{prof}$)
-- **Benchmarking sistemático**
+- **Producto vectorial paralelo**
+- **División recursiva del problema**
+- **Gestión de múltiples arreglos**
+- **Optimización del grado de paralelismo**
+- **Punto de rendimiento óptimo**
+- **Sobrecarga por exceso de hilos**
 
 **Análisis de resultados:**
-- Los tiempos varían significativamente entre ejecuciones
-- No hay una relación lineal clara entre profundidad y rendimiento
-- La **sobrecarga de gestión de hilos** puede afectar el rendimiento
-- Se requiere **análisis estadístico** para conclusiones válidas
-- La **carga del sistema** influye en los resultados
+- **Mejor rendimiento**: Profundidad 3 (8 hilos) con 5.548574 ms
+- **Aceleración significativa**: ~2x mejora vs versión secuencial
+- **Punto óptimo**: Entre 4-8 hilos para este problema
+- **Sobrecarga evidente**: 16 hilos es más lento debido a gestión excesiva
+- **Ley de Amdahl aplicada**: Existe un límite práctico de aceleración
 
-**Recomendación:** Para obtener resultados confiables, se deben realizar **múltiples ejecuciones** (10-30) de cada configuración y calcular **promedios, medianas y desviaciones estándar** para identificar tendencias reales en el rendimiento.
+**Observaciones clave:**
+1. El **paralelismo mejora el rendimiento** hasta cierto punto
+2. El **exceso de hilos genera sobrecarga** que reduce la ganancia
+3. Es **crucial encontrar el punto óptimo** de paralelización
+4. Los **resultados validan la Ley de Amdahl** en la práctica
+5. Se requiere **benchmarking sistemático** para optimizar configuraciones
+
+**Recomendación:** Para este tipo de operaciones vectoriales, un grado de paralelismo entre 4-8 hilos parece ser el más eficiente, balanceando la aceleración con la sobrecarga de gestión.

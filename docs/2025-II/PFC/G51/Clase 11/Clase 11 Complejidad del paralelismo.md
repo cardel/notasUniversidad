@@ -11,3 +11,4 @@
 3. [Benchmarking](Benchmarking.md)
 4. [Ejemplo](Ejemplo.md)
 5. [Ejercicio](Ejercicio.md)
+6. [Resumen](Resumen.md)
