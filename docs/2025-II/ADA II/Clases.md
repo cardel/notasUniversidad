@@ -15,3 +15,4 @@
 
 ## Corte 3
 9. [Clase 9 Introduccion problemas NP, SAT - 3SAT](Clase%209/Clase%209%20Introduccion%20problemas%20NP,%20SAT%20-%203SAT.md)
+10. [Clase 10. IP y vertex cover](Clase%2010/Clase%2010.%20IP%20y%20vertex%20cover.md)
