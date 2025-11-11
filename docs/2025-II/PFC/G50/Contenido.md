@@ -15,3 +15,4 @@
 1. [Clase 10. Introducción paralelización](Clase10/Clase%2010.%20Introducción%20paralelización.md)
 2. [Clase 11. Complejidad programas paralelos](Clase11/Clase%2011.%20Complejidad%20programas%20paralelos.md)
 3. [Clase 12 Ejercicio paralelizacion](Clase12/Ejercicio.md)
+4. [Clase 13. Paralelismo de tareas](Clase13/Clase%2013.%20Paralelismo%20de%20tareas.md)
