@@ -5,3 +5,8 @@
 	2. Reduce
 	3. Scan
 
+# Temas
+
+1. [Paralelismo y colecciones](Paralelismo%20y%20colecciones.md)
+2. [Paralelización del Map](Paralelización%20del%20Map.md)
+3. [Paralelización del reduce](Paralelización%20del%20reduce.md)
