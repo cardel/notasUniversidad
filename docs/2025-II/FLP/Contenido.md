@@ -17,3 +17,4 @@
 8. [Clase 9. Asignación y paso por referencia](Clase%209/Clase%209.%20Asignación%20y%20paso%20por%20referencia.md)
 9. [Clase 10 Introducción de tipos](Clase%2010/Clase%2010%20Introducción%20de%20tipos.md)
 10. [Clase 11 Implementacion del interpretador de tipos](Clase%2011/Clase%2011%20Implementacion%20del%20interpretador%20de%20tipos.md)
+11. [Clase 12. Interpretador tipos e inferencia](Clase%2012/Clase%2012.%20Interpretador%20tipos%20e%20inferencia.md)
