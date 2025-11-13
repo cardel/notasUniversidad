@@ -15,3 +15,4 @@
 10. [Clase 10 Principios de concurrencia y abstracciones](Clase%2010/Clase%2010%20Principios%20de%20concurrencia%20y%20abstracciones.md)
 11. [Clase 11 Complejidad del paralelismo](Clase%2011/Clase%2011%20Complejidad%20del%20paralelismo.md)
 12. [Clase 12 Ejercicio](Clase%2012/Ejercicio.md)
+13. [Clase 13. Paralelismo de tareas](Clase%2013/Clase%2013.%20Paralelismo%20de%20tareas.md)
