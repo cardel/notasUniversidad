@@ -12,7 +12,8 @@
 6. [Clase 6. Introduccion a optimizacion](Clase%206/Clase%206.%20Introduccion%20a%20optimizacion.md)
 7. [Clase 7. Forma holgura y Simplex](Clase%207/Clase%207.%20Forma%20holgura%20y%20Simplex.md)
 8. [Clase 8 Simplex no factible y programacion entera](Clase%208/Clase%208%20Simplex%20no%20factible%20y%20programacion%20entera.md)
+9. [Solución parcial 1](Parcial%201/Enunciado%20parcial.md)
 
 ## Corte 3
-9. [Clase 9 Introduccion problemas NP, SAT - 3SAT](Clase%209/Clase%209%20Introduccion%20problemas%20NP,%20SAT%20-%203SAT.md)
-10. [Clase 10. IP y vertex cover](Clase%2010/Clase%2010.%20IP%20y%20vertex%20cover.md)
+10. [Clase 9 Introduccion problemas NP, SAT - 3SAT](Clase%209/Clase%209%20Introduccion%20problemas%20NP,%20SAT%20-%203SAT.md)
+11. [Clase 10. IP y vertex cover](Clase%2010/Clase%2010.%20IP%20y%20vertex%20cover.md)
