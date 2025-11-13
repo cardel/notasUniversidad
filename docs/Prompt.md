@@ -5,3 +5,7 @@ Agrega conceptos teóricos que hagan falta si es necesario de acuerdo al context
 El código que esté no lo borres si no que agregale comentarios útiles para explicarlo dentro de el.
 
 Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amabilidad.
+
+# PDF
+
+{ type=application/pdf style="min-height:70vh;width:100%"}
