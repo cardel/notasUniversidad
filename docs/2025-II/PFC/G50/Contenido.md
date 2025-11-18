@@ -16,3 +16,4 @@
 2. [Clase 11. Complejidad programas paralelos](Clase11/Clase%2011.%20Complejidad%20programas%20paralelos.md)
 3. [Clase 12 Ejercicio paralelizacion](Clase12/Ejercicio.md)
 4. [Clase 13. Paralelismo de tareas](Clase13/Clase%2013.%20Paralelismo%20de%20tareas.md)
+5. [Clase 14. Paralelismo de tareas Scan y paralelismo de datos](Clase14/Clase%2014.%20Paralelismo%20de%20tareas%20Scan%20y%20paralelismo%20de%20datos.md)
