@@ -122,6 +122,10 @@ docker compose down
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: app-deployment
 spec:
   replicas: 3
@@ -137,18 +141,24 @@ spec:
         - name: app
           image: node:16
           workingDir: /usr/src/app
-          command: ["sh", "-c", "npm install && npm start"]
+          command:
+            - sh
+            - -c
+            - |
+                cp -RL /config/* /usr/src/app/ && \
+                echo "Archivos copiados:" && ls -l /usr/src/app && \
+                npm install && \
+                npm start
           ports:
             - containerPort: 3000
           volumeMounts:
-            - mountPath: /usr/src/app
-              name: app-code
+            - name: app-configmap
+              mountPath: /config
+              readOnly: true
       volumes:
-        - name: app-code
-          hostPath:
-            path: /app
-            type: Directory
-
+        - name: app-configmap
+          configMap:
+            name: app-configmap
 
 ```
 
@@ -322,6 +332,14 @@ data:
 ```
 
 Este config aplica la configuración default.conf esto permite cada vez que se inicia el servicio se aplica automaticamente esta configuracion.
+
+Ahora para el aplicativo se generan los archivos
+
+```bash
+kubectl create configmap app-configmap --from-file=app/
+kubectl get configmaps app-configmap -o yaml >> app-configmap.yaml
+kubectl delete configmap app-configmap
+```
 
 ## Desplegar
 
