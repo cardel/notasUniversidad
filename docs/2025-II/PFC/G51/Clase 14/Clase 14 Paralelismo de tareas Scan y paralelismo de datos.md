@@ -6,3 +6,4 @@
 # Temas
 
 1. [Paralelismo de tareas Scan](Paralelismo%20de%20tareas%20Scan.md)
+2. [Paralelismo de datos](Paralelismo%20de%20datos.md)
