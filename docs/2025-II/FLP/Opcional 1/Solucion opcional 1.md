@@ -2,6 +2,9 @@
 
 **Nota** Para resolver este punto se uso el intereprete de recursivos disponible en el campus virtual. Así mismo, las operaciones de unión e intersección la hago para $n$ conjuntos, pero bastaba con dos en el exámen.
 
+Revisar interprete opcional:
+![](attachments/InterpreteOpcional.rkt)
+
 ## Enunciado
 
 Se desea implementar en el intérprete un nuevo tipo de dato llamado **conjunto de números**, el cual internamente está representado como un árbol binario de búsqueda (ABB).  
