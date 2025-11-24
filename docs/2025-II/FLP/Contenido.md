@@ -11,6 +11,7 @@
 7. [Clase 7 Procedimientos recursivos](Clase%207/Clase%207%20Procedimientos%20recursivos.md)
 
 [Solución examen I](Parcial%201/Parcial/Examen.md)
+[Solucion opcional 1](Opcional%201/Solucion%20opcional%201.md)
 
 ## Corte 2
 
