@@ -8,8 +8,8 @@
 6. [Clase 7. OpenMP](Clase%207/Clase%207.%20OpenMP.md)
 7. [Clase 8. Profiling en Linux](Clase%208/Clase%208.%20Profiling%20en%20Linux.md)
 
-[Solucion primer examen](Parcial%201/Solucion.md)
-[Solución Opcional 1](Opcional/Opcional%201.md)
+- [Solucion primer examen](Parcial%201/Solucion.md)
+- [Solución Opcional 1](Opcional/Opcional%201.md)
 
 # Corte 2
 
