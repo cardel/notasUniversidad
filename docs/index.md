@@ -9,3 +9,5 @@
 [2025-I](2025-I/Readme.md)
 
 [2025-II](2025-II/Lista.md)
+
+[2026-I](2026-I/Lista.md)
