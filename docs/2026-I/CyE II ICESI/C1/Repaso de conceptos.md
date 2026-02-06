@@ -10,6 +10,6 @@
 
 # Videos útiles relaciones
 
-https://www.youtube.com/watch?v=QC2WRVUJoZ8&list=PLi3X2PHYk7zSDjuLSlHcBc9ISgckRSair&index=42
+[Clases sobre relaciones Matematicas Discretas I Univalle 2022](https://www.youtube.com/watch?v=QC2WRVUJoZ8&list=PLi3X2PHYk7zSDjuLSlHcBc9ISgckRSair&index=42) 
 
 

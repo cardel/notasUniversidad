@@ -1,5 +1,9 @@
 # Arboles y grafos PUJ Cali
 
+# Clases grabadas
+
+[Clases grabadas](https://www.youtube.com/playlist?list=PLi3X2PHYk7zRX-zL5miYvmXhHOVm-snEU)
+
 # Corte 1
 
 1. [Repaso estructuras de datos 28 de Enero](C1/Repaso.md)
