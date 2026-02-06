@@ -1,1 +1,1 @@
-![](docs/2026-I/CyE%20II%20ICESI/C1/2026-02-04-Note-17-41_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
+![](2026-02-04-Note-17-41_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

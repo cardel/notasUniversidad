@@ -18,4 +18,4 @@
 
 # Temas
 
-1. [Ejercicios invariantes](docs/2026-I/AyG%20PUJ/C4/Ejercicios%20invariantes.md)
+1. [Ejercicios invariantes](C4/Ejercicios%20invariantes.md)
