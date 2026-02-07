@@ -13,3 +13,4 @@
 # Clases
 
 1. [Repaso de conceptos 04 de Febrero](C1/Repaso%20de%20conceptos.md)
+2. [Elementos de programación funcional 06 de Febrero](C2/Elementos%20de%20programación%20funcional.md)
