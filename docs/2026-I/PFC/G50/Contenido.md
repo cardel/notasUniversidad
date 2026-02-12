@@ -1,3 +1,3 @@
 # Corte
 
-1. [Introducción a Scala](C1/Introducción%20a%20Scala.md)
+1. [Introducción al curso y Scala](C1/Introducción%20al%20curso%20y%20Scala.md)
