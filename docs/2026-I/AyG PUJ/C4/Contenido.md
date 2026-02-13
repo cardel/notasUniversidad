@@ -18,4 +18,4 @@
 
 # Temas
 
-1. [Ejercicios invariantes](C4/Ejercicios%20invariantes.md)
+1. [Ejercicios invariantes](Ejercicios%20invariantes.md)
