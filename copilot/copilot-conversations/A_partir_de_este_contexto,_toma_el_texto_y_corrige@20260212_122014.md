@@ -19,7 +19,7 @@ Al final realiza una tabla de resumen con los conceptos vistos y agrega algunos 
 [Context: Notes: docs/Prompt.md]
 [Timestamp: 2026/02/12 12:20:14]
 
-**ai**: Entiendo que quieres que aplique las instrucciones del contenido de la nota [[Prompt]] a un texto que me proporciones. Sin embargo, no has incluido el texto específico que debo procesar.
+**ai**: Entiendo que quieres que aplique las instrucciones del contenido de la nota [[../../docs/Prompts]] a un texto que me proporciones. Sin embargo, no has incluido el texto específico que debo procesar.
 
 Para proceder, necesito que me proporciones el texto que quieres que revise, corrija y amplíe. Una vez que lo hagas, seguiré estas instrucciones paso a paso:
 

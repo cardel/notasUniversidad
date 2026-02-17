@@ -21,7 +21,7 @@ Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amab
 [Context: Notes: docs/Prompt.md]
 [Timestamp: 2026/02/12 09:14:52]
 
-**ai**: He revisado el contenido de la nota [[Prompt]] y veo que contiene instrucciones generales para procesar texto, pero no hay un texto específico, código o conceptos teóricos presentes en la nota para corregir, expandir o comentar.
+**ai**: He revisado el contenido de la nota [[../../docs/Prompts]] y veo que contiene instrucciones generales para procesar texto, pero no hay un texto específico, código o conceptos teóricos presentes en la nota para corregir, expandir o comentar.
 
 Para poder ayudarte, necesito que proporciones el texto específico que deseas que revise y procese según las instrucciones de tu prompt. Puedes:
 
@@ -270,7 +270,7 @@ Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amab
 
 Parece que el usuario está repitiendo la misma instrucción, quizás esperando que procesemos algo nuevo. Como no hay nuevo texto en su mensaje, asumamos que quiere que procesemos la nota [[Repaso]] de nuevo, pero tal vez con algún ajuste. Dado que ya lo hicimos, y no hay indicación de cambios, podríamos simplemente repetir el resultado anterior, pero eso sería redundante.
 
-Otra posibilidad: el usuario podría estar probando el sistema y espera que busquemos en el vault algo relevante. Pero en el contexto actual, solo tenemos las notas [[Prompt]] y [[Repaso]]. La nota [[Prompt]] contiene instrucciones generales, y [[Repaso]] es el contenido a procesar.
+Otra posibilidad: el usuario podría estar probando el sistema y espera que busquemos en el vault algo relevante. Pero en el contexto actual, solo tenemos las notas [[../../docs/Prompts]] y [[Repaso]]. La nota [[../../docs/Prompts]] contiene instrucciones generales, y [[Repaso]] es el contenido a procesar.
 
 Para salir del bucle, procederé a procesar la nota [[Repaso]] nuevamente, pero esta vez haré una versión ligeramente diferente, asegurándome de seguir todas las instrucciones al pie de la letra.
 

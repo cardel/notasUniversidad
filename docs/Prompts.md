@@ -1,3 +1,5 @@
+
+# Mejora de apuntes
 A partir de este contexto, toma el texto y corrige los errores de gramática y sintaxis. 
 
 Agrega conceptos teóricos que hagan falta si es necesario de acuerdo al contexto.
@@ -7,6 +9,18 @@ El código que esté no lo borres si no que agregale comentarios útiles para ex
 Al final realiza una tabla de resumen con los conceptos vistos y agrega algunos comentarios adicionales sobre el tema que hagan falta
 
 Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amabilidad.
+
+# Resumen de clase
+
+A partir de este contexto, toma el texto y genera un resumen de los conceptos vistos en clase 
+
+Agrega conceptos teóricos que hagan falta si es necesario
+
+Explica algunas aplicaciones practicas de lo visto y explica porque son importantes
+
+Finalmente, genera una frase de motivación para los estudiantes que le vean una utilidad a los conceptos vistos
+
+No coloques mensajes de amabilidad.
 
 # PDF
 
