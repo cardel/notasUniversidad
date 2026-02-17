@@ -7,3 +7,4 @@
 ## Corte 1
 
 1. [Clase de repaso](C1/Clase%20de%20repaso.md)
+2. [Clase 2 Representacion de datos y alcance de variables](C2/Clase%202%20Representacion%20de%20datos%20y%20alcance%20de%20variables.md)
