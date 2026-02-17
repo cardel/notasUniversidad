@@ -1,5 +1,7 @@
 # Materiales
 
+[Clases grabadas](https://www.youtube.com/watch?v=mv0lkjEEMoQ&list=PLi3X2PHYk7zTNrW_CBQAEVzs0Ur6yk4-B)
+
 # Clases
 
 ## Corte 1
