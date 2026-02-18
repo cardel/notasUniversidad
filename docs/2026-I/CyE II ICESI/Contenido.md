@@ -20,3 +20,5 @@
 1. [Repaso de conceptos 04 de Febrero](C1/Repaso%20de%20conceptos.md)
 2. [Elementos de programación funcional 06 de Febrero](C2/Elementos%20de%20programación%20funcional.md)
 3. [Clase relaciones n-arias 11 de Feb](C3/Clase%20relaciones%20n-arias.md)
+4. [Clase 4 Elementos de programacion funcional 13 de Feb](C4/Clase%204%20Elementos%20de%20programacion%20funcional.md)
+5. [Clase 5 Recursion matematica, estructural y en lenguajes programacion 19 de Feb](C5/Clase%205%20Recursion%20matematica%20y%20en%20lenguajes%20programacion.md)
