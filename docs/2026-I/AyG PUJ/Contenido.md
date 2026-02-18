@@ -11,4 +11,6 @@
 3. [Invariantes de ciclo 04 de Febrero](C3/Contenido.md)
 4. [Ejemplos invariantes de Ciclo 06 de Febrero](C4/Contenido.md)
 5. [Divide y vencerás I 11 de Febrero](C5/Divide%20y%20vencerás%20I.md)
+6. [Divide y vencerás II 13 Febrero](C6/Contenido.md)
+7. [Clase 7 Repaso de invariantes de ciclo. Divide y vencerás 18 de Feb](C7/Clase%207%20Repaso%20de%20invariantes%20de%20ciclo.%20Divide%20y%20vencerás.md)
 
