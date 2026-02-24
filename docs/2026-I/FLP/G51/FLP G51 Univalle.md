@@ -8,3 +8,4 @@
 
 1. [Clase de repaso](C1/Clase%20de%20repaso.md)
 2. [Clase 2 Representacion de datos y alcance de variables](C2/Clase%202%20Representacion%20de%20datos%20y%20alcance%20de%20variables.md)
+3. [Clase 3. Abstraccion de datos](C3/Clase%203.%20Abstraccion%20de%20datos.md)
