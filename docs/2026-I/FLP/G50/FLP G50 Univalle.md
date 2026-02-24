@@ -8,3 +8,5 @@
 
 1. [Clase 1 Introducción al curso y repaso](C1/Introducción%20al%20curso%20y%20repaso.md)
 2. [Clase 2 Induccion y recursion](C2/Clase%202%20Induccion%20y%20recursion.md)
+3. [Clase 3 Estrategias para representar datos](C3/Clase%203%20Estrategias%20para%20representar%20datos.md)
+4. 
