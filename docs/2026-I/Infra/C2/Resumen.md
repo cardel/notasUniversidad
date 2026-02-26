@@ -138,6 +138,8 @@ if (valor > threshold) {
 
 **Desventaja**: predicción incorrecta cuesta ciclos valiosos en especulación fallida. Además, vulnerabilidades como **Spectre y Meltdown** explotan la especulación para leer memoria no autorizada.
 
+#### 4.1.2 Ejecución 
+
 #### 4.2 Pipeline (encauzamiento)
 
 El **pipeline** divide la ejecución de una instrucción en múltiples etapas especializadas, permitiendo que diferentes instrucciones estén en diferentes etapas simultáneamente.
