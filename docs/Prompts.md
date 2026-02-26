@@ -18,7 +18,7 @@ Agrega conceptos teóricos que hagan falta si es necesario
 
 Explica algunas aplicaciones practicas de lo visto y explica porque son importantes
 
-Finalmente, genera una frase de motivación para los estudiantes que le vean una utilidad a los conceptos vistos esta frase debe ser corta y consiza
+Finalmente, genera un parrafo de motivación de no mas 50 palabras para los estudiantes que le vean una utilidad a los conceptos vistos esta frase debe ser corta y consiza
 
 No coloques mensajes de amabilidad.
 
