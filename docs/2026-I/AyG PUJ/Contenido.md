@@ -15,4 +15,5 @@
 7. [Clase 7 Repaso de invariantes de ciclo. Divide y vencerás 18 de Feb](C7/Clase%207%20Repaso%20de%20invariantes%20de%20ciclo.%20Divide%20y%20vencerás.md)
 8. [Clase 8. Algoritmo de la biseccion 20 Feb](C8/Clase%208.%20Algoritmo%20de%20la%20biseccion.md)
 9. [Clase 9. Introduccion grafos 24 Feb](C9/Clase%209.%20Introduccion%20grafos.md)
+10. [Clase 10. Representaciones de grafos, BFS, DFS 27 de Feb](C10/Clase%2010.%20Representaciones%20de%20grafos,%20BFS,%20DFS.md)
 

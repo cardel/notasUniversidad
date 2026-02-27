@@ -29,3 +29,6 @@
 
 1. [Grafos bipartito](Grafos%20bipartito.md)
 2. [Grafo complementario](Grafo%20complementario.md)
+3. [Representaciones grafos no dirigidos](Representaciones%20grafos%20no%20dirigidos.md)
+4. [Representaciones grafos dirigidos](Representaciones%20grafos%20dirigidos.md)
+5. [Busquedas](Busquedas.md)
