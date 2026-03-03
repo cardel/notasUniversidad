@@ -33,3 +33,6 @@
 El día de hoy tenemos las temáticas de define-datatype para arboles de sintaxis abstracta
 
 1. [Define-datatype](Define-datatype.md)
+2. [Ejercicio](Ejercicio.md)
+3. [Ejemplo ambientes](Ejemplo%20ambientes.md)
+4. [Sintaxis abstract y concreta](Sintaxis%20abstract%20y%20concreta.md)
