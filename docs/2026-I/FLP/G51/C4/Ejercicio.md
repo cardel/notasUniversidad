@@ -1,4 +1,3 @@
-
 Generar una definicion de datos para arboles bajo esta definición
 
 ```ebnf
