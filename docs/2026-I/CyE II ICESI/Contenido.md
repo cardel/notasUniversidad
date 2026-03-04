@@ -24,3 +24,4 @@
 5. [Clase 5 Recursion matematica, estructural y en lenguajes programacion 19 de Feb](C5/Clase%205%20Recursion%20matematica%20y%20en%20lenguajes%20programacion.md)
 6. [Clase 6. Evaluación de expresiones y recursión estructural 25 de Feb](C7/Clase%206.%20Evaluación%20de%20expresiones%20y%20recursión%20estructural.md)
 7. [Clase 8. Funciones recursivas y procesos 27 de Feb](C8/Clase%208.%20Funciones%20recursivas%20y%20procesos.md)
+8. [Clase 9. Inducción matematica 4 de Marzo](C9/Clase%209.%20Inducción%20matematica.md)
