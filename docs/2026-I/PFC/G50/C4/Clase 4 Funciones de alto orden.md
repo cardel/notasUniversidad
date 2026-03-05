@@ -20,4 +20,5 @@
 
 1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
 2. [Ejercicio de funciones de alto orden y anonimas](Ejercicio%20de%20funciones%20de%20alto%20orden%20y%20anonimas.md)
-
+3. [Currificacion](Currificacion.md)
+4. [Resumen](Resumen.md)
