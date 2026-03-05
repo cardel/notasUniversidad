@@ -15,3 +15,4 @@ t
 1. [Clase 1. Introducción al curso y Scala](C1/Introducción%20al%20curso%20y%20Scala.md)
 2. [Clase 2. Elementos de PF](C2/Clase%202.%20Elementos%20de%20PF.md)
 3. [Clase 3. Recursión y procesos que generan](C3/Clase%203.%20Recursión%20y%20procesos%20que%20generan.md)
+4. [Clase 4 Funciones de alto orden](C4/Clase%204%20Funciones%20de%20alto%20orden.md)
