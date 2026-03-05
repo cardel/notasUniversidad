@@ -32,3 +32,5 @@ El alcance está dado por la ubicación del código, es decir que en una funció
 
 1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
 2. [Ejercicio de funciones alto orden](Ejercicio%20de%20funciones%20alto%20orden.md)
+3. [Currificación](Currificación.md)
+4. [Resumen](Resumen.md)
