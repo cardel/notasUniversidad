@@ -17,4 +17,5 @@
 9. [Clase 9. Introduccion grafos 24 Feb](C9/Clase%209.%20Introduccion%20grafos.md)
 10. [Clase 10. Representaciones de grafos, BFS, DFS 27 de Feb](C10/Clase%2010.%20Representaciones%20de%20grafos,%20BFS,%20DFS.md)
 11. [Clase 11.BFS,DFS, grafos implicitos 04 de Marzo](C11/Clase%2011.BFS,DFS,%20grafos%20implicitos.md)
+12. [Clase 12 Solucion examen 06 de Marzo](C12/Solucion%20examen.md)
 

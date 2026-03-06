@@ -64,7 +64,7 @@ def BFS(grafo, fuente):
     
     Args:
         grafo (np.array): Matriz de adyacencia que representa el grafo.
-        fuente (int): Índice del nodo inicial para la búsqueda.
+        fuente (int): Íngdice del nodo inicial para la búsqueda.
     
     Returns:
         None: La función imprime el orden de procesamiento de los nodos.
