@@ -6,6 +6,10 @@ Agrega conceptos teóricos y ajusta los que tengan alguna inconsistencia y agreg
 
 El código que esté no lo borres si no que agregale comentarios útiles para explicarlo dentro de el.
 
+No agregues codigo adicional, solo trabaja con el que te estoy dando
+
+No comentes dentro de los diagramas mermaid
+
 Al final realiza una tabla de resumen con los conceptos vistos y agrega algunos comentarios adicionales sobre el tema que hagan falta
 
 Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amabilidad.
@@ -14,11 +18,11 @@ Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amab
 
 A partir de este contexto, toma el texto y genera un resumen de los conceptos vistos en clase 
 
-Agrega conceptos teóricos que hagan falta si es necesario
+Agrega conceptos teóricos que hagan falta si es necesario desde tu base del conocimiento
 
 Explica algunas aplicaciones practicas de lo visto y explica porque son importantes
 
-Finalmente, genera un parrafo de motivación de no mas 100 palabras para los estudiantes que le vean una utilidad a los conceptos vistos esta frase debe ser corta y consiza
+Finalmente, genera un parrafo de motivación de no mas 120 palabras para los estudiantes que le vean una utilidad a los conceptos vistos esta frase debe ser corta y consiza
 
 No coloques mensajes de amabilidad.
 
