@@ -18,4 +18,5 @@
 10. [Clase 10. Representaciones de grafos, BFS, DFS 27 de Feb](C10/Clase%2010.%20Representaciones%20de%20grafos,%20BFS,%20DFS.md)
 11. [Clase 11.BFS,DFS, grafos implicitos 04 de Marzo](C11/Clase%2011.BFS,DFS,%20grafos%20implicitos.md)
 12. [Clase 12 Solucion examen 06 de Marzo](C12/Solucion%20examen.md)
+13. [Clase 13 Propiedades BFS y DFS 11 de Marzo](C13/Clase%2013%20Propiedades%20BFS%20y%20DFS.md)
 
