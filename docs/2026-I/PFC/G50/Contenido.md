@@ -16,3 +16,4 @@ t
 2. [Clase 2. Elementos de PF](C2/Clase%202.%20Elementos%20de%20PF.md)
 3. [Clase 3. Recursión y procesos que generan](C3/Clase%203.%20Recursión%20y%20procesos%20que%20generan.md)
 4. [Clase 4 Funciones de alto orden](C4/Clase%204%20Funciones%20de%20alto%20orden.md)
+5. [Clase 5. Funciones y datos](C5/Clase%205.%20Funciones%20y%20datos.md)
