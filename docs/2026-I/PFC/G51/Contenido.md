@@ -13,3 +13,5 @@ Generador de gitignore [Gitignore.io](https://www.toptal.com/developers/gitignor
 1. [Clase 1 Introduccion al curso y Scala](C1/Introduccion%20al%20curso.md)
 2. [Clase 2 Elementos de programación funcional](C2/Clase%202%20Elementos%20de%20programación%20funcional.md)
 3. [Clase 3 Funciones y Procesos](C3/Clase%203%20Funciones%20y%20Procesos.md)
+4. [Clase 4 Funciones de alto orden](C4/Clase%204%20Funciones%20de%20alto%20orden.md)
+5. [Clase 5. Abstracción de datos](C5/Clase%205.%20Abstracción%20de%20datos.md)
