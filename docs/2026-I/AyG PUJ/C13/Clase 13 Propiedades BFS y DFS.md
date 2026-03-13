@@ -14,3 +14,4 @@
 
 1. [Propiedades de BFS](Propiedades%20de%20BFS.md)
 2. [Propiedades de DFS](Propiedades%20de%20DFS.md)
+3. [Diapositivas clase 13](Diapositivas%20clase%2013.md)
