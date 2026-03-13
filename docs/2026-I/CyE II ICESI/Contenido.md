@@ -6,7 +6,7 @@
 3. [Jetbrains IDE Education](https://www.jetbrains.com/academy/student-pack/)
 4. [Curso GIT](https://www.simplilearn.com/learn-git-basics-skillup)
 
-#$ Videos útiles
+# Videos útiles
 
 - [Clases sobre relaciones Matematicas Discretas I Univalle 2022](https://www.youtube.com/watch?v=QC2WRVUJoZ8&list=PLi3X2PHYk7zSDjuLSlHcBc9ISgckRSair&index=42) 
 - [Clase sobre complejidad computacional](https://www.youtube.com/watch?v=tyfDlLQMaSM&list=PLi3X2PHYk7zS4e61wu1uir6_nkH2EfiBC&index=10)
@@ -15,6 +15,9 @@
 
 [Clases grabadas](https://www.youtube.com/playlist?list=PLi3X2PHYk7zSYUahIcphZewheLlwmMcBA)
 
+# Diapositivas
+
+[Diapositivas del curso](https://drive.google.com/drive/folders/19zkVSUU8-EA7foiCnAYEFcWgSNRq2phu?usp=sharing)
 # Clases
 
 1. [Repaso de conceptos 04 de Febrero](C1/Repaso%20de%20conceptos.md)

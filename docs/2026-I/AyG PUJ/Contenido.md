@@ -3,7 +3,9 @@
 # Clases grabadas
 
 [Clases grabadas](https://www.youtube.com/playlist?list=PLi3X2PHYk7zRX-zL5miYvmXhHOVm-snEU)
+# Diapositivas
 
+[Diapositivas del curso](https://drive.google.com/drive/folders/1QjbLbzMLOGrHCjWcWfpemTYMajyY5ijh?usp=sharing)
 # Corte 1
 
 1. [Repaso estructuras de datos 28 de Enero](C1/Repaso.md)

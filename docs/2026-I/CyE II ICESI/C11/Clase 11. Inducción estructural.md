@@ -28,8 +28,8 @@ Segundo corte
 
 # Contenido
 
-1. [Diapositivas C11](Diapositivas%20C11.md)
-2. 
+1. [Definición recursiva de datos](Definición%20recursiva%20de%20datos.md)
+2. [Inducción estructural](Inducción%20estructural.md)
 
 
 
