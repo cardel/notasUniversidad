@@ -140,5 +140,39 @@ let
 		in
 			+(k,j)
 ```
-R/ 19
+R/ 11
 
+```mermaid
+graph TD
+	A["empty-env"] --> B["env0
+	x y z
+	1 2 3"]
+	B --> C["env1
+	f g
+	closure('(x,y) ... env0) closure('(a,b) .. env0)"
+	]
+	C --> D["env2
+	k j
+	8 3"]
+	C --> E["envkx
+	x
+	6"]
+	B --> F["envf1
+	x y
+	1 2"]
+	C --> G["envj
+	f
+	closure('(a) ...env1)"]
+	C --> H["envjf
+	a
+	2"]
+
+```
+
+1. Evaluamos (f x y) en env1, (f g  
+closure('(x,y) ... env0) 1 2), esto implica extender un ambiente desde env0
+2. Evaluamos $+(x,y,z)$ -> $+(1,2,3)$ nos da 6
+3. Evaluamos $+(x,y)$ en envkx $+(6,2)=8$
+4. Sobre envj evaluamos (f y) que es (closure('(a) ...env1) 2) esto nos produce otro ambiente que extiende de env1
+5. Sobre envjf voy a evaluar $+(a,x)$ lo que da $+(2,1)=3$
+6. En total 8+3 = 11
