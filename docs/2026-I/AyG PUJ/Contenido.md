@@ -6,6 +6,12 @@
 # Diapositivas
 
 [Diapositivas del curso](https://drive.google.com/drive/folders/1QjbLbzMLOGrHCjWcWfpemTYMajyY5ijh?usp=sharing)
+
+# Recursos
+
+[Curso MIT](https://ocw.mit.edu/courses/6-1200j-mathematics-for-computer-science-spring-2024/video_galleries/lecture-videos/)
+
+[Curso aprendiendo a aprender](https://www.coursera.org/learn/aprendiendo-a-aprender-ie#modules)
 # Corte 1
 
 1. [Repaso estructuras de datos 28 de Enero](C1/Repaso.md)
