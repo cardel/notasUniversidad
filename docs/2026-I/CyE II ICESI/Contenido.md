@@ -30,3 +30,4 @@
 8. [Clase 9. Inducción matematica 4 de Marzo](C9/Clase%209.%20Inducción%20matematica.md)
 9. [Clase 10. Solucion seguimiento e induccion](C10/Clase%2010.%20Solucion%20seguimiento%20e%20induccion.md)
 10. [Clase 11. Inducción estructural](C11/Clase%2011.%20Inducción%20estructural.md)
+11. [Clase 12 Pattern Matching y Divide y venceras](C12/Clase%2012%20Pattern%20Matching%20y%20Divide%20y%20venceras.md)
