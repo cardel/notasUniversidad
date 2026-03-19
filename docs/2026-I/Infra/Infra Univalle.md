@@ -10,3 +10,4 @@
 3. [Clase 3 Ejercicios de paralelizacion](C3/Clase%203%20Ejercicios%20de%20paralelizacion.md)
 4. [Clase 4 Profiling en Python e Instrucciones AVX](C4/Clase%204%20Profiling%20en%20Python%20e%20Instrucciones%20AVX.md)
 5. [Clase 5. Instrucciones AVX, hilos y procesos en Python](C5/Clase%205.%20Instrucciones%20AVX,%20hilos%20y%20procesos%20en%20Python.md)
+6. [Clase 6 Processing en Python y OpenMP](C6/Clase%206%20Processing%20en%20Python%20y%20OpenMP.md)
