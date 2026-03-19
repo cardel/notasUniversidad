@@ -12,3 +12,4 @@
 
 1. [Queue y Pipe en Multiprocessing Python](Queue%20y%20Pipe%20en%20Multiprocessing%20Python.md)
 2. [OpenMP](OpenMP.md)
+3. [Solucion ejercicio 3 infra](Solucion%20ejercicio%203%20infra.md)
