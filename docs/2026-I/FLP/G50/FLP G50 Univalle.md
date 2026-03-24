@@ -2,6 +2,8 @@
 
 [Clases grabadas](https://www.youtube.com/watch?v=mv0lkjEEMoQ&list=PLi3X2PHYk7zTNrW_CBQAEVzs0Ur6yk4-B)
 
+[Prompts del curso](https://github.com/cardel/prompts-cursos/tree/master/FLP)
+
 # Clases
 
 ## Corte 1
@@ -12,3 +14,4 @@
 4. [Clase 4 Abstraccion de datos AST y parser](C4/Clase%204%20Abstraccion%20de%20datos%20AST%20y%20parser.md)
 5. [Clase 5 Semántica de lenguajes de programación](C5/Clase%205%20Semántica%20de%20lenguajes%20de%20programación.md)
 6. [Clase 6 Condicionales, ligaduras y procedimientos](C6/Clase%206%20Condicionales,%20ligaduras%20y%20procedimientos.md)
+7. [Clase 7. Procedimientos recursivos](C7/Clase%207.%20Procedimientos%20recursivos.md)
