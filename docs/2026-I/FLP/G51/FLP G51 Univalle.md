@@ -16,4 +16,5 @@
 3. [Clase 3. Abstraccion de datos](C3/Clase%203.%20Abstraccion%20de%20datos.md)
 4. [Clase 4. Define-datatype y AST](C4/Clase%204.%20Define-datatype%20y%20AST.md)
 5. [Clase 5 Interpretacion, compilacion y semantica de lenguajes](C5/Clase%205%20Interpretacion,%20compilacion%20y%20semantica%20de%20lenguajes.md)
-6. [Clase 6 Condicionales, procedimientos y ligadras](C6/Clase%206%20Condicionales,%20procedimientos%20y%20ligadras.md)
+6. [Clase 6 Condicionales, procedimientos y ligaduras](C6/Clase%206%20Condicionales,%20procedimientos%20y%20ligadras.md)
+7. [Clase 7 Procedimientos recursivos](C7/Clase%207%20Procedimientos%20recursivos.md)
