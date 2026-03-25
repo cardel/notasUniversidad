@@ -32,3 +32,6 @@
 # Corte 2
 1. [Clase 13 Propiedades BFS y DFS 11 de Marzo](C13/Clase%2013%20Propiedades%20BFS%20y%20DFS.md)
 2. [Clase 14 Conectividad 13 de Marzo](C14/Clase%2014%20Conectividad.md)
+3. [Clase 15 Conectividad y orden topologico 17 de Marzo](C15/Clase%2015%20Conectividad%20y%20orden%20topologico.md)
+4. [Clase 16. Componentes fuertemente conexos 20 de Marzo](C16/Clase%2016.%20Componentes%20fuertemente%20conexos.md)
+5. [Clase 17 Puentes y articulaciones 25 de Marzo](C17/Clase%2017%20Puentes%20y%20articulaciones.md)
