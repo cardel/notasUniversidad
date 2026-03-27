@@ -18,3 +18,4 @@ t
 4. [Clase 4 Funciones de alto orden](C4/Clase%204%20Funciones%20de%20alto%20orden.md)
 5. [Clase 5. Funciones y datos](C5/Clase%205.%20Funciones%20y%20datos.md)
 6. [Clase 6 Abstracción de datos II y Listas I](C6/Clase%206%20Abstracción%20de%20datos%20II%20y%20Listas%20I.md)
+7. [Clase 7 Tuplas y funciones alto orden en listas](C7/Clase%207%20Tuplas%20y%20funciones%20alto%20orden%20en%20listas.md)

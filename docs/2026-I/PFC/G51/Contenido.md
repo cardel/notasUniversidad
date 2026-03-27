@@ -16,3 +16,4 @@ Generador de gitignore [Gitignore.io](https://www.toptal.com/developers/gitignor
 4. [Clase 4 Funciones de alto orden](C4/Clase%204%20Funciones%20de%20alto%20orden.md)
 5. [Clase 5. Abstracción de datos](C5/Clase%205.%20Abstracción%20de%20datos.md)
 6. [Clase 6 Abstraccion de datos II y Listas I](C6/Clase%206%20Abstraccion%20de%20datos%20II%20y%20Listas%20I.md)
+7. [Clase 7 Tuplas](C7/Clase%207%20Tuplas.md)
