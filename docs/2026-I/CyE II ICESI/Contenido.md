@@ -32,3 +32,4 @@
 10. [Clase 11. Inducción estructural](C11/Clase%2011.%20Inducción%20estructural.md)
 11. [Clase 12 Pattern Matching y Divide y venceras](C12/Clase%2012%20Pattern%20Matching%20y%20Divide%20y%20venceras.md)
 12. [Clase 13 Divide y venceras](C13/Clase%2013%20Divide%20y%20venceras.md)
+13. [Clase 14 Metodos de soluciones de Relaciones de Recurrencia](C14/Clase%2014%20Metodos%20de%20soluciones%20de%20Relaciones%20de%20Recurrencia.md)

@@ -13,5 +13,14 @@
 	1. EL número de nodos en un nivel $m^i$ donde $i$ es la profundidad contada desde 0 (raiz)
 	2. EL numero de hojas $m^h$
 	3. La suma total de nodos sin incluir las hojas $\sum \limits_{i=0}^{h-1} m^i = \frac{m^h-1}{m-1}$
+
+# Temas
+
+1. [Metodo de expansion](Metodo%20de%20expansion.md)
+2. [Metodo de arbol](Metodo%20de%20arbol.md)
+3. [Resumen](Resumen.md)
+
+
+
 	
  
