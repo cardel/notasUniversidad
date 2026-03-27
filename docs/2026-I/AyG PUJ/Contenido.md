@@ -5,7 +5,7 @@
 [Clases grabadas](https://www.youtube.com/playlist?list=PLi3X2PHYk7zRX-zL5miYvmXhHOVm-snEU)
 # Diapositivas
 
-[Diapositivas del curso](https://drive.google.com/drive/folders/1QjbLbzMLOGrHCjWcWfpemTYMajyY5ijh?usp=sharing)
+[Diapositivas del curso](|)
 
 # Recursos
 
@@ -35,3 +35,4 @@
 3. [Clase 15 Conectividad y orden topologico 17 de Marzo](C15/Clase%2015%20Conectividad%20y%20orden%20topologico.md)
 4. [Clase 16. Componentes fuertemente conexos 20 de Marzo](C16/Clase%2016.%20Componentes%20fuertemente%20conexos.md)
 5. [Clase 17 Puentes y articulaciones 25 de Marzo](C17/Clase%2017%20Puentes%20y%20articulaciones.md)
+6. [Clase 18. Algoritmos puentes y puntos de articulación. Componentes biconexos](C18/Clase%2018.%20Algoritmos%20puentes%20y%20puntos%20de%20articulación.%20Componentes%20biconexos.md)
