@@ -12,6 +12,8 @@
 [Curso MIT](https://ocw.mit.edu/courses/6-1200j-mathematics-for-computer-science-spring-2024/video_galleries/lecture-videos/)
 
 [Curso aprendiendo a aprender](https://www.coursera.org/learn/aprendiendo-a-aprender-ie#modules)
+
+[Prompts curso](https://github.com/cardel/prompts-cursos/tree/master/ArbolesGrafos)
 # Corte 1
 
 1. [Repaso estructuras de datos 28 de Enero](C1/Repaso.md)
