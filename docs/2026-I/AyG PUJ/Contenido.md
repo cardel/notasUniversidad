@@ -5,7 +5,7 @@
 [Clases grabadas](https://www.youtube.com/playlist?list=PLi3X2PHYk7zRX-zL5miYvmXhHOVm-snEU)
 # Diapositivas
 
-[Diapositivas del curso](|)
+[Diapositivas del curso](https://drive.google.com/drive/u/0/folders/1QjbLbzMLOGrHCjWcWfpemTYMajyY5ijh)
 
 # Recursos
 
@@ -38,3 +38,4 @@
 4. [Clase 16. Componentes fuertemente conexos 20 de Marzo](C16/Clase%2016.%20Componentes%20fuertemente%20conexos.md)
 5. [Clase 17 Puentes y articulaciones 25 de Marzo](C17/Clase%2017%20Puentes%20y%20articulaciones.md)
 6. [Clase 18. Algoritmos puentes y puntos de articulación. Componentes biconexos](C18/Clase%2018.%20Algoritmos%20puentes%20y%20puntos%20de%20articulación.%20Componentes%20biconexos.md)
+7. [Clase 19. Introducción a los caminos más cortos](C19/Clase%2019.%20Introducción%20a%20los%20caminos%20más%20cortos.md)
