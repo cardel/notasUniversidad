@@ -34,3 +34,4 @@
 12. [Clase 13 Divide y venceras](C13/Clase%2013%20Divide%20y%20venceras.md)
 13. [Clase 14 Metodos de soluciones de Relaciones de Recurrencia](C14/Clase%2014%20Metodos%20de%20soluciones%20de%20Relaciones%20de%20Recurrencia.md)
 14. [Clase 15 Funciones de alto orden y Currying](C15/Clase%2015%20Funciones%20de%20alto%20orden%20y%20Currying.md)
+15. [Clase 16. EjemploMetodo de árbol](C16/Clase%2016.%20EjemploMetodo%20de%20árbol.md)
