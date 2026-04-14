@@ -18,3 +18,5 @@
 5. [Clase 5 Interpretacion, compilacion y semantica de lenguajes](C5/Clase%205%20Interpretacion,%20compilacion%20y%20semantica%20de%20lenguajes.md)
 6. [Clase 6 Condicionales, procedimientos y ligaduras](C6/Clase%206%20Condicionales,%20procedimientos%20y%20ligadras.md)
 7. [Clase 7 Procedimientos recursivos](C7/Clase%207%20Procedimientos%20recursivos.md)
+
+[SolucionParcialB](SolucionParcialB.md)

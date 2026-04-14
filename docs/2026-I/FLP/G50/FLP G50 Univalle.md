@@ -15,3 +15,5 @@
 5. [Clase 5 Semántica de lenguajes de programación](C5/Clase%205%20Semántica%20de%20lenguajes%20de%20programación.md)
 6. [Clase 6 Condicionales, ligaduras y procedimientos](C6/Clase%206%20Condicionales,%20ligaduras%20y%20procedimientos.md)
 7. [Clase 7. Procedimientos recursivos](C7/Clase%207.%20Procedimientos%20recursivos.md)
+
+[SolucionParcialA](SolucionParcialA.md)
