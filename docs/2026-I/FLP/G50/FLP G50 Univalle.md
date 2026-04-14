@@ -17,3 +17,8 @@
 7. [Clase 7. Procedimientos recursivos](C7/Clase%207.%20Procedimientos%20recursivos.md)
 
 [SolucionParcialA](SolucionParcialA.md)
+
+
+# Corte 2
+
+1. [Clase 8 Asignacion y paso por referencia](C8/Clase%208%20Asignacion%20y%20paso%20por%20referencia.md)
