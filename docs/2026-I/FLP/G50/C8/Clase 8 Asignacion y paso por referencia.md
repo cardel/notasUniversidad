@@ -15,3 +15,4 @@ Ahora vamos a introducir el concepto de estado, es decir que las variables puede
 1. [Asignación.](Asignación..md)
 2. [Paso por referencia](Paso%20por%20referencia.md)
 3. [Ejemplo](Ejemplo.md)
+4. [Paradigmas de programación](Paradigmas.md)
