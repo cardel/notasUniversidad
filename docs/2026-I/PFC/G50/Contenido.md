@@ -20,3 +20,4 @@ t
 6. [Clase 6 Abstracción de datos II y Listas I](C6/Clase%206%20Abstracción%20de%20datos%20II%20y%20Listas%20I.md)
 7. [Clase 7 Tuplas y funciones alto orden en listas](C7/Clase%207%20Tuplas%20y%20funciones%20alto%20orden%20en%20listas.md)
 8. [Clase 8. Colecciones I](C8/Clase%208.%20Colecciones%20I.md)
+9. [Clase 9. Expresiones for, maps y evaluación perezosa](C9/Clase%209.%20Expresiones%20for,%20maps%20y%20evaluación%20perezosa.md)
