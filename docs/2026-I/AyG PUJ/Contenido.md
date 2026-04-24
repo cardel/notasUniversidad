@@ -42,3 +42,8 @@
 8. [Clase 20 Algoritmo de Bellman-Ford](C20/Clase%2020%20Algoritmo%20de%20Bellman-Ford.md)
 9. [Clase 21. Algoritmo Dijsktra y grafos con estado](C21/Clase%2021.%20Algoritmo%20Dijsktra%20y%20grafos%20con%20estado.md)
 10. [Clase 22 Algoritmo Floyd Warshall](C22/Clase%2022%20Algoritmo%20Floyd%20Warshall.md)
+
+
+# Corte 3
+
+1. [Clase 23 Introduccion a los arboles](C23/Clase%2023%20Introduccion%20a%20los%20arboles.md)

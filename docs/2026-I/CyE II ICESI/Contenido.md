@@ -37,3 +37,4 @@
 15. [Clase 16. EjemploMetodo de árbol](C16/Clase%2016.%20EjemploMetodo%20de%20árbol.md)
 16. [Clase 17 Introduccion a la teoria de números](C17/Clase%2017%20Introduccion%20a%20la%20teoria%20de%20números.md)
 17. [Clase 18 Funciones de alto orden map filter reduce](C18/Clase%2018%20Funciones%20de%20alto%20orden%20map%20filter%20reduce.md)
+18. [Clase 19. Aritmetica modular](C19/Clase%2019.%20Aritmetica%20modular.md)
