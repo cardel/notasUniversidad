@@ -25,3 +25,4 @@
 # Corte 2
 
 8. [Clase 8. Asignación y paso por referencia](C8/Clase%208.%20Asignación%20y%20paso%20por%20referencia.md)
+9. [Clase 9 Lenguajes tipados](C9/Clase%209%20Lenguajes%20tipados.md)

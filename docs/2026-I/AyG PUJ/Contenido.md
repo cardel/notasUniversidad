@@ -47,3 +47,4 @@
 # Corte 3
 
 1. [Clase 23 Introduccion a los arboles](C23/Clase%2023%20Introduccion%20a%20los%20arboles.md)
+2. [Clase 24 Radio y diametro](C24/Clase%2024%20Radio%20y%20diametro.md)

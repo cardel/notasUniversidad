@@ -1,1 +1,0 @@
-![](attachments/paradigmsDIAGRAMeng201.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
