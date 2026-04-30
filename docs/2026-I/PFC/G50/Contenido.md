@@ -10,7 +10,7 @@ t
 
 [Generador gitignore](https://www.toptal.com/developers/gitignore/)  Lo que genere almacenarlo como .gitignore en la carpeta raiz del repositorio de GIT
 
-# Corte
+# Corte 1
 
 1. [Clase 1. Introducción al curso y Scala](C1/Introducción%20al%20curso%20y%20Scala.md)
 2. [Clase 2. Elementos de PF](C2/Clase%202.%20Elementos%20de%20PF.md)
@@ -21,3 +21,8 @@ t
 7. [Clase 7 Tuplas y funciones alto orden en listas](C7/Clase%207%20Tuplas%20y%20funciones%20alto%20orden%20en%20listas.md)
 8. [Clase 8. Colecciones I](C8/Clase%208.%20Colecciones%20I.md)
 9. [Clase 9. Expresiones for, maps y evaluación perezosa](C9/Clase%209.%20Expresiones%20for,%20maps%20y%20evaluación%20perezosa.md)
+
+# Corte
+
+10. [Clase 10 Introduccion al paralelismo](C10/Clase%2010%20Introduccion%20al%20paralelismo.md)
+11. [Clase 11. Benchmarking](C11/Clase%2011.%20Benchmarking.md)
