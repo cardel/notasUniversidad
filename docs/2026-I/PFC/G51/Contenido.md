@@ -19,3 +19,8 @@ Generador de gitignore [Gitignore.io](https://www.toptal.com/developers/gitignor
 7. [Clase 7 Tuplas](C7/Clase%207%20Tuplas.md)
 8. [Clase 8. Colecciones I](C8/Clase%208.%20Colecciones%20I.md)
 9. [Clase 9. Expresiones for, mapas y evaluacion perezosa](C9/Clase%209.%20Expresiones%20for,%20mapas%20y%20evaluacion%20perezosa.md)
+
+# Corte 2
+
+10. [Clase 10 Introduccion al paralelismo](C10/Clase%2010%20Introduccion%20al%20paralelismo.md)
+11. [Clase 11 Complejidad de la paralelizacion y benchmarking](C11/Clase%2011%20Complejidad%20de%20la%20paralelizacion%20y%20benchmarking.md)
