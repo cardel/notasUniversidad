@@ -4,6 +4,9 @@
 
 [Prompts del curso](https://github.com/cardel/prompts-cursos/tree/master/FLP)
 
+[Diapositivas anotadas](https://drive.google.com/drive/folders/1SNspwZJXeBkzfmkJ4Gwk62NnBmqfJn5B?usp=sharing)
+
+
 # Clases
 
 ## Corte 1
@@ -22,4 +25,5 @@
 # Corte 2
 
 1. [Clase 8 Asignacion y paso por referencia](C8/Clase%208%20Asignacion%20y%20paso%20por%20referencia.md)
-2. [Clase 9. Lenguajes tipados](C9/Clase%209.%20Lenguajes%20tipados.md)
+2. [Clase 9. Lenguajes tipados Chequeo](C9/Clase%209.%20Lenguajes%20tipados.md)
+3. [Clase 10. Inferencia de tipos](C10/Clase%2010.%20Inferencia%20de%20tipos.md)
