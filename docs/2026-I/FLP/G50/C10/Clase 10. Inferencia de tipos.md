@@ -42,3 +42,8 @@ Comportamiento con ?.
 2. Cuando tenemos una ocurrencia:
 	1. Si la variable de tipo está ligada comparamos, si son diferentes falla
 	2. Si está vacia, la asignamos, validando que no existan recursiones en los tipo procval ($tx -> tx$)
+
+
+# Temas
+
+[Notas de implementacion](Notas%20de%20implementacion.md)
