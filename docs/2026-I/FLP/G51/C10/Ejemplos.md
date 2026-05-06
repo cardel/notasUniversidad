@@ -28,3 +28,138 @@ int
 > (type-to-external-form (type-of-program (scan&parse "let func = proc(? f, ? x) (f +(x,1) >(x,0)) in let res = (func proc(? a, ? b) a 10) in func")))
 ((int * bool -> int) * int -> int)
 ```
+
+# Pruebas examen del 2016
+
+```scheme
+--> let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            (t b a c d)
+12
+--> . . parsing: at line 14: nonterminal <program> can't begin with end-marker #f
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            (t b a c d)")))
+int
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            let res = (t b a c d) in a")))
+(int * (int -> bool) -> int)
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            let res = (t b a c d) in b")))
+((int * (int -> bool) -> int)
+ *
+ int
+ *
+ (int -> bool)
+ *
+ (int -> bool)
+ ->
+ int)
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            let res = (t b a c d) in c")))
+(int -> bool)
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            let res = (t b a c d) in d")))
+int
+> (type-to-external-form (type-of-program (scan&parse "let
+   a = proc(int x, ? y)
+           if (y x) then +(x,1) else +(x,3)
+   b = proc(? n, ?m, ?o, ?p)
+           if (p m) then (n m o) else (n *(m,3) o)
+   c = proc(int q)
+          zero?(q)
+   d = 3
+   in
+      let       
+        t = proc(? f, ?g, ?z, ?w)
+               (f g w z z)
+        in
+            let res = (t b a c d) in t")))
+(((int * (int -> bool) -> int)
+  *
+  int
+  *
+  (int -> bool)
+  *
+  (int -> bool)
+  ->
+  int)
+ *
+ (int * (int -> bool) -> int)
+ *
+ (int -> bool)
+ *
+ int
+ ->
+ int)
+```
