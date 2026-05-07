@@ -19,3 +19,8 @@ Pero esto requiere que estos se puedan comunicar y esto implica ciertos desafios
 1. Configurar volumenes
 2. Configurar REDES
 3. Configurar parametros como el CORS (Origines permitidos cuando se comunican aplicaciones)
+
+
+# Temas
+
+1. [Docker compose](Docker%20compose.md)
