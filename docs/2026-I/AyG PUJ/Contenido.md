@@ -51,3 +51,4 @@
 3. [Clase 25 Radio y diametro en arboles](C25/Clase%2025%20Radio%20y%20diametro%20en%20arboles.md)
 4. [Clase 26 Arboles m-arios y sus propiedades](C26/Clase%2026%20Arboles%20m-arios%20y%20sus%20propiedades.md)
 5. [Clase 27 Arboles de segmentos](C27/Clase%2027%20Arboles%20de%20segmentos.md)
+6. [Clase 28 Arboles de Fenwick](C28/Clase%2028%20Arboles%20de%20Fenwick.md)
