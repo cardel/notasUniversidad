@@ -27,3 +27,4 @@
 1. [Clase 8 Asignacion y paso por referencia](C8/Clase%208%20Asignacion%20y%20paso%20por%20referencia.md)
 2. [Clase 9. Lenguajes tipados Chequeo](C9/Clase%209.%20Lenguajes%20tipados.md)
 3. [Clase 10. Inferencia de tipos](C10/Clase%2010.%20Inferencia%20de%20tipos.md)
+4. [Clase 11 Objetos](C11/Clase%2011%20Objetos.md)
