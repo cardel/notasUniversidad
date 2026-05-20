@@ -52,3 +52,4 @@
 4. [Clase 26 Arboles m-arios y sus propiedades](C26/Clase%2026%20Arboles%20m-arios%20y%20sus%20propiedades.md)
 5. [Clase 27 Arboles de segmentos](C27/Clase%2027%20Arboles%20de%20segmentos.md)
 6. [Clase 28 Arboles de Fenwick](C28/Clase%2028%20Arboles%20de%20Fenwick.md)
+7. [Clase 29 Union Find](C29/Clase%2029%20Union%20Find.md)

@@ -1,0 +1,1 @@
+![](attachments/2026-05-20-Note-17-13_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

@@ -41,3 +41,4 @@
 19. [Clase 20 Teoria de numeros y TADS en PF](C20/Clase%2020%20Teoria%20de%20numeros%20y%20TADS%20en%20PF.md)
 20. [Clase 21 TADs y congruencias lineales](C21/Clase%2021%20TADs%20y%20congruencias%20lineales.md)
 21. [Clase 22 Ecuaciones de congruencia](C22/Clase%2022%20Ecuaciones%20de%20congruencia.md)
+22. [Clase 23. Teorema del residuo del chino y expresiones for](C23/Clase%2023.%20Teorema%20del%20residuo%20del%20chino%20y%20expresiones%20for.md)
