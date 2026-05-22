@@ -25,3 +25,4 @@ Generador de gitignore [Gitignore.io](https://www.toptal.com/developers/gitignor
 10. [Clase 10 Introduccion al paralelismo](C10/Clase%2010%20Introduccion%20al%20paralelismo.md)
 11. [Clase 11 Complejidad de la paralelizacion y benchmarking](C11/Clase%2011%20Complejidad%20de%20la%20paralelizacion%20y%20benchmarking.md)
 12. [Clase 12 paralelismo de tareas](C12/Clase%2012%20paralelismo%20de%20tareas.md)
+13. [Clase 13 Colecciones paralelas](../G50/C13/Clase%2013%20Colecciones%20paralelas.md)

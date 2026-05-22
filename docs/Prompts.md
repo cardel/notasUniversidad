@@ -10,6 +10,8 @@ No agregues codigo adicional, solo trabaja con el que te estoy dando
 
 No comentes dentro de los diagramas mermaid
 
+Añade 3 ejemplos concretos completos y paso a paso que ayuden a entender los conceptos
+
 Al final realiza una tabla de resumen en formato correcto de Markdown con los conceptos vistos y agrega algunos comentarios adicionales sobre el tema que hagan falta
 
 Así mismo no borres nada de lo que se ha escrito y no coloques mensajes de amabilidad.
