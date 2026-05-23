@@ -6,7 +6,7 @@
 
 [Diapositivas anotadas](https://drive.google.com/drive/folders/1SNspwZJXeBkzfmkJ4Gwk62NnBmqfJn5B?usp=sharing)
 
-
+[Examenes semestres anteriores](https://drive.google.com/drive/folders/1JrELF2qM-0UbFqGWejMrbF9oawMmKS6W?usp=drive_link)
 # Clases
 
 ## Corte 1
