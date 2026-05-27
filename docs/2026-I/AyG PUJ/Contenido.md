@@ -54,3 +54,4 @@
 6. [Clase 28 Arboles de Fenwick](C28/Clase%2028%20Arboles%20de%20Fenwick.md)
 7. [Clase 29 Union Find](C29/Clase%2029%20Union%20Find.md)
 8. [Clase 30 arboles de cobertura minima](C30/Clase%2030%20arboles%20de%20cobertura%20minima.md)
+9. [Clase 31 Refuerzo arboles de segmentos](C31/Clase%2031%20Refuerzo%20arboles%20de%20segmentos.md)
