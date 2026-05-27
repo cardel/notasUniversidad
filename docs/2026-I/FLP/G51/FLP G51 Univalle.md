@@ -23,7 +23,7 @@
 6. [Clase 6 Condicionales, procedimientos y ligaduras](C6/Clase%206%20Condicionales,%20procedimientos%20y%20ligadras.md)
 7. [Clase 7 Procedimientos recursivos](C7/Clase%207%20Procedimientos%20recursivos.md)
 
-[SolucionParcialB](SolucionParcialB.md)
+[Solución del primer exámen](SolucionParcialB.md)
 
 
 # Corte 2
@@ -32,3 +32,5 @@
 9. [Clase 9 Lenguajes tipados (Chequeo de tipo)](C9/Clase%209%20Lenguajes%20tipados.md)
 10. [Clase 10 Inferencia de tipos](C10/Clase%2010%20Inferencia%20de%20tipos.md)
 11. [Clase 11 Objetos](C11/Clase%2011%20Objetos.md)
+
+[Solución del segundo exámen](SolucionParcialB.md)
