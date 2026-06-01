@@ -22,3 +22,6 @@
 9. [Clase 9. Docker](C9/Clase%209.%20Docker.md)
 10. [Clase 10 Docker compose y Docker Swarm](C10/Clase%2010%20Docker%20compose%20y%20Docker%20Swarm.md)
 
+[Solución segundo exámen](solucion_parcial2.md)
+
+
