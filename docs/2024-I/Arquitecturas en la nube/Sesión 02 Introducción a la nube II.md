@@ -4,7 +4,7 @@ Fecha 23 de Julio de 2024
 
 Tener presente: [https://learn.microsoft.com/es-es/windows/wsl/install](https://learn.microsoft.com/es-es/windows/wsl/install) 
 
-![semana1_annotated.pdf](Sesio%CC%81n%2002%20Introduccio%CC%81n%20a%20la%20nube%20II%20d60dcf232d744bc9a81064ae124ffd60/semana1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
+![semana1_annotated.pdf](Sesion%2002/semana1_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Aspectos teóricos I parte
 

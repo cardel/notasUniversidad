@@ -1,3 +1,3 @@
 # Contenido del curso
 
-![Untitled](Untitled.jpeg)
+![Untitled](Contenido%20del%20curso/Untitled.jpeg)

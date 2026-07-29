@@ -10,4 +10,4 @@
 - Explicación proyecto
 - Ejemplos inducción estructural y generalizada
 
-![NotasClase_annotated.pdf](Clase%2005%20de%20Marzo%20Induccio%CC%81n%20estructural%20y%20general%201ad7fd794c28805fa3b1fbf1878a9d22/NotasClase_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
+![NotasClase_annotated.pdf](Clase%2005%20de%20Marzo%20Induccion%20estructural%20y%20general/NotasClase_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

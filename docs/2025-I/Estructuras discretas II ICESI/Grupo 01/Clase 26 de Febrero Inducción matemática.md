@@ -1,6 +1,6 @@
 # Clase 26 de Febrero Inducción matemática
 
-![Notas_annotated.pdf](Clase%2026%20de%20Febrero%20Induccio%CC%81n%20matema%CC%81tica%201a67fd794c2880f0a1b6d148f85a9104/Notas_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
+![Notas_annotated.pdf](Clase%2026%20de%20Febrero%20Inducción%20matemática/Notas_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
 
 # Inducción matemática
 

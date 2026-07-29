@@ -27,7 +27,7 @@ Es un recurso que administra los pods.
 
 Un directorio en el cual se monta un contenedor y permite acceder a una unidad física (local o en la nube)
 
-![kubernetes-cluster-architecture.svg](kubernetes-cluster-architecture.svg)
+![kubernetes-cluster-architecture.svg](Parte%202%20Clusters/kubernetes-cluster-architecture.svg)
 
 - api server es el punto de entrada al cluster
 - Scheduler Asignar las políticas de acceso a los clústeres

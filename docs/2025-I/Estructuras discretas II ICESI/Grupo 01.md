@@ -6,9 +6,9 @@
 
 [Clase 19 de Feb Listas](Grupo%2001/Clase%2019%20de%20Feb%20Listas.md)
 
-[Clase 26 de Febrero Inducción matemática](Grupo%2001%201987fd794c2880938872f773726292df/Clase%2026%20de%20Febrero%20Induccio%CC%81n%20matema%CC%81tica%201a67fd794c2880f0a1b6d148f85a9104.md)
+[Clase 26 de Febrero Inducción matemática](Grupo%2001/Clase%2026%20de%20Febrero%20Inducción%20matemática.md)
 
-[Clase 05 de Marzo. Inducción estructural y generalizada](Grupo%2001%201987fd794c2880938872f773726292df/Clase%2005%20de%20Marzo%20Induccio%CC%81n%20estructural%20y%20general%201ad7fd794c28805fa3b1fbf1878a9d22.md)
+[Clase 05 de Marzo. Inducción estructural y generalizada](Grupo%2001/Clase%2005%20de%20Marzo%20Induccion%20estructural.md)
 
 [Clase 12 de Marzo: Funciones, procesos. Relaciones recurrencia](Grupo%2001/Clase%2012%20de%20Marzo%20Funciones,%20procesos%20Relaciones.md)
 
@@ -16,9 +16,9 @@
 
 [Clase 26 Marzo: Relaciones RR y Funciones alto orden](Grupo%2001/Clase%2026%20Marzo%20Relaciones%20RR%20y%20Funciones%20alto%20orden.md)
 
-[Clase 11 de Abril Teoría de Números II](Grupo%2001%201987fd794c2880938872f773726292df/Clase%2011%20de%20Abril%20Teori%CC%81a%20de%20Nu%CC%81meros%20II%201d27fd794c2880a399d4cef6af4cc4e0.md)
+[Clase 11 de Abril Teoría de Números II](Grupo%2001/Clase%2011%20de%20Abril%20Teoría%20de%20números.md)
 
-[Clase 25 de Abril Repaso teoría de números](Grupo%2001%201987fd794c2880938872f773726292df/Clase%2025%20de%20Abril%20Repaso%20teori%CC%81a%20de%20nu%CC%81meros%201e07fd794c2880a78b3be61a299cd12d.md)
+[Clase 25 de Abril Repaso teoría de números](Grupo%2001/Clase%2025%20de%20Abril%20Repaso%20teoria%20de%20numeros.md)
 
 [Clase 02 de Mayo: Funciones de alto orden](Grupo%2001/Clase%2002%20de%20Mayo%20Funciones%20de%20alto%20orden.md)
 

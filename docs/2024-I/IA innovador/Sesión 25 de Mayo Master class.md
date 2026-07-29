@@ -1,0 +1,3 @@
+# Sesión 25 de Mayo: Master class
+
+![Master_Class_2_annotated.pdf](Sesión%2025%20de%20Mayo%20Master%20class/Master_Class_2_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

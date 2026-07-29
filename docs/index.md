@@ -1,13 +1,77 @@
-# Lista de semestres
+---
+hide:
+  - navigation
+  - toc
+---
 
-[2023-II](2023-II/Contenido.md)
+# Notas Universidad
 
-[2024-I](2024-I/Readme.md)
+Apuntes de los cursos que he dictado en distintas universidades:
+programación funcional e imperativa, algoritmos, matemáticas discretas,
+lenguajes de programación, computación en la nube y más. Elige un semestre
+para entrar.
 
-[2024-II](2024-II/Lista%20de%20cursos.md)
+<div class="grid cards" markdown>
 
-[2025-I](2025-I/Readme.md)
+-   :material-notebook-edit-outline:{ .lg .middle } **2023-II**
 
-[2025-II](2025-II/Lista.md)
+    ---
 
-[2026-I](2026-I/Lista.md)
+    Análisis y diseño de algoritmos I, programación funcional y redes
+    neuronales.
+
+    [:octicons-arrow-right-24: Entrar](2023-II/Contenido.md)
+
+-   :material-cloud-outline:{ .lg .middle } **2024-I**
+
+    ---
+
+    Fundamentos de lenguajes de programación, programación funcional,
+    arquitecturas en la nube e inteligencia artificial.
+
+    [:octicons-arrow-right-24: Entrar](2024-I/Readme.md)
+
+-   :material-function-variant:{ .lg .middle } **2024-II**
+
+    ---
+
+    Programación funcional, análisis y diseño de algoritmos II y redes
+    neuronales.
+
+    [:octicons-arrow-right-24: Entrar](2024-II/Lista%20de%20cursos.md)
+
+-   :material-sigma:{ .lg .middle } **2025-I**
+
+    ---
+
+    Lenguajes de programación, infraestructuras, estructuras discretas II
+    y algoritmos.
+
+    [:octicons-arrow-right-24: Entrar](2025-I/Readme.md)
+
+-   :material-graph-outline:{ .lg .middle } **2025-II**
+
+    ---
+
+    Continuación de cursos de algoritmos, lenguajes y matemáticas para la
+    computación.
+
+    [:octicons-arrow-right-24: Entrar](2025-II/Lista.md)
+
+-   :material-file-tree-outline:{ .lg .middle } **2026-I**
+
+    ---
+
+    Árboles y grafos, y demás cursos del primer semestre de 2026.
+
+    [:octicons-arrow-right-24: Entrar](2026-I/Lista.md)
+
+-   :material-database-outline:{ .lg .middle } **2026-II**
+
+    ---
+
+    Estructuras de datos: el curso más reciente, con clases en video.
+
+    [:octicons-arrow-right-24: Entrar](2026-II/Lista.md)
+
+</div>

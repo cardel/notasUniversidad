@@ -136,7 +136,7 @@ Categorias
 
 Los servicios se ofrecen en diferentes categorías, cada uno ofrece diferentes funcionalidades de acuerdo a lo que se requiere.
 
-![Untitled](Sesio%CC%81n%2001%20Introduccio%CC%81n%20a%20la%20nube%20I%2019d1e89b999f4d66b390bd83ea4473d7/Untitled.png)
+![Untitled](Sesion%2001/Untitled.png)
 
 ## Interacción con los servicios
 

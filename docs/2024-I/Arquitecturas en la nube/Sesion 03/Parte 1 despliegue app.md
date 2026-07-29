@@ -117,4 +117,4 @@ az webapp config appsettings set \
   --settings WEBSITES_PORT=5000
 ```
 
-[Sesión 03: PAAS/IAAS/SAAS I](Parte%201%20despliegue%20app%20cc8e1098f6c54c96b3c0df7c2d4915a6/Sesio%CC%81n%2003%20PAAS%20IAAS%20SAAS%20I%2003f8d6a3ddb842cab5aa7760ccb778f9.md)
+[Sesión 03: PAAS/IAAS/SAAS I](../Sesión%2003%20PASSIAAS.md)

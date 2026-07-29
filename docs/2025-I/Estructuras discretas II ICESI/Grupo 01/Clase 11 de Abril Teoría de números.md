@@ -1,6 +1,6 @@
 # Clase 11 de Abril Teoría de Números II
 
-[Ejemplos iniciales clase](Clase%2011%20de%20Abril%20Teori%CC%81a%20de%20Nu%CC%81meros%20II%201d27fd794c2880a399d4cef6af4cc4e0/Ejemplos%20iniciales%20clase%201d27fd794c28800ca50beb518267f6f7.md)
+[Ejemplos iniciales clase](Clase%2011%20de%20Abril%20Teoría%20de%20números/Ejemplos%20iniciales%20clase.md)
 
 # División de números enteros
 
@@ -238,4 +238,4 @@ Este ejemplo muestra cómo los teoremas de congruencia modular son esenciales pa
 
 # 
 
-![2025-04-11-Note-13-02_annotated.pdf](Clase%2011%20de%20Abril%20Teori%CC%81a%20de%20Nu%CC%81meros%20II%201d27fd794c2880a399d4cef6af4cc4e0/2025-04-11-Note-13-02_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}
+![2025-04-11-Note-13-02_annotated.pdf](Clase%2011%20de%20Abril%20Teoría%20de%20números/2025-04-11-Note-13-02_annotated.pdf){ type=application/pdf style="min-height:70vh;width:100%"}

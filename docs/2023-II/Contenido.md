@@ -1,11 +1,11 @@
 # 2023-II
 
-[Readme](2023-II/ADA%20I/Readme.md)
+[Readme](ADA%20I/Readme.md)
 
-[Funcional - Jueves](2023-II/Funcional%20-%20Jueves/Readme.md)
+[Funcional - Jueves](Funcional%20-%20Jueves/Readme.md)
 
 [Funcional-Martes](Funcional-Martes/Contenido.md)
 
-[Encuestas TG](Encuestas%20TG%20375dbe6eb24e47709f796cedc3c06ec7.md)
+Encuestas TG
 
 [Redes Neuronales](Redes%20Neuronales/Readme.md)

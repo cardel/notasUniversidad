@@ -1,35 +1,72 @@
 site_name: Notas Universidad
+site_author: Carlos A. Delgado
+site_description: >-
+  Apuntes de los cursos universitarios de Carlos A. Delgado: programación
+  funcional e imperativa, algoritmos, matemáticas discretas, lenguajes de
+  programación, computación en la nube y más.
+site_url: https://cardel.github.io/notasUniversidad/
+repo_url: https://github.com/cardel/notasUniversidad
+repo_name: cardel/notasUniversidad
 
 theme:
   name: "material"
+  language: es
+  icon:
+    logo: material/notebook-multiple-outline
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
   palette:
-    # Modo oscuro - Azul más profundo
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: cyan
-      accent: light blue
+    # Automático (sigue al sistema)
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/weather-night
-        name: Modo claro
-    # Modo claro - Azul claro
+        icon: material/brightness-auto
+        name: Cambiar a modo claro
+    # Modo claro
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: light blue
-      accent: light blue
+      primary: deep purple
+      accent: pink
       toggle:
         icon: material/weather-sunny
-        name: Modo oscuro
+        name: Cambiar a modo oscuro
+    # Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: pink
+      toggle:
+        icon: material/weather-night
+        name: Cambiar a modo automático
+
 markdown_extensions:
   - pymdownx.pathconverter:
       tags: "a script img link object embed"
   - attr_list
+  - md_in_html
   - footnotes
-  # - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.arithmatex:
       generic: true
-  # - pymdownx.superfences
-  # - pymdownx.details
-  # - pymdownx.magiclink
   - pymdownx.tasklist:
       custom_checkbox: true
   - def_list
@@ -43,13 +80,13 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-
   - toc:
       permalink: true
 
 plugins:
   - mkdocs-pdf
-  - search
+  - search:
+      lang: es
   - roamlinks
   - blog
   - rss:
@@ -59,6 +96,18 @@ plugins:
       categories:
         - categories
         - tags
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cardel
+      name: GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/cardel
+      name: LinkedIn
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@cardel87
+      name: YouTube
 
 extra_javascript:
   - javascripts/mathjax.js

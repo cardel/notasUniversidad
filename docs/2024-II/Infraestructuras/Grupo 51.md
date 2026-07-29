@@ -4,7 +4,7 @@
 
 [Clase 02 Introducción a la paralelización](Grupo%2051/Clase%2002%20Introducción%20a%20la%20paralelización.md)
 
-[Clase 03 Introducción paralelización II (Ejercicio)](Grupo%2051/Clase%2003%20Introducción%20paralelización%20II%20(Ejercicio).md)
+[Clase 03 Introducción paralelización II (Ejercicio)](Grupo%2051/Clase%2003%20Introducción%20paralelización%20II%20%28Ejercicio%29.md)
 
 [Clase 04 Paralelización II](Grupo%2051/Clase%2004%20Paralelización%20II.md)
 

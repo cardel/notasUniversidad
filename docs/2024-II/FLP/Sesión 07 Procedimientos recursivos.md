@@ -14,7 +14,7 @@ in
 	(x 2 3)
 ```
 
-![Untitled-2024-09-26-0829.png](Sesio%CC%81n%2007%20Procedimientos%20recursivos%2010d7fd794c288006b763d2db65e1278e/Untitled-2024-09-26-0829.png)
+![Untitled-2024-09-26-0829.png](Imagenes/Untitled-2024-09-26-0829.png)
 
 x no puede conocerse a sí mismo, sin embargo NO podemos modificar el let porque podriamos tener problemas de consistencias
 

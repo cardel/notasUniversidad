@@ -13,7 +13,7 @@
 - La ecuación tiene aT(n/b) + f(n)
 - Raiz: f(n) que tiene a hijos que son T(n/b)
 
-![Untitled-2023-09-28-0852.png](1%20Relaciones%20de%20recurrencia%20me%CC%81todo%20de%20arbol%20753f86daf1374e37b82f52aef18ad21e/Untitled-2023-09-28-0852.png)
+![Untitled-2023-09-28-0852.png](1%20Relaciones%20recurrencia/Untitled-2023-09-28-0852.png)
 
 ¿Como se expande el arból?
 
@@ -21,7 +21,7 @@
 - Reemplazo n por n/b en la ecuación y sencillamente reemplazo en el arbol el nodo T(n/b)
 - 
 
-![Untitled-2023-09-28-0852(1).png](1%20Relaciones%20de%20recurrencia%20me%CC%81todo%20de%20arbol%20753f86daf1374e37b82f52aef18ad21e/Untitled-2023-09-28-0852(1).png)
+![Untitled-2023-09-28-0852(1).png](1%20Relaciones%20recurrencia/Untitled-2023-09-28-0852%281%29.png)
 
 ¿Hasta cuando expando el arbol?
 
