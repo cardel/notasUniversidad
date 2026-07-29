@@ -36,7 +36,7 @@ Subestructura optima
 Hay dos variables que se mueven, la capacidad y el elemento
 
 $$
-M[i,j] = \begin{cases} 0 && j = 0 \\ 0 && j = 1 \wedge i < w_j \\ b_i && i \geq w_j \wedge j = 1  \\ \texttt{max}(M[i-w_j, j-1]), M[i,j-1]) && \texttt{En otro caso} \end{cases}
+M[i,j] = \begin{cases} 0 & j = 0 \\ 0 & j = 1 \wedge i < w_j \\ b_i & i \geq w_j \wedge j = 1  \\ \texttt{max}(M[i-w_j, j-1]), M[i,j-1]) & \texttt{En otro caso} \end{cases}
 $$
 
 ![image.png](Sesión%2004%20Programación%20dinámica%20II/image.png)

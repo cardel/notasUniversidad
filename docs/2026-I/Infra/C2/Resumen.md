@@ -18,7 +18,7 @@ Donde $C$ es capacitancia, $V$ es voltaje y $f$ es frecuencia. Reducir tamaño d
 
 3. **Variabilidad de manufactura**: en procesos nanométricos, pequeñas variaciones en fabricación (~1-2 átomos) causan diferencias significativas en comportamiento de transistores, reduciendo yield (porcentaje de chips funcionales).
 
-4. **Costo prohibitivo**: equipos litográficos para procesos menores de 5 nm cuestan $100+ millones, con ROI (retorno de inversión) que se ha vuelto negativo.
+4. **Costo prohibitivo**: equipos litográficos para procesos menores de 5 nm cuestan \$100+ millones, con ROI (retorno de inversión) que se ha vuelto negativo.
 
 **Implicación**: el crecimiento exponencial que caracterizó 50 años de computación ha terminado. La industria debe buscar mejoras a través de arquitectura, no solo reducción de tamaño.
 

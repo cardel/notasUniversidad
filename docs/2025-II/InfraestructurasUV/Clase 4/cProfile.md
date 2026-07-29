@@ -102,7 +102,7 @@ Con memoization:
 ### Estadísticas críticas:
 - **29,860,703 llamadas** a `fibonacci_recursive`
 - **12.023 segundos** de tiempo total de ejecución
-- **Complejidad exponencial**: O(2^n) ≈ 2³⁵ = 34,359,738,368 operaciones (teórico)
+- **Complejidad exponencial**: $O(2^n) \approx 2^{35}$ = 34,359,738,368 operaciones (teórico)
 - **29.8 millones de llamadas reales** (el profiler captura menos debido a casos base)
 
 ### Interpretación:

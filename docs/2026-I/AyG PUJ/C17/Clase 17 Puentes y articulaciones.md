@@ -8,4 +8,4 @@
 5. Algoritmo de Kosaraju: Este algoritmo permite detectar los componentes fuertemente conexos
 	1. Requiere dos pasadas de DFS $G$ y $G^T$ 
 	2. Tomamos los tiempos finalización de cada vértice en la primera pasada
-	3. Ejecutar en el $G^T$ DFS en el orden de los tiempo de finalización (decreciente), como el G^T tiene el orden invertido de las aristas, desde un componente de tiempo de finalización superior no podemos acceder a uno de finalización inferior. Por que el grafo DFS de $G$$ este componente es ancestro de este componente.
+	3. Ejecutar en el $G^T$ DFS en el orden de los tiempo de finalización (decreciente), como el $G^T$ tiene el orden invertido de las aristas, desde un componente de tiempo de finalización superior no podemos acceder a uno de finalización inferior. Por que el grafo DFS de $G$ este componente es ancestro de este componente.

@@ -37,5 +37,5 @@ $$
 | Pregunta | Acción |
 | --- | --- |
 | ¿Como resuelvo una ecuación con el método del maestro? | Si la ecuación tiene forma T(n) = aT(n/b) + f(n) buscar el caso en que aplica,  |
-| ¿Como encuentro el caso? | Verificar las condiciones con respecto a la cota, por ejemplo si f(n) es O(n^{log_b(a) - e)  dando los valores convenientes a e > 0, si la condición es VERDADERA procedemos a resolver |
+| ¿Como encuentro el caso? | Verificar las condiciones con respecto a la cota, por ejemplo si f(n) es $O(n^{log_b(a) - e})$  dando los valores convenientes a e > 0, si la condición es VERDADERA procedemos a resolver |
 | ¿Que pasa si no entra en ningún caso? | si no aplica en ninguno de los 3 casos, sencillamente no se puede solucionar con esté metodo |

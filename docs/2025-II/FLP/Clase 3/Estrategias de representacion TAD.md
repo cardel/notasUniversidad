@@ -35,10 +35,10 @@ a = 3  # Objeto con comportamiento definido
 
 Basado en los axiomas de Peano:
 $$
-\begin{align}
+\begin{aligned}
 \lceil 0 \rceil \in \mathbb{N} \\
 n \in \mathbb{N} \rightarrow n+1 \in \mathbb{N}
-\end{align}
+\end{aligned}
 $$
 
 ### Implementación 1: Usando números nativos

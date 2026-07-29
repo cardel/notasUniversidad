@@ -2,14 +2,14 @@
 
 Un analista de datos necesita calcular el **promedio móvil** de una serie numérica muy grande (por ejemplo, mediciones de temperatura cada segundo durante varios días).  
 
-El promedio móvil de una lista de valores se define como el promedio de los últimos ( k ) valores, y se usa para suavizar fluctuaciones.
+El promedio móvil de una lista de valores se define como el promedio de los últimos $k$ valores, y se usa para suavizar fluctuaciones.
 
 Por ejemplo, para la lista:
 
 $$
 A = [3, 1, 7, 0, 4, 1, 6, 3]  
 $$
-y una ventana ( k = 3 ), los promedios móviles son:
+y una ventana $k = 3$, los promedios móviles son:
 
 $$
 \left[\frac{3+1+7}{3}, \frac{1+7+0}{3}, \ldots \right] \Rightarrow [3.67, 2.67, \ldots]  
@@ -19,7 +19,7 @@ $$
 
 ## 1. Dependencias (10 puntos)
 
-- El cálculo del promedio móvil en la posición ( i ) **no depende de los resultados anteriores**, sino únicamente de los valores originales ( $A[i-k+1], \ldots, A[i]$ ).  
+- El cálculo del promedio móvil en la posición $i$ **no depende de los resultados anteriores**, sino únicamente de los valores originales $(A[i-k+1], \ldots, A[i])$.  
     Por tanto, **no hay dependencia entre los resultados** del promedio móvil: cada posición puede calcularse de manera independiente si se dispone de los valores originales de entrada.
     
 - El tipo de paralelismo adecuado es el **paralelismo de datos**, porque el mismo tipo de operación (promedio de ventana) se aplica a diferentes partes del conjunto de datos.

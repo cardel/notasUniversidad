@@ -9,13 +9,13 @@ El grafo existe, pero es **implícito**; lo generamos a medida que lo recorremos
 
 ## Definición formal
 
-Un **grafo de estado** asociado a un problema es una tupla \( (V, E, w, s, M) \) donde:
+Un **grafo de estado** asociado a un problema es una tupla $(V, E, w, s, M)$ donde:
 
-- \( V \) es el conjunto de configuraciones posibles del sistema (estados).
-- \( E \subseteq V \times V \): \( (s, s') \in E \) si y solo si existe una acción válida que transforma el estado \( s \) en \( s' \).
-- \( w : E \to \mathbb{R}_{\geq 0} \) asigna el costo de cada acción (peso de la arista).
-- \( s \in V \) es el estado inicial.
-- \( M \subseteq V \) es el conjunto de estados meta (objetivo).
+- $V$ es el conjunto de configuraciones posibles del sistema (estados).
+- $E \subseteq V \times V$: $(s, s') \in E$ si y solo si existe una acción válida que transforma el estado $s$ en $s'$.
+- $w : E \to \mathbb{R}_{\geq 0}$ asigna el costo de cada acción (peso de la arista).
+- $s \in V$ es el estado inicial.
+- $M \subseteq V$ es el conjunto de estados meta (objetivo).
 
 ## Enfoque de modelado
 
@@ -51,7 +51,7 @@ Concepto | Descripción |
 **Grafo implícito** | Grafo que se genera dinámicamente durante la exploración, no se almacena completamente. |
 **Grafo explícito** | Grafo que se construye por completo antes de ejecutar el algoritmo de búsqueda. |
 **Algoritmos aplicables** | BFS (pesos uniformes), Dijkstra (pesos no negativos), Bellman-Ford (pesos arbitrarios). |
-**Costo de acción** | Peso \( w(e) \) asociado a una arista, que representa el costo de realizar esa acción. |
+**Costo de acción** | Peso $w(e)$ asociado a una arista, que representa el costo de realizar esa acción. |
 
 ## Comentarios adicionales
 

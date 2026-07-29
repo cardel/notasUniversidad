@@ -8,13 +8,13 @@ Es un problema en el cual se tiene:
 Problema de decisión: ¿Existe alguna asignación de los enteros de tal forma que se cumplan las desigualdades y se cumpla $f(v) \geq B$?
 
 $$
-\begin{align}
+\begin{aligned}
 v_1 \geq 1 \\
 v_2 \geq 0 \\
 v_1 + v_2 \leq 3 \\
 f(v) = 2v_2 \\
 B = 3
-\end{align}
+\end{aligned}
 $$
 
 Soluciones:
@@ -94,7 +94,7 @@ $$
 Restricciones:
 
 $$
-\begin{align}
+\begin{aligned}
 0 \leq x_1 \leq 1 \\
 0 \leq x_2 \leq 1 \\
 0 \leq x_3 \leq 1 \\
@@ -109,7 +109,7 @@ $$
 1 \leq x_4 + \bar{x_4} \leq 1 \\
 x_1 + x_2 + x_3 \geq 1 \\
 \bar{x_3}+\bar{x_2}+x_4 \geq 1
-\end{align}
+\end{aligned}
 $$
 Función objetivo:
 $$

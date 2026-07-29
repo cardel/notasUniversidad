@@ -30,7 +30,7 @@
 ### c) Numéricos
 - **Definición**: Proporcionan soluciones aproximadas a problemas matemáticos.  
 - **Características**: Resultado siempre correcto (con precisión variable).  
-- **Ejemplo**: Cálculo de raíces de ecuaciones (e.g., \( \cos^2(x) = 0 \)).
+- **Ejemplo**: Cálculo de raíces de ecuaciones (e.g., $\cos^2(x) = 0$).
 
 ---
 

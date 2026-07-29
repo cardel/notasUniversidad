@@ -8,6 +8,10 @@ site_url: https://cardel.github.io/notasUniversidad/
 repo_url: https://github.com/cardel/notasUniversidad
 repo_name: cardel/notasUniversidad
 
+# Páginas que no aparecen en el menú de navegación (siguen accesibles por URL).
+not_in_nav: |
+  /Prompts.md
+
 theme:
   name: "material"
   language: es
@@ -106,7 +110,7 @@ extra:
       link: https://linkedin.com/in/cardel
       name: LinkedIn
     - icon: fontawesome/brands/youtube
-      link: https://www.youtube.com/@cardel87
+      link: https://www.youtube.com/@cardel87/playlists
       name: YouTube
 
 extra_javascript:

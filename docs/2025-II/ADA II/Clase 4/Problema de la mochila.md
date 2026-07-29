@@ -21,44 +21,44 @@ La solución es un vector x binario de tamaño 4.
 
 ## Posibles soluciones
 
-Vamos a enumerar todas las posibles soluciones binarias para el vector \(x = (x_1, x_2, x_3, x_4)\) y calcular el peso total y beneficio para cada una, considerando que solo son válidas aquellas con peso total \(\leq 20\) (aunque en este caso todas cumplen ya que el peso máximo de un elemento es 8 y hay 4 elementos, por lo que el peso máximo total sería \(6+8+4+7=25\), pero como la capacidad es 20, algunas combinaciones pueden excederla). Sin embargo, dado que la capacidad es 20 y los pesos individuales son bajos, la mayoría de las combinaciones son válidas. Vamos a listar todas las \(2^4 = 16\) posibilidades:
+Vamos a enumerar todas las posibles soluciones binarias para el vector $x = (x_1, x_2, x_3, x_4)$ y calcular el peso total y beneficio para cada una, considerando que solo son válidas aquellas con peso total $\leq 20$ (aunque en este caso todas cumplen ya que el peso máximo de un elemento es 8 y hay 4 elementos, por lo que el peso máximo total sería $6+8+4+7=25$, pero como la capacidad es 20, algunas combinaciones pueden excederla). Sin embargo, dado que la capacidad es 20 y los pesos individuales son bajos, la mayoría de las combinaciones son válidas. Vamos a listar todas las $2^4 = 16$ posibilidades:
 
-1. \(\{0,0,0,0\}\): Peso = 0, Beneficio = 0  
-2. \(\{1,0,0,0\}\): Peso = 6, Beneficio = 5  
-3. \(\{0,1,0,0\}\): Peso = 8, Beneficio = 4  
-4. \(\{0,0,1,0\}\): Peso = 4, Beneficio = 6  
-5. \(\{0,0,0,1\}\): Peso = 7, Beneficio = 3  
-6. \(\{1,1,0,0\}\): Peso = 6+8=14, Beneficio = 5+4=9  
-7. \(\{1,0,1,0\}\): Peso = 6+4=10, Beneficio = 5+6=11  
-8. \(\{1,0,0,1\}\): Peso = 6+7=13, Beneficio = 5+3=8  
-9. \(\{0,1,1,0\}\): Peso = 8+4=12, Beneficio = 4+6=10  
-10. \(\{0,1,0,1\}\): Peso = 8+7=15, Beneficio = 4+3=7  
-11. \(\{0,0,1,1\}\): Peso = 4+7=11, Beneficio = 6+3=9  
-12. \(\{1,1,1,0\}\): Peso = 6+8+4=18, Beneficio = 5+4+6=15  
-13. \(\{1,1,0,1\}\): Peso = 6+8+7=21 > 20 (no válida)  
-14. \(\{1,0,1,1\}\): Peso = 6+4+7=17, Beneficio = 5+6+3=14  
-15. \(\{0,1,1,1\}\): Peso = 8+4+7=19, Beneficio = 4+6+3=13  
-16. \(\{1,1,1,1\}\): Peso = 6+8+4+7=25 > 20 (no válida)  
+1. $\{0,0,0,0\}$: Peso = 0, Beneficio = 0  
+2. $\{1,0,0,0\}$: Peso = 6, Beneficio = 5  
+3. $\{0,1,0,0\}$: Peso = 8, Beneficio = 4  
+4. $\{0,0,1,0\}$: Peso = 4, Beneficio = 6  
+5. $\{0,0,0,1\}$: Peso = 7, Beneficio = 3  
+6. $\{1,1,0,0\}$: Peso = 6+8=14, Beneficio = 5+4=9  
+7. $\{1,0,1,0\}$: Peso = 6+4=10, Beneficio = 5+6=11  
+8. $\{1,0,0,1\}$: Peso = 6+7=13, Beneficio = 5+3=8  
+9. $\{0,1,1,0\}$: Peso = 8+4=12, Beneficio = 4+6=10  
+10. $\{0,1,0,1\}$: Peso = 8+7=15, Beneficio = 4+3=7  
+11. $\{0,0,1,1\}$: Peso = 4+7=11, Beneficio = 6+3=9  
+12. $\{1,1,1,0\}$: Peso = 6+8+4=18, Beneficio = 5+4+6=15  
+13. $\{1,1,0,1\}$: Peso = 6+8+7=21 > 20 (no válida)  
+14. $\{1,0,1,1\}$: Peso = 6+4+7=17, Beneficio = 5+6+3=14  
+15. $\{0,1,1,1\}$: Peso = 8+4+7=19, Beneficio = 4+6+3=13  
+16. $\{1,1,1,1\}$: Peso = 6+8+4+7=25 > 20 (no válida)  
 
 Las soluciones válidas ($peso \leq 20$) son las 1 a 12, 14 y 15. Las soluciones 13 y 16 no son válidas porque superan la capacidad de 20.
 
 En tu mensaje ya mencionaste las soluciones 1, 2 y 3. Las que faltan son las restantes (4 a 12, 14 y 15). Aquí están todas listadas:
 
-1. \(\{1,0,0,0\}\): Peso=6, Beneficio=5  
-2. \(\{0,1,0,0\}\): Peso=8, Beneficio=4  
-3. \(\{0,0,1,0\}\): Peso=4, Beneficio=6  
-4. \(\{0,0,0,1\}\): Peso=7, Beneficio=3  
-5. \(\{1,1,0,0\}\): Peso=14, Beneficio=9  
-6. \(\{1,0,1,0\}\): Peso=10, Beneficio=11  
-7. \(\{1,0,0,1\}\): Peso=13, Beneficio=8  
-8. \(\{0,1,1,0\}\): Peso=12, Beneficio=10  
-9. \(\{0,1,0,1\}\): Peso=15, Beneficio=7  
-10. \(\{0,0,1,1\}\): Peso=11, Beneficio=9  
-11. **\(\{1,1,1,0\}\): Peso=18, Beneficio=15**  11. **\(\{1,1,1,0\}\): Peso=18, Beneficio=15
-12. \(\{1,0,1,1\}\): Peso=17, Beneficio=14  
-13. \(\{0,1,1,1\}\): Peso=19, Beneficio=13  
+1. $\{1,0,0,0\}$: Peso=6, Beneficio=5  
+2. $\{0,1,0,0\}$: Peso=8, Beneficio=4  
+3. $\{0,0,1,0\}$: Peso=4, Beneficio=6  
+4. $\{0,0,0,1\}$: Peso=7, Beneficio=3  
+5. $\{1,1,0,0\}$: Peso=14, Beneficio=9  
+6. $\{1,0,1,0\}$: Peso=10, Beneficio=11  
+7. $\{1,0,0,1\}$: Peso=13, Beneficio=8  
+8. $\{0,1,1,0\}$: Peso=12, Beneficio=10  
+9. $\{0,1,0,1\}$: Peso=15, Beneficio=7  
+10. $\{0,0,1,1\}$: Peso=11, Beneficio=9  
+11. **$\{1,1,1,0\}$: Peso=18, Beneficio=15**  11. **$\{1,1,1,0\}$: Peso=18, Beneficio=15
+12. $\{1,0,1,1\}$: Peso=17, Beneficio=14  
+13. $\{0,1,1,1\}$: Peso=19, Beneficio=13  
 
-Nota: Las soluciones \(\{1,1,0,1\}\) (peso=21) y \(\{1,1,1,1\}\) (peso=25) no son válidas y se excluyen.
+Nota: Las soluciones $\{1,1,0,1\}$ (peso=21) y $\{1,1,1,1\}$ (peso=25) no son válidas y se excluyen.
 
 La solución optima es la 11, porque tiene el mayor beneficio
 
@@ -145,21 +145,21 @@ Basándonos en el contexto proporcionado sobre el problema de la mochila 0/1 y s
 ---
 
 ### 1. **La programación dinámica es eficiente para problemas con subestructura óptima y solapamiento de subproblemas**
-- El problema de la mochila 0/1 tiene una **subestructura óptima**: la solución óptima para una instancia del problema (capacidad \(M\), \(n\) elementos) se puede construir a partir de soluciones óptimas de subproblemas más pequeños (capacidad \(i < M\), \(j < n\) elementos).
+- El problema de la mochila 0/1 tiene una **subestructura óptima**: la solución óptima para una instancia del problema (capacidad $M$, $n$ elementos) se puede construir a partir de soluciones óptimas de subproblemas más pequeños (capacidad $i < M$, $j < n$ elementos).
 - Hay **solapamiento de subproblemas**: muchas combinaciones de capacidad y número de elementos se recalculan repetidamente en un enfoque recursivo ingenuo. La programación dinámica evita esto almacenando resultados en una tabla.
 
 ---
 
 ### 2. **La definición de la subestructura óptima es crucial**
-- Se define una matriz \(m[i][j]\) donde:
-  - \(i\) representa la capacidad disponible (desde 0 hasta \(M\)).
-  - \(j\) representa el número de elementos considerados (desde 0 hasta \(n\)).
-- \(m[i][j]\) almacena el **máximo beneficio achievable** con capacidad \(i\) y los primeros \(j\) elementos.
+- Se define una matriz $m[i][j]$ donde:
+  - $i$ representa la capacidad disponible (desde 0 hasta $M$).
+  - $j$ representa el número de elementos considerados (desde 0 hasta $n$).
+- $m[i][j]$ almacena el **máximo beneficio achievable** con capacidad $i$ y los primeros $j$ elementos.
 
 ---
 
 ### 3. **La relación de recurrencia captura la esencia de la decisión**
-Para cada subproblema \((i, j)\):
+Para cada subproblema $(i, j)$:
 $$
 m[i][j] = 
 \begin{cases} 
@@ -168,38 +168,38 @@ m[i][j-1] & \text{if } i < w_j \\
 \max\left(m[i - w_j][j-1] + b_j,\ m[i][j-1]\right) & \text{otherwise}
 \end{cases}
 $$
-- **Caso base**: si no hay elementos (\(j=0\)), el beneficio es 0.
-- **Si el elemento \(j\) no cabe** (\(i < w_j\)), no se puede incluir: se hereda la solución de \(j-1\).
+- **Caso base**: si no hay elementos ($j=0$), el beneficio es 0.
+- **Si el elemento $j$ no cabe** ($i < w_j$), no se puede incluir: se hereda la solución de $j-1$.
 - **Si cabe**, se elige el máximo entre:
-  - Incluir el elemento: beneficio \(b_j\) + solución óptima para capacidad \(i - w_j\) y \(j-1\) elementos.
-  - No incluirlo: solución óptima para capacidad \(i\) y \(j-1\) elementos.
+  - Incluir el elemento: beneficio $b_j$ + solución óptima para capacidad $i - w_j$ y $j-1$ elementos.
+  - No incluirlo: solución óptima para capacidad $i$ y $j-1$ elementos.
 
 ---
 
 ### 4. **El llenado de la tabla es sistemático y evita recomputación**
-- Se llena la tabla **por columnas** (para cada \(j\) desde 1 hasta \(n\)) y **por filas** (para cada \(i\) desde 0 hasta \(M\)).
-- Esto garantiza que al calcular \(m[i][j]\), los subproblemas \(m[i][j-1]\) y \(m[i - w_j][j-1]\) ya están resueltos.
-- La complejidad es \(O(n \cdot M)\), mucho mejor que la fuerza bruta (\(O(2^n)\)) para \(M\) no demasiado grande.
+- Se llena la tabla **por columnas** (para cada $j$ desde 1 hasta $n$) y **por filas** (para cada $i$ desde 0 hasta $M$).
+- Esto garantiza que al calcular $m[i][j]$, los subproblemas $m[i][j-1]$ y $m[i - w_j][j-1]$ ya están resueltos.
+- La complejidad es $O(n \cdot M)$, mucho mejor que la fuerza bruta ($O(2^n)$) para $M$ no demasiado grande.
 
 ---
 
-### 5. **La solución óptima se encuentra en \(m[M][n]\)**
-- En el ejemplo, con \(M=20\), \(n=4\), \(w = \{6,8,4,7\}\), \(b = \{5,4,6,3\}\), el máximo beneficio es 15 (logrado con \(\{1,1,1,0\}\)).
-- La esquina inferior derecha de la tabla (\(m[20][4]\)) contiene este valor.
+### 5. **La solución óptima se encuentra en $m[M][n]$**
+- En el ejemplo, con $M=20$, $n=4$, $w = \{6,8,4,7\}$, $b = \{5,4,6,3\}$, el máximo beneficio es 15 (logrado con $\{1,1,1,0\}$).
+- La esquina inferior derecha de la tabla ($m[20][4]$) contiene este valor.
 
 ---
 
 ### 6. **La reconstrucción de la solución requiere seguir decisiones**
 - Para saber qué elementos se incluyeron, se recorre la tabla hacia atrás:
-  - Si \(m[i][j] != m[i][j-1]\), el elemento \(j\) fue incluido (restar \(w_j\) a \(i\) y pasar a \(j-1\)).
-  - De lo contrario, no se incluyó (pasar a \(j-1\) con misma \(i\)).
+  - Si $m[i][j] != m[i][j-1]$, el elemento $j$ fue incluido (restar $w_j$ a $i$ y pasar a $j-1$).
+  - De lo contrario, no se incluyó (pasar a $j-1$ con misma $i$).
 
 ---
 
 ### 7. **Limitaciones y consideraciones prácticas**
-- La programación dinámica para la mochila es **pseudo-polinómica**: depende de \(M\), que puede ser grande en algunos casos.
-- Si \(M\) es muy grande, otros enfoques (como algoritmos voraces aproximados o branch and bound) pueden ser más adecuados.
-- Sin embargo, para instancias con \(M\) moderado, es muy eficiente y exacto.
+- La programación dinámica para la mochila es **pseudo-polinómica**: depende de $M$, que puede ser grande en algunos casos.
+- Si $M$ es muy grande, otros enfoques (como algoritmos voraces aproximados o branch and bound) pueden ser más adecuados.
+- Sin embargo, para instancias con $M$ moderado, es muy eficiente y exacto.
 
 ---
 
@@ -210,7 +210,7 @@ La programación dinámica es una técnica poderosa para el problema de la mochi
 - **Garantiza la optimalidad** gracias a la subestructura óptima.
 - **Es escalable** para instancias razonables.
 
-El ejemplo concreto (\(M=20\), 4 elementos) ilustra cómo se construye la tabla y cómo se obtiene la solución óptima (beneficio 15) de manera sistemática, demostrando la efectividad del método.
+El ejemplo concreto ($M=20$, 4 elementos) ilustra cómo se construye la tabla y cómo se obtiene la solución óptima (beneficio 15) de manera sistemática, demostrando la efectividad del método.
 
 ---
 

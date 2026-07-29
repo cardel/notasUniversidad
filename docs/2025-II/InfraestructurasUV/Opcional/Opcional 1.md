@@ -147,29 +147,29 @@ $$
 C_{ij} = \sum_{k=1}^{n} A_{ik} \times B_{kj}  
 $$
 
-Por ejemplo, para ( n = 2 ):
+Por ejemplo, para $n = 2$:
 
 $$
 A =  
 \begin{bmatrix}  
-1 & 2 \  
+1 & 2 \\  
 3 & 4  
 \end{bmatrix},  
 \quad  
 B =  
 \begin{bmatrix}  
-5 & 6 \  
+5 & 6 \\  
 7 & 8  
 \end{bmatrix},  
 \quad  
 C = A \times B =  
 \begin{bmatrix}  
-19 & 22 \  
+19 & 22 \\  
 43 & 50  
 \end{bmatrix}  
 $$
 
-Dado que la multiplicación de matrices requiere ( O(n^3) ) operaciones, se desea paralelizar el cálculo para aprovechar los núcleos disponibles del procesador.
+Dado que la multiplicación de matrices requiere $O(n^3)$ operaciones, se desea paralelizar el cálculo para aprovechar los núcleos disponibles del procesador.
 
 ## Preguntas (razonamiento + práctica)
 
@@ -182,7 +182,7 @@ Vale 10 puntos
 
 #### Diseño del paralelismo
  puntos  
-Suponga que dispone de ( T ) hilos de ejecución.
+Suponga que dispone de $T$ hilos de ejecución.
 
 - Explique cómo dividiría el trabajo entre los hilos (por filas, columnas o submatrices).
     
@@ -192,7 +192,7 @@ Suponga que dispone de ( T ) hilos de ejecución.
 ### Implementación conceptual
 
 Vale 20 puntos  
-Escriba un fragmento de código en C++ donde cada hilo calcule una parte de la matriz ( C ).  
+Escriba un fragmento de código en C++ donde cada hilo calcule una parte de la matriz $C$.  
 Debe usar la clase `std::thread` y asegurar que los resultados se almacenen correctamente en una estructura compartida.
 
 ### Ejemplo de ejecución
@@ -206,7 +206,7 @@ $$
 
 - Indique qué filas o columnas procesa cada hilo.
     
-- Muestre la matriz resultante ( C ) para el caso de matrices con valores pequeños y enteros.
+- Muestre la matriz resultante $C$ para el caso de matrices con valores pequeños y enteros.
 
 ## Análisis de dependencias (10 puntos)
 
@@ -314,7 +314,7 @@ $$
 - **Hilo 2:** filas 2 y 3
     
 
-Cada hilo calcula por completo sus filas de la matriz ( C ).
+Cada hilo calcula por completo sus filas de la matriz $C$.
 
 ### Ejemplo con matrices pequeñas
 
@@ -323,39 +323,39 @@ Sea:
 $$ 
 A =  
 \begin{bmatrix}  
-1 & 1 & 1 & 1 \  
-2 & 2 & 2 & 2 \  
-3 & 3 & 3 & 3 \  
+1 & 1 & 1 & 1 \\  
+2 & 2 & 2 & 2 \\  
+3 & 3 & 3 & 3 \\  
 4 & 4 & 4 & 4  
 \end{bmatrix},  
 \quad  
 B =  
 \begin{bmatrix}  
-1 & 2 & 3 & 4 \  
-1 & 2 & 3 & 4 \  
-1 & 2 & 3 & 4 \  
+1 & 2 & 3 & 4 \\  
+1 & 2 & 3 & 4 \\  
+1 & 2 & 3 & 4 \\  
 1 & 2 & 3 & 4  
 \end{bmatrix}  
 $$
 
-Cada elemento de ( C ) cumple:
+Cada elemento de $C$ cumple:
 
 $$ 
 C_{ij} = \sum_{k=0}^{3} A_{ik} \cdot B_{kj}  
 $$
 
-Como cada fila de ( A ) tiene valores constantes:
+Como cada fila de $A$ tiene valores constantes:
 
-- Fila 0: suma de 4 elementos → ( 1+1+1+1 = 4 )
+- Fila 0: suma de 4 elementos → $1+1+1+1 = 4$
     
-- Fila 1: suma → ( 8 )
+- Fila 1: suma → $8$
     
-- Fila 2: suma → ( 12 )
+- Fila 2: suma → $12$
     
-- Fila 3: suma → ( 16 )
+- Fila 3: suma → $16$
     
 
-Y cada columna de ( B ) tiene valores:
+Y cada columna de $B$ tiene valores:
 
 $$ 
 [1,1,1,1], [2,2,2,2], [3,3,3,3], [4,4,4,4]  
@@ -366,9 +366,9 @@ Entonces:
 $$ 
 C =  
 \begin{bmatrix}  
-4 & 8 & 12 & 16 \  
-8 & 16 & 24 & 32 \  
-12 & 24 & 36 & 48 \  
+4 & 8 & 12 & 16 \\  
+8 & 16 & 24 & 32 \\  
+12 & 24 & 36 & 48 \\  
 16 & 32 & 48 & 64  
 \end{bmatrix}  
 $$

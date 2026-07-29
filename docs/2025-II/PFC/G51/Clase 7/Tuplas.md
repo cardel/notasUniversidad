@@ -38,19 +38,19 @@ En general nos permite empaquetar valores y asignarlos directamente, permitendo 
 # Tuplas en el reconocimiento de patrones
 
 $$
-\begin{align}
+\begin{aligned}
 u = \{u_1,u_2,\ldots,u_n\} \\
 v = \{v_1,v_2,\ldots,v_n\} \\
 u.v = \{u_1*v_1 + u_2*v_2+\ldots+u_n*v_n\}
-\end{align}
+\end{aligned}
 $$
 Ejemplo
 $$
-\begin{align}
+\begin{aligned}
 v = \{1,2,3\} \\ 
 u = \{4,5,6\} \\
 u.v = 4 + 10 + 18 = 32
-\end{align}
+\end{aligned}
 $$
 
 Hasta el momento para reconocer patrones de listas paralelas es necesario identificar el caso de la primera y luego evaluar el de la segunda, esto hace que el código no sea facil de mantener o entender.

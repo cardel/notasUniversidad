@@ -15,21 +15,21 @@ El algoritmo simplex toma un problema de programación lineal y retorna lo valor
 La forma estandar es la maximización de una función objetivo sujeto a desigualdades de menor o igual, las variables de decisión deben ser estrictamente positivas
 
 $$
-\begin{align}
+\begin{aligned}
 \texttt{ maximize } & \sum \limits_{i=1}^{n}
  c_i * x_i \\
  \texttt{ subject to } \sum \limits_{i=1}^{m} \sum \limits_{j=1}^{n} a_{ij} x_j <= b_{i} \\
  x_i >=0 && 1 \leq i \leq n
- \end{align}
+ \end{aligned}
  $$
  Ejemplo
 $$
-\begin{align}
+\begin{aligned}
 \texttt{maximize }  x_1 + 2x_2 \\
 x_1 + x_2 \leq 10000 \\
 x_1 + 3x_2 \leq 15000 \\
 x_1 \geq 0, x_2 \geq 0
-\end{align}
+\end{aligned}
 $$
 En minizinc
 

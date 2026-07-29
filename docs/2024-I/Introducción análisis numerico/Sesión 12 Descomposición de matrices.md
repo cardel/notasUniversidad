@@ -18,37 +18,31 @@ Por ejemplo, consideremos la matriz A de 3x3:
 
 $$
 A =
-
 \begin{bmatrix}
 1 & 2 & 3 \\
 2 & 5 & 7 \\
 1 & 0 & 1
 \end{bmatrix}
-
 $$
 
 Podemos descomponerla en una matriz L (triangular inferior) y una matriz U (triangular superior) de la siguiente manera:
 
 $$
 L =
-
 \begin{bmatrix}
 1 & 0 & 0 \\
 2 & 1 & 0 \\
 1 & -2 & 1
 \end{bmatrix}
-
 $$
 
 $$
 U =
-
 \begin{bmatrix}
 1 & 2 & 3 \\
 0 & 1 & 1 \\
 0 & 0 & -1
 \end{bmatrix}
-
 $$
 
 Por lo tanto, la factorización LU de la matriz A es LU.
@@ -62,7 +56,6 @@ Por supuesto, aquí te dejo un ejemplo sencillo de la factorización de Cholesky
 Consideremos la matriz A:
 
 $$
-
 A =
 \begin{bmatrix}
 4 & 12 & -16 \\
@@ -74,15 +67,11 @@ $$
 Queremos descomponer esta matriz en la forma A = LL*, donde L es una matriz triangular inferior. Para hacerlo, usamos las fórmulas de la factorización de Cholesky:
 
 $$
-
 L_{ii} = \sqrt{A_{ii} - \sum_{k=1}^{i-1}L_{ik}^2} \quad (1)
-
 $$
 
 $$
-
 L_{ij} = \frac{1}{L_{jj}} \left( A_{ij} - \sum_{k=1}^{j-1}L_{ik}L_{jk} \right) \quad (2)
-
 $$
 
 Donde  es el elemento de la matriz L en la fila i y la columna j, y es el elemento correspondiente de la matriz A.

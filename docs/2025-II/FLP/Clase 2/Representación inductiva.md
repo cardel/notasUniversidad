@@ -3,10 +3,10 @@ Los datos recursivos son aquellos que podemos representar usando recursión:
 - Caso recursivo (inductivo)
 
 $$
-\begin{align}
+\begin{aligned}
 \lceil 0 \rceil \in \mathbb{N}\\
 n \in \mathbb{N}, n+1 \in \mathbb{N}
-\end{align}
+\end{aligned}
 $$
 
 Anotaciones
@@ -18,26 +18,26 @@ Anotaciones
 
 ## Listas de numeros naturales
 $$
-\begin{align}
+\begin{aligned}
 '() \in S \\
 n \in \mathbb{N} \wedge l \in S \therefore n :: l \in S
-\end{align}
+\end{aligned}
 $$
 
 ## Multiplos de 7
 $$
-\begin{align}
+\begin{aligned}
 7 \in S \\
 p \in S \therefore p+7 \in S
-\end{align}
+\end{aligned}
 $$
 ## Listas de multiplos de 8
 $$
-\begin{align}
+\begin{aligned}
 '() \in S, 8 \in P \\
 x \in P \therefore x+8 \in P \\
 l \in S \wedge j \in P \therefore j :: l \in S
-\end{align}
+\end{aligned}
 $$
 
 **Análisis del código:**
@@ -93,7 +93,7 @@ l e S y a e A y b e B -> (a :: b) :: l e S
 **Estructura inductiva definida:**
 - Conjunto A: números múltiplos de 6 (comenzando desde 6)
 - Conjunto B: números múltiplos de 8 (comenzando desde 8)  
-- Conjunto S: listas de pares donde cada par (a b) cumple a ∈ A y b ∈ B
+- Conjunto S: listas de pares donde cada par (a b) cumple $a \in A$ y $b \in B$
 
 **Función in-S?:**
 1. `(null? exp) #T` - Caso base: lista vacía pertenece a S

@@ -1,6 +1,6 @@
 Una relación permite asociar dos elementos dentro del producto cartesiano de dos conjuntos.
 
-$A = \{1,2,3\}$ %B=\{a,b\}$
+$A = \{1,2,3\}$ $B=\{a,b\}$
 $A \times B = \{(1,a),(1,b),(2,a),(2,b),(3,a),(3,b)\}$
 
 Cuatro tipos

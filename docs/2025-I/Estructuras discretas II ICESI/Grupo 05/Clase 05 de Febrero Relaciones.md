@@ -27,5 +27,5 @@ Repaso de conjuntos
 - Vacio
 
 $$
-\empty
+\emptyset
 $$

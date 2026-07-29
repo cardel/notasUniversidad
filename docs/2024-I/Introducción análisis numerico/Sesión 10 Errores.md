@@ -53,9 +53,7 @@ $$
 Un ejemplo de la Serie de Taylor es la expansión de la función exponencial alrededor del punto a = 0. En este caso, x es el valor en el que queremos calcular la función exponencial usando la Serie de Taylor. La serie se ve de la siguiente manera:
 
 $$
-
 e^x = \sum \limits_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \ldots
-
 $$
 
 Por ejemplo, si queremos calcular e^2 usando la Serie de Taylor, x sería igual a 2. Entonces, sustituimos x por 2 en la Serie de Taylor para obtener una aproximación de e^2.

@@ -100,7 +100,7 @@ object Main {
 
 **Validación con `require`:**
 - Garantiza la integridad del objeto desde su creación
-- Previene estados inválidos (denominador ≤ 0)
+- Previene estados inválidos (denominador $\le 0$)
 - Mejor que `assert` porque lanza `IllegalArgumentException` evita la instanciación
 
 **Notación infija:**

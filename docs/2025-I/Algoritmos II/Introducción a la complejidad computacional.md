@@ -34,7 +34,7 @@ La complejidad de un problema es la complejidad del mejor algoritmo, por para or
 # Maquinas de Turing
 
 - Deterministas: Cada combinación de simbolo estado sólo tiene una posible transición (Modelo computación actual)
-- No deterministas: Se puede explorar la ramificación de todas las posibilidades (2^n) al tiempo
+- No deterministas: Se puede explorar la ramificación de todas las posibilidades ($2^n$) al tiempo
 
 ### Ejemplos de Máquinas de Turing Deterministas y No Deterministas
 
@@ -94,13 +94,13 @@ Esta nos dice que existen algoritmos que trabajan MTD que los pueden solucionar 
 
 # Operacion de reducción
 
-Para demostrar que un problema B es NPc partirmos del hecho que A es NPc, se cumple A ≤p B y se puede transformar una instancia a A a B en tiempo polinomial.
+Para demostrar que un problema B es NPc partirmos del hecho que A es NPc, se cumple $A \leq_p B$ y se puede transformar una instancia a A a B en tiempo polinomial.
 
 - Instancias positivas de A son instancias instancias en B
 - Instancias negativas de A son instancias negativas en B
 - El procedimiento de reducción se hace en tiempo polinomial
 
-El hecho que A ≤p B implica que B es tan o más fuerte/duro/dificil/desafiante/complejo/complicado que A
+El hecho que $A \leq_p B$ implica que B es tan o más fuerte/duro/dificil/desafiante/complejo/complicado que A
 
 Se dice que B es NPCs si
 
@@ -132,12 +132,12 @@ Demostrado que es NPC (La demostración esta por fuera del alcance del curso) es
 
 Un ejemplo de un problema SAT en forma normal conjuntiva (CNF) podría ser el siguiente:
 
-Supongamos que tienes tres variables proposicionales: \$x_1, x_2 \texttt{ y } x_3.$ El problema SAT consiste en determinar si existe una asignación de valores de verdad (true o false) para estas variables que haga verdadera la fórmula lógica dada.
+Supongamos que tienes tres variables proposicionales: $x_1, x_2 \texttt{ y } x_3.$ El problema SAT consiste en determinar si existe una asignación de valores de verdad (true o false) para estas variables que haga verdadera la fórmula lógica dada.
 
 ### Fórmula en CNF:
 $(x_1 \vee \neg x_2 \vee x_3) \wedge (\neg x_1 \vee x_2) \wedge (x_2 \vee \neg x_3)$
 
-En este caso, la fórmula está en forma normal conjuntiva porque consiste en una conjunción (AND) de cláusulas, y cada cláusula es una disyunción (OR) de literales. El objetivo es encontrar una asignación de valores a \(x_1\), \(x_2\) y \(x_3\) que haga verdadera la fórmula completa.
+En este caso, la fórmula está en forma normal conjuntiva porque consiste en una conjunción (AND) de cláusulas, y cada cláusula es una disyunción (OR) de literales. El objetivo es encontrar una asignación de valores a $x_1$, $x_2$ y $x_3$ que haga verdadera la fórmula completa.
 
 A partir de SAT podemos realizar la reducción hacia otros problemas
 
@@ -204,7 +204,7 @@ La complejidad computacional es una rama fundamental de la computación que estu
     - **NP**: Verificables en tiempo polinomial o resolubles en tiempo polinomial con una Máquina de Turing No Determinista (MTND).
     - **NPC (NP-Completo)**: Problemas más difíciles de NP, que pueden reducirse unos a otros.
 4. **Problema P vs NP**:
-    - Un problema abierto: Si \( P = NP \), significaría que todos los problemas NP tienen soluciones rápidas, con grandes implicaciones en criptografía y seguridad.
+    - Un problema abierto: Si $P = NP$, significaría que todos los problemas NP tienen soluciones rápidas, con grandes implicaciones en criptografía y seguridad.
 5. **Reducción de problemas**:
     - Proceso de transformar un problema en otro para demostrar su complejidad (NP-duro o NPC).
 6. **Problema SAT**:

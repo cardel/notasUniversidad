@@ -3,7 +3,7 @@
 
 ## Matemáticas
 
-1. Relaciones: A hacia B o $A \mathbb{ R } B \subseteq A \times B$$ Propiedades Reflexiva, simetrica, antisimetrica y transitiva
+1. Relaciones: A hacia B o $A \mathbb{ R } B \subseteq A \times B$ Propiedades Reflexiva, simetrica, antisimetrica y transitiva
 2. Relaciones pueden ser orden parcial (Reflexiva, antisimetrica y transitiva), de equivalencia (Reflexivia, simetrica y transitiva)
 3. Relaciones n-arias que entre varios conjuntos
 	1. Composicion $A o B$ $(a,b) \in A \wedge (b,c) \in B \therefore (a,c) \in AoB$

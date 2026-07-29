@@ -104,7 +104,7 @@ Veamos cómo calcular el mcd(1032, 2043) paso a paso siguiendo la definición:
     
     Para calcular el mcd, tomamos los factores primos comunes y elegimos el menor exponente:
     
-    - Para el factor 3, el exponente mínimo entre 1032 y 2043 es 1 (porque en 1032 es 3^{1} y en 2043 es $3^{2}$).
+    - Para el factor 3, el exponente mínimo entre 1032 y 2043 es 1 (porque en 1032 es $3^{1}$ y en 2043 es $3^{2}$).
     
     Por lo tanto:
     

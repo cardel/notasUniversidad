@@ -99,31 +99,31 @@ Resultado final:
 
 1. **Algoritmo de Prim**
     
-    Complejidad: \( O(E + V \log V) \)
+    Complejidad: $O(E + V \log V)$
     
-    - **\( V \):** Número de vértices en el grafo.
-    - **\( E \):** Número de aristas en el grafo.
-    El uso de una cola de prioridad para seleccionar las aristas de menor peso contribuye al término \( V \log V \), mientras que procesar todas las aristas toma \( O(E) \).
+    - **$V$:** Número de vértices en el grafo.
+    - **$E$:** Número de aristas en el grafo.
+    El uso de una cola de prioridad para seleccionar las aristas de menor peso contribuye al término $V \log V$, mientras que procesar todas las aristas toma $O(E)$.
 2. **Algoritmo de Kruskal**
     
-    Complejidad: \( O(E \log E) \)
+    Complejidad: $O(E \log E)$
     
-    - **\( E \):** Número de aristas en el grafo.
-    - **\( V \):** Número de vértices en el grafo (implícito en la estructura de conjuntos disjuntos).
-    Ordenar las aristas toma \( O(E \log E) \), y la operación de unión y búsqueda (union-find) es eficiente, ejecutándose en tiempo casi constante por operación.
+    - **$E$:** Número de aristas en el grafo.
+    - **$V$:** Número de vértices en el grafo (implícito en la estructura de conjuntos disjuntos).
+    Ordenar las aristas toma $O(E \log E)$, y la operación de unión y búsqueda (union-find) es eficiente, ejecutándose en tiempo casi constante por operación.
 3. **Cambio de monedas**
     
-    Complejidad: \( O(D) \)
+    Complejidad: $O(D)$
     
-    - **\( D \):** Número de denominaciones de monedas disponibles.
+    - **$D$:** Número de denominaciones de monedas disponibles.
     Este algoritmo voraz solo itera a través de las denominaciones en orden descendente, lo que lo hace lineal respecto al número de denominaciones.
 4. **Algoritmo de Dijkstra**
     
-    Complejidad: \( O(V^2) \) (sin cola de prioridad) o \( O(E + V \log V) \) (con cola de prioridad).
+    Complejidad: $O(V^2)$ (sin cola de prioridad) o $O(E + V \log V)$ (con cola de prioridad).
     
-    - **\( V \):** Número de vértices en el grafo.
-    - **\( E \):** Número de aristas en el grafo.
-    En el caso más eficiente, el uso de una cola de prioridad reduce el costo de seleccionar el siguiente vértice de menor distancia, contribuyendo al término \( V \log V \), mientras que explorar todas las aristas toma \( O(E) \).
+    - **$V$:** Número de vértices en el grafo.
+    - **$E$:** Número de aristas en el grafo.
+    En el caso más eficiente, el uso de una cola de prioridad reduce el costo de seleccionar el siguiente vértice de menor distancia, contribuyendo al término $V \log V$, mientras que explorar todas las aristas toma $O(E)$.
 
 # Resumen
 

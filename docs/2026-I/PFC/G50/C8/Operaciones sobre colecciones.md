@@ -1,7 +1,7 @@
 ## Operaciones lógicas de predicados
 
-1. **exists(p)**: Verifica si existe al menos un elemento en la colección que satisface el predicado `p`. Corresponde al cuantificador existencial $ \exists x P(x) $.
-2. **forall(p)**: Verifica si todos los elementos de la colección satisfacen el predicado `p`. Corresponde al cuantificador universal $ \forall x P(x) $.
+1. **exists(p)**: Verifica si existe al menos un elemento en la colección que satisface el predicado `p`. Corresponde al cuantificador existencial $\exists x P(x)$.
+2. **forall(p)**: Verifica si todos los elementos de la colección satisfacen el predicado `p`. Corresponde al cuantificador universal $\forall x P(x)$.
 
 ## Operaciones de empaquetamiento
 

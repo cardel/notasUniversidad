@@ -246,9 +246,7 @@ let
     
     La verificación de tipos para la aplicación del procedimiento puede expresarse formalmente como:
     
-    $\frac
-    {\Gamma \vdash f : int \rightarrow int \quad \Gamma \vdash 3 : int}
-    {\Gamma \vdash (f \; 3) : int}$
+    $\frac{\Gamma \vdash f : int \rightarrow int \quad \Gamma \vdash 3 : int}{\Gamma \vdash (f \; 3) : int}$
     
     Donde:
     

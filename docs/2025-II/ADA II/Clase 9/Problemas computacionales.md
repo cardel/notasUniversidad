@@ -43,6 +43,6 @@ Este resultado establece una limitación fundamental de lo que puede ser computa
 1. Problemas tratables: Se pueden resolver en tiempo polinomial (su mejor algoritmo)
 2. Problemas intratables: No se puede pueden resolver (hasta ahora) en tiempo polinomial.
 
-Problemas tratables. ordenamiento $O(nlog(n))$, maximo $O(n), ...
+Problemas tratables. ordenamiento $O(nlog(n))$, maximo $O(n)$, ...
 Problemas intratables: SAT, problema de camino largo en un grafo, agente viajero $O(r^n, r> 1)$
 

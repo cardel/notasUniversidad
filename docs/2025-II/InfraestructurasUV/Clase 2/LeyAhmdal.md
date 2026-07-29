@@ -14,7 +14,7 @@ $$
 
 Donde:
 - $S$ es la mejora de velocidad (speedup).
-- $P$ es la fracción paralelizable del programa (0 ≤ P ≤ 1).
+- $P$ es la fracción paralelizable del programa ($0 \le P \le 1$).
 - $N$ es el número de procesadores o hilos.
 
 La parte no paralelizable es $(1 - P)$.

@@ -6,9 +6,7 @@ Las representaciones de arreglo de padres o bien hijo izquierdo, hermano derecho
 
 Un árbol se define recursivamente como:
 
-\[
-[\text{raíz} \mid [\text{lista de hijos}]]
-\]
+$$[\text{raíz} \mid [\text{lista de hijos}]]$$
 
 Donde:
 - El primer elemento es la raíz del árbol.
@@ -33,8 +31,8 @@ Esta representación es fácil de implementar en lenguajes de programación func
 1. **Árbol vacío según Cormen:** En el libro de Cormen, el caso base de un árbol se considera como un árbol con **solo la raíz** (sin hijos). Para él, la lista de hijos es vacía: `[raíz | []]` es un árbol válido. No existe un árbol "vacío" como tal (sin vértices).  
    *Nota:* Otras definiciones (como en estructuras de datos) pueden considerar un árbol vacío como `null` o `[]`.
 
-2. **Bosque:** Un bosque es una colección de árboles disjuntos. Si un bosque tiene \(k\) componentes conexas (árboles) y \(n\) vértices en total, entonces el número de aristas es \(n - k\).  
-   - Un **árbol libre** es un bosque con \(k = 1\).  
+2. **Bosque:** Un bosque es una colección de árboles disjuntos. Si un bosque tiene $k$ componentes conexas (árboles) y $n$ vértices en total, entonces el número de aristas es $n - k$.  
+   - Un **árbol libre** es un bosque con $k = 1$.  
    - La representación recursiva de un bosque puede ser una lista de árboles raíz.
 
 3. **Árbol libre no tiene raíz:** Un árbol libre (grafo no dirigido, conexo y acíclico) no tiene una raíz inherente. La raíz es una elección arbitraria que se realiza al transformarlo en un árbol con raíz. De un mismo árbol libre pueden obtenerse diferentes árboles con raíz según el vértice que se elija como raíz.
@@ -50,7 +48,7 @@ Esta representación es fácil de implementar en lenguajes de programación func
 |----------|-------------|---------------|
 | **Representación recursiva** | `[raíz \| [lista de hijos]]`; cada hijo es un árbol con la misma estructura. | Permite implementar algoritmos recursivos de forma natural. |
 | **Árbol vacío (Cormen)** | Árbol con solo la raíz y sin hijos. | No existe la noción de árbol sin vértices; caso base recursivo. |
-| **Bosque** | Colección de árboles disjuntos. | Aristas = vértices − componentes (\(n-k\)). |
+| **Bosque** | Colección de árboles disjuntos. | Aristas = vértices − componentes ($n-k$). |
 | **Árbol libre** | Grafo no dirigido, conexo, acíclico; sin raíz fija. | La raíz se elige arbitrariamente al convertirlo en árbol con raíz. |
 | **Altura** | Número de aristas en el camino más largo de la raíz a una hoja. | Medida en aristas (no vértices). |
 

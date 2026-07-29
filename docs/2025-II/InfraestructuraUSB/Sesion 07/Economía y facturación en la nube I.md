@@ -26,7 +26,7 @@
 		5. AWS Identity and AccessManagement (AWS IAM
 		Los 2,3 y 4 pueden tener cargos por el uso en conjunto con otros servicios.
 		
-	2. Después del 15 de Julio: https://aws.amazon.com/es/free/ los clientes nuevos obtiene 200 USD de crédito. Gain $100 USD credits at sign-up and up to $100 USD more to earn as you explore key AWS services.
+	2. Después del 15 de Julio: https://aws.amazon.com/es/free/ los clientes nuevos obtiene 200 USD de crédito. Gain \$100 USD credits at sign-up and up to \$100 USD more to earn as you explore key AWS services.
 # Costo total de propiedad
 - Costo de la infraestructura tradicional vs el modelo de AWS
 	- Costos de equipos: nube solo pague por lo que usa
@@ -156,7 +156,7 @@ Aplica el efecto de permitir que el usuario (nombre de usuario) pueda obtener y 
 
 #### Elementos Adicionales Importantes:
 1. **Nivel Gratuito de AWS**: 
-   - Cambios después del 15 de julio de 2025: nuevos clientes reciben $200 USD en créditos.
+   - Cambios después del 15 de julio de 2025: nuevos clientes reciben \$200 USD en créditos.
    - Servicios incluidos previamente (hasta julio 2025): VPC, Elastic Beanstalk, IAM, etc.
 
 2. **Escalado en AWS**:

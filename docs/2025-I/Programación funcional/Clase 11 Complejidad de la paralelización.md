@@ -120,11 +120,11 @@ La complejidad de la paralelización es un tema central en la optimización de p
     $D(e) + \frac{W(e)}{P}$
     
     Donde:
-        - \(D(e)\): Trabajo secuencial (no paralelizable).
-        - \(W(e)\): Trabajo total (paralelizable y no paralelizable).
-        - \(P\): Número de hilos.
+        - $D(e)$: Trabajo secuencial (no paralelizable).
+        - $W(e)$: Trabajo total (paralelizable y no paralelizable).
+        - $P$: Número de hilos.
 3. **Ley de Amdahl**:
-    - Muestra la importancia de reducir la parte secuencial de un programa (\(f\)) para maximizar el impacto de la paralelización.
+    - Muestra la importancia de reducir la parte secuencial de un programa ($f$) para maximizar el impacto de la paralelización.
     - Fórmula:
     $\frac{1}{(f+\frac{1-f}{P})}$
     - Ejemplo: Si el 40% de un programa es secuencial, incluso con paralelización infinita, el tiempo nunca será menor a 2.5 veces más rápido.

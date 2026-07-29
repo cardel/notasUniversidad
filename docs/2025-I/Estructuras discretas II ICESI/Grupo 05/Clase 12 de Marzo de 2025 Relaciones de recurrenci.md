@@ -90,14 +90,14 @@ $$
 
 Sustituimos en la solución general:
 
-Para \(a(0)\):
+Para $a(0)$:
 
 $$
 a(0) = A(2^0) + B(3^0) \\
 5 = A + B
 $$
 
-Para \(a(1)\):
+Para $a(1)$:
 
 $$
 a(1) = A(2^1) + B(3^1) \\
@@ -106,8 +106,8 @@ $$
 
 Esto forma un sistema de ecuaciones:
 
-1. \( A + B = 5 \)
-2. \( 2A + 3B = 8 \)
+1. $A + B = 5$
+2. $2A + 3B = 8$
 
 Resolviendo el sistema:
 
@@ -117,7 +117,7 @@ $$
 B = 5 - A
 $$
 
-Sustituimos \(B\) en la segunda ecuación:
+Sustituimos $B$ en la segunda ecuación:
 
 $$
 2A + 3(5 - A) = 8 \\
@@ -126,7 +126,7 @@ $$
 A = 7
 $$
 
-Sustituimos \(A = 7\) en \(B = 5 - A\):
+Sustituimos $A = 7$ en $B = 5 - A$:
 
 $$
 B = 5 - 7 \\
@@ -135,7 +135,7 @@ $$
 
 ### Paso 4: Solución particular
 
-Sustituimos \(A = 7\) y \(B = -2\) en la solución general:
+Sustituimos $A = 7$ y $B = -2$ en la solución general:
 
 $$
 a(n) = 7(2^n) - 2(3^n)

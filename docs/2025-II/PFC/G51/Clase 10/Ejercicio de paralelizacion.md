@@ -21,10 +21,10 @@ El **promedio ponderado** va a tomar un arreglo de notas y un arreglo de número
 ### Datos de Ejemplo
 
 $$
-\begin{align}
+\begin{aligned}
 \texttt{notas} = \{4.2, 4.3, 1.2\} \\
 \texttt{creditos} = \{4, 3, 2\}
-\end{align}
+\end{aligned}
 $$
 
 ### Proceso de Cálculo

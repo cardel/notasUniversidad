@@ -9,10 +9,10 @@ Un **árbol binario** es el caso particular donde *m = 2*.
 ## Enunciar y aplicar las cotas fundamentales de hojas y altura en árboles m-arios por inducción estructural.
 
 - **Cota mínima de altura:** *h - 1* (corresponde a un árbol camino, donde cada nodo tiene un solo hijo).
-- **Cota máxima de altura:** *log_m(n - 1) + 1*, donde *n* es el número total de vértices.
-- **Relación fundamental en árbol m-ario completo:** *n = m·i + 1*, donde *i* es el número de vértices internos.
-- **Cota de hojas:** *ℓ ≤ m^h*, donde *ℓ* es el número de hojas y *h* la altura.
-- **Cotas para árboles binarios:** *h + 1 ≤ n ≤ 2^{h+1} - 1*.
+- **Cota máxima de altura:** $\log_m(n - 1) + 1$, donde *n* es el número total de vértices.
+- **Relación fundamental en árbol m-ario completo:** $n = m·i + 1$, donde *i* es el número de vértices internos.
+- **Cota de hojas:** $ℓ ≤ m^h$, donde *ℓ* es el número de hojas y *h* la altura.
+- **Cotas para árboles binarios:** $h + 1 ≤ n ≤ 2^{h+1} - 1$.
 
 ## Formular la especificación recursiva binaria y distinguir las posiciones izquierda/derecha.
 
@@ -115,9 +115,9 @@ graph TD
 
 | Concepto | Definición | Fórmula/Cota clave |
 |----------|------------|-------------------|
-| Árbol m-ario | Cada nodo interno tiene máximo *m* hijos | *n = m·i + 1* (completo) |
-| Árbol m-ario completo | Todos los nodos internos tienen exactamente *m* hijos | *ℓ ≤ m^h* |
-| Árbol binario | Caso particular con *m = 2* | *h + 1 ≤ n ≤ 2^{h+1} - 1* |
+| Árbol m-ario | Cada nodo interno tiene máximo *m* hijos | $n = m·i + 1$ (completo) |
+| Árbol m-ario completo | Todos los nodos internos tienen exactamente *m* hijos | $ℓ ≤ m^h$ |
+| Árbol binario | Caso particular con *m = 2* | $h + 1 ≤ n ≤ 2^{h+1} - 1$ |
 | Especificación recursiva | `[T] = [] \| [raíz [T] [T]]` | Tripleta (valor, izq, der) |
 | Recorrido preorden | Raíz → Izquierdo → Derecho | Notación prefija |
 | Recorrido inorden | Izquierdo → Raíz → Derecho | Notación infija |

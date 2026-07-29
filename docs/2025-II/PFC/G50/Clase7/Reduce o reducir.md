@@ -5,10 +5,10 @@ La reducción permite transformar una lista en un solo elemento.
 3. Retornar el tamaño del string más grande en una lista de string.
 
 $$
-\begin{align}
+\begin{aligned}
 v = \{v_1,v_2, \ldots v_n\} \\
 s = v_1+v_2 + \ldots v_n
-\end{align}
+\end{aligned}
 $$
 Pero la suma solo recibe dos parametros, lo que implica que debo establecer un orden de asociacion.
 

@@ -71,7 +71,7 @@ Se toma como mejor caso la bifurcación que menos se demore (menos pasos tenga) 
 5) $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
 ## Ejemplos de análisis de código
 
-### Análisis de Complejidad Temporal \( T(n) \) con Conteo Simplificado  
+### Análisis de Complejidad Temporal $T(n)$ con Conteo Simplificado  
 
 **Código:**  
 ```cpp
@@ -136,22 +136,22 @@ int main() {
     return 0;               // 1 (retorno)
 }
 ```
-### Resumen de Complejidad \( T(n) \):  
+### Resumen de Complejidad $T(n)$:  
 - **Mejor caso (`a <= b`):**  
-  - Operaciones: **7** (todas \( O(1) \)).  
-  - Complejidad: **\( O(1) \)**.  
+  - Operaciones: **7** (todas $O(1)$).  
+  - Complejidad: **$O(1)$**.  
 
 - **Peor caso (`a > b`):**  
-  - Operaciones: **10** (todas \( O(1) \)).  
-  - Complejidad: **\( O(1) \)**.  
+  - Operaciones: **10** (todas $O(1)$).  
+  - Complejidad: **$O(1)$**.  
 
 **Nota:**  
-- Cada bloque de operaciones (incluso combinadas como `a * b + c`) se cuenta como **1** por ser \( O(1) \).  
-- La complejidad total es **constante** en ambos casos, ya que no depende de \( n \).  
+- Cada bloque de operaciones (incluso combinadas como `a * b + c`) se cuenta como **1** por ser $O(1)$.  
+- La complejidad total es **constante** en ambos casos, ya que no depende de $n$.  
 
 
 **Explicación clave:**  
-Aunque el peor caso tiene más operaciones (10 vs 7), ambas son **constantes** y no escalan con la entrada. Por eso, \( T(n) = O(1) \) siempre.
+Aunque el peor caso tiene más operaciones (10 vs 7), ambas son **constantes** y no escalan con la entrada. Por eso, $T(n) = O(1)$ siempre.
 
 
 ---

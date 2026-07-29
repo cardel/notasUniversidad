@@ -23,10 +23,10 @@ En ciertas ocasiones necesitamos que reconocer dos o mas patrones al mismo tipo.
 # Suma de vectores
 Dados
 $$
-\begin{align}\
+\begin{aligned}
 u = \{u_1,u_2, \ldots , u_n\} \\
 v = \{v_1,v_2, \ldots , v_n\} 
-\end{align}
+\end{aligned}
 $$
 Para sumarlos
 $$

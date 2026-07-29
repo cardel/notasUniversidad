@@ -29,7 +29,6 @@ La complejidad va a depender de:
 
 $$
 T(n) = D(ln(n)) + f(n)/P
-
 $$
 
 Esto nos dice dos cosas

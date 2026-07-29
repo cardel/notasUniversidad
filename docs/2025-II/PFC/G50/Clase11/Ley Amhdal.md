@@ -7,7 +7,7 @@ S = \frac{1}{f+\frac{1-f}{P}}
 $$
 
 Donde:
-- $f$: fracción secuencial del programa (0 ≤ f ≤ 1)
+- $f$: fracción secuencial del programa ($0 \le f \le 1$)
 - $P$: número de procesadores/hilos disponibles
 - $S$: speedup (aceleración máxima)
 

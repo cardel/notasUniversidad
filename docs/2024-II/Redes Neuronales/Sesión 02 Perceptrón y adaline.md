@@ -36,8 +36,8 @@ Descripción de algoritmo
 
 1. Tiene salidas continuas
 2. Se hace la siguiente:
-    1. Se calcula el error cuadrático medio $e = \frac{1}{2}\sum \limits_{i=1}^n (t_i - y_i)²$
-    2. (Supongamos una red neuronal con dos entradas) Calculamos la derivada parcial con respecto a los pesos $e = \frac{1}{2}\sum \limits_{i=1}^n (t_i - f(w_1*x_1j+w_2*x_2j + b))²$
+    1. Se calcula el error cuadrático medio $e = \frac{1}{2}\sum \limits_{i=1}^n (t_i - y_i)^2$
+    2. (Supongamos una red neuronal con dos entradas) Calculamos la derivada parcial con respecto a los pesos $e = \frac{1}{2}\sum \limits_{i=1}^n (t_i - f(w_1*x_1j+w_2*x_2j + b))^2$
     3. Derivamos con respecto al peso e igualamos a cero, el objetivo es encontrar el peso que hace que la derivada sea cero, es decir el ERROR ES MINIMO $\frac{\partial e}{\partial w_i} = -\frac{1}{2}*2*(t - f(\bar{X}))f'(\bar{X})*x_i$ 
     4. $\frac{\partial e}{\partial w_i} = -e*(1)*x_i$
     5. El cambio de pesos es el siguiente $w_{t} = w_{t-1} - \eta*\Delta e$
