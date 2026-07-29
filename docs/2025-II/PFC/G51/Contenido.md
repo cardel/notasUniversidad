@@ -3,7 +3,7 @@
 1. [Clase 1 Introducción PF](Clase%201/Contenido.md)
 2. [Clase 2 Elementos de PF](Clase%202/Contenido.md)
 3. [Clase 3 Funciones y procesos](Clase%203/Contenido.md)
-4. [Clase 4 Funciones de alto orden ](2025-II/PFC/G51/Contenido.md)
+4. [Clase 4 Funciones de alto orden ](Clase%204/Contenido.md)
 5. [Clase 5 Funciones y datos](Clase%205/Contenido.md)
 6. [Clase 6 Listas y reconocimiento de patrones I](Clase%206/Clase%206%20Listas%20y%20reconocimiento%20de%20patrones%20I.md)
 7. [Clase 7 Tuplas y funciones alto orden map, filter y reduce](Clase%207/Clase%207%20Tuplas%20y%20funciones%20alto%20orden%20map,%20filter%20y%20reduce.md)

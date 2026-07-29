@@ -199,7 +199,7 @@ def lambda_handler(event, context):
 Guía Visual Studio Code https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python
 
 Guía desde la consola de Administración
-1. Acceder a [Azure Portal]([https://portal.azure.com/](https://portal.azure.com/))  
+1. Acceder a [Azure Portal](https://portal.azure.com/)  
 2. Crear nuevo recurso en **Funciones > Crear**  
 3. Especificar parámetros:  
    - Tipo de función: "Desencadenador HTTP"  
