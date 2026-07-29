@@ -12,7 +12,7 @@ theme:
   name: "material"
   language: es
   icon:
-    logo: material/notebook-multiple-outline
+    logo: material/notebook-outline
     repo: fontawesome/brands/github
   features:
     - navigation.instant
