@@ -2,9 +2,7 @@
 
 Curso de Árboles y Grafos de la Pontificia Universidad Javeriana Cali, semestre
 2026-II, grupos A y B. Los dos grupos llevan el mismo cronograma y el mismo
-material, así que esta página sirve para ambos: aquí quedan el programa, las
-notas de clase y las grabaciones. Docentes: Carlos A. Ramírez Restrepo y
-Carlos A. Delgado.
+material.
 
 El curso arranca con las herramientas para razonar sobre eficiencia (orden
 asintótico, propiedades de la función O e invariantes de ciclo) y con ellas
