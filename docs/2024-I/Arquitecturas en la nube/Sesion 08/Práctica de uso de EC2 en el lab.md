@@ -4,11 +4,11 @@
 2. Dar en la opción iniciar laboratorio (Iniciar lab) esto tarda unos 5 minutos: Esto nos crea un entorno de pruebas, tener en cuenta como estudiantes tenemos un budget de 100 USD y el laboratorio dura unas 2 o 3 horas, después de ello TODO es borrado.
 3. Haciendo clic en la opción detalles y luego en Detalles se obtienen las llaves y datos conexión
 
-![](2024-I/Arquitecturas en la nube/Sesion 08/Practica EC2 Lab/Untitled.png)
+![](Practica%20EC2%20Lab/Untitled.png)
 
 1. Alli tienen los parámetros de conexión  
 
-![](2024-I/Arquitecturas en la nube/Sesion 08/Practica EC2 Lab/Untitled 1.png)
+![](Practica%20EC2%20Lab/Untitled%201.png)
 1. Se conecta por ssh con la llave, ejemplo 
 
 ```bash

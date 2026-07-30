@@ -104,14 +104,14 @@ Es de entender que la subestructura optima tiene mapeados todos los subproblemas
 1. Estructura de costos: Almacena el costo de la solución
 2. Estructura de solución: Almacena la solución
 
-$$
-m[i,j] = 
-\begin{cases} 
-0 & \text{si } i = 0 \vee j = 0 \\
-m[i-1,j-1] + 1 & \text{si } X[i] = Y[j] \\
-\max(m[i-1,j], m[i,j-1]) & \text{si } X[i] \neq Y[j]
-\end{cases}
-$$
+    $$
+    m[i,j] = 
+    \begin{cases} 
+    0 & \text{si } i = 0 \vee j = 0 \\
+    m[i-1,j-1] + 1 & \text{si } X[i] = Y[j] \\
+    \max(m[i-1,j], m[i,j-1]) & \text{si } X[i] \neq Y[j]
+    \end{cases}
+    $$
 
 3. Se llena de la siguiente forma
 	1. Calcule $m[0,j] \texttt{ y } m[i,0]$
