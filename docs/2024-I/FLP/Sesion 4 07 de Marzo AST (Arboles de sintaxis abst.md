@@ -4,7 +4,7 @@
 
 Es una representación de los datos a partir de la gramática
 
-![Untitled](Sesion%204%2007%20de%20Marzo%20AST%20(Arboles%20de%20sintaxis%20abst%2082bc0c3d036e43cdada25fdee76fb984/Untitled.png)
+![Untitled](Sesion%204%2007%20de%20Marzo%20AST%20%28Arboles%20de%20sintaxis%20abst/Untitled.png)
 
 ---
 
