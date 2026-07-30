@@ -12,6 +12,6 @@ Cursos del segundo semestre de 2026.
     datos fundamentales (listas, pilas, colas, tablas hash, árboles,
     montículos, colas de prioridad y conjuntos) con la STL de C++.
 
-    [:octicons-arrow-right-24: Entrar](estructurasDeDatos.md)
+    [:octicons-arrow-right-24: Entrar](Estructuras%20de%20Datos/Contenido.md)
 
 </div>

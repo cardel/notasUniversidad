@@ -16,6 +16,12 @@ mismas estructuras ya empacadas.
 
 [Programa y cronograma (PDF)](Contenido.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+## Notas de clase
+
+### Corte 1
+
+1. [Clase 1. Repaso de programación básica — 29 de julio](C1/Clase%201.%20Repaso%20de%20programación%20básica.md)
+
 ## Clases en video
 
 Las grabaciones de cada sesión se publican en la lista de reproducción del
