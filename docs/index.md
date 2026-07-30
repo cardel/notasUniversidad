@@ -70,7 +70,8 @@ para entrar.
 
     ---
 
-    Estructuras de datos: el curso más reciente, con clases en video.
+    Estructuras de datos, y árboles y grafos: el semestre en curso, con clases
+    en video.
 
     [:octicons-arrow-right-24: Entrar](2026-II/Lista.md)
 
