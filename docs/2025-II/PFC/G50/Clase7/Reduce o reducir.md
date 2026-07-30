@@ -10,6 +10,7 @@ v = \{v_1,v_2, \ldots v_n\} \\
 s = v_1+v_2 + \ldots v_n
 \end{aligned}
 $$
+
 Pero la suma solo recibe dos parametros, lo que implica que debo establecer un orden de asociacion.
 
 1. Asociación por la izquierda $s = ( \ldots ((v_1+v_2) + v_3)) \ldots v_n)$ **reduceLeft**

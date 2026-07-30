@@ -16,12 +16,14 @@
    10. Son relaciones entre más de dos conjuntos (o entre elementos de un mismo conjunto con más de dos componentes).
    11. **Composición** $f \circ g$: si $(a,b) \in g$ y $(b,c) \in f$, entonces $(a,c) \in f \circ g$.
    12. **Potencia**:
-      $$
-      r^n = \begin{cases}
-          r & \text{si } n = 1 \\
-          r \circ r^{n-1} & \text{si } n > 1 \\
-          \end{cases}
-      $$
+
+    $$
+    r^n = \begin{cases}
+        r & \text{si } n = 1 \\
+        r \circ r^{n-1} & \text{si } n > 1 \\
+        \end{cases}
+    $$
+
    13. **Proyección**: dada una relación con elementos $(a_1, a_2, \ldots, a_n)$, una proyección es un subconjunto de estos elementos, por ejemplo $(a_i, a_j, a_k)$ con $i, j, k \in \{1,\ldots,n\}$.
    14. **Join**: dadas dos relaciones $R(a_0, a_1, \ldots, a_k, c_1, c_2, \ldots, c_n)$ y $S(b_0, b_1, \ldots, b_k, c_1, c_2, \ldots, c_n)$, el join produce una nueva relación $(a_0, a_1, \ldots, a_k, b_0, b_1, \ldots, b_k, c_1, c_2, \ldots, c_n)$ donde las componentes $c_i$ coinciden.
 
@@ -33,9 +35,11 @@
    19. **Caso base**: es trivial, con solución inmediata. El **caso recursivo** compone la solución y nos acerca al caso base.
 
 Ejemplo matemático (factorial):
+
 $$
 f(n) = n \cdot f(n-1), \quad f(0) = 1
 $$
+
 Desarrollo:
 - $f(0) = 1$
 - $f(1) = 1 \cdot f(0) = 1 \cdot 1 = 1$

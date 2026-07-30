@@ -4,7 +4,9 @@
 
 ### 1. **Relaciones de Recurrencia**
 Ecuaciones que definen una función en términos de sus valores en entradas más pequeñas. Para algoritmos de divide y vencerás tienen la forma general:
+
 $$T(n) = aT(n/b) + f(n)$$
+
 donde:
 - $a$: número de subproblemas generados
 - $b$: factor de reducción del tamaño

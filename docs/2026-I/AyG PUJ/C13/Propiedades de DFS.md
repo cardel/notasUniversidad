@@ -57,8 +57,8 @@ Esto no es posible. Si $d[v] < f[u]$ (v se descubrió antes de que u finalizara)
 
 Concepto | Descripción | Teorema/Propiedad Relacionado
 --- | --- | ---
-Tiempo de descubrimiento ($d[v]$) | Instante en el que el vértice $v$ es visitado por primera vez y se marca como GRIS. | Entero entre 1 y $2|V|$.
-Tiempo de finalización ($f[v]$) | Instante en el que se termina de explorar recursivamente todos los vértices alcanzables desde $v$ y se marca como NEGRO. | Entero entre 1 y $2|V|$. Siempre $d[v] < f[v]$.
+Tiempo de descubrimiento ($d[v]$) | Instante en el que el vértice $v$ es visitado por primera vez y se marca como GRIS. | Entero entre 1 y $2\lvert V \rvert$.
+Tiempo de finalización ($f[v]$) | Instante en el que se termina de explorar recursivamente todos los vértices alcanzables desde $v$ y se marca como NEGRO. | Entero entre 1 y $2\lvert V \rvert$. Siempre $d[v] < f[v]$.
 Estados (Colores) | BLANCO (no visitado), GRIS (en proceso/ en la pila), NEGRO (procesado). | Un nodo es GRIS durante el intervalo $[d[v], f[v]]$. Encontrar una arista a un nodo GRIS indica un ciclo en grafos dirigidos.
 Teorema del Paréntesis | Describe la relación de anidamiento de los intervalos $[d[v], f[v]]$ para cualquier par de vértices. | **Teorema 22.7 (Cormen):** Para dos vértices $u$ y $v$, sus intervalos son disjuntos o uno está contenido en el otro, definiendo la relación de descendencia en el bosque DFS.
 Descendencia en el bosque DFS | $u$ es descendiente de $v$ **si y solo si** $d[v] < d[u] < f[u] < f[v]$. | Corolario directo del Teorema del Paréntesis.

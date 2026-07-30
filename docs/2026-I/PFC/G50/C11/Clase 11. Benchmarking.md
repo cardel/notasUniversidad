@@ -13,6 +13,7 @@ Ley ahmdal, suponemos una parte secuencial $f$ y otra paralela $1-f$
 $$
 S_p = \frac{1}{f - \frac{1-f}{P}}
 $$
+
 En el caso de el paralelismo sea ilimitado
 
 $$

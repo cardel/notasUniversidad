@@ -3,6 +3,7 @@
 ### Suma generalizada de términos
 
 La implementación original permite calcular sumatorias de la forma:
+
 $$\sum \limits_{i=1}^{n} k(i)$$
 
 ```scala

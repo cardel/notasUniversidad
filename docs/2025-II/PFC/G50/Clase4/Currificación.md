@@ -23,6 +23,7 @@ def f(a: Int)(b: Int): Int = {
 ### Fundamentos matemáticos
 
 Matemáticamente, la currificación transforma:
+
 $$f(a, b) = g(h(a))(b) = (g \circ h)(a)(b)$$
 
 Donde:

@@ -30,25 +30,25 @@ $x - 3 + 3 = x$
 
 ## Ejemplo 2
 
-Demostrar que $x²+4x + 17$ es $O(x^3)$
+Demostrar que $x^2+4x + 17$ es $O(x^3)$
 
-$x²+4x+17 \leq c*x^3$
+$x^2+4x+17 \leq c*x^3$
 
-$\lim_{x \rightarrow \infty} x²+4x+17 \leq c*x^3$
+$\lim_{x \rightarrow \infty} x^2+4x+17 \leq c*x^3$
 
-$\lim_{x \rightarrow \infty} \frac{x²}{x³}+\frac{4x}{x³}+\frac{17}{x³} \leq \frac{cx³}{x³}$
+$\lim_{x \rightarrow \infty} \frac{x^2}{x^3}+\frac{4x}{x^3}+\frac{17}{x^3} \leq \frac{cx^3}{x^3}$
 
 $0+0+0 \leq c$
 $c \geq 0$
 
 $c = 2$
-$x²+4x+17 \leq 2x^3$
-$2x^3 -x²-4x-17 \geq 0$
+$x^2+4x+17 \leq 2x^3$
+$2x^3 -x^2-4x-17 \geq 0$
 
 Esto aplica para un $k \geq 3$ 
-Demostrar que $x^3$ es $O(x²+4x + 17)$
+Demostrar que $x^3$ es $O(x^2+4x + 17)$
 
-$x³ \leq c*(x²+4x+17)$
+$x^3 \leq c*(x^2+4x+17)$
 
 Aplicando el limite
 

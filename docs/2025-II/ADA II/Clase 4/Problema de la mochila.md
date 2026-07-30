@@ -5,7 +5,7 @@ El problema de la mochila consiste en lo siguiente:
 1. Tenemos una mochila con capacidad $M$
 2. Tenemos con conjunto de elementos con peso $w_i$ y beneficio $b_i$
 3. La idea es llenar la mochila de tal forma podamos llevar los elementos y maximize el beneficio
-$$ \sum \limits_{i=0}{n} = x_i*b_i $$ sea maximo
+$\sum \limits_{i=0}{n} = x_i*b_i$ sea maximo
 $x_i$ es un vector binario, donde cuando tenemos un cero no llevamos el elementos y cuando tenemos 1 lo llevamos
 A esto se le conoce como el problema **la mochila 0/1**
 
@@ -160,6 +160,7 @@ Basándonos en el contexto proporcionado sobre el problema de la mochila 0/1 y s
 
 ### 3. **La relación de recurrencia captura la esencia de la decisión**
 Para cada subproblema $(i, j)$:
+
 $$
 m[i][j] = 
 \begin{cases} 
@@ -168,6 +169,7 @@ m[i][j-1] & \text{if } i < w_j \\
 \max\left(m[i - w_j][j-1] + b_j,\ m[i][j-1]\right) & \text{otherwise}
 \end{cases}
 $$
+
 - **Caso base**: si no hay elementos ($j=0$), el beneficio es 0.
 - **Si el elemento $j$ no cabe** ($i < w_j$), no se puede incluir: se hereda la solución de $j-1$.
 - **Si cabe**, se elige el máximo entre:

@@ -36,7 +36,7 @@ Concepto | Descripción |
 **Método de demostración** | Demostración por contradicción, analizando el primer vértice que violaría la igualdad. |
 **Papel del camino más corto** | Se analiza un camino más corto $s \leadsto u$ y la primera arista que cruza la frontera de $S$. |
 **Argumento de no negatividad** | Garantiza que $\delta(s,y) \leq \delta(s,u)$, crucial para la contradicción. |
-**Complejidades** | Depende de la estructura de datos: desde $O(|V|^2)$ (arreglo) hasta $O(|V|\log|V|+|E|)$ (Fibonacci heap). |
+**Complejidades** | Depende de la estructura de datos: desde $O(\lvert V \rvert^2)$ (arreglo) hasta $O(\lvert V \rvert\log\lvert V \rvert+\lvert E \rvert)$ (Fibonacci heap). |
 
 ## Comentarios adicionales
 

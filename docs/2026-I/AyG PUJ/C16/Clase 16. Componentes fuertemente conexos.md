@@ -11,7 +11,7 @@
 	5. Grado de salida: En grafos dirigidos, son aquellas cuyo origen es el vértice, por ejemplo $(u,v)$ es un vertice de salida de $u$
 	6. Teorema de Handshaking
 		1. No dirigidos $2e = \sum \limits_{v_i \in V} \delta(v_i)$ 
-		2. Dirigidos $e = \sum \limits_{v_i \in V} \delta⁺(v_i) = \sum \limits_{v_i \in V} \delta⁻(v_i)$
+		2. Dirigidos $e = \sum \limits_{v_i \in V} \delta^{+}(v_i) = \sum \limits_{v_i \in V} \delta^{-}(v_i)$
 	7. Familias de grafos simples
 		1. Completo $K_n$ cada vertice es adyacente a los demás
 		2. Ciclo $C_n$ Cada vertice conecta exactamente con otros dos

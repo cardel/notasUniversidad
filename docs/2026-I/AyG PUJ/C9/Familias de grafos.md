@@ -7,6 +7,7 @@ Las familias de grafos simples (no dirigidos) son:
 Un grafo completo es aquel que tiene $n$ vértices donde cada vértice está conectado con todos los demás. Es decir, cada vértice tiene grado $n-1$.
 
 El número de aristas es:
+
 $$e = \frac{n(n-1)}{2}$$
 
 **Demostración**: Hay $\binom{n}{2} = \frac{n(n-1)}{2}$ pares de vértices distintos, y cada par está conectado por exactamente una arista.
@@ -26,8 +27,11 @@ En este caso tenemos:
 - 1 vértice central con grado $n$
 
 Aplicando el teorema de Handshaking:
+
 $$2e = \sum \delta(v_i) = n \cdot 3 + 1 \cdot n = 3n + n = 4n$$
+
 Por lo tanto:
+
 $$e = 2n$$
 
 **Nota sobre notación**: Estamos tomando la definición de Rosen, donde $W_n$ tiene $n+1$ vértices (ciclo $C_n$ más vértice central). Otros autores definen $W_n$ con $n$ vértices totales, lo que implica trabajar con el ciclo $C_{n-1}$ más el vértice central.
@@ -44,6 +48,7 @@ Número de aristas: $e = m \cdot n$
 
 ### Grafo Regular
 Todos los vértices tienen el mismo grado $r$. Si es $r$-regular con $n$ vértices, entonces:
+
 $$2e = n \cdot r$$
 
 ### Grafo Nulo o Vacío

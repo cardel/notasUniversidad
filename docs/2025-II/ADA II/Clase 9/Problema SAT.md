@@ -9,7 +9,10 @@ SAT es NP y cualquier problema NPC puede ser reducido a SAT en tiempo polinomial
 Es un conjunto de clausulas binarias en forma normal conjuntiva (FNC) que son conjunciones de disyunciones
 
 $$
-(v_1  \vee v_2 \vee \bar{v_3}) \wedge (v_1 \vee v_2) \wedge (v_1 \vee v_2 \vee v_3 \vee \bar{v_4}) $$¿ Existe una combinación de valores para las variables binarias de tal forma la formula se satisfaga, es decir sea VERDADERA?
+(v_1  \vee v_2 \vee \bar{v_3}) \wedge (v_1 \vee v_2) \wedge (v_1 \vee v_2 \vee v_3 \vee \bar{v_4})
+$$
+
+¿ Existe una combinación de valores para las variables binarias de tal forma la formula se satisfaga, es decir sea VERDADERA?
 
 # Demostracion
 

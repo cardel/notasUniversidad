@@ -5,12 +5,14 @@
 1. **Definición de grado de un vértice ($\delta(v)$)**: Número de aristas incidentes a un vértice. En un grafo simple, cada arista contribuye con 1 al grado de cada uno de sus dos vértices extremos.
 
 2. **Teorema de Handshaking para grafos no dirigidos**:
-   $$
-   2e = \sum_{v_i \in V} \delta(v_i)
-   $$
-   **Explicación**: Cada arista conecta dos vértices, por lo que contribuye exactamente 2 a la suma total de grados. Por lo tanto, la suma de los grados de todos los vértices es igual al doble del número de aristas.
 
-   **Corolario**: La suma de los grados de todos los vértices es siempre un número par. Esto implica que el número de vértices con grado impar debe ser par.
+    $$
+    2e = \sum_{v_i \in V} \delta(v_i)
+    $$
+
+    **Explicación**: Cada arista conecta dos vértices, por lo que contribuye exactamente 2 a la suma total de grados. Por lo tanto, la suma de los grados de todos los vértices es igual al doble del número de aristas.
+
+    **Corolario**: La suma de los grados de todos los vértices es siempre un número par. Esto implica que el número de vértices con grado impar debe ser par.
 
 ## Grafos Dirigidos
 
@@ -19,10 +21,12 @@
 2. **Grado de salida ($\delta^+(v)$)**: Número de aristas que tienen al vértice $v$ como origen (aristas que "salen" del nodo).
 
 3. **Teorema para grafos dirigidos**:
-   $$
-   e = \sum_{v_i \in V} \delta^-(v_i) = \sum_{v_i \in V} \delta^+(v_i)
-   $$
-   **Explicación**: Cada arista dirigida tiene exactamente un vértice de origen y un vértice de destino. Por lo tanto, la suma total de grados de entrada de todos los vértices es igual al número total de aristas, y lo mismo ocurre con la suma total de grados de salida.
+
+    $$
+    e = \sum_{v_i \in V} \delta^-(v_i) = \sum_{v_i \in V} \delta^+(v_i)
+    $$
+
+    **Explicación**: Cada arista dirigida tiene exactamente un vértice de origen y un vértice de destino. Por lo tanto, la suma total de grados de entrada de todos los vértices es igual al número total de aristas, y lo mismo ocurre con la suma total de grados de salida.
 
 ## Conceptos Teóricos Adicionales
 

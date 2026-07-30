@@ -5,6 +5,7 @@
 La recursión lineal almacena todos los llamados pendientes en la pila de ejecución hasta alcanzar el caso base.
 
 **Definición matemática:**
+
 $$
 \text{fact}(n) = \begin{cases}
 1 & \text{si } n = 0 \\

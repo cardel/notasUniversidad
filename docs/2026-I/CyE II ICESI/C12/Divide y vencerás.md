@@ -9,7 +9,8 @@ T(n) = \begin{cases}
 	\Theta(1) & \texttt{ si } & n = 1 \\
 	aT(\frac{n}{b})+D(n)+C(n) && \texttt{En otro caso}
 	\end{cases}
-	$$
+$$
+
 Donde 
 
 1. $a$ es el numero de subproblemas

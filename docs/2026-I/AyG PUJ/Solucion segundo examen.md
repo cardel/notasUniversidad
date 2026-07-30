@@ -437,9 +437,9 @@ def min_aeropuertos(N, tiene_aeropuerto, edges, x, y):
   ciudad; un par $(s, d)$ origen-destino del cargo.
 - **Salida:** costo mínimo de un camino $s = v_0, \ldots, v_k = d$, donde
 
-  $$\text{costo}(p) \;=\; \sum_{i=0}^{k-1} w(v_i, v_{i+1}) \;+\; \sum_{i=1}^{k-1} t(v_i).$$
+    $$\text{costo}(p) \;=\; \sum_{i=0}^{k-1} w(v_i, v_{i+1}) \;+\; \sum_{i=1}^{k-1} t(v_i).$$
 
-  El peaje se cobra en cada ciudad **intermedia**; ni $s$ ni $d$ pagan.
+    El peaje se cobra en cada ciudad **intermedia**; ni $s$ ni $d$ pagan.
 
 **Reducción a Dijkstra estándar.** Construimos un grafo dirigido $G'$
 con los mismos vértices y, por cada arista $(u, v)$ del original, dos
@@ -583,9 +583,9 @@ fase 2).
 | Fase | Costo |
 |------|-------|
 | 1. Kosaraju (Clase 16) | $O(V + E)$ |
-| 2. Bellman-Ford por SCC (Clase 20) | $O(\sum_j |C_j| \cdot |E_j|) = O(V \cdot E)$ peor caso |
+| 2. Bellman-Ford por SCC (Clase 20) | $O(\sum_j \lvert C_j \rvert \cdot \lvert E_j \rvert) = O(V \cdot E)$ peor caso |
 | 3. Construcción de $H$ | $O(V + E)$ |
-| 4. Dijkstra sobre $H$, EXTRACT-MIN lineal (Clase 21) | $O(K^2 + |F|)$ |
+| 4. Dijkstra sobre $H$, EXTRACT-MIN lineal (Clase 21) | $O(K^2 + \lvert F \rvert)$ |
 
 **Total:** $O(V \cdot E)$, dominada por los Bellman-Ford internos. El
 peor caso ocurre cuando una sola SCC concentra casi todos los vértices

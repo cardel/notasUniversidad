@@ -29,9 +29,11 @@ X = ABCAAABC
 Y = ABCBAAAC
 
 $$\epsilon, A, AB, ABC, ABCA, \ldots, B, BC, BCA, \ldots$$
+
 Conjunto potencia de X, ¿Cuanto cuesta hacerlo?
 
 $$O(2^n)$$
+
 Complejidad exponencia :(
 
 # Estrategias para mejorar la complejidad
@@ -101,6 +103,7 @@ Es de entender que la subestructura optima tiene mapeados todos los subproblemas
 
 1. Estructura de costos: Almacena el costo de la solución
 2. Estructura de solución: Almacena la solución
+
 $$
 m[i,j] = 
 \begin{cases} 

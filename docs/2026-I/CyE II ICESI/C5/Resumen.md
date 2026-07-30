@@ -25,12 +25,14 @@ La recursión aparece en fenómenos naturales y matemáticos llamados **fractale
 La recursión matemática define funciones y secuencias numéricas mediante relaciones entre valores. Algunos ejemplos clásicos:
 
 **Factorial:**
+
 $$f(n) = \begin{cases}
 1 & \text{si } n = 0 \\
 n \cdot f(n-1) & \text{en otro caso}
 \end{cases}$$
 
 **Fibonacci:**
+
 $$fib(n) = \begin{cases}
 0 & \text{si } n = 0 \\
 1 & \text{si } n = 1 \\

@@ -20,12 +20,15 @@ Donde:
 La parte no paralelizable es $(1 - P)$.
 
 # Paralelización sin limites
+
 $$
 S = \frac{1}{(1 - P)}
 $$
+
 Por ejemplo, si puedo parelelizar el 60% de un programa, ¿Cuanta acelaración tengo?
 
 $$
 S = \frac{1}{0.4} = 2.5
 $$
+
 A pesar de que tengo recursos infinitos tengo una limitación en la velocidad que puedo obtener paralelizar, es limitación de diseño de software.

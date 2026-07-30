@@ -12,6 +12,7 @@ Es un método para demostrar teoremas o fórmulas, que consta de dos pasos:
 **Paso base** $n = 1$ (dado que trabajamos en $\mathbb{N}$):
 
 $$2^1 > 1$$
+
 Esto es correcto.
 
 **Paso inductivo**: suponemos $P(k)$ y demostramos $P(k+1)$.

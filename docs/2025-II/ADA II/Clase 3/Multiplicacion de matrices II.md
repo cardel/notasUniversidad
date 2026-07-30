@@ -152,6 +152,7 @@ Esta estructura garantiza que la solución encontrada para M[1,4] será globalme
 ## Cálculo de la Solución General M[1,4]
 
 **Fórmula aplicada:**
+
 $$M[1,4] = \min\limits_{1 \leq k < 4} \left\{ M[1,k] + M[k+1,4] + p_0 \cdot p_k \cdot p_4 \right\}$$
 
 **Evaluación de las tres opciones:**
@@ -164,7 +165,7 @@ $$M[1,4] = \min\limits_{1 \leq k < 4} \left\{ M[1,k] + M[k+1,4] + p_0 \cdot p_k 
 
 **Decisión:** Dividir en $M[1,2]$ y $M[3,4]$
 
-La agrupación óptima es: $$((M_1 \times M_2) \times (M_3 \times M_4))$$
+La agrupación óptima es: $((M_1 \times M_2) \times (M_3 \times M_4))$
 Explica este codigo siguiendo el contexto que llevamos, ten en cuenta explicar donde esta la subestructura optima, como se modela y como se llena
 
 # Implementación
@@ -245,6 +246,7 @@ La **subestructura óptima** se modela mediante la relación de recurrencia:
 costo = costos[i, k] + costos[k+1, j] + p[i] * p[k+1] * p[j+1]
 ```
 Esto corresponde exactamente a:
+
 $$M[i,j] = M[i,k] + M[k+1,j] + p_{i} \cdot p_{k+1} \cdot p_{j+1}$$
 
 ### Estrategia de Llenado por Diagonales

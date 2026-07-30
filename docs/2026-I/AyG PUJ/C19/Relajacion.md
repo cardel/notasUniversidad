@@ -57,7 +57,7 @@ Concepto | Descripción | Observaciones |
 Atributos para SSSP | $v.d$ (estimación de distancia), $v.\pi$ (predecesor en el camino). | Permiten representar la solución y reconstruir los caminos. |
 Inicialización | $v.d = \infty$, $v.\pi = \text{NIL}$, $s.d = 0$. | Estado inicial que refleja la ausencia de conocimiento sobre los caminos. |
 Operación RELAX | Si $u.d + w(u,v) < v.d$, actualiza $v.d$ y $v.\pi$. | Operación fundamental en todos los algoritmos de caminos más cortos. |
-Estrategias de aplicación | Bellman‑Ford (todas las aristas, $|V|-1$ veces), Dijkstra (vértice con menor $d$), DAG (orden topológico). | La estrategia define el algoritmo y sus condiciones de aplicabilidad. |
+Estrategias de aplicación | Bellman‑Ford (todas las aristas, $\lvert V \rvert-1$ veces), Dijkstra (vértice con menor $d$), DAG (orden topológico). | La estrategia define el algoritmo y sus condiciones de aplicabilidad. |
 Cota superior | $v.d \geq \delta(s,v)$ en todo momento. | La estimación nunca subestima la distancia real, solo puede mejorar. |
 Convergencia | Si $u.d = \delta(s,u)$ y se relaja $(u,v)$, entonces $v.d = \delta(s,v)$. | Base para demostrar la corrección de los algoritmos. |
 Relajación de un camino | Relajar las aristas de un camino más corto en orden garantiza obtener la distancia mínima al final. | Explica por qué múltiples relajaciones pueden conducir a la solución. |

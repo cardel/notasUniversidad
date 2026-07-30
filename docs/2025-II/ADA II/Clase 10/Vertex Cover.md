@@ -3,6 +3,7 @@ Recibe un grafo $G = (V,E)$ y recibe un entero $k \leq |V|$.
 ¿Existe un subconjunto de a lo sumo $k$ vértices donde cada arista $e\in E$ tiene al menos uno de los vértices en el subconjunto?
 
 La salida es 1 si existe $V' \subseteq V$ tal que $|V'| \leq k$ y
+
 $$
 \forall e(u,v) \in E, (u \in V' \vee v \in V')
 $$

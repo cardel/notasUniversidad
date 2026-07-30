@@ -12,8 +12,11 @@
 
 ## Complejidad
 Tenemos que generamos 2 problemas de tamaño n/2 y combinar/conquistar nos cuesta O(n) por lo tanto
+
 $$T(n) = T(\frac{n}{2})+O(n)$$
-Al resolver esta ecuación por método de árbol, nos da $$O(nlog(n))$$
+
+Al resolver esta ecuación por método de árbol, nos da $O(nlog(n))$
+
 Se porque:
 1. Es un arbol binario (dos hijos)
 2. La altura de ese árbol de log(n)

@@ -19,6 +19,7 @@ Son los valores que son validos para las entradas, dominios finitos o infinitos
 $$
 D \in \mathbb{N}
 $$
+
 Este seria el caso de los números naturales que es un dominio infinito
 
 ## Tamaño de un problema
@@ -40,9 +41,10 @@ Suma de una serie: geometrica o aritmetica
 # Calculo de complejidad
 
 Notaciones
-$$O$$ Sirve para el peor caso
-$$ \Omega $$ Se usa para el mejor caso
-$$ \Theta $$ Caso promedio
+
+$O$ Sirve para el peor caso  
+$\Omega$ Se usa para el mejor caso  
+$\Theta$ Caso promedio
 ## Calculo de complejidad
 Operaciones elementales (toman tiempo 1)
 - Operaciones artimeticas
@@ -60,15 +62,15 @@ Se toma como mejor caso la bifurcación que menos se demore (menos pasos tenga) 
 
 ## Formulas de sumatorias
 
-1)$$  \sum_{i=1}^n k = k \cdot n $$
+1) $\sum_{i=1}^n k = k \cdot n$
 
-2) $$ \sum_{i=m}^n k = (n-m+1)k $$
+2) $\sum_{i=m}^n k = (n-m+1)k$
 
-3) $$ \sum_{i=1}^n k \cdot a_i = k \sum_{i=1}^n a_i $$
+3) $\sum_{i=1}^n k \cdot a_i = k \sum_{i=1}^n a_i$
 
-4) $$ \sum_{i=1}^n (a_i \pm b_i) = \sum_{i=1}^n a_i \pm \sum_{i=1}^n b_i $$
+4) $\sum_{i=1}^n (a_i \pm b_i) = \sum_{i=1}^n a_i \pm \sum_{i=1}^n b_i$
 
-5) $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
+5) $\sum_{i=1}^n i = \frac{n(n+1)}{2}$
 ## Ejemplos de análisis de código
 
 ### Análisis de Complejidad Temporal $T(n)$ con Conteo Simplificado  
@@ -205,7 +207,7 @@ Para un `n` dado:
 
 ### Costos individuales
 
-$$3+1+[4+4+⋯+4 (n veces)]+1+1+13 + 1 + \left[4 + 4 + \cdots + 4 \ (\text{n veces})\right] + 1 + 1 + 1$$
+$$3 + 1 + \left[4 + 4 + \cdots + 4 \ (\text{n veces})\right] + 1 + 1 + 1$$
 
 Desglosado:
 

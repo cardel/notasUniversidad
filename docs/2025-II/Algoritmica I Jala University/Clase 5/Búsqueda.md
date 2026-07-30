@@ -90,5 +90,9 @@ flowchart TD
 
 ## Complejidad
 Este algoritmo crea un solo subproblema de tamaño n/2, ¿porque? porque evalúa la mitad, es es mayor el valor escoge la mitad derecha, en caso contrario escoge la izquierda.
+
 $$T(n) = T(\frac{n}{2})+O(1)$$
-Al resolver por árbol nos da $$O(log(n))$$![](attachments/Pasted%20image%2020250804171232.png)
+
+Al resolver por árbol nos da $O(log(n))$
+
+![](attachments/Pasted%20image%2020250804171232.png)

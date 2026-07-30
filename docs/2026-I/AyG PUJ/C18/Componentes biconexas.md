@@ -36,7 +36,7 @@ Sea $G$ un grafo conexo no dirigido. Para cualesquiera dos vértices $u$, $v$ en
 
 | Concepto | Definición | Propiedad clave | Observaciones |
 |----------|------------|-----------------|---------------|
-| **Grafo biconexo** | Grafo conexo no dirigido con $|V| \geq 3$ que no tiene puntos de articulación. | Al eliminar cualquier vértice, el grafo permanece conexo. | Requiere al menos 3 vértices; con 2 vértices se considera degenerado. |
+| **Grafo biconexo** | Grafo conexo no dirigido con $\lvert V \rvert \geq 3$ que no tiene puntos de articulación. | Al eliminar cualquier vértice, el grafo permanece conexo. | Requiere al menos 3 vértices; con 2 vértices se considera degenerado. |
 | **Componente biconexa** | Subgrafo biconexo maximal (no contenido en otro más grande). | Particiona las aristas del grafo, no los vértices. | Los puntos de articulación pueden pertenecer a múltiples componentes. |
 | **Puente como componente** | Arista que es puente forma una componente biconexa degenerada con sus dos extremos. | Es una componente con una sola arista. | Corresponde a un caso límite en la descomposición. |
 | **Relación de equivalencia** | Dos aristas están en la misma componente si son iguales o hay un ciclo simple que las contiene. | Reflexiva, simétrica y transitiva. | Base teórica para agrupar aristas en componentes. |

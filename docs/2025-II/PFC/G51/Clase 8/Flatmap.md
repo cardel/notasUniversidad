@@ -3,6 +3,7 @@ Usualmente vamos a necesitar hacer operaciones que están dentro del producto ca
 $$
 A \times B
 $$
+
 $A =\{1,2,3\} B = \{4,5\}, A \times B = \{(1,4),(1,5),(2,4),(2,5),(3,4),(3,5)\}$
 ```scala
 scala> val A = 1 to 3

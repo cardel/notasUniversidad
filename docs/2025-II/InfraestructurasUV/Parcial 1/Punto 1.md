@@ -9,6 +9,7 @@ Por ejemplo, para la lista:
 $$
 A = [3, 1, 7, 0, 4, 1, 6, 3]  
 $$
+
 y una ventana $k = 3$, los promedios móviles son:
 
 $$
@@ -151,7 +152,8 @@ $$
         - (1,6,3) → 3.33
             
 
-**Resultado combinado:**  
+**Resultado combinado:**
+
 $$
 [3.67, 2.67, 3.67, 1.67, 3.67, 3.33]  
 $$

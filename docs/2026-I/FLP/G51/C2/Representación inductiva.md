@@ -142,6 +142,7 @@ t ∈ T ∧ l ∈ L → t :: l ∈ L
 Definir la representación de listas de listas de tuplas $(a,b)$ donde $a$ es un número par y $b$ es una lista de símbolos.
 
 **Números pares:**
+
 $$
 \begin{align}
 2 \in P \\
@@ -150,6 +151,7 @@ n \in P \therefore n+2 \in P
 $$
 
 **Lista de símbolos:**
+
 $$
 \begin{align}
 '() \in L_s \\
@@ -160,11 +162,13 @@ $$
 Donde $S$ representa el dominio de símbolos válidos (no es una definición recursiva).
 
 **Tuplas $(a,b)$** donde $a$ es un número par y $b$ es una lista de símbolos (no es una definición recursiva):
+
 $$
 a \in P \wedge b \in L_s \therefore (a, b) \in T
 $$
 
 **Lista de tuplas:**
+
 $$
 \begin{align}
 '() \in L_t \\
@@ -173,6 +177,7 @@ t \in T \wedge l \in L_t \therefore t :: l \in L_t
 $$
 
 **Lista de listas de tuplas:**
+
 $$
 \begin{align}
 '() \in LL_t  \\

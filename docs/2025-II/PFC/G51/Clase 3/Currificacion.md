@@ -19,11 +19,15 @@ $$\text{curry}(f)(a)(b) = f(a, b)$$
 ## Ejemplo matemático
 
 Dada la función:
+
 $$f: \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$$
+
 $$f(a, b) = a + b$$
 
 Su versión currificada es:
+
 $$\text{curry}(f): \mathbb{N} \rightarrow (\mathbb{N} \rightarrow \mathbb{N})$$
+
 $$\text{curry}(f)(a) = g_a \quad \text{donde } g_a(b) = a + b$$
 
 ## Representación de la currificación

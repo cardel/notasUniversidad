@@ -68,7 +68,7 @@ Arista cuya eliminación desconecta el grafo o aumenta el número de componentes
 | Distancia | Número de aristas en el camino más corto entre dos vértices. | Si no hay camino: $\infty$. Métrica en grafos no dirigidos. |
 | Lema del subcamino | Cualquier subcamino de un camino más corto es también un camino más corto. | Propiedad fundamental para algoritmos como Dijkstra. |
 | Alcanzabilidad | Existencia de un camino dirigido de $u$ a $v$. | Relación de equivalencia en no dirigidos; en dirigidos no es simétrica. |
-| Grafo conexo | Grafo no dirigido con camino entre todo par de vértices. | Condición necesaria: $|E| \geq |V|-1$. |
+| Grafo conexo | Grafo no dirigido con camino entre todo par de vértices. | Condición necesaria: $\lvert E \rvert \geq \lvert V \rvert-1$. |
 | Componente conexa | Subgrafo conexo maximal. | Particiona el grafo en subgrafos disjuntos conexos. |
 | Punto de articulación | Vértice cuya eliminación desconecta el grafo. | Importante en análisis de redes vulnerables. |
 | Puente | Arista cuya eliminación desconecta el grafo. | También llamada "arista de corte". |

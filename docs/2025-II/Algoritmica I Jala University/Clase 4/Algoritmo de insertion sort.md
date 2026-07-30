@@ -117,5 +117,5 @@ Aquí está el paso a paso del algoritmo **Insertion Sort** para ordenar el arre
 	- El tercero se compara con los  dos anteriores, 2 comparaciones
 	- El cuarto se compara con los tres anteriores, 3 comparaciones
 	- Y así hasta el ultimo que se compara n-1 veces
-	- La sumatoria nos va a salir 1+2+3+...+n-1 => $O(n²)$
-- Caso promedio: Asumimos la mitad de comparaciones de el peor caso $O(n²)$
+	- La sumatoria nos va a salir 1+2+3+...+n-1 => $O(n^2)$
+- Caso promedio: Asumimos la mitad de comparaciones de el peor caso $O(n^2)$

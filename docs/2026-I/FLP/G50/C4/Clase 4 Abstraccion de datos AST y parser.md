@@ -3,9 +3,11 @@
 
 1. Representación recursiva de datos
 	1. Representación inductiva
-	   $$
-	   '() \in S, n \in \mathbb{N} \wedge l \in S \therefore n :: s \in S
-	   $$
+
+		$$
+		'() \in S, n \in \mathbb{N} \wedge l \in S \therefore n :: s \in S
+		$$
+
 	2. Representación en gramáticas BNF
 ```ebnf
 <lst-num> ::= '()

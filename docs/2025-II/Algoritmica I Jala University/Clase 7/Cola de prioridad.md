@@ -6,8 +6,8 @@ Es una cola que no sigue el esquema FIFO, si no que los elementos se ordenan de 
 La cola colocará en su cabeza el elemento de mayor prioridad, si se inserta un elemento este se organizará de acuerdo a su prioridad
 
 - Internamente las colas de prioridad se maneja como árboles binarios
-- Las operaciones de búsqueda e inserción cuestan $$O(log(n))$$
-- El caso de búsqueda puede requerir tiempo $$O(n)$$
+- Las operaciones de búsqueda e inserción cuestan $O(log(n))$
+- El caso de búsqueda puede requerir tiempo $O(n)$
 - Son más difíciles de implementar que otras estructuras lineales
 
 # Ejemplo en Java

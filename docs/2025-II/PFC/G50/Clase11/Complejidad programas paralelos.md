@@ -33,6 +33,7 @@ def insertar(l:List[Int], e: Int):List[Int] = {
 ### Sumatoria Paralelizada
 
 La sumatoria $\sum_{i=1}^{n} i$ se puede dividir recursivamente:
+
 $$\sum_{i=1}^{n} i = \sum_{i=1}^{\frac{n}{2}} i + \sum_{i=\frac{n}{2}+1}^{n} i$$
 
 ### Implementación Paralela

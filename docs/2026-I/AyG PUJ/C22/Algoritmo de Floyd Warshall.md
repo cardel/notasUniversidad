@@ -25,9 +25,10 @@ Sea $p$ un camino más corto entre $i$ y $j$ con vértices intermedios en $\{1,\
 
 1. Si el vértice $k$ **no** está en el camino, entonces $d_{ij}^{(k)} = d_{ij}^{(k-1)}$.
 2. Si el vértice $k$ **sí** está en el camino, entonces el camino se puede dividir en $i \rightsquigarrow k$ y $k \rightsquigarrow j$, ambos con vértices intermedios en $\{1,\dots ,k-1\}$. Por tanto,
-   $$
-   d_{ij}^{(k)} = d_{ik}^{(k-1)} + d_{kj}^{(k-1)}.
-   $$
+
+    $$
+    d_{ij}^{(k)} = d_{ik}^{(k-1)} + d_{kj}^{(k-1)}.
+    $$
 
 Combinando ambos casos obtenemos la **recurrencia de Floyd‑Warshall**:
 
@@ -45,11 +46,15 @@ Dado que el usuario solicita un ejemplo con 6 vértices y 12 aristas, se present
 
 1. **Inicialización**: Construir $D^{(0)}$ con los pesos directos, $\infty$ donde no hay arista y 0 en la diagonal.
 2. **Iterar $k = 1$ hasta $n$**:
-   - Para cada par $(i,j)$ calcular:
-     $$
-     D[i][j] = \min\bigl(D[i][j],\; D[i][k] + D[k][j]\bigr)
-     $$
-     (usando los valores de la iteración anterior).
+
+    - Para cada par $(i,j)$ calcular:
+
+        $$
+        D[i][j] = \min\bigl(D[i][j],\; D[i][k] + D[k][j]\bigr)
+        $$
+
+        (usando los valores de la iteración anterior).
+
 3. **Detección de ciclos negativos**: Al final, si algún elemento $D[i][i] < 0$, existe un ciclo negativo accesible desde $i$.
 
 
@@ -80,9 +85,10 @@ Sea $p$ un camino más corto entre $i$ y $j$ con vértices intermedios en $\{1,\
 
 1. Si el vértice $k$ **no** está en el camino, entonces $d_{ij}^{(k)} = d_{ij}^{(k-1)}$.
 2. Si el vértice $k$ **sí** está en el camino, entonces el camino se puede dividir en $i \rightsquigarrow k$ y $k \rightsquigarrow j$, ambos con vértices intermedios en $\{1,\dots ,k-1\}$. Por tanto,
-   $$
-   d_{ij}^{(k)} = d_{ik}^{(k-1)} + d_{kj}^{(k-1)}.
-   $$
+
+    $$
+    d_{ij}^{(k)} = d_{ik}^{(k-1)} + d_{kj}^{(k-1)}.
+    $$
 
 Combinando ambos casos obtenemos la **recurrencia de Floyd‑Warshall**:
 
@@ -130,6 +136,7 @@ graph TD
 ```
 ennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnve
 **Matriz de adyacencia inicial $D^{(0)}$** (se usa $\infty$ para indicar que no hay arista directa):
+
 $$
 \begin{array}{c|cccccc}
  & 1 & 2 & 3 & 4 & 5 & 6 \\
@@ -144,9 +151,11 @@ $$
 $$
 
 Aplicamos el algoritmo iterando $k=1$ hasta $6$. En cada iteración, para todo par $(i,j)$ se calcula:
+
 $$
 D[i][j] \leftarrow \min\bigl(D[i][j],\; D[i][k] + D[k][j]\bigr).
 $$
+
 Aquí $D[i][k]$ es el valor actual de la distancia de $i$ a $k$, y $D[k][j]$ el de $k$ a $j$.
 
 ---

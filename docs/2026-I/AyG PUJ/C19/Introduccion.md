@@ -75,7 +75,7 @@ SPSP | Calcular $\delta(u,v)$ para un par específico. | Puede resolverse como c
 APSP | Calcular $\delta(u,v)$ para todos los pares $u,v$. | Algoritmos: Floyd‑Warshall, Johnson, múltiples ejecuciones de SSSP. |
 Subestructura óptima | Un camino más corto contiene subcaminos más cortos entre sus vértices intermedios. | Propiedad clave que permite el diseño de algoritmos dinámicos y greedy. |
 Ciclos negativos | Ciclos cuyo peso total es negativo. Si son alcanzables desde la fuente, hacen que $\delta(s,v) = -\infty$ para algunos vértices. | La detección de ciclos negativos es un subproblema importante (ej. Bellman‑Ford). |
-Cota de longitud | Sin ciclos negativos, existe un camino más corto simple con $\leq |V|-1$ aristas. | Justifica que algoritmos como Bellman‑Ford necesiten a lo sumo $|V|-1$ iteraciones. |
+Cota de longitud | Sin ciclos negativos, existe un camino más corto simple con $\leq \lvert V \rvert-1$ aristas. | Justifica que algoritmos como Bellman‑Ford necesiten a lo sumo $\lvert V \rvert-1$ iteraciones. |
 
 **Comentarios adicionales:**
 

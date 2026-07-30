@@ -71,8 +71,10 @@ Análisis de la gramática según los principios BNF de la Clase 2:
 Para generar listas de longitud par (0, 2, 4, ...), la regla inductiva debe agregar exactamente **dos** elementos en cada paso:
 
 - **a)** Correcta:
-  $$'() \in S,\; s_1 \in \textit{Symbol} \wedge s_2 \in \textit{Symbol} \wedge l \in S \therefore (s_1\; s_2\; l) \in S$$
-  Caso base: lista vacía (longitud 0, que es par). Paso inductivo: agrega **dos símbolos independientes** a una lista existente. Genera longitudes 0, 2, 4, 6, ...
+
+    $$'() \in S,\; s_1 \in \textit{Symbol} \wedge s_2 \in \textit{Symbol} \wedge l \in S \therefore (s_1\; s_2\; l) \in S$$
+
+    Caso base: lista vacía (longitud 0, que es par). Paso inductivo: agrega **dos símbolos independientes** a una lista existente. Genera longitudes 0, 2, 4, 6, ...
 
 - **c)** Correcta — gramática equivalente a la opción a):
   ```
@@ -238,6 +240,7 @@ Aplicando las reglas de `occurs-free?` vistas en clase (Clase 2 — Ligaduras):
 **e) `x` libre en toda la expresión** — Incorrecto. `x` está ligada por el lambda más externo `(lambda (x) ...)`.
 
 **Concepto formal de clase:**
+
 $$\text{Free}(\lambda x. e) = \text{Free}(e) \setminus \{x\}$$
 
 ---

@@ -172,7 +172,7 @@ $$
 Raices (2,2,2,3,3)
 
 $$
-a_n = A2^n + Bn2^n + Cn²2^n+ D3^n + En3^n
+a_n = A2^n + Bn2^n + Cn^{2}2^n+ D3^n + En3^n
 $$
 
 ```scala

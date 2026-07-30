@@ -75,7 +75,7 @@ $Query(l, r)$ desde $l$ hasta $r$: $Query(r) - Query(l-1)$
 | :--- | :--- | :--- |
 | **Estructura** | Arreglo $T$ que almacena sumas de rangos basados en potencias de 2 | $T[i] = f([g(i), i])$ |
 | **Función $g(i)$** | Encuentra el inicio del rango cubierto por $T[i]$ | $g(i) = i \ \& \ (i+1)$ |
-| **Función $h(i)$** | Encuentra el siguiente índice a actualizar | $h(i) = i \ | \ (i+1)$ |
+| **Función $h(i)$** | Encuentra el siguiente índice a actualizar | $h(i) = i \ \vert \ (i+1)$ |
 | **Query prefijo** | Suma desde índice 0 hasta $i$ | Iterar con $g(i)$ hasta llegar a 0 |
 | **Update** | Actualiza $T[i]$ y propaga a $T[h(i)]$ | Iterar con $h(i)$ hasta superar $N$ |
 | **Query rango** | Consulta entre $l$ y $r$ | $Query(r) - Query(l-1)$ |

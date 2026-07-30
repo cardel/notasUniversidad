@@ -6,6 +6,7 @@ En algunas situaciones vamos a necesitar evaluar si todos los elementos de un ar
 $$
 \forall P(x), \exists P(x)
 $$
+
 ```scala
 scala> Array(1,2,3,4) forall (_ < 5)
 val res18: Boolean = true

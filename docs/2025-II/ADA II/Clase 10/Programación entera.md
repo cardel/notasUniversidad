@@ -84,13 +84,17 @@ En total $O(nm)+O(n) = O(nm)$. Por lo tanto, este problema es NP.
 
 Tenemos un 3-SAT con 4 variables $(v_1,v_2,v_3,v_4)$.
 Tenemos las cláusulas:
+
 $$
 (v_1,v_2,v_3),(\bar{v_3},\bar{v_2},v_4)
 $$
+
 Transformar a IP:
+
 $$
 x_1,x_2,x_3,x_4,\bar{x_1},\bar{x_2},\bar{x_3},\bar{x_4}
 $$
+
 Restricciones:
 
 $$
@@ -111,7 +115,9 @@ x_1 + x_2 + x_3 \geq 1 \\
 \bar{x_3}+\bar{x_2}+x_4 \geq 1
 \end{aligned}
 $$
+
 Función objetivo:
+
 $$
 B = 0, f(x) = x_1
 $$

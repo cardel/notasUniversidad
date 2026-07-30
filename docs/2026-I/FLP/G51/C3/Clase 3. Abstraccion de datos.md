@@ -4,9 +4,11 @@
 Hemos visto como especificar datos recursivos
 
 1. Especificación inductiva
-   $$
-   2 \in S, n \in S \therefore n+2 \in S
-   $$
+
+    $$
+    2 \in S, n \in S \therefore n+2 \in S
+    $$
+
 2. Especificación mediante gramáticas
 ```ebnf
    <list-n> ::= '() | <int> <list-n>

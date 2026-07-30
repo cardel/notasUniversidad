@@ -22,7 +22,9 @@ $$
  x_i >=0 && 1 \leq i \leq n
  \end{aligned}
  $$
+
  Ejemplo
+
 $$
 \begin{aligned}
 \texttt{maximize }  x_1 + 2x_2 \\
@@ -31,6 +33,7 @@ x_1 + 3x_2 \leq 15000 \\
 x_1 \geq 0, x_2 \geq 0
 \end{aligned}
 $$
+
 En minizinc
 
 ```minizinc

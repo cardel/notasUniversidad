@@ -17,5 +17,5 @@ bool adivinarClave(String clave) {
 	}
 }
 ```
-En este caso para averiguar la contraseña de 4 caracteres requiero $O(n⁴)$ operaciones en promedio **es muy costoso**
+En este caso para averiguar la contraseña de 4 caracteres requiero $O(n^4)$ operaciones en promedio **es muy costoso**
 

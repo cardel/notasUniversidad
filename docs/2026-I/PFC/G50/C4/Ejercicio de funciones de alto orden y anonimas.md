@@ -61,6 +61,7 @@ La norma-p es una generalización de las normas vectoriales comunes:
 - **p = ∞**: Norma del máximo (valor absoluto máximo)
 
 Matemáticamente, para un vector $\vec{x} = (x_1, x_2, \ldots, x_n)$:
+
 $$
 \|\vec{x}\|_p = \left( \sum_{i=1}^n |x_i|^p \right)^{1/p}
 $$

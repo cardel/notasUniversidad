@@ -44,7 +44,9 @@ v = \{v_1,v_2,\ldots,v_n\} \\
 u.v = \{u_1*v_1 + u_2*v_2+\ldots+u_n*v_n\}
 \end{aligned}
 $$
+
 Ejemplo
+
 $$
 \begin{aligned}
 v = \{1,2,3\} \\ 

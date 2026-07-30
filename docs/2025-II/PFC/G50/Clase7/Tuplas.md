@@ -21,14 +21,18 @@ val y: Int = 2
 En ciertas ocasiones necesitamos que reconocer dos o mas patrones al mismo tipo.
 
 # Suma de vectores
+
 Dados
+
 $$
 \begin{aligned}
 u = \{u_1,u_2, \ldots , u_n\} \\
 v = \{v_1,v_2, \ldots , v_n\} 
 \end{aligned}
 $$
+
 Para sumarlos
+
 $$
 w = \{u_1+v_1,u_2+v_2, \ldots , u_n+v_n\}
 $$

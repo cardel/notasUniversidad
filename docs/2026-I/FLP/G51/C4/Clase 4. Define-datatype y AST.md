@@ -2,9 +2,11 @@
 
 1. Representación de datos recursivos
 	1. Inductiva 
-	   $$
-	   5 \in S, n \in S \therefore n+5 \in S
-	   $$
+
+		$$
+		5 \in S, n \in S \therefore n+5 \in S
+		$$
+
 	2. Gramaticas
 ```ebnf
 	   <lst-sym> ::= '()

@@ -98,7 +98,7 @@ El algoritmo utiliza recursividad sobre listas, que es un patrón común en prog
 
 | Concepto | Definición | Ejemplo en el ejercicio | Observaciones |
 |----------|------------|-------------------------|---------------|
-| **Distancia de Minkowski** | Generalización de métricas de distancia | $\sqrt[p]{\sum_{i=1}^n |a_i-b_i|^p}$ | Base matemática del ejercicio |
+| **Distancia de Minkowski** | Generalización de métricas de distancia | $\sqrt[p]{\sum_{i=1}^n \lvert a_i-b_i \rvert^p}$ | Base matemática del ejercicio |
 | **Función de transformación (f)** | Calcula la contribución de cada coordenada | `(x: Int, y: Int) => Math.pow((x - y), 2).toInt` | Eleva la diferencia a la potencia p |
 | **Función de reducción (g)** | Aplica la operación final al resultado | `(s: Int) => Math.pow(s, 1 / 2.0)` | Calcula la raíz p-ésima |
 | **Recursividad sobre listas** | Procesamiento elemento por elemento | `calcularDistanciaAux(a.tail, b.tail, ...)` | Patrón común en programación funcional |

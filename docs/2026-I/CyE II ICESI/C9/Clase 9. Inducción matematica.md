@@ -7,11 +7,15 @@
 2. Relaciones pueden ser orden parcial (Reflexiva, antisimetrica y transitiva), de equivalencia (Reflexivia, simetrica y transitiva)
 3. Relaciones n-arias que entre varios conjuntos
 	1. Composicion $A o B$ $(a,b) \in A \wedge (b,c) \in B \therefore (a,c) \in AoB$
-	2. Potencia de una relación $$ A^n = \begin{cases}
-	   A & \texttt{ si }  n = 1  \\
-	   A^{n-1} o A & \texttt{en otro caso}
-	   \end{cases}
-	   $$
+	2. Potencia de una relación
+
+		$$
+		A^n = \begin{cases}
+		A & \texttt{ si }  n = 1  \\
+		A^{n-1} o A & \texttt{en otro caso}
+		\end{cases}
+		$$
+
 	3. Proyección: Seleccionar un subconjunto dentro de una relación n-aria $A = \{a_1,a_2,\ldots,a_n\}$ proyección $\{a_i,a_j,a_k,\ldots\}$
 	4. Join $A = \{a_1,a_2,\ldots,a_k, c_1,c_2 \ldots c_m\}, B = \{b_1,b_2,\ldots,b_p, c_1,c_2 \ldots c_m\}$ el join es  $\{a_1,a_2,\ldots,a_k, c_1,c_2 \ldots c_m, b_1,b_2,\ldots,b_p\}$
 

@@ -109,6 +109,7 @@ Está orientada a las funciones y cómo estas interactuan entre sí, desde la ma
 $$
 f(x,y) = x+y,  D(f) \in \mathbb(N \times N), R(f) \in \mathbb(N)
 $$
+
 En computación llevamos esto a un nivel más generico
 
 - Las entradas pueden ser distintos tipos

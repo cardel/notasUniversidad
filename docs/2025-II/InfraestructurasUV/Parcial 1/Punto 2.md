@@ -40,13 +40,16 @@ Cada vez que se invoca `factorial(n)`, la función:
 - Multiplica `n` por el resultado devuelto.
     
 
-Por ejemplo:  
+Por ejemplo:
+
 $$  
 factorial(5) = 5 \times factorial(4)  
 $$ 
+
 $$
 factorial(4) = 4 \times factorial(3)  
 $$ 
+
 … y así hasta llegar a `factorial(0)`.
 
 En total, `factorial(100)` genera **101 llamadas anidadas**, y cada una ocupa un marco en la pila.

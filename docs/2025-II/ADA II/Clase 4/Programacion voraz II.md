@@ -32,7 +32,7 @@ Hacer todas las combinaciones llevando a 0 elementos, 1 elemento, 2 elementos, 3
 2. Recorremos toda la matriz por columnas
 3. Por lo tanto la complejidad computacional $O(M*N)$ usualmente $M > N$
 4. La complejidad especial es igual por la estructura de datos.
-5. Podemos asumir que $M$ es estadisticamente $N²$ por ello la solución tiende $O(N^3)$
+5. Podemos asumir que $M$ es estadisticamente $N^2$ por ello la solución tiende $O(N^3)$
 
 ### Solución voraz
 

@@ -3,6 +3,7 @@ Programar pensando en el concepto de función, una función hace algo de acuerdo
 $$
 f(x) = x^2
 $$
+
 Esta función
 - x es un valor numérico $x \in \mathbb{R}$ 
 - f(x) es un valor numérico $f(x) \in \mathbb{R}$

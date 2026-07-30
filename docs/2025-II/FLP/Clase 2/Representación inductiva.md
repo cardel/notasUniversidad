@@ -31,6 +31,7 @@ $$
 p \in S \therefore p+7 \in S
 \end{aligned}
 $$
+
 ## Listas de multiplos de 8
 $$
 \begin{aligned}

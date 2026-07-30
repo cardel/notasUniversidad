@@ -20,6 +20,7 @@ Se pueden implementar más versiones siguiendo el mismo patrón.
 ## Ejemplo: Suma de potencias
 
 Para la sumatoria:
+
 $$\sum \limits_{i=0}^{n} ar^i$$
 
 Se puede dividir en **intervalos disyuntos** cuya unión sea igual al conjunto original. Esta estrategia se conoce como **separación por segmentos**.

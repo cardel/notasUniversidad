@@ -89,6 +89,7 @@ Cambios en la implementación base afectan automáticamente a todas las variante
 ## Analogía Matemática
 
 La abstracción alcanzada es equivalente a definir:
+
 $$
 F(n, g, h, k, acc) = 
 \begin{cases} 

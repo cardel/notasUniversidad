@@ -4,7 +4,7 @@
 
 Una ecuación de recurrencia asociada a un algoritmo de divide y vencerás tiene la forma general:
 
-$$T(n) = \underbrace{a}_{\text{subproblemas}} \cdot T!\left(\frac{n}{b}\right) + \underbrace{f(n)}_{\text{costo de dividir y combinar}}$$
+$$T(n) = \underbrace{a}_{\text{subproblemas}} \cdot T\!\left(\frac{n}{b}\right) + \underbrace{f(n)}_{\text{costo de dividir y combinar}}$$
 
 donde:
 
@@ -67,17 +67,17 @@ $$T(n) = n + 3T(n/4)$$
 
 **Iteración 2:** sustituimos $T(n/4) = n/4 + 3T(n/16)$:
 
-$$T(n) = n + 3\left(\frac{n}{4} + 3T!\left(\frac{n}{16}\right)\right) = n + \frac{3n}{4} + 9 \cdot T!\left(\frac{n}{16}\right)$$
+$$T(n) = n + 3\left(\frac{n}{4} + 3T\!\left(\frac{n}{16}\right)\right) = n + \frac{3n}{4} + 9 \cdot T\!\left(\frac{n}{16}\right)$$
 
 **Iteración 3:** sustituimos $T(n/16) = n/16 + 3T(n/64)$:
 
-$$T(n) = n + \frac{3n}{4} + \frac{9n}{16} + 27 \cdot T!\left(\frac{n}{64}\right)$$
+$$T(n) = n + \frac{3n}{4} + \frac{9n}{16} + 27 \cdot T\!\left(\frac{n}{64}\right)$$
 
 ### Paso 2: Patrón general
 
 Después de $i$ iteraciones:
 
-$$T(n) = n \sum_{j=0}^{i-1} \left(\frac{3}{4}\right)^j + 3^i \cdot T!\left(\frac{n}{4^i}\right)$$
+$$T(n) = n \sum_{j=0}^{i-1} \left(\frac{3}{4}\right)^j + 3^i \cdot T\!\left(\frac{n}{4^i}\right)$$
 
 Los coeficientes del término $n$ siguen una progresión geométrica con razón $3/4$, y el coeficiente del término recursivo crece como $3^i$.
 
@@ -129,7 +129,7 @@ $$T(n) = 2n + 4\left(\frac{n}{4} + 2T(n/8)\right) = 3n + 8T(n/8)$$
 
 Después de $i$ iteraciones:
 
-$$T(n) = i \cdot n + 2^i \cdot T!\left(\frac{n}{2^i}\right)$$
+$$T(n) = i \cdot n + 2^i \cdot T\!\left(\frac{n}{2^i}\right)$$
 
 Cada nivel aporta exactamente $n$ al costo acumulado (los $2^i$ nodos del nivel $i$ contribuyen $n/2^i$ cada uno, sumando $n$ en total). Esta propiedad es característica de la razón $a/b = 2/2 = 1$.
 
@@ -155,7 +155,7 @@ Resolver $T(n) = 2T(n/2) + 1$, con $T(1) = \Theta(1)$.
 
 Después de $i$ iteraciones:
 
-$$T(n) = \sum_{j=0}^{i-1} 2^j + 2^i \cdot T!\left(\frac{n}{2^i}\right)$$
+$$T(n) = \sum_{j=0}^{i-1} 2^j + 2^i \cdot T\!\left(\frac{n}{2^i}\right)$$
 
 ### Condición de parada y resultado
 
@@ -177,7 +177,7 @@ Resolver $T(n) = T(n/2) + 1$, con $T(1) = \Theta(1)$.
 
 Después de $i$ iteraciones:
 
-$$T(n) = i + T!\left(\frac{n}{2^i}\right)$$
+$$T(n) = i + T\!\left(\frac{n}{2^i}\right)$$
 
 ### Condición de parada y resultado
 
@@ -215,7 +215,7 @@ $$T(n) = 3n + 16\left(\frac{n}{4} + 4T(n/8)\right) = 3n + 4n + 64T(n/8) = 7n + 6
 
 Después de $i$ iteraciones:
 
-$$T(n) = n \sum_{j=0}^{i-1} 2^j + 4^i \cdot T!\left(\frac{n}{2^i}\right)$$
+$$T(n) = n \sum_{j=0}^{i-1} 2^j + 4^i \cdot T\!\left(\frac{n}{2^i}\right)$$
 
 Aquí la razón es $a/b = 4/2 = 2 > 1$, lo que indica que la serie geométrica será dominada por su último término.
 

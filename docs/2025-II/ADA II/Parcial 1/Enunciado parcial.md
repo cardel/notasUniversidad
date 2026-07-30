@@ -52,6 +52,7 @@ Definimos las variables de decisión:
     
 
 Cada combo tiene el siguiente beneficio unitario (precio de venta menos costo de producción):
+
 $$  
 \begin{aligned}  
 \text{Combo popular: } & 3500 - (3 \cdot 400 + 1 \cdot 300 + 2 \cdot 500) = 1000,\\  
@@ -108,6 +109,7 @@ $$
 - Variable entrante: elegir la columna con coeficiente más negativo en la fila $z$ $\Rightarrow$ $x_3$ (coeficiente $-4800$).
     
 - Razones $\text{RHS}/\text{columna }x_3$:  
+
     $$  
     \frac{500}{2}=250,\quad \frac{600}{1}=600,\quad \frac{800}{3}\approx266.666667,\quad \frac{200000}{2200}\approx90.9090909.  
     $$
@@ -122,6 +124,7 @@ $$
 Primero normalizamos la fila pivote ($s_4$) dividiendo por $2200$:
 
 Fila pivote nueva ($R_{piv}$):  
+
 $$  
 R_{piv} \leftarrow \frac{1}{2200} R_{s_4}  
 $$
@@ -145,6 +148,7 @@ Ahora eliminamos $x_3$ en las otras filas: $R_i \leftarrow R_i - a_{i3}\cdot R_{
 - Factor $a_{13}=2$.
     
 - Nueva fila $s_1$:  
+
     $$  
     \begin{aligned}  
     x_1 &: 3 - 2\cdot 1.136363636364 = 0.727272727272\\  
@@ -162,6 +166,7 @@ Ahora eliminamos $x_3$ en las otras filas: $R_i \leftarrow R_i - a_{i3}\cdot R_{
 - Factor $a_{23}=1$.
     
 - Nueva fila $s_2$:  
+
     $$  
     \begin{aligned}  
     x_1 &: 2 - 1\cdot 1.136363636364 = 0.863636363636\\  
@@ -179,6 +184,7 @@ Ahora eliminamos $x_3$ en las otras filas: $R_i \leftarrow R_i - a_{i3}\cdot R_{
 - Factor $a_{33}=3$.
     
 - Nueva fila $s_3$:  
+
     $$  
     \begin{aligned}  
     x_1 &: 1 - 3\cdot 1.136363636364 = -2.409090909091\\  
@@ -198,6 +204,7 @@ Ahora eliminamos $x_3$ en las otras filas: $R_i \leftarrow R_i - a_{i3}\cdot R_{
 - Actualizamos con $R_z \leftarrow R_z - a_{z3}\cdot R_{piv} = R_z + 4800\cdot R_{piv}$.
     
 - Nueva fila $z$:  
+
     $$  
     \begin{aligned}  
     x_1 &: -1000 + 4800\cdot 1.136363636364 = 4454.545454545\\  
@@ -236,6 +243,7 @@ De la tabla final leemos la solución básica:
 - Las holguras: $s_1 \approx 318.1818,; s_2 \approx 509.0909,; s_3 \approx 527.2727,; s_4 = 0$.
     
 - Valor objetivo:  
+
     $$  
     Z^\ast = 436363.636363\ldots  
     $$

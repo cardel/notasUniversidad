@@ -9,6 +9,7 @@ La representación inductiva define tipos de datos mediante reglas de construcci
 - **Reglas inductivas**: permiten construir nuevos elementos a partir de los existentes
 
 Ejemplo: El conjunto de números pares se define como:
+
 $$2 \in P \quad \text{y} \quad n \in P \therefore n+2 \in P$$
 
 Esta estructura garantiza que **todo dato recursivo debe permitir volver al caso base**. Las funciones de pertenencia validan si un dato cumple con la definición inductiva mediante recursión que desciende hacia el caso base.
@@ -20,6 +21,7 @@ Esta estructura garantiza que **todo dato recursivo debe permitir volver al caso
 ### 2. Gramáticas BNF y Lenguajes Regulares
 
 Las gramáticas BNF (Backus-Naur Form) especifican formalmente la sintaxis de lenguajes. Las gramáticas tipo 3 (regulares) de la jerarquía de Chomsky se caracterizan por reglas de la forma:
+
 $$A \rightarrow aB \quad \text{o} \quad A \rightarrow a$$
 
 Cada regla en BNF corresponde a un caso en una función de validación recursiva:
@@ -66,6 +68,7 @@ Patrón general:
 ### 4. Cálculo Lambda y Expresiones Funcionales
 
 El cálculo lambda es un sistema formal que modela funciones anónimas:
+
 $$\lambda x. e \quad \text{(abstracción)} \quad (e_1 \, e_2) \quad \text{(aplicación)}$$
 
 Conceptos clave:

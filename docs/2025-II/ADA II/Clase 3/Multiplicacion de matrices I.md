@@ -3,6 +3,7 @@
 ## Definición del Problema
 
 Dada una secuencia de matrices multiplicables:
+
 $$M_1 \times M_2 \times M_3 \times \cdots \times M_n$$
 
 Determinar la agrupación óptima de operaciones que minimice el número total de multiplicaciones escalares.
@@ -37,6 +38,7 @@ El primer agrupamiento es óptimo al minimizar las operaciones.
 El problema exhibe **subestructura óptima**: la solución óptima del problema general contiene soluciones óptimas de sus subproblemas.
 
 Para $M[i,j]$ (multiplicar matrices $i$ hasta $j$), consideramos todas las particiones posibles:
+
 $$M[i,j] = M[i,k] \times M[k+1,j] \quad \text{para } i \leq k < j$$
 
 ### Decisión en Divide y Vencerás

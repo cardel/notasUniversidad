@@ -34,6 +34,7 @@ a = 3  # Objeto con comportamiento definido
 ## Representación recursiva de números naturales
 
 Basado en los axiomas de Peano:
+
 $$
 \begin{aligned}
 \lceil 0 \rceil \in \mathbb{N} \\

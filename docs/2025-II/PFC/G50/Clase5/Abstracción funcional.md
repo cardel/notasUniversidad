@@ -14,9 +14,11 @@ Es una técnica para  representa TAD (tipos abstractos de datos) en  un lenguaje
 
 []()# Ejemplo
 Un numero racional tiene la forma
+
 $$
 \frac{p}{q}, p \in \mathbb{ Z }, q \in \mathbb{N}, q \neq 0
 $$
+
 La forma de representar esto, es con números flotantes con decimales, sin embargo, los números tipo float o double tienen limitaciones dada la representación, estos tipos de datos aumentan su error de truncamiento a medida 
 
 

@@ -58,8 +58,8 @@ Cuando se explora un vértice, se empuja a una pila. Si `v.low == v.d`, signific
 
 Algoritmo | Idea principal | Complejidad | Ventajas | Desventajas |
 | --- | --- | --- | --- | --- |
-| **Kosaraju** | Dos DFS: una en $G$ para orden de finalización, otra en $G^T$ en ese orden. | $O(|V|+|E|)$ | Conceptualmente simple, fácil de implementar. | Requiere dos pasadas DFS y la construcción explícita de $G^T$. |
-| **Tarjan** | Una DFS con pila, usando `v.low` para identificar raíces de SCC. | $O(|V|+|E|)$ | Una sola DFS, no necesita $G^T$ explícito, más eficiente en práctica. | Más complejo de entender e implementar correctamente. |
+| **Kosaraju** | Dos DFS: una en $G$ para orden de finalización, otra en $G^T$ en ese orden. | $O(\lvert V \rvert+\lvert E \rvert)$ | Conceptualmente simple, fácil de implementar. | Requiere dos pasadas DFS y la construcción explícita de $G^T$. |
+| **Tarjan** | Una DFS con pila, usando `v.low` para identificar raíces de SCC. | $O(\lvert V \rvert+\lvert E \rvert)$ | Una sola DFS, no necesita $G^T$ explícito, más eficiente en práctica. | Más complejo de entender e implementar correctamente. |
 
 **Comentarios adicionales**:
 - Ambos algoritmos son óptimos en tiempo ($O(V+E)$) para grafos representados con listas de adyacencia.

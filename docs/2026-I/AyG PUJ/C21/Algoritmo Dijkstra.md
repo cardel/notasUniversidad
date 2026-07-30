@@ -46,7 +46,7 @@ Concepto | Descripción |
 --- | --- |
 **Propósito** | Encontrar los caminos más cortos desde un vértice origen a todos los demás en un grafo con pesos no negativos. |
 **Estrategia** | Algoritmo voraz (greedy). |
-**Complejidad** | $O((|V|+|E|) \log |V|)$ con cola de prioridad basada en heap. |
+**Complejidad** | $O((\lvert V \rvert+\lvert E \rvert) \log \lvert V \rvert)$ con cola de prioridad basada en heap. |
 **Condición clave** | Todos los pesos de las aristas deben ser no negativos. |
 **Estructuras de datos** | Cola de prioridad (min-heap), arreglos de distancias y predecesores. |
 **Propiedad de subcamino óptimo** | Garantiza que los caminos construidos son óptimos en cada paso. |

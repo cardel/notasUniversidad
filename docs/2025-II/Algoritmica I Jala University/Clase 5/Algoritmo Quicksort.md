@@ -60,4 +60,4 @@ C2 --> D2[Derecha de 29 - pivote 42 - Menores: 31 - Mayores: 81]
 	- Una con n-1 elementos
 	- Otra un elemento
 	- $$T(n) = T(n-1) + O(n)$$
-	- Resolver esto nos da $O(n²)$
+	- Resolver esto nos da $O(n^2)$

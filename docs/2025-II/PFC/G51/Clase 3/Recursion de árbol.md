@@ -3,6 +3,7 @@
 ## Definición matemática
 
 La sucesión de Fibonacci se define recursivamente como:
+
 $$
 \text{fib}(n) = \begin{cases}
 0 & n = 0 \\
@@ -39,13 +40,17 @@ f(1) f(0)
 ## Complejidad computacional
 
 La ecuación de recurrencia es:
+
 $$T(n) = T(n-1) + T(n-2) + O(1)$$
 
 Resolviendo la ecuación característica:
+
 $$r^2 - r - 1 = 0$$
+
 $$r = \frac{1 \pm \sqrt{5}}{2}$$
 
 La solución es de la forma:
+
 $$T(n) = A\left(\frac{1+\sqrt{5}}{2}\right)^n + B\left(\frac{1-\sqrt{5}}{2}\right)^n$$
 
 **Complejidad asintótica:** $O(\phi^n)$ donde $\phi = \frac{1+\sqrt{5}}{2} \approx 1.618$

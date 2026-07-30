@@ -21,13 +21,15 @@ En el caso de grafos no dirigidos, cada arista se clasifica como:
 2. **Back edge (Arista de retroceso)**: Arista $(u,v)$ donde $v$ es un ancestro de $u$ en el árbol DFS, esto significa que el tiempo de descubrimiento de $v$ es menor que el tiempo de descubrimiento de $u$.
 3. **Tiempo de descubrimiento**: Para cada vértice es el orden (marca de tiempo) en el que $v$ fue descubierto, lo denotamos $v.d$.
 4. **$v.low$** para cada vértice lo definimos así:
-   $$
-   v.low = \texttt{min}\begin{cases}
-   v.d, \\
-   w.d \texttt{ para toda arista de retroceso (u,w) donde u es descendiente de v} \\
-   u.low \texttt{ para todo hijo u de v en el árbol DFS}
-   \end{cases}
-   $$
+
+    $$
+    v.low = \texttt{min}\begin{cases}
+    v.d, \\
+    w.d \texttt{ para toda arista de retroceso (u,w) donde u es descendiente de v} \\
+    u.low \texttt{ para todo hijo u de v en el árbol DFS}
+    \end{cases}
+    $$
+
 5. $v.low$ representa el ancestro más antiguo (con menor $d$) alcanzable desde el subárbol de $v$ usando a lo sumo un *back edge*.
 6. Si $(u,v)$ es un puente, entonces $u$ o $v$ son puntos de articulación, a menos que tengan grado 1. Sin embargo, un punto de articulación no necesariamente tiene un puente incidente. La eliminación de un vértice puede arrastrar a una o más aristas incidentes, y estas pueden ser los puntos de conexión con el otro componente.
 

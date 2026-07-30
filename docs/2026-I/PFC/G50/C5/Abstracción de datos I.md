@@ -3,6 +3,7 @@ Las abstracciones de datos no permite elevar el nivel conceptual al pensar los d
 $$
 \frac{1}{6}
 $$
+
 Pero si queremos implementarlo
 
 ```scala

@@ -4,7 +4,9 @@
 **Definición**: 3SAT es el problema de satisfacibilidad booleana restringido a fórmulas en forma normal conjuntiva (CNF) donde cada cláusula contiene exactamente 3 literales.
 
 **Formalmente**: Dada una fórmula booleana $\phi$ en CNF con $n$ variables $x_1, x_2, \ldots, x_n$ y $m$ cláusulas, donde cada cláusula $C_i$ es de la forma:
+
 $$C_i = (l_{i1} \lor l_{i2} \lor l_{i3})$$
+
 donde cada $l_{ij}$ es un literal (variable $x_k$ o su negación $\neg x_k$).
 
 **Pregunta**: ¿Existe una asignación de valores de verdad a las variables que haga $\phi$ verdadera?
@@ -50,6 +52,7 @@ Esta fórmula contiene todas las posibles combinaciones de 3 literales con las v
 $$
 SAT \leq_{p} 3SAT
 $$
+
 Esto es dificil de demostrar y por ende vamos a asumir que es asi. Esto me dice la dirección de la reducción. A = SAT y B = 3SAT, vamos a transformar una entrada de SAT en una de 3SAT.
 
 
@@ -58,6 +61,7 @@ Esto es dificil de demostrar y por ende vamos a asumir que es asi. Esto me dice 
 $$
 C = z_1
 $$
+
 Vamos a añadir dos variables adicionales $v_1, v_2$ y añadimos 4 clausulas adicionals con las combinaciones de $v_1$ y $v_2$
 
 $$
@@ -76,6 +80,7 @@ Vamos a añadir una variable $v_1$ adicional y creamos dos clasulas
 $$
 C = (z_1,z_2)
 $$
+
 Al convertir
 
 $$
@@ -95,6 +100,7 @@ Vamos a crear $k-3$ variables y $k-2$ clasulas.
 $$
 C = (z_1,z_2,\ldots z_k)
 $$
+
 La conversión queda asi:
 
 $$
@@ -107,7 +113,9 @@ Ejemplo k = 4, variables k - 3 = 1 (variable), clasulas k -2 = 2 (clasulas)
 $$
 C = (z_1,z_2,z_3,z_4)
 $$
+
 Convierte en
+
 $$
 C = (z_1,z_2,v_1),(\bar{v_1},z_3,z_4)
 $$
@@ -120,11 +128,13 @@ k = 5
 $$
 (z_1,z_2,z_3,z_4,z_5)
 $$
+
 Entonces creamos k - 3 variables (2) y k-2 clasulas (3)
 
 $$
 C = (z_1,z_2,v_1),(\bar{v_1},z_3,v_2),(\bar{v_2},z_4,z_5)
 $$
+
 1. Para que sea verdadero al menos una de las variables debe ser verdadera, notese que la combinación $v_1, v_2$ tiene al menos un valor que vuelve las clausulas verdaderas. Si la clasula 1 verdadera. ¿Que valores de v hacen las otras dos verdederas?. (F,F)
 2. Todas las variables z son falsas ¿Existe una combinación de v que haga cambiar ese valor? No improta que valores le coloques a v habrá siempre una clausula falso.
 
@@ -165,22 +175,27 @@ $$
 ## Reducción de SAT a 3SAT para el conjunto dado
 
 Dado el conjunto de cláusulas:
+
 $$C = \{(v_1,v_2),(\bar{v_1}),(v_1,v_2,\bar{v_3}),(v_1,v_2,v_3,v_4,\bar{v_5})\}$$
 
 ### Paso 1: Clausula de tamaño 2 - $(v_1,v_2)$
 Se añade una variable auxiliar $a_1$:
+
 $$(v_1,v_2,a_1),(v_1,v_2,\bar{a_1})$$
 
 ### Paso 2: Clausula de tamaño 1 - $(\bar{v_1})$
 Se añaden dos variables auxiliares $a_2, a_3$:
+
 $$(\bar{v_1},a_2,a_3),(\bar{v_1},a_2,\bar{a_3}),(\bar{v_1},\bar{a_2},a_3),(\bar{v_1},\bar{a_2},\bar{a_3})$$
 
 ### Paso 3: Clausula de tamaño 3 - $(v_1,v_2,\bar{v_3})$
 Pasa directamente sin cambios:
+
 $$(v_1,v_2,\bar{v_3})$$
 
 ### Paso 4: Clausula de tamaño 5 - $(v_1,v_2,v_3,v_4,\bar{v_5})$
 Se añaden $k-3 = 2$ variables auxiliares $a_4, a_5$ y $k-2 = 3$ cláusulas:
+
 $$(v_1,v_2,a_4),(\bar{a_4},v_3,a_5),(\bar{a_5},v_4,\bar{v_5})$$
 
 ## Resultado final de la reducción

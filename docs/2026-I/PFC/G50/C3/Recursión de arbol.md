@@ -8,6 +8,7 @@ fib(n) \begin{cases}
           fib(n-1) + f(n-2) & \texttt{ en otro caso } & \\
         \end{cases}
 $$
+
 Evaluar fib(4)
 
 ```mermaid

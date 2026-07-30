@@ -56,6 +56,7 @@ Tenemos:
 1. Se divide el problema en 2
 2. Cada subproblema tiene tamaño n/2
 3. Posteriormente combinar cuesta n
+
 $$ T(n) = 2T(\frac{n}{2})+n$$
 
 Al resolverla nos da $O(nlog(n))$ **método de árbol**
