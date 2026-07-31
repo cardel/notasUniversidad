@@ -22,9 +22,14 @@ de Fenwick y arreglos de sufijos. Se programa en Python y el texto guía es CLRS
 ## Notas de clase
 
 Las notas de cada sesión se publican aquí, organizadas por corte, a medida que
-avanza el semestre. Las del semestre anterior, que cubren los mismos temas,
-siguen disponibles en
+avanza el semestre. Los grupos A y B ven la misma sesión el mismo viernes, así
+que hay una sola nota por clase. Las del semestre anterior, que cubren los
+mismos temas, siguen disponibles en
 [Árboles y Grafos 2026-I](../../2026-I/AyG%20PUJ/Contenido.md).
+
+### Corte 1
+
+1. [Clase 1. Repaso de estructuras de datos y notación asintótica — 31 de julio](C1/Clase%201.%20Repaso%20de%20estructuras%20de%20datos%20y%20notación%20asintótica.md)
 
 ## Clases en video
 
