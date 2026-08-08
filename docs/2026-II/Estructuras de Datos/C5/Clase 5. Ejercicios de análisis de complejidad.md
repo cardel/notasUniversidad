@@ -398,6 +398,92 @@ Clasificación de práctica: (a) $7n + 2$, (b) $5$, (c) $\frac{n(n+1)}{2}$,
 $O(n^2)$ y $O(\log n)$. En la (c), el producto $n(n+1)$ esconde un
 $n^2$: siempre se expande antes de clasificar.
 
+## Todo junto
+
+Para cerrar la práctica, una sola función con todo lo de la semana
+adentro: un recorrido lineal con `if`, un ciclo dependiente con otro
+`if`, y un índice que se duplica.
+
+```c title="combinado.c"
+int combinado(int datos[], int n) {
+    int mayor = datos[0];
+    int i = 1;
+    while (i < n) {
+        if (datos[i] > mayor) {
+            mayor = datos[i];
+        }
+        i = i + 1;
+    }
+    int parejas = 0;
+    i = 0;
+    while (i < n) {
+        int j = i + 1;
+        while (j < n) {
+            if (datos[i] + datos[j] > mayor) {
+                parejas = parejas + 1;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    int pasos = 0;
+    int valor = 1;
+    while (valor <= n) {
+        pasos = pasos + 1;
+        valor = valor * 2;
+    }
+    return parejas + pasos;
+}
+```
+
+Los tres bloques están en secuencia, así que sus costos se suman, y
+cada uno se cuenta con su propia herramienta.
+
+**Bloque 1, el mayor.** El índice arranca en 1, así que la condición se
+evalúa $n$ veces; la asignación de adentro corre $k$ veces, con $k$
+entre 0 (el primer valor es el mayor) y $n - 1$ (arreglo ascendente).
+
+$$T_1 = 3n + k \qquad \text{peor caso: } T_1 = 4n - 1.$$
+
+**Bloque 2, las parejas.** El mismo triángulo de `parejas_estrictas`,
+con un `if` que corre $p$ veces, $0 \leq p \leq \frac{n(n-1)}{2}$. Las
+sumas ya se conocen: la condición interna aporta $\frac{n(n+1)}{2}$ y
+las líneas del cuerpo $\frac{(n-1)\,n}{2}$ cada una. En el peor caso
+(todas las parejas superan al mayor):
+
+$$T_2 = 2n^2 + 2n + 3.$$
+
+**Bloque 3, las duplicaciones.** Es `potencias` del miércoles con otro
+nombre, y con el `return` al final:
+
+$$T_3 = 3\lfloor\log_2 n\rfloor + 7.$$
+
+**El total.** En el peor caso,
+
+$$T(n) = (4n - 1) + (2n^2 + 2n + 3) + (3\lfloor\log_2 n\rfloor + 7)
+= 2n^2 + 6n + 3\lfloor\log_2 n\rfloor + 9,$$
+
+y en el mejor ($k = 0$ y $p = 0$, por ejemplo con todos los valores
+negativos),
+
+$$T(n) = \frac{3n^2 + 11n}{2} + 3\lfloor\log_2 n\rfloor + 10.$$
+
+La prueba de siempre: con $n = 1$ no hay parejas ni vueltas del primer
+ciclo, las dos fórmulas coinciden y dan 17; contado a mano bloque por
+bloque, $3 + 7 + 7 = 17$.
+
+El veredicto: el mejor y el peor caso difieren en las constantes, pero
+los dos son cuadráticos, así que el `if` no cambia el ritmo. El término
+que manda, $n^2$, lo pone el bloque 2; el recorrido lineal y el
+logaritmo quedan de equipaje. Se reporta el peor caso:
+$T(n) \in O(n^2)$.
+
+!!! note "La regla que resume la semana"
+
+    Una función con bloques en secuencia se analiza bloque por bloque,
+    cada uno con su herramienta, y el bloque más costoso decide el $O$
+    de toda la función.
+
 ## Ejercicio de cierre
 
 La condición frena al índice antes de llegar a $n$. Trace con $n = 10$,
@@ -511,6 +597,10 @@ gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 - [prefijos.c](codigo/prefijos.c)
 - [parejas_estrictas.c](codigo/parejas_estrictas.c)
 - [tercetos.c](codigo/tercetos.c)
+
+**Todo junto**
+
+- [combinado.c](codigo/combinado.c)
 
 **Cierre y propuestos**
 
