@@ -324,6 +324,81 @@ evaluaciones externas, un `int j = i;`, dos evaluaciones internas, dos
 instrucciones del cuerpo, un incremento y un `return`: 11. Y
 $T(1) = \frac{14}{2} + 4 = 11$.
 
+## Cuando el índice se duplica
+
+Hasta ahora el índice suma. ¿Y si se multiplica?
+
+```c title="potencias.c"
+int potencias(int n) {
+    int i = 1;
+    int cuenta = 0;
+    while (i <= n) {
+        cuenta = cuenta + 1;
+        i = i * 2;
+    }
+    return cuenta;
+}
+```
+
+La traza con $n = 20$:
+
+| Evaluación | $i$ | ¿$i \leq 20$? | Acción |
+|---|---:|---|---|
+| 1 | 1 | cierto | `cuenta` $= 1$, $i = 2$ |
+| 2 | 2 | cierto | `cuenta` $= 2$, $i = 4$ |
+| 3 | 4 | cierto | `cuenta` $= 3$, $i = 8$ |
+| 4 | 8 | cierto | `cuenta` $= 4$, $i = 16$ |
+| 5 | 16 | cierto | `cuenta` $= 5$, $i = 32$ |
+| 6 | 32 | falso | sale del ciclo |
+
+Cinco vueltas para $n = 20$; con $n = 1000$, $i$ toma
+$1, 2, 4, \ldots, 512$ y para en 1024: diez vueltas.
+
+| $n$ | Vueltas |
+|---:|---:|
+| 10 | 4 |
+| 20 | 5 |
+| 100 | 7 |
+| 1000 | 10 |
+| $10^6$ | 20 |
+
+Las vueltas son la cantidad de veces que 1 se puede duplicar sin pasar
+de $n$. Ese número se llama logaritmo en base 2 de $n$: el exponente al
+que hay que elevar 2 para llegar a $n$. Redondeado hacia abajo,
+
+$$\text{vueltas} = \lfloor \log_2 n \rfloor + 1.$$
+
+El conteo completo:
+
+| Línea | Veces |
+|---|---:|
+| `int i = 1;` | 1 |
+| `int cuenta = 0;` | 1 |
+| `while (i <= n)` | $\lfloor\log_2 n\rfloor + 2$ |
+| `    cuenta = cuenta + 1;` | $\lfloor\log_2 n\rfloor + 1$ |
+| `    i = i * 2;` | $\lfloor\log_2 n\rfloor + 1$ |
+| `return cuenta;` | 1 |
+
+$$T(n) = 3\lfloor \log_2 n \rfloor + 7.$$
+
+La prueba del caso pequeño: con $n = 20$, $\lfloor\log_2 20\rfloor = 4$
+y la fórmula da 19. A mano: 2 inicializaciones, 6 evaluaciones de la
+condición, 10 instrucciones del cuerpo y un `return`: 19. Multiplicar
+$n$ por mil suma unas diez vueltas; es el crecimiento más lento que ha
+aparecido en el curso, el logarítmico.
+
+!!! warning "Un índice multiplicativo no arranca en 0"
+
+    Si `i` arrancara en 0, duplicar dejaría $2 \cdot 0 = 0$: el índice
+    nunca avanzaría y el ciclo no terminaría. Todo ciclo cuyo índice se
+    multiplica necesita un punto de partida distinto de cero.
+
+Y la variación de práctica: el mismo ciclo con `i = i * 3;`. Con
+$n = 20$, $i$ toma $1, 3, 9$ y para en 27: tres vueltas. En general
+$\lfloor \log_3 n \rfloor + 1$, con $T(n) = 3\lfloor\log_3 n\rfloor + 7$.
+La base del logaritmo es el factor del salto, igual que en los pasos
+aditivos el divisor era el tamaño del paso.
+
 ## Ejercicios
 
 ### Ejercicio 1
@@ -499,6 +574,10 @@ gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 
 - [contar_incluida.c](codigo/contar_incluida.c)
 - [suma_parejas.c](codigo/suma_parejas.c)
+
+**El índice se duplica**
+
+- [potencias.c](codigo/potencias.c)
 
 **Ejercicios**
 

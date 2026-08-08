@@ -218,15 +218,15 @@ El ciclo parece depender de $n$ y su costo es constante.
     ciclo no termina. Un paso calculado siempre se revisa preguntando si
     puede valer cero.
 
-### Duplicar el índice
+### Partir por la mitad
 
-```c title="potencias.c"
-int potencias(int n) {
-    int i = 1;
+```c title="mitades.c"
+int mitades(int n) {
+    int i = n;
     int cuenta = 0;
-    while (i <= n) {
+    while (i > 0) {
         cuenta = cuenta + 1;
-        i = i * 2;
+        i = i / 2;
     }
     return cuenta;
 }
@@ -234,27 +234,17 @@ int potencias(int n) {
 
 | $n$ | Valores de $i$ | Vueltas |
 |---:|---|---:|
-| 10 | 1, 2, 4, 8 | 4 |
-| 20 | 1, 2, 4, 8, 16 | 5 |
-| 100 | 1, 2, 4, 8, 16, 32, 64 | 7 |
+| 20 | 20, 10, 5, 2, 1 | 5 |
+| 1000 | 1000, 500, 250, 125, 62, 31, 15, 7, 3, 1 | 10 |
 
-Las vueltas son la cantidad de veces que 1 se puede duplicar sin pasar
-de $n$. Ese número tiene nombre, logaritmo en base 2, y produce
+Las mismas vueltas de `potencias` del miércoles: partir por la mitad es
+duplicar recorrido al revés, y la cuenta la lleva el mismo logaritmo,
 
 $$\text{vueltas} = \lfloor \log_2 n \rfloor + 1 \qquad
 T(n) = 3\lfloor \log_2 n \rfloor + 7.$$
 
-La tabla que muestra qué tan lento crece:
-
-| $n$ | Vueltas |
-|---:|---:|
-| 1000 | 10 |
-| $10^6$ | 20 |
-| $10^9$ | 30 |
-
-Duplicar $n$ añade una sola vuelta. Es el crecimiento logarítmico, el
-más lento que produce un ciclo que avanza, y va a reaparecer en el curso
-cada vez que una estructura parta el problema por la mitad.
+Duplicar $n$ añade una sola vuelta. El patrón reaparecerá cada vez que
+un algoritmo descarte la mitad de lo que le queda.
 
 ## Ciclos dependientes
 
@@ -378,7 +368,7 @@ La cosecha de la semana, en una tabla:
 | Función | $T$ | Término que manda |
 |---|---|---|
 | `paso_grande` | a lo sumo 28 | constante |
-| `potencias` | $3\lfloor\log_2 n\rfloor + 7$ | $\log_2 n$ |
+| `mitades` | $3\lfloor\log_2 n\rfloor + 7$ | $\log_2 n$ |
 | `promedio` | $3n + 4$ | $n$ |
 | `de_dos_en_dos` | $3\lceil n/2\rceil + 4$ | $n$ |
 | `prefijos` | $\frac{3n^2+11n}{2} + 4$ | $n^2$ |
@@ -398,7 +388,7 @@ curso; por ahora el uso es de vocabulario:
 | Nombre | Se escribe | Ejemplo de hoy |
 |---|---|---|
 | Constante | $O(1)$ | `paso_grande` |
-| Logarítmico | $O(\log n)$ | `potencias` |
+| Logarítmico | $O(\log n)$ | `mitades` |
 | Lineal | $O(n)$ | `promedio` |
 | Cuadrático | $O(n^2)$ | `prefijos` |
 | Cúbico | $O(n^3)$ | `tercetos` |
@@ -514,7 +504,7 @@ gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 - [de_dos_en_dos.c](codigo/de_dos_en_dos.c)
 - [descendente.c](codigo/descendente.c)
 - [paso_grande.c](codigo/paso_grande.c)
-- [potencias.c](codigo/potencias.c)
+- [mitades.c](codigo/mitades.c)
 
 **Ciclos dependientes**
 
