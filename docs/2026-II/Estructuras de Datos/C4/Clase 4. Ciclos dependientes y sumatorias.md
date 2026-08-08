@@ -383,6 +383,75 @@ Solo los valores pares de $i$ aportan. Con $n$ par, $i$ toma los valores
 $0, 2, \ldots, n-2$; escriba la suma de esos aportes y saque el 2 como
 factor para cerrar con Gauss.
 
+### Ejercicio 4
+
+Dos ciclos internos en secuencia: uno crece con $i$ y el otro decrece.
+¿Cuántas veces corren, en total, las dos líneas `cuenta = cuenta + 1;`?
+
+```c title="complemento.c"
+int complemento(int n) {
+    int i = 0;
+    int cuenta = 0;
+    while (i < n) {
+        int j = 0;
+        while (j < i) {
+            cuenta = cuenta + 1;
+            j = j + 1;
+        }
+        j = 0;
+        while (j < n - i) {
+            cuenta = cuenta + 1;
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return cuenta;
+}
+```
+
+Cuente cada ciclo interno por separado y sume los dos totales. Los
+patrones son $i$ y $n - i$: los dos triángulos de la sesión, que juntos
+llenan el cuadrado.
+
+### Ejercicio 5
+
+El problema al revés. En `triangulo`, ¿para qué valor de $n$ el cuerpo
+interno corre exactamente 45 veces? ¿Y para cuál corre 4950 veces?
+
+Aquí no se cuenta: se plantea una ecuación con la fórmula cerrada,
+$\frac{n(n-1)}{2} = 45$, y se despeja o se prueban valores. Para 4950,
+la respuesta ya apareció en la sesión.
+
+### Ejercicio 6
+
+Tres ciclos anidados: el de `j` no depende de nadie y el de `k` depende
+de `i`. ¿Cuántas veces corre `cuenta = cuenta + 1;`?
+
+```c title="mixto.c"
+int mixto(int n) {
+    int i = 0;
+    int cuenta = 0;
+    while (i < n) {
+        int j = 0;
+        while (j < n) {
+            int k = 0;
+            while (k < i) {
+                cuenta = cuenta + 1;
+                k = k + 1;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return cuenta;
+}
+```
+
+Las dos reglas de la sesión trabajan juntas en el mismo conteo. Congele
+$i$: el ciclo de $k$ corre $i$ veces y el de $j$ lo repite $n$ veces
+completas, así que el cuerpo aporta $n \cdot i$ por vuelta externa.
+Cierre $\sum n \cdot i$ sacando la constante $n$ de la suma.
+
 ### Ejercicio de cierre
 
 El límite interno es el cuadrado del índice externo. Encuentre $T(n)$.
@@ -435,6 +504,8 @@ gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 
 - [doble_i.c](codigo/doble_i.c)
 - [salto_dependiente.c](codigo/salto_dependiente.c)
+- [complemento.c](codigo/complemento.c)
+- [mixto.c](codigo/mixto.c)
 - [cuadrado_interno.c](codigo/cuadrado_interno.c)
 
 ## Referencias
