@@ -24,4 +24,14 @@ Cursos del segundo semestre de 2026.
 
     [:octicons-arrow-right-24: Entrar](Estructuras%20de%20Datos/Contenido.md)
 
+-   :material-lambda:{ .lg .middle } **Programación Funcional y Concurrente**
+
+    ---
+
+    Recursión y los procesos que genera, funciones de alto orden, abstracción
+    de datos, listas y colecciones, y paralelismo de tareas y de datos, en
+    Scala. Grupos 4A y 4B, Univalle Tuluá.
+
+    [:octicons-arrow-right-24: Entrar](PFC/Contenido.md)
+
 </div>
