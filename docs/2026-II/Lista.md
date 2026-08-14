@@ -24,6 +24,16 @@ Cursos del segundo semestre de 2026.
 
     [:octicons-arrow-right-24: Entrar](Estructuras%20de%20Datos/Contenido.md)
 
+-   :material-server-network:{ .lg .middle } **Infraestructuras Paralelas y Distribuidas**
+
+    ---
+
+    Límites de la paralelización, localidad de caché, hilos y procesos,
+    OpenMP y vectorización, profiling, sistemas distribuidos, contenedores,
+    orquestación y despliegue continuo. Grupos 50 y 51, Univalle Tuluá.
+
+    [:octicons-arrow-right-24: Entrar](Infra/Contenido.md)
+
 -   :material-lambda:{ .lg .middle } **Programación Funcional y Concurrente**
 
     ---
