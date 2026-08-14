@@ -24,6 +24,17 @@ Cursos del segundo semestre de 2026.
 
     [:octicons-arrow-right-24: Entrar](Estructuras%20de%20Datos/Contenido.md)
 
+-   :material-file-tree-outline:{ .lg .middle } **Interpretación y Compilación de Lenguajes**
+
+    ---
+
+    Especificación inductiva de datos, tipos abstractos, árboles de sintaxis
+    abstracta, ambientes, intérpretes con clausuras y recursión, asignación
+    y paso por referencia, tipos y objetos, en Racket. Grupo 50, Univalle
+    Tuluá.
+
+    [:octicons-arrow-right-24: Entrar](FLP/Contenido.md)
+
 -   :material-server-network:{ .lg .middle } **Infraestructuras Paralelas y Distribuidas**
 
     ---
