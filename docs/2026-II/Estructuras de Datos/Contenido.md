@@ -23,8 +23,8 @@ mismas estructuras ya empacadas.
 1. [Clase 1. Repaso de programación básica — 29 de julio](C1/Clase%201.%20Repaso%20de%20programación%20básica.md)
 2. [Clase 2. Lenguajes de programación y paradigmas — 31 de julio](C2/Clase%202.%20Lenguajes%20de%20programación%20y%20paradigmas.md)
 3. [Clase 3. Introducción a la complejidad computacional — 5 de agosto](C3/Clase%203.%20Introducción%20a%20la%20complejidad%20computacional.md)
-4. [Clase 4. Ciclos dependientes y sumatorias — 12 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
-5. [Clase 5. Ejercicios de análisis de complejidad — 14 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
+4. [Clase 4. Ciclos dependientes y sumatorias — 19 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
+5. [Clase 5. Ejercicios de análisis de complejidad — 21 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
 
 ## Clases en video
 

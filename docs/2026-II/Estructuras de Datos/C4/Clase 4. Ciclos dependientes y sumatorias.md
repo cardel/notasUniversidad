@@ -1,10 +1,9 @@
 # Clase 4. Ciclos dependientes y sumatorias
 
-Miércoles 12 de agosto de 2026.
+Miércoles 19 de agosto de 2026.
 
-El viernes pasado fue festivo, así que la clase 3 quedó abierta en su
-ejercicio de cierre: un ciclo adentro de otro donde el interno depende del
-externo. Hoy ese ejercicio deja de ser un reto y se convierte en el punto
+La clase 3 quedó abierta en su ejercicio de cierre: un ciclo adentro de
+otro donde el interno depende del externo. Hoy ese ejercicio deja de ser un reto y se convierte en el punto
 de partida de un método general, porque la regla ``anidar multiplica'' de
 la clase pasada tiene una letra menuda que toca leer con cuidado.
 

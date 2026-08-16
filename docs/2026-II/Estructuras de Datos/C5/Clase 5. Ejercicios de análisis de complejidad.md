@@ -1,6 +1,6 @@
 # Clase 5. Ejercicios de análisis de complejidad
 
-Viernes 14 de agosto de 2026.
+Viernes 21 de agosto de 2026.
 
 Con las reglas de conteo de la clase 3 y las sumatorias de la clase 4, el
 equipo de herramientas está completo. Esta sesión de tres horas es para
