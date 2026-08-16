@@ -78,6 +78,7 @@ if (typeof module !== "undefined") {
       9: { txt: "1",          fn: function (n) { return 1; } }
     };
     var gauss = false;
+    var resuelta = false;
 
     function mostrarDatos(n) {
       document.getElementById("ver-datos").textContent =
@@ -161,19 +162,21 @@ if (typeof module !== "undefined") {
         total = total + veces;
         var tr2 = document.createElement("tr");
         tr2.innerHTML = "<td>" + num + "</td><td>" + veces + "</td>" +
-          (e.terminado
+          (resuelta
             ? "<td>" + f.txt + "</td><td>" + f.fn(n) + "</td>"
             : "<td class='pend'>…</td><td class='pend'>…</td>");
         cuerpoConteo.appendChild(tr2);
       }
       var totalT = document.getElementById("total-t");
-      if (e.terminado) {
+      if (resuelta && e.terminado) {
         var tn = (3 * n * n + 11 * n) / 2 + 4;
         totalT.innerHTML = "Suma de la columna simulada: <b>" + total +
           "</b>. La fórmula general T(n) = (3n² + 11n)/2 + 4 evaluada en n = " + n +
           " da <b>" + tn + "</b>. Coinciden: la cuenta cuadra.";
+      } else if (resuelta) {
+        totalT.textContent = "Termine la ejecución para comparar la fórmula contra lo simulado.";
       } else {
-        totalT.textContent = "Las fórmulas se revelan cuando la ejecución llega al final.";
+        totalT.textContent = "Las fórmulas se revelan cuando encuentre la fórmula general (tarjeta 6).";
       }
       document.getElementById("n-formula").textContent = n;
     }
@@ -195,8 +198,8 @@ if (typeof module !== "undefined") {
       var n = params.n;
       var esperado = n * (n + 1) / 2;
       if (valor === esperado) {
-        return { ok: true, msg: "Correcto: la línea 6 corre n + (n − 1) + … + 1 = n(n + 1)/2 = " +
-          esperado + " veces. El patrón baja, pero la suma es la misma." };
+        return { ok: true, msg: "Correcto: la línea 6 corre n + (n − 1) + … + 1 = " +
+          esperado + " veces. El patrón baja, pero la suma es la misma. La fórmula general se pregunta al final." };
       }
       if (valor === n * (n - 1) / 2) {
         return { ok: false, msg: "Esa sería la cuenta si j arrancara en i + 1 (parejas estrictas). " +
@@ -218,6 +221,33 @@ if (typeof module !== "undefined") {
       mostrarDatos(n);
       Motor.limpiarVeredicto();
       Motor.reiniciar({ n: n });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-analisis button"), function (b) {
+      b.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-analisis");
+        var op = b.getAttribute("data-op");
+        if (op === "correcta") {
+          resuelta = true;
+          v.className = "veredicto bien";
+          v.textContent = "Correcto: n + (n − 1) + … + 1 = n(n + 1)/2, la misma suma de " +
+            "contar_incluida leída al revés: recorridos distintos pueden costar exactamente " +
+            "lo mismo. El término que manda es n². La tabla de conteo ya muestra las fórmulas.";
+          Motor.repintar();
+        } else if (op === "cuadrado") {
+          v.className = "veredicto mal";
+          v.textContent = "Eso contaría cada i con cada j completo. Ejecute con n = 4: la " +
+            "columna de la línea 6 marca 10, no 16.";
+        } else if (op === "estricta") {
+          v.className = "veredicto mal";
+          v.textContent = "Esa sería la cuenta si j arrancara en i + 1 (parejas estrictas). " +
+            "Con n = 4 daría 6 y la columna marca 10.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "El doble: esa fórmula cuenta el rectángulo completo del truco de " +
+            "Gauss, no la escalera.";
+        }
+      });
     });
 
     document.getElementById("btn-gauss").addEventListener("click", function () {

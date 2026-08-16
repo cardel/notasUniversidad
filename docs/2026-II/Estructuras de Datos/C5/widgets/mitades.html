@@ -12,7 +12,7 @@
   <h1>mitades: el índice se parte en dos</h1>
   <p class="intro">El índice arranca en n y en cada vuelta se parte por la
   mitad (división entera). Es el espejo de potencias, que visitamos el
-  miércoles: bajar partiendo en dos cuesta lo mismo que subir duplicando.</p>
+  miércoles: ¿bajar partiendo en dos cuesta lo mismo que subir duplicando?</p>
 
   <div class="carta">
     <h2>1. Antes de ejecutar, prediga</h2>
@@ -81,6 +81,20 @@
       </table>
     </div>
     <div class="nota" id="total-t"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. El análisis en términos de n</h2>
+    <p style="margin-top:0">Pruebe varios n (10, 20, 100, 1000) y anote
+    cuántas veces corre la línea 4. ¿Cuál fórmula produce esos números para
+    un n cualquiera?</p>
+    <div class="opciones" id="opciones-analisis">
+      <button data-op="mitad">n/2</button>
+      <button data-op="correcta">⌊log₂ n⌋ + 1</button>
+      <button data-op="sinuno">⌊log₂ n⌋</button>
+      <button data-op="lineal">n</button>
+    </div>
+    <div id="veredicto-analisis" class="veredicto"></div>
   </div>
 
 </div>

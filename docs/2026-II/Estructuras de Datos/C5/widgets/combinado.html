@@ -62,12 +62,24 @@
     <h2>4. ¿Y cuando n crece de verdad?</h2>
     <div class="envoltura-tabla">
       <table>
-        <thead><tr><th>n</th><th>Bloque 1 (lineal)</th><th>Bloque 2 (cuadrático)</th><th>Bloque 3 (logarítmico)</th></tr></thead>
+        <thead><tr><th>n</th><th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th></tr></thead>
         <tbody id="cuerpo-grandes"></tbody>
       </table>
     </div>
-    <div class="nota">El bloque más costoso decide el nombre del crecimiento:
-    esta función es O(n²), aunque dos de sus tres bloques sean baratos.</div>
+    <div class="nota" id="nota-grandes"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El análisis en términos de n</h2>
+    <p style="margin-top:0">En el peor caso (todas las comparaciones ciertas),
+    ¿cuál fórmula da el total de pasos de la función completa?</p>
+    <div class="opciones" id="opciones-analisis">
+      <button data-op="multiplica">2n² · (3⌊log₂ n⌋)</button>
+      <button data-op="sinquad">6n + 9</button>
+      <button data-op="correcta">2n² + 6n + 3⌊log₂ n⌋ + 9</button>
+      <button data-op="nombre">n²</button>
+    </div>
+    <div id="veredicto-analisis" class="veredicto"></div>
   </div>
 
 </div>

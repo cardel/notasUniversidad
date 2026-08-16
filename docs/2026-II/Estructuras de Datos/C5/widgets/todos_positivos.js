@@ -62,6 +62,7 @@ if (typeof module !== "undefined") {
 } else {
   (function () {
     var params = { n: 6, datos: EJERCICIO.datosIniciales(6) };
+    var resuelta = false;
 
     function alPintar(e) {
       var n = e.params.n;
@@ -129,18 +130,21 @@ if (typeof module !== "undefined") {
         total = total + veces;
         var tr = document.createElement("tr");
         tr.innerHTML = "<td>" + f.linea + "</td><td>" + veces + "</td>" +
-          (e.terminado
+          (resuelta
             ? "<td>" + f.mejor + " = " + f.mejorVal + "</td><td>" + f.peor + " = " + f.peorVal + "</td>"
             : "<td class='pend'>…</td><td class='pend'>…</td>");
         cuerpoConteo.appendChild(tr);
       });
       var totalT = document.getElementById("total-t");
-      if (e.terminado) {
+      if (resuelta && e.terminado) {
         totalT.innerHTML = "Este arreglo costó <b>" + total + "</b> pasos. Los extremos: " +
           "mejor caso <b>8</b> (el primer valor ya no es positivo) y peor caso " +
           "<b>3n + 4 = " + (3 * n + 4) + "</b> (todos positivos: el ciclo llega hasta el final).";
+      } else if (e.terminado) {
+        totalT.innerHTML = "Este arreglo costó <b>" + total + "</b> pasos. Cambie los datos, " +
+          "compare totales y responda la pregunta de la tarjeta 5 para revelar los extremos.";
       } else {
-        totalT.textContent = "Los extremos se revelan cuando la ejecución llega al final.";
+        totalT.textContent = "Los extremos se revelan cuando encuentre la fórmula del peor caso (tarjeta 5).";
       }
     }
 
@@ -178,6 +182,33 @@ if (typeof module !== "undefined") {
         return { ok: false, msg: "Esa es la cuenta de la condición (línea 3), que se evalúa una vez más que el cuerpo." };
       }
       return { ok: false, msg: "No coincide. Pista: busque la primera casilla con un valor que no sea positivo; el ciclo la procesa y ahí se frena." };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-analisis button"), function (b) {
+      b.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-analisis");
+        var op = b.getAttribute("data-op");
+        if (op === "correcta") {
+          resuelta = true;
+          v.className = "veredicto bien";
+          v.textContent = "Correcto: en el peor caso (todos positivos) la función ejecuta " +
+            "3n + 4 pasos, lineal (O(n)); el mejor caso queda en 8, constante (O(1)). " +
+            "Cuando se reporta una sola cota, se reporta la del peor caso.";
+          Motor.repintar();
+        } else if (op === "mejor") {
+          v.className = "veredicto mal";
+          v.textContent = "Ese es el mejor caso: el primer valor ya no es positivo y el " +
+            "ciclo corta de inmediato. El peor caso recorre todo el arreglo.";
+        } else if (op === "vueltas") {
+          v.className = "veredicto mal";
+          v.textContent = "n cuenta solo las vueltas del ciclo. Cada vuelta ejecuta varias " +
+            "líneas y la condición se evalúa una vez más: mire los contadores con n = 6.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "Le faltan las líneas de afuera del ciclo y la evaluación extra " +
+            "de la condición. Ejecute con n = 6, todos positivos: el total es 22, no 18.";
+        }
+      });
     });
 
     function reiniciarCon(n, datos) {

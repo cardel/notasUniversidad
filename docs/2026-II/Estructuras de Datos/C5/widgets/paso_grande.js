@@ -55,6 +55,8 @@ if (typeof module !== "undefined") {
   module.exports = EJERCICIO;
 } else {
   (function () {
+    var resuelta = false;
+
     function alPintar(e) {
       var n = e.params.n;
       var salto = Math.floor(n / 5);
@@ -92,9 +94,8 @@ if (typeof module !== "undefined") {
       var formulaSec = document.getElementById("formula-secuencia");
       if (e.terminado) {
         formulaSec.innerHTML = "Con n = " + n + " el paso vale " + salto +
-          " y salen <b>" + visitas.length + "</b> vueltas. Pruebe los presets: " +
-          "para cualquier n ≥ 10 las vueltas quedan entre 6 y 8. El costo no " +
-          "crece con n: <b>es constante</b>.";
+          " y salen <b>" + visitas.length + "</b> vueltas. Pruebe los presets, " +
+          "anote las vueltas de cada n y compare.";
       } else {
         formulaSec.textContent = "";
       }
@@ -110,11 +111,14 @@ if (typeof module !== "undefined") {
         cuerpoConteo.appendChild(tr);
       });
       var totalT = document.getElementById("total-t");
-      if (e.terminado) {
+      if (resuelta && e.terminado) {
         var v = EJERCICIO.vueltas(n);
         totalT.innerHTML = "Total: <b>" + total + "</b> pasos = 3 × vueltas + 4 = 3 × " +
           v + " + 4. Como las vueltas nunca pasan de 8 (con n ≥ 10), el total " +
           "queda acotado por 28 sin importar qué tan grande sea n.";
+      } else if (e.terminado) {
+        totalT.innerHTML = "Total: <b>" + total + "</b> pasos con n = " + n +
+          ". Pruebe otros n y responda la pregunta de la tarjeta 5.";
       } else {
         totalT.textContent = "El total se comenta cuando la ejecución llega al final.";
       }
@@ -148,6 +152,33 @@ if (typeof module !== "undefined") {
       }
       return { ok: false, msg: "No coincide. Pista: el camino mide n y cada vuelta avanza " +
         "n/5. ¿Cuántos saltos caben, contando el arranque en 0 y el posible tope en n?" };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-analisis button"), function (b) {
+      b.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-analisis");
+        var op = b.getAttribute("data-op");
+        if (op === "correcta") {
+          resuelta = true;
+          v.className = "veredicto bien";
+          v.textContent = "Correcto: el camino mide n y cada vuelta avanza n/5, así que las " +
+            "vueltas quedan entre 6 y 8 para cualquier n ≥ 10. El costo es constante (O(1)) " +
+            "aunque el código mencione a n.";
+          Motor.repintar();
+        } else if (op === "paso") {
+          v.className = "veredicto mal";
+          v.textContent = "n/5 es el tamaño del paso, no el número de vueltas. Con n = 1000 " +
+            "el paso vale 200 y las vueltas siguen siendo 6.";
+        } else if (op === "log") {
+          v.className = "veredicto mal";
+          v.textContent = "Logarítmico sería si el paso partiera el camino restante por la " +
+            "mitad. Aquí avanza una fracción fija del total: compare n = 20 y n = 1000.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "Lineal sería avanzar de uno en uno. Compare los presets: con " +
+            "n = 20 y con n = 1000 salen las mismas 6 vueltas.";
+        }
+      });
     });
 
     function cambiarN(n) {

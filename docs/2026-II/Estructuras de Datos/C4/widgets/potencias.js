@@ -53,6 +53,8 @@ if (typeof module !== "undefined") {
   module.exports = EJERCICIO;
 } else {
   (function () {
+    var resuelta = false;
+
     function alPintar(e) {
       var n = e.params.n;
       var visitas = [];
@@ -88,9 +90,9 @@ if (typeof module !== "undefined") {
 
       var formulaSec = document.getElementById("formula-secuencia");
       if (e.terminado) {
-        formulaSec.innerHTML = "El índice visita las potencias de 2 que no pasan de n. " +
-          "Con n = " + n + " son <b>" + visitas.length + "</b> valores: " +
-          "vueltas = ⌊log₂ n⌋ + 1 = " + (visitas.length - 1) + " + 1.";
+        formulaSec.innerHTML = "El índice visita las potencias de 2 que no pasan de n: " +
+          "con n = " + n + " son <b>" + visitas.length + "</b> valores. Pruebe otros n, " +
+          "anote cuántos salen y busque la relación con n.";
       } else {
         formulaSec.textContent = "";
       }
@@ -121,18 +123,20 @@ if (typeof module !== "undefined") {
         total = total + veces;
         var tr = document.createElement("tr");
         tr.innerHTML = "<td>" + f.linea + "</td><td>" + veces + "</td>" +
-          (e.terminado
+          (resuelta
             ? "<td>" + f.txt + "</td><td>" + f.val + "</td>"
             : "<td class='pend'>…</td><td class='pend'>…</td>");
         cuerpoConteo.appendChild(tr);
       });
       var totalT = document.getElementById("total-t");
-      if (e.terminado) {
+      if (resuelta && e.terminado) {
         totalT.innerHTML = "Suma de la columna simulada: <b>" + total +
           "</b>. La fórmula general T(n) = 3⌊log₂ n⌋ + 7 evaluada en n = " + n +
           " da <b>" + (3 * (v - 1) + 7) + "</b>. Coinciden: la cuenta cuadra.";
+      } else if (resuelta) {
+        totalT.textContent = "Termine la ejecución para comparar la fórmula contra lo simulado.";
       } else {
-        totalT.textContent = "Las fórmulas se revelan cuando la ejecución llega al final.";
+        totalT.textContent = "Las fórmulas se revelan cuando encuentre la fórmula general (tarjeta 6).";
       }
       document.getElementById("n-formula").textContent = n;
     }
@@ -152,11 +156,11 @@ if (typeof module !== "undefined") {
       var n = params.n;
       var esperado = EJERCICIO.vueltas(n);
       if (valor === esperado) {
-        return { ok: true, msg: "Correcto: la línea 4 corre ⌊log₂ n⌋ + 1 = " + esperado +
-          " veces. Ejecute la simulación y mire la secuencia de valores." };
+        return { ok: true, msg: "Correcto: la línea 4 corre " + esperado +
+          " veces. Mire la secuencia de valores que visita el índice; la fórmula general se pregunta al final." };
       }
       if (valor === esperado - 1) {
-        return { ok: false, msg: "Le faltó una vuelta: la de i = 1. Las vueltas son ⌊log₂ n⌋ + 1, no ⌊log₂ n⌋." };
+        return { ok: false, msg: "Le faltó una vuelta: la de i = 1 también cuenta." };
       }
       if (valor === Math.floor(n / 2)) {
         return { ok: false, msg: "El índice no sube de 2 en 2: se duplica. En cada vuelta el camino restante se parte por la mitad." };
@@ -165,6 +169,33 @@ if (typeof module !== "undefined") {
         return { ok: false, msg: "Eso sería un ciclo que sube de uno en uno. Aquí el índice salta 1, 2, 4, 8, …" };
       }
       return { ok: false, msg: "No coincide. Pista: escriba los valores que toma i (1, 2, 4, …) y cuente cuántos caben sin pasarse de n." };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-analisis button"), function (b) {
+      b.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-analisis");
+        var op = b.getAttribute("data-op");
+        if (op === "correcta") {
+          resuelta = true;
+          v.className = "veredicto bien";
+          v.textContent = "Correcto: caben ⌊log₂ n⌋ + 1 potencias de 2 sin pasarse de n. " +
+            "Duplicar n agrega una sola vuelta: crecimiento logarítmico. La tabla de " +
+            "conteo ya muestra las fórmulas.";
+          Motor.repintar();
+        } else if (op === "lineal") {
+          v.className = "veredicto mal";
+          v.textContent = "Lineal sería subir de uno en uno. Pruebe n = 1000: la columna " +
+            "de la línea 4 marca 10, no 1000.";
+        } else if (op === "sinuno") {
+          v.className = "veredicto mal";
+          v.textContent = "Le falta la vuelta de i = 1. Pruebe n = 20: la columna marca 5 " +
+            "y ⌊log₂ 20⌋ es 4.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "Con n = 20 daría 10 y la columna marca 5. El índice no sube de " +
+            "2 en 2: se duplica.";
+        }
+      });
     });
 
     function cambiarN(n) {

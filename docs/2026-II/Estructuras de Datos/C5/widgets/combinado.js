@@ -175,6 +175,7 @@ if (typeof module !== "undefined") {
 } else {
   (function () {
     var RANGOS = { 1: [1, 6], 2: [7, 15], 3: [16, 20] };
+    var resueltaBloque = false;
     var NOMBRES = {
       1: "Bloque 1: el mayor",
       2: "Bloque 2: las parejas",
@@ -241,6 +242,15 @@ if (typeof module !== "undefined") {
           t.t2 + "</b></td><td>" + t.t3 + "</td>";
         cuerpoGrandes.appendChild(tr);
       });
+      var notaGrandes = document.getElementById("nota-grandes");
+      if (resueltaBloque) {
+        notaGrandes.textContent = "El bloque 1 es lineal, el bloque 2 cuadrático y el " +
+          "bloque 3 logarítmico. El más costoso decide el nombre del crecimiento: esta " +
+          "función es O(n²), aunque dos de sus tres bloques sean baratos.";
+      } else {
+        notaGrandes.textContent = "Compare cómo crece cada columna al multiplicar n por 10 " +
+          "y responda la pregunta de la tarjeta 1.";
+      }
     }
 
     Motor.iniciar({
@@ -264,10 +274,12 @@ if (typeof module !== "undefined") {
         var eleccion = b.getAttribute("data-b");
         var v = document.getElementById("veredicto");
         if (eleccion === "2") {
+          resueltaBloque = true;
           v.className = "veredicto bien";
           v.textContent = "Correcto: los dos ciclos anidados del bloque 2 crecen con n². " +
             "Los otros dos crecen con n y con log n: el cuadrático termina mandando. " +
             "Compruébelo con las barras y con la tabla de abajo.";
+          Motor.repintar();
         } else if (eleccion === "1") {
           v.className = "veredicto mal";
           v.textContent = "El bloque 1 es lineal: un solo ciclo. Crece, pero el bloque de " +
@@ -276,6 +288,31 @@ if (typeof module !== "undefined") {
           v.className = "veredicto mal";
           v.textContent = "El bloque 3 es el más barato: duplicar el valor llega a n en " +
             "unas pocas vueltas (crecimiento logarítmico). Mire la tabla con n = 1000.";
+        }
+      });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-analisis button"), function (b) {
+      b.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-analisis");
+        var op = b.getAttribute("data-op");
+        if (op === "correcta") {
+          v.className = "veredicto bien";
+          v.textContent = "Correcto: los bloques van en secuencia, así que se suman: " +
+            "(4n − 1) + (2n² + 2n + 3) + (3⌊log₂ n⌋ + 6) + 1. El término que manda es " +
+            "n²: la función es O(n²).";
+        } else if (op === "multiplica") {
+          v.className = "veredicto mal";
+          v.textContent = "Multiplicó los bloques, pero van uno después de otro, no uno " +
+            "adentro de otro: los conteos en secuencia se suman.";
+        } else if (op === "sinquad") {
+          v.className = "veredicto mal";
+          v.textContent = "Olvidó el bloque de las parejas, que es justamente el más caro. " +
+            "Mire las barras: con n = 6 ya es el que más aporta.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "n² es el nombre del crecimiento, no el conteo. La pregunta pide " +
+            "la fórmula completa, con todos los términos.";
         }
       });
     });
