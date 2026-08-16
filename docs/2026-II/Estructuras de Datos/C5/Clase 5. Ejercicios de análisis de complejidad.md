@@ -571,6 +571,13 @@ $T(n) = 3n^2 + 4n + 4$, el mismo del anidado completo.
 El ejercicio de cierre no trae pista: se resuelve con la rutina de la
 sesión.
 
+## Ejercicios interactivos
+
+Cuatro ejercicios de esta sesión (`todos_positivos`, `paso_grande`,
+`mitades` y `combinado`) se pueden trabajar en el navegador, con
+predicción, ejecución paso a paso y el conteo de cada línea en vivo:
+[página de ejercicios interactivos](./Ejercicios.md).
+
 ## Código de la clase
 
 Compilación y ejecución:

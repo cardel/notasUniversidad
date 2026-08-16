@@ -557,6 +557,13 @@ El formulario de la sesión tiene todo lo necesario.
 3. Compile `contar_incluida.c` y verifique que `contar_incluida(5)`
    devuelve 15, el valor que predice $\frac{n(n+1)}{2}$.
 
+## Ejercicios interactivos
+
+Cuatro ejercicios de esta clase (`triangulo`, `contar_incluida`,
+`suma_parejas` y `potencias`) se pueden trabajar en el navegador, con
+predicción, ejecución paso a paso y el conteo de cada línea en vivo:
+[página de ejercicios interactivos](./Ejercicios.md).
+
 ## Código de la clase
 
 Compilación y ejecución:

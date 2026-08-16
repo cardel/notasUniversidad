@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>todos_positivos — mejor y peor caso</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>todos_positivos: el conteo depende de los datos</h1>
+  <p class="intro">La función decide si todos los valores son positivos y
+  corta apenas encuentra uno que no lo es. Toque las casillas para cambiar el
+  signo de un valor y mire cómo cambia el conteo.</p>
+
+  <div class="carta">
+    <h2>1. Arme el arreglo y prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="3" max="8" value="6">
+      <span class="valor-n">n = <span id="ver-n">6</span></span>
+    </div>
+    <div class="arreglo fila-arreglo" id="panel-arreglo"></div>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Presets:</span>
+      <button data-caso="positivos">Todos positivos</button>
+      <button data-caso="inicio">Negativo al inicio</button>
+      <button data-caso="medio">Negativo en el medio</button>
+      <button data-caso="final">Negativo al final</button>
+    </div>
+    <div class="prediccion">
+      <span>Con este arreglo, ¿cuántas veces corre <b>i = i + 1;</b> (línea 6)?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La condición del while tiene dos partes: el recorrido
+        se frena cuando i llega a n o cuando todos pasa a 0, lo que ocurra
+        primero.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza, vuelta por vuelta</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Vuelta (valor de i)</th><th>datos[i]</th><th>¿datos[i] ≤ 0?</th><th>todos al cerrar</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Mejor caso y peor caso</h2>
+    <p style="margin-top:0">Un mismo n puede costar distinto según los datos.
+    Por eso el análisis distingue el mejor y el peor caso.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Veces (este arreglo)</th><th>Mejor caso</th><th>Peor caso</th></tr></thead>
+        <tbody id="cuerpo-conteo"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="total-t"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="todos_positivos.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>potencias — contador de pasos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>potencias: el índice se duplica</h1>
+  <p class="intro">El índice no sube de uno en uno: se duplica en cada vuelta.
+  Suba n con el deslizador y mire qué tan despacio crece el contador.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="2" max="1000" value="20">
+      <span class="valor-n">n = <span id="ver-n">20</span></span>
+      <span class="presets">
+        <button data-n="10">10</button>
+        <button data-n="20">20</button>
+        <button data-n="100">100</button>
+        <button data-n="1000">1000</button>
+      </span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces se ejecuta <b>cuenta = cuenta + 1;</b> (línea 4)?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El índice arranca en 1, no en 0: si arrancara en 0,
+        duplicarlo lo dejaría quieto.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los valores que visita el índice</h2>
+    <div class="secuencia" id="panel-secuencia"></div>
+    <div class="formula-esc" id="formula-secuencia"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. ¿Qué tan despacio crece?</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>n</th><th>Vueltas</th></tr></thead>
+        <tbody id="cuerpo-crecimiento"></tbody>
+      </table>
+    </div>
+    <div class="nota">Multiplicar n por 10 apenas suma tres o cuatro vueltas.
+    Ese comportamiento tiene nombre: crecimiento logarítmico.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La tabla de conteo completa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Veces (simulado)</th><th>Fórmula</th><th>Fórmula en n = <span id="n-formula">20</span></th></tr></thead>
+        <tbody id="cuerpo-conteo"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="total-t"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="potencias.js"></script>
+</body>
+</html>

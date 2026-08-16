@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>triangulo — contador de pasos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>triangulo: el ciclo interno depende del externo</h1>
+  <p class="intro">j recorre de 0 hasta i − 1, así que el cuerpo interno corre
+  0, 1, 2, … veces. Elija n, prediga y compruebe paso a paso.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="3" max="8" value="4">
+      <span class="valor-n">n = <span id="ver-n">4</span></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces se ejecuta <b>cuenta = cuenta + 1;</b> (línea 6)?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La condición de un while se evalúa una vez más que su
+        cuerpo: por eso la línea 3 termina en n + 1.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza, vuelta por vuelta</h2>
+    <p style="margin-top:0">Congele i y mire cuántas veces corrió el ciclo
+    interno en esa vuelta. La fila aparece cuando la vuelta termina.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Vuelta (valor de i)</th><th>Veces del cuerpo interno</th><th>cuenta acumulada</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El dibujo: una escalera</h2>
+    <p style="margin-top:0">Cada casilla azul es una ejecución de la línea 6.
+    La vuelta i aporta i casillas.</p>
+    <div class="escalera" id="panel-escalera"></div>
+    <div class="botones">
+      <button id="btn-gauss">Completar el rectángulo (truco de Gauss)</button>
+    </div>
+    <div class="formula-esc" id="formula-escalera"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La tabla de conteo completa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Veces (simulado)</th><th>Fórmula</th><th>Fórmula en n = <span id="n-formula">4</span></th></tr></thead>
+        <tbody id="cuerpo-conteo"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="total-t"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="triangulo.js"></script>
+</body>
+</html>

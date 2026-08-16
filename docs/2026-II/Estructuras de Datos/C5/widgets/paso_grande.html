@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>paso_grande — contador de pasos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>paso_grande: el paso depende de n</h1>
+  <p class="intro">El índice avanza de n/5 en n/5. El paso crece con n, pero
+  el camino también. Suba n y mire qué le pasa al contador.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="10" max="1000" value="20">
+      <span class="valor-n">n = <span id="ver-n">20</span></span>
+      <span class="presets">
+        <button data-n="10">10</button>
+        <button data-n="14">14</button>
+        <button data-n="20">20</button>
+        <button data-n="65">65</button>
+        <button data-n="1000">1000</button>
+      </span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces se ejecuta <b>cuenta = cuenta + 1;</b> (línea 4)?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Con n = <span id="ver-paso-n">20</span> el paso vale
+        n/5 = <span id="ver-salto">4</span> (división entera).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los valores que visita el índice</h2>
+    <div class="secuencia" id="panel-secuencia"></div>
+    <div class="formula-esc" id="formula-secuencia"></div>
+    <div class="alerta">¿Y si n fuera menor que 5? El paso n/5 valdría 0 y el
+    índice se quedaría quieto: el ciclo nunca terminaría. Por eso el
+    enunciado supone n ≥ 10.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La tabla de conteo completa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Veces (simulado)</th></tr></thead>
+        <tbody id="cuerpo-conteo"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="total-t"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="paso_grande.js"></script>
+</body>
+</html>
