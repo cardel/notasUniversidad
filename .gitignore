@@ -44,13 +44,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,obsidian
-
-# -----------------------------------------------------------------------------
-# Grafo local de graft
-# -----------------------------------------------------------------------------
-# Caché regenerable, como node_modules: se reconstruye con
-# `npx -y @nanonets/graft@0.10.1 build`, junto al .ignore que reabre la carpeta
-# a ripgrep. Lo que sí viaja en el clon es el cableado: .mcp.json y la sección
-# Navegación de código de CLAUDE.md, que explica cómo rehacer el grafo.
-graft/
-.ignore
