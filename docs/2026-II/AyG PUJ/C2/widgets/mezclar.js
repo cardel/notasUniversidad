@@ -196,19 +196,28 @@ if (typeof module !== "undefined") {
       });
     });
 
-    /* ---- tarjeta 4: el patrón ---- */
+    /* ---- tarjeta 4: los dos invariantes ---- */
+    var patronOK = false;
+    var cotasOK = false;
+    function revisarDescubrimiento() {
+      if (patronOK && cotasOK) {
+        document.getElementById("paso-1").classList.remove("bloqueado");
+        document.getElementById("nota-pasos").innerHTML = "Invariantes: " +
+          "<b>I₀: 0 ≤ i ≤ len(izq) y 0 ≤ j ≤ len(der)</b> e " +
+          "<b>I₁: resultado contiene, en orden, los i + j menores</b>.";
+      }
+    }
     Array.prototype.forEach.call(document.querySelectorAll("#opciones-patron button"), function (btn) {
       btn.addEventListener("click", function () {
         var v = document.getElementById("veredicto-patron");
         var op = btn.getAttribute("data-op");
         if (op === "correcta") {
+          patronOK = true;
           v.className = "veredicto bien";
-          v.textContent = "Ese es el invariante. Dice tres cosas a la vez: cuántos " +
-            "elementos hay, cuáles son y en qué orden están. Con él, los cuatro " +
-            "pasos de la tarjeta 5 salen solos.";
-          document.getElementById("paso-1").classList.remove("bloqueado");
-          document.getElementById("nota-pasos").innerHTML = "Invariante: " +
-            "<b>resultado contiene, en orden, los i + j menores</b>.";
+          v.textContent = "Ese es I₁. Dice tres cosas a la vez: cuántos " +
+            "elementos hay, cuáles son y en qué orden están. Con él, la " +
+            "demostración de la tarjeta 5 sale sola.";
+          revisarDescubrimiento();
         } else if (op === "debil") {
           v.className = "veredicto mal";
           v.textContent = "Cierto, pero débil: no dice que estén ordenados ni que " +
@@ -226,7 +235,31 @@ if (typeof module !== "undefined") {
       });
     });
 
-    /* ---- tarjeta 5: pasos ---- */
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-cotas button"), function (btn) {
+      btn.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-cotas");
+        var op = btn.getAttribute("data-op");
+        if (op === "correcta") {
+          cotasOK = true;
+          v.className = "veredicto bien";
+          v.textContent = "Ese es I₀: cada índice se mueve dentro de su propia " +
+            "lista, y en el último chequeo uno de los dos llega justo a su tamaño.";
+          revisarDescubrimiento();
+        } else if (op === "estricta") {
+          v.className = "veredicto mal";
+          v.textContent = "Mire el último chequeo: el ciclo termina justo porque " +
+            "uno de los índices llegó al tamaño de su lista. El invariante " +
+            "también debe cubrir ese chequeo.";
+        } else {
+          v.className = "veredicto mal";
+          v.textContent = "Cierto, pero flojo: no acota cada índice por su propia " +
+            "lista, y la estabilidad necesita saber que izq[i] y der[j] son " +
+            "posiciones válidas.";
+        }
+      });
+    });
+
+    /* ---- tarjeta 5: la demostración ---- */
     function cablearPaso(idBoton, idPaso, idSiguiente, alFinal) {
       document.getElementById(idBoton).addEventListener("click", function () {
         document.getElementById(idPaso).classList.add("hecho");
@@ -238,8 +271,7 @@ if (typeof module !== "undefined") {
     }
     cablearPaso("btn-m1", "paso-1", "paso-2");
     cablearPaso("btn-m2", "paso-2", "paso-3");
-    cablearPaso("btn-m3", "paso-3", "paso-4");
-    cablearPaso("btn-m4", "paso-4", null, function () {
+    cablearPaso("btn-m3", "paso-3", null, function () {
       document.getElementById("nota-clrs").style.display = "block";
     });
 

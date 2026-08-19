@@ -9,9 +9,11 @@
 
 ## Repaso: invariantes de ciclo
 
-<!-- Lo esencial de la sesión del miércoles: estados e invariante,
-     correctitud {Q} A {R} y el método de los cuatro pasos, con la
-     demostración del factorial completa como ejemplo. -->
+<!-- Lo esencial de la sesión del miércoles: especificación (entrada y
+     salida), la pareja de invariantes I₀ (cotas) e I₁ (acumulador), y la
+     demostración por inicialización y estabilidad con el cierre, usando
+     fact (i = 1, condición i <= N, I₁: ans = (i−1)!) como ejemplo:
+     Teorema 1, inicialización, estabilidad, Finalmente, Teorema 2. -->
 
 ## Un problema para partir en dos
 
@@ -47,8 +49,9 @@
 ## Ejercicios
 
 <!-- Suma de un arreglo por divide y vencerás; contar apariciones de x;
-     potencia con b^n = (b^(n/2))²; demostrar con los cuatro pasos el
-     invariante del ciclo de mezclar. -->
+     potencia con b^n = (b^(n/2))²; demostrar inicialización y estabilidad
+     de los invariantes I₀ e I₁ del primer ciclo de mezclar (estabilidad
+     por casos). -->
 
 ## Ejercicios interactivos
 
@@ -56,8 +59,9 @@ Dos ejercicios en el navegador acompañan la sesión, en la [página de
 ejercicios interactivos](Ejercicios.md#divide-y-venceras):
 
 - [mezclar](widgets/mezclar.html){ target=_blank rel=noopener } — ejecute
-  la mezcla copia por copia, encuentre el invariante de su ciclo y
-  certifíquelo con los mismos cuatro pasos del repaso.
+  la mezcla copia por copia, proponga los invariantes I₀ e I₁ de su primer
+  ciclo y certifíquelos por inicialización y estabilidad, como en el
+  repaso.
 - [ordenar](widgets/ordenar.html){ target=_blank rel=noopener } — baje
   partiendo la lista hasta el caso base, súbala mezclando y descubra en la
   tabla de niveles de dónde sale el n·lg n.

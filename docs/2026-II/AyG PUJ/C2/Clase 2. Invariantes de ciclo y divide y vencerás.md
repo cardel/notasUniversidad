@@ -14,10 +14,10 @@ en dos páginas: entre por la de su grupo.
 
     ---
 
-    **Grupo B.** El tema desde el comienzo: computación iterativa,
-    especificación de un algoritmo, el invariante como la relación que
-    ninguna vuelta rompe, y el método de los cuatro pasos para demostrar
-    que un ciclo es correcto.
+    **Grupo B.** El tema desde el comienzo: la especificación de un
+    problema (entrada y salida), la pareja de invariantes I₀ e I₁ de un
+    ciclo, y la demostración de correctitud por inicialización y
+    estabilidad.
 
     [:octicons-arrow-right-24: Entrar](Invariantes%20de%20ciclo.md)
 
@@ -25,7 +25,7 @@ en dos páginas: entre por la de su grupo.
 
     ---
 
-    **Grupo A.** Un repaso corto del método de los cuatro pasos y la
+    **Grupo A.** Un repaso corto de los invariantes I₀ e I₁ y la
     primera técnica de diseño recursivo: dividir, conquistar y combinar,
     con el máximo, el ordenamiento por mezcla y la recurrencia
     T(n) = 2·T(n/2) + Θ(n).
@@ -37,7 +37,7 @@ en dos páginas: entre por la de su grupo.
 ## Ejercicios interactivos
 
 Las dos rutas comparten la [página de ejercicios
-interactivos](Ejercicios.md): dos ejercicios de invariantes (`computa` y
+interactivos](Ejercicios.md): dos ejercicios de invariantes (`sumar` y
 `factorial`) y dos de divide y vencerás (`mezclar` y `ordenar`). Cada uno
 sigue el mismo camino de la clase: ver el patrón primero, generalizarlo
 después y cerrar con la demostración o el análisis paso a paso.

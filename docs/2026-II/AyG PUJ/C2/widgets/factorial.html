@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>factorial — el invariante es suyo</title>
+<title>factorial — los invariantes son suyos</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
   .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
@@ -19,21 +19,22 @@
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>factorial: repita usted el proceso completo</h1>
-  <p class="intro">En computa el invariante se lo mostramos con pinzas. Aquí
-  el recorrido es el mismo —predecir, ejecutar, ver el patrón, demostrar—
-  pero las decisiones son suyas. Al final, un experimento: ¿qué pasa si la
-  entrada rompe la precondición?</p>
+  <h1>fact: repita usted el proceso completo</h1>
+  <p class="intro">En sumarArreglo los invariantes se descubrieron con calma.
+  Aquí el recorrido es el mismo —predecir, ejecutar, proponer I₀ e I₁,
+  demostrar con inicialización y estabilidad— pero las decisiones son suyas.
+  Al final, un experimento con una entrada que no cumple la precondición.</p>
 
   <div class="carta">
-    <h2>1. Antes de ejecutar, prediga</h2>
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> N ∈ ℕ. &nbsp;<b>Salida:</b> N!</p>
     <div class="fila-n">
       <label for="rango-n">Entrada:</label>
-      <input type="range" id="rango-n" min="3" max="8" value="4">
-      <span class="valor-n">n = <span id="ver-n">4</span></span>
+      <input type="range" id="rango-n" min="3" max="8" value="5">
+      <span class="valor-n">N = <span id="ver-n">5</span></span>
     </div>
     <div class="prediccion">
-      <span>¿Qué devuelve <code>factorial(<span id="pred-n">4</span>)</code>?</span>
+      <span>¿Qué devuelve <code>fact(<span id="pred-n">5</span>)</code>?</span>
       <input type="number" id="prediccion" placeholder="su número">
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
@@ -53,8 +54,8 @@
           <button id="btn-fin">Al final</button>
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
-        <div class="nota">La foto del estado se toma en cada chequeo del
-        while: la pareja (indice, resultado) al comenzar cada vuelta.</div>
+        <div class="nota">La foto (i, ans) se toma en cada chequeo del while.
+        Ojo con la condición: aquí es i &lt;= N, no i &lt; N.</div>
       </div>
     </div>
   </div>
@@ -64,7 +65,7 @@
     <div class="envoltura-tabla">
       <table>
         <thead>
-          <tr><th>Chequeo</th><th>indice</th><th>resultado</th><th id="col-patron">¿Qué se repite?</th></tr>
+          <tr><th>Chequeo</th><th>i</th><th>ans</th><th id="col-patron">¿Qué se repite?</th></tr>
         </thead>
         <tbody id="cuerpo-estados"></tbody>
       </table>
@@ -72,88 +73,90 @@
   </div>
 
   <div class="carta">
-    <h2>4. El patrón</h2>
-    <p style="margin-top:0">¿Qué relación se cumple en <b>todas</b> las filas
-    de la tabla?</p>
+    <h2>4. Los dos invariantes</h2>
+    <div style="margin-bottom:0.3rem"><b>¿Qué lleva ans en función de i?</b> (ese será I₁)</div>
     <div class="opciones" id="opciones-patron">
-      <button data-op="meta">resultado = n!</button>
-      <button data-op="correcta">resultado = indice!</button>
-      <button data-op="prod">resultado = indice · (indice − 1)</button>
-      <button data-op="debil">indice ≤ n</button>
+      <button data-op="ifact">ans = i!</button>
+      <button data-op="correcta">ans = (i − 1)!</button>
+      <button data-op="meta">ans = N!</button>
+      <button data-op="prod">ans = i · (i − 1)</button>
     </div>
     <div id="veredicto-patron" class="veredicto"></div>
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Entre qué valores se mueve i en los chequeos?</b> (ese será I₀)</div>
+    <div class="opciones" id="opciones-cotas">
+      <button data-op="corta">1 ≤ i ≤ N</button>
+      <button data-op="correcta">1 ≤ i ≤ N + 1</button>
+      <button data-op="floja">0 ≤ i ≤ N + 1</button>
+    </div>
+    <div id="veredicto-cotas" class="veredicto"></div>
   </div>
 
   <div class="carta">
-    <h2>5. Los cuatro pasos</h2>
-    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero el
-    invariante en la tarjeta 4.</p>
+    <h2>5. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
+    dos invariantes en la tarjeta 4.</p>
 
     <div class="paso bloqueado" id="paso-1">
-      <div class="titulo-paso">Paso 1 — Inicialización: el estado inicial es (0, 1). ¿Cumple resultado = indice!?</div>
+      <div class="titulo-paso">Inicialización: por las líneas 1–2, (i, ans) = (1, 1). Para I₁ hace falta saber: ¿cuánto es 0!?</div>
       <div class="opciones">
-        <button data-p1="si">Sí: 0! = 1</button>
-        <button data-p1="no">No: 0! = 0</button>
+        <button data-p1="uno">0! = 1</button>
+        <button data-p1="cero">0! = 0</button>
       </div>
       <div id="veredicto-p1" class="veredicto"></div>
-      <div class="texto-paso">0! se define como 1, así que (0, 1) cumple el
-      invariante desde antes de la primera vuelta. ✓</div>
+      <div class="texto-paso">Para I₀: 1 ≤ 1 ≤ N + 1. ✓ &nbsp;Para I₁:
+      ans = (1 − 1)! = 0! = 1. ✓ &nbsp;Los invariantes se cumplen en la
+      inicialización.</div>
     </div>
 
     <div class="paso bloqueado" id="paso-2">
-      <div class="titulo-paso">Paso 2 — Invarianza: ¿la vuelta conserva el invariante?</div>
+      <div class="titulo-paso">Estabilidad</div>
       <div class="botones" style="margin-top:0.4rem">
-        <button id="btn-p2">Ver el paso de invarianza</button>
+        <button id="btn-p2">Ver el argumento</button>
       </div>
-      <div class="texto-paso">Si una vuelta comienza en (k, k!) con k ≠ n, el
-      cuerpo produce (k + 1, k! · (k + 1)) = (k + 1, (k + 1)!): el invariante
-      sobrevive a la transformación. ✓</div>
+      <div class="texto-paso">Se considera una iteración arbitraria i = j (con
+      j ≤ N: de lo contrario el cuerpo no se habría ejecutado) y se asume que
+      antes de ella valen 1 ≤ j ≤ N + 1 y ans = (j − 1)!. Al ejecutar las
+      líneas 4–5: ans = (j − 1)! · j = j!, e i = j + 1: exactamente I₁
+      evaluado en j + 1. E I₀ vale porque j ≤ N implica 1 ≤ j + 1 ≤ N + 1.
+      Los invariantes son estables. ✓</div>
     </div>
 
     <div class="paso bloqueado" id="paso-3">
-      <div class="titulo-paso">Paso 3 — Éxito: el ciclo termina con indice = n. ¿Qué dice ahí el invariante?</div>
+      <div class="titulo-paso">Finalmente: ¿con qué valor de i termina el ciclo?</div>
       <div class="opciones">
-        <button data-p3="nf">resultado = n!</button>
-        <button data-p3="n1">resultado = (n − 1)!</button>
-        <button data-p3="nada">No dice nada del resultado</button>
+        <button data-p3="n1">i = N + 1</button>
+        <button data-p3="n">i = N</button>
+        <button data-p3="dep">Depende de N</button>
       </div>
       <div id="veredicto-p3" class="veredicto"></div>
-      <div class="texto-paso">Invariante más estado final: resultado = indice!
-      con indice = n da resultado = n!, la poscondición exacta. ✓</div>
-    </div>
-
-    <div class="paso bloqueado" id="paso-4">
-      <div class="titulo-paso">Paso 4 — Terminación: ¿qué garantiza que indice alcance a n?</div>
-      <div class="opciones">
-        <button data-p4="pre">Que n ≥ 0: la precondición</button>
-        <button data-p4="finitos">Que los enteros son finitos</button>
-        <button data-p4="paso2">El paso 2 ya lo demostró</button>
-      </div>
-      <div id="veredicto-p4" class="veredicto"></div>
-      <div class="texto-paso">indice arranca en 0 y sube de a 1; como la
-      precondición garantiza n ≥ 0, en exactamente n vueltas lo alcanza. ✓</div>
+      <div class="texto-paso">El ciclo terminará ya que i se incrementa de 1
+      en 1 hasta superar a N. Por la estabilidad de I₁, al terminar:
+      ans = (N + 1 − 1)! = N!, y eso es lo que llega a la línea 6. Los
+      invariantes son correctos. ∎</div>
     </div>
 
     <div class="conclusion" id="conclusion">
-      <b>Conclusión.</b> Por lo tanto, se puede concluir que
-      <code>factorial(n)</code> termina y entrega resultado = n!: es correcto
-      respecto a su especificación. ∎
+      <b>Teorema 2.</b> La invocación <code>fact(N)</code> para cualquier
+      N ≥ 0 produce como resultado N!. &nbsp;<b>Demostración:</b> es trivial
+      a partir de la correctitud de los invariantes I₀ e I₁. ∎
     </div>
   </div>
 
   <div class="carta">
-    <h2>6. El experimento: romper la precondición</h2>
-    <p style="margin-top:0">El paso 4 usó n ≥ 0. ¿Y si alguien llama
-    <code>factorial(-1)</code>?</p>
+    <h2>6. El experimento: salirse de la precondición</h2>
+    <p style="margin-top:0">La especificación pide N ∈ ℕ. ¿Y si alguien llama
+    <code>fact(-1)</code>?</p>
     <div class="botones">
-      <button id="btn-negativo">Probar con n = −1</button>
+      <button id="btn-negativo">Probar con N = −1</button>
     </div>
     <div class="secuencia" id="sec-negativo"></div>
-    <div class="alerta" id="alerta-negativo" style="display:none">indice pasa
-    por 0, 1, 2, 3, … y nunca toca −1: la condición <code>indice != n</code>
-    jamás falla y el ciclo no termina. La precondición no es decoración: es la
-    hipótesis que sostiene el paso de terminación. Sin ella se cae la
-    demostración, y también el programa.</div>
+    <div class="alerta" id="alerta-negativo" style="display:none">La condición
+    1 ≤ −1 falla desde el primer chequeo: el ciclo no corre y la función
+    devuelve 1. ¿Está mal el algoritmo? No: −1 no es una instancia del
+    problema, porque no cumple la precondición N ∈ ℕ. La correctitud se
+    promete para las entradas que cumplen las precondiciones; para las demás
+    no se promete nada. (Y note que <code>fact(0)</code> sí es una instancia:
+    devuelve 1 = 0!, como debe ser.)</div>
   </div>
 
 </div>
