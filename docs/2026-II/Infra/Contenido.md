@@ -30,6 +30,23 @@ Se publican después de cada sesión.
 
 *Aún no hay clases publicadas.*
 
+## Clases en video
+
+Las grabaciones de cada sesión se publican en la lista de reproducción del
+curso, en orden cronológico (la sesión más reciente queda al final). La lista es
+común a los grupos 50 y 51 y se irá llenando a medida que avanza el semestre.
+
+<iframe
+  width="100%" height="480"
+  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLV_aSmZJMP34"
+  title="Infraestructuras 2026-II"
+  style="border:0;border-radius:12px;"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+
+[:material-youtube: Ver la lista completa en YouTube](https://www.youtube.com/playlist?list=PLV_aSmZJMP34)
+
 ## De qué se trata el curso
 
 El recorrido va de una máquina con un solo hilo de ejecución a muchas máquinas
