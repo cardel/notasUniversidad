@@ -31,6 +31,24 @@ Se publican después de cada sesión.
 
 *Aún no hay clases publicadas.*
 
+## Clases en video
+
+Las grabaciones de cada sesión se publican en la lista de reproducción del
+curso, en orden cronológico: la sesión más antigua va primero y la más reciente
+queda al final. La lista es común a los dos grupos y se irá llenando a medida
+que avanza el semestre.
+
+<iframe
+  width="100%" height="480"
+  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLZ7nhAy0MtkA"
+  title="Programación funcional y concurrente 2026-II"
+  style="border:0;border-radius:12px;"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+
+[:material-youtube: Ver la lista completa en YouTube](https://www.youtube.com/playlist?list=PLZ7nhAy0MtkA)
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
