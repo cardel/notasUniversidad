@@ -30,6 +30,7 @@ mismos temas, siguen disponibles en
 ### Corte 1
 
 1. [Clase 1. Repaso de estructuras de datos y notación asintótica — 31 de julio](C1/Clase%201.%20Repaso%20de%20estructuras%20de%20datos%20y%20notación%20asintótica.md)
+2. [Clase 2. Invariantes de ciclo y divide y vencerás — 21 de agosto](C2/Clase%202.%20Invariantes%20de%20ciclo%20y%20divide%20y%20vencerás.md)
 
 ## Clases en video
 
