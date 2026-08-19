@@ -70,8 +70,9 @@ para entrar.
 
     ---
 
-    Estructuras de datos, y árboles y grafos: el semestre en curso, con clases
-    en video.
+    Estructuras de datos, árboles y grafos, lenguajes de programación,
+    infraestructuras paralelas y distribuidas, y programación funcional y
+    concurrente: el semestre en curso, con clases en video.
 
     [:octicons-arrow-right-24: Entrar](2026-II/Lista.md)
 
