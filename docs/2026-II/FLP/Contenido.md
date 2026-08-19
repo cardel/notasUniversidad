@@ -37,6 +37,23 @@ reporta en el Campus Virtual antes de terminar la clase.
 
 *Aún no hay ejercicios publicados.*
 
+## Clases en video
+
+Las grabaciones de cada sesión se publican en la lista de reproducción del
+curso, en orden cronológico: la sesión más antigua aparece primero y la más
+reciente al final. La lista se irá llenando a medida que avanza el semestre.
+
+<iframe
+  width="100%" height="480"
+  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLRsTnxN7mJNA"
+  title="FLP 2026-II"
+  style="border:0;border-radius:12px;"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+
+[:material-youtube: Ver la lista completa en YouTube](https://www.youtube.com/playlist?list=PLRsTnxN7mJNA)
+
 ## Reglas del código
 
 Todo el código del curso se escribe en `#lang eopl`. Las representaciones de
