@@ -11,6 +11,13 @@ la clase pasada tiene una letra menuda que toca leer con cuidado.
 
 ![](clase04.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+## Video de la clase
+
+La grabación de esta sesión quedó en Panopto:
+[Clase 4 — Ciclos dependientes y sumatorias](https://ujaverianacali.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3e82a7b4-05f6-47f3-b2ab-b4ac0001b90a).
+Para verla hay que iniciar sesión con el correo institucional de la
+Javeriana Cali.
+
 ## El ejercicio pendiente
 
 ```c title="triangulo.c"
