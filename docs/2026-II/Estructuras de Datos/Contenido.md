@@ -26,6 +26,15 @@ mismas estructuras ya empacadas.
 4. [Clase 4. Ciclos dependientes y sumatorias — 19 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
 5. [Clase 5. Ejercicios de análisis de complejidad — 21 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
 
+## Apéndices
+
+Material de apoyo que no corresponde a una sesión concreta y conviene tener a la
+mano durante todo el semestre.
+
+- [Apéndice A. El juez automático](A1/Apéndice%20A.%20El%20juez%20automático.md)
+  — cómo entrar a la arena, enviar una solución, leer los veredictos y qué hace el
+  servidor con cada envío.
+
 ## Clases en video
 
 Las grabaciones de cada sesión se publican en la lista de reproducción del
