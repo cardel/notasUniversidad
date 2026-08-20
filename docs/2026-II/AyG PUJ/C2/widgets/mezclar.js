@@ -273,6 +273,7 @@ if (typeof module !== "undefined") {
     cablearPaso("btn-m2", "paso-2", "paso-3");
     cablearPaso("btn-m3", "paso-3", null, function () {
       document.getElementById("nota-clrs").style.display = "block";
+      document.getElementById("conclusion").style.display = "block";
     });
 
     /* ---- tarjeta 6: costo ---- */

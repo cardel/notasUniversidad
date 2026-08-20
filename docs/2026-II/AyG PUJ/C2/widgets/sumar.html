@@ -138,7 +138,9 @@
       </div>
       <div id="veredicto-p3" class="veredicto"></div>
       <div class="texto-paso">El ciclo terminará ya que i se incrementa de 1
-      en 1 hasta llegar a N. Por la estabilidad de I₁, al terminar:
+      en 1 e I₀ lo acota por N. Al salir, la condición i &lt; N es falsa, o sea
+      i ≥ N; junto con I₀ esto da exactamente i = N. Sustituyendo ese valor
+      en I₁:
       ac = A[0] + … + A[N−1], lo que coincide con la poscondición. Los
       invariantes son correctos. ∎</div>
     </div>
@@ -147,7 +149,8 @@
       <b>Teorema 2.</b> La invocación <code>sumarArreglo(A)</code> para
       cualquier arreglo A produce la suma de sus elementos.
       <b>Demostración:</b> es trivial a partir de la correctitud de los
-      invariantes I₀ e I₁. ∎
+      invariantes I₀ e I₁: el cierre deja i = N, y sustituir ese valor en I₁
+      da ac = A[0] + … + A[N−1], que es la poscondición. ∎
     </div>
   </div>
 

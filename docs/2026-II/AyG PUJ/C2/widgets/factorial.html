@@ -94,7 +94,8 @@
   <div class="carta">
     <h2>5. La demostración</h2>
     <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
-    dos invariantes en la tarjeta 4.</p>
+    dos invariantes en la tarjeta 4. El teorema a demostrar es el de la
+    clase: <b>Teorema 1 — los invariantes I₀ e I₁ se cumplen.</b></p>
 
     <div class="paso bloqueado" id="paso-1">
       <div class="titulo-paso">Inicialización: por las líneas 1–2, (i, ans) = (1, 1). Para I₁ hace falta saber: ¿cuánto es 0!?</div>
@@ -130,15 +131,18 @@
       </div>
       <div id="veredicto-p3" class="veredicto"></div>
       <div class="texto-paso">El ciclo terminará ya que i se incrementa de 1
-      en 1 hasta superar a N. Por la estabilidad de I₁, al terminar:
-      ans = (N + 1 − 1)! = N!, y eso es lo que llega a la línea 6. Los
-      invariantes son correctos. ∎</div>
+      en 1 e I₀ lo acota por N + 1. Al salir, la condición i ≤ N es falsa, o
+      sea i &gt; N; junto con I₀ esto da exactamente i = N + 1. Sustituyendo ese
+      valor en I₁: ans = (N + 1 − 1)! = N!, y eso es lo que llega a la
+      línea 6. Los invariantes son correctos. ∎</div>
     </div>
 
     <div class="conclusion" id="conclusion">
       <b>Teorema 2.</b> La invocación <code>fact(N)</code> para cualquier
       N ≥ 0 produce como resultado N!. &nbsp;<b>Demostración:</b> es trivial
-      a partir de la correctitud de los invariantes I₀ e I₁. ∎
+      a partir de la correctitud de los invariantes I₀ e I₁: el cierre deja
+      i = N + 1, y sustituir ese valor en I₁ da ans = (N + 1 − 1)! = N!, que
+      es justo lo que retorna la línea 6. ∎
     </div>
   </div>
 
