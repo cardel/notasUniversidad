@@ -13,7 +13,10 @@
      salida), la pareja de invariantes I₀ (cotas) e I₁ (acumulador), y la
      demostración por inicialización, estabilidad y terminación, usando
      fact (i = 1, condición i <= N, I₁: ans = (i−1)!) como ejemplo:
-     Teorema 1, inicialización, estabilidad, terminación, Teorema 2. -->
+     Teorema 1, inicialización, estabilidad, terminación, Teorema 2.
+     Ejercicio adicional: la búsqueda lineal solve (I₁ con existencial
+     sobre el prefijo [0..i), estabilidad por casos), que deja armado el
+     mismo esquema por casos del ciclo de mezclar. -->
 
 ## Un problema para partir en dos
 
