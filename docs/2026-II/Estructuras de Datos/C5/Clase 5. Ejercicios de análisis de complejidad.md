@@ -3,14 +3,103 @@
 Viernes 21 de agosto de 2026.
 
 Con las reglas de conteo de la clase 3 y las sumatorias de la clase 4, el
-equipo de herramientas está completo. Esta sesión de tres horas es para
-usarlo: nueve ejercicios en parejas, un reto en equipos con tres ciclos
-anidados, y al final el vocabulario que resume todo lo visto, la notación
-$O$.
+equipo de herramientas está completo. La sesión de tres horas tuvo dos
+partes: el estreno de la arena de programación, con un problema clásico
+resuelto y enviado en vivo, y una batería de ejercicios de conteo que
+sube hasta tres ciclos anidados y cierra con el vocabulario que resume
+todo lo visto, la notación $O$.
 
 ## Diapositivas
 
 ![](clase05.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+## El estreno de la arena
+
+La primera parte de la sesión fue para la arena, el juez automático del
+curso. El procedimiento para entrar, enviar una solución y leer los
+veredictos está en el
+[Apéndice A](../A1/Apéndice%20A.%20El%20juez%20automático.md); en clase
+se recorrió en vivo con un problema clásico de los jueces en línea,
+*The 3n + 1 problem* (UVa 100).
+
+El problema se apoya en una regla simple. A partir de un entero $n$ se
+genera una secuencia: si $n$ es par, el siguiente término es $n/2$; si
+es impar, es $3n + 1$; el proceso termina al llegar a 1. La longitud del
+ciclo de $n$ es la cantidad de términos, contando el inicial y el 1
+final. Con $n = 22$ la secuencia es
+$22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1$ y la
+longitud es 16. La entrada trae parejas de enteros $i$ y $j$; por cada
+pareja hay que reportar la longitud máxima entre todos los $n$ del
+intervalo.
+
+Esta es la solución escrita durante la clase:
+
+```c title="3n1.c"
+#include "stdio.h"
+
+int conjetura(long n) {
+  if (n == 1) {
+    return 1;
+  } else {
+    if (n % 2 == 0) {
+      return 1 + conjetura(n / 2);
+    } else {
+      return 1 + conjetura(3 * n + 1);
+    }
+  }
+}
+
+int max_rango(long i, long j) {
+  if (i > j) {
+    int aux = i;
+    i = j;
+    j = aux;
+  }
+  int mayor = conjetura(i);
+  for (long k = i + 1; k <= j; k++) {
+    int actual = conjetura(k);
+    if (actual > mayor) {
+      mayor = actual;
+    }
+  }
+  return mayor;
+}
+
+int main() {
+  long i, j;
+  while (scanf("%ld %ld", &i, &j) == 2) {
+    printf("%ld %ld %d\n", i, j, max_rango(i, j));
+  }
+}
+```
+
+Tres detalles del código valen para cualquier problema de juez:
+
+- El programa no pregunta nada: `while (scanf("%ld %ld", &i, &j) == 2)`
+  consume parejas hasta que la entrada se acaba, porque el juez
+  alimenta el programa con un archivo, no con una persona que teclea.
+- Los términos intermedios de la secuencia pueden superar la capacidad
+  de un entero de 32 bits; por eso el tipo es `long`.
+- Los extremos pueden venir al revés, y el enunciado lo advierte:
+  `max_rango` los intercambia antes de recorrer, pero la salida los
+  repite en el orden original.
+
+La prueba local antes de enviar, con el caso de ejemplo del enunciado:
+
+```bash
+gcc -Wall -Wextra 3n1.c -o 3n1
+./3n1 < sample-3n1.in
+```
+
+El envío quedó aceptado, y el contest de demostración sigue abierto
+hasta el lunes 25 de agosto a las 23:59 para que cada quien consiga su
+primer ``accepted''.
+
+La función `conjetura` lleva ese nombre por la conjetura de Collatz:
+que la secuencia llegue a 1 para todo $n$ está comprobado por
+computador hasta números enormes, pero nadie lo ha demostrado, y
+tampoco se conoce una cota para la cantidad de términos. Por eso el
+problema se resuelve simulando la secuencia completa.
 
 ## La rutina de trabajo
 
@@ -504,6 +593,13 @@ int frenado(int n) {
 
 ## Para practicar en casa
 
+!!! note "De cara al primer parcial"
+
+    En el primer parcial va a salir un ejercicio de conteo de este
+    estilo, y la respuesta debe traer el análisis completo: el patrón
+    planteado como sumatoria y la suma cerrada con el formulario, no
+    solo el resultado.
+
 ### Propuesto 1
 
 ```c title="descendente_tres.c"
@@ -585,6 +681,11 @@ Compilación y ejecución:
 ```bash
 gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 ```
+
+**La arena**
+
+- [3n1.c](codigo/3n1.c)
+- [sample-3n1.in](codigo/sample-3n1.in), [sample-3n1.out](codigo/sample-3n1.out)
 
 **Ciclos simples**
 
