@@ -16,8 +16,8 @@ en dos páginas: entre por la de su grupo.
 
     **Grupo B.** El tema desde el comienzo: la especificación de un
     problema (entrada y salida), la pareja de invariantes I₀ e I₁ de un
-    ciclo, y la demostración de correctitud por inicialización y
-    estabilidad.
+    ciclo, y la demostración de correctitud por inicialización,
+    estabilidad y terminación.
 
     [:octicons-arrow-right-24: Entrar](Invariantes%20de%20ciclo.md)
 
@@ -33,6 +33,15 @@ en dos páginas: entre por la de su grupo.
     [:octicons-arrow-right-24: Entrar](Divide%20y%20vencerás.md)
 
 </div>
+
+## Apéndice
+
+De una pregunta que salió en la clase del grupo A quedó un
+[apéndice](Apéndice.md) que sirve a los dos grupos: qué pasa con el
+invariante cuando el algoritmo modifica el arreglo (tres ejercicios
+resueltos, uno con dos ciclos anidados y sus dos parejas de invariantes) y
+la demostración por inducción estructural del máximo recursivo, escrita
+completa con el molde del curso.
 
 ## Ejercicios interactivos
 
