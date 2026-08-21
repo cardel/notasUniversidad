@@ -6,7 +6,7 @@ paso a paso y busque el patrón en la traza. La diferencia está en el
 destino: aquí el patrón no es una fórmula de conteo sino una pareja de
 **invariantes** —I₀ para las cotas del índice, I₁ para el acumulador— y una
 vez los encuentre el ejercicio lo lleva, paso por paso, a la demostración
-completa: inicialización, estabilidad y el cierre.
+completa: inicialización, estabilidad y terminación.
 
 ## Invariantes de ciclo
 
@@ -37,7 +37,7 @@ Dos listas ordenadas entran, una sola sale. Ejecute copia por copia y
 proponga la pareja de invariantes del primer while: las cotas de i y j, y
 lo que resultado cumple en cada chequeo. Con ellos se arma la demostración
 completa —Teorema 1 por inicialización y estabilidad, esta vez por casos, y
-el cierre hasta el Teorema 2— del ciclo que hace funcionar todo el
+la terminación hasta el Teorema 2— del ciclo que hace funcionar todo el
 ordenamiento por mezcla.
 
 Pruebe las tres parejas de listas: una deja «sobras» cuando la izquierda se

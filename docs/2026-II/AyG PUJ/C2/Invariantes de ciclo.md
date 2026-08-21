@@ -19,33 +19,42 @@
 
 ## Invariantes de ciclo
 
-<!-- sumarArreglo con líneas numeradas; la cadena de estados (i, ac) y su
-     generalización (i, Σ_{j=0}^{i-1} A[j]); definición de invariante; la
-     pareja I₀ (cotas del índice) e I₁ (acumulador); el método:
-     inicialización, estabilidad y el cierre (al terminar, los invariantes
-     deben suministrar información sobre el objetivo del algoritmo).
+<!-- sumarArreglo con líneas numeradas y acumulador ans; variables, estado
+     como tupla (i, ans), caso particular A = [9, 4, −5, 1, 8, 3] y caso
+     general (i, Σ_{j=0}^{i-1} A[j]); definición de invariante; la pareja
+     I₀ (cotas del índice) e I₁ (acumulador); el método en tres pasos:
+     inicialización, estabilidad y terminación (el ciclo termina y los
+     invariantes suministran información sobre el objetivo del algoritmo).
      Nota CLRS pp. 18–20: su «mantenimiento» es la estabilidad. -->
 
-## La demostración completa: el factorial
+## La demostración completa: la suma de un arreglo
+
+<!-- Teorema 1 (los invariantes se cumplen), demostración: inicialización
+     (líneas 1–2, rango vacío [0..0)), estabilidad (iteración arbitraria
+     i = j, líneas 4–5), terminación (termina con i = N, ans = suma).
+     Teorema 2: sumarArreglo(A) produce la suma; demostración trivial a
+     partir de I₀ e I₁ (Teorema 1). El caso límite del arreglo vacío. -->
+
+## Segundo ejemplo: el factorial
 
 <!-- fact con i = 1 y condición i <= N; estados (1,1) → … → (N+1, N!);
      I₀: 1 ≤ i ≤ N+1, I₁: ans = (i−1)!. Teorema 1 (los invariantes se
      cumplen), demostración: inicialización (líneas 1–2, 0! = 1),
-     estabilidad (iteración arbitraria i = j, líneas 4–5), Finalmente
+     estabilidad (iteración arbitraria i = j, líneas 4–5), terminación
      (termina con i = N+1, ans = N!). Teorema 2: fact(N) produce N!;
      demostración trivial a partir de I₀ e I₁. El experimento fact(−1):
      fuera de la precondición no hay promesa. -->
 
-## Segundo ejemplo: búsqueda en un arreglo
+## Tercer ejemplo: búsqueda en un arreglo
 
 <!-- solve en C++ con la traza A = [8,1,4,2,5,6,7,10], v = 5;
      I₀: 0 ≤ i ≤ N, I₁: ans = ∃ p ∈ [0..i). A[p] = v; inicialización con
      el rango vacío [0..0); estabilidad por casos (A[j] = v / A[j] ≠ v);
-     Finalmente: i = N entrega la poscondición. -->
+     terminación: i = N entrega la poscondición. -->
 
 ## Ejercicios
 
-<!-- 1. Demostración completa de sumarArreglo. 2. La búsqueda que
+<!-- 1. Contar cuántas veces aparece un valor v en el arreglo. 2. La búsqueda que
      devuelve p o −1: algoritmo e invariantes. 3. La búsqueda en arreglo
      ordenado: ¿solve aprovecha la precondición? (teaser de búsqueda
      binaria). -->
@@ -54,7 +63,7 @@
 
 Dos ejercicios en el navegador siguen el camino completo de la clase: ver
 el patrón en la traza, nombrarlo como la pareja de invariantes I₀ e I₁ y
-armar la demostración por inicialización y estabilidad. Están en la
+armar la demostración por inicialización, estabilidad y terminación. Están en la
 [página de ejercicios interactivos](Ejercicios.md#invariantes-de-ciclo):
 
 - [sumar](widgets/sumar.html){ target=_blank rel=noopener } — el primer

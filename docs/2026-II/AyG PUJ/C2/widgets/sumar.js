@@ -3,29 +3,29 @@ var EJERCICIO = (function () {
   var CODIGO = [
     { txt: "def sumarArreglo(A):",   num: null },
     { txt: "    i = 0",              num: 1 },
-    { txt: "    ac = 0",             num: 2 },
+    { txt: "    ans = 0",             num: 2 },
     { txt: "    while i < len(A):",  num: 3 },
-    { txt: "        ac = ac + A[i]", num: 4 },
+    { txt: "        ans = ans + A[i]", num: 4 },
     { txt: "        i = i + 1",      num: 5 },
-    { txt: "    return ac",          num: 6 }
+    { txt: "    return ans",          num: 6 }
   ];
 
   function simular(params) {
     var A = params.A;
     var pasos = [];
-    var i = null, ac = null;
+    var i = null, ans = null;
     function snap(linea, extra) {
-      var p = { linea: linea, i: i, ac: ac };
+      var p = { linea: linea, i: i, ans: ans };
       if (extra) { for (var c in extra) { p[c] = extra[c]; } }
       pasos.push(p);
     }
     i = 0; snap(1);
-    ac = 0; snap(2);
+    ans = 0; snap(2);
     var corriendo = true;
     while (corriendo) {
       snap(3, { chequeo: true });
       if (i < A.length) {
-        ac = ac + A[i]; snap(4);
+        ans = ans + A[i]; snap(4);
         i = i + 1; snap(5);
       } else {
         corriendo = false;
@@ -53,7 +53,7 @@ if (typeof module !== "undefined") {
 } else {
   (function () {
     var PRESETS = [
-      { A: [8, 1, 4, 2, 5] },
+      { A: [9, 4, -5, 1, 8, 3] },
       { A: [3, 1, 3] },
       { A: [7] }
     ];
@@ -81,7 +81,7 @@ if (typeof module !== "undefined") {
           }
           var tr = document.createElement("tr");
           tr.innerHTML = "<td>" + fila + "</td><td>" + p.i + "</td><td>" +
-            p.ac + "</td><td" + (patronOK ? "" : " class='pend'") + ">" +
+            p.ans + "</td><td" + (patronOK ? "" : " class='pend'") + ">" +
             patron + "</td>";
           cuerpo.appendChild(tr);
         }
@@ -92,7 +92,7 @@ if (typeof module !== "undefined") {
         cuerpo.appendChild(trv);
       }
       document.getElementById("col-patron").textContent = patronOK
-        ? "I₁: ac = A[0..i)"
+        ? "I₁: ans = A[0..i)"
         : "¿Qué se repite?";
     }
 
@@ -101,7 +101,7 @@ if (typeof module !== "undefined") {
       simular: EJERCICIO.simular,
       chips: [
         { campo: "i", rotulo: "i" },
-        { campo: "ac", rotulo: "ac", clase: "cuenta" }
+        { campo: "ans", rotulo: "ans", clase: "cuenta" }
       ],
       paramsIniciales: PRESETS[0],
       alPintar: alPintar
@@ -114,10 +114,10 @@ if (typeof module !== "undefined") {
       A.forEach(function (v) { if (v > mayor) { mayor = v; } });
       if (valor === esperado) {
         return { ok: true, msg: "Correcto: la suma es " + esperado +
-          ". Ahora ejecute y fíjese en la pareja (i, ac) de cada chequeo." };
+          ". Ahora ejecute y fíjese en la pareja (i, ans) de cada chequeo." };
       }
       if (valor === mayor) {
-        return { ok: false, msg: "Ese es el mayor elemento; ac acumula la suma " +
+        return { ok: false, msg: "Ese es el mayor elemento; ans acumula la suma " +
           "de todos." };
       }
       if (valor === A.length) {
@@ -142,7 +142,7 @@ if (typeof module !== "undefined") {
       if (patronOK && cotasOK) {
         document.getElementById("paso-1").classList.remove("bloqueado");
         document.getElementById("nota-pasos").innerHTML = "Invariantes: " +
-          "<b>I₀: 0 ≤ i ≤ N</b> e <b>I₁: ac = A[0] + … + A[i−1]</b>. " +
+          "<b>I₀: 0 ≤ i ≤ N</b> e <b>I₁: ans = A[0] + … + A[i−1]</b>. " +
           "El teorema a demostrar: <b>Teorema 1 — los invariantes I₀ e I₁ se " +
           "cumplen.</b>";
       }
@@ -155,7 +155,7 @@ if (typeof module !== "undefined") {
         if (op === "correcta") {
           patronOK = true;
           v.className = "veredicto bien";
-          v.textContent = "Ese es I₁: en cada chequeo, ac lleva la suma de los " +
+          v.textContent = "Ese es I₁: en cada chequeo, ans lleva la suma de los " +
             "primeros i elementos (el elemento A[i] todavía no entra). La tabla " +
             "ya lo verifica fila por fila.";
           Motor.repintar();
@@ -163,11 +163,11 @@ if (typeof module !== "undefined") {
         } else if (op === "masuno") {
           v.className = "veredicto mal";
           v.textContent = "Mire la primera fila: con i = 0, esa fórmula pediría " +
-            "ac = A[0], pero ac vale 0. El elemento A[i] entra en la vuelta, no antes.";
+            "ans = A[0], pero ans vale 0. El elemento A[i] entra en la vuelta, no antes.";
         } else if (op === "solo") {
           v.className = "veredicto mal";
-          v.textContent = "Mire la fila i = 2 del arreglo inicial: A[2] = 4 pero " +
-            "ac marca 9. ac no guarda un elemento: acumula.";
+          v.textContent = "Mire la fila i = 2 del arreglo inicial: A[2] = −5 pero " +
+            "ans marca 13. ans no guarda un elemento: acumula.";
         } else {
           v.className = "veredicto mal";
           v.textContent = "Esa es la poscondición, la meta: solo se cumple en la " +
@@ -212,7 +212,7 @@ if (typeof module !== "undefined") {
         var v = document.getElementById("veredicto-p1");
         if (btn.getAttribute("data-p1") === "00") {
           v.className = "veredicto bien";
-          v.textContent = "Correcto: i = 0 (línea 1) y ac = 0 (línea 2).";
+          v.textContent = "Correcto: i = 0 (línea 1) y ans = 0 (línea 2).";
           completarPaso("paso-1", "paso-2");
         } else {
           v.className = "veredicto mal";

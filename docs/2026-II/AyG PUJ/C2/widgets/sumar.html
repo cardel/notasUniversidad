@@ -23,7 +23,7 @@
   <p class="intro">El primer ciclo de la clase. Prediga qué devuelve, mire la
   traza de estados y descubra las dos propiedades que ninguna vuelta rompe:
   los invariantes I₀ e I₁. Con ellos, la demostración de correctitud sale en
-  tres movimientos: inicialización, estabilidad y el cierre.</p>
+  tres pasos: inicialización, estabilidad y terminación.</p>
 
   <div class="carta">
     <h2>1. La especificación y la predicción</h2>
@@ -31,7 +31,7 @@
     N ≥ 0. &nbsp;<b>Salida:</b> A[0] + A[1] + … + A[N−1].</p>
     <div class="presets">
       <span class="nota" style="margin-top:0">Arreglo:</span>
-      <button data-preset="0" class="primario">[8, 1, 4, 2, 5]</button>
+      <button data-preset="0" class="primario">[9, 4, -5, 1, 8, 3]</button>
       <button data-preset="1">[3, 1, 3]</button>
       <button data-preset="2">[7]</button>
     </div>
@@ -57,7 +57,7 @@
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
         <div class="nota">Cada vez que la ejecución pasa por la línea 3, el
-        while evalúa su condición: esa foto de (i, ac) es un «chequeo» y
+        while evalúa su condición: esa foto de (i, ans) es un «chequeo» y
         queda en la tabla de abajo.</div>
       </div>
     </div>
@@ -68,7 +68,7 @@
     <div class="envoltura-tabla">
       <table>
         <thead>
-          <tr><th>Chequeo</th><th>i</th><th>ac</th><th id="col-patron">¿Qué se repite?</th></tr>
+          <tr><th>Chequeo</th><th>i</th><th>ans</th><th id="col-patron">¿Qué se repite?</th></tr>
         </thead>
         <tbody id="cuerpo-estados"></tbody>
       </table>
@@ -79,12 +79,12 @@
     <h2>4. Los dos invariantes</h2>
     <p style="margin-top:0">Todo cambia de fila en fila, pero dos propiedades
     se cumplen en <b>todas</b>, incluida la primera y la última.</p>
-    <div style="margin-bottom:0.3rem"><b>¿Qué lleva ac en función de i?</b> (ese será I₁)</div>
+    <div style="margin-bottom:0.3rem"><b>¿Qué lleva ans en función de i?</b> (ese será I₁)</div>
     <div class="opciones" id="opciones-patron">
-      <button data-op="masuno">ac = A[0] + … + A[i]</button>
-      <button data-op="correcta">ac = A[0] + … + A[i−1]</button>
-      <button data-op="solo">ac = A[i]</button>
-      <button data-op="meta">ac = A[0] + … + A[N−1]</button>
+      <button data-op="masuno">ans = A[0] + … + A[i]</button>
+      <button data-op="correcta">ans = A[0] + … + A[i−1]</button>
+      <button data-op="solo">ans = A[i]</button>
+      <button data-op="meta">ans = A[0] + … + A[N−1]</button>
     </div>
     <div id="veredicto-patron" class="veredicto"></div>
     <div style="margin:0.8rem 0 0.3rem"><b>¿Entre qué valores se mueve i en los chequeos?</b> (ese será I₀)</div>
@@ -103,7 +103,7 @@
     clase: <b>Teorema 1 — los invariantes I₀ e I₁ se cumplen.</b></p>
 
     <div class="paso bloqueado" id="paso-1">
-      <div class="titulo-paso">Inicialización: según las líneas 1–2, ¿cuál es el estado inicial (i, ac)?</div>
+      <div class="titulo-paso">Inicialización: según las líneas 1–2, ¿cuál es el estado inicial (i, ans)?</div>
       <div class="opciones">
         <button data-p1="00">(0, 0)</button>
         <button data-p1="10">(1, 0)</button>
@@ -111,8 +111,8 @@
       </div>
       <div id="veredicto-p1" class="veredicto"></div>
       <div class="texto-paso">Para I₀: 0 ≤ 0 ≤ N. ✓ &nbsp;Para I₁:
-      ac = A[0] + … + A[−1] es una suma sobre el rango vacío [0..0), que vale
-      0 = ac. ✓ &nbsp;Los dos invariantes se cumplen en la inicialización.</div>
+      ans = A[0] + … + A[−1] es una suma sobre el rango vacío [0..0), que vale
+      0 = ans. ✓ &nbsp;Los dos invariantes se cumplen en la inicialización.</div>
     </div>
 
     <div class="paso bloqueado" id="paso-2">
@@ -122,15 +122,15 @@
       </div>
       <div class="texto-paso">Se considera una iteración arbitraria i = j
       (con j &lt; N: de lo contrario el cuerpo no se habría ejecutado) y se
-      asume que antes de ella valen 0 ≤ j ≤ N y ac = A[0] + … + A[j−1]. Al
-      ejecutar las líneas 4–5: ac = (A[0] + … + A[j−1]) + A[j] =
+      asume que antes de ella valen 0 ≤ j ≤ N y ans = A[0] + … + A[j−1]. Al
+      ejecutar las líneas 4–5: ans = (A[0] + … + A[j−1]) + A[j] =
       A[0] + … + A[j], e i = j + 1: exactamente I₁ evaluado en j + 1. E I₀
       vale porque j &lt; N implica 0 ≤ j + 1 ≤ N. Los invariantes son
       estables. ✓</div>
     </div>
 
     <div class="paso bloqueado" id="paso-3">
-      <div class="titulo-paso">Finalmente: ¿con qué valor de i termina el ciclo?</div>
+      <div class="titulo-paso">Terminación: ¿con qué valor de i termina el ciclo?</div>
       <div class="opciones">
         <button data-p3="n">i = N</button>
         <button data-p3="n1">i = N + 1</button>
@@ -138,10 +138,10 @@
       </div>
       <div id="veredicto-p3" class="veredicto"></div>
       <div class="texto-paso">El ciclo terminará ya que i se incrementa de 1
-      en 1 e I₀ lo acota por N. Al salir, la condición i &lt; N es falsa, o sea
+      en 1 e I₀ lo acota por N. Finalmente, al salir, la condición i &lt; N es falsa, o sea
       i ≥ N; junto con I₀ esto da exactamente i = N. Sustituyendo ese valor
       en I₁:
-      ac = A[0] + … + A[N−1], lo que coincide con la poscondición. Los
+      ans = A[0] + … + A[N−1], lo que coincide con la poscondición. Los
       invariantes son correctos. ∎</div>
     </div>
 
@@ -149,8 +149,8 @@
       <b>Teorema 2.</b> La invocación <code>sumarArreglo(A)</code> para
       cualquier arreglo A produce la suma de sus elementos.
       <b>Demostración:</b> es trivial a partir de la correctitud de los
-      invariantes I₀ e I₁: el cierre deja i = N, y sustituir ese valor en I₁
-      da ac = A[0] + … + A[N−1], que es la poscondición. ∎
+      invariantes I₀ e I₁: la terminación deja i = N, y sustituir ese valor en I₁
+      da ans = A[0] + … + A[N−1], que es la poscondición. ∎
     </div>
   </div>
 

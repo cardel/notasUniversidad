@@ -11,9 +11,9 @@
 
 <!-- Lo esencial de la sesión del miércoles: especificación (entrada y
      salida), la pareja de invariantes I₀ (cotas) e I₁ (acumulador), y la
-     demostración por inicialización y estabilidad con el cierre, usando
+     demostración por inicialización, estabilidad y terminación, usando
      fact (i = 1, condición i <= N, I₁: ans = (i−1)!) como ejemplo:
-     Teorema 1, inicialización, estabilidad, Finalmente, Teorema 2. -->
+     Teorema 1, inicialización, estabilidad, terminación, Teorema 2. -->
 
 ## Un problema para partir en dos
 

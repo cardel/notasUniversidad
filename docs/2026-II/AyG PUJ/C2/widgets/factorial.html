@@ -123,7 +123,7 @@
     </div>
 
     <div class="paso bloqueado" id="paso-3">
-      <div class="titulo-paso">Finalmente: ¿con qué valor de i termina el ciclo?</div>
+      <div class="titulo-paso">Terminación: ¿con qué valor de i termina el ciclo?</div>
       <div class="opciones">
         <button data-p3="n1">i = N + 1</button>
         <button data-p3="n">i = N</button>
@@ -131,7 +131,7 @@
       </div>
       <div id="veredicto-p3" class="veredicto"></div>
       <div class="texto-paso">El ciclo terminará ya que i se incrementa de 1
-      en 1 e I₀ lo acota por N + 1. Al salir, la condición i ≤ N es falsa, o
+      en 1 e I₀ lo acota por N + 1. Finalmente, al salir, la condición i ≤ N es falsa, o
       sea i &gt; N; junto con I₀ esto da exactamente i = N + 1. Sustituyendo ese
       valor en I₁: ans = (N + 1 − 1)! = N!, y eso es lo que llega a la
       línea 6. Los invariantes son correctos. ∎</div>
@@ -140,7 +140,7 @@
     <div class="conclusion" id="conclusion">
       <b>Teorema 2.</b> La invocación <code>fact(N)</code> para cualquier
       N ≥ 0 produce como resultado N!. &nbsp;<b>Demostración:</b> es trivial
-      a partir de la correctitud de los invariantes I₀ e I₁: el cierre deja
+      a partir de la correctitud de los invariantes I₀ e I₁: la terminación deja
       i = N + 1, y sustituir ese valor en I₁ da ans = (N + 1 − 1)! = N!, que
       es justo lo que retorna la línea 6. ∎
     </div>
