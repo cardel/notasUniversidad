@@ -38,6 +38,19 @@ Las grabaciones de cada sesión están en la lista de reproducción del curso,
 ordenada por clase: la sesión más reciente queda al final y la lista se va
 llenando a medida que avanza el semestre. Es una sola lista para los grupos
 A y B, y cada sesión se parte en varios videos cortos, para volver a un tema
-puntual sin recorrer la clase entera.
+puntual sin recorrer la clase entera. El reproductor de abajo va sobre la
+lista completa; la barra que lo encabeza la abre en YouTube, en una pestaña
+nueva.
 
-[:material-youtube: Abrir la lista de reproducción del curso](https://www.youtube.com/playlist?list=PLLjpI_N-OJNE){ .md-button .md-button--primary }
+<div class="yt-lista">
+  <a class="yt-lista__barra" href="https://www.youtube.com/playlist?list=PLLjpI_N-OJNE" target="_blank" rel="noopener">
+    <span class="yt-lista__titulo">Lista de reproducción del curso</span>
+    <span class="yt-lista__accion">Abrir en YouTube ↗</span>
+  </a>
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/videoseries?list=PLLjpI_N-OJNE"
+    title="Árboles y Grafos PUJ 2026-II"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>

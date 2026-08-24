@@ -121,3 +121,70 @@
 
 /* ---- Footer ---- */
 .md-footer-meta { background: rgba(0, 0, 0, 0.35); }
+
+/* ---- Reproductor de la lista de reproducción del curso ----
+   El reproductor incrustado de YouTube enlaza sólo el video en curso; la
+   barra propia tapa su franja de título y lleva a la lista completa. */
+.md-typeset .yt-lista {
+  position: relative;
+  margin: 1rem 0 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 6px 18px rgba(30, 20, 60, 0.14);
+}
+.md-typeset .yt-lista iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+}
+.md-typeset .yt-lista__barra {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;   /* cubre la franja del título del reproductor */
+  padding: 0 1.1rem;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  background: linear-gradient(100deg, #6d28d9, #4f46e5 60%, #db2777);
+  transition: filter 0.16s ease;
+}
+.md-typeset .yt-lista__barra:hover,
+.md-typeset .yt-lista__barra:focus {
+  color: #fff;
+  background: linear-gradient(100deg, #6d28d9, #4f46e5 60%, #db2777);
+  background-size: auto;
+  filter: brightness(1.08);
+}
+.md-typeset .yt-lista__titulo {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.md-typeset .yt-lista__titulo::before {
+  content: "▶";
+  margin-right: 0.6rem;
+  font-size: 0.8em;
+}
+.md-typeset .yt-lista__accion {
+  flex-shrink: 0;
+  padding: 0.2rem 0.75rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .md-typeset .yt-lista__barra { min-height: 2.8rem; padding: 0 0.7rem; font-size: 0.72rem; gap: 0.5rem; }
+  .md-typeset .yt-lista__titulo::before { display: none; }
+}

@@ -39,20 +39,25 @@ reporta en el Campus Virtual antes de terminar la clase.
 
 ## Clases en video
 
-Las grabaciones de cada sesión se publican en la lista de reproducción del
-curso, en orden cronológico: la sesión más antigua aparece primero y la más
-reciente al final. La lista se irá llenando a medida que avanza el semestre.
+Las grabaciones de cada sesión están en la lista de reproducción del curso, en
+orden cronológico: la sesión más reciente queda al final y la lista se va
+llenando a medida que avanza el semestre. Cada sesión se parte en varios
+videos cortos, para volver a un tema puntual sin recorrer la clase entera. El
+reproductor de abajo va sobre la lista completa; la barra que lo encabeza la
+abre en YouTube, en una pestaña nueva.
 
-<iframe
-  width="100%" height="480"
-  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLRsTnxN7mJNA"
-  title="FLP 2026-II"
-  style="border:0;border-radius:12px;"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen>
-</iframe>
-
-[:material-youtube: Ver la lista completa en YouTube](https://www.youtube.com/playlist?list=PLRsTnxN7mJNA)
+<div class="yt-lista">
+  <a class="yt-lista__barra" href="https://www.youtube.com/playlist?list=PLRsTnxN7mJNA" target="_blank" rel="noopener">
+    <span class="yt-lista__titulo">Lista de reproducción del curso</span>
+    <span class="yt-lista__accion">Abrir en YouTube ↗</span>
+  </a>
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/videoseries?list=PLRsTnxN7mJNA"
+    title="FLP 2026-II"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
 
 ## Reglas del código
 
