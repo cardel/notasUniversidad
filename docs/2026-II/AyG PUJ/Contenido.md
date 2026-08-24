@@ -34,17 +34,10 @@ mismos temas, siguen disponibles en
 
 ## Clases en video
 
-Las grabaciones de cada sesión se publican en la lista de reproducción del
-curso, en orden cronológico (la sesión más reciente queda al final). La lista es
-común a los grupos A y B y se irá llenando a medida que avanza el semestre.
+Las grabaciones de cada sesión están en la lista de reproducción del curso,
+ordenada por clase: la sesión más reciente queda al final y la lista se va
+llenando a medida que avanza el semestre. Es una sola lista para los grupos
+A y B, y cada sesión se parte en varios videos cortos, para volver a un tema
+puntual sin recorrer la clase entera.
 
-<iframe
-  width="100%" height="480"
-  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLLjpI_N-OJNE"
-  title="Árboles y Grafos PUJ 2026-II"
-  style="border:0;border-radius:12px;"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen>
-</iframe>
-
-[:material-youtube: Ver la lista completa en YouTube](https://www.youtube.com/playlist?list=PLLjpI_N-OJNE)
+[:material-youtube: Abrir la lista de reproducción del curso](https://www.youtube.com/playlist?list=PLLjpI_N-OJNE){ .md-button .md-button--primary }
