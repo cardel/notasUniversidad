@@ -25,6 +25,9 @@ mismas estructuras ya empacadas.
 3. [Clase 3. Introducción a la complejidad computacional — 5 de agosto](C3/Clase%203.%20Introducción%20a%20la%20complejidad%20computacional.md)
 4. [Clase 4. Ciclos dependientes y sumatorias — 19 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
 5. [Clase 5. Ejercicios de análisis de complejidad — 21 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
+6. [Clase 6. La notación O — ejercicios interactivos — 26 de agosto](C6/Ejercicios.md)
+7. [Clase 7. Manejo de memoria en C — ejercicios interactivos — 28 de agosto](C7/Ejercicios.md)
+8. [Clase 8. Punteros, arreglos y matrices — ejercicios interactivos — 2 de septiembre](C8/Ejercicios.md)
 
 ## Apéndices
 
