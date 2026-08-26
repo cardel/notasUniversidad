@@ -500,11 +500,12 @@ iterativa para 18 356 rangos de arreglos cortos.
 ### Las dos técnicas, juntas
 
 `ordenar` es el cierre natural de este apéndice, y queda como ejercicio. Su
-demostración es la misma inducción estructural del máximo: el caso base es la
-lista de tamaño 0 o 1, ya ordenada; el caso inductivo parte por la mitad, y la
-hipótesis de inducción entrega `izq` y `der` ordenadas. El paso de combinar no
-hay que probarlo de cero: la clase ya demostró con invariantes que `mezclar`
-produce una lista ordenada con todos los elementos de las dos entradas. Ese
+demostración es la misma inducción estructural del máximo, sobre el tamaño
+del rango: el caso base es el rango de cero o un elemento, ya ordenado; el
+caso inductivo parte el rango con `mitad`, y la hipótesis de inducción
+entrega los dos tramos ordenados. El paso de combinar no hay que probarlo
+de cero: la clase ya demostró con invariantes que `mezclar` deja
+`lista[ini..fin]` ordenado cuando recibe los dos tramos ordenados. Ese
 Teorema 2 se usa aquí como lema, y así es como conviven las dos técnicas del
 curso: los invariantes certifican los ciclos y la inducción estructural arma
 con ellos la correctitud de la recursión.

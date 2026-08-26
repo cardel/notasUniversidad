@@ -33,15 +33,16 @@ no— la especificación cuando la entrada no cumple la precondición.
 
 ### [mezclar](widgets/mezclar.html){ target=_blank rel=noopener }
 
-Dos listas ordenadas entran, una sola sale. Ejecute copia por copia y
-proponga la pareja de invariantes del primer while: las cotas de i y j, y
-lo que resultado cumple en cada chequeo. Con ellos se arma la demostración
-completa —Teorema 1 por inicialización y estabilidad, esta vez por casos, y
-la terminación hasta el Teorema 2— del ciclo que hace funcionar todo el
-ordenamiento por mezcla.
+Dos tramos ordenados del mismo arreglo entran, y la mezcla escribe el tramo
+completo, ordenado, sobre ese arreglo. Ejecute escritura por escritura y
+proponga la pareja de invariantes del primer while: las cotas de i, j y k,
+y lo que lista[ini..k) cumple en cada chequeo. Con ellos se arma la
+demostración completa —Teorema 1 por inicialización y estabilidad, esta vez
+por casos, y la terminación hasta el Teorema 2— del ciclo que hace
+funcionar todo el ordenamiento por mezcla.
 
-Pruebe las tres parejas de listas: una deja «sobras» cuando la izquierda se
-agota y otra tiene empates que el `<=` resuelve.
+Pruebe los tres arreglos: uno deja «sobras» cuando la copia izquierda se
+agota y otro tiene empates que el `<=` resuelve.
 
 ### [ordenar](widgets/ordenar.html){ target=_blank rel=noopener }
 

@@ -221,75 +221,105 @@ Bastante, por una propiedad que se ve al ponerlas lado a lado: **el menor de
 todos está al frente de una de las dos listas**. Se toma, y se repite. Esa
 operación es la mezcla, y sobre ella se construye el ordenamiento.
 
+La mezcla del curso trabaja sobre el mismo arreglo: recibe los índices que
+delimitan los dos tramos ya ordenados, `lista[ini..mitad]` y
+`lista[mitad+1..fin]`, y deja el tramo completo `lista[ini..fin]` ordenado.
+Antes de mezclar copia los dos tramos, y esa copia no es un capricho, como
+se ve en la traza de más abajo.
+
 ```python
-def mezclar(izq, der):
-    # Combina dos listas ordenadas en una lista ordenada
-    resultado = []
+def mezclar(lista, ini, mitad, fin):
+    # Combina los tramos ordenados lista[ini..mitad]
+    # y lista[mitad+1..fin] sobre lista[ini..fin]
+    izq = []
+    der = []
+    p = ini
+    while p <= mitad:
+        izq.append(lista[p])
+        p = p + 1
+    while p <= fin:
+        der.append(lista[p])
+        p = p + 1
     i = 0
     j = 0
+    k = ini
     while i < len(izq) and j < len(der):
         if izq[i] <= der[j]:
-            resultado.append(izq[i])
+            lista[k] = izq[i]
             i = i + 1
         else:
-            resultado.append(der[j])
+            lista[k] = der[j]
             j = j + 1
+        k = k + 1
     while i < len(izq):
-        resultado.append(izq[i])
+        lista[k] = izq[i]
         i = i + 1
+        k = k + 1
     while j < len(der):
-        resultado.append(der[j])
+        lista[k] = der[j]
         j = j + 1
-    return resultado
+        k = k + 1
+    return lista
 ```
 
-La traza de la clase, con `izq = [2, 4, 7]` y `der = [1, 3, 6]`:
+La traza de la clase, ahora sobre el arreglo: `mezclar(lista, 0, 2, 5)` con
+`lista = [2, 4, 7, 1, 3, 6]`. Las copias quedan `izq = [2, 4, 7]` y
+`der = [1, 3, 6]`, y cada vuelta escribe un elemento en la posición $k$:
 
-| Comparación | Sale | `resultado` |
-|:---:|:---:|---|
-| $2$ vs $1$ | 1 | `[1]` |
-| $2$ vs $3$ | 2 | `[1, 2]` |
-| $4$ vs $3$ | 3 | `[1, 2, 3]` |
-| $4$ vs $6$ | 4 | `[1, 2, 3, 4]` |
-| $7$ vs $6$ | 6 | `[1, 2, 3, 4, 6]` |
-| derecha agotada | 7 | `[1, 2, 3, 4, 6, 7]` |
+| $i$ | $j$ | $k$ | Comparación | `lista` tras escribir |
+|:---:|:---:|:---:|:---:|---|
+| 0 | 0 | 0 | $2 > 1$: se escribe 1 | `[`**1**`, 4, 7, 1, 3, 6]` |
+| 0 | 1 | 1 | $2 \leq 3$: se escribe 2 | `[1, `**2**`, 7, 1, 3, 6]` |
+| 1 | 1 | 2 | $4 > 3$: se escribe 3 | `[1, 2, `**3**`, 1, 3, 6]` |
+| 1 | 2 | 3 | $4 \leq 6$: se escribe 4 | `[1, 2, 3, `**4**`, 3, 6]` |
+| 2 | 2 | 4 | $7 > 6$: se escribe 6 | `[1, 2, 3, 4, `**6**`, 6]` |
+| 2 | 3 | 5 | `der` agotada: se escribe 7 | `[1, 2, 3, 4, 6, `**7**`]` |
 
-Cuando una lista se agota, los dos `while` finales copian lo que queda de la
-otra, que ya viene ordenado y es mayor que todo lo copiado. Cada vuelta copia
-exactamente un elemento y ninguno se copia dos veces: mezclar dos listas con
-$n$ elementos en total cuesta $\Theta(n)$, y ese dato va a ser la clave del
+Vale la pena detenerse en la segunda fila: la escritura en $k = 1$ tapa el
+$4$ cuando el $4$ todavía no ha salido. La mezcla sobrevive porque lee de
+las copias, nunca del tramo que está escribiendo; así construye CLRS su
+procedimiento Merge (p. 31), con los arreglos auxiliares $L$ y $R$. Cuando
+una copia se agota, los dos `while` finales escriben lo que queda de la
+otra, que ya viene ordenado y es mayor que todo lo escrito. Cada vuelta
+escribe exactamente un elemento y ninguno se escribe dos veces: mezclar dos
+tramos con $n$ elementos en total cuesta $\Theta(n)$ —contando las copias
+iniciales, que son otras $n$ operaciones— y ese dato va a ser la clave del
 análisis.
 
 El primer ciclo tiene su pareja de invariantes, como cualquier `while`:
 
-$$I_0:\; 0 \leq i \leq \mathrm{len}(\mathtt{izq}) \;\wedge\; 0 \leq j \leq \mathrm{len}(\mathtt{der})$$
+$$I_0:\; 0 \leq i \leq \mathrm{len}(\mathtt{izq}) \;\wedge\; 0 \leq j \leq \mathrm{len}(\mathtt{der}) \;\wedge\; k = ini + i + j$$
 
-e $I_1$: `resultado` contiene, en orden, los $i + j$ elementos más pequeños
-de las dos listas. La estabilidad va por casos según cuál lista aporta el
-menor, el mismo esquema de la búsqueda del repaso. Así, con un invariante
-cuya estabilidad se revisa por casos, es como CLRS demuestra la correctitud
-de su procedimiento Merge (pp. 31--33); la escritura completa queda como
-ejercicio.
+e $I_1$: `lista[ini..k)` contiene, en orden, los $i + j$ elementos más
+pequeños de las dos copias. La estabilidad va por casos según cuál copia
+aporta el menor, el mismo esquema de la búsqueda del repaso. Así, con un
+invariante cuya estabilidad se revisa por casos, es como CLRS demuestra la
+correctitud de su procedimiento Merge (pp. 31--33); la escritura completa
+queda como ejercicio. Un detalle que conecta con el
+[apéndice](Apéndice.md): aquí el arreglo se modifica, pero el invariante no
+necesita la cláusula de la zona intacta, porque el ciclo nunca lee de
+`lista` — todo lo que lee viene de las copias.
 
 Con la mezcla resuelta, el ordenamiento es el esquema de divide y vencerás
 aplicado sin más:
 
 ```python
-def ordenar(lista):
-    # Ordena por mezcla: divide, conquista y combina
-    if len(lista) <= 1:
-        resultado = lista
-    else:
-        mitad = len(lista) // 2
-        izq = ordenar(lista[0:mitad])
-        der = ordenar(lista[mitad:len(lista)])
-        resultado = mezclar(izq, der)
-    return resultado
+def ordenar(lista, ini, fin):
+    # Ordena lista[ini..fin] en su lugar, partiendo el rango en dos
+    if ini < fin:
+        mitad = (ini + fin) // 2
+        ordenar(lista, ini, mitad)
+        ordenar(lista, mitad + 1, fin)
+        mezclar(lista, ini, mitad, fin)
+    return lista
 ```
 
-Dividir corta por la mitad, conquistar ordena cada mitad con el mismo
-procedimiento, combinar mezcla, y el caso base es la lista de cero o un
-elemento, que ya está ordenada.
+Dividir es calcular `mitad`: los índices delimitan cada mitad sin mover un
+elemento, igual que en el máximo. Conquistar ordena cada mitad con el mismo
+procedimiento, combinar mezcla los dos tramos —ya ordenados— sobre el mismo
+arreglo, y el caso base es el rango de cero o un elemento, que ya está
+ordenado y no entra al `if`. El arreglo completo se ordena con
+`ordenar(lista, 0, len(lista) - 1)`.
 
 El árbol de llamadas es la figura 2.4 de CLRS, y en clase se dibujó con 16
 elementos: partiendo quedan 2 de 8, luego 4 de 4, luego 8 de 2 y finalmente
@@ -343,9 +373,9 @@ Del cierre de la clase, el molde general que conviene interiorizar. Estos
 algoritmos suelen tener dos funciones:
 
 - **La que combina** (`mezclar`): recibe dos o más soluciones parciales que
-  ya cumplen la **propiedad de solución** (aquí, venir ordenadas; en el
-  máximo, ser el máximo de su parte) y produce una solución del problema
-  mayor que cumple la misma propiedad.
+  ya cumplen la **propiedad de solución** (aquí, los tramos vienen
+  ordenados; en el máximo, ser el máximo de su parte) y produce una solución
+  del problema mayor que cumple la misma propiedad.
 - **La que divide y llama** (`ordenar`): trae el caso base con su solución
   trivial, la partición, las llamadas recursivas y la combinación.
 
@@ -367,11 +397,53 @@ completo para adelantar.
 - **Una partición que no reduce.** Si una de las partes puede quedar del
   tamaño original, el algoritmo se cuelga, igual que un ciclo sin
   terminación.
-- **Mezclar olvidando los sobrantes.** Cuando una lista se agota, los
-  restantes deben copiarse: los dos `while` finales de mezclar no son de
-  adorno.
+- **Mezclar olvidando los sobrantes.** Cuando una copia se agota, lo que
+  queda de la otra debe escribirse: los dos `while` finales de mezclar no
+  son de adorno.
 - **Equivocar $f(n)$ en la recurrencia.** La mezcla cuesta $\Theta(n)$, no
   $\Theta(1)$; con la $f(n)$ errada, el análisis entero da otro valor.
+
+## Los costos que esconde Python
+
+Python ofrece una forma tentadora de partir: el *slice*. `lista[a:b]`
+construye una lista nueva con los elementos del rango $[a..b)$, así que la
+división de `ordenar` podría escribirse en dos líneas:
+
+```python
+izq = lista[0:mitad]    # slice: una lista nueva con esa mitad
+der = lista[mitad:]     # slice: otra lista nueva con el resto
+```
+
+El problema es lo que cuesta. Cada slice copia sus $b - a$ elementos uno
+por uno: tiempo y memoria $\Theta(b-a)$. Dividir con slices convierte un
+paso que con índices cuesta $\Theta(1)$ en uno que cuesta $\Theta(n)$, y la
+cuenta se resiente en cada algoritmo del curso:
+
+- En el máximo, la recurrencia pasa de $T(n) = 2\,T(n/2) + \Theta(1)$ a
+  $T(n) = 2\,T(n/2) + \Theta(n)$: de $O(n)$ a $O(n \lg n)$ solo por copiar
+  al partir.
+- En la búsqueda binaria de la próxima clase es peor:
+  $T(n) = T(n/2) + \Theta(1)$ da $O(\lg n)$, y con slices
+  $T(n) = T(n/2) + \Theta(n)$ da $O(n)$ — se pierde toda la gracia del
+  algoritmo.
+- En el ordenamiento por mezcla el orden se salva, porque cada nivel ya
+  pagaba $\Theta(n)$ al mezclar; pero cada nivel copiaría otros $n$
+  elementos solo para partir, y las celdas pedidas y liberadas a lo largo
+  de la ejecución suman $\Theta(n \lg n)$.
+
+Por eso `maximo` y `ordenar` reciben `ini` y `fin`: cada llamado recursivo
+dice *de dónde a dónde* trabaja y nadie copia nada para dividir. Las copias
+que quedan, las de `mezclar`, viven en el único paso que ya cuesta
+$\Theta(n)$ de todas formas; ahí no cambian la cuenta.
+
+Hay un segundo costo, más discreto, que sí se tolera. Una lista de Python
+no es un arreglo compacto: guarda referencias a objetos que viven
+repartidos por la memoria, así que cada `lista[i]` paga una indirección que
+un arreglo de C o de C++ no paga. Ese sobrecosto es un factor constante:
+`lista[i]` sigue siendo $O(1)$, el análisis asintótico no se mueve y por
+eso el curso trabaja con listas de Python sin remordimiento. Las copias de
+los slices son otra historia: agregan trabajo $\Theta(n)$ donde la división
+debía ser gratis, y eso sí cambia la cuenta.
 
 ## Ejercicios
 
@@ -385,7 +457,9 @@ completo para adelantar.
 4. Para el primer ciclo de `mezclar`: demuestre la inicialización y la
    estabilidad de sus invariantes $I_0$ e $I_1$, y use la terminación para
    concluir que la mezcla es correcta. La estabilidad se parte en dos casos,
-   según cuál lista aporta el menor.
+   según cuál copia aporta el menor; en cada uno, diga qué exige el
+   invariante evaluado en el nuevo valor y por qué el estado que dejó el
+   código lo cumple.
 
 ## Ejercicios interactivos
 
@@ -393,8 +467,9 @@ Los dos de divide y vencerás se recorrieron en clase y están en la
 [página de ejercicios interactivos](Ejercicios.md#divide-y-venceras):
 
 - [mezclar](widgets/mezclar.html){ target=_blank rel=noopener } — ejecute la
-  mezcla copia por copia, proponga la pareja de invariantes del primer
-  `while` y arme la demostración completa, con la estabilidad por casos.
+  mezcla escritura por escritura sobre el arreglo, proponga la pareja de
+  invariantes del primer `while` y arme la demostración completa, con la
+  estabilidad por casos.
 - [ordenar](widgets/ordenar.html){ target=_blank rel=noopener } — el
   ordenamiento por mezcla dibujado completo: baje partiendo la lista nivel
   por nivel hasta el caso base y súbala mezclando. La tabla acumula el
