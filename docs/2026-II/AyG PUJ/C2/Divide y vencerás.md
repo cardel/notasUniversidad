@@ -221,11 +221,97 @@ Bastante, por una propiedad que se ve al ponerlas lado a lado: **el menor de
 todos está al frente de una de las dos listas**. Se toma, y se repite. Esa
 operación es la mezcla, y sobre ella se construye el ordenamiento.
 
-La mezcla del curso trabaja sobre el mismo arreglo: recibe los índices que
-delimitan los dos tramos ya ordenados, `lista[ini..mitad]` y
-`lista[mitad+1..fin]`, y deja el tramo completo `lista[ini..fin]` ordenado.
-Antes de mezclar copia los dos tramos, y esa copia no es un capricho, como
-se ve en la traza de más abajo.
+### La primera versión
+
+La traducción directa del esquema es la que se le ocurre a uno primero:
+mezclar recibe dos listas y devuelve una lista nueva, y ordenar parte la
+lista con slices.
+
+```python
+def mezclar(izq, der):
+    # Combina dos listas ordenadas en una lista nueva
+    resultado = []
+    i = 0
+    j = 0
+    while i < len(izq) and j < len(der):
+        if izq[i] <= der[j]:
+            resultado.append(izq[i])
+            i = i + 1
+        else:
+            resultado.append(der[j])
+            j = j + 1
+    while i < len(izq):
+        resultado.append(izq[i])
+        i = i + 1
+    while j < len(der):
+        resultado.append(der[j])
+        j = j + 1
+    return resultado
+
+def ordenar(lista):
+    # Ordena por mezcla: divide, conquista y combina
+    if len(lista) <= 1:
+        resultado = lista
+    else:
+        mitad = len(lista) // 2
+        izq = ordenar(lista[0:mitad])
+        der = ordenar(lista[mitad:len(lista)])
+        resultado = mezclar(izq, der)
+    return resultado
+```
+
+Funciona, y se escribe rápido. La pregunta que sigue es cuánto cuesta
+dividir así.
+
+### Lo que cuesta dividir copiando
+
+`lista[a:b]` construye una lista nueva copiando sus $b - a$ elementos uno
+por uno: tiempo y memoria $\Theta(b-a)$. Dividir con slices convierte un
+paso que debía ser $\Theta(1)$ en uno que cuesta $\Theta(n)$, y la cuenta
+se resiente en cada algoritmo del curso:
+
+- En el máximo, la recurrencia pasaría de $T(n) = 2\,T(n/2) + \Theta(1)$ a
+  $T(n) = 2\,T(n/2) + \Theta(n)$: de $O(n)$ a $O(n \lg n)$ solo por copiar
+  al partir.
+- En la búsqueda binaria de la próxima clase es peor:
+  $T(n) = T(n/2) + \Theta(1)$ da $O(\lg n)$, y con slices
+  $T(n) = T(n/2) + \Theta(n)$ da $O(n)$ — se pierde toda la gracia del
+  algoritmo.
+- En el ordenamiento por mezcla el orden se salva, porque cada nivel ya
+  paga $\Theta(n)$ al mezclar; pero cada nivel copia otros $n$ elementos
+  solo para partir, y las celdas pedidas y liberadas suman
+  $\Theta(n \lg n)$.
+
+Dividir debe ser gratis, y los índices lo logran: cada llamado dice *de
+dónde a dónde* trabaja, como ya lo hace `maximo(lista, ini, fin)`. Lo que
+sigue es transformar esta versión, pieza por pieza.
+
+### La versión por índices
+
+```python
+def ordenar(lista, ini, fin):
+    # Ordena lista[ini..fin] en su lugar, partiendo el rango en dos
+    if ini < fin:
+        mitad = (ini + fin) // 2
+        ordenar(lista, ini, mitad)
+        ordenar(lista, mitad + 1, fin)
+        mezclar(lista, ini, mitad, fin)
+    return lista
+```
+
+Qué cambió: dividir ahora es calcular `mitad`, y los índices delimitan cada
+mitad sin mover un elemento, $\Theta(1)$. El caso base quedó implícito: un
+rango de cero o un elemento (`ini >= fin`) no entra al `if`. Y `mezclar` ya
+no puede devolver una lista nueva: debe dejar el resultado en
+`lista[ini..fin]`, el mismo tramo donde viven las dos mitades. El arreglo
+completo se ordena con `ordenar(lista, 0, len(lista) - 1)`.
+
+### La mezcla, sobre el mismo arreglo
+
+La mezcla recibe entonces los índices que delimitan los dos tramos ya
+ordenados, `lista[ini..mitad]` y `lista[mitad+1..fin]`, y deja el tramo
+completo `lista[ini..fin]` ordenado. Antes de mezclar copia los dos tramos,
+y esa copia no es un capricho, como se ve en la traza de más abajo.
 
 ```python
 def mezclar(lista, ini, mitad, fin):
@@ -300,26 +386,8 @@ queda como ejercicio. Un detalle que conecta con el
 necesita la cláusula de la zona intacta, porque el ciclo nunca lee de
 `lista` — todo lo que lee viene de las copias.
 
-Con la mezcla resuelta, el ordenamiento es el esquema de divide y vencerás
-aplicado sin más:
-
-```python
-def ordenar(lista, ini, fin):
-    # Ordena lista[ini..fin] en su lugar, partiendo el rango en dos
-    if ini < fin:
-        mitad = (ini + fin) // 2
-        ordenar(lista, ini, mitad)
-        ordenar(lista, mitad + 1, fin)
-        mezclar(lista, ini, mitad, fin)
-    return lista
-```
-
-Dividir es calcular `mitad`: los índices delimitan cada mitad sin mover un
-elemento, igual que en el máximo. Conquistar ordena cada mitad con el mismo
-procedimiento, combinar mezcla los dos tramos —ya ordenados— sobre el mismo
-arreglo, y el caso base es el rango de cero o un elemento, que ya está
-ordenado y no entra al `if`. El arreglo completo se ordena con
-`ordenar(lista, 0, len(lista) - 1)`.
+Con las dos piezas ya transformadas, el ordenamiento queda completo: los
+índices dividen y la mezcla combina sobre el mismo arreglo.
 
 El árbol de llamadas es la figura 2.4 de CLRS, y en clase se dibujó con 16
 elementos: partiendo quedan 2 de 8, luego 4 de 4, luego 8 de 2 y finalmente
@@ -403,47 +471,18 @@ completo para adelantar.
 - **Equivocar $f(n)$ en la recurrencia.** La mezcla cuesta $\Theta(n)$, no
   $\Theta(1)$; con la $f(n)$ errada, el análisis entero da otro valor.
 
-## Los costos que esconde Python
-
-Python ofrece una forma tentadora de partir: el *slice*. `lista[a:b]`
-construye una lista nueva con los elementos del rango $[a..b)$, así que la
-división de `ordenar` podría escribirse en dos líneas:
-
-```python
-izq = lista[0:mitad]    # slice: una lista nueva con esa mitad
-der = lista[mitad:]     # slice: otra lista nueva con el resto
-```
-
-El problema es lo que cuesta. Cada slice copia sus $b - a$ elementos uno
-por uno: tiempo y memoria $\Theta(b-a)$. Dividir con slices convierte un
-paso que con índices cuesta $\Theta(1)$ en uno que cuesta $\Theta(n)$, y la
-cuenta se resiente en cada algoritmo del curso:
-
-- En el máximo, la recurrencia pasa de $T(n) = 2\,T(n/2) + \Theta(1)$ a
-  $T(n) = 2\,T(n/2) + \Theta(n)$: de $O(n)$ a $O(n \lg n)$ solo por copiar
-  al partir.
-- En la búsqueda binaria de la próxima clase es peor:
-  $T(n) = T(n/2) + \Theta(1)$ da $O(\lg n)$, y con slices
-  $T(n) = T(n/2) + \Theta(n)$ da $O(n)$ — se pierde toda la gracia del
-  algoritmo.
-- En el ordenamiento por mezcla el orden se salva, porque cada nivel ya
-  pagaba $\Theta(n)$ al mezclar; pero cada nivel copiaría otros $n$
-  elementos solo para partir, y las celdas pedidas y liberadas a lo largo
-  de la ejecución suman $\Theta(n \lg n)$.
-
-Por eso `maximo` y `ordenar` reciben `ini` y `fin`: cada llamado recursivo
-dice *de dónde a dónde* trabaja y nadie copia nada para dividir. Las copias
-que quedan, las de `mezclar`, viven en el único paso que ya cuesta
-$\Theta(n)$ de todas formas; ahí no cambian la cuenta.
+## El costo escondido de `lista[i]`
 
 Hay un segundo costo, más discreto, que sí se tolera. Una lista de Python
 no es un arreglo compacto: guarda referencias a objetos que viven
 repartidos por la memoria, así que cada `lista[i]` paga una indirección que
-un arreglo de C o de C++ no paga. Ese sobrecosto es un factor constante:
-`lista[i]` sigue siendo $O(1)$, el análisis asintótico no se mueve y por
-eso el curso trabaja con listas de Python sin remordimiento. Las copias de
-los slices son otra historia: agregan trabajo $\Theta(n)$ donde la división
-debía ser gratis, y eso sí cambia la cuenta.
+un arreglo de C o de C++ no paga.
+
+Ese sobrecosto es un factor constante: `lista[i]` sigue siendo $O(1)$, el
+análisis asintótico no se mueve y por eso el curso trabaja con listas de
+Python sin remordimiento. Las copias de los slices son otra historia:
+agregan trabajo $\Theta(n)$ donde la división debía ser gratis, y eso sí
+cambia la cuenta.
 
 ## Ejercicios
 
