@@ -273,7 +273,8 @@ se resiente en cada algoritmo del curso:
 - En el máximo, la recurrencia pasaría de $T(n) = 2\,T(n/2) + \Theta(1)$ a
   $T(n) = 2\,T(n/2) + \Theta(n)$: de $O(n)$ a $O(n \lg n)$ solo por copiar
   al partir.
-- En la búsqueda binaria de la próxima clase es peor:
+- En la [búsqueda binaria](../C3/Busqueda%20binaria%20y%20biseccion.md)
+  es peor:
   $T(n) = T(n/2) + \Theta(1)$ da $O(\lg n)$, y con slices
   $T(n) = T(n/2) + \Theta(n)$ da $O(n)$ — se pierde toda la gracia del
   algoritmo.

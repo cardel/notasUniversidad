@@ -487,6 +487,128 @@ no se puede porque el envase de 5 tiene que caber. Con $M = 2$ la
 primera diferencia aparece en $mitad = 6$, donde $f(6) = 3 > 2$: el
 algoritmo sube $a$ a 7 y esa es la respuesta.
 
+### Los invariantes de la búsqueda sobre la respuesta
+
+Sea $R = \{\, cap : f(cap) \leq M \,\}$ el conjunto de capacidades
+viables y $cap^{*} = \min R$ la respuesta pedida. Como $f$ es
+decreciente, $R$ es **cerrado hacia arriba**: si una capacidad alcanza,
+cualquiera mayor también. De ahí que su complemento sea cerrado hacia
+abajo, hecho que se usa en la estabilidad.
+
+Lo que cambia es la ventana de candidatos $[a..b]$, y lo que hay que
+conservar es que el óptimo siga adentro:
+
+$$I_0:\; \max(A) \leq a \leq b \leq \mathrm{sum}(A) \qquad\qquad I_1:\; a \leq cap^{*} \leq b$$
+
+**Teorema 1.** Los invariantes $I_0$ e $I_1$ se cumplen.
+
+*Demostración*: se procede mostrando la validez de los invariantes para la
+inicialización, la estabilidad y la terminación.
+
+**Inicialización.** Las líneas 1--2 dejan $a = \max(A)$ y
+$b = \mathrm{sum}(A)$. Para $I_0$ se pide
+$\max(A) \leq \max(A) \leq \mathrm{sum}(A) \leq \mathrm{sum}(A)$; la del
+medio vale porque los envases son enteros positivos, así que la suma de
+todos no baja del mayor. ✓
+
+Para $I_1$ hay que ver que $cap^{*}$ arranca dentro del rango, y son dos
+cosas distintas. Que $cap^{*} \leq \mathrm{sum}(A)$: con esa capacidad
+todo cabe en un contenedor, $f(\mathrm{sum}(A)) = 1 \leq M$, luego
+$\mathrm{sum}(A) \in R$ y el mínimo de $R$ no lo supera. Que
+$cap^{*} \geq \max(A)$: una capacidad menor que el envase más grande no
+puede recibirlo en ningún contenedor, así que ninguna está en $R$. ✓
+
+**Estabilidad.** Iteración arbitraria, diferente a la última: como el
+cuerpo se ejecuta, $a < b$. Se asumen $I_0$ e $I_1$.
+
+Primero, $a \leq mitad < b$. Con $mitad = \lfloor (a+b)/2 \rfloor$ y
+$b \geq a+1$: de $a + b \geq 2a + 1$ sale
+$mitad \geq \lfloor (2a{+}1)/2 \rfloor = a$; de $a + b \leq 2b - 1$ sale
+$mitad \leq \lfloor (2b{-}1)/2 \rfloor = b - 1 < b$.
+
+La comparación de la línea 6 abre dos casos:
+
+- **$f(mitad) \leq M$**, y la línea 7 deja $b = mitad$. Aquí
+  $mitad \in R$, luego $cap^{*} \leq mitad$ por ser el mínimo. $I_0$
+  exige $\max(A) \leq a \leq mitad \leq \mathrm{sum}(A)$, que sale de
+  $a \leq mitad < b \leq \mathrm{sum}(A)$. ✓ $I_1$ exige
+  $a \leq cap^{*} \leq mitad$: la izquierda es la asumida y la derecha se
+  acaba de probar. ✓
+- **$f(mitad) > M$**, y la línea 9 deja $a = mitad + 1$. Aquí
+  $mitad \notin R$, y como el complemento de $R$ es cerrado hacia abajo,
+  ninguna capacidad $\leq mitad$ está en $R$; en particular
+  $cap^{*} > mitad$, o sea $cap^{*} \geq mitad + 1$. $I_0$ exige
+  $\max(A) \leq mitad + 1 \leq b \leq \mathrm{sum}(A)$: la izquierda sale
+  de $mitad + 1 > a \geq \max(A)$ y la del medio de $mitad < b$. ✓ $I_1$
+  exige $mitad + 1 \leq cap^{*} \leq b$: la izquierda se acaba de probar
+  y la derecha es la asumida. ✓
+
+Por lo tanto, los invariantes son estables.
+
+**Terminación.** El ancho $b - a$ es un entero no negativo por $I_0$. En
+el primer caso pasa a $mitad - a$, que es $\leq b - 1 - a < b - a$; en el
+segundo, a $b - mitad - 1$, que es $\leq b - a - 1 < b - a$. Un entero no
+negativo que decrece estrictamente no puede hacerlo para siempre.
+
+Al salir, la condición $a < b$ es falsa, o sea $a \geq b$; e $I_0$ da
+$a \leq b$. El único valor que cumple las dos cosas es $a = b$.
+Sustituyendo en $I_1$ queda $a \leq cap^{*} \leq a$, es decir
+$cap^{*} = a$: la ventana se cerró exactamente sobre el óptimo. Por lo
+tanto, los invariantes son correctos. $\blacksquare$
+
+**Teorema 2.** La invocación `capacidad_minima(envases, m)` sobre un
+arreglo de enteros positivos y $M \geq 1$ produce la menor capacidad con
+la que bastan $M$ contenedores.
+
+*Demostración*: es trivial a partir de la correctitud de $I_0$ e $I_1$
+(Teorema 1): la terminación deja $a = b$ y sustituir en $I_1$ da
+$a = cap^{*}$, que es lo que retorna la línea 10. $\blacksquare$
+
+Los tres ciclos de esta clase tienen el mismo $I_1$ con distinto disfraz:
+*lo que se busca sigue dentro de la ventana*. En el arreglo era la
+respuesta al existencial, en la bisección el valor $v$ encerrado entre
+$f(a)$ y $f(b)$, y aquí el óptimo $cap^{*}$. Al resolver un problema
+nuevo, ese es el invariante que hay que escribir.
+
+## Cómo atacar un problema con bisección
+
+La metodología, en tres pasos:
+
+1. **Identificar el parámetro.** ¿Qué número es el que hay que hallar?
+   En la leche, la capacidad; en el arreglo ordenado, la posición. Ese
+   número, y no otro, es sobre el que se va a buscar.
+2. **Definir la función y comprobar que es monótona.** Se escribe $f$ del
+   parámetro y se dice *qué significa*. Casi siempre responde una
+   pregunta de viabilidad: dado un valor, ¿alcanza? Y se argumenta por
+   qué crece o decrece: si $f$ no es monótona, la bisección no aplica y
+   hay que buscar otra formulación.
+3. **Acotar el rango y buscar.** Se justifican las dos cotas: un valor
+   que seguro no alcanza y uno que seguro sí. Entre ellos, la bisección
+   encuentra el borde en $O(\lg(\text{ancho del rango}))$ evaluaciones
+   de $f$.
+
+La señal que hay que aprender a ver: cuando el enunciado pide *el
+mínimo* o *el máximo* de algo y verificar un valor concreto es fácil,
+casi siempre hay una bisección escondida.
+
+### Detalles de implementación que cuestan puntos
+
+- **Entero o continuo son dos plantillas distintas.** Con enteros, el
+  ciclo es `while a < b` y la rama que descarta debe escribir
+  `a = mitad + 1`; con `a = mitad` el intervalo puede quedarse quieto y
+  el programa se cuelga. Con reales, el ciclo es `while b - a > eps` y
+  las dos ramas asignan `mitad` sin sumar nada.
+- **Cuánto vale $\varepsilon$** lo dice el enunciado: si pide cuatro
+  decimales, $\varepsilon = 10^{-6}$ sobra y cuesta apenas unas vueltas
+  más. Un $\varepsilon$ más fino que la precisión del `double` deja el
+  ciclo girando sin avanzar.
+- **El costo total** es el de evaluar $f$ multiplicado por el número de
+  vueltas. Si $f$ cuesta $\Theta(n)$ y el rango tiene ancho $R$, el total
+  es $O(n \lg R)$: por eso conviene que la verificación sea barata.
+- **Antes de enviar**, corra el ejemplo del enunciado a mano y pruebe los
+  extremos: el rango de tamaño 1, el caso donde la respuesta es la cota
+  inferior y aquel donde es la superior.
+
 ## Errores comunes
 
 - **Un intervalo que no progresa.** Con división entera, actualizar con
@@ -499,25 +621,68 @@ algoritmo sube $a$ a 7 y esa es la respuesta.
 - **Un rango inicial que no contiene la respuesta.** Si la respuesta
   puede ser $\max(A)$ y el rango arranca en $\max(A) + 1$, ninguna
   búsqueda la encuentra. Las cotas del rango se justifican.
+- **Suponer que la respuesta existe.** Si $v$ queda fuera de
+  $[f(a), f(b)]$, el algoritmo no avisa: converge al extremo del
+  intervalo cuyo valor de $f$ es el más cercano a $v$. Al terminar hay
+  que comprobar que el candidato de verdad cumple lo pedido.
 - **Tolerancia mal escogida.** Un $\varepsilon$ más fino que la
   precisión del `float` deja el ciclo dando vueltas sin que $b - a$
   baje.
 
 ## Ejercicios
 
+### Sobre lo visto en la clase
+
 1. Escriba la recurrencia de la búsqueda binaria y justifique la cota
    $\Theta(\lg n)$ del peor caso (CLRS, Ejercicio 2.3-5, p. 39).
 2. Modifique `buscar` para que devuelva la *posición* de $v$, o $-1$ si
    no está. ¿Qué cambia en la función objetivo y en el caso base?
-3. Para el ciclo de `biseccion`: proponga el invariante que garantiza
-   que la respuesta nunca se sale de $[a, b]$ y úselo para argumentar
-   la correctitud.
-4. *Copying Books* (UVa 714): $K$ escribas copian libros contiguos;
-   minimice las páginas del escriba más cargado. Plantee $f(t)$, su
-   monotonía y el rango, y aplique el patrón de la leche.
-5. *Athletics Track* (UVa 11646): halle el largo $l$ de una pista con
-   proporción dada cuyo perímetro sea 400. La función $f(l)$ es
-   creciente: bisección continua.
+3. Reescriba `buscar` con un `while` en vez de recursión, sin cambiar la
+   lógica, y compare el consumo de pila de las dos versiones.
+4. Halle la raíz de $f(x) = x^3 - 2x - 5$ en $[2, 3]$ con
+   $\varepsilon = 10^{-3}$. Antes de programar, prediga el número de
+   vueltas con la fórmula del logaritmo: deberían ser 10. La raíz anda
+   cerca de $2{,}0946$.
+5. Adapte los invariantes de `capacidad_minima` al ejercicio 2: escriba
+   $I_0$ e $I_1$ para la versión que devuelve la posición y complete los
+   tres pasos.
+
+### Problemas de juez en línea
+
+**UVa 11909 — Soya Milk.**
+<https://onlinejudge.org/external/119/11909.pdf>
+
+Una caja de leche de dimensiones $l \times w \times h$ se inclina un
+ángulo $\theta$; hay que hallar el volumen que queda adentro.
+
+*Consejo*: la geometría da dos casos según el líquido toque o no el borde
+superior, y en cada uno el volumen sale de una longitud desconocida. Esa
+longitud es el parámetro: la función que la relaciona con el dato
+conocido es creciente, así que se halla con bisección continua. Dibuje
+los dos casos antes de escribir una línea de código.
+
+**UVa 11646 — Athletics Track.**
+<https://onlinejudge.org/external/116/11646.pdf>
+
+Una pista de dos rectas y dos arcos, con proporción largo : ancho dada,
+debe medir 400 metros.
+
+*Consejo*: el parámetro es el largo $l$; el ancho sale de la proporción y
+el perímetro $f(l)$ crece con $l$. Se busca $l$ con $f(l) = 400$:
+bisección continua sobre un rango generoso. Verifique la monotonía antes
+de confiar en el descarte.
+
+**UVa 714 — Copying Books.**
+<https://onlinejudge.org/external/7/714.pdf>
+
+$K$ escribas copian libros consecutivos; hay que minimizar las páginas
+del escriba más cargado.
+
+*Consejo*: es el problema de la leche con otro disfraz. $f(t)$ = escribas
+necesarios si cada uno copia a lo sumo $t$ páginas, decreciente, y el
+rango va de $\max(A)$ a $\mathrm{sum}(A)$. Cuidado con la salida: el juez
+pide además la partición, y entre varias válidas exige la que carga más
+a los últimos escribas.
 
 ## Código de la clase
 
@@ -532,11 +697,17 @@ Los tres programas imprimen las trazas de arriba y se comprueban solos:
 - [contenedores.py](codigo/contenedores.py) — la búsqueda sobre la
   respuesta, contrastada contra una fuerza bruta que revisa todos los
   repartos en bloques consecutivos: 6 015 casos.
+- [invariantes.py](codigo/invariantes.py) — los tres ciclos con $I_0$ e
+  $I_1$ escritos como `assert` junto a la condición, más los del último
+  chequeo y el de la terminación. Corre sobre familias completas de
+  entradas: si alguna fórmula fuera falsa, reventaría diciendo en qué
+  chequeo.
 
 ```bash
 python3 busquedaBinaria.py
 python3 biseccion.py
 python3 contenedores.py
+python3 invariantes.py
 ```
 
 ## Referencias
