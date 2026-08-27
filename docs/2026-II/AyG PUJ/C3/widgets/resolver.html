@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UVa 10341 — resolver un problema con bisección, paso a paso</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .carta.bloqueado { opacity: 0.45; pointer-events: none; }
+  .enunciado { background: #f8fafc; border-left: 4px solid var(--azul);
+    padding: 0.7rem 1rem; margin: 0.6rem 0; font-size: 0.94rem; }
+  .enunciado code { background: #e8eef6; }
+  .fila-termino { display: grid; grid-template-columns: 8.5rem 4.5rem 1fr;
+    gap: 0.6rem; align-items: center; padding: 0.35rem 0;
+    border-bottom: 1px solid var(--borde); }
+  .fila-termino:last-child { border-bottom: 0; }
+  .fila-termino.resuelta { background: var(--verde-suave); border-radius: 6px;
+    padding-left: 0.4rem; }
+  .fila-termino .termino code { font-size: 0.95rem; }
+  .fila-termino .restriccion { font-family: ui-monospace, monospace;
+    font-size: 0.85rem; color: var(--gris); }
+  .opciones-mini { display: flex; gap: 0.35rem; align-items: center;
+    flex-wrap: wrap; font-size: 0.88rem; }
+  .opciones-mini button { padding: 0.15rem 0.6rem; font-size: 0.82rem; }
+  .opciones-mini .razon { color: var(--gris); font-size: 0.84rem; }
+  .cierre { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .ecuacion { font-family: ui-monospace, monospace; font-size: 1rem;
+    background: #f2f4f7; border-radius: 8px; padding: 0.6rem 0.8rem;
+    margin-bottom: 0.5rem; }
+  .ok { color: var(--verde); font-weight: 700; }
+  .no { color: #d63b3b; font-weight: 700; }
+  .bloque-codigo { background: #f6f8fa; border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.8rem 1rem; overflow-x: auto;
+    font-size: 0.86rem; line-height: 1.5; margin: 0.6rem 0; }
+  .bloque-codigo code { background: none; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Resolver un problema con bisección, paso a paso</h1>
+  <p class="intro">Un problema de juez en línea que nadie vio en clase, atacado
+  con el método completo: entender qué se pide, nombrar la función objetivo,
+  <b>demostrar</b> que es monótona, acotar el rango, decidir si la solución
+  existe, fijar la tolerancia y recién ahí escribir código. Cada tarjeta se
+  abre cuando la anterior queda resuelta.</p>
+
+  <div class="carta">
+    <h2>1. El problema</h2>
+    <p style="margin-top:0"><b>UVa 10341 — Solve It.</b><br>
+    <code>https://onlinejudge.org/external/103/10341.pdf</code></p>
+    <div class="enunciado">
+      <p style="margin-top:0">Resuelva la ecuación</p>
+      <p style="text-align:center"><code>p·e⁻ˣ + q·sen(x) + r·cos(x) + s·tan(x) + t·x² + u = 0</code></p>
+      <p>donde <code>0 ≤ x ≤ 1</code>.</p>
+      <p><b>Entrada.</b> Varios casos de prueba hasta EOF. Cada caso trae seis
+      enteros en una línea: <code>p q r s t u</code>, con
+      <code>0 ≤ p, r ≤ 20</code> y <code>−20 ≤ q, s, t ≤ 0</code>.</p>
+      <p style="margin-bottom:0"><b>Salida.</b> Por cada caso, el valor de
+      <code>x</code> con 4 decimales, o la cadena <code>No solution</code>
+      cuando corresponda.</p>
+    </div>
+    <p class="nota">Fíjese en las restricciones de los coeficientes antes de
+    seguir: parecen un detalle de formato y son el corazón del problema.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Entender la entrada</h2>
+    <p style="margin-top:0"><b>Cada línea trae seis enteros. ¿Qué son?</b></p>
+    <div class="opciones" id="opciones-entrada">
+      <button data-op="correcta">Los coeficientes de la ecuación; x es lo que hay que hallar</button>
+      <button data-op="x">Cinco coeficientes y el valor de x</button>
+      <button data-op="rango">Los coeficientes y los extremos del rango de búsqueda</button>
+    </div>
+    <div id="veredicto-entrada" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La función objetivo</h2>
+    <p style="margin-top:0"><b>¿Cuál es la función sobre la que se va a
+    buscar, y qué valor se busca?</b></p>
+    <div class="opciones" id="opciones-funcion">
+      <button data-op="correcta">f(x) = p·e⁻ˣ + q·sen(x) + r·cos(x) + s·tan(x) + t·x² + u, y se busca f(x) = 0</button>
+      <button data-op="conteo">f(x) = cuántos términos de la ecuación son positivos</button>
+      <button data-op="coef">f(p, q, r, s, t, u) = el valor de la ecuación</button>
+    </div>
+    <div id="veredicto-funcion" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-monotonia">
+    <h2>4. ¿Es monótona? La parte que no se asume</h2>
+    <p style="margin-top:0">La bisección solo funciona si <code>f</code> es
+    monótona en el rango. Nadie lo dice en el enunciado: hay que
+    <b>demostrarlo</b>, y la prueba se arma término a término. Para cada uno,
+    derive y decida qué hace en [0, 1] con la restricción que le impone el
+    enunciado.</p>
+    <div id="tabla-terminos"></div>
+    <div id="veredicto-monotonia" class="veredicto"></div>
+    <div class="cierre" id="cierre-monotonia">
+      Los seis términos tienen derivada ≤ 0 en [0, 1], así que
+      <b>f′(x) ≤ 0</b>: la función decrece en todo el rango. Ahí está la
+      licencia para aplicar bisección. Y note de dónde salió: de las
+      restricciones sobre los coeficientes, esas que parecían formato. Si el
+      enunciado permitiera <code>t &gt; 0</code>, el término
+      <code>t·x²</code> subiría, la monotonía se caería y este problema pediría
+      otra técnica.
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-rango">
+    <h2>5. El rango y la pregunta que casi nadie hace</h2>
+    <p style="margin-top:0">El rango viene regalado: <code>[0, 1]</code>. Pero
+    el enunciado admite responder <code>No solution</code>, así que hay algo
+    más que comprobar. <b>¿Cómo se decide si la solución existe?</b></p>
+    <div class="opciones" id="opciones-rango">
+      <button data-op="correcta">Comprobando f(0) ≥ 0 ≥ f(1) antes de arrancar</button>
+      <button data-op="cambio">Comprobando f(0) ≤ 0 ≤ f(1) antes de arrancar</button>
+      <button data-op="mitad">Evaluando f en la mitad y viendo si da negativo</button>
+    </div>
+    <div id="veredicto-rango" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-ejecutar">
+    <h2>6. Los casos del enunciado</h2>
+    <div class="presets" id="casos">
+      <span class="nota" style="margin-top:0">Entrada:</span>
+      <button data-caso="0" class="primario">0 0 0 0 -2 1</button>
+      <button data-caso="1">1 0 0 0 -1 2</button>
+      <button data-caso="2">1 -1 1 -1 -1 1</button>
+    </div>
+    <div id="panel-ejecucion" style="margin-top:0.7rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead>
+          <tr><th>[a, b]</th><th>mitad</th><th>f(mitad)</th><th>Decisión</th></tr>
+        </thead>
+        <tbody id="cuerpo-ejecucion"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="pie-ejecucion" style="margin-top:0.5rem"></div>
+    <p class="nota">El segundo caso es el que enseña: f(0) y f(1) son los dos
+    positivos, la curva nunca cruza el cero dentro del rango y la respuesta no
+    es un número.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-eps">
+    <h2>7. La tolerancia</h2>
+    <p style="margin-top:0">El juez pide 4 decimales. <b>¿Qué ε conviene?</b></p>
+    <div class="opciones" id="opciones-eps">
+      <button data-op="grande">ε = 10⁻³, que ya da tres decimales</button>
+      <button data-op="correcta">ε = 10⁻⁷, holgado y barato</button>
+      <button data-op="chico">ε = 10⁻³⁰, para no arriesgar</button>
+    </div>
+    <div id="veredicto-eps" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-codigo">
+    <h2>8. El código, ya con todo decidido</h2>
+    <p style="margin-top:0">Cada línea sale de una decisión de las tarjetas
+    anteriores, no de una plantilla copiada.</p>
+    <pre class="bloque-codigo"><code>import math
+
+def f(p, q, r, s, t, u, x):
+    # El lado izquierdo de la ecuacion, evaluado en x
+    return (p * math.exp(-x) + q * math.sin(x) + r * math.cos(x) +
+            s * math.tan(x) + t * x * x + u)
+
+def resolver(p, q, r, s, t, u, eps):
+    # f decrece en [0, 1]: hay raiz solo si el cero queda encerrado
+    if f(p, q, r, s, t, u, 0) &lt; 0 or f(p, q, r, s, t, u, 1) &gt; 0:
+        resultado = None
+    else:
+        a = 0.0
+        b = 1.0
+        while b - a &gt; eps:
+            mitad = (a + b) / 2
+            if f(p, q, r, s, t, u, mitad) &gt; 0:
+                a = mitad
+            else:
+                b = mitad
+        resultado = (a + b) / 2
+    return resultado</code></pre>
+    <p class="nota">La comparación de la línea del <code>if</code> interno va
+    al revés que la de la clase, y esa inversión es justo lo que la tarjeta 4
+    autorizó: <code>f</code> decrece, así que un valor positivo en la mitad
+    significa que la raíz está a la <em>derecha</em>.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-codigo2">
+    <h2>9. El error que cuesta el problema</h2>
+    <p style="margin-top:0"><b>De estos tres descuidos, ¿cuál produce un
+    programa que compila, corre, no se cuelga y responde mal?</b></p>
+    <div class="opciones" id="opciones-error">
+      <button data-op="signo">Copiar la comparación de la plantilla sin invertirla</button>
+      <button data-op="eof">Olvidar leer hasta EOF</button>
+      <button data-op="rango">No justificar las cotas del rango</button>
+    </div>
+    <div id="veredicto-error" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>Para seguir</h2>
+    <p style="margin-top:0">El mismo recorrido —entrada, función objetivo,
+    monotonía demostrada, rango, existencia, tolerancia, código— sirve para los
+    tres problemas de la sesión:</p>
+    <ul class="nota" style="line-height:1.9">
+      <li><b>UVa 11909 — Soya Milk.</b><br>
+        <code>https://onlinejudge.org/external/119/11909.pdf</code></li>
+      <li><b>UVa 11646 — Athletics Track.</b><br>
+        <code>https://onlinejudge.org/external/116/11646.pdf</code></li>
+      <li><b>UVa 714 — Copying Books.</b><br>
+        <code>https://onlinejudge.org/external/7/714.pdf</code></li>
+    </ul>
+  </div>
+
+</div>
+<script src="resolver.js"></script>
+</body>
+</html>

@@ -86,7 +86,8 @@ vacío.
 
 ## El problema de la demostración
 
-El concurso de práctica trae *The 3n + 1 problem*, que es el problema 100 de UVa.
+El concurso de práctica trae *The 3n + 1 problem*, que es el problema 100 de
+UVa: <https://onlinejudge.org/external/1/100.pdf>.
 
 !!! abstract "Statement"
 

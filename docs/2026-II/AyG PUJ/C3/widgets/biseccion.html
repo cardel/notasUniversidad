@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bisección — el intervalo que encierra la respuesta</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .conclusion { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .recta { position: relative; height: 34px; border-radius: 8px;
+    background: #f2f4f7; border: 2px solid var(--borde); margin-top: 0.4rem; }
+  .recta-viva { position: absolute; top: 0; bottom: 0; background: var(--azul);
+    border-radius: 6px; transition: left 0.15s, width 0.15s; }
+  .recta-marca { position: absolute; top: -6px; bottom: -6px; width: 3px;
+    background: #d63b3b; transform: translateX(-1px); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>bisección: el intervalo que encierra la respuesta</h1>
+  <p class="intro">La misma jugada de la búsqueda binaria, ahora sin arreglo:
+  una función monótona, un intervalo que se parte a la mitad y un valor que
+  nunca puede escaparse de él. Como sobre los reales no hay igualdad exacta,
+  la salida trae una promesa distinta: un error acotado.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Función y objetivo:</span>
+      <button data-preset="0" class="primario">x³ + x = 10 en [0, 3]</button>
+      <button data-preset="1">√x = 3 en [0, 16]</button>
+      <button data-preset="2">2ˣ = 100 en [0, 10]</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas vueltas hasta que el intervalo mida menos que ε?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire el intervalo cerrarse</h2>
+    <div id="panel-recta"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La barra azul es lo que queda vivo del intervalo
+        original; la marca roja, la mitad que se está evaluando. Fíjese en el
+        pie: la desigualdad f(a) ≤ v ≤ f(b) se cumple en todas las vueltas,
+        aunque el intervalo se encoja.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza, vuelta por vuelta</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>[a, b]</th><th>mitad</th><th>f(mitad)</th><th>Decisión</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los dos invariantes del while</h2>
+    <p style="margin-top:0"><b>Al comenzar cada vuelta, ¿qué es siempre cierto
+    de los extremos?</b> (ese será I₁)</p>
+    <div class="opciones" id="opciones-encierro">
+      <button data-op="correcta">f(a) ≤ v ≤ f(b)</button>
+      <button data-op="igual">f(mitad) = v</button>
+      <button data-op="monotona">f es creciente en [a, b]</button>
+    </div>
+    <div id="veredicto-encierro" class="veredicto"></div>
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Y las cotas del intervalo?</b>
+    (ese será I₀; a′ y b′ son los extremos originales)</div>
+    <div class="opciones" id="opciones-cotas">
+      <button data-op="correcta">a′ ≤ a ≤ b ≤ b′</button>
+      <button data-op="estricta">a′ ≤ a &lt; b ≤ b′</button>
+      <button data-op="eps">b − a ≤ ε</button>
+    </div>
+    <div id="veredicto-cotas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
+    dos invariantes en la tarjeta 4. El teorema a demostrar:
+    <b>Teorema 1 — los invariantes I₀ e I₁ se cumplen.</b></p>
+
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Inicialización</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-c1">Ver</button></div>
+      <div class="texto-paso">Antes de la primera vuelta a = a′ y b = b′. Para
+      I₀: a′ ≤ a′ ≤ b′ ≤ b′, donde la del medio vale porque [a′, b′] es un
+      intervalo. ✓ &nbsp;Para I₁, sustituyendo queda f(a′) ≤ v ≤ f(b′), que es
+      exactamente la precondición del problema. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-2">
+      <div class="titulo-paso">Estabilidad</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-c2">Ver</button></div>
+      <div class="texto-paso">Vuelta arbitraria: como el cuerpo se ejecuta,
+      b − a &gt; ε &gt; 0, luego a &lt; b y por lo tanto a &lt; mitad &lt; b. La
+      comparación abre dos casos.
+      <br><br>
+      Si f(mitad) &lt; v, la línea 4 deja a = mitad: I₀ pide a′ ≤ mitad ≤ b ≤ b′,
+      que sale de a′ ≤ a &lt; mitad &lt; b ≤ b′; e I₁ pide f(mitad) ≤ v ≤ f(b),
+      donde la izquierda es el caso mismo y la derecha es la que se asumió,
+      porque b no cambió. ✓
+      <br><br>
+      Si f(mitad) ≥ v, la línea 5 deja b = mitad, y es simétrico: I₁ pide
+      f(a) ≤ v ≤ f(mitad), con la izquierda asumida (a no cambió) y la derecha
+      dada por el caso. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-3">
+      <div class="titulo-paso">Terminación</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-c3">Ver</button></div>
+      <div class="texto-paso">Cada vuelta deja el ancho en exactamente la mitad:
+      de b − a pasa a mitad − a o a b − mitad, y los dos valen (b−a)/2. Tras k
+      vueltas el ancho es (b′ − a′)/2^k, que baja de cualquier ε &gt; 0: el ciclo
+      termina, y lo hace en ⌈log₂((b′−a′)/ε)⌉ vueltas.
+      <br><br>
+      Al salir, la condición b − a &gt; ε es falsa, o sea b − a ≤ ε; e I₀ da
+      a ≤ b, o sea b − a ≥ 0. Intersectando: 0 ≤ b − a ≤ ε. E I₁ sigue diciendo
+      f(a) ≤ v ≤ f(b), así que por el teorema del valor intermedio hay una
+      solución dentro del intervalo final. ∎</div>
+    </div>
+
+    <div class="conclusion" id="conclusion">
+      <b>Teorema 2.</b> La invocación <code>biseccion(v, a, b, eps)</code> sobre
+      una f continua y creciente con f(a) ≤ v ≤ f(b) produce un x̂ que dista a lo
+      sumo ε/2 de una solución de f(x) = v. &nbsp;<b>Demostración:</b> es trivial
+      a partir de la correctitud de I₀ e I₁: la terminación deja un intervalo de
+      ancho a lo sumo ε que sigue encerrando a v, y el valor de la línea 6 es su
+      centro. ∎
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. ¿Qué promete la salida?</h2>
+    <p style="margin-top:0">Al terminar, el algoritmo devuelve el centro del
+    intervalo. <b>¿Qué se puede afirmar de ese número?</b></p>
+    <div class="opciones" id="opciones-error">
+      <button data-op="exacta">Que cumple f(x̂) = v exactamente</button>
+      <button data-op="correcta">Que dista a lo sumo ε/2 de una solución</button>
+      <button data-op="epsilon">Que dista a lo sumo ε de una solución</button>
+    </div>
+    <div id="veredicto-error" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>7. La trampa</h2>
+    <p style="margin-top:0">Suponga que llama <code>biseccion(50, 0, 3, 1e-6)</code>
+    con f(x) = x³ + x, donde f(3) = 30 &lt; 50. <b>¿Qué pasa?</b></p>
+    <div class="opciones" id="opciones-trampa">
+      <button data-op="error">Se detiene con un error, porque v está fuera del rango</button>
+      <button data-op="correcta">Devuelve un número cualquiera: converge al extremo más cercano y no avisa</button>
+      <button data-op="cuelga">Se cuelga: el ciclo nunca termina</button>
+    </div>
+    <div id="veredicto-trampa" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="biseccion.js"></script>
+</body>
+</html>

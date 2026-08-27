@@ -684,6 +684,22 @@ rango va de $\max(A)$ a $\mathrm{sum}(A)$. Cuidado con la salida: el juez
 pide además la partición, y entre varias válidas exige la que carga más
 a los últimos escribas.
 
+## Ejercicios interactivos
+
+Los tres se trabajan en el navegador, en la
+[página de ejercicios](Ejercicios.md):
+
+- [buscar](widgets/buscar.html){ target=_blank rel=noopener } — la ventana
+  que se encoge, con la traza división por división, los dos invariantes y
+  la demostración completa.
+- [bisección](widgets/biseccion.html){ target=_blank rel=noopener } — el
+  intervalo que encierra la respuesta, sobre tres funciones distintas, con
+  la cuenta de vueltas y la cota del error.
+- [resolver un problema de juez](widgets/resolver.html){ target=_blank rel=noopener }
+  — el método completo aplicado a UVa 10341, un problema que no aparece en
+  estas notas: entrada, función objetivo, monotonía demostrada término a
+  término, rango, existencia, tolerancia y código.
+
 ## Código de la clase
 
 Los tres programas imprimen las trazas de arriba y se comprueban solos:

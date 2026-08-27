@@ -33,6 +33,12 @@ recorre esa clase de divide y vencerás.
 
 </div>
 
+## Ejercicios interactivos
+
+Los dos algoritmos y un problema de juez, para recorrer paso a paso en el
+navegador: la [página de ejercicios](Ejercicios.md) trae `buscar`,
+`bisección` y el recorrido guiado sobre UVa 10341.
+
 ## Antes de entrar
 
 [Divide y vencerás](../C2/Divide%20y%20vencerás.md) y su
