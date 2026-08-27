@@ -2,8 +2,8 @@
 
 **Grupo A — viernes 28 de agosto de 2026.**
 
-La clase pasada dejó el molde de dividir, conquistar y combinar, con el
-máximo y el ordenamiento por mezcla. Hoy el molde se aplica a un caso
+Divide y vencerás dejó el molde de dividir, conquistar y combinar, con el
+máximo y el ordenamiento por mezcla. Aquí el molde se aplica a un caso
 donde la cuenta sale todavía mejor: cuando el espacio de búsqueda viene
 ordenado, cada división descarta una mitad **y no hay que combinar
 nada**, porque sobrevive un solo subproblema.
@@ -32,8 +32,7 @@ el resto de la clase.
 ascendentemente, con $N \geq 1$, y un número $v$. Salida:
 $\exists\, p \in [0..N).\; A[p] = v$.
 
-Es el mismo problema de la búsqueda lineal de la clase de invariantes,
-con un dato nuevo en la precondición: el arreglo viene ordenado. La
+Es el mismo problema de la búsqueda lineal, con un dato nuevo en la precondición: el arreglo viene ordenado. La
 búsqueda lineal lo resuelve en $O(n)$ sin usar ese dato.
 
 ### La función objetivo
@@ -99,7 +98,7 @@ def buscar(lista, v, ini, fin):
 ```
 
 El arreglo completo se consulta con `buscar(lista, v, 0, len(lista))`.
-Como en el máximo y en el ordenamiento de la clase pasada, cada llamado
+Como en el máximo y en el ordenamiento por mezcla, cada llamado
 recibe de dónde a dónde trabaja: dividir cuesta $\Theta(1)$ y nadie
 copia nada.
 
@@ -158,11 +157,119 @@ casos, la mitad que sobrevive tiene la misma respuesta que el todo. ✓
 para todo intervalo; en particular $\varphi(0, N)$, que es la salida
 pedida. $\blacksquare$
 
+### La versión iterativa y sus invariantes
+
+La recursión se certificó por inducción estructural. El mismo algoritmo
+escrito con un ciclo pide la otra herramienta del curso: la pareja de
+invariantes.
+
+```python
+def buscar(lista, v):
+    ini = 0
+    fin = len(lista)
+    while fin - ini > 1:
+        mitad = (ini + fin) // 2
+        if v < lista[mitad]:
+            fin = mitad
+        else:
+            ini = mitad
+    return lista[ini] == v
+```
+
+Aquí no hay acumulador: lo que cambia es la **ventana** $[ini..fin)$. $I_0$
+acota sus extremos e $I_1$ dice qué conserva:
+
+$$I_0:\; 0 \leq ini < fin \leq N$$
+
+$$I_1:\; \bigl(\exists\, p \in [0..N).\; A[p] = v\bigr) \;\Longleftrightarrow\; \bigl(\exists\, p \in [ini..fin).\; A[p] = v\bigr)$$
+
+En palabras: la respuesta del arreglo completo es la misma que la de la
+ventana. Ese es el trabajo de la búsqueda binaria — encoger la ventana sin
+cambiar la respuesta.
+
+**Teorema 1.** Los invariantes $I_0$ e $I_1$ se cumplen.
+
+*Demostración*: se procede mostrando la validez de los invariantes para la
+inicialización, la estabilidad y la terminación.
+
+**Inicialización.** Las líneas 1--2 dejan $ini = 0$ y $fin = N$. Para
+$I_0$ se pide $0 \leq 0 < N \leq N$: la desigualdad estricta $0 < N$ vale
+por la precondición $N \geq 1$ y las otras dos son igualdades. ✓ Para
+$I_1$, sustituyendo $ini = 0$ y $fin = N$ el lado derecho queda
+$\exists\, p \in [0..N).\; A[p] = v$, que es literalmente el lado
+izquierdo; una equivalencia entre una fórmula y ella misma es verdadera. ✓
+
+**Estabilidad.** Se considera una iteración arbitraria con $ini = a$ y
+$fin = b$, diferente a la última; como el cuerpo se ejecuta, $b - a > 1$,
+o sea $b \geq a + 2$. Se asumen $0 \leq a < b \leq N$ y la equivalencia de
+$I_1$ para la ventana $[a..b)$.
+
+Primero hay que verificar que $a < mitad < b$, porque de eso dependen las
+cotas y el progreso. De $b \geq a+2$ sale $a + b \geq 2a + 2$, luego
+$mitad \geq \lfloor (2a{+}2)/2 \rfloor = a+1 > a$; y de $a \leq b-2$ sale
+$a + b \leq 2b - 2$, luego $mitad \leq \lfloor (2b{-}2)/2 \rfloor = b-1 <
+b$. Con eso $mitad$ es una posición válida y las dos ventanas candidatas
+son no vacías.
+
+La comparación de la línea 5 abre dos casos:
+
+- **$v < A[mitad]$**, y la línea 6 deja $fin = mitad$. $I_0$ evaluado en
+  los nuevos valores exige $0 \leq a < mitad \leq N$: la primera vale por
+  lo asumido, $a < mitad$ se acaba de probar y $mitad < b \leq N$. ✓
+  $I_1$ exige que la respuesta total equivalga a la de $[a..mitad)$; por
+  lo asumido equivale a la de $[a..b)$, así que basta ver que $[mitad..b)$
+  no aporta testigos: para todo $p$ en ese rango, $A[p] \geq A[mitad]$
+  porque el arreglo está ordenado, y $A[mitad] > v$, luego $A[p] \neq v$. ✓
+- **$v \geq A[mitad]$**, y la línea 8 deja $ini = mitad$. $I_0$ exige
+  $0 \leq mitad < b \leq N$: $mitad \geq a+1 \geq 1 > 0$ y $mitad < b$ ya
+  están probados. ✓ $I_1$ exige que la respuesta de $[a..b)$ equivalga a
+  la de $[mitad..b)$. De derecha a izquierda es inmediato, porque
+  $[mitad..b) \subseteq [a..b)$. De izquierda a derecha: si hubiera un
+  testigo $p \in [a..mitad)$, de $p < mitad$ y el orden sale
+  $v = A[p] \leq A[mitad]$, que junto con $v \geq A[mitad]$ da
+  $A[mitad] = v$; entonces $mitad$ —que sí pertenece a $[mitad..b)$—
+  también es testigo. ✓
+
+En los dos casos valen $I_0$ e $I_1$ con los valores nuevos. Por lo tanto,
+los invariantes son estables.
+
+**Terminación.** El ancho $fin - ini$ es un entero positivo por $I_0$. En
+el primer caso pasa a valer $mitad - a$ y en el segundo $b - mitad$; como
+$a < mitad < b$, los dos son al menos 1 y estrictamente menores que
+$b - a$. Un entero positivo que decrece estrictamente no puede hacerlo
+para siempre, así que el ciclo termina.
+
+Al salir, la condición $fin - ini > 1$ es falsa, o sea $fin - ini \leq 1$;
+e $I_0$ da $ini < fin$, o sea $fin - ini \geq 1$. El único valor que
+cumple las dos cosas es $fin - ini = 1$, es decir $fin = ini + 1$: la
+ventana quedó en una sola posición. Sustituyendo en $I_1$, el lado derecho
+es $\exists\, p \in [ini..ini{+}1).\; A[p] = v$, un rango de una posición,
+que vale exactamente $A[ini] = v$. Entonces la respuesta del arreglo
+completo es $A[ini] = v$. Por lo tanto, los invariantes son correctos.
+$\blacksquare$
+
+**Teorema 2.** La invocación `buscar(lista, v)` sobre un arreglo ordenado
+de tamaño $N \geq 1$ produce el valor de
+$\exists\, p \in [0..N).\; \mathtt{lista}[p] = v$.
+
+*Demostración*: es trivial a partir de la correctitud de $I_0$ e $I_1$
+(Teorema 1): la terminación deja $fin = ini + 1$, y sustituir ese valor en
+$I_1$ dice que la respuesta pedida es $A[ini] = v$, que es justo lo que
+retorna la línea 9. $\blacksquare$
+
+De paso, esta versión no apila llamadas: sobreviven `ini`, `fin` y
+`mitad`, así que el costo en espacio baja de $O(\lg n)$ a $O(1)$ sin tocar
+la lógica.
+
 ## Bisección: el mismo algoritmo sin arreglo
 
-**Especificación.** Entrada: una función $f$ monótona creciente en un
-intervalo $[a, b]$ y un valor $v$ con $f(a) \leq v \leq f(b)$. Salida:
-$x \in [a, b]$ tal que $f(x) = v$.
+**Especificación.** Entrada: una función $f$ continua y monótona creciente
+en un intervalo $[a, b]$ y un valor $v$ con $f(a) \leq v \leq f(b)$.
+Salida: $x \in [a, b]$ tal que $f(x) = v$.
+
+La continuidad no es un adorno: es la que garantiza, por el teorema del
+valor intermedio, que ese $x$ existe. La monotonía es la que permite
+descartar media.
 
 La jugada es idéntica: se evalúa $f$ en la mitad del intervalo, y si
 $f(mid) < v$ la monotonía garantiza que $x$ está a la derecha; si no, a
@@ -218,6 +325,74 @@ decir
 
 $$k = \left\lceil \log_2 \frac{b - a}{\varepsilon} \right\rceil,
 \qquad \text{aquí } \left\lceil \log_2 \frac{3}{10^{-6}} \right\rceil = 22.$$
+
+### Los invariantes de la bisección
+
+Se escriben $a'$ y $b'$ para los valores originales de $a$ y $b$,
+congelados antes de la primera vuelta.
+
+$$I_0:\; a' \leq a \leq b \leq b' \qquad\qquad I_1:\; f(a) \leq v \leq f(b)$$
+
+$I_0$ dice que el intervalo vivo nunca se sale del original ni se da
+vuelta; $I_1$, que $v$ sigue **encerrado** entre los dos extremos. Ese
+encierro es lo que la bisección nunca puede perder.
+
+**Teorema 1.** Los invariantes $I_0$ e $I_1$ se cumplen.
+
+*Demostración*: se procede mostrando la validez de los invariantes para la
+inicialización, la estabilidad y la terminación.
+
+**Inicialización.** Antes de la primera vuelta $a = a'$ y $b = b'$. Para
+$I_0$: $a' \leq a' \leq b' \leq b'$, donde la del medio vale porque
+$[a', b']$ es un intervalo. ✓ Para $I_1$, sustituyendo queda
+$f(a') \leq v \leq f(b')$, que es exactamente la precondición. ✓
+
+**Estabilidad.** Iteración arbitraria, diferente a la última: como el
+cuerpo se ejecuta, $b - a > \varepsilon > 0$, luego $a < b$ y por lo tanto
+$a < mitad < b$, con $mitad = (a+b)/2$. Se asumen $I_0$ e $I_1$. La
+comparación de la línea 3 abre dos casos:
+
+- **$f(mitad) < v$**, y la línea 4 deja $a = mitad$. $I_0$ evaluado ahí
+  exige $a' \leq mitad \leq b \leq b'$: la primera sale de
+  $a' \leq a < mitad$ y las otras de $mitad < b \leq b'$. ✓ $I_1$ exige
+  $f(mitad) \leq v \leq f(b)$: la izquierda es el caso mismo y la derecha
+  es la que se asumió, porque $b$ no cambió. ✓
+- **$f(mitad) \geq v$**, y la línea 6 deja $b = mitad$. $I_0$ exige
+  $a' \leq a \leq mitad \leq b'$: sale de $a < mitad < b \leq b'$. ✓
+  $I_1$ exige $f(a) \leq v \leq f(mitad)$: la izquierda es la que se
+  asumió, porque $a$ no cambió, y la derecha es el caso mismo. ✓
+
+Por lo tanto, los invariantes son estables.
+
+**Terminación.** Cada vuelta deja el ancho en exactamente la mitad: de
+$b - a$ pasa a $mitad - a = (b-a)/2$ o a $b - mitad = (b-a)/2$. Tras $k$
+vueltas vale $(b' - a')/2^k$, que baja de cualquier $\varepsilon > 0$; el
+ciclo termina, y lo hace en $\lceil \log_2((b'-a')/\varepsilon) \rceil$
+vueltas.
+
+Al salir, la condición $b - a > \varepsilon$ es falsa, o sea
+$b - a \leq \varepsilon$; e $I_0$ da $a \leq b$, o sea $b - a \geq 0$.
+Intersectando: $0 \leq b - a \leq \varepsilon$. Y $I_1$ dice
+$f(a) \leq v \leq f(b)$, así que por el teorema del valor intermedio
+existe una solución $x \in [a, b]$ de $f(x) = v$. El valor retornado,
+$\hat{x} = (a+b)/2$, también está en $[a, b]$, y midiendo desde el centro
+de un intervalo de ancho a lo sumo $\varepsilon$ queda
+$|\hat{x} - x| \leq \varepsilon/2$. Por lo tanto, los invariantes son
+correctos. $\blacksquare$
+
+**Teorema 2.** La invocación `biseccion(v, a, b, eps)` sobre una $f$
+continua y creciente con $f(a) \leq v \leq f(b)$ produce un $\hat{x}$ que
+dista a lo sumo $\varepsilon/2$ de una solución de $f(x) = v$.
+
+*Demostración*: es trivial a partir de la correctitud de $I_0$ e $I_1$
+(Teorema 1): la terminación deja un intervalo de ancho a lo sumo
+$\varepsilon$ que sigue encerrando a $v$, y de ahí sale la cota del error
+del valor que retorna la línea 7. $\blacksquare$
+
+Vale la pena marcar la diferencia con el caso discreto: en el arreglo la
+terminación entrega la respuesta **exacta**; aquí entrega una con error
+acotado, y esa cota es parte del enunciado del teorema. Sobre los reales
+no hay otra cosa que prometer.
 
 ## Búsqueda sobre la respuesta
 
