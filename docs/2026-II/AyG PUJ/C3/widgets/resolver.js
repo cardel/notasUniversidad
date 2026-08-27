@@ -298,6 +298,7 @@ if (typeof module !== "undefined") {
         var op = btn.getAttribute("data-op");
         if (op === "signo") {
           d.className = "veredicto bien";
+          document.getElementById("carta-enviar").classList.remove("bloqueado");
           d.innerHTML = "Ese es el error que más veces cuesta el problema. La " +
             "bisección de la clase estaba escrita para f <b>creciente</b>: " +
             "<code>if f(mitad) &lt; v: a = mitad</code>. Aquí f <b>decrece</b>, así que " +

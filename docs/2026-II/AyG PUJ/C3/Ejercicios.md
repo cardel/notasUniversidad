@@ -39,8 +39,8 @@ y qué pasa cuando el objetivo queda fuera del rango de $f$.
 
 ## [resolver un problema de juez](widgets/resolver.html){ target=_blank rel=noopener }
 
-Un problema que no se vio en clase —**UVa 10341, Solve It**,
-<https://onlinejudge.org/external/103/10341.pdf>— atacado con el método
+Un problema que no se vio en clase —**UVa 10341, Solve It**— atacado con el
+método
 completo, y con las tarjetas cerradas hasta que la anterior queda resuelta:
 entender qué trae la entrada, nombrar la función objetivo, **demostrar** que
 es monótona término a término, mirar el rango, decidir si la solución existe,
@@ -53,7 +53,13 @@ ejemplos de la clase—, y esa inversión es justo la que hace fallar a quien
 copia la plantilla sin pensar.
 
 Los tres casos del enunciado están cargados, incluido el que responde
-`No solution`.
+`No solution`. La tarjeta del código deja solo el esqueleto: los huecos son
+las decisiones de las tarjetas anteriores, y llenarlos es el ejercicio. La
+última tarjeta cierra con lo que hay que revisar antes de enviar y con qué
+significa cada veredicto que no sea *Accepted*.
+
+- Enunciado: <https://onlinejudge.org/external/103/10341.pdf>
+- Enviar: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1282>
 
 ## De la clase anterior
 

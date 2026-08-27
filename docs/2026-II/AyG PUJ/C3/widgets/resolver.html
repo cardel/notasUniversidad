@@ -34,6 +34,8 @@
     border-radius: 8px; padding: 0.8rem 1rem; overflow-x: auto;
     font-size: 0.86rem; line-height: 1.5; margin: 0.6rem 0; }
   .bloque-codigo code { background: none; font-family: ui-monospace, monospace; }
+  .enlaces { font-size: 0.9rem; line-height: 1.8; }
+  .enlaces code { font-size: 0.82rem; word-break: break-all; }
 </style>
 </head>
 <body>
@@ -48,8 +50,13 @@
 
   <div class="carta">
     <h2>1. El problema</h2>
-    <p style="margin-top:0"><b>UVa 10341 — Solve It.</b><br>
-    <code>https://onlinejudge.org/external/103/10341.pdf</code></p>
+    <p style="margin-top:0"><b>UVa 10341 — Solve It.</b></p>
+    <p class="enlaces">
+      Enunciado:<br>
+      <code>https://onlinejudge.org/external/103/10341.pdf</code><br>
+      Enviar la solución:<br>
+      <code>https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=1282</code>
+    </p>
     <div class="enunciado">
       <p style="margin-top:0">Resuelva la ecuación</p>
       <p style="text-align:center"><code>p·e⁻ˣ + q·sen(x) + r·cos(x) + s·tan(x) + t·x² + u = 0</code></p>
@@ -156,37 +163,42 @@
   </div>
 
   <div class="carta bloqueado" id="carta-codigo">
-    <h2>8. El código, ya con todo decidido</h2>
-    <p style="margin-top:0">Cada línea sale de una decisión de las tarjetas
-    anteriores, no de una plantilla copiada.</p>
+    <h2>8. El código: complete el esqueleto</h2>
+    <p style="margin-top:0">El esqueleto ya trae la forma que salió de las
+    tarjetas anteriores. Lo que falta es justo lo que cada tarjeta decidió:
+    complételo usted.</p>
     <pre class="bloque-codigo"><code>import math
 
 def f(p, q, r, s, t, u, x):
     # El lado izquierdo de la ecuacion, evaluado en x
-    return (p * math.exp(-x) + q * math.sin(x) + r * math.cos(x) +
-            s * math.tan(x) + t * x * x + u)
+    # Transcriba la formula del enunciado
+    resultado = 0
+    return resultado
 
 def resolver(p, q, r, s, t, u, eps):
-    # f decrece en [0, 1]: hay raiz solo si el cero queda encerrado
-    if f(p, q, r, s, t, u, 0) &lt; 0 or f(p, q, r, s, t, u, 1) &gt; 0:
+    # Tarjeta 5: la solucion existe solo si el cero queda encerrado.
+    # Escriba la condicion que descarta los casos sin solucion.
+    if ...:
         resultado = None
     else:
-        a = 0.0
-        b = 1.0
-        while b - a &gt; eps:
+        # Tarjeta 5: el rango lo fija el enunciado
+        a = ...
+        b = ...
+        # Tarjeta 7: el ciclo corre mientras el intervalo sea mas ancho que eps
+        while ...:
             mitad = (a + b) / 2
-            if f(p, q, r, s, t, u, mitad) &gt; 0:
+            # Tarjeta 4: f decrece. Decida que extremo se mueve en cada caso
+            if ...:
                 a = mitad
             else:
                 b = mitad
-        resultado = (a + b) / 2
+        # El valor que se devuelve es el centro del intervalo final
+        resultado = ...
     return resultado</code></pre>
-    <p class="nota">La comparación de la línea del <code>if</code> interno va
-    al revés que la de la clase, y esa inversión es justo lo que la tarjeta 4
-    autorizó: <code>f</code> decrece, así que un valor positivo en la mitad
-    significa que la raíz está a la <em>derecha</em>.</p>
-  </div>
-
+    <p class="nota">Ninguno de los huecos es de sintaxis: cada uno es una
+    decisión que ya tomó en las tarjetas anteriores. El del <code>if</code>
+    interno es el que separa a quien entendió la monotonía de quien copió la
+    plantilla de la clase.</p>
   <div class="carta bloqueado" id="carta-codigo2">
     <h2>9. El error que cuesta el problema</h2>
     <p style="margin-top:0"><b>De estos tres descuidos, ¿cuál produce un
@@ -199,18 +211,47 @@ def resolver(p, q, r, s, t, u, eps):
     <div id="veredicto-error" class="veredicto"></div>
   </div>
 
+  <div class="carta bloqueado" id="carta-enviar">
+    <h2>10. Enviarlo al juez</h2>
+    <p style="margin-top:0">El problema no está resuelto hasta que el juez lo
+    acepta. La página de envío pide iniciar sesión: la cuenta de UVa es
+    gratuita y se crea una sola vez.</p>
+    <p class="enlaces"><code>https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=1282</code></p>
+    <p style="margin-bottom:0.3rem"><b>Antes de enviar</b></p>
+    <ul class="nota" style="line-height:1.8; margin-top:0">
+      <li>Corra los tres casos del enunciado y compare carácter por carácter:
+      <code>0.7071</code>, <code>No solution</code>, <code>0.7554</code>.</li>
+      <li>Lea hasta EOF. El enunciado admite hasta 2100 líneas y no dice
+      cuántas vienen.</li>
+      <li>Imprima con cuatro decimales exactos, incluidos los ceros de
+      relleno: <code>"%.4f"</code>, no el <code>print</code> por defecto.</li>
+    </ul>
+    <p style="margin-bottom:0.3rem"><b>Si el veredicto no es Accepted</b></p>
+    <ul class="nota" style="line-height:1.8; margin-top:0">
+      <li><b>Wrong Answer</b> con los ejemplos bien: casi siempre es la
+      comparación invertida de la tarjeta 9, o el caso
+      <code>No solution</code> sin comprobar.</li>
+      <li><b>Time Limit Exceeded</b>: ε demasiado fino, o un ciclo que no
+      reduce el intervalo.</li>
+      <li><b>Presentation Error</b>: sobra o falta un salto de línea.</li>
+    </ul>
+  </div>
+
   <div class="carta">
     <h2>Para seguir</h2>
     <p style="margin-top:0">El mismo recorrido —entrada, función objetivo,
     monotonía demostrada, rango, existencia, tolerancia, código— sirve para los
     tres problemas de la sesión:</p>
-    <ul class="nota" style="line-height:1.9">
+    <ul class="enlaces">
       <li><b>UVa 11909 — Soya Milk.</b><br>
-        <code>https://onlinejudge.org/external/119/11909.pdf</code></li>
+        Enunciado: <code>https://onlinejudge.org/external/119/11909.pdf</code><br>
+        Enviar: <code>https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=3060</code></li>
       <li><b>UVa 11646 — Athletics Track.</b><br>
-        <code>https://onlinejudge.org/external/116/11646.pdf</code></li>
+        Enunciado: <code>https://onlinejudge.org/external/116/11646.pdf</code><br>
+        Enviar: <code>https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=2693</code></li>
       <li><b>UVa 714 — Copying Books.</b><br>
-        <code>https://onlinejudge.org/external/7/714.pdf</code></li>
+        Enunciado: <code>https://onlinejudge.org/external/7/714.pdf</code><br>
+        Enviar: <code>https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=655</code></li>
     </ul>
   </div>
 
