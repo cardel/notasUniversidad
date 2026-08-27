@@ -41,7 +41,7 @@ De una pregunta que salió en la clase del grupo A quedó un
 invariante cuando el algoritmo modifica el arreglo (tres ejercicios
 resueltos, uno con dos ciclos anidados y sus dos parejas de invariantes) y
 la demostración por inducción estructural del máximo recursivo, escrita
-completa con el molde del curso.
+escrita completa.
 
 ## Ejercicios interactivos
 

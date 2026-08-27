@@ -705,7 +705,7 @@ Testigos: $c = 3$ y $k = 1$. Ahora sí se escribe.
 > *Conclusión.* Por lo tanto, se puede concluir que $3n^2 \in O(n^2)$ con
 > testigos $c = 3$ y $k = 1$. $\blacksquare$
 
-### El mismo molde, otros datos
+### Otro ejemplo: $7x^2 \in O(x^3)$
 
 > **Teorema.** $7x^2 \in O(x^3)$.
 >

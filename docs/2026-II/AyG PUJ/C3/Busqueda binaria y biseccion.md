@@ -2,11 +2,11 @@
 
 **Grupo A — viernes 28 de agosto de 2026.**
 
-Divide y vencerás dejó el molde de dividir, conquistar y combinar, con el
-máximo y el ordenamiento por mezcla. Aquí el molde se aplica a un caso
-donde la cuenta sale todavía mejor: cuando el espacio de búsqueda viene
-ordenado, cada división descarta una mitad **y no hay que combinar
-nada**, porque sobrevive un solo subproblema.
+Divide y vencerás dejó la idea de dividir, conquistar y combinar, con el
+máximo y el ordenamiento por mezcla. Aquí la cuenta sale todavía mejor:
+cuando el espacio de búsqueda viene ordenado, cada división descarta una
+mitad **y no hay que combinar nada**, porque sobrevive un solo
+subproblema.
 
 ## Diapositivas
 

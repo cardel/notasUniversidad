@@ -12,7 +12,7 @@ Aquí está lo que quedó pendiente de esa conversación: dos ejercicios
 resueltos donde el arreglo se modifica y hace parte del invariante, un
 tercero que además tiene dos ciclos anidados, cada uno con su propia pareja
 de invariantes, y la demostración por inducción estructural de un algoritmo
-de divide y vencerás, escrita completa con el método del curso.
+de divide y vencerás, escrita completa.
 
 ## Cuando el arreglo cambia
 
@@ -245,13 +245,13 @@ entrega la poscondición, que es lo que retorna la línea 9. $\blacksquare$
 ## Ejemplo 3: dos ciclos anidados
 
 Hasta aquí cada algoritmo tenía un solo `while`. Cuando hay un ciclo adentro
-de otro, la regla que quedó anunciada en clase es esta: **cada ciclo lleva su
-propia pareja de invariantes**, y la estabilidad del externo usa la
-terminación del interno como un resultado ya probado. Así está hecho el
+de otro, **cada ciclo lleva su propia pareja de invariantes**, y la
+estabilidad del externo usa la terminación del interno como un resultado ya
+probado. Así está hecho el
 ordenamiento por inserción en el material del profesor titular: el ciclo
 externo lleva $I_0$ e $I_1$, el interno continúa la numeración con $I_2$ e
 $I_3$, y el teorema del interno se demuestra primero. El ordenamiento por
-selección repite ese molde con otro algoritmo, y junta el ingrediente de los
+selección repite esa estructura con otro algoritmo, y junta el ingrediente de los
 ciclos anidados con el de los dos ejemplos anteriores, porque también
 modifica el arreglo.
 
@@ -418,8 +418,8 @@ media hora demostrándola.
 La clase de divide y vencerás dejó enunciada la técnica para los algoritmos
 recursivos: el caso base se verifica directo y el caso recursivo asume que las
 llamadas sobre problemas más pequeños son correctas. Aquí está esa prueba
-escrita completa para el máximo recursivo, con el mismo molde de teorema,
-demostración y conclusión del curso.
+escrita completa para el máximo recursivo, en las mismas cuatro partes:
+teorema, estrategia, desarrollo y conclusión.
 
 ```python
 def maximo(lista, ini, fin):

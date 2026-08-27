@@ -164,7 +164,7 @@ máximo: el de tamaño 1, porque es su propio máximo. Hasta ahí se divide.
 **inducción estructural**: el caso base se verifica directo y el caso
 recursivo asume que las llamadas sobre problemas más pequeños son correctas.
 Es la pareja de los invariantes, que cubren los iterativos. La escritura
-completa de una de estas pruebas, con el molde del curso, está en el
+completa de una de estas pruebas está en el
 [apéndice](Apéndice.md#la-induccion-estructural-del-maximo).
 
 El costo de un algoritmo de divide y vencerás queda descrito por una
@@ -211,7 +211,7 @@ $$T(n) = 2\,T(n/2) + \Theta(1) \implies T(n) = O(n).$$
 El ciclo también era $O(n)$, así que partir el arreglo no hizo magia, y no
 podía hacerla: para hallar el máximo hay que mirar todos los elementos al
 menos una vez, ningún orden de visita baja de ahí. Lo que sí ganamos fue el
-molde. La ganancia de verdad viene con el siguiente problema.
+forma de atacar el problema. La ganancia de verdad viene con el siguiente.
 
 ## El ordenamiento por mezcla
 
@@ -438,7 +438,7 @@ el método.
 
 ## La anatomía de un algoritmo de divide y vencerás
 
-Del cierre de la clase, el molde general que conviene interiorizar. Estos
+Estos
 algoritmos suelen tener dos funciones:
 
 - **La que combina** (`mezclar`): recibe dos o más soluciones parciales que
@@ -450,14 +450,12 @@ algoritmos suelen tener dos funciones:
 
 A veces la parte de combinar no existe, porque el propio conquistar deja
 resuelto el problema; el quicksort, que aparecerá más adelante, es el ejemplo
-clásico. Pero la mayoría de los algoritmos de esta familia siguen el molde
-completo.
+clásico. Pero la mayoría de los algoritmos de esta familia tienen las dos partes.
 
-Un anuncio para la próxima clase: cuando un `while` vive adentro de otro,
-cada uno lleva su propia pareja de invariantes, la del interno continuando la
-numeración ($I_2$, $I_3$). El miércoles se trabaja con calma; el
-[apéndice](Apéndice.md#ejemplo-3-dos-ciclos-anidados) ya trae un ejemplo
-completo para adelantar.
+Cuando un `while` vive adentro de otro, cada uno lleva su propia pareja de
+invariantes, la del interno continuando la numeración ($I_2$, $I_3$). El
+[apéndice](Apéndice.md#ejemplo-3-dos-ciclos-anidados) trae un ejemplo
+completo.
 
 ## Errores comunes
 
@@ -520,13 +518,12 @@ Los de invariantes, `sumar` y `factorial`, siguen disponibles para el repaso.
 
 ## Lo que queda pendiente
 
-La escritura formal de la inducción estructural quedó anunciada para la clase
-del miércoles con el profesor titular, junto con los ciclos anidados. Para
-adelantar, el [apéndice](Apéndice.md) trae la prueba del máximo recursivo
-escrita completa y un ejercicio de dos ciclos con sus dos parejas de
-invariantes. El material de divide y vencerás del profesor en su página,
-incluido el del semestre pasado, cubre lo mismo que esta introducción y es la
-referencia para el estilo de los parciales.
+La escritura formal de la inducción estructural y los ciclos anidados se
+trabajan con el profesor titular. El [apéndice](Apéndice.md) trae la prueba
+del máximo recursivo escrita completa y un ejercicio de dos ciclos con sus
+dos parejas de invariantes. El material de divide y vencerás del profesor en
+su página, incluido el del semestre pasado, cubre lo mismo que esta
+introducción y es la referencia para el estilo de los parciales.
 
 ## Referencias
 

@@ -4,7 +4,7 @@
 
 Los dos grupos siguen en puntos distintos del tema. El grupo A ya
 trabajó divide y vencerás con el máximo y el ordenamiento por mezcla,
-así que avanza a los dos algoritmos donde el molde rinde más; el grupo B
+así que avanza a los dos algoritmos donde esa idea rinde más; el grupo B
 recorre esa clase de divide y vencerás.
 
 <div class="grid cards" markdown>
@@ -25,7 +25,7 @@ recorre esa clase de divide y vencerás.
 
     ---
 
-    **Grupo B.** El molde de dividir, conquistar y combinar, con el
+    **Grupo B.** Dividir, conquistar y combinar, con el
     máximo, el ordenamiento por mezcla y la recurrencia
     $T(n) = 2 \cdot T(n/2) + \Theta(n)$.
 
@@ -33,11 +33,9 @@ recorre esa clase de divide y vencerás.
 
 </div>
 
-## Lo que se anunció para investigar
+## Antes de entrar
 
-La clase de bisección arranca sobre lo que los estudiantes traigan
-investigado de búsqueda binaria y de bisección. El material de la clase
-2 —[divide y vencerás](../C2/Divide%20y%20vencerás.md) y el
-[apéndice](../C2/Apéndice.md)— es el punto de partida: los dos
-algoritmos de hoy son casos del mismo molde, con una diferencia que se
-nota en la cuenta.
+[Divide y vencerás](../C2/Divide%20y%20vencerás.md) y su
+[apéndice](../C2/Apéndice.md) son el punto de partida: los dos
+algoritmos de esta sesión dividen igual, pero descartan una de las dos
+mitades y eso cambia la cuenta.
