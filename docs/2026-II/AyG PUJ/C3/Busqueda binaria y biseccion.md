@@ -10,6 +10,9 @@ subproblema.
 
 ## Diapositivas
 
+Esta versión incluye lo que se anotó durante la clase, en las páginas donde
+apareció.
+
 ![](clase03-busqueda.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El juego de adivinar el número
@@ -122,13 +125,70 @@ $$T(n) = T\!\left(\frac{n}{2}\right) + \Theta(1), \qquad T(1) = \Theta(1).$$
 Expandiendo: cada nivel aporta una constante $c$, y los niveles se
 acaban cuando $n/2^k = 1$, o sea $k = \lg n$. El total es
 $c\,(\lg n + 1)$, es decir $T(n) \in O(\lg n)$. CLRS la propone en el
-Ejercicio 2.3-5 (p. 39) con esta misma cota.
+Ejercicio 2.3-5 (p. 39) con esta misma cota. Las sustituciones una por
+una, junto con las dos recurrencias de divide y vencerás, están en
+[Resolver recurrencias por expansión](../C2/Recurrencias%20por%20expansión.md).
 
 | $n$ | Búsqueda lineal | Búsqueda binaria |
 |---:|---:|---:|
 | $10^3$ | 1 000 | 10 |
 | $10^6$ | 1 000 000 | 20 |
 | $10^9$ | 1 000 000 000 | 30 |
+
+### El costo en memoria
+
+Una pregunta que salió en clase y que vale la pena dejar por escrito: si
+en cada llamada sobrevive **un solo** subproblema, ¿no debería la pila
+ocupar $O(1)$?
+
+No, y la razón está en la última línea del algoritmo. La llamada recursiva
+no es lo último que hace `buscar`: su valor se guarda en `resultado` y el
+`return` lo devuelve. Mientras el llamado hijo trabaja, el marco del padre
+tiene que seguir vivo esperando ese valor, así que los marcos se apilan y
+ninguno se cierra hasta que el más profundo responde. Cada marco guarda
+`ini`, `fin` y `mitad` —tres números, $O(1)$—, y marcos hay tantos como
+niveles:
+
+$$\frac{n}{2^k} = 1 \iff k = \log_2 n \implies \text{espacio } \Theta(\lg n).$$
+
+$\Theta(\lg n)$ es poquísimo —para mil millones de elementos, treinta
+marcos— pero no es $O(1)$. Quien sí llega a $O(1)$ es la versión
+iterativa, que aparece más abajo: sin llamadas no hay pila, y viven
+exactamente las mismas tres variables.
+
+Hay lenguajes que reconocen cuándo el resultado de la llamada recursiva se
+devuelve tal cual, sin operarlo, y reutilizan el marco en vez de apilar
+uno nuevo. Python no lo hace, así que la cuenta de arriba es la que
+aplica.
+
+### Dónde viven los datos ordenados
+
+Otra pregunta natural: ¿de qué sirve un algoritmo que exige un arreglo
+ordenado, si ordenar cuesta $\Theta(n \lg n)$?
+
+Sirve porque hay estructuras que **ya vienen ordenadas por
+construcción**, y no por casualidad: se construyeron así justamente para
+que buscar sea barato. El conjunto es el ejemplo más cercano. Un conjunto,
+por definición, no tiene orden entre sus elementos —no hay un primero ni
+un último—, pero la implementación sí lo tiene, y ahí está la gracia. El
+`std::set` de C++ es un árbol binario de búsqueda balanceado: a la
+izquierda de cada nodo solo hay menores, a la derecha solo mayores.
+Buscar el 4 en ese árbol es preguntar por la raíz, decidir un lado y
+descartar el otro —la misma jugada de esta clase—, con $\Theta(\lg n)$
+como costo. El balanceo, que se vio en el repaso de estructuras de datos,
+es lo que impide que el árbol degenere en una hilera y la búsqueda vuelva
+a $O(n)$.
+
+El `set` de Python y el `unordered_set` de C++ toman el otro camino, la
+tabla hash: pagan $O(1)$ promedio en la búsqueda pero pierden el orden, y
+con él las consultas por rango. Los dos diseños conviven porque
+resuelven preguntas distintas.
+
+Lo mismo pasa con los índices de una base de datos. Crear un índice sobre
+una columna es, en esencia, mantener esa columna ordenada en un árbol; y
+lo que se compra con ese trabajo es que las consultas que la filtran bajen
+de $O(n)$ a $O(\lg n)$. El orden se paga una vez y se cobra en cada
+búsqueda.
 
 ### Correctitud
 
@@ -336,6 +396,21 @@ $$I_0:\; a' \leq a \leq b \leq b' \qquad\qquad I_1:\; f(a) \leq v \leq f(b)$$
 $I_0$ dice que el intervalo vivo nunca se sale del original ni se da
 vuelta; $I_1$, que $v$ sigue **encerrado** entre los dos extremos. Ese
 encierro es lo que la bisección nunca puede perder.
+
+!!! note "Qué significa la prima"
+
+    La prima marca el valor **original**, congelado antes de la primera
+    vuelta: es la misma convención del $A'$ que aparece cuando un
+    algoritmo modifica el arreglo que recibe. No es el valor nuevo. Las
+    que se mueven son $a$ y $b$, sin prima; $a'$ y $b'$ se quedan quietas
+    y sirven de marco de referencia.
+
+    Leído así, $I_0$ dice tres cosas de una vez: el extremo izquierdo solo
+    puede avanzar ($a' \leq a$), el derecho solo puede retroceder
+    ($b \leq b'$) y nunca se cruzan ($a \leq b$). Cada vuelta reemplaza
+    $[a, b]$ por $[a, mitad]$ o por $[mitad, b]$, y las dos opciones caen
+    dentro del intervalo anterior, que a su vez cae dentro de
+    $[a', b']$.
 
 **Teorema 1.** Los invariantes $I_0$ e $I_1$ se cumplen.
 

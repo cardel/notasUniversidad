@@ -33,6 +33,17 @@ recorre esa clase de divide y vencerás.
 
 </div>
 
+## Apéndice: las recurrencias, resueltas por expansión
+
+La solución de $T(n) = 2\,T(n/2) + \Theta(1)$ que quedó desarrollada en el
+tablero del grupo B está escrita completa en
+[Resolver recurrencias por expansión](../C2/Recurrencias%20por%20expansión.md),
+junto con la del ordenamiento por mezcla,
+$T(n) = 2\,T(n/2) + \Theta(n)$, y la de la búsqueda binaria,
+$T(n) = T(n/2) + \Theta(1)$, que es la del grupo A. Cada una con las
+sustituciones una por una, el patrón, la sumatoria geométrica y el
+aterrizaje en el caso base.
+
 ## Ejercicios interactivos
 
 Los dos algoritmos y un problema de juez, para recorrer paso a paso en el

@@ -1,12 +1,13 @@
 # Divide y vencerás
 
-**Grupo A — viernes 21 de agosto de 2026.** Sesión virtual, de 9 a 11.
+**Grupo A — viernes 21 de agosto de 2026**, sesión virtual, de 9 a 11.
+**Grupo B — viernes 28 de agosto de 2026.**
 
-Este grupo ya trabajó invariantes de ciclo el miércoles con el profesor
-titular, así que la sesión tuvo dos partes: un repaso del método completo,
-con el factorial y un ejercicio nuevo, y la primera técnica de diseño
-recursivo del curso: dividir, conquistar y combinar, con el máximo, el
-ordenamiento por mezcla y su recurrencia.
+Los dos grupos recibieron la misma sesión, con una semana de diferencia.
+Tuvo dos partes: un repaso del método de los invariantes, con el factorial
+y un ejercicio nuevo, y la primera técnica de diseño recursivo del curso:
+dividir, conquistar y combinar, con el máximo, el ordenamiento por mezcla
+y su recurrencia.
 
 ## Diapositivas
 
@@ -435,6 +436,37 @@ La base del logaritmo no importa, porque cambiar de base es multiplicar por
 una constante y la notación asintótica las ignora. En las próximas sesiones
 se verán formas más rápidas de resolver recurrencias; por ahora, el árbol es
 el método.
+
+El mismo conteo escrito como álgebra —sustituir la recurrencia dentro de sí
+misma, encontrar el patrón y resolver la sumatoria— está en el
+[apéndice de recurrencias por expansión](Recurrencias%20por%20expansión.md),
+con esta recurrencia y la del máximo desarrolladas paso a paso. Es la forma
+de justificar la cota cuando el enunciado pide la cuenta y no el dibujo.
+
+### Lo que ocupa en memoria
+
+El tiempo no es lo único que hay que contar. `mezclar` construye las
+copias `izquierda` y `derecha` antes de escribir sobre el arreglo, así que
+el ordenamiento por mezcla **no es in situ**: no reorganiza la estructura
+que recibe, produce valores nuevos.
+
+Para saber cuánto pesa eso hay que mirar qué está vivo al mismo tiempo.
+Las dos llamadas recursivas no corren a la vez: `ordenar` de la mitad
+izquierda termina por completo antes de que arranque la de la derecha. En
+el momento más profundo, entonces, lo que está abierto es **una sola rama
+del árbol**, desde la raíz hasta la hoja: $\lg n + 1$ marcos. El marco de
+profundidad $i$ trabaja sobre un tramo de $n/2^i$ elementos y sus copias
+suman eso mismo, así que el total vivo es
+
+$$n + \frac{n}{2} + \frac{n}{4} + \cdots + 1 = 2n - 1 = \Theta(n).$$
+
+Memoria adicional $\Theta(n)$, más los $\Theta(\lg n)$ marcos que la
+sostienen. Esa es la razón de fondo por la que el ordenamiento por mezcla
+es la referencia de los cursos y no la de las bibliotecas: ordena en
+$\Theta(n \lg n)$ garantizado, pero pide un arreglo entero de espacio
+prestado. El quicksort, que llega más adelante, ordena in situ —sus marcos
+guardan índices, no copias— y por eso se lo prefiere en la práctica, aun
+cuando su peor caso es $\Theta(n^2)$.
 
 ## La anatomía de un algoritmo de divide y vencerás
 

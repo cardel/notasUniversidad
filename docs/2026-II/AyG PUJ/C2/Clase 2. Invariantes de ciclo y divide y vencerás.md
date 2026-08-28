@@ -34,14 +34,21 @@ en dos páginas: entre por la de su grupo.
 
 </div>
 
-## Apéndice
+## Apéndices
 
-De una pregunta que salió en la clase del grupo A quedó un
-[apéndice](Apéndice.md) que sirve a los dos grupos: qué pasa con el
-invariante cuando el algoritmo modifica el arreglo (tres ejercicios
-resueltos, uno con dos ciclos anidados y sus dos parejas de invariantes) y
-la demostración por inducción estructural del máximo recursivo, escrita
-escrita completa.
+Dos páginas que sirven a los dos grupos y que quedaron de preguntas de
+clase:
+
+- [El arreglo en el invariante y la inducción estructural](Apéndice.md) —
+  qué pasa con el invariante cuando el algoritmo modifica el arreglo (tres
+  ejercicios resueltos, uno con dos ciclos anidados y sus dos parejas de
+  invariantes) y la demostración por inducción estructural del máximo
+  recursivo, escrita completa.
+- [Resolver recurrencias por expansión](Recurrencias%20por%20expansión.md) —
+  el álgebra que hay detrás del árbol de llamadas, con
+  $T(n) = 2\,T(n/2) + \Theta(1)$ y $T(n) = 2\,T(n/2) + \Theta(n)$
+  desarrolladas paso a paso: las sustituciones, el patrón, la sumatoria y
+  el aterrizaje en el caso base.
 
 ## Ejercicios interactivos
 
