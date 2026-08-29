@@ -332,27 +332,43 @@ x = 7, y = 9
 Tras `p = &y`, el mismo `*p` habla de otra variable. Qué toca `*p` no lo
 decide el texto del programa sino el valor de `p` en ese momento.
 
-Al imprimir se ve la distinción de una vez: `printf("%p", (void *) p)`
-saca la dirección donde vive `y`, y `printf("%d", *p)` saca el 9 que hay
-guardado ahí. Dos cosas distintas del mismo puntero.
+Al imprimir se ve la distinción de una vez. Agregando dos líneas al final
+del programa:
+
+```c
+printf("p %p", p);
+printf("*p %d", *p);
+```
+
+```text
+x = 7, y = 9
+p 0x7fffc0d36dac*p 9
+```
+
+El primer `printf` saca la dirección donde vive `y`; el segundo, el 9 que
+hay guardado ahí. Dos cosas distintas del mismo puntero. El formato
+importa: `%d` sobre un puntero no compila limpio, porque un puntero no es
+un entero de cuatro bytes; el que corresponde es `%p`.
 
 ### ¿Y si no se inicializa?
 
 ```c
-int main(void) {
-    int *p;
-    *p = 5;
-    return 0;
+#include "stdio.h"
+
+int main() {
+  int *p;
+  printf("%p\n", p);
+  *p = 10;
 }
 ```
 
 El compilador lo ve venir:
 
 ```text
-sin_inicializar.c: In function 'main':
+Malo.cpp: In function 'int main()':
 warning: 'p' is used uninitialized [-Wuninitialized]
-    3 |     *p = 5;
-      |     ~~~^~~
+    5 |   printf("%p\n", p);
+      |   ~~~~~~^~~~~~~~~~~
 ```
 
 Y al ejecutar:
@@ -470,6 +486,22 @@ Lo notable es que el bloque se usa con la misma notación de siempre.
 `i * sizeof(int)`. Es la fórmula del arreglo estático, con la base ahora
 en el montículo en vez de la pila. Por eso un bloque de `malloc` se
 recorre, se indexa y se pasa a funciones exactamente igual que un arreglo.
+
+Las dos formas se pueden escribir una al lado de la otra y hacen lo
+mismo:
+
+```c
+scanf("%lf", &temperaturas[i]);
+scanf("%lf", temperaturas + i);
+
+suma = suma + temperaturas[i];
+suma = suma + *(temperaturas + i);
+```
+
+En la primera pareja, `&temperaturas[i]` y `temperaturas + i` son la
+misma dirección. En la segunda, los corchetes y el asterisco leen la misma
+celda. La notación de arreglo es la cómoda; la de puntero es la que
+explica por qué funciona.
 
 ### La traza en el mapa
 
@@ -639,22 +671,41 @@ pisa la única dirección del bloque anterior: ese bloque queda sin dueño y
 su `free` ya no existe. Es la fuga del servidor en miniatura. Los dos
 `free` del final alcanzan dos de los tres bloques pedidos.
 
-El arreglo, línea por línea: verificar cada reserva antes de escribir, y
-liberar el bloque viejo de `b` antes de reasignar el puntero.
+El arreglo se escribió en clase línea por línea: cada escritura se
+protege con su verificación, y el bloque viejo de `b` se libera antes de
+reasignar el puntero.
 
 ```c
-if (a == NULL || b == NULL) {
-    printf("No hay memoria disponible\n");
-    estado = 1;
-} else {
-    a[0] = 1;
-    b[0] = 2;
+int n = 100;
+int *a = malloc(n * sizeof(int));
+int *b = malloc(n * sizeof(int));
 
-    free(b);
-    b = malloc(2 * n * sizeof(int));
-    ...
+if (a != NULL) {
+    a[0] = 1;
 }
+
+if (b != NULL) {
+    b[0] = 2;
+}
+
+free(b);
+b = NULL;
+
+b = malloc(2 * n * sizeof(int));
+
+if (b != NULL) {
+    b[0] = 3;
+}
+
+free(a);
+free(b);
+a = NULL;
+b = NULL;
 ```
+
+El orden del tramo del medio es el que hace toda la diferencia: primero
+`free(b)`, después el `malloc` nuevo. Al revés, la dirección del primer
+bloque se pierde en la asignación y ya no hay a quién liberarle nada.
 
 Y toda liberación arrastra su `= NULL`. Las tres reglas no se aplican por
 separado: se aplican las tres a cada bloque.
@@ -668,46 +719,62 @@ superan e imprima ambos resultados devolviendo la memoria.
 La primera decisión es el tipo. El enunciado dice temperaturas y no dice
 más, pero una temperatura tiene decimales, así que el bloque se pide con
 `sizeof(double)` y no con `sizeof(int)`. Eso arrastra los formatos: `%lf`
-para leer un `double` con `scanf`, y `%.2lf` para imprimirlo.
+para leer un `double` con `scanf`, y `%.4lf` para imprimirlo.
 
 ```c
-temperaturas = malloc(n * sizeof(double));
-if (temperaturas == NULL) {
-    printf("No hay memoria disponible\n");
-    estado = 1;
-} else {
-    i = 0;
-    while (i < n) {
-        scanf("%lf", &temperaturas[i]);
-        suma = suma + temperaturas[i];
-        i = i + 1;
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+  int n;
+  scanf("%d", &n);
+  double *temperaturas = malloc(n * sizeof(double));
+  // double temperaturas[n]; // C99 lo permite, pero queda en la pila
+  if (temperaturas != NULL) {
+    for (int i = 0; i < n; i++) {
+      scanf("%lf", &temperaturas[i]);
+      // scanf("%lf", temperaturas + i); // otra forma de hacerlo
     }
-    promedio = suma / n;
-
-    i = 0;
-    while (i < n) {
-        if (temperaturas[i] > promedio) {
-            superan = superan + 1;
-        }
-        i = i + 1;
+    double promedio = 0.0;
+    for (int i = 0; i < n; i++) {
+      promedio += temperaturas[i];
+      // promedio += *(temperaturas + i); // otra forma de hacerlo
     }
-
-    printf("Promedio: %.2lf\n", promedio);
-    printf("La superan: %d\n", superan);
-
+    promedio /= n;
+    int mayores_promedio = 0;
+    for (int i = 0; i < n; i++) {
+      if (temperaturas[i] > promedio) {
+        mayores_promedio++;
+      }
+    }
+    printf("Promedio: %.4lf\n", promedio);
+    printf("Cantidad de temperaturas mayores al promedio: %d\n",
+           mayores_promedio);
     free(temperaturas);
     temperaturas = NULL;
+  } else {
+    printf("Error al asignar memoria\n");
+  }
 }
 ```
 
-Una corrida con cinco valores:
+Con las diez temperaturas del archivo de prueba:
 
 ```text
-Cuantas temperaturas? 5
-18.5 21.0 19.75 24.2 17.0
-Promedio: 20.09
-La superan: 2
+Promedio: 6.0300
+Cantidad de temperaturas mayores al promedio: 5
 ```
+
+La línea comentada merece atención, porque es la tentación obvia:
+`double temperaturas[n]` compila en C desde el estándar de 1999, y a
+primera vista ahorra el `malloc` entero. El problema es dónde queda ese
+arreglo. Un arreglo declarado así vive en la pila, que es la región
+pequeña y que además se recupera al salir de la función; si el usuario
+escribe un $n$ grande, no hay `NULL` que avise, simplemente el programa
+se cae. El montículo es más grande, avisa cuando no puede, y el bloque
+sobrevive a la función que lo pidió. Para un tamaño que llega de la
+entrada, la reserva dinámica es la respuesta.
 
 Queda la pregunta que acompaña al ejercicio: ¿por qué este problema no se
 puede resolver leyendo los valores de a uno, sin guardarlos? Porque
@@ -716,6 +783,13 @@ el promedio solo se sabe después de haber leído la última. El primer dato
 hay que volverlo a mirar cuando ya se leyó el último, y eso obliga a
 tenerlos todos. Es el argumento que va a justificar, una y otra vez,
 guardar en memoria en lugar de procesar al vuelo.
+
+Sobre el recorrido: son tres pasadas sobre el arreglo, una para leer,
+otra para sumar y otra para contar. Las dos primeras se podrían fundir en
+una sola, sumando a medida que se lee. Da igual para la clase de
+complejidad: tres recorridos de $n$ son $3n$ operaciones y eso sigue
+siendo $O(n)$, porque el número de pasadas es una constante y las
+constantes las absorbe el testigo $c$.
 
 ## Para practicar en casa
 
@@ -773,6 +847,14 @@ Compilación y ejecución:
 
 ```bash
 gcc -Wall -Wextra archivo.c -o archivo && ./archivo
+g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
+```
+
+El ejercicio de cierre lee de la entrada estándar, así que el archivo de
+prueba se le pasa directo:
+
+```bash
+gcc -Wall -Wextra EjercicioCierre.c -o cierre && ./cierre < ejercicioCierre.in
 ```
 
 **La memoria por dentro**
@@ -785,20 +867,25 @@ gcc -Wall -Wextra archivo.c -o archivo && ./archivo
 **Punteros**
 
 - [punteros.c](codigo/punteros.c)
+- [Ejemplo.cpp](codigo/Ejemplo.cpp) — el mismo programa, con los `printf`
+  de `p` y de `*p` que se agregaron en clase
 - [dos_punteros.c](codigo/dos_punteros.c)
 - [sin_inicializar.c](codigo/sin_inicializar.c)
+- [Malo.cpp](codigo/Malo.cpp) — el puntero sin inicializar
 
 **Montículo**
 
 - [arreglo_dinamico.c](codigo/arreglo_dinamico.c)
-- [temperaturas.c](codigo/temperaturas.c)
+- [EjercicioCierre.c](codigo/EjercicioCierre.c),
+  [ejercicioCierre.in](codigo/ejercicioCierre.in) — el ejercicio de cierre
 
 **Lo que sale mal**
 
 - [fuga.c](codigo/fuga.c)
 - [colgante.c](codigo/colgante.c)
-- [errores_ejercicio.c](codigo/errores_ejercicio.c)
-- [errores_corregido.c](codigo/errores_corregido.c)
+- [errores_ejercicio.c](codigo/errores_ejercicio.c) — el fragmento con los
+  dos errores
+- [Ejercicio2.c](codigo/Ejercicio2.c) — la versión que se corrigió en clase
 
 ## Referencias
 
