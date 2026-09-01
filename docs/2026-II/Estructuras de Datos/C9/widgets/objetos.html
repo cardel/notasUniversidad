@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>objetos — repaso de POO</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El estudiante viaja</h1>
+  <p class="intro">La clase <b>Estudiante</b> de la sesión, puesta a prueba:
+  qué responde, qué protege y qué pasa cuando el objeto viaja a una
+  función.</p>
+
+  <div class="carta">
+    <h2>La clase</h2>
+    <div class="codigo" id="codigo-clase"></div>
+    <div class="nota">El cupo de notas es 3: <b>registrar_nota</b> ignora la
+    cuarta y siguientes. <b>promedio()</b> divide entre las registradas.</div>
+  </div>
+
+  <div class="carta">
+    <h2>1. El promedio</h2>
+    <div class="codigo" id="codigo-promedio"></div>
+    <div class="prediccion">
+      <span>promedio:</span>
+      <input type="number" id="pred-promedio" step="0.01" placeholder="con decimales">
+      <button id="btn-promedio" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-promedio" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El premio que viaja por copia</h2>
+    <div class="codigo" id="codigo-copia"></div>
+    <p style="margin-bottom:0.3rem">¿Qué imprime <b>tras premiar_copia</b>?</p>
+    <div class="opciones" id="opciones-copia">
+      <button data-op="correcta">3.50 — la nota quedó en la copia</button>
+      <button data-op="original">4.00 — la nota quedó en e</button>
+      <button data-op="reinicio">5.00 — la última nota manda</button>
+    </div>
+    <div id="veredicto-copia" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El premio que viaja por referencia</h2>
+    <div class="codigo" id="codigo-referencia"></div>
+    <div class="prediccion">
+      <span>tras premiar:</span>
+      <input type="number" id="pred-referencia" step="0.01" placeholder="con decimales">
+      <button id="btn-referencia" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-referencia" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La puerta de private</h2>
+    <div class="codigo" id="codigo-privado"></div>
+    <p style="margin-bottom:0.3rem">¿Qué pasa con este <b>main</b>?</p>
+    <div class="opciones" id="opciones-privado">
+      <button data-op="compila">Compila: notas es un arreglo normal</button>
+      <button data-op="correcta">No compila: notas es private</button>
+      <button data-op="ejecuta">Compila, pero falla al ejecutar</button>
+    </div>
+    <div id="veredicto-privado" class="veredicto"></div>
+    <div id="error-privado" style="display:none">
+      <div class="codigo" id="codigo-error"></div>
+      <div class="nota">El error textual del compilador. Las notas solo cambian
+      pasando por registrar_nota, que valida el cupo: la clase defiende sus
+      datos y el compilador es el portero.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El promedio de nadie</h2>
+    <div class="codigo" id="codigo-vacio"></div>
+    <p style="margin-bottom:0.3rem">Recién creado, sin notas: ¿qué pasa al
+    pedir el promedio?</p>
+    <div class="opciones" id="opciones-vacio">
+      <button data-op="cero">Imprime 0.00</button>
+      <button data-op="falla">El programa falla y se detiene</button>
+      <button data-op="correcta">Imprime -nan</button>
+    </div>
+    <div id="veredicto-vacio" class="veredicto"></div>
+    <div id="cierre-vacio" class="alerta" style="display:none">
+      Con registradas en 0, la división 0/0 no es un número y el programa
+      imprime basura sin fallar. La clase protege cómo se guardan los datos,
+      pero todavía no dice qué se puede pedir y en qué estado. Ese contrato
+      —operaciones, condiciones y significado— abre el tema de la abstracción
+      de datos.
+    </div>
+  </div>
+
+</div>
+<script src="objetos.js"></script>
+</body>
+</html>

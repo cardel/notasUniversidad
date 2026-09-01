@@ -28,6 +28,7 @@ mismas estructuras ya empacadas.
 6. [Clase 6. La notación O — 26 de agosto](C6/Clase%206.%20La%20notación%20O.md)
 7. [Clase 7. Manejo de memoria en C — 28 de agosto](C7/Clase%207.%20Manejo%20de%20memoria%20en%20C.md)
 8. [Clase 8. Punteros, arreglos y matrices — ejercicios interactivos — 2 de septiembre](C8/Ejercicios.md)
+9. [Clase 9. Paso de parámetros por referencia y repaso de POO — ejercicios interactivos — 4 de septiembre](C9/Ejercicios.md)
 
 ## Apéndices
 
