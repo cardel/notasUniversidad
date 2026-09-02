@@ -32,7 +32,8 @@ anterior, que cubren los mismos temas, siguen disponibles en
 1. [Clase 1. Repaso de estructuras de datos y notación asintótica — 31 de julio](C1/Clase%201.%20Repaso%20de%20estructuras%20de%20datos%20y%20notación%20asintótica.md)
 2. [Clase 2. Invariantes de ciclo y divide y vencerás — 21 de agosto](C2/Clase%202.%20Invariantes%20de%20ciclo%20y%20divide%20y%20vencerás.md)
 3. [Clase 3. Búsqueda binaria y bisección — 28 de agosto](C3/Clase%203.%20Busqueda%20binaria%20y%20biseccion.md)
-4. [Clase 4. Introducción a grafos — 4 de septiembre](C4/Clase%204.%20Introduccion%20a%20grafos.md)
+4. [Clase 4. Invariantes: acumuladores, listas y ciclos anidados — 4 de septiembre](C4/Clase%204.%20Invariantes%20con%20ciclos%20anidados.md)
+5. [Clase 5. Introducción a grafos — semana del 7 de septiembre](C5/Clase%205.%20Introduccion%20a%20grafos.md)
 
 ## Clases en video
 

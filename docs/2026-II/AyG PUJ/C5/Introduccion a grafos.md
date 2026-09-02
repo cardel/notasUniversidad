@@ -1,6 +1,6 @@
 # Introducción a los grafos
 
-**Grupo A — viernes 4 de septiembre de 2026.**
+**Semana del 7 de septiembre de 2026.**
 
 Hasta aquí los datos venían acostados en una línea: un arreglo que se
 parte por la mitad, un intervalo que se cierra, una función que se
@@ -11,7 +11,7 @@ curso.
 
 ## Diapositivas
 
-![](clase04-grafos.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](clase05-grafos.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## De las estructuras lineales a los grafos
 
