@@ -220,16 +220,16 @@ parámetros por referencia.
 Vale la pena verlo en un lenguaje donde uno cree que no hay punteros:
 
 ```python
-def sumar(lista):
+def sumar(lst):
     suma = 0
-    for valor in lista:
-        suma = suma + valor
-    lista[0] = 1000
+    for e in lst:
+        suma += e
+    lst[0] = 1000
     return suma
 
 
 if __name__ == "__main__":
-    lista = [i for i in range(0, 101)]
+    lista = [x for x in range(0, 101)]
     print(lista[0:20])
     print(sumar(lista))
     print(lista[0:20])
@@ -600,6 +600,35 @@ filas de largos distintos, a cambio de $n + 1$ reservas, $n + 1$
 verificaciones y una liberación en dos pasos. En el curso se usa el bloque
 único, con la cuenta del *row-major* a la vista.
 
+### Tres detalles al pasarlo en limpio
+
+El archivo que quedó en pantalla, `bidimensional.c`, compila sin una queja con
+`-Wall -Wextra` y corre sin que valgrind reporte un solo error. Aun así hay
+tres cosas que conviene mirar antes de tomarlo como modelo, y ninguna de las
+tres la puede ver una herramienta.
+
+**La verificación llega después de usar el puntero.** Ahí las filas se
+reservan en un ciclo y solo entonces se pregunta `if (arr != NULL)`. Si la
+reserva del arreglo de punteros hubiera fallado, `arr[i] = malloc(...)` ya
+habría escrito a través de un puntero nulo, y para cuando llega la pregunta el
+programa ya se cayó. El orden del contrato no es decorativo: reservar,
+verificar, y solo entonces usar.
+
+**`ptr[i]` no es `ptr[j]`.** Dentro del ciclo interno, el índice que avanza es
+`j`; escribir `ptr[i] = 10` usa el índice de la fila para elegir la columna.
+Con tres filas y cuatro columnas la escritura cae dentro del bloque —por eso
+nadie protesta—, pero solo se toca una celda por fila y las otras tres quedan
+sin inicializar. Si la matriz fuera de 5 × 3, `ptr[4]` se saldría del bloque y
+volvería la casa de al lado, esta vez con una escritura.
+
+**Aterrizar la copia no aterriza el original.** En el ciclo de liberación,
+`ptr` es una copia de `arr[i]`; hacerle `ptr = NULL` después del `free` deja
+en `NULL` la copia y no toca `arr[i]`, que queda apuntando a memoria devuelta.
+Aquí no alcanza a doler porque `arr` se libera acto seguido, pero es la
+diferencia entre `ptr = NULL` y `arr[i] = NULL`, y es exactamente el puntero
+colgante del manejo de memoria. La versión que aterriza `arr[i]` es la que
+está arriba.
+
 ## Ejercicios de la sesión
 
 ### El mayor de la planilla, y dónde está
@@ -788,8 +817,10 @@ gcc -Wall -Wextra matriz_dinamica.c -o matriz && echo "3 4" | ./matriz
 
 - [matriz_dinamica.c](codigo/matriz_dinamica.c) — un solo bloque, con
   `M[i * m + j]`
-- [dimensional.c](codigo/dimensional.c) — el arreglo de punteros que se
-  escribió en clase
+- [bidimensional.c](codigo/bidimensional.c) — el arreglo de punteros tal como
+  quedó en pantalla
+- [matriz_punteros.c](codigo/matriz_punteros.c) — la misma idea con las
+  verificaciones en su sitio, llenando y mostrando la planilla
 
 **Para practicar**
 
