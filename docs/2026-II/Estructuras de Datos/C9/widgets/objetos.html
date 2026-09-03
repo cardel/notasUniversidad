@@ -9,46 +9,45 @@
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>El estudiante viaja</h1>
-  <p class="intro">La clase <b>Estudiante</b> de la sesión, puesta a prueba:
-  qué responde, qué protege y qué pasa cuando el objeto viaja a una
-  función.</p>
+  <h1>La cuenta viaja</h1>
+  <p class="intro">Una clase <b>Cuenta</b> puesta a prueba: qué acepta, qué
+  rechaza y qué pasa cuando el objeto viaja a una función.</p>
 
   <div class="carta">
     <h2>La clase</h2>
     <div class="codigo" id="codigo-clase"></div>
-    <div class="nota">El cupo de notas es 3: <b>registrar_nota</b> ignora la
-    cuarta y siguientes. <b>promedio()</b> divide entre las registradas.</div>
+    <div class="nota">Las dos operaciones que escriben validan antes de tocar
+    el saldo; <b>consultar</b> solo lee.</div>
   </div>
 
   <div class="carta">
-    <h2>1. El promedio</h2>
-    <div class="codigo" id="codigo-promedio"></div>
+    <h2>1. El saldo</h2>
+    <div class="codigo" id="codigo-saldo"></div>
     <div class="prediccion">
-      <span>promedio:</span>
-      <input type="number" id="pred-promedio" step="0.01" placeholder="con decimales">
-      <button id="btn-promedio" class="primario">Comprobar</button>
+      <span>saldo:</span>
+      <input type="number" id="pred-saldo" step="0.01" placeholder="con decimales">
+      <button id="btn-saldo" class="primario">Comprobar</button>
     </div>
-    <div id="veredicto-promedio" class="veredicto"></div>
+    <div id="veredicto-saldo" class="veredicto"></div>
   </div>
 
   <div class="carta">
-    <h2>2. El premio que viaja por copia</h2>
+    <h2>2. El cobro que viaja por copia</h2>
     <div class="codigo" id="codigo-copia"></div>
-    <p style="margin-bottom:0.3rem">¿Qué imprime <b>tras premiar_copia</b>?</p>
+    <p style="margin-bottom:0.3rem">¿Qué imprime <b>tras cobrar_copia</b>?</p>
     <div class="opciones" id="opciones-copia">
-      <button data-op="correcta">3.50 — la nota quedó en la copia</button>
-      <button data-op="original">4.00 — la nota quedó en e</button>
-      <button data-op="reinicio">5.00 — la última nota manda</button>
+      <button data-op="correcta">50.00 — el retiro quedó en la copia</button>
+      <button data-op="original">25.00 — el retiro llegó a la cuenta de main</button>
+      <button data-op="numero">No compila: dos cuentas con el mismo número</button>
     </div>
     <div id="veredicto-copia" class="veredicto"></div>
   </div>
 
   <div class="carta">
-    <h2>3. El premio que viaja por referencia</h2>
+    <h2>3. El cobro que viaja por referencia</h2>
     <div class="codigo" id="codigo-referencia"></div>
     <div class="prediccion">
-      <span>tras premiar:</span>
+      <span>tras cobrar:</span>
       <input type="number" id="pred-referencia" step="0.01" placeholder="con decimales">
       <button id="btn-referencia" class="primario">Comprobar</button>
     </div>
@@ -60,34 +59,35 @@
     <div class="codigo" id="codigo-privado"></div>
     <p style="margin-bottom:0.3rem">¿Qué pasa con este <b>main</b>?</p>
     <div class="opciones" id="opciones-privado">
-      <button data-op="compila">Compila: notas es un arreglo normal</button>
-      <button data-op="correcta">No compila: notas es private</button>
+      <button data-op="compila">Compila: saldo es un double normal</button>
+      <button data-op="correcta">No compila: saldo es private</button>
       <button data-op="ejecuta">Compila, pero falla al ejecutar</button>
     </div>
     <div id="veredicto-privado" class="veredicto"></div>
     <div id="error-privado" style="display:none">
       <div class="codigo" id="codigo-error"></div>
-      <div class="nota">El error textual del compilador. Las notas solo cambian
-      pasando por registrar_nota, que valida el cupo: la clase defiende sus
-      datos y el compilador es el portero.</div>
+      <div class="nota">El error textual del compilador. El saldo solo cambia
+      pasando por consignar y retirar, que validan cada monto: la clase
+      defiende sus datos y el compilador es el portero.</div>
     </div>
   </div>
 
   <div class="carta">
-    <h2>5. El promedio de nadie</h2>
-    <div class="codigo" id="codigo-vacio"></div>
-    <p style="margin-bottom:0.3rem">Recién creado, sin notas: ¿qué pasa al
-    pedir el promedio?</p>
-    <div class="opciones" id="opciones-vacio">
-      <button data-op="cero">Imprime 0.00</button>
+    <h2>5. El retiro que no avisa</h2>
+    <div class="codigo" id="codigo-retiro"></div>
+    <p style="margin-bottom:0.3rem">Con 40.00 en la cuenta llega un retiro de
+    90.00: ¿qué pasa?</p>
+    <div class="opciones" id="opciones-retiro">
+      <button data-op="sobregiro">Imprime -50.00</button>
       <button data-op="falla">El programa falla y se detiene</button>
-      <button data-op="correcta">Imprime -nan</button>
+      <button data-op="correcta">Imprime 40.00</button>
     </div>
-    <div id="veredicto-vacio" class="veredicto"></div>
-    <div id="cierre-vacio" class="alerta" style="display:none">
-      Con registradas en 0, la división 0/0 no es un número y el programa
-      imprime basura sin fallar. La clase protege cómo se guardan los datos,
-      pero todavía no dice qué se puede pedir y en qué estado. Ese contrato
+    <div id="veredicto-retiro" class="veredicto"></div>
+    <div id="cierre-retiro" class="alerta" style="display:none">
+      El saldo quedó protegido, pero mire lo que faltó: el retiro no ocurrió
+      y quien llamó no recibió ningún aviso, porque retirar no responde nada.
+      La clase ya dice cómo guarda sus datos; falta que diga qué promete cada
+      operación y cómo responde cuando no puede cumplir. Ese contrato
       —operaciones, condiciones y significado— abre el tema de la abstracción
       de datos.
     </div>

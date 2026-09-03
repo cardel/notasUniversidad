@@ -2,26 +2,27 @@
 
 Clase 9 — paso de parámetros por referencia y repaso de POO (4 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el
-navegador, con los dibujos de memoria de la clase al frente.
+navegador. Los programas no son los de la sesión: mismo tema, ronda
+nueva.
 
 ## [trazas](widgets/trazas.html){ target=_blank rel=noopener }
 
-El mismo programa tres veces, y solo cambia la firma de la función:
-`int a`, `int *a`, `int &a`. En cada versión se predice la línea final,
-con un puntero del llamador metido en la historia para separar lo que
-hizo la función de lo que hizo `main`.
+Una función y su `main`, tres veces; solo cambia la firma del segundo
+parámetro: `int b`, `int *b`, `int &b`. En cada versión se predice la
+línea final, con un puntero del llamador metido en la historia para que
+no todo cambio venga de la función.
 
-Cada distractor tiene su explicación: confundir la copia con la celda
-original, olvidar quién escribe el valor retornado o correr el aumento
-antes de tiempo reciben cada uno su pista. Al acertar las tres versiones
-se abre la tabla que las compara.
+Cada distractor tiene su pista: confundir la copia con la celda
+original, correr la resta antes de tiempo o perder el valor retornado.
+Al acertar las tres versiones se abre la tabla que las compara.
 
 ## [objetos](widgets/objetos.html){ target=_blank rel=noopener }
 
-La clase `Estudiante` de la sesión: el promedio con dos notas, un premio
-que viaja por copia y otro por referencia, la puerta que cierra
-`private` y el promedio de un objeto sin notas.
+Una clase `Cuenta` cuyas operaciones validan antes de escribir: el saldo
+tras una consignación rechazada, un cobro que viaja por copia y otro por
+referencia, la puerta que cierra `private` y el retiro que no ocurre.
 
-Los aciertos destapan lo que la corrida real muestra —incluidos el error
-textual del compilador y el `-nan` de la división 0/0— y el cierre deja
-planteado el contrato que retoma la abstracción de datos.
+Los aciertos destapan lo que la corrida real muestra —incluido el error
+textual del compilador— y el cierre deja planteada la pregunta que
+retoma la abstracción de datos: qué promete cada operación y cómo avisa
+cuando no puede cumplir.

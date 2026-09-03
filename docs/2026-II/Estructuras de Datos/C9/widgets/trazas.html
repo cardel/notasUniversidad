@@ -10,22 +10,22 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>Tres firmas, un programa</h1>
-  <p class="intro">El mismo <b>main</b> llama a <b>algo</b> tres veces a lo largo
-  de la página, y solo cambia la firma de la función. En cada versión, prediga
-  la línea final antes de comprobar.</p>
+  <p class="intro">El mismo <b>main</b> llama a <b>ajuste</b> tres veces a lo
+  largo de la página, y solo cambia la firma del segundo parámetro. En cada
+  versión, prediga la línea final antes de comprobar.</p>
 
   <div class="carta">
     <h2>El programa</h2>
     <p style="margin-top:0"><b>main</b> es el mismo en las tres versiones;
-    cambia la función <b>algo</b> y la forma de llamarla.</p>
+    cambia la función <b>ajuste</b> y la forma de llamarla.</p>
     <div class="codigo" id="codigo-main"></div>
     <div class="nota">La primera línea impresa siempre es
-    <b>x = 10 y = 2 z = 8</b>. Su tarea, en cada versión: la segunda línea.
-    Ojo con <b>w</b>: guarda la dirección de <b>y</b>.</div>
+    <b>x = 2 y = 10 z = 4</b>. Su tarea, en cada versión: la segunda línea.
+    Ojo con <b>w</b>: guarda la dirección de <b>x</b>.</div>
   </div>
 
   <div class="carta">
-    <h2>1. Por valor: la llamada es <b>*w = algo(x, y);</b></h2>
+    <h2>1. Por valor: la llamada es <b>z = z + ajuste(x, y);</b></h2>
     <div class="codigo" id="codigo-valor"></div>
     <div class="prediccion">
       <span>x =</span>
@@ -40,7 +40,7 @@
   </div>
 
   <div class="carta">
-    <h2>2. Por puntero: la llamada es <b>*w = algo(&amp;x, y);</b></h2>
+    <h2>2. Por puntero: la llamada es <b>z = z + ajuste(x, &amp;y);</b></h2>
     <div class="codigo" id="codigo-puntero"></div>
     <div class="prediccion">
       <span>x =</span>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="carta">
-    <h2>3. Por referencia (C++): la llamada es <b>*w = algo(x, y);</b></h2>
+    <h2>3. Por referencia (C++): la llamada es <b>z = z + ajuste(x, y);</b></h2>
     <div class="codigo" id="codigo-referencia"></div>
     <div class="prediccion">
       <span>x =</span>
@@ -77,16 +77,16 @@
           <tr><th></th><th>Por valor</th><th>Por puntero</th><th>Por referencia</th></tr>
         </thead>
         <tbody>
-          <tr><td><b>a</b> recibe</td><td>una copia de 10</td><td>la dirección de x</td><td>un alias de x</td></tr>
-          <tr><td>¿algo alcanzó a x?</td><td>no</td><td>sí, con *a</td><td>sí, sin asteriscos</td></tr>
-          <tr><td>¿quién escribió y?</td><td>main, con *w</td><td>main, con *w</td><td>main, con *w</td></tr>
-          <tr><td>Línea final</td><td>x = 10 y = 12 z = 8</td><td>x = 11 y = 12 z = 8</td><td>x = 11 y = 12 z = 8</td></tr>
+          <tr><td><b>b</b> recibe</td><td>una copia de 10</td><td>la dirección de y</td><td>un alias de y</td></tr>
+          <tr><td>¿ajuste alcanzó a y?</td><td>no</td><td>sí, con *b</td><td>sí, sin asteriscos</td></tr>
+          <tr><td>¿quién cambió x?</td><td>main, con *w</td><td>main, con *w</td><td>main, con *w</td></tr>
+          <tr><td>Línea final</td><td>x = 3 y = 10 z = 7</td><td>x = 3 y = 3 z = 7</td><td>x = 3 y = 3 z = 7</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="nota">En las tres versiones, la escritura sobre y fue del
-    llamador: <b>w</b> guarda su dirección y <b>*w</b> deja ahí el valor
-    retornado. La función solo alcanza a x cuando recibe su dirección o un
+    <div class="nota">En las tres versiones, el cambio de x fue del llamador:
+    <b>w</b> guarda su dirección y <b>*w = *w + 1</b> la sube después de la
+    llamada. La función solo alcanza a y cuando recibe su dirección o un
     alias, y en C++ la llamada no lo delata: hay que leer la firma.</div>
   </div>
 
