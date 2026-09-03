@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>burbuja — un lema adentro, un teorema afuera</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .conclusion { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .caja.fijada { background: var(--verde-suave); border-color: var(--verde); color: var(--verde); }
+  .caja.par { outline: 3px solid var(--azul); }
+  .caja.recorrida { background: var(--azul-suave); }
+  #panel-arreglo .arreglo { margin-top: 1.4rem; }
+  .opciones button { text-align: left; }
+  .lema { background: var(--azul-suave); border-radius: 8px; padding: 0.6rem 0.9rem;
+    margin: 0.6rem 0; font-size: 0.93rem; }
+  .lema b { color: var(--azul); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>ordenarBurbuja: un lema adentro, un teorema afuera</h1>
+  <p class="intro">Dos ciclos, uno dentro del otro. El de adentro se demuestra
+  solo y su conclusión se guarda con nombre propio: un lema. El de afuera no
+  vuelve a mirar el código de adentro — cita el lema y sigue. Esa es toda la
+  técnica, y aquí se arma pieza por pieza.</p>
+
+  <div class="carta">
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un arreglo A[0..N) de números,
+    N ≥ 1. &nbsp;<b>Salida:</b> el mismo arreglo, ordenado de forma no
+    decreciente, con los mismos elementos.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Arreglo:</span>
+      <button data-preset="0" class="primario">[5, 1, 4, 2, 8]</button>
+      <button data-preset="1">[1, 2, 3, 4]</button>
+      <button data-preset="2">[4, 3, 2, 1]</button>
+      <button data-preset="3">[2, 2, 2]</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas comparaciones hace la línea 6 en total?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire las dos zonas</h2>
+    <div id="panel-arreglo"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Verde: la cola ya terminada, A[N−i..N). Azul: lo que
+        el ciclo interno ya recorrió en esta pasada. El recuadro marca la
+        pareja (j, j+1) que se está comparando.</div>
+      </div>
+    </div>
+    <div class="alerta">Pruebe [1, 2, 3, 4], que ya viene ordenado: el
+    algoritmo hace exactamente las mismas comparaciones que con
+    [4, 3, 2, 1]. Este ciclo no se entera de que ya terminó, y eso se ve en
+    la cuenta de la tarjeta 1.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza del ciclo interno</h2>
+    <p style="margin-top:0" class="nota">Una fila por chequeo del while de la
+    línea 5, dentro de la pasada que está corriendo ahora
+    (<b>i = <span id="ver-i">–</span></b>). Al cambiar de pasada la tabla
+    arranca de nuevo.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Chequeo</th><th>j</th><th>A[0..j]</th><th>A[j]</th>
+          <th id="col-patron">¿Qué se repite?</th></tr>
+        </thead>
+        <tbody id="cuerpo-estados"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El invariante del ciclo interno</h2>
+    <p style="margin-top:0">Mire la columna A[j] contra la columna A[0..j],
+    fila por fila. Y escríbalo en términos de N, i, j y A: no de los números
+    de este arreglo.</p>
+
+    <div style="margin-bottom:0.3rem"><b>¿Qué se cumple en cada chequeo de la línea 5?</b> (ese será J₁)</div>
+    <div class="opciones" id="opciones-j1">
+      <button data-op="ordenado">A[0..j] está ordenado</button>
+      <button data-op="correcta">A[j] es el máximo de A[0..j]</button>
+      <button data-op="concreto">A[j] vale 5</button>
+      <button data-op="global">A[j] es el máximo de todo el arreglo</button>
+    </div>
+    <div id="veredicto-j1" class="veredicto"></div>
+
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Hasta dónde llega j?</b> (ese será J₀)</div>
+    <div class="opciones" id="opciones-j0">
+      <button data-op="correcta">0 ≤ j ≤ N − 1 − i</button>
+      <button data-op="n">0 ≤ j ≤ N</button>
+      <button data-op="estricta">0 ≤ j &lt; N − 1 − i</button>
+    </div>
+    <div id="veredicto-j0" class="veredicto"></div>
+
+    <div class="lema" id="caja-lema" style="display:none">
+      <b>Lema 1.</b> Al terminar el ciclo interno de la línea 5, la posición
+      N−1−i contiene el máximo de A[0..N−1−i].
+      <br><br>
+      Sale de intersecar la condición rota (j ≥ N−1−i) con J₀ (j ≤ N−1−i), que
+      deja j = N−1−i, y de sustituir ese valor en J₁. Ese enunciado es todo lo
+      que el ciclo externo va a necesitar: de aquí en adelante nadie vuelve a
+      mirar las líneas 5 a 10.
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El invariante del ciclo externo</h2>
+    <p style="margin-top:0" class="nota" id="nota-externo">Primero encuentre
+    el invariante de adentro: el de afuera se escribe sobre la conclusión del
+    lema.</p>
+    <div id="bloque-externo" class="bloqueado" style="opacity:0.45; pointer-events:none">
+      <div style="margin-bottom:0.3rem"><b>¿Qué se cumple en cada chequeo de la línea 3?</b></div>
+      <div class="opciones" id="opciones-i1">
+        <button data-op="prefijo">A[0..i) está ordenado</button>
+        <button data-op="correcta">A[N−i..N) está ordenado, y todo A[0..N−i) es ≤ todo A[N−i..N)</button>
+        <button data-op="soloorden">A[N−i..N) está ordenado</button>
+        <button data-op="todo">A está ordenado</button>
+      </div>
+      <div id="veredicto-i1" class="veredicto"></div>
+
+      <div style="margin:0.8rem 0 0.3rem"><b>Falta un invariante más, y sin él
+      el teorema no dice nada útil. ¿Cuál?</b></div>
+      <div class="opciones" id="opciones-i3">
+        <button data-op="correcta">A es una permutación del arreglo original</button>
+        <button data-op="tamano">len(A) = N</button>
+        <button data-op="ninguno">Ninguno: con el orden basta</button>
+      </div>
+      <div id="veredicto-i3" class="veredicto"></div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Complete las tarjetas
+    4 y 5. Se demuestra primero el <b>Lema 1</b> (los invariantes del ciclo
+    interno) y después el <b>Teorema 1</b> (los del externo), que lo cita.</p>
+
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Lema 1, estabilidad: ¿por qué después del cuerpo la posición j+1 tiene el máximo de A[0..j+1]?</div>
+      <div class="opciones">
+        <button data-p1="max">Porque el cuerpo deja en la posición j+1 el mayor entre A[j] y A[j+1], y por J₁ A[j] era el máximo de A[0..j]</button>
+        <button data-p1="orden">Porque el cuerpo ordena A[0..j+1]</button>
+        <button data-p1="swap">Porque el cuerpo siempre intercambia</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">Se toma un chequeo arbitrario con j = t y se
+      asume J₀ y J₁ evaluados en t. Las líneas 6 a 9 dejan en la posición
+      t+1 el mayor entre A[t] y A[t+1] y en la posición t el menor —si ya
+      estaban en ese orden no hacen nada, y si no, los intercambian—. Por J₁,
+      A[t] era el máximo de A[0..t], de modo que el mayor entre A[t] y A[t+1]
+      es el máximo de A[0..t+1]. La línea 10 deja j = t+1, y entonces A[j] es
+      el máximo de A[0..j]: J₁ evaluado en t+1. ✓ &nbsp;J₀ vale porque
+      t &lt; N−1−i implica 0 ≤ t+1 ≤ N−1−i. ✓ &nbsp;Y el intercambio no crea ni
+      borra elementos: el arreglo sigue siendo una permutación del que entró. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-2">
+      <div class="titulo-paso">Teorema 1, estabilidad: la pasada i acaba de terminar. ¿Por qué la cola crece en una posición?</div>
+      <div class="opciones">
+        <button data-p2="lema">Por el Lema 1 la posición N−1−i quedó con el máximo de A[0..N−1−i], y por el segundo invariante ese máximo no supera a nada de la cola vieja</button>
+        <button data-p2="repite">Porque se repite el argumento de las líneas 5 a 10 con los nuevos valores</button>
+        <button data-p2="obvio">Porque la burbuja siempre empuja el mayor al final</button>
+      </div>
+      <div id="veredicto-p2" class="veredicto"></div>
+      <div class="texto-paso">Se toma un chequeo arbitrario con i = t, t &lt; N−1,
+      y se asumen los invariantes evaluados en t. El ciclo interno solo toca
+      posiciones hasta N−1−t, así que la cola A[N−t..N) queda intacta y sigue
+      ordenada.
+      <br><br>
+      Por el <b>Lema 1</b>, al terminar esa pasada A[N−1−t] es el máximo de
+      A[0..N−1−t]. La cola nueva es A[N−1−t..N), o sea ese elemento seguido de
+      la cola vieja. Está ordenada porque A[N−1−t] pertenece a A[0..N−t), y el
+      segundo invariante evaluado en t dice que todo elemento de A[0..N−t) es
+      ≤ todo elemento de la cola vieja; en particular es ≤ el primero de ella. ✓
+      <br><br>
+      Y el segundo invariante se mantiene: todo elemento de A[0..N−1−t) es
+      ≤ A[N−1−t] por el lema, y ≤ todo lo de la cola vieja por hipótesis. ✓
+      La permutación se conserva porque lo único que hizo el ciclo interno
+      fueron intercambios. ✓ Las cotas valen porque t &lt; N−1 implica
+      0 ≤ t+1 ≤ N−1. ✓
+      <br><br>
+      Fíjese en lo que <b>no</b> aparece aquí: ni una línea del ciclo interno.
+      Ya se demostró aparte y ahora se cita.</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-3">
+      <div class="titulo-paso">Teorema 1, terminación: ¿con qué valor de i termina el ciclo externo?</div>
+      <div class="opciones">
+        <button data-p3="nm1">i = N − 1</button>
+        <button data-p3="n">i = N</button>
+        <button data-p3="nm2">i = N − 2</button>
+      </div>
+      <div id="veredicto-p3" class="veredicto"></div>
+      <div class="texto-paso">Al salir, la condición i &lt; N−1 es falsa, o sea
+      i ≥ N−1; intersecando con el invariante de cotas, que da i ≤ N−1, queda
+      i = N−1. Sustituyendo ese valor: A[N−(N−1)..N) = A[1..N) está ordenado, y
+      todo elemento de A[0..1) —es decir, A[0]— es ≤ todo elemento de A[1..N).
+      Un arreglo cuyo primer elemento no supera a ninguno de los demás y cuyo
+      resto está ordenado, está ordenado. Con la permutación, esa es
+      exactamente la poscondición. ∎</div>
+    </div>
+
+    <div class="conclusion" id="conclusion">
+      <b>Teorema 2.</b> La invocación <code>ordenarBurbuja(A)</code> devuelve
+      A ordenado de forma no decreciente, con los mismos elementos.
+      <b>Demostración:</b> por el Teorema 1 los invariantes del ciclo externo
+      se cumplen; la terminación deja i = N−1 y sustituir ese valor da la
+      poscondición. ∎
+      <br><br>
+      El orden de la escritura es lo que hay que retener: primero el lema, que
+      se demuestra sin saber nada del ciclo de afuera; después el teorema, que
+      se demuestra sin volver a abrir el de adentro. Si al escribir el externo
+      aparece un «y entonces el ciclo interno recorre…», es que el lema quedó
+      mal enunciado.
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>7. El costo</h2>
+    <p style="margin-top:0">La pasada número i hace N−1−i comparaciones, y hay
+    pasadas para i = 0, 1, …, N−2. Sumando:</p>
+    <p style="text-align:center; font-size:1.05rem">
+      (N−1) + (N−2) + … + 2 + 1 = N(N−1)/2 ∈ Θ(N²)
+    </p>
+    <p>La cuenta no depende de los datos: ninguna comparación se ahorra cuando
+    el arreglo ya viene ordenado, y por eso el mejor caso y el peor caso valen
+    lo mismo. El ordenamiento por selección de la clase suma exactamente igual.</p>
+  </div>
+
+  <div class="carta">
+    <h2>8. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Agregue una variable
+    <code>hubo</code> que registre si la pasada hizo algún intercambio, y
+    termine el ciclo externo cuando una pasada no intercambie nada. Después:
+    ¿cuál es el nuevo invariante del ciclo externo —el viejo ya no alcanza—,
+    por qué es correcto detenerse ahí, y cuánto cuesta ahora el mejor caso en
+    términos de N? Cuidado con el reflejo de usar <code>break</code>: se pide
+    una condición compuesta en el while.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="burbuja.js"></script>
+</body>
+</html>
