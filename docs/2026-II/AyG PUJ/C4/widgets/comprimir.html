@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>comprimir — la lista que crece y el invariante que la sostiene</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .conclusion { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .caja.leida { background: var(--azul-suave); }
+  .caja.actual { outline: 3px solid var(--azul); }
+  .caja.pendiente { color: #b9c0c9; border-color: #e2e6eb; }
+  .ficha.ultima { background: var(--ambar); }
+  .rotulo-lista { font-size: 0.85rem; color: var(--gris); margin-right: 0.3rem; }
+  #panel-arreglo .arreglo { margin-top: 1.4rem; }
+  .opciones button { text-align: left; }
+  .vacia { color: var(--gris); font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>comprimir: la lista que crece y el invariante que la sostiene</h1>
+  <p class="intro">Aquí la salida no es un número: es una lista que se va
+  escribiendo. Un invariante sobre ella tiene que decir dos cosas —qué tan
+  larga es y qué hay en cada posición— y va a hacer falta una tercera
+  propiedad, pequeña, sin la cual la estabilidad no se deja escribir.</p>
+
+  <div class="carta">
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un arreglo A[0..N) de números,
+    N ≥ 0. &nbsp;<b>Salida:</b> la lista de A sin repeticiones
+    <b>consecutivas</b>: cada racha de valores iguales seguidos deja un solo
+    elemento, y el orden se conserva. Sobre [1, 1, 2, 2, 2, 3, 1, 1] la
+    respuesta es [1, 2, 3, 1].</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Arreglo:</span>
+      <button data-preset="0" class="primario">[1, 1, 2, 2, 2, 3, 1, 1]</button>
+      <button data-preset="1">[4, 4, 4, 4]</button>
+      <button data-preset="2">[1, 2, 3]</button>
+      <button data-preset="3">[ ] (vacío)</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos elementos tiene la lista devuelta?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire las dos listas</h2>
+    <div id="panel-arreglo"></div>
+    <div id="panel-res"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Arriba, las casillas azules son A[0..i). Abajo,
+        <code>res</code>: la ficha ámbar es la última escrita. Mírela contra
+        A[i−1] en cada chequeo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza por estados</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Chequeo</th><th>i</th><th>A[0..i)</th><th>res</th>
+          <th id="col-patron">¿Qué se repite?</th></tr>
+        </thead>
+        <tbody id="cuerpo-estados"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los invariantes</h2>
+    <p style="margin-top:0">Un invariante sobre una lista que crece no puede
+    limitarse a decir cuántos elementos tiene: hay que fijar también qué hay
+    en cada posición. Y todo escrito en términos de N, i y A.</p>
+
+    <div style="margin-bottom:0.3rem"><b>¿Qué contiene <code>res</code> en cada chequeo?</b> (ese será I₁)</div>
+    <div class="opciones" id="opciones-res">
+      <button data-op="longitud">len(res) = i</button>
+      <button data-op="distintos">res = los elementos distintos de A[0..i), en orden de aparición</button>
+      <button data-op="correcta">res = A[0..i) sin repeticiones consecutivas, en el mismo orden</button>
+      <button data-op="floja">res no tiene dos elementos consecutivos iguales</button>
+    </div>
+    <div id="veredicto-res" class="veredicto"></div>
+
+    <div style="margin:0.8rem 0 0.3rem"><b>El cuerpo del ciclo compara A[i] con
+    el último elemento de <code>res</code>. Para demostrar que esa comparación
+    es la correcta, ¿qué más hay que saber?</b> (ese será I₂)</div>
+    <div class="opciones" id="opciones-ultimo">
+      <button data-op="nada">Nada: con I₁ basta</button>
+      <button data-op="correcta">Que si i &gt; 0, el último elemento de res es A[i−1]</button>
+      <button data-op="max">Que el último elemento de res es el mayor de A[0..i)</button>
+    </div>
+    <div id="veredicto-ultimo" class="veredicto"></div>
+
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Entre qué valores se mueve i?</b> (ese será I₀)</div>
+    <div class="opciones" id="opciones-cotas">
+      <button data-op="correcta">0 ≤ i ≤ N</button>
+      <button data-op="estricta">0 ≤ i &lt; N</button>
+      <button data-op="res">0 ≤ i ≤ len(res)</button>
+    </div>
+    <div id="veredicto-cotas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
+    tres invariantes en la tarjeta 4. El teorema a demostrar:
+    <b>Teorema 1 — los invariantes I₀, I₁ e I₂ se cumplen.</b></p>
+
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Inicialización: con i = 0 y res = [ ], ¿por qué se cumple I₂?</div>
+      <div class="opciones">
+        <button data-p1="vacuo">Porque I₂ solo exige algo cuando i &gt; 0, y aquí i = 0</button>
+        <button data-p1="ultimo">Porque el último elemento de la lista vacía es A[−1]</button>
+        <button data-p1="falso">No se cumple: I₂ falla en la inicialización</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">I₀: 0 ≤ 0 ≤ N. ✓ &nbsp;I₁: A[0..0) es el rango
+      vacío y comprimirlo da la lista vacía, que es lo que dejó la línea 2. ✓
+      &nbsp;I₂ está escrito como una implicación con antecedente i &gt; 0; con
+      i = 0 el antecedente es falso y la implicación se cumple sin exigir
+      nada. ✓ Enunciar I₂ así no es un truco: es lo que permite que el
+      invariante valga desde el primer chequeo, cuando <code>res</code>
+      todavía no tiene último elemento.</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-2">
+      <div class="titulo-paso">Estabilidad: se toma i = t con t &lt; N. ¿En cuántos casos se parte?</div>
+      <div class="opciones">
+        <button data-p2="tres">Tres: res vacía; res no vacía con A[t] ≠ A[t−1]; res no vacía con A[t] = A[t−1]</button>
+        <button data-p2="dos">Dos: A[t] entra en res o no entra</button>
+      </div>
+      <div id="veredicto-p2" class="veredicto"></div>
+      <div class="texto-paso"><b>Caso 1, res vacía.</b> Por I₁ eso solo ocurre
+      con t = 0. La línea 5 pone <code>nuevo</code> en True, la línea 6 no
+      entra —no hay último con quién comparar— y la línea 9 escribe A[0], así que res = [A[0]], que es la compresión de A[0..1). ✓
+      Y su último elemento es A[0] = A[t], o sea A[(t+1)−1]: I₂ evaluado en
+      t + 1. ✓
+      <br><br>
+      <b>Caso 2, res no vacía y A[t] ≠ A[t−1].</b> Por I₂ el último de res es
+      A[t−1], de modo que la comparación de la línea 7 da True y la línea 9
+      escribe A[t]. Como A[t] difiere de A[t−1], empieza una racha nueva y la
+      compresión de A[0..t+1) es la de A[0..t) con A[t] al final: eso es
+      exactamente lo que quedó. ✓ El último pasa a ser A[t]. ✓
+      <br><br>
+      <b>Caso 3, res no vacía y A[t] = A[t−1].</b> Otra vez por I₂ la
+      comparación da False, no se escribe nada, y en efecto A[t] continúa la
+      racha de A[t−1]: comprimir A[0..t+1) da lo mismo que comprimir
+      A[0..t). ✓ El último sigue siendo A[t−1], que es igual a A[t]. ✓
+      <br><br>
+      I₀ vale porque t &lt; N implica 0 ≤ t + 1 ≤ N. Los tres invariantes son
+      estables. ✓ Fíjese en que los casos 2 y 3 <b>usan I₂</b> para pasar de
+      «el último de res» a «A[t−1]». Sin ese invariante la comparación del
+      código no se puede relacionar con el enunciado, y la demostración se
+      queda sin argumento.</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-3">
+      <div class="titulo-paso">Terminación: ¿con qué valor de i termina el ciclo, y de dónde sale?</div>
+      <div class="opciones">
+        <button data-p3="interseccion">i = N, de intersecar la condición rota (i ≥ N) con I₀ (i ≤ N)</button>
+        <button data-p3="declarado">i = N, porque el ciclo recorre todo el arreglo</button>
+        <button data-p3="reslen">i = len(res)</button>
+      </div>
+      <div id="veredicto-p3" class="veredicto"></div>
+      <div class="texto-paso">El ciclo termina porque i crece de 1 en 1 e I₀
+      lo acota por N. Al salir, la condición i &lt; N es falsa, o sea i ≥ N, y
+      junto con I₀ queda i = N. Sustituyendo en I₁: res es A[0..N) sin
+      repeticiones consecutivas, que es la poscondición. ∎</div>
+    </div>
+
+    <div class="conclusion" id="conclusion">
+      <b>Teorema 2.</b> La invocación <code>comprimir(A)</code> sobre cualquier
+      arreglo A devuelve A sin repeticiones consecutivas.
+      <b>Demostración:</b> por el Teorema 1 los invariantes se cumplen; la
+      terminación deja i = N y sustituir en I₁ da la poscondición. ∎
+      <br><br>
+      Dos cosas para llevarse. La longitud de <code>res</code> no aparece en
+      ningún invariante: no hacía falta, porque decir <b>qué</b> es la lista ya
+      fija cuántos elementos tiene. Y el invariante que costó encontrar, I₂, no
+      habla de la salida sino de la relación entre la salida y la entrada; es
+      el puente entre lo que el código compara y lo que el enunciado pide.
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Modifique <code>comprimir</code>
+    para que además construya una segunda lista <code>veces</code>, donde
+    <code>veces[t]</code> sea el largo de la racha que dejó <code>res[t]</code>.
+    Escriba el invariante que relaciona las dos listas —tendrá que decir algo
+    sobre la suma de <code>veces</code>— y demuestre los tres pasos. Después
+    responda, en términos de N: ¿cuál es la longitud más corta y la más larga
+    que puede tener <code>res</code>, y con qué entradas?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="comprimir.js"></script>
+</body>
+</html>

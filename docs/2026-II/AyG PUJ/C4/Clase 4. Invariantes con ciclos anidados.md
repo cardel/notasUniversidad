@@ -33,8 +33,16 @@ variantes de la búsqueda binaria.
 
 ## Ejercicios
 
-Los de esta sesión están en la [página de ejercicios](Ejercicios.md): tres
-con un ciclo, tres con dos ciclos y tres de búsqueda binaria.
+Cuatro para trabajar en el navegador, uno por cada forma de ciclo, con
+algoritmos que no aparecen en las diapositivas: el mayor y el segundo mayor a
+la vez, comprimir repeticiones consecutivas, el ordenamiento burbuja y el
+mínimo de un arreglo rotado. En todos hay que proponer el invariante antes de
+que se abra la demostración, y hay que escribirlo con $N$ y el índice: entre
+las respuestas posibles siempre está la que describe los datos de la corrida,
+y elegirla lleva al caso donde se cae.
+
+Después, nueve para resolver en papel. Todos están en la
+[página de ejercicios](Ejercicios.md).
 
 ## Antes de entrar
 
