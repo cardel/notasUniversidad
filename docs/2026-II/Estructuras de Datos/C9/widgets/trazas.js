@@ -1,16 +1,16 @@
 /* Ejercicio interactivo: paso de parametros (clase 9). */
 var EJERCICIO = (function () {
   /* Estado inicial de main y respuesta correcta por version. */
-  var INICIAL = { x: 10, y: 2, z: 8 };
+  var INICIAL = { x: 2, y: 10, z: 4 };
   var ESPERADO = {
-    valor: { x: 10, y: 12, z: 8 },
-    puntero: { x: 11, y: 12, z: 8 },
-    referencia: { x: 11, y: 12, z: 8 }
+    valor: { x: 3, y: 10, z: 7 },
+    puntero: { x: 3, y: 3, z: 7 },
+    referencia: { x: 3, y: 3, z: 7 }
   };
 
-  /* ans se evalua antes de los aumentos: 10 + 2 en las tres versiones. */
+  /* La resta corre con a ya en 7: 10 - 7 en las tres versiones. */
   function retorno() {
-    return INICIAL.x + INICIAL.y;
+    return INICIAL.y - (INICIAL.x + 5);
   }
 
   return { inicial: INICIAL, esperado: ESPERADO, retorno: retorno };
@@ -40,43 +40,38 @@ if (typeof module !== "undefined") {
     }
 
     pintarCodigo("codigo-main", [
-      ["int x = 10;", ""],
-      ["int y = 2;", ""],
-      ["int z = 8;", ""],
-      ["int *w = &y;", "bloque-2"],
+      ["int x = 2;", ""],
+      ["int y = 10;", ""],
+      ["int z = 4;", ""],
+      ["int *w = &x;", "bloque-2"],
       ["", ""],
       ["printf(\"x = %d y = %d z = %d\\n\", x, y, z);", ""],
-      ["*w = algo(..., y);", "bloque-2"],
+      ["z = z + ajuste(x, ...);", "bloque-2"],
+      ["*w = *w + 1;", "bloque-2"],
       ["printf(\"x = %d y = %d z = %d\\n\", x, y, z);", ""]
     ]);
 
     pintarCodigo("codigo-valor", [
-      ["int algo(int a, int b) {", "bloque-1"],
-      ["    int ans = a + b;", ""],
-      ["", ""],
-      ["    a = a + 1;", ""],
-      ["    b = b - 1;", ""],
-      ["    return ans;", ""],
+      ["int ajuste(int a, int b) {", "bloque-1"],
+      ["    a = a + 5;", ""],
+      ["    b = b - a;", ""],
+      ["    return b;", ""],
       ["}", ""]
     ]);
 
     pintarCodigo("codigo-puntero", [
-      ["int algo(int *a, int b) {", "bloque-1"],
-      ["    int ans = *a + b;", "bloque-1"],
-      ["", ""],
-      ["    *a = *a + 1;", "bloque-1"],
-      ["    b = b - 1;", ""],
-      ["    return ans;", ""],
+      ["int ajuste(int a, int *b) {", "bloque-1"],
+      ["    a = a + 5;", ""],
+      ["    *b = *b - a;", "bloque-1"],
+      ["    return *b;", "bloque-1"],
       ["}", ""]
     ]);
 
     pintarCodigo("codigo-referencia", [
-      ["int algo(int &a, int b) {", "bloque-1"],
-      ["    int ans = a + b;", ""],
-      ["", ""],
-      ["    a = a + 1;", ""],
-      ["    b = b - 1;", ""],
-      ["    return ans;", ""],
+      ["int ajuste(int a, int &b) {", "bloque-1"],
+      ["    a = a + 5;", ""],
+      ["    b = b - a;", ""],
+      ["    return b;", ""],
       ["}", ""]
     ]);
 
@@ -99,54 +94,63 @@ if (typeof module !== "undefined") {
       if (isNaN(x) || isNaN(y) || isNaN(z)) {
         return "Complete los tres valores primero.";
       }
+      if (z === EJERCICIO.inicial.z) {
+        return "El retorno no se pierde: la línea dice z = z + ajuste(...), " +
+          "así que lo retornado se le suma al 4 que z ya tenía.";
+      }
+      if (z === EJERCICIO.retorno()) {
+        return "Casi: z = z + ajuste(...) suma el retorno al 4 que z ya " +
+          "tenía, no lo reemplaza.";
+      }
       if (z !== e.z) {
-        return "Nadie escribió en z: no viaja a la función y main tampoco la toca.";
+        return "Revise z: calcule primero qué retorna ajuste y luego mire " +
+          "qué hace main con ese valor.";
       }
-      if (version === "valor" && x === 11) {
-        return "a = a + 1 sumó en la copia. En esta versión a nace copiando " +
-          "el 10 y vive en el marco de algo: x no se entera.";
+      if (x === EJERCICIO.inicial.x) {
+        return "Es cierto que la función no alcanza a x, pero mire la línea " +
+          "que sigue a la llamada: w guarda la dirección de x, y main " +
+          "escribe ahí con *w.";
       }
-      if (version !== "valor" && x === 10) {
-        if (version === "puntero") {
-          return "Ahora a guarda la dirección de x: *a = *a + 1 viaja hasta " +
-            "la celda original y x sí cambia.";
-        }
-        return "int &a no copia: a es otro nombre de x durante la llamada, " +
-          "y a = a + 1 escribe en la celda de x.";
+      if (x === 7 || x === 8) {
+        return "a viaja por valor en las tres firmas de esta página: el " +
+          "a + 5 se quedó en el marco de ajuste y murió con él.";
       }
       if (x !== e.x) {
-        return "Revise x: pregúntese si esta versión le da a la función la " +
-          "celda original o una copia.";
+        return "Revise x: la función nunca recibe su dirección, y aun así " +
+          "x termina distinta. La respuesta está en main.";
       }
-      if (y === EJERCICIO.inicial.y) {
-        return "Es cierto que b viaja por valor, pero mire la llamada " +
-          "completa: w guarda la dirección de y, y main escribe ahí el " +
-          "valor retornado con *w.";
+      if (version === "valor" && y === 3) {
+        return "b = b - a restó en la copia: con int b solo viaja el valor " +
+          "de y, y la celda original no se entera.";
       }
-      if (y === 1) {
-        return "El b = b - 1 ocurrió en la copia y murió con el marco. La " +
-          "escritura visible sobre y viene de *w con el valor retornado.";
+      if (version !== "valor" && y === EJERCICIO.inicial.y) {
+        if (version === "puntero") {
+          return "Ahora b guarda la dirección de y: *b = *b - a viaja hasta " +
+            "la celda original y y sí cambia.";
+        }
+        return "int &b no copia: b es otro nombre de y durante la llamada, " +
+          "y b = b - a escribe en la celda de y.";
       }
-      if (y === 13) {
-        return "Revise el orden: ans se calcula antes del aumento, con el " +
-          "10 original.";
+      if (y === 8) {
+        return "Cuidado con el orden: cuando llega la resta, a ya subió a 7.";
       }
       if (y !== e.y) {
-        return "Siga el retorno: ans = 10 + 2, y *w lo deja en la celda de y.";
+        return "Siga la resta: a sube a 7 y la resta deja 10 - 7 = 3. " +
+          "Pregúntese a qué celda le quedó ese 3 en esta versión.";
       }
       return null;
     }
 
     var EXITO = {
-      valor: "Correcto: el paso fue por valor de principio a fin y x quedó " +
-        "intacta. Aun así y terminó en 12, porque main escribió el retorno " +
-        "con *w: el puntero es asunto del llamador, no del paso.",
-      puntero: "Correcto: *a alcanzó la celda de x (10 → 11) y el retorno 12 " +
-        "llegó a y por *w. Una misma firma mezcló los dos modos: a por " +
-        "referencia, b por valor.",
+      valor: "Correcto: nada de lo que hizo ajuste salió de su marco —a y b " +
+        "eran copias— y su única salida fue el retorno 3, que se sumó a z. " +
+        "El cambio de x no fue de la función: fue main, escribiendo con *w.",
+      puntero: "Correcto: *b llevó la resta hasta la celda de y (10 → 3), a " +
+        "siguió siendo copia, y el retorno subió z a 7. Una misma firma " +
+        "mezcló los dos modos: b por referencia, a por valor.",
       referencia: "Correcto, y con trampa doble: el resultado es el de la " +
         "versión con punteros, pero la llamada se lee como la versión por " +
-        "valor. En C++ quien avisa es la firma: int &a."
+        "valor. En C++ quien avisa es la firma: int &b."
     };
 
     ["valor", "puntero", "referencia"].forEach(function (version) {
