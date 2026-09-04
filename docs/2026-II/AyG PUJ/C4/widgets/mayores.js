@@ -203,9 +203,11 @@ if (typeof module !== "undefined") {
     function revisarDescubrimiento() {
       if (mayorOK && segundoOK && cotasOK) {
         document.getElementById("paso-1").classList.remove("bloqueado");
-        document.getElementById("nota-pasos").innerHTML = "Invariantes: " +
-          "<b>I₀: 2 ≤ i ≤ N</b>, <b>I₁: mayor = máx A[0..i)</b> e " +
-          "<b>I₂: segundo = el segundo de A[0..i) ordenado de mayor a menor</b>. " +
+        document.getElementById("nota-pasos").innerHTML = "Invariantes, con " +
+          "M = {{A[t] : 0 ≤ t &lt; i}} el multiconjunto de lo ya leído: " +
+          "<b>I₀: 2 ≤ i ≤ N</b>, <b>I₁: mayor = máx M</b> e " +
+          "<b>I₂: segundo = máx (M − {{mayor}})</b>, donde la resta quita una " +
+          "sola copia. " +
           "El teorema a demostrar: <b>Teorema 1 — los invariantes I₀, I₁ e I₂ " +
           "se cumplen.</b>";
       }
