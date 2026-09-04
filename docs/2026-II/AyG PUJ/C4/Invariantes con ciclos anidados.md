@@ -131,7 +131,8 @@ argumento no cierra.
 
 El invariante de una lista que crece tiene que fijar dos cosas: cuántos
 elementos lleva, en función del índice, y qué hay en cada posición ya
-escrita.
+escrita. Las dos con fórmula: un cuantificador sobre las posiciones y,
+dentro, una igualdad o una pertenencia.
 
 Si falta lo primero, en la terminación se sabría qué hay en cada posición
 de `res` pero no cuántas posiciones hay. Una lista vacía cumpliría de
@@ -156,37 +157,77 @@ def posiciones_pares(A):
     return res
 ```
 
-$I_0$: $0 \leq i \leq N$.
+Antes de los invariantes conviene nombrar el conjunto que el ciclo va
+enumerando:
 
-$I_1$: `res` es la lista, en orden creciente, de las posiciones $j$ con
-$0 \leq j < i$ y $A[j]$ par.
+$$P_i = \{\, j \in \mathbb{Z} \;:\; 0 \leq j < i \;\wedge\; A[j] \bmod 2 = 0 \,\}$$
 
-El largo no aparece porque $I_1$ ya lo determina: describe exactamente qué
-posiciones están y en qué orden.
+Son las posiciones pares de la parte ya revisada, y la poscondición pide
+entregar $P_N$ en orden creciente. Con ese nombre los invariantes quedan
+así:
 
-**Inicialización.** $\texttt{res} = []$ e $i = 0$. Para $I_0$:
-$0 \leq 0 \leq N$, cierto porque $N \geq 0$. Para $I_1$: el rango
-$0 \leq j < 0$ es vacío, así que la lista de sus posiciones pares es la
-lista vacía.
+$$I_0:\ 0 \leq i \leq N$$
+$$I_1:\ \texttt{len(res)} = |P_i|$$
+$$I_2:\ \forall k,\ 0 \leq k < \texttt{len(res)}:\ \texttt{res}[k] \in P_i$$
+$$I_3:\ \forall k,\ 0 \leq k < \texttt{len(res)} - 1:\ \texttt{res}[k] < \texttt{res}[k+1]$$
 
-**Estabilidad.** Se considera una iteración arbitraria $i = j$ con $j < N$,
-y se asume que `res` contiene, en orden creciente, las posiciones pares de
-$A[0..j)$. Hay dos casos.
+Las tres últimas juntas dicen que `res` es $P_i$ en orden. $I_3$ obliga a
+que las entradas sean distintas dos a dos, así que `res` tiene
+$\texttt{len(res)}$ valores distintos; $I_2$ los mete a todos en $P_i$; e
+$I_1$ dice que son tantos como $|P_i|$. Un subconjunto de $P_i$ con $|P_i|$
+elementos distintos es $P_i$ completo.
 
-Si $A[j]$ es par, se agrega $j$ al final. Como todas las posiciones que ya
-estaban son menores que $j$, agregar al final conserva el orden creciente, y
-la lista pasa a contener las posiciones pares de $A[0..j+1)$.
+Escrito en prosa —«`res` tiene las posiciones pares en orden»— quedan
+tres preguntas abiertas: si el orden es estricto, si pueden faltar
+posiciones y sobre qué rango. Cada una es un invariante que la estabilidad
+usa por separado, y ninguna se puede sustituir en $j+1$ mientras no sea una
+fórmula.
 
-Si $A[j]$ es impar, `res` no cambia. La posición $j$ no debe estar, y las de
-$A[0..j)$ ya están, así que la lista contiene las posiciones pares de
-$A[0..j+1)$.
+**Cómo crece $P_i$.** Separando de $P_{j+1}$ la posición $j$:
 
-En ambos casos vale $I_1$ evaluado en $j+1$. Para $I_0$: de $j < N$ sale
-$0 \leq j+1 \leq N$.
+$$P_{j+1} = \begin{cases} P_j \cup \{j\} & \text{si } A[j] \bmod 2 = 0, \\ P_j & \text{si } A[j] \bmod 2 = 1. \end{cases}$$
+
+Y por la definición de $P_j$, todo $t \in P_j$ cumple $t < j$; en
+particular $j \notin P_j$, así que en el primer caso
+$|P_{j+1}| = |P_j| + 1$.
+
+**Inicialización.** $\texttt{res} = []$ e $i = 0$, luego
+$\texttt{len(res)} = 0$. Para $I_0$: $0 \leq 0 \leq N$, cierto porque
+$N \geq 0$. Para $I_1$: la condición $0 \leq j < 0$ es falsa para todo $j$,
+luego $P_0 = \emptyset$ y $|P_0| = 0 = \texttt{len(res)}$. Para $I_2$ e
+$I_3$: cuantifican sobre $0 \leq k < 0$ y sobre $0 \leq k < -1$, ambos
+vacíos, y una afirmación universal sobre el vacío es cierta.
+
+**Estabilidad.** Se considera una iteración arbitraria $i = j$ que ejecuta
+el cuerpo, o sea con $j < N$, y se asumen $I_0$ a $I_3$ evaluados en $j$.
+Sea $L = \texttt{len(res)}$ el largo antes de la vuelta y $\texttt{res}'$
+el valor después del cuerpo.
+
+*Caso $A[j] \bmod 2 = 0$.* El `append` deja $\texttt{res}'[k] =
+\texttt{res}[k]$ para $k < L$ y $\texttt{res}'[L] = j$, con
+$\texttt{len(res}') = L + 1$. Para $I_1$: $L + 1 = |P_j| + 1 = |P_{j+1}|$,
+la última igualdad porque $j \notin P_j$. Para $I_2$: si $k < L$,
+$\texttt{res}'[k] = \texttt{res}[k] \in P_j \subseteq P_{j+1}$; y
+$\texttt{res}'[L] = j \in P_{j+1}$ por la condición del caso. Para $I_3$:
+las parejas con $k+1 < L$ valen por hipótesis, y la nueva es
+$\texttt{res}'[L-1] < \texttt{res}'[L] = j$, cierta porque
+$\texttt{res}[L-1] \in P_j$ y todo elemento de $P_j$ es menor que $j$; con
+$L = 0$ no hay pareja nueva.
+
+*Caso $A[j] \bmod 2 = 1$.* El `append` no se ejecuta, luego
+$\texttt{res}' = \texttt{res}$, y $P_{j+1} = P_j$. Los tres invariantes
+evaluados en $j+1$ son las mismas afirmaciones sobre los mismos objetos que
+la hipótesis.
+
+Para $I_0$: de $j < N$ sale $j+1 \leq N$, y de $j \geq 0$ sale
+$j+1 \geq 0$.
 
 **Terminación.** Al salir, $i \geq N$; con $I_0$ eso da $i = N$.
-Sustituyendo en $I_1$, `res` es la lista creciente de las posiciones $j < N$
-con $A[j]$ par, o sea todas las del arreglo.
+Sustituyendo, $\texttt{len(res)} = |P_N|$, cada $\texttt{res}[k]$ está en
+$P_N$ y la lista es estrictamente creciente. El orden estricto hace
+distintas las $|P_N|$ entradas, así que el conjunto de valores de `res`
+tiene $|P_N|$ elementos y está contenido en $P_N$, que tiene ese mismo
+cardinal; entonces es $P_N$ completo, listado de menor a mayor.
 
 ### La lista crece siempre
 
@@ -346,9 +387,12 @@ deja de importar a partir de aquí.
 ### El ciclo externo
 
 $$I_0:\ 0 \leq i \leq N-1$$
-$$I_1:\ A[0..i) \text{ está en orden no decreciente}$$
-$$I_2:\ \text{todo elemento de } A[0..i) \text{ es} \leq \text{todo elemento de } A[i..N)$$
-$$I_3:\ A \text{ es una permutación del arreglo original}$$
+$$I_1:\ \forall a, b,\ 0 \leq a < b < i:\ A[a] \leq A[b]$$
+$$I_2:\ \forall a, b,\ 0 \leq a < i \leq b < N:\ A[a] \leq A[b]$$
+$$I_3:\ \{\!\{\, A[t] : 0 \leq t < N \,\}\!\} = \{\!\{\, A_0[t] : 0 \leq t < N \,\}\!\}$$
+
+con $A_0$ el arreglo que recibió la función y $\{\!\{\cdot\}\!\}$ el
+multiconjunto: los mismos valores, con las mismas repeticiones.
 
 Saber que $A[0..i)$ está ordenado no dice nada sobre lo que viene después.
 El arreglo $[1, 2 \mid 0, 7]$ cumple $I_1$ con $i = 2$ y no está en camino
@@ -362,17 +406,18 @@ cumpliría $I_1$ e $I_2$ sin ser un ordenamiento.
 
 **Inicialización.** $i = 0$. Para $I_0$: $0 \leq 0 \leq N-1$, cierto
 siempre que $N \geq 1$; con $N = 0$ el ciclo no corre y no hay nada que
-probar. Para $I_1$: $A[0..0)$ es vacío y un rango vacío está ordenado. Para
-$I_2$: la afirmación cuantifica sobre un rango vacío, luego es cierta de
-forma trivial. Para $I_3$: todavía no se ha modificado nada.
+probar. Para $I_1$: no hay $a$, $b$ con $0 \leq a < b < 0$, luego el
+universal es cierto sobre el vacío. Para $I_2$: tampoco hay $a$ con
+$0 \leq a < 0$, mismo argumento. Para $I_3$: nada se ha tocado todavía, así
+que $A[t] = A_0[t]$ para todo $t$ y los dos multiconjuntos coinciden.
 
 **Estabilidad.** Se considera $i = k$ con $k < N-1$, y se asumen $I_0$ a
 $I_3$ para $k$. Por el **Lema 1**, al salir del ciclo interno vale
 $A[p] = \min A[k..N)$ con $k \leq p < N$. El cuerpo intercambia $A[k]$ con
 $A[p]$; sea $B$ el arreglo después del intercambio.
 
-*$I_3$*: el intercambio permuta dos posiciones, así que $B$ sigue siendo una
-permutación del original.
+*$I_3$*: el intercambio permuta dos posiciones, así que el multiconjunto de
+$B$ es el mismo de $A$, y por hipótesis el de $A_0$.
 
 *$I_2$ sobrevive al intercambio*: las dos posiciones tocadas, $k$ y $p$,
 están ambas en $[k..N)$. El multiconjunto $A[0..k)$ no cambió y el
@@ -391,11 +436,13 @@ todos ellos.
 *$I_0$*: de $k < N-1$ sale $0 \leq k+1 \leq N-1$.
 
 **Terminación.** Al salir, $i \geq N-1$; junto con $I_0$ eso da $i = N-1$.
-$I_1$ dice que $A[0..N-1)$ está ordenado, e $I_2$ dice que todo elemento de
-$A[0..N-1)$ es $\leq$ el único elemento de $A[N-1..N)$, que es $A[N-1]$. Un
-arreglo ordenado al que se le agrega al final un elemento mayor o igual que
-todos sigue ordenado, luego $A[0..N)$ está ordenado. Con $I_3$, además, son
-los elementos originales.
+$I_1$ da $A[a] \leq A[b]$ para $0 \leq a < b < N-1$, e $I_2$ da
+$A[a] \leq A[b]$ para $0 \leq a < N-1 \leq b < N$, donde el único $b$ del
+rango es $b = N-1$. Sea ahora una pareja cualquiera con
+$0 \leq a < b < N$: si $b < N-1$ la cubre $I_1$, y si $b = N-1$ la cubre
+$I_2$. Entonces $A[a] \leq A[b]$ para toda pareja, que es la definición de
+orden no decreciente sobre $A[0..N)$. Con $I_3$, además, son los elementos
+originales.
 
 ### El costo
 

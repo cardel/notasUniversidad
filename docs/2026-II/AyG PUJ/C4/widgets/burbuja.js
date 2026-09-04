@@ -314,10 +314,12 @@ if (typeof module !== "undefined") {
       if (i1OK && i3OK) {
         document.getElementById("paso-1").classList.remove("bloqueado");
         document.getElementById("nota-pasos").innerHTML = "Invariantes del " +
-          "ciclo externo: <b>I₀: 0 ≤ i ≤ N−1</b>, <b>I₁: A[N−i..N) está " +
-          "ordenado</b>, <b>I₂: todo A[0..N−i) es ≤ todo A[N−i..N)</b> e " +
-          "<b>I₃: A es una permutación del arreglo original</b>. Se demuestra " +
-          "primero el <b>Lema 1</b> y después el <b>Teorema 1</b>, que lo cita.";
+          "ciclo externo: <b>I₀: 0 ≤ i ≤ N−1</b>, " +
+          "<b>I₁: ∀a, b, N−i ≤ a &lt; b &lt; N: A[a] ≤ A[b]</b>, " +
+          "<b>I₂: ∀a, b, 0 ≤ a &lt; N−i ≤ b &lt; N: A[a] ≤ A[b]</b> e " +
+          "<b>I₃: {{A[t] : 0 ≤ t &lt; N}} = {{A₀[t] : 0 ≤ t &lt; N}}</b>, con A₀ el " +
+          "arreglo recibido y {{·}} el multiconjunto. Se demuestra primero el " +
+          "<b>Lema 1</b> y después el <b>Teorema 1</b>, que lo cita.";
       }
     }
 
