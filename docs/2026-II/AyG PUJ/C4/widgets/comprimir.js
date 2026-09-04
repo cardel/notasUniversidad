@@ -251,9 +251,12 @@ if (typeof module !== "undefined") {
     function revisarDescubrimiento() {
       if (resOK && ultimoOK && cotasOK) {
         document.getElementById("paso-1").classList.remove("bloqueado");
-        document.getElementById("nota-pasos").innerHTML = "Invariantes: " +
-          "<b>I₀: 0 ≤ i ≤ N</b>, <b>I₁: res = A[0..i) sin repeticiones " +
-          "consecutivas</b> e <b>I₂: si i &gt; 0, res[len(res) − 1] = A[i−1]</b>. " +
+        document.getElementById("nota-pasos").innerHTML = "Invariantes, con " +
+          "B = { t : 0 ≤ t &lt; i ∧ (t = 0 ∨ A[t] ≠ A[t−1]) } las posiciones " +
+          "donde arranca una racha y b₀ &lt; b₁ &lt; … sus elementos en orden: " +
+          "<b>I₀: 0 ≤ i ≤ N</b>, <b>I₁: len(res) = |B| ∧ ∀k, 0 ≤ k &lt; " +
+          "len(res): res[k] = A[bₖ]</b> e <b>I₂: i &gt; 0 → " +
+          "res[len(res) − 1] = A[i−1]</b>. " +
           "El teorema a demostrar: <b>Teorema 1 — los invariantes I₀, I₁ e I₂ " +
           "se cumplen.</b>";
       }

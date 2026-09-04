@@ -218,8 +218,8 @@ if (typeof module !== "undefined") {
       if (i1OK && cotasOK) {
         document.getElementById("paso-1").classList.remove("bloqueado");
         document.getElementById("nota-pasos").innerHTML = "Invariantes: " +
-          "<b>I₀: 0 ≤ l ≤ r ≤ N</b> e <b>I₁: toda posición t &lt; l cumple " +
-          "A[t] &gt; A[N−1], y toda posición t ≥ r cumple A[t] ≤ A[N−1]</b>. " +
+          "<b>I₀: 0 ≤ l ≤ r ≤ N</b> e <b>I₁: ∀t, 0 ≤ t &lt; l: " +
+          "A[t] &gt; A[N−1] ∧ ∀t, r ≤ t &lt; N: A[t] ≤ A[N−1]</b>. " +
           "El teorema a demostrar: <b>Teorema 1 — los invariantes I₀ e I₁ se " +
           "cumplen.</b>";
       }

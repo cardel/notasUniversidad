@@ -10,12 +10,16 @@ que se cumple en **todas** las filas mientras el resto cambia. Cuando lo
 encuentre, el ejercicio abre la demostración y usted la arma respondiendo una
 pregunta por movimiento.
 
-Una advertencia que vale para los cuatro. Un invariante se escribe con $N$,
-con el índice y con el arreglo: `mayor` es el máximo de $A[0..i)$, `res` es
-$A[0..i)$ sin repeticiones consecutivas, $A[j]$ es el máximo de $A[0..j]$.
-Frases como ``mayor vale 9'' o ``la lista tiene cuatro elementos'' describen
-una corrida y no otra; los ejercicios traen esa opción entre las respuestas
-posibles, y elegirla lleva al preset donde la frase se cae.
+Una advertencia que vale para los cuatro. Un invariante es una fórmula, no
+una frase: lleva $N$, el índice y el arreglo, un cuantificador sobre las
+posiciones y, adentro, una igualdad o una pertenencia. Se escribe
+$\texttt{mayor} = \max A[0..i)$, o
+$\forall k,\ 0 \leq k < \texttt{len(res)} - 1:\ \texttt{res}[k] \neq \texttt{res}[k+1]$,
+y no ```mayor` guarda el más grande'' ni ``la lista no trae repetidos
+seguidos''. Frases como ``mayor vale 9'' o ``la lista tiene cuatro
+elementos'' describen una corrida y no otra; los ejercicios traen esa opción
+entre las respuestas posibles, y elegirla lleva al preset donde la frase se
+cae.
 
 ## Varias variables a la vez
 
