@@ -5,9 +5,9 @@
 Los cuatro ciclos que ya quedaron demostrados —la suma de un arreglo, el
 factorial, la búsqueda de un valor y la búsqueda binaria— tienen todos la
 misma forma de estado: un índice y un acumulador numérico, con $I_1$
-escrito como una ecuación entre los dos. Esta sesión sale de ese molde por
-tres lados. El estado puede ser varias variables amarradas entre sí, la
-salida puede ser una lista que crece, y puede haber un ciclo dentro de
+escrito como una ecuación entre los dos. Esta sesión abre los tres casos
+que no caben ahí: el estado puede ser varias variables amarradas entre sí,
+la salida puede ser una lista que crece, y puede haber un ciclo dentro de
 otro.
 
 ## Diapositivas
@@ -25,10 +25,24 @@ Un ciclo se demuestra con dos invariantes y tres pasos:
 vuelta cualquiera los conserva. **Terminación**: el ciclo para, y ahí los
 invariantes entregan la poscondición.
 
+Los dos primeros pasos son una inducción sobre el número de vueltas: la
+inicialización es el caso base y la estabilidad es el paso inductivo, donde
+se asume el invariante en $j$ y se demuestra en $j+1$. CLRS le dice
+*conservación* a lo que aquí se llama estabilidad; es lo mismo.
+
 El paso que más se salta es el tercero. El valor final del índice no se
 declara: sale de intersectar la condición rota con $I_0$. Si el ciclo se
 detuvo, $i < N$ es falsa, o sea $i \geq N$; junto con $I_0: 0 \leq i \leq N$
 eso da $i = N$, y no otra cosa.
+
+### El invariante no se adivina
+
+Antes de escribirlo se corre el ciclo a mano sobre una entrada cualquiera
+—tres o cuatro vueltas alcanzan— anotando en una tabla el índice y cada
+variable del estado. Ahí aparece el patrón, y el invariante es ese patrón
+puesto en fórmula y amarrado a lo que pide la poscondición. Sin la tabla,
+lo que uno escribe es una descripción de la corrida que tuvo delante, no
+una afirmación sobre una vuelta cualquiera.
 
 ## Varias variables a la vez
 
@@ -127,6 +141,12 @@ El error no se descubre corriendo el programa con $n = 2$, donde por
 casualidad acierta. Se descubre en la estabilidad, que es donde el
 argumento no cierra.
 
+Eso convierte la demostración en una herramienta para lo contrario: mostrar
+que un programa está mal. Y el paso que falla dice de qué tipo es el error.
+Un valor inicial equivocado rompe la inicialización; una actualización mal
+escrita rompe la estabilidad; una condición de ciclo mal puesta rompe la
+terminación.
+
 ## Cuando la salida es una lista
 
 El invariante de una lista que crece tiene que fijar dos cosas: cuántos
@@ -177,7 +197,7 @@ $\texttt{len(res)}$ valores distintos; $I_2$ los mete a todos en $P_i$; e
 $I_1$ dice que son tantos como $|P_i|$. Un subconjunto de $P_i$ con $|P_i|$
 elementos distintos es $P_i$ completo.
 
-Escrito en prosa —«`res` tiene las posiciones pares en orden»— quedan
+Descrito en palabras —«`res` tiene las posiciones pares en orden»— quedan
 tres preguntas abiertas: si el orden es estricto, si pueden faltar
 posiciones y sobre qué rango. Cada una es un invariante que la estabilidad
 usa por separado, y ninguna se puede sustituir en $j+1$ mientras no sea una
@@ -248,6 +268,23 @@ def maximos_parciales(A):
         i = i + 1
     return res
 ```
+
+Sobre $[3, 8, 4, 12, 1, 3]$, el estado cada vez que se llega a comprobar
+`i < N`:
+
+| $i$ | $A[0..i)$ | $m$ | `res` |
+|:---:|:---|:---:|:---|
+| 1 | $[3]$ | 3 | $[3]$ |
+| 2 | $[3, 8]$ | 8 | $[3, 8]$ |
+| 3 | $[3, 8, 4]$ | 8 | $[3, 8, 8]$ |
+| 4 | $[3, 8, 4, 12]$ | 12 | $[3, 8, 8, 12]$ |
+| 5 | $[3, 8, 4, 12, 1]$ | 12 | $[3, 8, 8, 12, 12]$ |
+| 6 | $[3, 8, 4, 12, 1, 3]$ | 12 | $[3, 8, 8, 12, 12, 12]$ |
+
+La columna $m$ es el máximo de la que tiene al lado, y cada entrada de
+`res` es el máximo del prefijo que termina en su posición. Esas dos
+observaciones, puestas en fórmula, son los invariantes. La última fila es
+lo que el ciclo entrega.
 
 El estado tiene tres partes y cada una necesita su línea:
 
@@ -400,9 +437,18 @@ de quedar ordenado: el 0 de la derecha debería haber ido de primero. $I_1$
 ordena hacia adentro del prefijo; $I_2$ lo separa del resto, y garantiza que
 nada de la derecha tiene que volver a la izquierda.
 
+Con $I_2$ escrito, el intercambio se lee solo. Sobre
+$[2, 3, 5 \mid 7, 9, 6]$ el mínimo de la derecha es el 6, que está al final;
+el cuerpo lo cambia con el 7 y deja $[2, 3, 5, 6 \mid 9, 7]$. El elemento
+que cruzó era el menor de su lado, así que es mayor o igual que todo el
+prefijo —el orden aguanta— y lo que quedó a la derecha es mayor o igual que
+él.
+
 $I_3$ tampoco sobra. Ordenar no es solo entregar algo ordenado: es entregar
 *los mismos elementos* ordenados. Un ciclo que llenara el arreglo de ceros
-cumpliría $I_1$ e $I_2$ sin ser un ordenamiento.
+cumpliría $I_1$ e $I_2$ sin ser un ordenamiento. La igualdad de
+multiconjuntos ahorra además el invariante del tamaño: dos multiconjuntos
+iguales tienen la misma cantidad de elementos.
 
 **Inicialización.** $i = 0$. Para $I_0$: $0 \leq 0 \leq N-1$, cierto
 siempre que $N \geq 1$; con $N = 0$ el ciclo no corre y no hay nada que
