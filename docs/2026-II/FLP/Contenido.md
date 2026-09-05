@@ -29,6 +29,16 @@ Se publican después de cada sesión.
 
 *Aún no hay clases publicadas.*
 
+## Actividades interactivas
+
+Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
+quedan disponibles después para volver sobre el tema.
+
+1. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
+   — decidir qué entra en un conjunto definido por reglas, qué llamada
+   recursiva autoriza la gramática, y escribir cuatro procedimientos que
+   corren en la misma página.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
