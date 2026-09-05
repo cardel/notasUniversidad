@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Especificación inductiva de datos</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Qué entra en el conjunto</h1>
+  <p class="intro">Tres bloques. En los dos primeros se decide si un valor
+  pertenece al conjunto que definen las reglas; en el tercero, cuál llamada
+  recursiva queda justificada por esas mismas reglas. Cada decisión muestra la
+  razón, se acierte o no.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>La definición dice…</th><th>…y de ahí sale</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>una regla sin premisas</td><td>el caso base del procedimiento</td></tr>
+          <tr><td>una regla que nombra el conjunto adentro de sí mismo</td><td>la llamada recursiva, sobre esa parte y no sobre otra</td></tr>
+          <tr><td>dos conjuntos que se nombran mutuamente</td><td>dos procedimientos que se llaman mutuamente</td></tr>
+          <tr><td>que nada más entra</td><td>permiso para descartar un valor sin probar todos los casos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">La definición inductiva no es el preámbulo del
+    procedimiento: es su plano. Cuántas cláusulas van, sobre qué se llama la
+    recursión y por qué termina son tres preguntas que las reglas ya
+    respondieron.</div>
+  </div>
+
+</div>
+<script src="induccion.js"></script>
+</body>
+</html>
