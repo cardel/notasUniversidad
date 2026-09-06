@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>escalera — clases de crecimiento</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La escalera de clases</h1>
+  <p class="intro">Cada costo de la semana cae en una clase: O(1), O(log n),
+  O(n), O(n²). Clasifique los cuatro de abajo; cuando estén todos, la
+  escalera se traduce a números y a segundos de máquina.</p>
+
+  <div class="carta">
+    <h2>1. Ubique cada costo en su clase más ajustada</h2>
+    <div id="filas-clasificar"></div>
+    <div id="veredicto-clasificar" class="veredicto"></div>
+    <div class="nota">Truco de la clase: evaluar el costo en n = 10 y en
+    n = 1000 y mirar cuánto creció delata la clase casi siempre.</div>
+  </div>
+
+  <div class="carta" id="carta-escalera" style="display:none">
+    <h2>2. La escalera en números y en segundos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Clase</th><th>n = 10</th><th>n = 1000</th><th>n = 10⁶</th><th>Tiempo con n = 10⁶ a 10⁹ op/s</th></tr></thead>
+        <tbody id="cuerpo-escalera"></tbody>
+      </table>
+    </div>
+    <div class="nota">En la arena, el veredicto <i>Time Limit Exceeded</i> es
+    esta tabla en acción: el juez concede segundos y la clase del algoritmo
+    decide si alcanzan.</div>
+  </div>
+
+</div>
+<script src="escalera.js"></script>
+</body>
+</html>

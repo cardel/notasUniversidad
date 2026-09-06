@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Localidad temporal y espacial — la misma matriz, dos recorridos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Localidad temporal y espacial</h1>
+  <p class="intro">La matriz vive en memoria por filas: primero la fila 0
+  completa, después la 1, y así. Un <code>double</code> ocupa 8 bytes y una
+  línea de caché son 64, de modo que cada línea trae 8 elementos seguidos.
+  Cada acceso termina en una de tres cosas, y esas tres son el ejercicio:</p>
+  <ul style="margin-top:0">
+    <li><b>Acierto espacial</b>: el dato ya estaba porque vino en la misma
+    línea que el acceso anterior. Es aprovechar al vecino.</li>
+    <li><b>Acierto temporal</b>: el dato ya estaba porque se trajo antes y
+    todavía no lo han sacado. Es volver a algo que ya se visitó.</li>
+    <li><b>Fallo</b>: no estaba y hubo que ir por él.</li>
+  </ul>
+
+  <div class="carta">
+    <h2>1. Antes de correr, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la matriz:</label>
+      <input type="range" id="rango-n" min="4" max="16" value="8">
+      <span class="valor-n">n = <span id="ver-n">8</span></span>
+      <span class="presets">
+        <button data-n="4">4×4</button>
+        <button data-n="8">8×8</button>
+        <button data-n="12">12×12</button>
+        <button data-n="16">16×16</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label>Recorrido:</label>
+      <span class="presets">
+        <button data-rec="filas" class="primario">por filas</button>
+        <button data-rec="columnas">por columnas</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="rango-cache">Líneas que caben en la caché:</label>
+      <input type="range" id="rango-cache" min="1" max="40" value="4">
+      <span class="valor-n"><span id="ver-cache">4</span></span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="rango-pasadas">Veces que se recorre la matriz:</label>
+      <input type="range" id="rango-pasadas" min="1" max="3" value="1">
+      <span class="valor-n"><span id="ver-pasadas">1</span></span>
+      <span class="nota" style="margin:0">La segunda pasada es donde se ve la
+      localidad temporal: o el dato sigue ahí, o hay que traerlo otra vez.</span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos fallos habrá en total?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El recorrido, acceso por acceso</h2>
+    <div class="panel-doble">
+      <div><div id="panel-matriz"></div></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Acceso <span id="ver-paso">0</span> de
+          <span id="ver-total">0</span> · pasada
+          <span id="ver-pasada">1</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un acceso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota" id="nota-paso">Azul: acierto espacial. Verde:
+        acierto temporal. Ámbar: fallo.</div>
+      </div>
+    </div>
+    <h2 style="margin-top:1rem">Líneas residentes en la caché</h2>
+    <div class="secuencia" id="panel-cache"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las dos localidades, medidas</h2>
+    <div id="panel-medidas"></div>
+    <div class="alerta" id="caja-lectura"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los dos recorridos, lado a lado</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Recorrido</th><th>Accesos</th><th>Fallos</th><th>Aciertos espaciales</th><th>Aciertos temporales</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota">La tabla usa el n, la capacidad y las pasadas que estén
+    seleccionadas arriba.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuál localidad explota cada uno</h2>
+    <p style="margin-top:0">Ponga n = 8, caché en 4 líneas y una sola pasada.
+    El recorrido por filas casi no falla. ¿De cuál de las dos localidades vive?</p>
+    <div class="opciones" id="opciones-filas">
+      <button data-op="espacial">De la espacial</button>
+      <button data-op="temporal">De la temporal</button>
+      <button data-op="ambas">De las dos por igual</button>
+      <button data-op="ninguna">De ninguna: es que la caché es grande</button>
+    </div>
+    <div id="veredicto-filas" class="veredicto"></div>
+
+    <p style="margin-top:1rem">Ahora suba la caché a 8 líneas y deje el
+    recorrido por columnas. Los fallos caen de 64 a 8 sin tocar el orden de
+    los accesos. ¿Qué apareció?</p>
+    <div class="opciones" id="opciones-columnas">
+      <button data-op="temporal">Localidad temporal: la línea sigue ahí cuando se vuelve a ella</button>
+      <button data-op="espacial">Localidad espacial: ahora sí se usan los vecinos</button>
+      <button data-op="orden">Cambió el orden de los accesos</button>
+      <button data-op="nada">Nada, es coincidencia del simulador</button>
+    </div>
+    <div id="veredicto-columnas" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="localidad.js"></script>
+</body>
+</html>

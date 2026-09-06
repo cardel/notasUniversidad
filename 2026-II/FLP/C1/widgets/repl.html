@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recursión estructural — escribir y correr</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Escribir y correr</h1>
+  <p class="intro">Cuatro procedimientos por escribir. El código corre aquí
+  mismo: se llena el esqueleto, se presiona <b>Probar</b> y las pruebas dicen
+  qué pasó. Cuando una falla, el mensaje señala el caso concreto que se cayó.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cuatro, resueltos</h2>
+    <p style="margin-top:0">Los cuatro procedimientos se escribieron con la
+    misma receta y ninguno necesitó una idea nueva:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>El conjunto que recorre</th><th>Cláusulas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>suma-lista</td><td>listas de enteros</td><td>2: vacía y par</td></tr>
+          <tr><td>duple</td><td>números naturales</td><td>2: cero y n − 1</td></tr>
+          <tr><td>elimina-primero</td><td>listas de símbolos</td><td>3: la vacía, la que empieza con s, y el resto</td></tr>
+          <tr><td>ocurre-libre?</td><td>expresiones lambda</td><td>3: variable, lambda y aplicación</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Cuando el argumento pertenece a un conjunto definido por
+    inducción, la definición ya trae escrito el esqueleto del procedimiento:
+    una cláusula por regla, y la llamada recursiva sobre exactamente la parte
+    que la regla nombra. Lo que queda por decidir es qué devuelve cada
+    cláusula.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (largo lst)
+  (if (null? lst)
+      0
+      (+ 1 (largo (cdr lst)))))
+
+(largo '(a b c d))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="repl.js"></script>
+</body>
+</html>
