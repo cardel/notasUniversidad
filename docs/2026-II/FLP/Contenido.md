@@ -35,9 +35,10 @@ Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
 quedan disponibles después para volver sobre el tema.
 
 1. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
-   — decidir qué entra en un conjunto definido por reglas, qué llamada
-   recursiva autoriza la gramática, y escribir cuatro procedimientos que
-   corren en la misma página.
+   — cuatro actividades: decidir qué entra en un conjunto definido por reglas
+   y qué llamada recursiva autoriza la gramática, escribir los reconocedores
+   que salen de esas reglas, y recorrer listas, s-lists y árboles siguiendo
+   la gramática. El código corre en la misma página.
 
 ## Ejercicios de clase
 

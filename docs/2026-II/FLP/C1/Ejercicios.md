@@ -5,6 +5,10 @@ septiembre). Cada enlace abre una actividad que se trabaja directo en el
 navegador, sin instalar nada. Los ejemplos no son los de la sesión: mismo
 tema, ronda nueva.
 
+Son cuatro. Las dos primeras se alcanzan en la sesión; las dos últimas quedan
+para volver sobre el tema, y entre las tres que piden código suman catorce
+procedimientos por escribir.
+
 ## [conjuntos](widgets/induccion.html){ target=_blank rel=noopener }
 
 Tres bloques de decisiones. En los dos primeros hay que decir si un valor
@@ -36,3 +40,31 @@ El evaluador de la página entiende `define`, `lambda`, `if`, `cond`, `let`,
 `letrec` y las primitivas de listas y aritmética, y nada más: no hay
 `define-datatype` ni `cases`. Sirve para tantear una idea sin cambiar de
 ventana. Lo que se entrega se escribe y se corre en DrRacket.
+
+## [de las reglas al reconocedor](widgets/reconocedores.html){ target=_blank rel=noopener }
+
+Cinco conjuntos definidos por reglas y, para cada uno, el procedimiento que
+decide la pertenencia. Empieza por las potencias de dos, donde la regla
+multiplica y el reconocedor tiene que dividir; sigue con un conjunto de
+parejas, donde las dos componentes se mueven al tiempo y verificar una sola
+deja entrar valores ajenos; y con cuatro conjuntos encadenados, que dan cuatro
+procedimientos preguntándose entre ellos. Ahí aparece el caso del cero, que
+`modulo` acepta y las reglas no.
+
+Los dos últimos toman gramáticas en lugar de reglas de inferencia: la de las
+expresiones lambda y la de los árboles binarios. Decidir si `(lambda x x)`
+pertenece es lo mismo que se hace a ojo mirando paréntesis, ahora escrito
+como procedimiento.
+
+## [recorrer siguiendo la gramática](widgets/recorridos.html){ target=_blank rel=noopener }
+
+Cinco procedimientos que ya no responden sí o no: buscan un elemento, arman
+una lista nueva, miden. `nth-element` baja dos argumentos al tiempo,
+`subst` necesita dos procedimientos que se llaman entre sí porque la gramática
+nombra dos conjuntos, y `profundidad` compara las dos ramas en vez de sumarlas.
+
+Los dos últimos van marcados como opcionales y se pueden dejar para después:
+contar cuántas veces ocurre libre una variable, que es la versión con números
+de lo que antes se respondía con booleanos, y encontrar el camino hasta un
+número en un árbol ordenado, donde la comparación descarta media estructura en
+cada nivel.

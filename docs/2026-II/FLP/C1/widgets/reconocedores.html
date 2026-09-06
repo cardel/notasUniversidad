@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De las reglas al reconocedor</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>De las reglas al reconocedor</h1>
+  <p class="intro">Cinco conjuntos definidos por reglas y, para cada uno, el
+  procedimiento que decide si un valor pertenece. Se llena el esqueleto, se
+  presiona <b>Probar</b> y las pruebas dicen qué pasó. Decidir la pertenencia
+  es lo único que se pide aquí: ninguno de los cinco construye ni transforma
+  nada.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Los cinco reconocedores salieron de leer las
+    reglas, y en cada caso la lectura decidió lo mismo:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En las reglas aparece…</th><th>…y en el reconocedor queda</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>una regla sin premisas</td><td>la cláusula que responde que sí sin preguntar nada</td></tr>
+          <tr><td>una regla que construye a partir de un elemento</td><td>una llamada que deshace esa construcción</td></tr>
+          <tr><td>una regla que nombra dos veces el conjunto</td><td>dos llamadas recursivas unidas por <code>and</code></td></tr>
+          <tr><td>varios conjuntos encadenados</td><td>un procedimiento por conjunto, y cada uno pregunta al siguiente</td></tr>
+          <tr><td>que nada más entra</td><td>la cláusula final que responde que no</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Un valor cae fuera del conjunto por una de dos razones:
+    ninguna regla tiene su forma, o la tiene pero al deshacerla se llega a algo
+    que tampoco pertenece. La primera se resuelve mirando el valor; la segunda,
+    solo recorriéndolo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (in-P? n)
+  (cond ((= n 2) #t)
+        ((< n 2) #f)
+        (else (in-P? (- n 2)))))
+
+(in-P? 10)</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="reconocedores.js"></script>
+</body>
+</html>
