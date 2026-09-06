@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>caja — abstracción de datos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Una caja, dos cuerpos</h1>
+  <p class="intro">Un <b>TAD Hora</b> especificado con firmas y ecuaciones, y
+  dos clases distintas que lo cumplen. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>La caja</h2>
+    <div class="codigo" id="codigo-espec"></div>
+    <div class="nota">Las ecuaciones hablan de lo que la caja
+    <b>responde</b>, no de lo que guarda. Esa diferencia es la que trabajan
+    las cuatro cartas.</div>
+  </div>
+
+  <div class="carta">
+    <h2>1. La ecuación decide</h2>
+    <div class="codigo" id="codigo-normal"></div>
+    <p style="margin-bottom:0.3rem">La llamada cumple la precondición
+    (9 ≥ 0 y 130 ≥ 0). Según las ecuaciones, ¿qué imprime?</p>
+    <div class="prediccion">
+      <span>hora:</span>
+      <input type="number" id="pred-normal-h" placeholder="?">
+      <span>minuto:</span>
+      <input type="number" id="pred-normal-m" placeholder="?">
+      <button id="btn-normal" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-normal" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Quinientos minutos</h2>
+    <p style="margin-top:0">Una clase que cumple la caja guardando un solo
+    entero:</p>
+    <div class="codigo" id="codigo-total"></div>
+    <div class="prediccion">
+      <span>t.hora():</span>
+      <input type="number" id="pred-total-h" placeholder="?">
+      <span>t.minuto():</span>
+      <input type="number" id="pred-total-m" placeholder="?">
+      <button id="btn-total" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-total" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿De qué lado de la barrera?</h2>
+    <p style="margin-top:0">Cada línea viene de un programa que usa el TAD
+    Hora. Diga si vive en el <b>área del programador</b> (solo usa la
+    interfaz) o en la <b>implementación</b> (toca la representación).</p>
+
+    <div class="codigo"><div class="linea"><span class="num">a</span><span class="txt">int p = r.hora() * 60;</span></div></div>
+    <div class="opciones">
+      <button data-linea="0" data-lado="area">Área del programador</button>
+      <button data-linea="0" data-lado="impl">Implementación</button>
+    </div>
+    <div id="veredicto-linea-0" class="veredicto"></div>
+
+    <div class="codigo" style="margin-top:0.7rem"><div class="linea"><span class="num">b</span><span class="txt">total = h * 60 + m;</span></div></div>
+    <div class="opciones">
+      <button data-linea="1" data-lado="area">Área del programador</button>
+      <button data-linea="1" data-lado="impl">Implementación</button>
+    </div>
+    <div id="veredicto-linea-1" class="veredicto"></div>
+
+    <div class="codigo" style="margin-top:0.7rem"><div class="linea"><span class="num">c</span><span class="txt">if (a.minuto() == b.minuto()) {</span></div></div>
+    <div class="opciones">
+      <button data-linea="2" data-lado="area">Área del programador</button>
+      <button data-linea="2" data-lado="impl">Implementación</button>
+    </div>
+    <div id="veredicto-linea-2" class="veredicto"></div>
+
+    <div class="codigo" style="margin-top:0.7rem"><div class="linea"><span class="num">d</span><span class="txt">return total / 60;</span></div></div>
+    <div class="opciones">
+      <button data-linea="3" data-lado="area">Área del programador</button>
+      <button data-linea="3" data-lado="impl">Implementación</button>
+    </div>
+    <div id="veredicto-linea-3" class="veredicto"></div>
+
+    <div class="codigo" style="margin-top:0.7rem"><div class="linea"><span class="num">e</span><span class="txt">Hora manana(6, 30);</span></div></div>
+    <div class="opciones">
+      <button data-linea="4" data-lado="area">Área del programador</button>
+      <button data-linea="4" data-lado="impl">Implementación</button>
+    </div>
+    <div id="veredicto-linea-4" class="veredicto"></div>
+
+    <div id="cierre-barrera" class="alerta" style="display:none">
+      Las cinco quedaron en su lugar. La prueba rápida: si la línea nombra un
+      campo (<b>total</b>, <b>h</b>, <b>m</b>) está adentro; si solo usa el
+      constructor y los observadores, está afuera. Todo lo que está afuera
+      sobrevive intacto a un cambio de representación.
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Mismo main, dos clases</h2>
+    <div class="codigo" id="codigo-main-doble"></div>
+    <p style="margin-bottom:0.3rem">Este main se compila una vez con la clase
+    que guarda la pareja hora y minuto, y otra vez con la clase del total.
+    ¿Qué pasa?</p>
+    <div class="opciones" id="opciones-doble">
+      <button data-op="pareja">Con la pareja imprime 11:10 y con el total imprime 9:130</button>
+      <button data-op="correcta">Las dos corridas imprimen 11:10</button>
+      <button data-op="campos">Con la clase del total no compila</button>
+    </div>
+    <div id="veredicto-doble" class="veredicto"></div>
+    <div id="tabla-doble" style="display:none">
+      <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table>
+        <tr><th></th><th>clase de la pareja</th><th>clase del total</th></tr>
+        <tr><td>qué guarda tras crear(9, 130)</td><td><b>h</b> = 11, <b>m</b> = 10</td><td><b>total</b> = 670</td></tr>
+        <tr><td>quién normaliza</td><td>el constructor, al crear</td><td>la división, al responder</td></tr>
+        <tr><td>línea impresa</td><td>11:10</td><td>11:10</td></tr>
+      </table>
+      </div>
+      <div class="nota">Memorias distintas, respuestas idénticas: main quedó
+      escrito contra la caja y no contra un cuerpo en particular.</div>
+    </div>
+  </div>
+
+  <div id="carta-final" class="carta" style="display:none">
+    <h2>Lo que quedó demostrado</h2>
+    <div class="alerta">
+      La especificación fija lo que la caja responde; la representación y su
+      disciplina quedan del lado de la implementación, y por eso pudieron
+      cambiar sin que main se enterara. La actividad del contrato sigue con
+      la otra mitad de la historia: qué pasa cuando la llamada no cumple lo
+      que la caja exige.
+    </div>
+  </div>
+
+</div>
+<script src="caja.js"></script>
+</body>
+</html>
