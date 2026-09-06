@@ -59,11 +59,15 @@ pestaña nueva.
 Ejercicios interactivos para recorrer en el navegador, uno por tema. No se
 entregan ni tienen nota: sirven para llegar a clase con la mecánica ya vista
 y para volver sobre ella cuando algo no cuadre. Se publican antes de cada
-sesión.
+clase.
 
-| Sesión | Tema | Ejercicios |
+Las clases se numeran por orden dictado. La primera corresponde a la sesión
+03 del campus, porque las dos primeras semanas del semestre fueron jornada de
+reuniones docentes y jornada de reflexión.
+
+| Clase | Tema | Ejercicios |
 |---:|---|---|
-| 3 | Principios y elementos de programación | [sustituir y evaluación](C3/Ejercicios.md) |
+| 1 | Principios y elementos de programación | [sustituir y evaluación](C1/Ejercicios.md) |
 
 ## Ejercicios de clase
 
