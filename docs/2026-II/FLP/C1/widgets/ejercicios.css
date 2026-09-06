@@ -76,17 +76,3 @@
 }
 .razon.mal { color: var(--rojo); }
 .razon.bien { color: var(--verde); }
-
-/* Marca de los retos que se resuelven después: no retienen el resumen. */
-.etiqueta {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ambar);
-  background: var(--ambar-suave);
-  border: 1px solid var(--ambar);
-  border-radius: 999px;
-  padding: 0.05rem 0.5rem;
-  vertical-align: 0.12em;
-}
