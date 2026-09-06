@@ -168,7 +168,6 @@ var RETOS = (function () {
     {
       id: "cuantas",
       titulo: "4. Cuántas veces ocurre libre",
-      opcional: true,
       enunciado:
         "Ya se decidió <b>si</b> una variable ocurre libre. Ahora escriba " +
         "<code>cuantas-libres</code>, que dice <b>cuántas</b> veces ocurre " +
@@ -221,7 +220,6 @@ var RETOS = (function () {
     {
       id: "camino",
       titulo: "5. El camino hasta un número",
-      opcional: true,
       enunciado:
         "Un árbol binario de búsqueda guarda en cada nodo un entero, a la " +
         "izquierda los menores y a la derecha los mayores. Escriba " +

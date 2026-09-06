@@ -63,8 +63,7 @@ una lista nueva, miden. `nth-element` baja dos argumentos al tiempo,
 `subst` necesita dos procedimientos que se llaman entre sí porque la gramática
 nombra dos conjuntos, y `profundidad` compara las dos ramas en vez de sumarlas.
 
-Los dos últimos van marcados como opcionales y se pueden dejar para después:
-contar cuántas veces ocurre libre una variable, que es la versión con números
-de lo que antes se respondía con booleanos, y encontrar el camino hasta un
-número en un árbol ordenado, donde la comparación descarta media estructura en
-cada nivel.
+Los dos últimos son los más exigentes: contar cuántas veces ocurre libre una
+variable, que es la versión con números de lo que antes se respondía con
+booleanos, y encontrar el camino hasta un número en un árbol ordenado, donde la
+comparación descarta media estructura en cada nivel.

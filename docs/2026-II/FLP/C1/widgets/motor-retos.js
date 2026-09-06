@@ -35,9 +35,8 @@ var MotorRetos = (function () {
     var gram = reto.gramatica
       ? '<div class="codigo gramatica">' + reto.gramatica + "</div>"
       : "";
-    var marca = reto.opcional ? ' <span class="etiqueta">opcional</span>' : "";
     carta.innerHTML =
-      "<h2>" + reto.titulo + marca + "</h2>" +
+      "<h2>" + reto.titulo + "</h2>" +
       "<p>" + reto.enunciado + "</p>" + gram +
       '<div class="casos"></div>' +
       '<textarea class="editor" spellcheck="false" rows="7"></textarea>' +
@@ -94,15 +93,12 @@ var MotorRetos = (function () {
     return carta;
   }
 
-  /* Los retos marcados como opcionales no retienen la carta de cierre: se
-     resuelven después, y quien no llegue a ellos igual ve el resumen. */
   function montar(opciones) {
     var resueltos = {};
-    var exigidos = opciones.retos.filter(function (r) { return !r.opcional; });
 
     function alResolver(reto) {
       resueltos[reto.id] = true;
-      var faltan = exigidos.some(function (r) { return !resueltos[r.id]; });
+      var faltan = opciones.retos.some(function (r) { return !resueltos[r.id]; });
       var cierre = document.getElementById(opciones.cierre);
       if (!faltan && cierre) { cierre.style.display = "block"; }
     }

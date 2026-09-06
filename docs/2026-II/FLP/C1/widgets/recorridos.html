@@ -14,8 +14,8 @@
   <p class="intro">Cinco procedimientos que ya no responden sí o no: buscan un
   elemento, arman una lista nueva, miden, cuentan. La gramática sigue diciendo
   cuántas cláusulas van y sobre qué se llama la recursión; lo que cambia es
-  qué devuelve cada cláusula. Los dos últimos están marcados como opcionales y
-  se pueden dejar para después.</p>
+  qué devuelve cada cláusula. Los dos últimos son los más exigentes y conviene
+  llegar a ellos con los tres primeros resueltos.</p>
 
   <div class="alerta">
     Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
@@ -29,8 +29,8 @@
   <div id="retos"></div>
 
   <div class="carta" id="carta-cierre" style="display:none">
-    <h2>Los tres primeros, resueltos</h2>
-    <p style="margin-top:0">Los tres recorren conjuntos distintos con la misma
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Los cinco recorren conjuntos distintos con la misma
     lectura, y lo que cambia entre ellos está en la última columna:</p>
     <div class="envoltura-tabla">
       <table>
@@ -41,6 +41,8 @@
           <tr><td>nth-element</td><td>listas</td><td>nada: una sola rama baja y la respuesta sube igual</td></tr>
           <tr><td>subst</td><td>s-lists y s-exp, uno adentro del otro</td><td><code>cons</code>, que rearma el nivel que se acaba de abrir</td></tr>
           <tr><td>profundidad</td><td>árboles binarios</td><td><code>max</code> entre las dos ramas, más uno</td></tr>
+          <tr><td>cuantas-libres</td><td>expresiones lambda</td><td>una suma entre las dos partes de la aplicación</td></tr>
+          <tr><td>camino</td><td>árboles binarios de búsqueda</td><td><code>cons</code> del giro de este nivel, y baja una sola rama</td></tr>
         </tbody>
       </table>
     </div>
