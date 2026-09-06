@@ -17,17 +17,22 @@ velocidad, y que la distancia entre lo que se gana y lo que se paga crece
 rápido. Al final hay dos preguntas: de dónde sale el techo y, al revés,
 cuánto habría que paralelizar para ir diez veces más rápido.
 
-## [Localidad de caché](widgets/localidad.html){ target=_blank rel=noopener }
+## [Localidad temporal y espacial](widgets/localidad.html){ target=_blank rel=noopener }
 
-La misma matriz recorrida por filas y por columnas. Los dos recorridos leen
-los mismos elementos y hacen el mismo número de accesos; lo único distinto es
-el orden.
+La misma matriz recorrida por filas y por columnas. Los dos leen los mismos
+elementos y hacen el mismo número de accesos; lo único distinto es el orden.
+Cada acceso queda clasificado en tres: acierto espacial si el dato llegó de
+vecino en la línea recién traída, acierto temporal si estaba porque se cargó
+antes y todavía sigue ahí, y fallo si hubo que ir por él.
 
-Empiece con la caché en cuatro líneas y compare los dos recorridos con n = 8.
-Después suba la capacidad hasta que la diferencia se borre, y fíjese en qué
-valor ocurre: eso dice cuánta caché hace falta para que el recorrido malo
-deje de importar. Por eso el mismo código va bien con matrices pequeñas y mal
-con las grandes.
+Con n = 8 y cuatro líneas de caché, el recorrido por filas da 8 fallos y 56
+aciertos espaciales, y ninguno temporal: vive del vecino. Suba la caché a ocho
+líneas y pase a columnas sin tocar nada más. Los fallos caen de 64 a 8, los
+aciertos espaciales siguen en cero y aparecen 56 temporales. Son dos maneras
+distintas de no ir a memoria, y un mismo código puede tener una sin la otra.
+
+La perilla de pasadas es la que deja ver la temporal: en la segunda vuelta, o
+el dato sigue en la caché o toca traerlo otra vez.
 
 ## [False sharing](widgets/falso.html){ target=_blank rel=noopener }
 
@@ -89,6 +94,16 @@ Una matriz de $1000 \times 1000$ de `double`, guardada por filas. Un
 4. La transposición de una matriz lee por filas y escribe por columnas, o al
    revés: uno de los dos accesos va a estar mal siempre. ¿Cómo lo arreglaría
    sin cambiar el resultado?
+5. Un programa recorre diez veces seguidas un vector de 1 MB, y la caché L2
+   tiene 256 KB. ¿Cuántas de las diez pasadas encuentran los datos ya
+   cargados? ¿Y si el vector midiera 100 KB? Diga cuál de las dos localidades
+   decide en cada caso.
+6. La multiplicación clásica de matrices recorre una de las dos por columnas;
+   la versión por bloques parte las tres en cuadros que caben en la caché.
+   ¿Cuál localidad mejora cada cambio: pasar de columnas a filas, y partir en
+   bloques?
+7. Escriba un fragmento con localidad espacial buena y temporal nula, y otro
+   al revés. Ninguno de los dos puede ser un recorrido de matriz.
 
 ## Sobre el false sharing
 
