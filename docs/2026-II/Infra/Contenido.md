@@ -24,7 +24,10 @@ Se publican después de cada sesión.
 
 ### Corte 1
 
-*Aún no hay clases publicadas.*
+1. [Clase 1. Introducción a la programación paralela, ley de Amdahl y localidad de caché — 8 y 10 de septiembre](C1/Ejercicios.md)
+   — speedup y eficiencia a partir de tiempos medidos, el techo que impone la
+   parte que no se reparte, y las dos formas en que la caché decide el tiempo:
+   el orden del recorrido y la línea compartida entre hilos.
 
 ### Corte 2
 
