@@ -54,6 +54,17 @@ pestaña nueva.
   </iframe>
 </div>
 
+## Ejercicios de apoyo
+
+Ejercicios interactivos para recorrer en el navegador, uno por tema. No se
+entregan ni tienen nota: sirven para llegar a clase con la mecánica ya vista
+y para volver sobre ella cuando algo no cuadre. Se publican antes de cada
+sesión.
+
+| Sesión | Tema | Ejercicios |
+|---:|---|---|
+| 3 | Principios y elementos de programación | [sustituir y evaluación](C3/Ejercicios.md) |
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega

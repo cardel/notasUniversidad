@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>evaluación — por valor y por nombre</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 720px) { .columnas { grid-template-columns: 1fr; } }
+  .columna { border: 1px solid var(--borde); border-radius: 8px; padding: 0.7rem 0.9rem; }
+  .columna h3 { margin: 0 0 0.5rem; font-size: 0.98rem; }
+  .columna .sub { font-size: 0.82rem; color: #6b737c; font-weight: 400; }
+  .reduccion { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.18rem 0; }
+  .reduccion .flecha-red { width: 1rem; color: #9aa3ad; font-weight: 700; }
+  .reduccion .expr { font-size: 0.95rem; }
+  .reduccion.ultima .expr { font-weight: 700; }
+  .reduccion.infinita .expr { color: var(--rojo, #c0392b); }
+  .marca { background: var(--verde-suave); color: var(--verde);
+    border-radius: 4px; padding: 0 0.18rem; }
+  .pie-columna { margin-top: 0.6rem; font-size: 0.86rem; color: #6b737c; }
+  .pie-columna.bueno { color: var(--verde); font-weight: 700; }
+  .pie-columna.malo { color: var(--rojo, #c0392b); font-weight: 700; }
+  #nota-preset { margin-top: 0.8rem; font-size: 0.92rem; color: #5b636c; min-height: 3em; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>evaluación: por valor y por nombre</h1>
+  <p class="intro">Las dos estrategias reemplazan lo mismo, pero no en el
+  mismo orden. <b>Por valor</b> reduce los argumentos antes de entrar a la
+  función; <b>por nombre</b> los mete sin evaluar y los reduce solo si el
+  cuerpo los usa. Aquí corren lado a lado sobre la misma expresión.</p>
+
+  <div class="carta">
+    <h2>1. Elija la expresión y prediga</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Expresión:</span>
+      <button data-preset="0" class="primario">sumaDeCuadrados(3, 2 + 2)</button>
+      <button data-preset="1">cuadrado(2 + 3)</button>
+      <button data-preset="2">primero(1, bucle)</button>
+    </div>
+    <p style="margin:0.7rem 0 0"><b>Antes de ejecutar:</b> ¿las dos columnas
+    van a terminar en el mismo valor? Piense su respuesta y después ejecute.
+    El tercer preset es el que decide.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute las dos a la vez</h2>
+    <div class="columnas">
+      <div class="columna">
+        <h3>Por valor <span class="sub">(call by value)</span></h3>
+        <div id="col-cbv"></div>
+      </div>
+      <div class="columna">
+        <h3>Por nombre <span class="sub">(call by name)</span></h3>
+        <div id="col-cbn"></div>
+      </div>
+    </div>
+    <div id="nota-preset"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La columna que llega antes al valor se queda quieta
+        mientras la otra sigue. El contador de cada definición cuenta los usos
+        de la columna de la izquierda.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La pregunta que separa las dos</h2>
+    <p style="margin-top:0">Ejecute los tres presets hasta el final.
+    <b>¿Qué relación hay entre el valor que da cada estrategia?</b></p>
+    <div class="opciones" id="opciones-resultado">
+      <button data-op="siempre">Siempre dan el mismo valor</button>
+      <button data-op="termina">Si las dos terminan, dan el mismo valor; una puede no terminar</button>
+      <button data-op="distinto">Dan valores distintos: por nombre es menos preciso</button>
+      <button data-op="rapido">Por nombre siempre necesita menos pasos</button>
+    </div>
+    <div id="veredicto-resultado" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las dos estrategias reducen la misma expresión y,
+    cuando ambas terminan, llegan al mismo valor. La diferencia está en los
+    bordes:</p>
+    <ul>
+      <li><b>Por nombre termina más veces.</b> Si el cuerpo no usa un
+      argumento, ese argumento no se reduce nunca, y da igual que fuera un
+      cálculo infinito.</li>
+      <li><b>Por valor no repite trabajo.</b> El argumento se reduce una vez,
+      aunque el cuerpo lo use tres. Por nombre lo reduce una vez por
+      aparición, como se ve en <code>cuadrado(2 + 3)</code>.</li>
+    </ul>
+    <p>Scala evalúa <b>por valor</b> de manera predeterminada, precisamente
+    por eso: repetir trabajo es caro y en la práctica pesa más que el caso
+    raro del argumento que no termina. Cuando se quiere lo otro, se pide
+    explícitamente escribiendo el parámetro como <code>=&gt; Int</code> en vez
+    de <code>Int</code>.</p>
+    <p>Queda una pregunta abierta para la clase: si por nombre repite el
+    cálculo cada vez que aparece el parámetro, ¿habrá una tercera estrategia
+    que lo reduzca <i>solo si se usa</i> pero <i>una sola vez</i>? La hay, y
+    aparece más adelante en el curso con las secuencias perezosas.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="evaluacion.js"></script>
+</body>
+</html>
