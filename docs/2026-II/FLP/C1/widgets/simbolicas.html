@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listas simbólicas y procedimientos como valores</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../EjerciciosRacket/">← Volver a los ejercicios de Racket</a>
+  <h1>Listas simbólicas y procedimientos como valores</h1>
+  <p class="intro">Seis procedimientos sobre listas de símbolos, terminando con dos que reciben otro procedimiento como argumento. Los símbolos son el dato con que se representan los programas más adelante, y pasar procedimientos es lo que después permite guardar una clausura.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los seis, resueltos</h2>
+    <p style="margin-top:0">Seis recorridos sobre listas, y en la última
+    columna lo que decide cada uno:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>Qué devuelve</th><th>La decisión</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>pertenece?</td><td>un booleano</td><td>se detiene apenas encuentra</td></tr>
+          <tr><td>solo-simbolos</td><td>una lista más corta</td><td>hay un caso que no reconstruye</td></tr>
+          <tr><td>sin-repetidos</td><td>una lista sin duplicados</td><td>usa un procedimiento ya escrito</td></tr>
+          <tr><td>aplana</td><td>una lista sin anidamiento</td><td>recursión sobre el car y sobre el cdr</td></tr>
+          <tr><td>mapea</td><td>una lista del mismo largo</td><td>la operación llega como argumento</td></tr>
+          <tr><td>filtra</td><td>una lista más corta</td><td>la condición llega como argumento</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Un símbolo se compara de un golpe con <code>eq?</code>, y
+    un procedimiento se pasa y se guarda como cualquier otro valor. Las dos
+    cosas reaparecen juntas al escribir intérpretes: el ambiente asocia
+    símbolos a valores, y entre esos valores hay procedimientos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (aplicar-dos-veces f x)
+  (f (f x)))
+
+(aplicar-dos-veces add1 5)</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="simbolicas.js"></script>
+</body>
+</html>

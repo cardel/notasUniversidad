@@ -34,7 +34,14 @@ Se publican después de cada sesión.
 Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
 quedan disponibles después para volver sobre el tema.
 
-1. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
+1. [Racket: notación prefija, recursión y listas simbólicas](C1/EjerciciosRacket.md)
+   — tres actividades y diecisiete procedimientos por escribir, sobre el
+   lenguaje mismo: el operador que va adelante, la recursión lineal frente a
+   la de cola, y las listas de símbolos hasta llegar a `mapea` y `filtra`.
+   Acompañan el material de lectura y conviene resolverlas antes de la
+   primera sesión de contenido.
+
+2. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
    — cuatro actividades: decidir qué entra en un conjunto definido por reglas
    y qué llamada recursiva autoriza la gramática, escribir los reconocedores
    que salen de esas reglas, y recorrer listas, s-lists y árboles siguiendo

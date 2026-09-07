@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notación prefija y definiciones</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../EjerciciosRacket/">← Volver a los ejercicios de Racket</a>
+  <h1>Notación prefija y definiciones</h1>
+  <p class="intro">Cinco procedimientos cortos para acostumbrar la mano a que el operador vaya adelante y a que definir sea ponerle nombre a una expresión. No hay recursión todavía: lo que se practica es leer el anidamiento de los paréntesis y escoger entre <code>if</code>, <code>cond</code> y <code>let*</code>.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Cinco formas de escribir lo mismo que en otro
+    lenguaje se escribiría con precedencia y llaves:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Lo que se necesitaba</th><th>Cómo se escribió</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>una fórmula con varias operaciones</td><td>paréntesis anidados, el de afuera manda</td></tr>
+          <tr><td>dos condiciones a la vez</td><td><code>and</code>, que se detiene en la primera falsa</td></tr>
+          <tr><td>tres casos excluyentes</td><td><code>cond</code>, probado en orden, con <code>else</code> al final</td></tr>
+          <tr><td>una respuesta que no es número</td><td>un símbolo con comilla, que es un dato y no una variable</td></tr>
+          <tr><td>resultados intermedios con nombre</td><td><code>let*</code>, donde cada ligadura ve las anteriores</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">No hay reglas de precedencia que memorizar porque no
+    hacen falta: el paréntesis dice qué se aplica a qué. Lo que se gana con
+    eso es que la forma escrita del programa y su orden de evaluación son la
+    misma cosa, y esa coincidencia es la que después permite tratar un
+    programa como un dato.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (doble x) (* 2 x))
+
+(doble (+ 3 4))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="prefija.js"></script>
+</body>
+</html>
