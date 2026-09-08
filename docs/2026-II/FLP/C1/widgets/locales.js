@@ -23,7 +23,7 @@ var RETOS = (function () {
         "(define (rango lst)\n" +
         "  (if (null? (cdr lst))\n" +
         "      (list (car lst) (car lst))\n" +
-        "      (let ((resto ???))\n" +
+        "      (let ([resto ???])\n" +
         "        (list ???\n" +
         "              ???))))\n",
       pruebas: [
@@ -69,10 +69,10 @@ var RETOS = (function () {
         "(define (quita-y-cuenta s lst)\n" +
         "  (cond ((null? lst) (list '() 0))\n" +
         "        ((eq? (car lst) s)\n" +
-        "         (let ((resto (quita-y-cuenta s (cdr lst))))\n" +
+        "         (let ([resto (quita-y-cuenta s (cdr lst))])\n" +
         "           (list ??? ???)))\n" +
         "        (else\n" +
-        "         (let ((resto (quita-y-cuenta s (cdr lst))))\n" +
+        "         (let ([resto (quita-y-cuenta s (cdr lst))])\n" +
         "           (list ??? ???)))))\n",
       pruebas: [
         { llamada: "(quita-y-cuenta 'a '(a b a c))", esperado: "((b c) 2)" },
@@ -116,10 +116,10 @@ var RETOS = (function () {
         "(define (resumen arbol)\n" +
         "  (if (null? arbol)\n" +
         "      (list 0 0)\n" +
-        "      (let* ((izq ???)\n" +
-        "             (der ???)\n" +
-        "             (nodos ???)\n" +
-        "             (alto ???))\n" +
+        "      (let* ([izq ???]\n" +
+        "             [der ???]\n" +
+        "             [nodos ???]\n" +
+        "             [alto ???])\n" +
         "        (list nodos alto))))\n",
       pruebas: [
         { llamada: "(resumen '())", esperado: "(0 0)" },
@@ -161,11 +161,11 @@ var RETOS = (function () {
         "        ::= (&lt;valor&gt; . &lt;lista&gt;)",
       esqueleto:
         "(define (con-posicion lst)\n" +
-        "  (letrec ((numerar (lambda (l i)\n" +
+        "  (letrec ([numerar (lambda (l i)\n" +
         "                      (if (null? l)\n" +
         "                          ???\n" +
         "                          (cons (list ??? ???)\n" +
-        "                                (numerar ??? ???))))))\n" +
+        "                                (numerar ??? ???))))])\n" +
         "    (numerar lst ???)))\n",
       pruebas: [
         { llamada: "(con-posicion '())", esperado: "()" },
@@ -207,12 +207,12 @@ var RETOS = (function () {
         "&lt;s-exp&gt;  ::= &lt;símbolo&gt; | &lt;s-list&gt;",
       esqueleto:
         "(define (cuenta-simbolos slist)\n" +
-        "  (letrec ((en-lista (lambda (l)\n" +
+        "  (letrec ([en-lista (lambda (l)\n" +
         "                       (if (null? l)\n" +
         "                           ???\n" +
-        "                           (+ (en-exp ???) (en-lista ???)))))\n" +
-        "           (en-exp (lambda (x)\n" +
-        "                     (if (symbol? x) ??? ???))))\n" +
+        "                           (+ (en-exp ???) (en-lista ???))))]\n" +
+        "           [en-exp (lambda (x)\n" +
+        "                     (if (symbol? x) ??? ???))])\n" +
         "    (en-lista slist)))\n",
       pruebas: [
         { llamada: "(cuenta-simbolos '())", esperado: "0" },

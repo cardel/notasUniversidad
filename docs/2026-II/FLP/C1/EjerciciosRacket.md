@@ -5,7 +5,7 @@ El repaso de Racket es material de lectura, y estas tres actividades son la
 parte que no se aprende leyendo: escribir procedimientos, correrlos y ver qué
 responden. Todo pasa en el navegador, sin instalar nada.
 
-Son cuatro actividades y veintitrés procedimientos por escribir. Se pueden hacer
+Son cinco actividades y veintiocho procedimientos por escribir. Se pueden hacer
 en cualquier momento y conviene tenerlas resueltas antes de la sesión sobre
 [inducción y recursión](./Ejercicios.md){ target=_blank rel=noopener }, que
 supone resuelto lo que aquí se practica.
@@ -23,6 +23,19 @@ En el camino salen dos convenciones de nombres que el curso usa todo el
 semestre: el signo de interrogación al final de lo que devuelve un booleano y
 la flecha en medio de lo que convierte. Y sale la comilla, que es lo que
 separa un símbolo del nombre de una variable.
+
+## [condicionales: if y cond](widgets/condicionales.html){ target=_blank rel=noopener }
+
+Cinco decisiones. Las dos primeras son el mismo problema, el mayor de tres
+números, escrito con `if` anidado y después con `cond`, que es la forma de ver
+qué aplana el segundo y qué cuesta el primero.
+
+Las otras tres son los casos donde una de las dos formas es la que
+corresponde: un `if` metido en mitad de una resta, porque produce un valor y
+cabe donde vaya un número; una clasificación por rangos donde cada cláusula
+hereda lo que descartaron las anteriores; y una pregunta por la forma del
+dato, donde la lista vacía también responde que sí a `list?` y el orden
+decide si queda bien clasificada.
 
 ## [recursión lineal y recursión de cola](widgets/recursion.html){ target=_blank rel=noopener }
 

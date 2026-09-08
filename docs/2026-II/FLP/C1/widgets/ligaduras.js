@@ -18,9 +18,9 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (rota a b c)\n" +
-        "  (let ((a ???)\n" +
-        "        (b ???)\n" +
-        "        (c ???))\n" +
+        "  (let ([a ???]\n" +
+        "        [b ???]\n" +
+        "        [c ???])\n" +
         "    (list a b c)))\n",
       pruebas: [
         { llamada: "(rota 1 2 3)", esperado: "(3 1 2)" },
@@ -64,9 +64,9 @@ var RETOS = (function () {
         "  (if (null? lst) 0 (+ (car lst) (suma (cdr lst)))))\n" +
         "\n" +
         "(define (resumen lst)\n" +
-        "  (let* ((n ???)\n" +
-        "         (total ???)\n" +
-        "         (promedio ???))\n" +
+        "  (let* ([n ???]\n" +
+        "         [total ???]\n" +
+        "         [promedio ???])\n" +
         "    (list n total promedio)))\n",
       pruebas: [
         { llamada: "(resumen '(1 2 3))", esperado: "(3 6 2)" },
@@ -105,8 +105,8 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (dos-pasos x)\n" +
-        "  (let ((doble ???))\n" +
-        "    (let ((mas-uno ???))\n" +
+        "  (let ([doble ???])\n" +
+        "    (let ([mas-uno ???])\n" +
         "      (list doble mas-uno))))\n",
       pruebas: [
         { llamada: "(dos-pasos 5)", esperado: "(10 11)" },
@@ -143,10 +143,10 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (largo lst)\n" +
-        "  (??? ((contar (lambda (l)\n" +
+        "  (??? ([contar (lambda (l)\n" +
         "                  (if (null? l)\n" +
         "                      0\n" +
-        "                      (+ 1 (contar (cdr l)))))))\n" +
+        "                      (+ 1 (contar (cdr l)))))])\n" +
         "    (contar lst)))\n",
       pruebas: [
         { llamada: "(largo '())", esperado: "0" },
@@ -176,10 +176,10 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (suma-lista lst)\n" +
-        "  (letrec ((sumar (lambda (l ac)\n" +
+        "  (letrec ([sumar (lambda (l ac)\n" +
         "                    (if (null? l)\n" +
         "                        ???\n" +
-        "                        (sumar ??? ???)))))\n" +
+        "                        (sumar ??? ???)))])\n" +
         "    (sumar lst ???)))\n",
       pruebas: [
         { llamada: "(suma-lista '())", esperado: "0" },
@@ -218,10 +218,10 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (par-n? n)\n" +
-        "  (letrec ((par? (lambda (k)\n" +
-        "                   (if (zero? k) #t (impar? ???))))\n" +
-        "           (impar? (lambda (k)\n" +
-        "                     (if (zero? k) ??? (par? ???)))))\n" +
+        "  (letrec ([par? (lambda (k)\n" +
+        "                   (if (zero? k) #t (impar? ???)))]\n" +
+        "           [impar? (lambda (k)\n" +
+        "                     (if (zero? k) ??? (par? ???)))])\n" +
         "    (par? n)))\n",
       pruebas: [
         { llamada: "(par-n? 0)", esperado: "#t" },

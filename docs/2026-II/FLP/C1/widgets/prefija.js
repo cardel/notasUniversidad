@@ -174,9 +174,9 @@ var RETOS = (function () {
       gramatica: null,
       esqueleto:
         "(define (reloj segs)\n" +
-        "  (let* ((horas ???)\n" +
-        "         (resto ???)\n" +
-        "         (minutos ???))\n" +
+        "  (let* ([horas ???]\n" +
+        "         [resto ???]\n" +
+        "         [minutos ???])\n" +
         "    (list horas minutos ???)))\n",
       pruebas: [
         { llamada: "(reloj 3725)", esperado: "(1 2 5)" },

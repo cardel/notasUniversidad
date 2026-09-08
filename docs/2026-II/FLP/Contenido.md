@@ -35,10 +35,11 @@ Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
 quedan disponibles después para volver sobre el tema.
 
 1. [Racket: notación prefija, recursión y listas simbólicas](C1/EjerciciosRacket.md)
-   — cuatro actividades y veintitrés procedimientos por escribir, sobre el
-   lenguaje mismo: el operador que va adelante, la recursión lineal frente a
-   la de cola, las ligaduras locales con `let`, `let*` y `letrec`, y las
-   listas de símbolos hasta llegar a `mapea` y `filtra`.
+   — cinco actividades y veintiocho procedimientos por escribir, sobre el
+   lenguaje mismo: el operador que va adelante, los condicionales con `if` y
+   con `cond`, la recursión lineal frente a la de cola, las ligaduras locales
+   con `let`, `let*` y `letrec`, y las listas de símbolos hasta llegar a
+   `mapea` y `filtra`.
    Acompañan el material de lectura y conviene resolverlas antes de la
    primera sesión de contenido.
 
