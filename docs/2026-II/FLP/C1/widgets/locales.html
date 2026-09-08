@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ligaduras locales al recorrer la gramática</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ligaduras locales al recorrer la gramática</h1>
+  <p class="intro">Cinco recorridos donde el nombre local deja de ser una
+  comodidad. En unos, el resultado de la llamada se necesita dos veces y
+  escribirla dos veces la evalúa dos veces; en otros hace falta un
+  procedimiento auxiliar que no debe aparecer en la interfaz. La gramática
+  sigue decidiendo la forma del recorrido: lo que se agrega es dónde poner
+  los nombres.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">En cada uno, la razón por la que el nombre local
+    hacía falta:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>Forma</th><th>Por qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>rango</td><td><code>let</code></td><td>una llamada cuyo resultado se usa dos veces</td></tr>
+          <tr><td>quita-y-cuenta</td><td><code>let</code></td><td>dos respuestas de un solo recorrido</td></tr>
+          <tr><td>resumen</td><td><code>let*</code></td><td>el cálculo se arma por etapas sobre las ramas</td></tr>
+          <tr><td>con-posicion</td><td><code>letrec</code></td><td>un contador que no debe verse por fuera</td></tr>
+          <tr><td>cuenta-simbolos</td><td><code>letrec</code></td><td>dos conjuntos que se nombran mutuamente</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Repetir una llamada recursiva en vez de ligarla duplica
+    el trabajo en cada nivel, y con la profundidad eso deja de ser un detalle.
+    El resto de las decisiones vuelve a salir de la gramática: cuántas
+    cláusulas, sobre qué se llama, y cuántos procedimientos hacen falta cuando
+    las reglas nombran más de un conjunto.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (par lst)
+  (list (car lst) (cadr lst)))
+
+(let ((p (par '(1 2 3))))
+  (list (cadr p) (car p)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="locales.js"></script>
+</body>
+</html>
