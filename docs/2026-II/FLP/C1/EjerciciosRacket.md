@@ -5,7 +5,7 @@ El repaso de Racket es material de lectura, y estas tres actividades son la
 parte que no se aprende leyendo: escribir procedimientos, correrlos y ver qué
 responden. Todo pasa en el navegador, sin instalar nada.
 
-Son tres actividades y diecisiete procedimientos por escribir. Se pueden hacer
+Son cuatro actividades y veintitrés procedimientos por escribir. Se pueden hacer
 en cualquier momento y conviene tenerlas resueltas antes de la sesión sobre
 [inducción y recursión](./Ejercicios.md){ target=_blank rel=noopener }, que
 supone resuelto lo que aquí se practica.
@@ -37,6 +37,24 @@ arranca el acumulador; el largo de una lista, donde lo que se agota ya no es
 un número; invertir una lista, que sale volteada sola porque se construye
 mientras se baja; y Fibonacci con dos acumuladores, que es lo que convierte un
 cálculo impracticable en uno inmediato.
+
+## [ligaduras locales: let, let* y letrec](widgets/ligaduras.html){ target=_blank rel=noopener }
+
+Seis procedimientos con nombres que solo viven dentro de una expresión. Las
+tres formas se escriben casi igual y se diferencian en una sola cosa: en qué
+ambiente se evalúan las expresiones que calculan los valores.
+
+Empieza por el caso que solo `let` resuelve, correr tres valores una posición
+sin perder ninguno, porque las tres derechas miran los valores originales.
+Sigue con la cadena que obliga a `let*`, donde el promedio necesita la
+cantidad y la suma ya calculadas, y con dos `let` anidados, que es lo que
+`let*` hace por debajo.
+
+Los tres últimos son de `letrec`. Uno pide escoger la palabra que permite que
+un procedimiento local se llame a sí mismo; otro esconde un acumulador para
+que no aparezca en la interfaz; el último define dos procedimientos que se
+nombran mutuamente. Esa forma es la que reaparece al implementar `letrec` en
+el intérprete del curso.
 
 ## [listas simbólicas y procedimientos como valores](widgets/simbolicas.html){ target=_blank rel=noopener }
 
