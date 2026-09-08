@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ligaduras locales: let, let* y letrec</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../EjerciciosRacket/">← Volver a los ejercicios de Racket</a>
+  <h1>Ligaduras locales: let, let* y letrec</h1>
+  <p class="intro">Seis procedimientos con nombres que solo viven dentro de una
+  expresión. Las tres formas se escriben casi igual y se diferencian en una
+  sola cosa: en qué ambiente se evalúan las expresiones que calculan los
+  valores. Esa diferencia decide qué se puede escribir con cada una.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los seis, resueltos</h2>
+    <p style="margin-top:0">Las tres formas, y en qué ambiente evalúa cada una
+    las expresiones de la derecha:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Forma</th><th>Las derechas se evalúan en…</th><th>Sirve para</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>let</code></td><td>el ambiente de afuera</td><td>varios nombres a la vez, sin que uno dependa de otro</td></tr>
+          <tr><td><code>let*</code></td><td>el ambiente con las anteriores ya ligadas</td><td>una cadena de resultados intermedios</td></tr>
+          <tr><td><code>letrec</code></td><td>el ambiente que ya incluye todos los nombres</td><td>procedimientos que se nombran a sí mismos o entre sí</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Las tres extienden el ambiente; lo que cambia es cuándo.
+    <code>let</code> lo extiende después de calcular, <code>let*</code> lo va
+    extendiendo de a una, y <code>letrec</code> lo extiende antes, con los
+    nombres todavía sin valor. De ahí sale que solo la última admita una
+    clausura que se llame a sí misma.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define x 'de-afuera)
+
+(let ((x 'de-adentro))
+  (list x (let ((y x)) y)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="ligaduras.js"></script>
+</body>
+</html>
