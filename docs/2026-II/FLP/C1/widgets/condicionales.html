@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Condicionales: if y cond</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../EjerciciosRacket/">← Volver a los ejercicios de Racket</a>
+  <h1>Condicionales: if y cond</h1>
+  <p class="intro">Cinco decisiones. Las dos primeras son el mismo problema
+  escrito de las dos maneras, para ver qué aplana <code>cond</code> y qué
+  cuesta anidar <code>if</code>. Las tres siguientes son los casos donde una de
+  las dos formas es la que corresponde: un <code>if</code> metido en mitad de
+  una cuenta, y dos <code>cond</code> donde el orden de las cláusulas es parte
+  de la respuesta.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Cuándo conviene cada forma:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Forma</th><th>Por qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>dos posibilidades</td><td><code>if</code></td><td>una prueba y dos ramas, sin más ceremonia</td></tr>
+          <tr><td>tres o más casos</td><td><code>cond</code></td><td>las condiciones quedan al mismo nivel</td></tr>
+          <tr><td>adentro de otra expresión</td><td><code>if</code></td><td>produce un valor y cabe donde vaya un dato</td></tr>
+          <tr><td>rangos ordenados</td><td><code>cond</code></td><td>cada cláusula hereda lo que descartaron las anteriores</td></tr>
+          <tr><td>preguntas por el tipo</td><td><code>cond</code></td><td>varias pruebas excluyentes, y una que las recoge todas</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Las dos ramas de un <code>if</code> son obligatorias
+    porque el resultado tiene que existir en los dos casos, y ese mismo
+    requisito explica el <code>else</code> de <code>cond</code>: sin él, un
+    valor que no cumpla ninguna cláusula deja la expresión sin valor que
+    devolver. Ninguna de las dos formas agrega poder al lenguaje sobre la otra;
+    <code>cond</code> se traduce a <code>if</code> anidados.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (paridad n)
+  (if (even? n) 'par 'impar))
+
+(list (paridad 4) (paridad 7) (+ 1 (if #t 10 20)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="condicionales.js"></script>
+</body>
+</html>
