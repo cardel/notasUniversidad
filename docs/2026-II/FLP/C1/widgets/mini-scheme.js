@@ -236,10 +236,31 @@ var MiniScheme = (function () {
     prim("cons", 2, 2, function (a) { return new Par(a[0], a[1]); });
     prim("car", 1, 1, function (a) { return par("car", a[0]).car; });
     prim("cdr", 1, 1, function (a) { return par("cdr", a[0]).cdr; });
-    prim("cadr", 1, 1, function (a) { return par("cadr", par("cadr", a[0]).cdr).car; });
-    prim("caddr", 1, 1, function (a) {
-      return par("caddr", par("caddr", par("caddr", a[0]).cdr).cdr).car;
-    });
+    /* Todas las combinaciones de car y cdr hasta cuatro niveles: caar, cadr,
+       cdar, cddr, caaar, ..., cddddr. La secuencia se lee de derecha a
+       izquierda, así que caddr es el car del cdr del cdr. */
+    (function () {
+      function bajar(seq, nombre) {
+        return function (a) {
+          var v = a[0];
+          for (var i = seq.length - 1; i >= 0; i--) {
+            var p = par(nombre, v);
+            v = seq[i] === "a" ? p.car : p.cdr;
+          }
+          return v;
+        };
+      }
+      function generar(seq) {
+        if (seq.length >= 2) {
+          var nombre = "c" + seq + "r";
+          prim(nombre, 1, 1, bajar(seq, nombre));
+        }
+        if (seq.length === 4) { return; }
+        generar(seq + "a");
+        generar(seq + "d");
+      }
+      generar("");
+    })();
     prim("list", 0, Infinity, function (a) { return desdeArreglo(a); });
     prim("null?", 1, 1, function (a) { return a[0] === NULO; });
     prim("pair?", 1, 1, function (a) { return a[0] instanceof Par; });
