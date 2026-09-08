@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Declaración, referencia y alcance</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Declaración, referencia y alcance</h1>
+  <p class="intro">Cinco procedimientos que convierten en código la pregunta de
+  a cuál declaración pertenece cada aparición de un nombre. La regla es una
+  sola: cada referencia se resuelve con la declaración más cercana hacia afuera
+  que la contenga, y se decide leyendo el texto, sin ejecutar nada. Los dos
+  primeros separan los dos tipos de aparición; los tres siguientes usan esa
+  separación.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Cada uno mira la misma expresión con una pregunta
+    distinta:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>La pregunta</th><th>Qué hace la lambda</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>declaradas</td><td>¿qué nombres se introducen?</td><td>aporta el suyo</td></tr>
+          <tr><td>referencias</td><td>¿qué nombres se usan?</td><td>no aporta el suyo</td></tr>
+          <tr><td>libres</td><td>¿qué usos quedan sin declaración?</td><td>quita el suyo de lo que traiga el cuerpo</td></tr>
+          <tr><td>sombra?</td><td>¿algún nombre tapa a otro?</td><td>agrega el suyo a lo ya declarado</td></tr>
+          <tr><td>renombra</td><td>¿qué cambia y qué no?</td><td>detiene el cambio si declara ese nombre</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Los cinco tratan la lambda de manera distinta y esa
+    diferencia es el alcance: la región donde las referencias a un nombre
+    corresponden a una declaración dada. Nada de esto depende de cómo se
+    ejecute el programa, y por eso un compilador puede resolverlo antes de que
+    el programa corra.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define e '(lambda (x) (lambda (x) (x y))))
+
+(list (cadr e) (caddr e))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="alcance.js"></script>
+</body>
+</html>
