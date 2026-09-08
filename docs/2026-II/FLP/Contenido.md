@@ -23,7 +23,13 @@ Se publican después de cada sesión.
 
 ### Corte 1
 
-*Aún no hay clases publicadas.*
+1. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Clase%201.%20Inducci%C3%B3n%20y%20recursi%C3%B3n.md)
+   — conjuntos definidos por reglas y sus reconocedores, gramáticas BNF,
+   recorrer siguiendo la gramática, recursión sobre árboles, declaración,
+   referencia y alcance, ocurrencia libre y ligada, y `let`, `let*` y
+   `letrec`. Incluye el código escrito en clase.
+   El repaso del lenguaje va aparte, en
+   [Racket, lo que hace falta para empezar](C1/Racket.md).
 
 ### Corte 2
 
