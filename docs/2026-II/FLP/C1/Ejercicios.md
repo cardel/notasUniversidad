@@ -5,8 +5,8 @@ septiembre). Cada enlace abre una actividad que se trabaja directo en el
 navegador, sin instalar nada. Los ejemplos no son los de la sesión: mismo
 tema, ronda nueva.
 
-Son cuatro. Las dos primeras se alcanzan en la sesión; las dos últimas quedan
-para volver sobre el tema, y entre las tres que piden código suman catorce
+Son cinco. Las dos primeras se alcanzan en la sesión; las demás quedan para
+volver sobre el tema, y entre las cuatro que piden código suman diecinueve
 procedimientos por escribir.
 
 ## [conjuntos](widgets/induccion.html){ target=_blank rel=noopener }
@@ -67,3 +67,18 @@ Los dos últimos son los más exigentes: contar cuántas veces ocurre libre una
 variable, que es la versión con números de lo que antes se respondía con
 booleanos, y encontrar el camino hasta un número en un árbol ordenado, donde la
 comparación descarta media estructura en cada nivel.
+
+## [ligaduras locales al recorrer la gramática](widgets/locales.html){ target=_blank rel=noopener }
+
+Cinco recorridos donde el nombre local deja de ser una comodidad. En `rango` y
+en `quita-y-cuenta` el resultado de la llamada se necesita dos veces, y
+escribirla dos veces la evalúa dos veces: el trabajo se duplica en cada nivel.
+El segundo además devuelve dos respuestas de un solo recorrido, la lista sin
+las apariciones y cuántas quitó.
+
+Los otros tres reparten las tres formas. `resumen` arma con `let*` la cantidad
+de nodos y la altura de un árbol binario, por etapas sobre las dos ramas.
+`con-posicion` esconde con `letrec` el contador que empareja cada elemento con
+su posición, de modo que quien lo llama pase solo la lista. Y el último vuelve
+a la gramática de las s-lists: dos conjuntos que se nombran mutuamente dan dos
+procedimientos que se llaman entre sí, ligados en un mismo `letrec`.

@@ -43,10 +43,11 @@ quedan disponibles después para volver sobre el tema.
    primera sesión de contenido.
 
 2. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
-   — cuatro actividades: decidir qué entra en un conjunto definido por reglas
+   — cinco actividades: decidir qué entra en un conjunto definido por reglas
    y qué llamada recursiva autoriza la gramática, escribir los reconocedores
-   que salen de esas reglas, y recorrer listas, s-lists y árboles siguiendo
-   la gramática. El código corre en la misma página.
+   que salen de esas reglas, recorrer listas, s-lists y árboles siguiendo la
+   gramática, y poner ligaduras locales donde el recorrido las necesita. El
+   código corre en la misma página.
 
 ## Ejercicios de clase
 
