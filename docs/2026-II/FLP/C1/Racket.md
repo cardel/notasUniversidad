@@ -118,6 +118,11 @@ Una lista tiene dos partes: el `car`, que es su primer elemento, y el `cdr`,
 que es la lista con el resto. Para llegar al segundo elemento hay que pedir el
 `car` del `cdr`, que se abrevia `cadr`; al tercero, `caddr`.
 
+Existen todas las combinaciones de `a` y `d` hasta cuatro niveles, de `caar` a
+`cddddr`. La secuencia se lee de derecha a izquierda: `caddar` es el `car` del
+`cdr` del `cdr` del `car`. Sirven para no escribir cadenas largas de
+paréntesis, aunque a partir de tres letras cuesta más leerlas que escribirlas.
+
 ## Listas simbólicas
 
 Con listas anidadas la diferencia se nota:

@@ -89,7 +89,8 @@ y qué debía dar, y los tropiezos más frecuentes traen además su explicación
 Al final de cada página hay una consola libre para tantear cualquier otra cosa.
 
 El evaluador de la página entiende `define`, `lambda`, `if`, `cond`, `let`,
-`let*`, `letrec`, `and`, `or` y las primitivas de listas y aritmética. No tiene
-`define-datatype` ni `cases`, ni `map`, ni `filter`: por eso dos de los retos
-consisten en escribirlos. Lo que se entrega en el curso se escribe y se corre
+`let*`, `letrec`, `and`, `or` y las primitivas de listas y aritmética,
+incluidas todas las combinaciones de `car` y `cdr` hasta cuatro niveles, de
+`caar` a `cddddr`. No tiene `define-datatype` ni `cases`, ni `map`, ni
+`filter`: por eso dos de los retos consisten en escribirlos. Lo que se entrega en el curso se escribe y se corre
 en DrRacket.
