@@ -1,11 +1,10 @@
 # Ejercicios
 
 Clase 1 — introducción a la programación paralela, ley de Amdahl y localidad
-de caché (8 y 10 de septiembre). La página sigue el mismo orden de la sesión:
-cada apartado es uno de los temas que se vieron, con lo que se puede practicar
-de él. Los que se trabajan en el navegador no necesitan instalar nada; los de
-papel no toman más de media hora y sirven para fijar las cuentas antes de
-medir en la máquina.
+de caché (8 y 10 de septiembre). Los apartados van en el orden de la clase.
+Los que se abren en el navegador no piden instalar nada; los de papel no toman
+más de media hora y sirven para fijar las cuentas antes de medir en la
+máquina.
 
 ## Introducción a los sistemas de cómputo paralelo
 
