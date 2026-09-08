@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los muros — por qué la frecuencia dejó de subir</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Por qué dejaron de subir la frecuencia y empezaron a poner núcleos</h1>
+  <p class="intro">Hasta 2004 cada generación de procesadores venía con más
+  megahercios y el mismo programa corría más rápido sin tocarle una línea.
+  Después dejó de pasar. Aquí están las dos razones, con números.</p>
+
+  <div class="carta">
+    <h2>1. El consumo</h2>
+    <p style="margin-top:0">Un chip consume según su capacitancia, el cuadrado
+    del voltaje y la frecuencia. Para subir la frecuencia hay que subir el
+    voltaje casi en la misma proporción, así que el consumo termina creciendo
+    con el <b>cubo</b> de la frecuencia. El punto de partida son 3 GHz y 80 W.</p>
+    <div class="fila-n">
+      <label for="rango-ghz">Frecuencia:</label>
+      <input type="range" id="rango-ghz" min="10" max="100" value="30">
+      <span class="valor-n"><span id="ver-ghz">3,0</span> GHz</span>
+      <span class="presets">
+        <button data-ghz="3">3</button>
+        <button data-ghz="4">4</button>
+        <button data-ghz="5">5</button>
+        <button data-ghz="6">6</button>
+        <button data-ghz="10">10</button>
+      </span>
+    </div>
+    <div class="prediccion">
+      <span>¿A qué frecuencia se pasa de los 130 W que se pueden disipar?</span>
+      <input type="number" id="prediccion" min="0" step="0.01" placeholder="GHz">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Lo que pide el chip contra lo que se puede sacar</h2>
+    <div id="panel-potencia"></div>
+    <div id="aviso-potencia"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La distancia con la memoria</h2>
+    <p style="margin-top:0">Entre 1980 y 2005 el procesador ganó cerca de 52 %
+    de velocidad al año y la DRAM cerca de 7 %. Cada año la diferencia se
+    multiplica, y lo que se acumula es la espera.</p>
+    <div class="fila-n">
+      <label for="rango-año">Año:</label>
+      <input type="range" id="rango-año" min="1980" max="2005" value="1995">
+      <span class="valor-n"><span id="ver-año">1995</span></span>
+    </div>
+    <div class="chips" id="chips-memoria" style="margin-top:0.8rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Año</th><th>Procesador</th><th>Memoria</th>
+        <th>Distancia</th></tr></thead>
+        <tbody id="cuerpo-memoria"></tbody>
+      </table>
+    </div>
+    <div class="nota">Un procesador real no espera todo eso en cada acceso: la
+    jerarquía de cachés se lo come casi todo, y por eso recorrer una matriz por
+    filas o por columnas cambia tanto el tiempo. Lo que crece aquí es lo que
+    costaría cada fallo si la caché no estuviera.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lo que siguió</h2>
+    <p style="margin-top:0">Con el consumo cerrando el camino de la frecuencia,
+    y con el número de instrucciones por ciclo que se le pueden sacar a un solo
+    hilo también estancado, ¿qué hizo la industria y qué le trasladó al
+    programador?</p>
+    <div class="opciones" id="opciones-final">
+      <button data-op="correcta">Poner más núcleos, y repartir el trabajo pasó a ser tarea del programador</button>
+      <button data-op="litografia">Dejar de encoger los transistores</button>
+      <button data-op="memoria">Poner más núcleos para acercarse a la memoria</button>
+      <button data-op="demanda">Responder a que se pedía más cómputo</button>
+    </div>
+    <div id="veredicto-final" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="walls.js"></script>
+</body>
+</html>
