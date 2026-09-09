@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>construir — el mismo grafo en tres formas</title>
+<title>construir — las tres representaciones, a mano</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
   #panel-grafo { text-align: center; margin: 0.4rem 0; }
@@ -13,19 +13,32 @@
   .celda-m.bien-m { background: var(--verde-suave); color: var(--verde); }
   .celda-m.mal-m { background: var(--rojo-suave); color: var(--rojo); }
   #panel-matriz table { width: auto; margin: 0 auto; }
-  #panel-matriz th { min-width: 2rem; }
-  #panel-matriz td { min-width: 2rem; }
-  #panel-derivadas code { font-size: 0.82rem; word-break: break-all; }
+  #panel-matriz th, #panel-matriz td { min-width: 2rem; }
+  .fila-ady { display: flex; align-items: center; gap: 0.6rem; margin: 0.35rem 0; }
+  .fila-ady label { width: 4.2rem; flex: none; font-family: ui-monospace, monospace;
+    font-weight: 700; }
+  .fila-ady input { flex: 1; max-width: 22rem; padding: 0.35rem 0.5rem;
+    border: 1px solid var(--borde); border-radius: 8px; font-family: ui-monospace, monospace; }
+  .marca-ady { width: 1.2rem; font-weight: 700; }
+  .marca-ady.ok { color: var(--verde); }
+  .marca-ady.no { color: var(--rojo); }
+  #campo-aristas { width: 100%; padding: 0.45rem 0.6rem; border: 1px solid var(--borde);
+    border-radius: 8px; font-family: ui-monospace, monospace; font-size: 0.9rem; }
+  .valor-n.pendiente-n { background: var(--ambar-suave); color: #a86a12; }
+  #panel-resumen table { margin-top: 0.5rem; }
+  #panel-resumen td, #panel-resumen th { padding: 0.3rem 0.5rem; }
+  .encabezado-tarea { display: flex; align-items: center; justify-content: space-between;
+    gap: 0.6rem; flex-wrap: wrap; }
 </style>
 </head>
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>El mismo grafo, en tres formas</h1>
+  <h1>Las tres representaciones, a mano</h1>
   <p class="intro">Un grafo dibujado no le sirve a un programa. Aquí hay que
-  pasarlo a matriz de adyacencia a mano, celda por celda, y cuando quede bien
-  aparecen las otras dos representaciones construidas desde ella, para ver que
-  las tres guardan lo mismo y ocupan cosas muy distintas.</p>
+  escribir las tres representaciones del mismo grafo —matriz de adyacencia,
+  lista de adyacencia y lista de aristas— y comprobarlas por separado. Al
+  final, las tres lado a lado con lo que ocupa cada una.</p>
 
   <div class="carta">
     <h2>1. El grafo y una cuenta previa</h2>
@@ -41,32 +54,72 @@
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
     <div id="veredicto" class="veredicto"></div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <span>Representaciones correctas:</span>
+      <span class="valor-n pendiente-n" id="marcador">0 de 3</span>
+    </div>
   </div>
 
   <div class="carta">
-    <h2>2. La matriz de adyacencia, celda por celda</h2>
+    <h2>2. Matriz de adyacencia</h2>
     <p style="margin-top:0" class="nota">Haga clic en una celda para poner o
     quitar un uno. La fila es el origen y la columna el destino.</p>
     <div id="panel-matriz" class="envoltura-tabla"></div>
     <div class="botones" style="margin-top:0.7rem">
-      <button id="btn-comprobar-matriz" class="primario">Comprobar</button>
+      <button id="btn-comprobar-matriz" class="primario">Comprobar la matriz</button>
       <button id="btn-limpiar-matriz">Limpiar</button>
     </div>
     <div id="veredicto-matriz" class="veredicto"></div>
-    <div class="nota" id="nota-simetria"></div>
-    <div id="panel-derivadas" style="margin-top:0.8rem"></div>
   </div>
 
   <div class="carta">
-    <h2>3. Para llevarse</h2>
+    <h2>3. Lista de adyacencia</h2>
+    <p style="margin-top:0" class="nota">Escriba, para cada vértice, los
+    vecinos separados por comas. El orden dentro de la lista no cambia el
+    grafo, pero sí el orden en que un recorrido lo visita.</p>
+    <div id="panel-lista"></div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-lista" class="primario">Comprobar la lista</button>
+    </div>
+    <div id="veredicto-lista" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lista de aristas</h2>
+    <p style="margin-top:0" class="nota" id="nota-aristas"></p>
+    <input type="text" id="campo-aristas" placeholder="por ejemplo: (0,2) (0,3) (1,2) ...">
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-aristas" class="primario">Comprobar las aristas</button>
+    </div>
+    <div id="veredicto-aristas" class="veredicto"></div>
+    <div class="nota">Sirve cualquier separador: paréntesis, comas, guiones o
+    espacios. Lo que se lee son los números, de dos en dos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Las tres, lado a lado</h2>
+    <div id="panel-resumen"></div>
+    <div class="nota">Aparece cuando las tres estén correctas.</div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
     <p style="margin-top:0">Sin solución aquí.</p>
-    <p>Primero: la matriz de incidencia de un grafo no dirigido tiene una fila
-    por vértice y una columna por arista. Escríbala para H1 y compruebe las dos
-    propiedades que salen de la definición — la suma de cada fila y el número
-    de unos de cada columna. ¿Cuánto ocupa comparada con las otras tres?</p>
-    <p>Segundo: escriba la función que recibe la matriz de adyacencia y
-    devuelve la lista de adyacencia. ¿Cuánto cuesta esa conversión en términos
-    de $V$ y $E$, y por qué no puede costar menos?</p>
+    <p><b>Sobre la matriz de incidencia.</b> Tiene una fila por vértice y una
+    columna por arista. Escríbala para H1 y compruebe las dos propiedades que
+    salen de la definición: cuánto suma cada fila y cuántos unos tiene cada
+    columna. ¿Cuánto ocupa comparada con las otras tres, y por qué casi nunca
+    se usa para programar?</p>
+    <p><b>Las seis conversiones.</b> Entre tres representaciones hay seis
+    conversiones posibles. Escriba las funciones y diga, para cada una, cuánto
+    cuesta en términos de $V$ y $E$. Hay una que no puede costar menos de
+    $\Theta(V^2)$ pase lo que pase: encuéntrela y explique por qué.</p>
+    <p><b>Cuándo cambiar de representación.</b> Un problema entrega el grafo
+    como lista de aristas y el algoritmo que hay que correr hace un recorrido
+    completo. ¿Conviene convertir a lista de adyacencia primero, o trabajar
+    directamente sobre la lista de aristas? Compare $\Theta(V+E)$ de convertir
+    más $\Theta(V+E)$ de recorrer, contra $\Theta(V \cdot E)$ de recorrer sin
+    convertir.</p>
   </div>
 
 </div>

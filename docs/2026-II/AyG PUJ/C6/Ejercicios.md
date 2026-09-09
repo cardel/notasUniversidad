@@ -15,9 +15,15 @@ explica por qué lo es.
 
 ### [construir](widgets/construir.html){ target=_blank rel=noopener }
 
-El grafo dibujado hay que pasarlo a matriz de adyacencia a mano, celda por
-celda. Cuando la matriz queda bien, el ejercicio construye desde ella la lista
-de adyacencia y la lista de aristas, y pone al lado cuánto ocupa cada una.
+Las tres representaciones del mismo grafo, escritas a mano y comprobadas por
+separado: la matriz a clic sobre las celdas, la lista de adyacencia vértice
+por vértice y la lista de aristas en un campo de texto. Cuando las tres
+quedan bien aparecen lado a lado, con lo que ocupa cada una en este grafo y
+en general.
+
+Cada comprobación dice qué falta y qué sobra, no solo si está bien. En la
+lista de aristas de un grafo no dirigido, escribir $(0,2)$ y $(2,0)$ cuenta
+como repetir la misma arista.
 
 El segundo grafo es dirigido, y ahí la matriz deja de ser simétrica: la arista
 $(3,2)$ pone un uno en la fila $3$ y nada en la fila $2$.
@@ -105,23 +111,39 @@ Estos ejercicios entran en el material del parcial.
    las tres, diga cuánto cuesta el recorrido completo en términos de $V$ y $E$,
    y sobre qué línea cae ese costo.
 
-2. Recorra $H_1$ en profundidad y en amplitud arrancando en el $2$ en lugar
+2. **La matriz de incidencia.** Tiene una fila por vértice y una columna por
+   arista. Escríbala para $H_1$ y compruebe las dos propiedades que salen de
+   la definición: cuánto suma cada fila y cuántos unos tiene cada columna.
+   ¿Cuánto ocupa comparada con las otras tres?
+
+3. **Las seis conversiones.** Entre las tres representaciones hay seis
+   conversiones posibles. Escriba las funciones y diga, para cada una, cuánto
+   cuesta en términos de $V$ y $E$. Hay una que no puede costar menos de
+   $\Theta(V^2)$ pase lo que pase: encuéntrela y explique por qué.
+
+4. **Cuándo conviene convertir.** Un problema entrega el grafo como lista de
+   aristas y hay que hacer un recorrido completo. Compare $\Theta(V+E)$ de
+   convertir más $\Theta(V+E)$ de recorrer, contra $\Theta(V \cdot E)$ de
+   recorrer sin convertir, y diga a partir de qué tamaño la conversión se paga
+   sola.
+
+5. Recorra $H_1$ en profundidad y en amplitud arrancando en el $2$ en lugar
    del $0$. ¿Cambian los órdenes de visita? ¿Cambian las distancias?
 
-3. En $H_1$, ¿desde cuáles vértices se alcanza a todos los demás? ¿Y en
+6. En $H_1$, ¿desde cuáles vértices se alcanza a todos los demás? ¿Y en
    $H_2$?
 
-4. Invierta todas las aristas de $H_2$ y recorra en profundidad desde el $5$.
+7. Invierta todas las aristas de $H_2$ y recorra en profundidad desde el $5$.
    ¿Qué vértices alcanza ahora?
 
-5. Guarde los vecinos de cada vértice de $H_1$ en orden decreciente y vuelva a
+8. Guarde los vecinos de cada vértice de $H_1$ en orden decreciente y vuelva a
    recorrer en profundidad desde el $0$. El orden de visita cambia; el conjunto
    de vértices alcanzados, no. Explique por qué.
 
-6. Dibuje un grafo de cinco vértices donde la profundidad y la amplitud den el
+9. Dibuje un grafo de cinco vértices donde la profundidad y la amplitud den el
    mismo orden de visita desde el mismo arranque.
 
-7. **UVa 11902 — Dominator.** Enunciado en
+10. **UVa 11902 — Dominator.** Enunciado en
    <https://onlinejudge.org/external/119/11902.pdf> y envío en
    <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3053>.
    La entrada llega como matriz de adyacencia de un grafo dirigido. Se recorre
