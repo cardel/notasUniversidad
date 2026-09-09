@@ -765,7 +765,7 @@ a los últimos escribas.
 ## Ejercicios interactivos
 
 Los tres se trabajan en el navegador, en la
-[página de ejercicios](Ejercicios.md):
+[página de ejercicios](./Ejercicios.md):
 
 - [buscar](widgets/buscar.html){ target=_blank rel=noopener } — la ventana
   que se encoge, con la traza división por división, los dos invariantes y

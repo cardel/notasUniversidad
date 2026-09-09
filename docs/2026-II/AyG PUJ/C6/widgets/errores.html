@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>errores — encuentre la falla</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  .salida { display: none; margin-top: 0.7rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); border-radius: 8px; font-size: 0.9rem; }
+  .salida code { background: #fff; padding: 0.1rem 0.3rem; border-radius: 4px;
+    word-break: break-all; }
+  pre { background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.82rem; margin: 0.5rem 0; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Encuentre la falla</h1>
+  <p class="intro">Cuatro programas que corren sin dar error y contestan mal.
+  En cada uno hay exactamente una línea equivocada. Cuando la señale, aparece
+  la salida de las dos versiones para ver qué tan lejos queda la respuesta.</p>
+
+  <div class="carta caso" data-caso="vuelta">
+    <h2>1. Construir el grafo</h2>
+    <p style="margin-top:0" class="nota">El grafo es <b>no dirigido</b>, con 6
+    vértices y las aristas (0,2), (0,3), (1,2), (1,5), (2,3), (2,4), (4,5).</p>
+<pre>def construir(n, aristas):
+    G = []
+    u = 0
+    while u &lt; n:
+        G.append([])
+        u = u + 1
+    for arista in aristas:
+        G[arista[0]].append(arista[1])
+    return G</pre>
+    <div class="opciones">
+      <button data-op="a">El ciclo que crea las listas recorre mal el rango</button>
+      <button data-op="b">Falta agregar la arista en la lista del otro extremo</button>
+      <button data-op="c">Los vecinos deberían quedar ordenados</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="alias">
+    <h2>2. Crear las listas</h2>
+<pre>def construir(n, aristas):
+    G = [[]] * n
+    for arista in aristas:
+        G[arista[0]].append(arista[1])
+        G[arista[1]].append(arista[0])
+    return G</pre>
+    <div class="opciones">
+      <button data-op="a">El tamaño <code>n</code> debería ser <code>n + 1</code></button>
+      <button data-op="b">Falta inicializar la lista de los vértices sin aristas</button>
+      <button data-op="c"><code>[[]] * n</code> no crea <code>n</code> listas distintas</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="marca">
+    <h2>3. La búsqueda en amplitud</h2>
+<pre>def bfs(G, s):
+    visitado = [False] * len(G)
+    d = [-1] * len(G)
+    d[s] = 0
+    cola = deque()
+    cola.append(s)
+    while len(cola) &gt; 0:
+        u = cola.popleft()
+        if not visitado[u]:
+            visitado[u] = True
+            for v in G[u]:
+                if not visitado[v]:
+                    if d[v] == -1:
+                        d[v] = d[u] + 1
+                    cola.append(v)
+    return d</pre>
+    <div class="opciones">
+      <button data-op="a">La marca se pone al desencolar y debería ponerse al encolar</button>
+      <button data-op="b">Debería sacar por el final de la cola, no por el frente</button>
+      <button data-op="c">La distancia está mal calculada</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="externo">
+    <h2>4. Recorrer todo el grafo</h2>
+    <p style="margin-top:0" class="nota">El problema pide visitar
+    <b>todos</b> los vértices del grafo, no solo los alcanzables desde uno.</p>
+<pre>def recorrer_todo(G):
+    visitado = [False] * len(G)
+    orden = []
+    dfs(G, 0, visitado, orden)
+    return orden</pre>
+    <div class="opciones">
+      <button data-op="a">La recursión de <code>dfs</code> está mal planteada</button>
+      <button data-op="b">Falta un ciclo que arranque un recorrido en cada vértice sin marcar</button>
+      <button data-op="c">Habría que marcar al salir de cada vértice, no al entrar</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. El error del caso 3 no cambia ni
+    el orden de visita ni las distancias en el grafo de seis vértices: solo
+    infla la cola. Construya un grafo donde esa diferencia sea grande —piense
+    en cuántos vecinos comparte un vértice con sus compañeros de capa— y
+    calcule, en términos de $V$ y $E$, cuántas entradas puede llegar a tener la
+    cola con el error y sin él.</p>
+  </div>
+
+</div>
+<script src="errores.js"></script>
+</body>
+</html>

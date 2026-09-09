@@ -47,7 +47,7 @@ aterrizaje en el caso base.
 ## Ejercicios interactivos
 
 Los dos algoritmos y un problema de juez, para recorrer paso a paso en el
-navegador: la [página de ejercicios](Ejercicios.md) trae `buscar`,
+navegador: la [página de ejercicios](./Ejercicios.md) trae `buscar`,
 `bisección` y el recorrido guiado sobre UVa 10341.
 
 ## Antes de entrar

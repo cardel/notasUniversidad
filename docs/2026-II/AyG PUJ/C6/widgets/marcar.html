@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>marcar — por qué el recorrido necesita la marca</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0 0.2rem; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo);
+    border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block;
+    max-width: 100%; overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La marca de visitados</h1>
+  <p class="intro">Un grafo no se recorre como una lista: se puede volver por
+  donde uno vino. Aquí está el mismo recorrido con la marca y sin ella, y el
+  contador de vueltas dice de un vistazo qué pasa cuando falta.</p>
+
+  <div class="carta">
+    <h2>1. Los tres montajes</h2>
+    <p style="margin-top:0">El parámetro <code>marcar</code> enciende y apaga
+    la marca. El <code>limite</code> es un tope de vueltas: sin él, la primera
+    corrida no terminaría nunca y la página se quedaría colgada.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Montaje:</span>
+      <button data-preset="0" class="primario">H1 sin marca</button>
+      <button data-preset="1">H1 con marca</button>
+      <button data-preset="2">H3 dirigido, con marca</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas vueltas da el while?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute</h2>
+    <div id="panel-grafo"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Pila: <span class="viva" id="ver-pila">vacía</span></div>
+        <div>Anotados: <span class="viva" id="ver-orden">–</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Compare las dos primeras corridas mirando el
+        contador <code>distintos</code> contra el de <code>vueltas</code>.</div>
+      </div>
+    </div>
+    <div id="aviso-final"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Qué hace terminar al recorrido</h2>
+    <div class="opciones" id="opciones-porque">
+      <button data-op="correcta">Que cada vértice se marca una sola vez, y solo un vértice recién marcado apila vecinos</button>
+      <button data-op="ciclos">Que el grafo no tenga ciclos</button>
+      <button data-op="limite">El límite de vueltas</button>
+    </div>
+    <div id="veredicto-porque" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Y aun con la marca, falta algo</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">En H3 el recorrido con marca termina, pero deja un vértice sin visitar. ¿Qué hace falta?</div>
+      <div class="opciones">
+        <button data-p1="externo">Un ciclo externo que vuelva a arrancar en cada vértice sin marcar</button>
+        <button data-p1="otro">Arrancar desde otro vértice</button>
+        <button data-p1="grafo">Nada: el grafo está mal construido</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">Desde el 0 se llega a seis de los siete
+      vértices: al 6 no entra ninguna arista. El ciclo externo recorre los
+      vértices de 0 a n−1 y arranca un recorrido nuevo en cada uno que siga
+      sin marcar, de modo que ninguno queda por fuera sin importar cómo esté
+      repartido el grafo.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En la versión con marca, un
+    mismo vértice puede entrar varias veces a la pila antes de que le llegue
+    el turno, y la línea 8 lo descarta al salir. Escriba una versión que no
+    permita duplicados en la pila y responda: ¿cuántas entradas puede tener la
+    pila como máximo en cada una de las dos versiones, en términos de $V$ y
+    $E$? ¿Cambia el orden de visita?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="marcar.js"></script>
+</body>
+</html>

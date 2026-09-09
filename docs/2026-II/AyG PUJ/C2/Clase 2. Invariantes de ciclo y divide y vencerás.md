@@ -53,7 +53,7 @@ clase:
 ## Ejercicios interactivos
 
 Las dos rutas comparten la [página de ejercicios
-interactivos](Ejercicios.md): dos ejercicios de invariantes (`sumar` y
+interactivos](./Ejercicios.md): dos ejercicios de invariantes (`sumar` y
 `factorial`) y dos de divide y vencerás (`mezclar` y `ordenar`). Cada uno
 sigue el mismo camino de la clase: ver el patrón primero, generalizarlo
 después y cerrar con la demostración o el análisis paso a paso.

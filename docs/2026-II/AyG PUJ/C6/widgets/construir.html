@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>construir — el mismo grafo en tres formas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .celda-m { cursor: pointer; font-family: ui-monospace, monospace; font-weight: 700;
+    color: #b9c0c9; user-select: none; }
+  .celda-m.puesta { background: var(--azul); color: #fff; }
+  .celda-m.bien-m { background: var(--verde-suave); color: var(--verde); }
+  .celda-m.mal-m { background: var(--rojo-suave); color: var(--rojo); }
+  #panel-matriz table { width: auto; margin: 0 auto; }
+  #panel-matriz th { min-width: 2rem; }
+  #panel-matriz td { min-width: 2rem; }
+  #panel-derivadas code { font-size: 0.82rem; word-break: break-all; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El mismo grafo, en tres formas</h1>
+  <p class="intro">Un grafo dibujado no le sirve a un programa. Aquí hay que
+  pasarlo a matriz de adyacencia a mano, celda por celda, y cuando quede bien
+  aparecen las otras dos representaciones construidas desde ella, para ver que
+  las tres guardan lo mismo y ocupan cosas muy distintas.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y una cuenta previa</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">H1, no dirigido</button>
+      <button data-preset="1">H2, dirigido</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <div class="prediccion">
+      <span>¿Cuántas entradas suman, en total, las listas de adyacencia?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La matriz de adyacencia, celda por celda</h2>
+    <p style="margin-top:0" class="nota">Haga clic en una celda para poner o
+    quitar un uno. La fila es el origen y la columna el destino.</p>
+    <div id="panel-matriz" class="envoltura-tabla"></div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-matriz" class="primario">Comprobar</button>
+      <button id="btn-limpiar-matriz">Limpiar</button>
+    </div>
+    <div id="veredicto-matriz" class="veredicto"></div>
+    <div class="nota" id="nota-simetria"></div>
+    <div id="panel-derivadas" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí.</p>
+    <p>Primero: la matriz de incidencia de un grafo no dirigido tiene una fila
+    por vértice y una columna por arista. Escríbala para H1 y compruebe las dos
+    propiedades que salen de la definición — la suma de cada fila y el número
+    de unos de cada columna. ¿Cuánto ocupa comparada con las otras tres?</p>
+    <p>Segundo: escriba la función que recibe la matriz de adyacencia y
+    devuelve la lista de adyacencia. ¿Cuánto cuesta esa conversión en términos
+    de $V$ y $E$, y por qué no puede costar menos?</p>
+  </div>
+
+</div>
+<script src="construir.js"></script>
+</body>
+</html>

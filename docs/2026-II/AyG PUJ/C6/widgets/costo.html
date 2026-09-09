@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>costo — V + E contra V²</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  .barra-fila .rotulo { width: 11rem; }
+  .barra-fila .valor { width: 8rem; }
+  #panel-razon { margin-top: 0.6rem; font-size: 0.92rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>V + E contra V²</h1>
+  <p class="intro">Con seis vértices las tres representaciones sirven igual.
+  La pregunta es qué pasa cuando el grafo crece, y la respuesta se ve mejor
+  moviendo los controles que leyendo la fórmula.</p>
+
+  <div class="carta">
+    <h2>1. Antes de mover nada</h2>
+    <p style="margin-top:0">Una red de <b>100 000 vértices</b> donde cada uno
+    tiene, en promedio, <b>4 vecinos</b>. Un computador hace unas cien millones
+    de operaciones por segundo.</p>
+    <div class="prediccion">
+      <span>¿Cuántos segundos tarda el recorrido sobre la matriz de adyacencia?</span>
+      <input type="number" id="prediccion" min="0" placeholder="segundos">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Mueva el grafo</h2>
+    <div class="fila-n">
+      <label for="rango-v">Vértices</label>
+      <input type="range" id="rango-v" min="10" max="60" value="30">
+      <span class="valor-n" id="valor-v">1 000</span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label for="rango-grado">Grado medio</label>
+      <input type="range" id="rango-grado" min="2" max="60" value="4">
+      <span class="valor-n" id="valor-grado">4</span>
+    </div>
+    <p class="nota">Con esos valores, E = <b id="valor-e">2 000</b> aristas.</p>
+    <div id="panel-barras" style="margin-top:0.8rem"></div>
+    <div id="panel-razon"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cuánto tarda</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th style="text-align:left">Representación</th><th>Operaciones</th><th>Tiempo</th></tr>
+        </thead>
+        <tbody id="cuerpo-tiempos"></tbody>
+      </table>
+    </div>
+    <div class="nota">En rojo, lo que pasa de un segundo. Los jueces en línea
+    suelen dar entre uno y tres.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. De dónde sale cada término</h2>
+    <div style="margin-bottom:0.3rem"><b>El costo sobre lista de adyacencia es
+    $\Theta(V + E)$. ¿Por qué aparece el $V$, si las aristas ya están contadas
+    en el $E$?</b></div>
+    <div class="opciones" id="opciones-v">
+      <button data-op="aislados">Porque hay que pasar por todos los vértices, tengan aristas o no</button>
+      <button data-op="cola">Porque la cola puede llegar a tener V vértices</button>
+      <button data-op="marca">Porque marcar cada vértice cuesta una operación aparte</button>
+    </div>
+    <div id="veredicto-v" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuándo empatan</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">¿En qué caso la matriz de adyacencia deja de ser más cara que la lista?</div>
+      <div class="opciones">
+        <button data-p1="denso">Cuando el grafo es denso, con E del orden de V²</button>
+        <button data-p1="pequeno">Cuando el grafo tiene pocos vértices</button>
+        <button data-p1="nunca">Nunca: la lista siempre gana</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">Suba el grado medio hasta acercarlo al número de
+      vértices y las dos barras se igualan. Ahí la matriz no desperdicia nada,
+      y además contesta en una sola consulta si existe una arista, cosa que la
+      lista no puede.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Un problema de juez da
+    $V \leq 10^5$, $E \leq 2 \cdot 10^5$ y un límite de dos segundos, y pide
+    responder $Q \leq 10^5$ preguntas del tipo ``¿existe la arista $(u,v)$?''.
+    Decida qué representación usar, estime las operaciones totales con los
+    controles de arriba y justifique la decisión. Después cambie el enunciado
+    a $V \leq 2000$ y vuelva a decidir.</p>
+  </div>
+
+</div>
+<script src="costo.js"></script>
+</body>
+</html>

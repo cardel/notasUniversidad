@@ -599,7 +599,7 @@ prueba que se olvida.
 ## Ejercicios
 
 Los ejercicios de la clase, con los dos problemas de juez y los consejos
-para atacarlos, están en la [página de ejercicios](Ejercicios.md).
+para atacarlos, están en la [página de ejercicios](./Ejercicios.md).
 
 ## Código de la clase
 

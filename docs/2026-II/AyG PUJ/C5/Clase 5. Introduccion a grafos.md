@@ -28,7 +28,7 @@ alcanzar.
     problemas de juez en línea: UVa 10928 y UVa 11550, con el enunciado y
     el enlace de envío.
 
-    [:octicons-arrow-right-24: Entrar](Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
 
 </div>
 
