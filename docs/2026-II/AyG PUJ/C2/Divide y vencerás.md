@@ -534,7 +534,7 @@ cambia la cuenta.
 ## Ejercicios interactivos
 
 Los dos de divide y vencerás se recorrieron en clase y están en la
-[página de ejercicios interactivos](Ejercicios.md#divide-y-venceras):
+[página de ejercicios interactivos](./Ejercicios.md#divide-y-venceras):
 
 - [mezclar](widgets/mezclar.html){ target=_blank rel=noopener } — ejecute la
   mezcla escritura por escritura sobre el arreglo, proponga la pareja de

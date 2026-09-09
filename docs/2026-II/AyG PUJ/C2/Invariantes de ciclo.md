@@ -424,7 +424,7 @@ patrón en la traza, nombrarlo como la pareja de invariantes $I_0$ e $I_1$ y
 armar la demostración por inicialización, estabilidad y terminación. Son una
 primera iteración de este tipo de material, así que la realimentación es
 bienvenida. Están en la
-[página de ejercicios interactivos](Ejercicios.md#invariantes-de-ciclo):
+[página de ejercicios interactivos](./Ejercicios.md#invariantes-de-ciclo):
 
 - [sumar](widgets/sumar.html){ target=_blank rel=noopener } — el mismo
   ejemplo de la clase, con el mismo arreglo: descubra qué se conserva en la

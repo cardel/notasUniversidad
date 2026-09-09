@@ -61,6 +61,3 @@ incidencia de un grafo simple no dirigido. Las dos condiciones salen de la
 definición: cada columna representa una arista, así que debe tener
 exactamente dos unos, y como el grafo es simple no puede haber dos aristas
 entre el mismo par de vértices, es decir, dos columnas iguales.
-
-La página de envío pide iniciar sesión: no está rota, hay que tener cuenta
-en el juez y entrar antes de enviar.

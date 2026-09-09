@@ -42,7 +42,7 @@ las respuestas posibles siempre está la que describe los datos de la corrida,
 y elegirla lleva al caso donde se cae.
 
 Después, nueve para resolver en papel. Todos están en la
-[página de ejercicios](Ejercicios.md).
+[página de ejercicios](./Ejercicios.md).
 
 ## Antes de entrar
 
