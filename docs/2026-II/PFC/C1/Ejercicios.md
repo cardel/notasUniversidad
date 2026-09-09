@@ -11,8 +11,19 @@ reemplazar hasta que no quede nada por reemplazar.
 
 ## [sustituir](widgets/sustituir.html){ target=_blank rel=noopener }
 
-El modelo de sustitución sobre `sumaDeCuadrados(3, 2 + 2)`. Cada vuelta
-resalta el único trozo que cambia, y el pie dice por qué ese y no otro.
+El modelo de sustitución sobre seis expresiones. Cada vuelta resalta el único
+trozo que cambia, y el pie dice por qué ese y no otro.
+
+Conviene recorrerlas en orden, porque cada una agrega algo que la anterior no
+tenía. Las tres primeras son la misma mecánica con distinto reparto del
+trabajo. En `primero(2 + 3, 4 * 5)` aparece lo que más cuesta aceptar: el
+`4 * 5` se reduce igual, aunque el cuerpo de `primero` no lo nombre nunca. Son
+dos reducciones pagadas para nada, y son exactamente las que la evaluación por
+nombre no paga. `cuadrado(cuadrado(1 + 1))` no tiene dos argumentos sino dos
+niveles, y se reduce de adentro hacia afuera; el contador de `cuadrado` marca
+dos con una sola definición escrita. Y `abs(3 - 5)` es el único con un
+condicional: se reduce primero la condición, después la expresión entera se
+reemplaza por una sola rama, y la otra se descarta sin haberla mirado.
 
 La predicción inicial pide el número de reemplazos hasta llegar al valor.
 Cuesta más de lo que parece, porque es fácil contar de a dos: reducir el
