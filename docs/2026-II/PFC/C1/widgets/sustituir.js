@@ -7,7 +7,9 @@
     { txt: "def sumaDeCuadrados(x: Int, y: Int): Int =", num: null },
     { txt: "  cuadrado(x) + cuadrado(y)", num: 2 },
     { txt: "", num: null },
-    { txt: "sumaDeCuadrados(3, 2 + 2)", num: 3 }
+    { txt: "def primero(x: Int, y: Int): Int = x", num: 3 },
+    { txt: "", num: null },
+    { txt: "def abs(x: Int): Int = if (x >= 0) x else -x", num: 4 }
   ];
 
   /* Cada preset trae la reducción completa escrita a mano: es la única forma
@@ -17,7 +19,7 @@
     {
       rotulo: "sumaDeCuadrados(3, 2 + 2)",
       pasos: [
-        { expr: "sumaDeCuadrados(3, 2 + 2)", marca: "2 + 2", linea: 3,
+        { expr: "sumaDeCuadrados(3, 2 + 2)", marca: "2 + 2", linea: null,
           regla: "El argumento todavía no es un valor: primero se reduce." },
         { expr: "sumaDeCuadrados(3, 4)", marca: "sumaDeCuadrados(3, 4)", linea: 2,
           regla: "Ya son valores. Se reemplaza la llamada por el cuerpo, con x = 3 e y = 4." },
@@ -51,7 +53,7 @@
     {
       rotulo: "sumaDeCuadrados(2 + 1, 4)",
       pasos: [
-        { expr: "sumaDeCuadrados(2 + 1, 4)", marca: "2 + 1", linea: 3,
+        { expr: "sumaDeCuadrados(2 + 1, 4)", marca: "2 + 1", linea: null,
           regla: "El primer argumento no es un valor." },
         { expr: "sumaDeCuadrados(3, 4)", marca: "sumaDeCuadrados(3, 4)", linea: 2,
           regla: "Se reemplaza la llamada por el cuerpo." },
@@ -65,6 +67,53 @@
           regla: "Multiplicación de valores." },
         { expr: "9 + 16", marca: "9 + 16", linea: null, regla: "La suma final." },
         { expr: "25", marca: "25", linea: null, regla: "Ya es un valor." }
+      ]
+    },
+    {
+      rotulo: "primero(2 + 3, 4 * 5)",
+      pasos: [
+        { expr: "primero(2 + 3, 4 * 5)", marca: "2 + 3", linea: null,
+          regla: "El primer argumento no es un valor: se reduce." },
+        { expr: "primero(5, 4 * 5)", marca: "4 * 5", linea: null,
+          regla: "El segundo tampoco, y también se reduce: por valor se reducen todos los argumentos antes de entrar, se usen o no." },
+        { expr: "primero(5, 20)", marca: "primero(5, 20)", linea: 3,
+          regla: "Ya son valores. Se reemplaza la llamada por el cuerpo, que es solo x." },
+        { expr: "5", marca: "5", linea: null,
+          regla: "Ya es un valor. El 20 costó dos reducciones y nadie lo miró." }
+      ]
+    },
+    {
+      rotulo: "cuadrado(cuadrado(1 + 1))",
+      pasos: [
+        { expr: "cuadrado(cuadrado(1 + 1))", marca: "1 + 1", linea: null,
+          regla: "Lo más adentro que todavía no es un valor." },
+        { expr: "cuadrado(cuadrado(2))", marca: "cuadrado(2)", linea: 1,
+          regla: "El argumento de afuera sigue sin ser un valor: se reduce la llamada de adentro." },
+        { expr: "cuadrado(2 * 2)", marca: "2 * 2", linea: null,
+          regla: "Multiplicación de valores." },
+        { expr: "cuadrado(4)", marca: "cuadrado(4)", linea: 1,
+          regla: "Ahora el argumento sí es un valor: se reemplaza la llamada de afuera." },
+        { expr: "4 * 4", marca: "4 * 4", linea: null,
+          regla: "Multiplicación de valores." },
+        { expr: "16", marca: "16", linea: null,
+          regla: "Ya es un valor. La misma definición sirvió a los dos niveles." }
+      ]
+    },
+    {
+      rotulo: "abs(3 - 5)",
+      pasos: [
+        { expr: "abs(3 - 5)", marca: "3 - 5", linea: null,
+          regla: "El argumento no es un valor." },
+        { expr: "abs(-2)", marca: "abs(-2)", linea: 4,
+          regla: "Se reemplaza la llamada por el cuerpo, con x = -2." },
+        { expr: "if (-2 >= 0) -2 else -(-2)", marca: "-2 >= 0", linea: null,
+          regla: "En un condicional lo primero que se reduce es la condición." },
+        { expr: "if (false) -2 else -(-2)", marca: "if (false) -2 else -(-2)", linea: null,
+          regla: "La condición dio false: la expresión entera se reemplaza por la rama else." },
+        { expr: "-(-2)", marca: "-(-2)", linea: null,
+          regla: "La otra rama se descartó sin reducirla nunca." },
+        { expr: "2", marca: "2", linea: null,
+          regla: "Ya es un valor." }
       ]
     }
   ];
