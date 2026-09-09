@@ -365,7 +365,7 @@ sin darse cuenta.
 
 ## Ejercicios
 
-Siete interactivos, uno por tema, y siete en papel: están en la
+Siete interactivos, uno por tema, y diez en papel: están en la
 [página de ejercicios](./Ejercicios.md).
 
 ## Referencias

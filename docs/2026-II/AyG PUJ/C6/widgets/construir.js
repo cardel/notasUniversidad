@@ -1,4 +1,5 @@
-/* Ejercicio interactivo: construir las representaciones de un grafo (clase 6). */
+/* Ejercicio interactivo: construir las tres representaciones de un grafo
+   (clase 6). Las tres se escriben a mano y se comprueban por separado. */
 var EJERCICIO = (function () {
   var H1 = [[2, 3], [2, 5], [0, 1, 3, 4], [0, 2], [2, 5], [1, 4]];
   var H2 = [[2, 3], [0], [4], [2, 5], [1], [4]];
@@ -44,8 +45,83 @@ var EJERCICIO = (function () {
     return n;
   }
 
+  /* Extrae todos los numeros de un texto, en orden. */
+  function numerosDe(texto) {
+    var salida = [];
+    var actual = "";
+    var i = 0;
+    while (i <= texto.length) {
+      var c = i < texto.length ? texto.charAt(i) : " ";
+      if (c >= "0" && c <= "9") {
+        actual = actual + c;
+      } else {
+        if (actual.length > 0) { salida.push(parseInt(actual, 10)); }
+        actual = "";
+      }
+      i = i + 1;
+    }
+    return salida;
+  }
+
+  /* Compara dos conjuntos de numeros: que falta y que sobra. */
+  function comparar(propuesto, esperado) {
+    var faltan = [], sobran = [], repetidos = [];
+    var vistos = [];
+    var i = 0;
+    while (i < propuesto.length) {
+      if (vistos.indexOf(propuesto[i]) >= 0) {
+        if (repetidos.indexOf(propuesto[i]) < 0) { repetidos.push(propuesto[i]); }
+      } else {
+        vistos.push(propuesto[i]);
+      }
+      i = i + 1;
+    }
+    i = 0;
+    while (i < esperado.length) {
+      if (vistos.indexOf(esperado[i]) < 0) { faltan.push(esperado[i]); }
+      i = i + 1;
+    }
+    i = 0;
+    while (i < vistos.length) {
+      if (esperado.indexOf(vistos[i]) < 0) { sobran.push(vistos[i]); }
+      i = i + 1;
+    }
+    return { faltan: faltan, sobran: sobran, repetidos: repetidos,
+             bien: faltan.length === 0 && sobran.length === 0 && repetidos.length === 0 };
+  }
+
+  /* Compara conjuntos de aristas dadas como pares. */
+  function compararAristas(propuestas, esperadas, dirigido) {
+    function clave(p) {
+      if (dirigido) { return p[0] + "-" + p[1]; }
+      return Math.min(p[0], p[1]) + "-" + Math.max(p[0], p[1]);
+    }
+    var claveEsp = esperadas.map(clave);
+    var vistas = [], repetidas = [], sobran = [];
+    var i = 0;
+    while (i < propuestas.length) {
+      var k = clave(propuestas[i]);
+      if (vistas.indexOf(k) >= 0) {
+        if (repetidas.indexOf(k) < 0) { repetidas.push(k); }
+      } else {
+        vistas.push(k);
+        if (claveEsp.indexOf(k) < 0) { sobran.push(k); }
+      }
+      i = i + 1;
+    }
+    var faltan = [];
+    i = 0;
+    while (i < claveEsp.length) {
+      if (vistas.indexOf(claveEsp[i]) < 0) { faltan.push(claveEsp[i]); }
+      i = i + 1;
+    }
+    return { faltan: faltan, sobran: sobran, repetidas: repetidas,
+             bien: faltan.length === 0 && sobran.length === 0 && repetidas.length === 0 };
+  }
+
   return { H1: H1, H2: H2, matrizDe: matrizDe, aristasDe: aristasDe,
-           entradasDeLista: entradasDeLista };
+           entradasDeLista: entradasDeLista, numerosDe: numerosDe,
+           comparar: comparar, compararAristas: compararAristas };
 })();
 
 if (typeof module !== "undefined") {
@@ -58,6 +134,7 @@ if (typeof module !== "undefined") {
     ];
     var actual = PRESETS[0];
     var marcas = null;
+    var listo = { matriz: false, lista: false, aristas: false };
     var POS = [[0, 1.6], [3.2, 1.6], [1.6, 0.8], [0, -0.6], [3.2, -0.6], [1.6, -1.6]];
 
     function limpiarMarcas() {
@@ -116,6 +193,7 @@ if (typeof module !== "undefined") {
       caja.innerHTML = svg;
     }
 
+    /* ---------- 1. matriz ---------- */
     function pintarMatriz(revisar) {
       var n = actual.G.length;
       var correcta = EJERCICIO.matrizDe(actual.G);
@@ -149,62 +227,169 @@ if (typeof module !== "undefined") {
           var a = parseInt(celda.getAttribute("data-u"), 10);
           var b = parseInt(celda.getAttribute("data-v"), 10);
           marcas[a][b] = marcas[a][b] === 1 ? 0 : 1;
+          listo.matriz = false;
           pintarMatriz(false);
-          document.getElementById("veredicto-matriz").className = "veredicto";
-          document.getElementById("veredicto-matriz").textContent = "";
-          document.getElementById("panel-derivadas").innerHTML = "";
+          limpiarVeredicto("veredicto-matriz");
+          revisarTodo();
         });
       });
     }
 
-    function comoLista(a) { return "[" + a.join(", ") + "]"; }
+    function limpiarVeredicto(id) {
+      var v = document.getElementById(id);
+      v.className = "veredicto";
+      v.innerHTML = "";
+    }
 
-    function mostrarDerivadas() {
+    function veredicto(id, ok, texto) {
+      var v = document.getElementById(id);
+      v.className = ok ? "veredicto bien" : "veredicto mal";
+      v.innerHTML = texto;
+    }
+
+    /* ---------- 2. lista de adyacencia ---------- */
+    function pintarCamposLista() {
       var G = actual.G;
-      var e = EJERCICIO.aristasDe(G, actual.dirigido);
-      var t = "<div class='alerta' style='background:var(--verde-suave); border-color:var(--verde)'>";
-      t = t + "<b>La misma información, en las otras dos formas</b><br><br>";
-      t = t + "<b>Lista de adyacencia</b> — cada fila de la matriz, sin los ceros:<br>";
-      t = t + "<code>[";
+      var t = "";
       var u = 0;
       while (u < G.length) {
-        t = t + comoLista(G[u]) + (u < G.length - 1 ? ", " : "");
+        t = t + "<div class='fila-ady'><label for='ady-" + u + "'>G[" + u + "] =</label>" +
+            "<input type='text' id='ady-" + u + "' placeholder='vecinos separados por comas'>" +
+            "<span class='marca-ady' id='marca-ady-" + u + "'></span></div>";
         u = u + 1;
       }
-      t = t + "]</code><br><br>";
-      t = t + "<b>Lista de aristas</b> — " + e.length + " " +
-          (actual.dirigido ? "aristas dirigidas" : "aristas") + ":<br><code>[";
-      var i = 0;
-      while (i < e.length) {
-        t = t + "(" + e[i][0] + ", " + e[i][1] + ")" + (i < e.length - 1 ? ", " : "");
-        i = i + 1;
+      document.getElementById("panel-lista").innerHTML = t;
+      Array.prototype.forEach.call(document.querySelectorAll(".fila-ady input"), function (campo) {
+        campo.addEventListener("input", function () {
+          listo.lista = false;
+          limpiarVeredicto("veredicto-lista");
+          Array.prototype.forEach.call(document.querySelectorAll(".marca-ady"), function (m) {
+            m.textContent = "";
+          });
+          revisarTodo();
+        });
+      });
+    }
+
+    function comprobarLista() {
+      var G = actual.G;
+      var filasMal = 0;
+      var detalle = [];
+      var u = 0;
+      while (u < G.length) {
+        var texto = document.getElementById("ady-" + u).value;
+        var res = EJERCICIO.comparar(EJERCICIO.numerosDe(texto), G[u]);
+        var marca = document.getElementById("marca-ady-" + u);
+        if (res.bien) {
+          marca.textContent = "✓";
+          marca.className = "marca-ady ok";
+        } else {
+          marca.textContent = "✗";
+          marca.className = "marca-ady no";
+          filasMal = filasMal + 1;
+          var partes = [];
+          if (res.faltan.length > 0) { partes.push("faltan " + res.faltan.join(", ")); }
+          if (res.sobran.length > 0) { partes.push("sobran " + res.sobran.join(", ")); }
+          if (res.repetidos.length > 0) { partes.push("repetidos " + res.repetidos.join(", ")); }
+          detalle.push("G[" + u + "]: " + partes.join("; "));
+        }
+        u = u + 1;
       }
-      t = t + "]</code><br><br>";
-      t = t + "Espacio: la matriz ocupa " + (G.length * G.length) + " posiciones; " +
-          "la lista de adyacencia, " + EJERCICIO.entradasDeLista(G) + " entradas más " +
-          G.length + " listas; la de aristas, " + e.length + " pares.";
-      t = t + "</div>";
-      document.getElementById("panel-derivadas").innerHTML = t;
+      if (filasMal === 0) {
+        listo.lista = true;
+        veredicto("veredicto-lista", true, "Correcta. Fíjese en que la lista " +
+          "guarda solo lo que existe: " + EJERCICIO.entradasDeLista(G) +
+          " entradas contra las " + (G.length * G.length) + " posiciones de la matriz.");
+      } else {
+        listo.lista = false;
+        veredicto("veredicto-lista", false, "Quedan " + filasMal + " filas mal.<br>" +
+          detalle.join("<br>"));
+      }
+      revisarTodo();
     }
 
-    function cambiarPreset(k) {
-      actual = PRESETS[k];
-      limpiarMarcas();
-      dibujar();
-      pintarMatriz(false);
-      document.getElementById("veredicto-matriz").className = "veredicto";
-      document.getElementById("veredicto-matriz").textContent = "";
-      document.getElementById("panel-derivadas").innerHTML = "";
-      var v = document.getElementById("veredicto");
-      v.className = "veredicto";
-      v.textContent = "";
-      document.getElementById("nota-simetria").innerHTML = actual.dirigido
-        ? "En un grafo dirigido la matriz <b>no</b> tiene por qué ser simétrica: " +
-          "la arista (3,2) pone un uno en la fila 3, y nada en la fila 2."
-        : "En un grafo no dirigido la matriz es simétrica: cada arista pone dos " +
-          "unos, uno a cada lado de la diagonal.";
+    /* ---------- 3. lista de aristas ---------- */
+    function comprobarAristas() {
+      var G = actual.G;
+      var esperadas = EJERCICIO.aristasDe(G, actual.dirigido);
+      var nums = EJERCICIO.numerosDe(document.getElementById("campo-aristas").value);
+      if (nums.length % 2 !== 0) {
+        listo.aristas = false;
+        veredicto("veredicto-aristas", false, "Hay " + nums.length + " números, que " +
+          "es impar: alguna arista quedó con un solo extremo.");
+        revisarTodo();
+        return;
+      }
+      var propuestas = [];
+      var i = 0;
+      while (i < nums.length) {
+        propuestas.push([nums[i], nums[i + 1]]);
+        i = i + 2;
+      }
+      var fuera = propuestas.filter(function (p) {
+        return p[0] < 0 || p[0] >= G.length || p[1] < 0 || p[1] >= G.length;
+      });
+      if (fuera.length > 0) {
+        listo.aristas = false;
+        veredicto("veredicto-aristas", false, "Hay vértices fuera de rango: los " +
+          "de este grafo van de 0 a " + (G.length - 1) + ".");
+        revisarTodo();
+        return;
+      }
+      var res = EJERCICIO.compararAristas(propuestas, esperadas, actual.dirigido);
+      if (res.bien) {
+        listo.aristas = true;
+        veredicto("veredicto-aristas", true, "Correcta: " + esperadas.length +
+          (actual.dirigido ? " aristas dirigidas." : " aristas.") +
+          " Es la más compacta de las tres, y la más parecida a como llega la " +
+          "entrada de un problema.");
+      } else {
+        listo.aristas = false;
+        var partes = [];
+        if (res.faltan.length > 0) { partes.push("faltan " + res.faltan.join(", ")); }
+        if (res.sobran.length > 0) { partes.push("sobran " + res.sobran.join(", ")); }
+        if (res.repetidas.length > 0) {
+          partes.push("repetidas " + res.repetidas.join(", ") +
+            (actual.dirigido ? "" : " — en un grafo no dirigido cada arista se escribe una sola vez"));
+        }
+        veredicto("veredicto-aristas", false, partes.join("; ") + ".");
+      }
+      revisarTodo();
     }
 
+    /* ---------- cierre ---------- */
+    function revisarTodo() {
+      var caja = document.getElementById("panel-resumen");
+      var marcador = document.getElementById("marcador");
+      var hechas = (listo.matriz ? 1 : 0) + (listo.lista ? 1 : 0) + (listo.aristas ? 1 : 0);
+      marcador.textContent = hechas + " de 3";
+      marcador.className = hechas === 3 ? "valor-n" : "valor-n pendiente-n";
+      if (hechas < 3) {
+        caja.innerHTML = "";
+        return;
+      }
+      var G = actual.G;
+      var n = G.length;
+      var entradas = EJERCICIO.entradasDeLista(G);
+      var e = EJERCICIO.aristasDe(G, actual.dirigido).length;
+      var t = "<table><thead><tr><th style='text-align:left'>Representación</th>" +
+        "<th>Lo que guarda</th><th>En este grafo</th><th>En general</th></tr></thead><tbody>";
+      t = t + "<tr><td style='text-align:left'>Lista de adyacencia</td><td>" + n +
+        " listas con " + entradas + " entradas</td><td>" + (n + entradas) +
+        "</td><td>Θ(V + E)</td></tr>";
+      t = t + "<tr><td style='text-align:left'>Matriz de adyacencia</td><td>" +
+        n + " × " + n + " posiciones</td><td>" + (n * n) + "</td><td>Θ(V²)</td></tr>";
+      t = t + "<tr><td style='text-align:left'>Lista de aristas</td><td>" + e +
+        " pares</td><td>" + (2 * e) + "</td><td>Θ(E)</td></tr>";
+      t = t + "</tbody></table>";
+      t = t + "<p class='nota'>Las tres guardan exactamente la misma información: " +
+        "de cualquiera de ellas se puede reconstruir el dibujo. Lo que cambia es " +
+        "cuánto ocupan y qué pregunta contestan rápido.</p>";
+      caja.innerHTML = "<div class='alerta' style='background:var(--verde-suave); " +
+        "border-color:var(--verde)'><b>Las tres, lado a lado</b>" + t + "</div>";
+    }
+
+    /* ---------- controles ---------- */
     document.getElementById("btn-comprobar-matriz").addEventListener("click", function () {
       var correcta = EJERCICIO.matrizDe(actual.G);
       var n = actual.G.length;
@@ -223,58 +408,76 @@ if (typeof module !== "undefined") {
         u = u + 1;
       }
       pintarMatriz(true);
-      var ver = document.getElementById("veredicto-matriz");
       if (errores === 0) {
-        ver.className = "veredicto bien";
-        ver.innerHTML = "Correcta. Las otras dos representaciones salen de esta " +
-          "sin volver a mirar el dibujo: abajo están.";
-        mostrarDerivadas();
+        listo.matriz = true;
+        veredicto("veredicto-matriz", true, "Correcta." +
+          (actual.dirigido
+            ? " Fíjese en que no es simétrica: la arista (3,2) pone un uno en la fila 3 y nada en la fila 2."
+            : " Es simétrica, porque cada arista pone dos unos."));
       } else {
-        ver.className = "veredicto mal";
-        ver.innerHTML = "Quedan " + errores + " celdas mal: " + faltantes +
-          " aristas sin poner y " + sobrantes + " puestas de más. Las rojas son " +
-          "las que hay que revisar." +
-          (!actual.dirigido ? " Recuerde que cada arista pone <b>dos</b> unos." : "");
+        listo.matriz = false;
+        veredicto("veredicto-matriz", false, "Quedan " + errores + " celdas mal: " +
+          faltantes + " aristas sin poner y " + sobrantes + " puestas de más." +
+          (!actual.dirigido ? " Recuerde que cada arista pone <b>dos</b> unos." : ""));
       }
+      revisarTodo();
     });
 
     document.getElementById("btn-limpiar-matriz").addEventListener("click", function () {
       limpiarMarcas();
+      listo.matriz = false;
       pintarMatriz(false);
-      document.getElementById("veredicto-matriz").className = "veredicto";
-      document.getElementById("veredicto-matriz").textContent = "";
-      document.getElementById("panel-derivadas").innerHTML = "";
+      limpiarVeredicto("veredicto-matriz");
+      revisarTodo();
     });
 
+    document.getElementById("btn-comprobar-lista").addEventListener("click", comprobarLista);
+    document.getElementById("btn-comprobar-aristas").addEventListener("click", comprobarAristas);
+
     document.getElementById("btn-comprobar").addEventListener("click", function () {
-      var campo = document.getElementById("prediccion");
-      var v = document.getElementById("veredicto");
-      var valor = parseInt(campo.value, 10);
+      var valor = parseInt(document.getElementById("prediccion").value, 10);
       var G = actual.G;
       var entradas = EJERCICIO.entradasDeLista(G);
       var e = EJERCICIO.aristasDe(G, actual.dirigido).length;
       if (isNaN(valor)) {
-        v.className = "veredicto mal";
-        v.textContent = "Escriba un número primero.";
+        veredicto("veredicto", false, "Escriba un número primero.");
       } else if (valor === entradas) {
-        v.className = "veredicto bien";
-        v.innerHTML = "Correcto: " + entradas + " entradas" +
+        veredicto("veredicto", true, "Correcto: " + entradas + " entradas" +
           (actual.dirigido
             ? ", una por arista, porque cada arista dirigida aparece una sola vez."
-            : ", dos por arista, porque cada una aparece en las listas de sus dos extremos.");
+            : ", dos por arista, porque cada una aparece en las listas de sus dos extremos."));
       } else if (valor === e) {
-        v.className = "veredicto mal";
-        v.innerHTML = "Ese es el número de aristas (" + e + ")." +
-          (actual.dirigido ? "" : " En un grafo no dirigido cada arista deja dos entradas.");
+        veredicto("veredicto", false, "Ese es el número de aristas (" + e + ")." +
+          (actual.dirigido ? "" : " En un grafo no dirigido cada arista deja dos entradas."));
       } else if (valor === G.length * G.length) {
-        v.className = "veredicto mal";
-        v.innerHTML = "Ese es el tamaño de la matriz. La lista de adyacencia solo " +
-          "guarda lo que existe.";
+        veredicto("veredicto", false, "Ese es el tamaño de la matriz. La lista de " +
+          "adyacencia solo guarda lo que existe.");
       } else {
-        v.className = "veredicto mal";
-        v.textContent = "No coincide. Sume el largo de las seis listas.";
+        veredicto("veredicto", false, "No coincide. Sume el largo de las " +
+          G.length + " listas.");
       }
     });
+
+    function cambiarPreset(k) {
+      actual = PRESETS[k];
+      listo = { matriz: false, lista: false, aristas: false };
+      limpiarMarcas();
+      dibujar();
+      pintarMatriz(false);
+      pintarCamposLista();
+      document.getElementById("campo-aristas").value = "";
+      limpiarVeredicto("veredicto-matriz");
+      limpiarVeredicto("veredicto-lista");
+      limpiarVeredicto("veredicto-aristas");
+      limpiarVeredicto("veredicto");
+      document.getElementById("prediccion").value = "";
+      document.getElementById("nota-aristas").innerHTML = actual.dirigido
+        ? "El grafo es dirigido: el par (u, v) no es lo mismo que (v, u), y cada " +
+          "arista se escribe una sola vez, en su sentido."
+        : "El grafo es no dirigido: cada arista se escribe <b>una sola vez</b>. " +
+          "Escribir (0,2) y (2,0) es contarla dos veces.";
+      revisarTodo();
+    }
 
     Array.prototype.forEach.call(document.querySelectorAll(".presets button"), function (btn) {
       btn.addEventListener("click", function () {
