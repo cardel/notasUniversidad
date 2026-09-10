@@ -25,7 +25,12 @@ Se publican después de cada sesión.
 
 ### Corte 1
 
-*Aún no hay clases publicadas.*
+1. [Clase 1. Principios y elementos de programación funcional — 10 de septiembre](C1/Clase%201.%20Principios%20y%20elementos%20de%20programaci%C3%B3n%20funcional.md)
+   — paradigmas y el esquema de von Neumann, las funciones como valores, el
+   modelo de sustitución, composición con `andThen` y `compose`, cinco formas
+   de definir una función, evaluación por valor frente a por nombre, `val`
+   frente a `def`, el `if` como expresión, cortocircuito de `&&`, y bloques y
+   alcance léxico. Incluye el código escrito en clase.
 
 ### Corte 2
 
