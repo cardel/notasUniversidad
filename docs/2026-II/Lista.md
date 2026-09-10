@@ -51,7 +51,7 @@ Cursos del segundo semestre de 2026.
 
     Recursión y los procesos que genera, funciones de alto orden, abstracción
     de datos, listas y colecciones, y paralelismo de tareas y de datos, en
-    Scala. Grupos 4A y 4B, Univalle Tuluá.
+    Scala. Grupos 50 y 51, Univalle Tuluá.
 
     [:octicons-arrow-right-24: Entrar](PFC/Contenido.md)
 
