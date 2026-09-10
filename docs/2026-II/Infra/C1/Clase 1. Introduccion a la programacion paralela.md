@@ -15,9 +15,11 @@ programador.
     ---
 
     La trampa serial y el *span*, la jerarquía de memoria de una máquina
-    real, las dos localidades, el recorrido por filas contra el recorrido
-    por columnas medido con cachegrind, la ley de Amdahl con su techo, el
-    false sharing y los tres muros que estancaron el reloj.
+    real, SMP y NUMA con el ancho de banda medido hilo a hilo, las dos
+    localidades, el recorrido por filas contra el recorrido por columnas
+    medido con cachegrind, la ley de Amdahl con su techo, el false sharing
+    con lo que cuesta, la taxonomía de Flynn y los tres muros que
+    estancaron el reloj.
 
     [:octicons-arrow-right-24: Entrar](Introduccion%20a%20la%20programacion%20paralela.md)
 

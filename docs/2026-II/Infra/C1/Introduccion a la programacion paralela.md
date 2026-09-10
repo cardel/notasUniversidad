@@ -99,6 +99,63 @@ $T_m$ es mucho mayor que $T_c$, el término que manda es el segundo aunque
 $1-h$ sea pequeño. Bajar la tasa de fallo del 10 % al 1 % cambia el tiempo de
 un programa mucho más de lo que sugiere la diferencia entre esos dos números.
 
+### Todos los núcleos a la misma distancia
+
+Esa escalera es la de un solo núcleo. Con seis, la máquina es un
+multiprocesador simétrico: varios núcleos iguales comparten un espacio de
+direcciones, alcanzan cualquier dirección por el mismo camino y con la misma
+latencia, y un solo sistema operativo planifica sobre todos. El hardware se
+encarga de que las copias en las cachés no se contradigan, así que el código no
+pide coherencia: la recibe.
+
+Simétrico quiere decir que da igual en qué núcleo caiga un hilo. El
+planificador lo puede mover de uno a otro sin avisarle al programa.
+
+Lo que no es simétrico es la interconexión, porque es una sola. Ahí aparece el
+techo. Midiendo el ancho de banda de memoria con un número creciente de hilos
+en esa máquina de seis núcleos:
+
+| Hilos | Tiempo | Ancho de banda | Speedup |
+|---:|---:|---:|---:|
+| 1 | 57,6 ms | 9,3 GB/s | 1,00 |
+| 2 | 32,7 ms | 16,4 GB/s | 1,76 |
+| 3 | 21,9 ms | 24,5 GB/s | 2,63 |
+| 4 | 16,7 ms | 32,2 GB/s | 3,45 |
+| 6 | 12,9 ms | 41,7 GB/s | 4,47 |
+| 12 | 15,3 ms | 35,0 GB/s | 3,76 |
+
+Hasta seis hilos la cosa sube, aunque cada vez menos: seis hilos hacen la sexta
+parte del trabajo cada uno y el tiempo solo baja 4,47 veces. Con doce **baja**.
+
+Doce hilos sobre seis núcleos significa dos hilos por núcleo. El segundo no le
+saca a la memoria nada que el primero no estuviera sacando ya, y de paso los
+dos se pelean la misma ruta hacia la RAM. El hardware multihilo ayuda cuando el
+cuello está en la CPU; aquí el cuello es la memoria, y duplicar los hilos solo
+agrega competencia.
+
+### Cuando dejan de estarlo
+
+En máquinas más grandes la memoria deja de estar a la misma distancia de todos
+los núcleos, y eso se llama NUMA. Cada nodo trae su propia RAM pegada a un
+grupo de núcleos: un acceso local cuesta del orden de cincuenta ciclos, y leer
+la RAM del otro nodo cruza la interconexión y cuesta más del doble.
+
+Ahí está la razón de una decisión de compra que suele parecer arbitraria: por
+qué dos módulos de 16 GB en lugar de uno de 32. Con dos, el sistema puede
+asignarle a unos núcleos el primero y a otros el segundo, y repartir el
+tráfico. Con uno, todos compiten por la misma ruta.
+
+Se mira con `numactl --hardware`. En una máquina de un solo zócalo la matriz de
+distancias tiene una sola celda y da igual dónde corra el hilo. En un servidor
+de dos zócalos aparecen dos nodos, cada uno con su CPU y su memoria, y valores
+mayores fuera de la diagonal.
+
+De ahí sale una práctica que sorprende la primera vez: **quien toca primero un
+dato decide dónde vive**. Si un hilo maestro inicializa el arreglo entero, todo
+queda en su nodo y los demás núcleos van a leerlo de lejos. Si la
+inicialización se reparte igual que el cálculo, cada hilo se trae su pedazo al
+nodo donde está.
+
 ## Una matriz no es un cuadrado
 
 Los arreglos de dos dimensiones no existen en memoria. Lo que hay es una tira
@@ -296,6 +353,21 @@ Las dos correcciones habituales salen de ahí: alinear cada acumulador a 64 byte
 para que no compartan línea, o acumular en una variable local (que vive en un
 registro) y escribir al arreglo una sola vez al terminar.
 
+### Cuánto cuesta
+
+Midiendo con `perf` las dos versiones del mismo programa, una con los cuatro
+acumuladores pegados y otra con cada uno en su línea:
+
+| | Misma línea | Una línea por hilo |
+|---|---:|---:|
+| Fallos de caché | 25 243 497 | 35 841 |
+| Ciclos | 14,15 mil millones | 1,63 mil millones |
+
+Setecientas veces más fallos y casi nueve veces más ciclos, con las mismas
+instrucciones y el mismo resultado. Los 64 bytes de relleno son todo el
+arreglo, y ahí está lo interesante: es acelerar un programa sin tocarle la
+lógica, solo cambiando dónde caen los datos.
+
 ## Por qué hubo que aprender todo esto
 
 Nada de esto haría falta si los procesadores siguieran duplicando su velocidad
@@ -343,6 +415,44 @@ una instrucción distinta en cada etapa.
 
 Ese paralelismo llegó a su límite. Alargar la segmentación deja de rendir, y
 predecir mejor las ramas también.
+
+### Cuántos flujos a la vez
+
+Con el reloj estancado, la pregunta cambia: en vez de cuántas veces por segundo
+hace algo la máquina, cuántas cosas hace a la vez. Y son dos preguntas
+distintas, porque una cosa son las instrucciones y otra los datos.
+
+| | Un flujo de datos | Varios flujos de datos |
+|---|---|---|
+| **Una instrucción** | SISD | SIMD |
+| **Varias instrucciones** | MISD | MIMD |
+
+SISD es el ciclo que suma una matriz corriendo en un solo núcleo: una
+instrucción, un dato. SIMD es la misma instrucción aplicada a varios datos a la
+vez; un registro AVX de 256 bits guarda ocho `float` de 32 y una sola
+instrucción los suma todos. MIMD es cada unidad corriendo su propio programa
+sobre sus propios datos, que es lo que hacen los hilos y los procesos.
+
+MISD casi no existe en cómputo general, y donde aparece no es por velocidad
+sino por desconfianza: varias unidades aplican operaciones distintas al mismo
+flujo de datos y se compara el resultado. Los computadores de vuelo redundantes
+funcionan así.
+
+Lo que la GPU hace es llevar SIMD al extremo: miles de unidades ejecutando la
+misma instrucción sobre datos distintos. Por eso rinde tanto en aprendizaje
+automático, donde la operación es siempre la misma sobre muchísimos números.
+
+Un polinomio de grado ocho evaluado sobre dieciséis millones de `float`, con
+las cuentas idénticas en los dos casos:
+
+| Versión | Tres corridas |
+|---|---|
+| Escalar | 45,8 · 47,0 · 40,9 ms |
+| Vectorizada con AVX | 9,3 · 9,8 · 9,7 ms |
+
+Entre cuatro y cinco veces según la corrida, sin cambiar el algoritmo. Lo que cambió fue la instrucción
+que el compilador emitió: `addss` sobre un valor, contra `vfmadd132ps` sobre un
+registro de 256 bits.
 
 ### Lo que quedó
 
