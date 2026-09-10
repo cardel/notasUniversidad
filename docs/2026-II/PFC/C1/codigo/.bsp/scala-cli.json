@@ -1,0 +1,20 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "/home/cardel/.local/share/coursier/bin/.scala-cli.aux",
+    "bsp",
+    "--json-options",
+    "/home/cardel/repositorios/notasUniversidad/docs/2026-II/PFC/C1/codigo/.scala-build/ide-options-v2.json",
+    "--json-launcher-options",
+    "/home/cardel/repositorios/notasUniversidad/docs/2026-II/PFC/C1/codigo/.scala-build/ide-launcher-options.json",
+    "--envs-file",
+    "/home/cardel/repositorios/notasUniversidad/docs/2026-II/PFC/C1/codigo/.scala-build/ide-envs.json",
+    "/home/cardel/repositorios/notasUniversidad/docs/2026-II/PFC/C1/codigo/01_pares_y_cuadrados.scala"
+  ],
+  "version": "1.13.0",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}
