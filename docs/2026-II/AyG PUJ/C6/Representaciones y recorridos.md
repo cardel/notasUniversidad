@@ -2,10 +2,9 @@
 
 **Viernes 11 de septiembre de 2026.**
 
-La sesión anterior llegó hasta las representaciones y dejó una pregunta
-abierta: cuál conviene, mirando cuánta memoria pide cada una y qué tan fácil
-es llegar a las conexiones de un vértice. Esta clase cierra esa pregunta y
-sigue con la que viene después: cómo se recorre un grafo.
+Cuatro formas de guardar un grafo, con lo que ocupa cada una y lo que cuesta
+cada consulta. De ahí sale cuál conviene, y de ahí la pregunta que viene
+después: cómo se recorre un grafo, en profundidad y en amplitud.
 
 ## Diapositivas
 
@@ -70,6 +69,67 @@ Una matriz de $|V| \times |E|$ donde la posición $(i, j)$ vale $1$ si la
 arista $j$ toca al vértice $i$. La suma de la fila $i$ es el grado de $i$, y
 la columna de una arista tiene exactamente dos unos. Ocupa $\Theta(V \cdot E)$
 y aparece cuando la matriz misma es el dato de entrada del problema.
+
+### Construir las tres desde la lista de aristas
+
+La entrada de un problema casi siempre trae $n$ y la lista de aristas. Las
+tres construcciones recorren esa lista una vez; la del grafo no dirigido
+escribe cada arista en los dos sentidos.
+
+```python
+def lista_de_adyacencia(n, aristas, dirigido):
+    # G[u] guarda los vecinos de u: una lista por vertice
+    G = []
+    u = 0
+    while u < n:
+        G.append([])
+        u = u + 1
+    for arista in aristas:
+        u = arista[0]
+        v = arista[1]
+        G[u].append(v)
+        if not dirigido:
+            G[v].append(u)
+    return G
+
+
+def matriz_de_adyacencia(n, aristas, dirigido):
+    # m[u][v] vale 1 si la arista existe y 0 si no existe
+    m = []
+    u = 0
+    while u < n:
+        fila = []
+        v = 0
+        while v < n:
+            fila.append(0)
+            v = v + 1
+        m.append(fila)
+        u = u + 1
+    for arista in aristas:
+        u = arista[0]
+        v = arista[1]
+        m[u][v] = 1
+        if not dirigido:
+            m[v][u] = 1
+    return m
+
+
+def lista_de_aristas(n, aristas, dirigido):
+    # El grafo es la lista de sus aristas; sin direccion se guarda el par al reves
+    E = []
+    for arista in aristas:
+        u = arista[0]
+        v = arista[1]
+        E.append((u, v))
+        if not dirigido:
+            E.append((v, u))
+    return E
+```
+
+La lista de adyacencia y la de aristas cuestan $\Theta(V + E)$: crear las $V$
+listas vacías y recorrer las $E$ aristas. La matriz cuesta $\Theta(V^2)$ y no
+puede costar menos, porque hay que escribir el cero en cada posición que no es
+arista antes de poner los unos.
 
 ## Cuál conviene
 
@@ -339,9 +399,8 @@ $3 \cdot 10^5$ operaciones; la matriz, $10^{10}$; la lista de aristas,
 $2 \cdot 10^{10}$. La primera corre en menos de un segundo y las otras dos no
 terminan.
 
-De ahí sale la respuesta a la pregunta de la sesión anterior. La lista de
-adyacencia gana porque guarda juntos los vecinos de cada vértice, que es justo
-lo que los recorridos preguntan. La matriz gana cuando la pregunta es otra:
+De ahí sale cuál conviene. La lista de adyacencia gana porque guarda juntos
+los vecinos de cada vértice, que es justo lo que los recorridos preguntan. La matriz gana cuando la pregunta es otra:
 ¿existe esta arista?
 
 ## Errores comunes
