@@ -22,8 +22,9 @@ de Fenwick y arreglos de sufijos. Se programa en Python y el texto guía es CLRS
 ## Notas de clase
 
 Las notas de cada sesión se publican aquí, organizadas por corte, a medida que
-avanza el semestre. Los dos grupos van en puntos distintos del temario, así que
-cada nota abre con las dos rutas: entre por la de su grupo. Las del semestre
+avanza el semestre. Hay una nota por sesión y sirve para los dos grupos. Las de
+las semanas en que los grupos estuvieron en puntos distintos del tema traen las
+dos rutas, y ahí conviene entrar por la del grupo propio. Las del semestre
 anterior, que cubren los mismos temas, siguen disponibles en
 [Árboles y Grafos 2026-I](../../2026-I/AyG%20PUJ/Contenido.md).
 
