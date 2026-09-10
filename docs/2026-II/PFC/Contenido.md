@@ -12,8 +12,8 @@ estas notas son comunes a ambos.
 
 | Grupo | Día | Hora |
 |---|---|---|
-| 4A | Jueves | 7:00 a. m. – 10:00 a. m. |
-| 4B | Jueves | 2:00 p. m. – 5:00 p. m. |
+| 50 | Jueves | 7:00 a. m. – 10:00 a. m. |
+| 51 | Jueves | 2:00 p. m. – 5:00 p. m. |
 
 Cada sesión son tres horas: la primera hora y media es de exposición y el
 resto se dedica a resolver un ejercicio en clase, que se entrega antes de
