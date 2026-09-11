@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>consultas — la misma pregunta, tres costos</title>
+<title>consultas — la misma pregunta, cuatro costos</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
   .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
@@ -20,7 +20,7 @@
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>La misma pregunta, tres costos</h1>
+  <h1>La misma pregunta, cuatro costos</h1>
   <p class="intro">La pregunta es una sola: cuántos vecinos tiene cada
   vértice de H1, es decir la secuencia de grados. Cambia la representación
   sobre la que se contesta, y con ella el número de operaciones. El contador
@@ -33,6 +33,7 @@
       <button data-preset="0" class="primario">Lista de adyacencia</button>
       <button data-preset="1">Matriz de adyacencia</button>
       <button data-preset="2">Lista de aristas</button>
+      <button data-preset="3">Matriz de incidencia</button>
     </div>
     <div class="prediccion">
       <span>¿Cuántas veces se ejecuta la <b id="rotulo-clave">línea 5</b>?</span>
@@ -40,7 +41,7 @@
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
     <div id="veredicto" class="veredicto"></div>
-    <div class="nota">H1 tiene 6 vértices y 7 aristas. Las tres versiones
+    <div class="nota">H1 tiene 6 vértices y 7 aristas. Las cuatro versiones
     devuelven lo mismo: <code>[2, 2, 4, 2, 2, 2]</code>.</div>
   </div>
 
@@ -65,7 +66,7 @@
   </div>
 
   <div class="carta">
-    <h2>3. Las tres cuentas</h2>
+    <h2>3. Las cuatro cuentas</h2>
     <div class="envoltura-tabla">
       <table>
         <thead>
@@ -84,6 +85,7 @@
       <button data-op="lista">La lista de adyacencia, siempre</button>
       <button data-op="matriz">La matriz de adyacencia, siempre</button>
       <button data-op="aristas">La lista de aristas, siempre</button>
+      <button data-op="incidencia">La matriz de incidencia, siempre</button>
       <button data-op="depende">Ninguna: depende de la pregunta que haga el algoritmo</button>
     </div>
     <div id="veredicto-cual" class="veredicto"></div>
@@ -108,12 +110,12 @@
 
   <div class="carta">
     <h2>6. Para llevarse</h2>
-    <p style="margin-top:0">Sin solución aquí. Escriba las tres versiones de
+    <p style="margin-top:0">Sin solución aquí. Escriba las cuatro versiones de
     una pregunta distinta: <b>¿cuántos vértices aislados tiene el grafo?</b>
     Cuente las operaciones de cada una sobre H1 y diga cuál gana. Después
-    responda por qué esa pregunta ordena las tres representaciones igual que
+    responda por qué esa pregunta ordena las cuatro representaciones igual que
     los grados, y qué pregunta tendría que hacerse para que ganara la
-    matriz.</p>
+    matriz de adyacencia.</p>
   </div>
 
 </div>

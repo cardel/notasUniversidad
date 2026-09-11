@@ -1,5 +1,5 @@
-/* Ejercicio interactivo: construir las tres representaciones de un grafo
-   (clase 6). Las tres se escriben a mano y se comprueban por separado. */
+/* Ejercicio interactivo: construir las cuatro representaciones de un grafo
+   (clase 6). Las cuatro se escriben a mano y se comprueban por separado. */
 var EJERCICIO = (function () {
   var H1 = [[2, 3], [2, 5], [0, 1, 3, 4], [0, 2], [2, 5], [1, 4]];
   var H2 = [[2, 3], [0], [4], [2, 5], [1], [4]];
@@ -36,6 +36,30 @@ var EJERCICIO = (function () {
       u = u + 1;
     }
     return e;
+  }
+
+  /* Matriz de incidencia: una fila por vertice y una columna por arista,
+     en el orden en que aristasDe las entrega. En el grafo no dirigido la
+     celda vale 1 si la arista toca al vertice; en el dirigido vale -1 donde
+     la arista sale y 1 donde entra (CLRS, Ejercicio 22.1-7). */
+  function incidenciaDe(G, dirigido) {
+    var E = aristasDe(G, dirigido);
+    var B = [];
+    var u = 0;
+    while (u < G.length) {
+      var fila = [];
+      var j = 0;
+      while (j < E.length) { fila.push(0); j = j + 1; }
+      B.push(fila);
+      u = u + 1;
+    }
+    var k = 0;
+    while (k < E.length) {
+      B[E[k][0]][k] = dirigido ? -1 : 1;
+      B[E[k][1]][k] = 1;
+      k = k + 1;
+    }
+    return B;
   }
 
   function entradasDeLista(G) {
@@ -120,8 +144,9 @@ var EJERCICIO = (function () {
   }
 
   return { H1: H1, H2: H2, matrizDe: matrizDe, aristasDe: aristasDe,
-           entradasDeLista: entradasDeLista, numerosDe: numerosDe,
-           comparar: comparar, compararAristas: compararAristas };
+           incidenciaDe: incidenciaDe, entradasDeLista: entradasDeLista,
+           numerosDe: numerosDe, comparar: comparar,
+           compararAristas: compararAristas };
 })();
 
 if (typeof module !== "undefined") {
@@ -134,7 +159,8 @@ if (typeof module !== "undefined") {
     ];
     var actual = PRESETS[0];
     var marcas = null;
-    var listo = { matriz: false, lista: false, aristas: false };
+    var marcasInc = null;
+    var listo = { matriz: false, lista: false, aristas: false, incidencia: false };
     var POS = [[0, 1.6], [3.2, 1.6], [1.6, 0.8], [0, -0.6], [3.2, -0.6], [1.6, -1.6]];
 
     function limpiarMarcas() {
@@ -145,6 +171,19 @@ if (typeof module !== "undefined") {
         var v = 0;
         while (v < actual.G.length) { fila.push(0); v = v + 1; }
         marcas.push(fila);
+        u = u + 1;
+      }
+    }
+
+    function limpiarMarcasInc() {
+      marcasInc = [];
+      var E = EJERCICIO.aristasDe(actual.G, actual.dirigido);
+      var u = 0;
+      while (u < actual.G.length) {
+        var fila = [];
+        var j = 0;
+        while (j < E.length) { fila.push(0); j = j + 1; }
+        marcasInc.push(fila);
         u = u + 1;
       }
     }
@@ -357,14 +396,128 @@ if (typeof module !== "undefined") {
       revisarTodo();
     }
 
+    /* ---------- 4. matriz de incidencia ---------- */
+    function textoCelda(valor) {
+      if (valor === 1) { return "1"; }
+      if (valor === -1) { return "−1"; }
+      return "0";
+    }
+
+    function pintarIncidencia(revisar) {
+      var G = actual.G;
+      var E = EJERCICIO.aristasDe(G, actual.dirigido);
+      var correcta = EJERCICIO.incidenciaDe(G, actual.dirigido);
+      var t = "<table><thead><tr><th></th>";
+      var j = 0;
+      while (j < E.length) {
+        t = t + "<th>e<sub>" + j + "</sub><br><small>(" + E[j][0] + "," + E[j][1] +
+            ")</small></th>";
+        j = j + 1;
+      }
+      t = t + "</tr></thead><tbody>";
+      var u = 0;
+      while (u < G.length) {
+        t = t + "<tr><th>" + u + "</th>";
+        j = 0;
+        while (j < E.length) {
+          var val = marcasInc[u][j];
+          var clase = "celda-i";
+          if (revisar) {
+            clase = clase + (val === correcta[u][j] ? " bien-m" : " mal-m");
+          } else if (val !== 0) {
+            clase = clase + " puesta";
+          }
+          t = t + "<td class='" + clase + "' data-u='" + u + "' data-j='" + j + "'>" +
+              textoCelda(val) + "</td>";
+          j = j + 1;
+        }
+        t = t + "</tr>";
+        u = u + 1;
+      }
+      t = t + "</tbody></table>";
+      document.getElementById("panel-incidencia").innerHTML = t;
+      Array.prototype.forEach.call(document.querySelectorAll(".celda-i"), function (celda) {
+        celda.addEventListener("click", function () {
+          var a = parseInt(celda.getAttribute("data-u"), 10);
+          var b = parseInt(celda.getAttribute("data-j"), 10);
+          if (actual.dirigido) {
+            marcasInc[a][b] = marcasInc[a][b] === 0 ? -1 : (marcasInc[a][b] === -1 ? 1 : 0);
+          } else {
+            marcasInc[a][b] = marcasInc[a][b] === 1 ? 0 : 1;
+          }
+          listo.incidencia = false;
+          pintarIncidencia(false);
+          limpiarVeredicto("veredicto-incidencia");
+          revisarTodo();
+        });
+      });
+    }
+
+    function gradosDe(G) {
+      var g = [];
+      var u = 0;
+      while (u < G.length) { g.push(G[u].length); u = u + 1; }
+      return g;
+    }
+
+    function comprobarIncidencia() {
+      var G = actual.G;
+      var E = EJERCICIO.aristasDe(G, actual.dirigido);
+      var correcta = EJERCICIO.incidenciaDe(G, actual.dirigido);
+      var errores = 0, faltantes = 0, sobrantes = 0, cambiadas = 0;
+      var u = 0;
+      while (u < G.length) {
+        var j = 0;
+        while (j < E.length) {
+          if (marcasInc[u][j] !== correcta[u][j]) {
+            errores = errores + 1;
+            if (marcasInc[u][j] === 0) { faltantes = faltantes + 1; }
+            else if (correcta[u][j] === 0) { sobrantes = sobrantes + 1; }
+            else { cambiadas = cambiadas + 1; }
+          }
+          j = j + 1;
+        }
+        u = u + 1;
+      }
+      pintarIncidencia(true);
+      if (errores === 0) {
+        listo.incidencia = true;
+        var posiciones = G.length * E.length;
+        var comun = " Ocupa V × E = " + posiciones + " posiciones, contra las " +
+          (G.length * G.length) + " de la matriz de adyacencia: en cuanto hay más " +
+          "aristas que vértices es la más grande de las cuatro.";
+        veredicto("veredicto-incidencia", true, "Correcta." +
+          (actual.dirigido
+            ? " Cada columna lleva un −1 donde la arista sale y un 1 donde entra, " +
+              "así que sus valores suman cero; la suma de la fila u es el grado de " +
+              "entrada menos el de salida."
+            : " Cada columna tiene exactamente dos unos, los dos extremos de su arista, " +
+              "y la suma de la fila u es el grado de u: [" + gradosDe(G).join(", ") + "].") +
+          comun);
+      } else {
+        listo.incidencia = false;
+        var partes = [];
+        if (faltantes > 0) { partes.push(faltantes + " celdas sin marcar"); }
+        if (sobrantes > 0) { partes.push(sobrantes + " marcadas de más"); }
+        if (cambiadas > 0) { partes.push(cambiadas + " con el signo cambiado"); }
+        veredicto("veredicto-incidencia", false, "Quedan " + errores + " celdas mal: " +
+          partes.join(", ") + "." +
+          (actual.dirigido
+            ? " Cada columna lleva un −1 y un 1, nada más."
+            : " Cada columna lleva <b>dos</b> unos, uno por extremo de la arista."));
+      }
+      revisarTodo();
+    }
+
     /* ---------- cierre ---------- */
     function revisarTodo() {
       var caja = document.getElementById("panel-resumen");
       var marcador = document.getElementById("marcador");
-      var hechas = (listo.matriz ? 1 : 0) + (listo.lista ? 1 : 0) + (listo.aristas ? 1 : 0);
-      marcador.textContent = hechas + " de 3";
-      marcador.className = hechas === 3 ? "valor-n" : "valor-n pendiente-n";
-      if (hechas < 3) {
+      var hechas = (listo.matriz ? 1 : 0) + (listo.lista ? 1 : 0) +
+        (listo.aristas ? 1 : 0) + (listo.incidencia ? 1 : 0);
+      marcador.textContent = hechas + " de 4";
+      marcador.className = hechas === 4 ? "valor-n" : "valor-n pendiente-n";
+      if (hechas < 4) {
         caja.innerHTML = "";
         return;
       }
@@ -381,12 +534,16 @@ if (typeof module !== "undefined") {
         n + " × " + n + " posiciones</td><td>" + (n * n) + "</td><td>Θ(V²)</td></tr>";
       t = t + "<tr><td style='text-align:left'>Lista de aristas</td><td>" + e +
         " pares</td><td>" + (2 * e) + "</td><td>Θ(E)</td></tr>";
+      t = t + "<tr><td style='text-align:left'>Matriz de incidencia</td><td>" + n +
+        " × " + e + " posiciones</td><td>" + (n * e) + "</td><td>Θ(V · E)</td></tr>";
       t = t + "</tbody></table>";
-      t = t + "<p class='nota'>Las tres guardan exactamente la misma información: " +
+      t = t + "<p class='nota'>Las cuatro guardan exactamente la misma información: " +
         "de cualquiera de ellas se puede reconstruir el dibujo. Lo que cambia es " +
-        "cuánto ocupan y qué pregunta contestan rápido.</p>";
+        "cuánto ocupan y qué pregunta contestan rápido. La de incidencia es la que " +
+        "más crece, y por eso casi nunca se programa sobre ella: aparece cuando la " +
+        "matriz misma es el dato de entrada del problema.</p>";
       caja.innerHTML = "<div class='alerta' style='background:var(--verde-suave); " +
-        "border-color:var(--verde)'><b>Las tres, lado a lado</b>" + t + "</div>";
+        "border-color:var(--verde)'><b>Las cuatro, lado a lado</b>" + t + "</div>";
     }
 
     /* ---------- controles ---------- */
@@ -433,6 +590,15 @@ if (typeof module !== "undefined") {
 
     document.getElementById("btn-comprobar-lista").addEventListener("click", comprobarLista);
     document.getElementById("btn-comprobar-aristas").addEventListener("click", comprobarAristas);
+    document.getElementById("btn-comprobar-incidencia").addEventListener("click", comprobarIncidencia);
+
+    document.getElementById("btn-limpiar-incidencia").addEventListener("click", function () {
+      limpiarMarcasInc();
+      listo.incidencia = false;
+      pintarIncidencia(false);
+      limpiarVeredicto("veredicto-incidencia");
+      revisarTodo();
+    });
 
     document.getElementById("btn-comprobar").addEventListener("click", function () {
       var valor = parseInt(document.getElementById("prediccion").value, 10);
@@ -460,15 +626,18 @@ if (typeof module !== "undefined") {
 
     function cambiarPreset(k) {
       actual = PRESETS[k];
-      listo = { matriz: false, lista: false, aristas: false };
+      listo = { matriz: false, lista: false, aristas: false, incidencia: false };
       limpiarMarcas();
+      limpiarMarcasInc();
       dibujar();
       pintarMatriz(false);
       pintarCamposLista();
+      pintarIncidencia(false);
       document.getElementById("campo-aristas").value = "";
       limpiarVeredicto("veredicto-matriz");
       limpiarVeredicto("veredicto-lista");
       limpiarVeredicto("veredicto-aristas");
+      limpiarVeredicto("veredicto-incidencia");
       limpiarVeredicto("veredicto");
       document.getElementById("prediccion").value = "";
       document.getElementById("nota-aristas").innerHTML = actual.dirigido
@@ -476,6 +645,12 @@ if (typeof module !== "undefined") {
           "arista se escribe una sola vez, en su sentido."
         : "El grafo es no dirigido: cada arista se escribe <b>una sola vez</b>. " +
           "Escribir (0,2) y (2,0) es contarla dos veces.";
+      document.getElementById("nota-incidencia").innerHTML = actual.dirigido
+        ? "Una fila por vértice y una columna por arista. El grafo es dirigido, así " +
+          "que la celda vale −1 si la arista <b>sale</b> del vértice y 1 si <b>entra</b> " +
+          "(CLRS, Ejercicio 22.1-7). Cada clic pasa de 0 a −1, de −1 a 1 y de vuelta a 0."
+        : "Una fila por vértice y una columna por arista. La celda vale 1 si la arista " +
+          "<b>toca</b> al vértice y 0 si no. Haga clic para poner o quitar el uno.";
       revisarTodo();
     }
 
