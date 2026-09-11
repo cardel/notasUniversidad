@@ -15,30 +15,40 @@ explica por qué lo es.
 
 ### [construir](widgets/construir.html){ target=_blank rel=noopener }
 
-Las tres representaciones del mismo grafo, escritas a mano y comprobadas por
-separado: la matriz a clic sobre las celdas, la lista de adyacencia vértice
-por vértice y la lista de aristas en un campo de texto. Cuando las tres
-quedan bien aparecen lado a lado, con lo que ocupa cada una en este grafo y
-en general.
+Las cuatro representaciones del mismo grafo, escritas a mano y comprobadas
+por separado: la matriz de adyacencia a clic sobre las celdas, la lista de
+adyacencia vértice por vértice, la lista de aristas en un campo de texto y la
+matriz de incidencia, otra vez a clic, con una columna por arista. Cuando las
+cuatro quedan bien aparecen lado a lado, con lo que ocupa cada una en este
+grafo y en general.
 
 Cada comprobación dice qué falta y qué sobra, no solo si está bien. En la
 lista de aristas de un grafo no dirigido, escribir $(0,2)$ y $(2,0)$ cuenta
 como repetir la misma arista.
 
-El segundo grafo es dirigido, y ahí la matriz deja de ser simétrica: la arista
-$(3,2)$ pone un uno en la fila $3$ y nada en la fila $2$.
+El segundo grafo es dirigido, y ahí las dos matrices cambian. La de adyacencia
+deja de ser simétrica: la arista $(3,2)$ pone un uno en la fila $3$ y nada en
+la fila $2$. La de incidencia pasa a llevar $-1$ donde la arista sale y $1$
+donde entra, que es la convención del Ejercicio 22.1-7 de CLRS; así cada
+columna suma cero y la suma de la fila $u$ es el grado de entrada menos el de
+salida.
+
+La de incidencia ocupa $V \cdot E$: sobre $H_1$ son $42$ posiciones contra las
+$36$ de la matriz de adyacencia. Ahí se ve por qué casi nunca se programa
+sobre ella.
 
 ## Cuál conviene
 
 ### [consultas](widgets/consultas.html){ target=_blank rel=noopener }
 
-Una sola pregunta —la secuencia de grados de $H_1$— contestada sobre las tres
-representaciones, con el contador de ejecuciones al lado de cada línea. Salen
-$6$, $36$ y $7$, es decir $V$, $V^2$ y $E$.
+Una sola pregunta —la secuencia de grados de $H_1$— contestada sobre las
+cuatro representaciones, con el contador de ejecuciones al lado de cada línea.
+Salen $6$, $36$, $7$ y $42$, es decir $V$, $V^2$, $E$ y $V \cdot E$.
 
 El resultado sorprende: para esta pregunta la lista de aristas le gana a la
-matriz. Sirve para lo que el titular dejó planteado, que no hay una
-representación mejor sino una mejor para cada pregunta.
+matriz de adyacencia, y la de incidencia queda de última aunque la respuesta
+esté ahí sumando cada fila. Sirve para lo que el titular dejó planteado, que
+no hay una representación mejor sino una mejor para cada pregunta.
 
 ## Recorrer un grafo
 
@@ -111,13 +121,14 @@ Estos ejercicios entran en el material del parcial.
    las tres, diga cuánto cuesta el recorrido completo en términos de $V$ y $E$,
    y sobre qué línea cae ese costo.
 
-2. **La matriz de incidencia.** Tiene una fila por vértice y una columna por
-   arista. Escríbala para $H_1$ y compruebe las dos propiedades que salen de
-   la definición: cuánto suma cada fila y cuántos unos tiene cada columna.
-   ¿Cuánto ocupa comparada con las otras tres?
+2. **La incidencia por su transpuesta.** Sea $B$ la matriz de incidencia de
+   $H_1$ y $B^{T}$ su transpuesta. Calcule $B \cdot B^{T}$, que es de
+   $V \times V$, y diga qué hay en la diagonal y qué hay fuera de ella.
+   Compárelo con la matriz de adyacencia de $H_1$. Es el Ejercicio 22.1-7 de
+   CLRS, planteado allá para grafos dirigidos.
 
-3. **Las seis conversiones.** Entre las tres representaciones hay seis
-   conversiones posibles. Escriba las funciones y diga, para cada una, cuánto
+3. **Las seis conversiones.** Entre lista de adyacencia, matriz de adyacencia
+   y lista de aristas hay seis conversiones posibles. Escriba las funciones y diga, para cada una, cuánto
    cuesta en términos de $V$ y $E$. Hay una que no puede costar menos de
    $\Theta(V^2)$ pase lo que pase: encuéntrela y explique por qué.
 

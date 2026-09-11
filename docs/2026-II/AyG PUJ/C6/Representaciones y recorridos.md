@@ -70,6 +70,17 @@ arista $j$ toca al vértice $i$. La suma de la fila $i$ es el grado de $i$, y
 la columna de una arista tiene exactamente dos unos. Ocupa $\Theta(V \cdot E)$
 y aparece cuando la matriz misma es el dato de entrada del problema.
 
+En un grafo dirigido hay que distinguir por dónde entra y por dónde sale la
+arista, así que la celda vale $-1$ si la arista $j$ sale del vértice $i$ y
+$1$ si entra (CLRS, Ejercicio 22.1-7). Cada columna queda con un $-1$ y un
+$1$, de modo que suma cero, y la suma de la fila $i$ es el grado de entrada
+de $i$ menos su grado de salida.
+
+Las dos matrices se cruzan en $E = V$: $G_1$ tiene siete vértices y siete
+aristas, y las dos ocupan $49$ posiciones. De ahí en adelante la de incidencia
+crece más rápido, y como casi todo grafo útil tiene más aristas que vértices,
+en la práctica es la más grande de las cuatro.
+
 ### Construir las tres desde la lista de aristas
 
 La entrada de un problema casi siempre trae $n$ y la lista de aristas. Las

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>construir — las tres representaciones, a mano</title>
+<title>construir — las cuatro representaciones, a mano</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
   #panel-grafo { text-align: center; margin: 0.4rem 0; }
@@ -14,6 +14,14 @@
   .celda-m.mal-m { background: var(--rojo-suave); color: var(--rojo); }
   #panel-matriz table { width: auto; margin: 0 auto; }
   #panel-matriz th, #panel-matriz td { min-width: 2rem; }
+  .celda-i { cursor: pointer; font-family: ui-monospace, monospace; font-weight: 700;
+    color: #b9c0c9; user-select: none; }
+  .celda-i.puesta { background: var(--azul); color: #fff; }
+  .celda-i.bien-m { background: var(--verde-suave); color: var(--verde); }
+  .celda-i.mal-m { background: var(--rojo-suave); color: var(--rojo); }
+  #panel-incidencia table { width: auto; margin: 0 auto; }
+  #panel-incidencia th, #panel-incidencia td { min-width: 2.4rem; }
+  #panel-incidencia th small { font-weight: 400; color: var(--tenue); }
   .fila-ady { display: flex; align-items: center; gap: 0.6rem; margin: 0.35rem 0; }
   .fila-ady label { width: 4.2rem; flex: none; font-family: ui-monospace, monospace;
     font-weight: 700; }
@@ -34,11 +42,11 @@
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>Las tres representaciones, a mano</h1>
+  <h1>Las cuatro representaciones, a mano</h1>
   <p class="intro">Un grafo dibujado no le sirve a un programa. Aquí hay que
-  escribir las tres representaciones del mismo grafo —matriz de adyacencia,
-  lista de adyacencia y lista de aristas— y comprobarlas por separado. Al
-  final, las tres lado a lado con lo que ocupa cada una.</p>
+  escribir las cuatro representaciones del mismo grafo —matriz de adyacencia,
+  lista de adyacencia, lista de aristas y matriz de incidencia— y comprobarlas
+  por separado. Al final, las cuatro lado a lado con lo que ocupa cada una.</p>
 
   <div class="carta">
     <h2>1. El grafo y una cuenta previa</h2>
@@ -56,7 +64,7 @@
     <div id="veredicto" class="veredicto"></div>
     <div class="fila-n" style="margin-top:0.8rem">
       <span>Representaciones correctas:</span>
-      <span class="valor-n pendiente-n" id="marcador">0 de 3</span>
+      <span class="valor-n pendiente-n" id="marcador">0 de 4</span>
     </div>
   </div>
 
@@ -97,23 +105,38 @@
   </div>
 
   <div class="carta">
-    <h2>5. Las tres, lado a lado</h2>
-    <div id="panel-resumen"></div>
-    <div class="nota">Aparece cuando las tres estén correctas.</div>
+    <h2>5. Matriz de incidencia</h2>
+    <p style="margin-top:0" class="nota" id="nota-incidencia"></p>
+    <div id="panel-incidencia" class="envoltura-tabla"></div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-incidencia" class="primario">Comprobar la incidencia</button>
+      <button id="btn-limpiar-incidencia">Limpiar</button>
+    </div>
+    <div id="veredicto-incidencia" class="veredicto"></div>
+    <div class="nota">Las columnas van en el mismo orden de la lista de
+    aristas de arriba, y el encabezado de cada una dice a qué arista
+    corresponde.</div>
   </div>
 
   <div class="carta">
-    <h2>6. Para llevarse</h2>
+    <h2>6. Las cuatro, lado a lado</h2>
+    <div id="panel-resumen"></div>
+    <div class="nota">Aparece cuando las cuatro estén correctas.</div>
+  </div>
+
+  <div class="carta">
+    <h2>7. Para llevarse</h2>
     <p style="margin-top:0">Sin solución aquí.</p>
-    <p><b>Sobre la matriz de incidencia.</b> Tiene una fila por vértice y una
-    columna por arista. Escríbala para H1 y compruebe las dos propiedades que
-    salen de la definición: cuánto suma cada fila y cuántos unos tiene cada
-    columna. ¿Cuánto ocupa comparada con las otras tres, y por qué casi nunca
-    se usa para programar?</p>
-    <p><b>Las seis conversiones.</b> Entre tres representaciones hay seis
-    conversiones posibles. Escriba las funciones y diga, para cada una, cuánto
-    cuesta en términos de $V$ y $E$. Hay una que no puede costar menos de
-    $\Theta(V^2)$ pase lo que pase: encuéntrela y explique por qué.</p>
+    <p><b>El producto de la incidencia por su transpuesta.</b> Sea B la matriz
+    de incidencia de H1 y B<sup>T</sup> su transpuesta. Calcule B · B<sup>T</sup>,
+    que es de V × V, y diga qué hay en la diagonal y qué hay fuera de ella.
+    Compare el resultado con la matriz de adyacencia. Es el Ejercicio 22.1-7 de
+    CLRS, planteado allá para grafos dirigidos.</p>
+    <p><b>Las seis conversiones.</b> Entre lista de adyacencia, matriz de
+    adyacencia y lista de aristas hay seis conversiones posibles. Escriba las
+    funciones y diga, para cada una, cuánto cuesta en términos de $V$ y $E$.
+    Hay una que no puede costar menos de $\Theta(V^2)$ pase lo que pase:
+    encuéntrela y explique por qué.</p>
     <p><b>Cuándo cambiar de representación.</b> Un problema entrega el grafo
     como lista de aristas y el algoritmo que hay que correr hace un recorrido
     completo. ¿Conviene convertir a lista de adyacencia primero, o trabajar
