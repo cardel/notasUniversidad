@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gramáticas BNF</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Gramáticas BNF</h1>
+  <p class="intro">Una sola gramática para los cinco retos, con las dos
+  abreviaturas que la notación permite: la estrella, que significa cero o más,
+  y la cruz, uno o más. Los argumentos de una operación dejan de ser una
+  cantidad fija, y eso cambia la forma del recorrido: en lugar de nombrar cada
+  hijo, hay que recorrer una tira.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">La misma gramática leída cinco veces, y lo que
+    cada lectura produjo:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>Qué devuelve</th><th>El caso base de la tira</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>es-exp?</td><td>un booleano</td><td>la tira vacía pertenece, salvo donde la cruz lo impide</td></tr>
+          <tr><td>evalua</td><td>un número</td><td>cero para la suma; el único argumento para el mayor</td></tr>
+          <tr><td>cuenta-operaciones</td><td>un número</td><td>cero: no hay nada que contar</td></tr>
+          <tr><td>profundidad</td><td>un número</td><td>cero, y se compara en vez de sumar</td></tr>
+          <tr><td>hojas</td><td>una lista</td><td>la lista vacía, y se junta con append</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">La estrella y la cruz no son adornos de la notación: son
+    la diferencia entre un caso base que acepta la tira vacía y uno que exige
+    al menos un elemento. Y como el número de argumentos no está fijo, cada
+    procedimiento necesita un auxiliar que recorra la tira, con su propio caso
+    base y su propia forma de combinar.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define e '(suma 1 (mayor 2 5) 3))
+
+(list (car e) (cdr e) (length (cdr e)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="bnf.js"></script>
+</body>
+</html>

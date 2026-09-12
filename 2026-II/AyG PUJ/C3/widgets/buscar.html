@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>buscar — la ventana que se encoge</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .conclusion { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .caja.viva { border-color: var(--azul); }
+  .caja.descartada { background: #f2f4f7; color: #b9c0c9; border-color: #e2e6eb;
+    text-decoration: line-through; }
+  .caja.actual { background: var(--azul); color: #fff; border-color: var(--azul); }
+  #panel-arreglo .arreglo { margin-top: 1.4rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>buscar: la ventana que se encoge</h1>
+  <p class="intro">La búsqueda binaria no persigue a <code>v</code>: encoge
+  una ventana de candidatos hasta dejar una sola posición, cuidando de no
+  perder la respuesta por el camino. Ese cuidado es un invariante, y aquí
+  lo va a encontrar y a demostrar.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Arreglo y valor:</span>
+      <button data-preset="0" class="primario">8 posiciones, v = 13</button>
+      <button data-preset="1">8 posiciones, v = 5 (no está)</button>
+      <button data-preset="2">12 posiciones, v = 31</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces se parte la ventana antes de quedar en una posición?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire la ventana</h2>
+    <div id="panel-arreglo"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Las posiciones tachadas ya se descartaron y nadie
+        vuelve a mirarlas. Pruebe el caso con <code>v = 5</code>: el
+        algoritmo recorre lo mismo y termina en una posición que no es
+        <code>v</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza, división por división</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>[ini..fin)</th><th>mitad</th><th>lista[mitad]</th><th>Decisión</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los dos invariantes del while</h2>
+    <p style="margin-top:0"><b>Al comenzar cada vuelta, ¿qué es siempre
+    cierto de la ventana <code>lista[ini..fin)</code>?</b> (ese será I₁)</p>
+    <div class="opciones" id="opciones-patron">
+      <button data-op="esta">v está en la ventana</button>
+      <button data-op="correcta">Buscar v en la ventana da la misma respuesta que buscarlo en todo el arreglo</button>
+      <button data-op="ordenada">La ventana está ordenada</button>
+      <button data-op="meta">La ventana tiene una sola posición</button>
+    </div>
+    <div id="veredicto-patron" class="veredicto"></div>
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Y las cotas de los índices?</b> (ese será I₀)</div>
+    <div class="opciones" id="opciones-cotas">
+      <button data-op="correcta">0 ≤ ini &lt; fin ≤ N</button>
+      <button data-op="floja">0 ≤ ini ≤ fin ≤ N</button>
+      <button data-op="estricta">0 ≤ ini y fin − ini &gt; 1 siempre</button>
+    </div>
+    <div id="veredicto-cotas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
+    dos invariantes en la tarjeta 4. El teorema a demostrar:
+    <b>Teorema 1 — los invariantes I₀ e I₁ se cumplen.</b></p>
+
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Inicialización</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-b1">Ver</button></div>
+      <div class="texto-paso">Las líneas 1–2 dejan ini = 0 y fin = N. Para I₀
+      se pide 0 ≤ 0 &lt; N ≤ N: la estricta 0 &lt; N vale por la precondición
+      N ≥ 1 y las otras dos son igualdades. ✓ &nbsp;Para I₁, sustituyendo
+      ini = 0 y fin = N el lado derecho queda «v está en lista[0..N)», que es
+      literalmente el lado izquierdo: una equivalencia entre una fórmula y
+      ella misma. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-2">
+      <div class="titulo-paso">Estabilidad</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-b2">Ver</button></div>
+      <div class="texto-paso">Vuelta arbitraria con ini = a y fin = b; como el
+      cuerpo se ejecuta, b − a &gt; 1, o sea b ≥ a + 2. Primero hay que ver que
+      la mitad cae estrictamente adentro: de b ≥ a+2 sale a + b ≥ 2a + 2, luego
+      mitad ≥ a + 1 &gt; a; y de a ≤ b−2 sale a + b ≤ 2b − 2, luego
+      mitad ≤ b − 1 &lt; b. Con eso las dos ventanas candidatas son no vacías.
+      <br><br>
+      Si v &lt; lista[mitad], la línea 6 deja fin = mitad: I₀ pide
+      0 ≤ a &lt; mitad ≤ N, que ya está probado; e I₁ se conserva porque en
+      [mitad..b) todo elemento es ≥ lista[mitad] &gt; v, así que ahí no hay
+      testigos. Si v ≥ lista[mitad], la línea 7 deja ini = mitad, y ese es el
+      caso de la tarjeta 6. En ambos, los invariantes valen con los valores
+      nuevos. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-3">
+      <div class="titulo-paso">Terminación</div>
+      <div class="botones" style="margin-top:0.4rem"><button id="btn-b3">Ver</button></div>
+      <div class="texto-paso">El ancho fin − ini es un entero positivo por I₀, y
+      cada vuelta lo deja en mitad − a o en b − mitad, ambos al menos 1 y
+      estrictamente menores que b − a: un entero positivo que decrece no puede
+      hacerlo para siempre.
+      <br><br>
+      Al salir, la condición fin − ini &gt; 1 es falsa, o sea fin − ini ≤ 1; e
+      I₀ da ini &lt; fin, o sea fin − ini ≥ 1. Intersectando, fin = ini + 1: la
+      ventana quedó en una sola posición. Sustituyendo en I₁, el lado derecho es
+      «v está en lista[ini..ini+1)», un rango de una posición, que vale
+      exactamente lista[ini] = v. ∎</div>
+    </div>
+
+    <div class="conclusion" id="conclusion">
+      <b>Teorema 2.</b> La invocación <code>buscar(lista, v)</code> sobre un
+      arreglo ordenado de tamaño N ≥ 1 responde si v está en el arreglo.
+      &nbsp;<b>Demostración:</b> es trivial a partir de la correctitud de I₀ e
+      I₁: la terminación deja fin = ini + 1, y sustituir ese valor en I₁ dice
+      que la respuesta pedida es lista[ini] = v, que es justo lo que retorna la
+      línea 8. ∎
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. El caso incómodo</h2>
+    <p style="margin-top:0">Cuando <code>v ≥ lista[mitad]</code>, el algoritmo
+    se queda con la mitad derecha. Pero <code>v</code> podría estar también en
+    la izquierda. <b>¿Por qué no se pierde la respuesta?</b></p>
+    <div class="opciones" id="opciones-descarte">
+      <button data-op="unico">Porque v aparece una sola vez en el arreglo</button>
+      <button data-op="correcta">Porque si hubiera un testigo a la izquierda, entonces lista[mitad] sería igual a v</button>
+      <button data-op="orden">Porque la mitad izquierda ya se revisó antes</button>
+    </div>
+    <div id="veredicto-descarte" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>7. El costo</h2>
+    <p style="margin-top:0">Buscar en un arreglo ordenado de n posiciones cuesta:</p>
+    <div class="opciones" id="opciones-costo">
+      <button data-op="log">Θ(lg n)</button>
+      <button data-op="lineal">Θ(n)</button>
+      <button data-op="nlogn">Θ(n · lg n)</button>
+    </div>
+    <div id="veredicto-costo" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="buscar.js"></script>
+</body>
+</html>

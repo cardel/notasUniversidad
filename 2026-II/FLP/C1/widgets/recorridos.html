@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recorrer siguiendo la gramática</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Recorrer siguiendo la gramática</h1>
+  <p class="intro">Cinco procedimientos que ya no responden sí o no: buscan un
+  elemento, arman una lista nueva, miden, cuentan. La gramática sigue diciendo
+  cuántas cláusulas van y sobre qué se llama la recursión; lo que cambia es
+  qué devuelve cada cláusula. Los dos últimos son los más exigentes y conviene
+  llegar a ellos con los tres primeros resueltos.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Los cinco recorren conjuntos distintos con la misma
+    lectura, y lo que cambia entre ellos está en la última columna:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>El conjunto que recorre</th><th>Qué junta las partes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>nth-element</td><td>listas</td><td>nada: una sola rama baja y la respuesta sube igual</td></tr>
+          <tr><td>subst</td><td>s-lists y s-exp, uno adentro del otro</td><td><code>cons</code>, que rearma el nivel que se acaba de abrir</td></tr>
+          <tr><td>profundidad</td><td>árboles binarios</td><td><code>max</code> entre las dos ramas, más uno</td></tr>
+          <tr><td>cuantas-libres</td><td>expresiones lambda</td><td>una suma entre las dos partes de la aplicación</td></tr>
+          <tr><td>camino</td><td>árboles binarios de búsqueda</td><td><code>cons</code> del giro de este nivel, y baja una sola rama</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">La gramática fija el esqueleto y la especificación llena
+    lo que queda: qué devuelve el caso base y con qué operación se juntan los
+    resultados de las llamadas. Dos procedimientos con el mismo recorrido y
+    distinta respuesta se diferencian solo en esas dos decisiones.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (largo lst)
+  (if (null? lst)
+      0
+      (+ 1 (largo (cdr lst)))))
+
+(largo '(a (b c) d))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="mini-scheme.js"></script>
+<script src="motor-retos.js"></script>
+<script src="recorridos.js"></script>
+</body>
+</html>

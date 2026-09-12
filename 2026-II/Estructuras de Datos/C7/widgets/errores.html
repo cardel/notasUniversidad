@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>errores — el fragmento que compila y falla</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Compila sin avisos y aun así está mal</h1>
+  <p class="intro">Este fragmento pasa gcc -Wall -Wextra sin una sola queja, y
+  tiene dos errores de memoria: uno rompe la regla de verificar y otro pierde
+  un bloque para siempre. Haga clic en la línea donde nace cada uno.</p>
+
+  <div class="carta">
+    <h2>1. Señale las líneas culpables</h2>
+    <div class="codigo" id="panel-lineas"></div>
+    <div class="progreso" id="marcador" style="margin-top:0.6rem"></div>
+    <div id="veredicto-lineas" class="veredicto"></div>
+    <div class="nota">Cada clic responde: las líneas inocentes explican por qué
+    lo son. Los dos errores rompen dos de las tres reglas del contrato con el
+    montículo.</div>
+  </div>
+
+  <div class="carta" id="carta-arreglo" style="display:none">
+    <h2>2. El arreglo</h2>
+    <p style="margin-top:0">Con los dos errores a la vista, la versión sana:
+    verificar cada reserva antes de usarla, y liberar (o no perder) el bloque
+    viejo de <b>b</b> antes de reasignar el puntero.</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">int *a = malloc(n * sizeof(int));</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">int *b = malloc(n * sizeof(int));</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">if (a == NULL || b == NULL) {</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    /* reportar y salir sin tocar los bloques */</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">} else {</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    a[0] = 1;</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    b[0] = 2;</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    free(b);            /* devolver antes de reasignar */</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    b = malloc(2 * n * sizeof(int));</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    /* ... verificar b de nuevo, usar, y al final ... */</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    free(a);</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    free(b);</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">}</span></div>
+    </div>
+    <div class="nota">Cada malloc con su NULL, cada malloc con su free, y
+    ningún puntero pierde su bloque: las tres reglas de la clase, completas.</div>
+  </div>
+
+</div>
+<script src="errores.js"></script>
+</body>
+</html>

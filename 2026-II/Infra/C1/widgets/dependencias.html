@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dependencias entre tareas — cuándo dejan de servir los procesadores</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuatro tareas, distintos tamaños y un orden que hay que respetar</h1>
+  <p class="intro">Hay cuatro tareas para repartir. Dos de ellas no pueden
+  empezar hasta que otra termine. Cambie el número de procesadores y mire en
+  qué momento agregar más deja de cambiar algo.</p>
+
+  <div class="carta">
+    <h2>1. Las tareas</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Tarea</th><th>Dura</th><th>Espera a</th></tr></thead>
+        <tbody id="cuerpo-tareas"></tbody>
+      </table>
+    </div>
+    <div class="nota">B y C no pueden arrancar hasta que A termine. D no
+    depende de nadie y puede correr desde el primer instante.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cuántos procesadores</h2>
+    <div class="fila-n">
+      <label>Procesadores:</label>
+      <span class="presets">
+        <button data-proc="1">1</button>
+        <button data-proc="2">2</button>
+        <button data-proc="4">4</button>
+        <button data-proc="8">8</button>
+      </span>
+      <span class="valor-n">ahora hay <span id="ver-p">2</span></span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="partible"><input type="checkbox" id="partible"> Las tareas se
+      pueden partir entre varios procesadores</label>
+    </div>
+    <div class="prediccion">
+      <span>Antes de mirar abajo: ¿en cuánto termina todo?</span>
+      <input type="number" id="prediccion" min="0" step="0.001" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El reparto</h2>
+    <div id="panel-gantt"></div>
+    <div class="chips" id="panel-chips" style="margin-top:0.8rem"></div>
+    <div class="nota">Cada vez que un procesador se desocupa toma la tarea más
+    larga de las que ya tienen resueltas sus dependencias. Los huecos son
+    espera: hay procesador libre y ninguna tarea puede empezar.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los cuatro repartos, uno al lado del otro</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Procesadores</th><th>Termina en</th><th>Speedup</th>
+        <th>Lo mejor posible</th><th>Si se pudieran partir</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota">La cuarta columna es el mayor de dos números: el trabajo
+    total dividido entre los procesadores, y la cadena más larga de tareas
+    encadenadas. El reparto de arriba alcanza ese valor en los cuatro casos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Por qué se estanca</h2>
+    <p style="margin-top:0">De 2 a 4 procesadores, y de 4 a 8, el tiempo no se
+    mueve. ¿Qué lo está deteniendo?</p>
+    <div class="opciones" id="opciones-tope">
+      <button data-op="correcta">La cadena A→C, que dura 11</button>
+      <button data-op="trabajo">El trabajo total, que son 17</button>
+      <button data-op="pocas">Que solo hay cuatro tareas</button>
+      <button data-op="memoria">El acceso a memoria</button>
+    </div>
+    <div id="veredicto-tope" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="dependencias.js"></script>
+</body>
+</html>

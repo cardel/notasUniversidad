@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>testigos — la notación O</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cazar testigos</h1>
+  <p class="intro">Decir que T(n) ∈ O(g(n)) es prometer un techo: existen una
+  constante c y un punto de arranque k tales que T(n) ≤ c·g(n) para todo
+  n ≥ k. Aquí la promesa se pone a prueba con números.</p>
+
+  <div class="carta">
+    <h2>1. El experimento</h2>
+    <p style="margin-top:0">Compare 3n + 4 contra n². Al principio la recta
+    gana. ¿Desde qué n se cumple 3n + 4 ≤ n² y no se vuelve a romper?</p>
+    <div class="prediccion">
+      <span>Primer n donde se cumple:</span>
+      <input type="number" id="prediccion-experimento" min="1" placeholder="su n">
+      <button id="btn-experimento" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-experimento" class="veredicto"></div>
+    <div id="tabla-experimento" style="display:none">
+      <div class="envoltura-tabla" style="margin-top:0.7rem">
+        <table>
+          <thead><tr><th>n</th><th>3n + 4</th><th>n²</th><th>¿3n + 4 ≤ n²?</th></tr></thead>
+          <tbody id="cuerpo-experimento"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Testigos para 3n + 4 ∈ O(n)</h2>
+    <p style="margin-top:0">Ahora el techo es una recta: c·n. Proponga una
+    pareja (c, k) y el comprobador la acepta o le muestra dónde falla.
+    Meta: encontrar <b>dos parejas distintas</b> que sirvan.</p>
+    <div class="prediccion">
+      <span>c =</span>
+      <input type="number" id="c1" min="1" placeholder="c">
+      <span>k =</span>
+      <input type="number" id="k1" min="1" placeholder="k">
+      <button id="btn-cazar1" class="primario">Comprobar testigos</button>
+    </div>
+    <div id="veredicto-cazar1" class="veredicto"></div>
+    <div class="secuencia" id="fichas1"></div>
+    <div class="nota">Pista para arrancar: pruebe primero una c que no supere
+    a 3 y mire qué contesta el comprobador.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Ahora usted: 5n + 5 ∈ O(n)</h2>
+    <p style="margin-top:0">La misma cacería con otra función. ¿Qué c y qué k
+    propone?</p>
+    <div class="prediccion">
+      <span>c =</span>
+      <input type="number" id="c2" min="1" placeholder="c">
+      <span>k =</span>
+      <input type="number" id="k2" min="1" placeholder="k">
+      <button id="btn-cazar2" class="primario">Comprobar testigos</button>
+    </div>
+    <div id="veredicto-cazar2" class="veredicto"></div>
+    <div class="secuencia" id="fichas2"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La pareja que no sirve</h2>
+    <p style="margin-top:0">Para 2n + 10 ∈ O(n) se proponen cuatro parejas de
+    testigos. Tres demuestran el teorema; una no lo demuestra jamás. ¿Cuál?</p>
+    <div class="opciones" id="opciones-cierre">
+      <button data-op="holgada">c = 12, k = 1</button>
+      <button data-op="apretada">c = 3, k = 10</button>
+      <button data-op="correcta">c = 2, k = 1000</button>
+      <button data-op="corrida">c = 12, k = 5</button>
+    </div>
+    <div id="veredicto-cierre" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="testigos.js"></script>
+</body>
+</html>

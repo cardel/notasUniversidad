@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>amplitud — el vértice más lejano</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0 0.2rem; }
+  .cola-viva { font-family: ui-monospace, monospace; background: var(--azul-suave);
+    border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+  #aviso-capas { font-size: 0.9rem; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>mas_lejano: hasta dónde llega el grafo</h1>
+  <p class="intro">Un recorrido por capas contesta más de lo que parece. Aquí
+  se usa para encontrar el vértice más apartado del arranque, y de paso se ve
+  por qué la primera vez que la búsqueda toca a alguien es siempre por el
+  camino más corto.</p>
+
+  <div class="carta">
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo <code>G</code> en lista de
+    adyacencia y un vértice <code>s</code>. &nbsp;<b>Salida:</b> el vértice
+    alcanzable más lejano de <code>s</code> y su distancia en número de
+    aristas.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Grafo y arranque:</span>
+      <button data-preset="0" class="primario">H1 desde 0</button>
+      <button data-preset="1">H1 desde 2</button>
+      <button data-preset="2">H2 dirigido desde 0</button>
+    </div>
+    <div class="prediccion">
+      <span>¿A qué distancia está el más lejano?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire las capas</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota" style="text-align:center; margin-top:0">Un color por capa;
+    el borde negro marca el vértice que salió de la cola.</p>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Cola: <span class="cola-viva" id="ver-cola">vacía</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La cola entrega por el frente y recibe por atrás.
+        Mire qué capas conviven en ella en cada momento.</div>
+      </div>
+    </div>
+    <div id="aviso-capas"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una fila por vértice que sale</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Turno</th><th>Sale</th><th>Encola</th><th>Cola después</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué hay dentro de la cola</h2>
+    <div style="margin-bottom:0.3rem"><b>En cualquier momento, los vértices que
+    están en la cola…</b></div>
+    <div class="opciones" id="opciones-capa">
+      <button data-op="una">pertenecen todos a la misma capa</button>
+      <button data-op="correcta">pertenecen a lo sumo a dos capas consecutivas</button>
+      <button data-op="todas">pueden pertenecer a cualquier capa</button>
+      <button data-op="numero">salen en orden de número de vértice</button>
+    </div>
+    <div id="veredicto-capa" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Dónde se fija la distancia</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">¿En qué momento queda fijada <code>d[v]</code>?</div>
+      <div class="opciones">
+        <button data-p1="encolar">Cuando <code>v</code> entra a la cola</button>
+        <button data-p1="salir">Cuando <code>v</code> sale de la cola</button>
+        <button data-p1="lejano">Cuando <code>v</code> pasa a ser el más lejano</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">Un vértice puede tener varios vecinos que quieran
+      encolarlo. El que llega primero le pone la distancia y la condición de la
+      línea 11 impide que los demás la toquen. Como los vértices salen por
+      capas, ese primero está en la capa más baja posible, y por eso
+      <code>d[v]</code> queda con el número mínimo de aristas.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. La <b>excentricidad</b> de un
+    vértice es la distancia a su vértice más lejano, que es justo lo que
+    devuelve este programa. El <b>diámetro</b> del grafo es la mayor
+    excentricidad de todos sus vértices, y el <b>radio</b>, la menor. Escriba
+    los dos usando <code>mas_lejano</code>, diga cuánto cuestan en términos de
+    $V$ y $E$, y responda qué pasa con ambos cuando el grafo no es conexo.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="amplitud.js"></script>
+</body>
+</html>

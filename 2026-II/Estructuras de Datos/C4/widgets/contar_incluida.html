@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>contar_incluida — contador de pasos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>contar_incluida: el límite se corre en uno</h1>
+  <p class="intro">Es el mismo triángulo, pero la condición interna es
+  j &lt;= i. Ese signo igual regala una ejecución por vuelta. ¿Cuánto cambia
+  la fórmula?</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="3" max="8" value="4">
+      <span class="valor-n">n = <span id="ver-n">4</span></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces se ejecuta <b>cuenta = cuenta + 1;</b> (línea 6)?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Compare con triangulo: la vuelta i = 0 ya no queda
+        vacía, porque j = 0 cumple j &lt;= 0.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza, vuelta por vuelta</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Vuelta (valor de i)</th><th>Veces del cuerpo interno</th><th>cuenta acumulada</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El dibujo: la escalera crece un escalón</h2>
+    <p style="margin-top:0">Ahora la vuelta i aporta i + 1 casillas.</p>
+    <div class="escalera" id="panel-escalera"></div>
+    <div class="botones">
+      <button id="btn-gauss">Completar el rectángulo (truco de Gauss)</button>
+    </div>
+    <div class="formula-esc" id="formula-escalera"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La tabla de conteo completa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Veces (simulado)</th><th>Fórmula</th><th>Fórmula en n = <span id="n-formula">4</span></th></tr></thead>
+        <tbody id="cuerpo-conteo"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="total-t"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. El análisis en términos de n</h2>
+    <p style="margin-top:0">Ejecute con varios valores de n y anote cuántas
+    veces corre la línea 6. ¿Cuál fórmula produce esos números para un n
+    cualquiera?</p>
+    <div class="opciones" id="opciones-analisis">
+      <button data-op="estricta">n(n − 1)/2</button>
+      <button data-op="cuadrado">n²</button>
+      <button data-op="correcta">n(n + 1)/2</button>
+      <button data-op="doble">n(n + 1)</button>
+    </div>
+    <div id="veredicto-analisis" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="contar_incluida.js"></script>
+</body>
+</html>
