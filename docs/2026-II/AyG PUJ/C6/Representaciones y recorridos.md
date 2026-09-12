@@ -87,11 +87,11 @@ aristas, y las dos ocupan $49$ posiciones. De ahí en adelante la de incidencia
 crece más rápido, y como casi todo grafo útil tiene más aristas que vértices,
 en la práctica es la más grande de las cuatro.
 
-### Construir las tres desde la lista de aristas
+### Construir las cuatro desde la lista de aristas
 
 La entrada de un problema casi siempre trae $n$ y la lista de aristas. Las
-tres construcciones recorren esa lista una vez; la del grafo no dirigido
-escribe cada arista en los dos sentidos.
+cuatro construcciones recorren esa lista una vez; las del grafo no dirigido
+escriben cada arista en los dos sentidos.
 
 ```python
 def lista_de_adyacencia(n, aristas, dirigido):
@@ -141,12 +141,40 @@ def lista_de_aristas(n, aristas, dirigido):
         if not dirigido:
             E.append((v, u))
     return E
+
+
+def matriz_de_incidencia(n, aristas, dirigido):
+    # Una fila por vertice y una columna por arista, en el orden en que llegan.
+    # Sin direccion la celda vale 1 en los dos extremos; con direccion vale -1
+    # donde la arista sale y 1 donde entra (CLRS, Ejercicio 22.1-7)
+    B = []
+    u = 0
+    while u < n:
+        fila = []
+        j = 0
+        while j < len(aristas):
+            fila.append(0)
+            j = j + 1
+        B.append(fila)
+        u = u + 1
+    j = 0
+    while j < len(aristas):
+        u = aristas[j][0]
+        v = aristas[j][1]
+        if dirigido:
+            B[u][j] = -1
+        else:
+            B[u][j] = 1
+        B[v][j] = 1
+        j = j + 1
+    return B
 ```
 
 La lista de adyacencia y la de aristas cuestan $\Theta(V + E)$: crear las $V$
-listas vacías y recorrer las $E$ aristas. La matriz cuesta $\Theta(V^2)$ y no
-puede costar menos, porque hay que escribir el cero en cada posición que no es
-arista antes de poner los unos.
+listas vacías y recorrer las $E$ aristas. Las dos matrices no pueden costar
+menos de lo que ocupan, porque hay que escribir el cero en cada posición que
+no es arista antes de poner los unos: $\Theta(V^2)$ la de adyacencia y
+$\Theta(V \cdot E)$ la de incidencia.
 
 ## Cuál conviene
 
@@ -507,8 +535,10 @@ sin darse cuenta.
 
 - [recorridos.py](codigo/recorridos.py) — los dos recorridos, la versión con
   pila y la reconstrucción del camino, sobre los dos grafos de la clase.
-- [representaciones.py](codigo/representaciones.py) — las tres construcciones
-  y las dos consultas, comprobadas sobre todos los grafos de cuatro vértices.
+- [representaciones.py](codigo/representaciones.py) — las cuatro
+  construcciones y las dos consultas, comprobadas sobre todos los grafos de
+  cuatro vértices; de la matriz de incidencia se comprueban las sumas por fila
+  y lo que trae cada columna.
 
 ## Ejercicios
 

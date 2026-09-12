@@ -1,9 +1,11 @@
-"""Las tres representaciones de un grafo, construidas desde la lista de aristas.
+"""Las cuatro representaciones de un grafo, construidas desde la lista de aristas.
 
-Comprueba que las tres contestan lo mismo a las dos preguntas que hace
-un algoritmo sobre grafos: si existe la arista (u, v) y cuales son los
-vecinos de un vertice. La comprobacion recorre todos los grafos
-posibles sobre 4 vertices, dirigidos y no dirigidos.
+Comprueba que las tres primeras contestan lo mismo a las dos preguntas que
+hace un algoritmo sobre grafos: si existe la arista (u, v) y cuales son los
+vecinos de un vertice. De la matriz de incidencia comprueba las dos
+propiedades de su definicion: lo que suma cada fila y lo que trae cada
+columna. La comprobacion recorre todos los grafos posibles sobre 4
+vertices, dirigidos y no dirigidos.
 """
 
 
@@ -54,6 +56,33 @@ def lista_de_aristas(n, aristas, dirigido):
         if not dirigido:
             E.append((v, u))
     return E
+
+
+def matriz_de_incidencia(n, aristas, dirigido):
+    # Una fila por vertice y una columna por arista, en el orden en que llegan.
+    # Sin direccion la celda vale 1 en los dos extremos; con direccion vale -1
+    # donde la arista sale y 1 donde entra (CLRS, Ejercicio 22.1-7)
+    B = []
+    u = 0
+    while u < n:
+        fila = []
+        j = 0
+        while j < len(aristas):
+            fila.append(0)
+            j = j + 1
+        B.append(fila)
+        u = u + 1
+    j = 0
+    while j < len(aristas):
+        u = aristas[j][0]
+        v = aristas[j][1]
+        if dirigido:
+            B[u][j] = -1
+        else:
+            B[u][j] = 1
+        B[v][j] = 1
+        j = j + 1
+    return B
 
 
 def hay_arista_en_lista(G, u, v):
@@ -178,12 +207,37 @@ def comprobar(n, dirigido):
                 assert hay_arista_en_lista_de_aristas(E, u, v) == hay, (aristas, u, v)
                 v = v + 1
             u = u + 1
+        B = matriz_de_incidencia(n, aristas, dirigido)
         if not dirigido:
             # Apreton de manos: la suma de los grados es dos veces el numero de aristas
             assert sum(grados(n, G)) == 2 * len(aristas), aristas
+            # Cada fila de B suma el grado del vertice
+            d = grados(n, G)
+            u = 0
+            while u < n:
+                assert sum(B[u]) == d[u], (aristas, u)
+                u = u + 1
         else:
             entrada, salida = grados_dirigido(n, G)
             assert sum(entrada) == len(aristas) and sum(salida) == len(aristas), aristas
+            # Cada fila de B suma el grado de entrada menos el de salida
+            u = 0
+            while u < n:
+                assert sum(B[u]) == entrada[u] - salida[u], (aristas, u)
+                u = u + 1
+        # Cada columna de B trae los dos extremos de su arista y nada mas
+        j = 0
+        while j < len(aristas):
+            columna = []
+            u = 0
+            while u < n:
+                columna.append(B[u][j])
+                u = u + 1
+            if dirigido:
+                assert sorted(columna) == [-1] + [0] * (n - 2) + [1], (aristas, j)
+            else:
+                assert sorted(columna) == [0] * (n - 2) + [1, 1], (aristas, j)
+            j = j + 1
         casos = casos + 1
     return casos
 
@@ -192,4 +246,4 @@ no_dirigidos = comprobar(4, False)
 dirigidos = comprobar(4, True)
 print("grafos no dirigidos de 4 vertices comprobados: {}".format(no_dirigidos))
 print("grafos dirigidos de 4 vertices comprobados: {}".format(dirigidos))
-print("las tres representaciones contestaron lo mismo en todos los casos")
+print("las tres primeras contestaron lo mismo y la incidencia cumplio sus dos propiedades")
