@@ -29,6 +29,12 @@ $n$ y Python indexa desde $0$: se corren los índices al leer, una sola vez.
 
 ## Las cuatro representaciones
 
+Dos palabras que se confunden. *Adyacencia* es entre vértices: $u$ y $v$ son
+adyacentes si los une una arista. *Incidencia* es entre una arista y sus
+extremos: la arista $\{u, v\}$ incide en $u$ y en $v$. Las dos matrices se
+llaman por eso: la de adyacencia relaciona vértices con vértices, la de
+incidencia relaciona vértices con aristas.
+
 ### Lista de adyacencia
 
 **Definición** (CLRS, Sección 22.1, p. 589). El grafo se representa como una
@@ -151,15 +157,24 @@ arista antes de poner los unos.
 | Lista de adyacencia | $\Theta(V+E)$ |
 | Matriz de adyacencia | $\Theta(V^2)$ |
 | Lista de aristas | $\Theta(E)$ |
+| Matriz de incidencia | $\Theta(V \cdot E)$ |
 
 Una red de $V = 10^5$ vértices y $E = 2 \cdot 10^5$ aristas: la lista de
 adyacencia guarda $4 \cdot 10^5$ entradas; la matriz guarda $10^{10}$
 posiciones, de las cuales el 99,9998 % son ceros. La matriz no cabe en
 memoria.
 
+En bytes: un entero ocupa cuatro, así que las $4 \cdot 10^5$ entradas de la
+lista pesan $1{,}6 \cdot 10^6$ bytes, algo más de un megabyte y medio, y las
+$10^{10}$ posiciones de la matriz pesan $4 \cdot 10^{10}$ bytes, cuarenta
+gigabytes. La matriz de incidencia, con $V \cdot E = 2 \cdot 10^{10}$
+posiciones, pesa el doble.
+
 Un grafo es **denso** cuando $E$ se acerca a $V^2$ y **ralo** cuando $E$ es
 del orden de $V$. Las redes viales, las sociales y casi todo lo que llega de
-un problema real son ralos.
+un problema real son ralos: en una red social cada cuenta sigue a unas cien y
+la siguen unas veinte, sobre millones de cuentas, así que $E$ es un múltiplo
+pequeño de $V$ y queda lejísimos de $V^2$.
 
 ### El acceso
 
@@ -170,6 +185,20 @@ un problema real son ralos.
 | Vecinos de $u$ | $\Theta(\delta(u))$ | $\Theta(V)$ | $\Theta(E)$ |
 | Recorrer todo | $\Theta(V+E)$ | $\Theta(V^2)$ | $\Theta(V \cdot E)$ |
 | Agregar arista | $O(1)$ | $O(1)$ | $O(1)$ |
+
+La matriz contesta si existe $(u, v)$ en $O(1)$ porque está guardada como una
+sola tira de memoria y la posición se calcula con un producto y una suma:
+$\text{base} + u \cdot V + v$. La lista tiene que recorrer los vecinos de
+$u$, y en el peor caso, el grafo completo, son $V - 1$: $O(\delta(u))$ es
+$O(V)$ cuando no se sabe nada del grafo.
+
+En la lista de aristas la cuenta depende de cómo se guardó el grafo no
+dirigido. Si cada arista está una sola vez, como llega en la entrada de un
+problema, buscar los vecinos de $u$ obliga a mirar los dos extremos:
+`arista[0] == u` da un vecino en `arista[1]`, y `arista[1] == u` da otro en
+`arista[0]`. Las funciones de `representaciones.py` se ahorran la segunda
+pregunta porque `lista_de_aristas` guarda el par en los dos sentidos; a cambio
+la lista ocupa $2E$ entradas.
 
 Si el grafo es ralo, lista de adyacencia. La matriz se justifica cuando $V$ es
 pequeño, cuando el grafo es denso, o cuando el algoritmo hace muchas consultas
@@ -235,6 +264,12 @@ El paso 2 de $DFS$ es el ciclo externo, el que no deja a nadie por fuera.
 $DFSAux$ es el recorrido propiamente dicho, y es recursivo: la pila de
 llamadas guarda el camino de vuelta.
 
+Por qué la recursión hace de pila: cuando $DFSAux(v)$ encuentra dos vecinos
+sin visitar, el llamado sobre el primero tiene que terminar entero —con todos
+los llamados que él mismo haga— antes de que empiece el llamado sobre el
+segundo. El último que entró es el primero que se resuelve, que es justo lo
+que hace una pila.
+
 ### Sobre $G_1$, a mano
 
 | Paso | En | Vecinos | Qué hace |
@@ -283,8 +318,18 @@ La marca se pone al entrar, no al salir: si se pusiera al salir, un ciclo
 haría que el mismo vértice se visitara dos veces. El `for` recorre los vecinos
 en el orden en que estén guardados, y ese orden decide la traza.
 
-Cuidado con `[[]] * n`: deja $n$ referencias a la misma lista. `[False] * n`
-está bien, porque los booleanos no se modifican.
+Cuidado con `[[]] * n`: deja $n$ referencias a la misma lista. Se ve en dos
+líneas:
+
+```python
+x = [[]] * 3
+x[1].append(10)   # x queda [[10], [10], [10]]
+```
+
+Las tres listas internas son el mismo objeto. `[False] * n` sí está bien,
+porque los booleanos no se modifican en el sitio. Para una lista de listas se
+crea cada una aparte, con el ciclo de `lista_de_adyacencia` o con
+`[[] for _ in range(n)]`.
 
 La misma idea sin recursión usa una pila explícita, apilando los vecinos al
 revés para que el primero de la lista salga primero, y poniendo la marca al
@@ -314,7 +359,12 @@ $BFS(G, s)$:
            $u.padre = w$, y agregar $u$ a la cola $P$
 
 La distancia hace de marca: $u.distancia = \infty$ dice que $u$ no se ha
-visto. Y la marca se pone al encolar, no al retirar.
+visto. Y la marca se pone al encolar, no al retirar. Si se pusiera al retirar,
+un vértice entraría a la cola tantas veces como caminos lleguen a él antes de
+que le toque el turno. En $G_1$ el $4$ es vecino del $0$ y del $1$: el $0$ lo
+encola a distancia $1$ y, sin la marca puesta ahí, el $1$ lo volvería a
+encolar a distancia $2$. Sobre un grafo pequeño el orden y las distancias
+salen igual; lo que crece es la cola, y el costo con ella.
 
 ### Sobre $G_1$, a mano
 
@@ -348,7 +398,10 @@ primera vez que alguien lo toca, que es por el camino más corto.
 
 Vale porque todas las aristas cuestan lo mismo. Si llevaran pesos distintos,
 la primera vez que se toca un vértice ya no sería por el camino más barato y
-el teorema sería falso.
+el teorema sería falso. Con pesos hacen falta otros algoritmos: Bellman-Ford,
+que admite pesos negativos, y Dijkstra, que exige pesos positivos y a cambio
+es más rápido. La búsqueda en amplitud es el caso en que todos los pesos
+valen $1$.
 
 ### El código
 
@@ -375,9 +428,33 @@ def bfs(G, inicio):
     return (orden, distancia, padre)
 ```
 
+La cola es un `deque` y no una lista porque sacar el primero de una lista
+cuesta $O(n)$: hay que correr todos los demás una posición. `popleft` cuesta
+$O(1)$.
+
 Con `padre` se reconstruye el camino subiendo desde el destino y después
 invirtiendo la lista. Cada vértice guarda de dónde se llegó a él, no hacia
 dónde va.
+
+```python
+def camino_hasta(padre, inicio, destino):
+    # Reconstruye el camino subiendo por los padres desde destino
+    camino = []
+    v = destino
+    while v != -1:
+        camino.append(v)
+        v = padre[v]
+    camino.reverse()
+    if len(camino) == 0 or camino[0] != inicio:
+        camino = []
+    return camino
+```
+
+Sobre $G_1$ desde el $0$, la búsqueda deja $\texttt{padre}[1] = 0$ y
+$\texttt{padre}[3] = 1$. Para llegar al $3$ se sube $3 \to 1 \to 0$, se
+invierte y queda $[0, 1, 3]$: dos aristas, que es $d(3)$. Hasta el $6$ la
+lista queda vacía: su padre sigue en $-1$, la subida para de inmediato y lo
+que hay no empieza en el $0$.
 
 ## El costo
 
