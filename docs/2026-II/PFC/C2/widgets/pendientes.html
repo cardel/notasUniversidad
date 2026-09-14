@@ -17,14 +17,18 @@
   .reduccion.ultima .expr { font-weight: 700; }
   .pie-columna { margin-top: 0.6rem; font-size: 0.86rem; color: #6b737c; }
   .pie-columna.bueno { color: var(--verde); font-weight: 700; }
-  .pila { display: flex; flex-direction: column-reverse; gap: 0.22rem; min-height: 5.5rem;
+  .pila { display: flex; flex-direction: column-reverse; gap: 0.3rem; min-height: 5.5rem;
     margin-top: 0.6rem; padding: 0.45rem; border: 1px dashed var(--borde); border-radius: 8px; }
   .marco { font-family: ui-monospace, monospace; font-size: 0.86rem; border-radius: 6px;
-    padding: 0.22rem 0.55rem; width: fit-content; background: var(--gris-suave, #f4f5f7);
-    border: 1px solid var(--borde); }
-  .marco.cima { background: var(--verde-suave); border-color: var(--verde); color: var(--verde); font-weight: 700; }
-  .marco.reemplazado { border-style: double; }
-  .marco.vacio { color: #9aa3ad; border: none; background: transparent; font-family: inherit; }
+    padding: 0.3rem 0.55rem; background: #fff6e0; border: 1px solid #e0a800; color: #7a5b00;
+    display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.5rem; align-items: center; }
+  .marco.cima { font-weight: 700; outline: 2px solid #e0a800; }
+  .marco.reemplazado { border-style: double; border-width: 3px; }
+  .marco .ins { grid-row: span 2; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #e0a800;
+    color: #fff; font-family: system-ui, sans-serif; font-size: 0.78rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; }
+  .marco .detalle { font-size: 0.78rem; font-weight: 400; color: #8a6d00; }
+  .marco.vacio { display: block; color: var(--verde); font-weight: 700; border: none; background: transparent; font-family: inherit; }
   .cuenta-pila { font-size: 0.82rem; color: #6b737c; margin-top: 0.3rem; }
 </style>
 </head>
@@ -80,10 +84,11 @@
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
         <div class="nota">La pila de cada columna muestra los marcos abiertos
-        en ese instante, el más nuevo arriba. A la izquierda cada llamada apila
-        uno nuevo y ninguno se cierra hasta que el de abajo devuelve. A la
-        derecha la caja es siempre la misma: la llamada nueva <b>reemplaza</b>
-        a la anterior, con los parámetros ya actualizados.</div>
+        en ese instante, el más nuevo arriba y numerado por hondura. Cada marco
+        dice qué tiene adentro: los de abajo esperan su multiplicación, y el de
+        arriba está entrando o acaba de recibir el valor del que se cerró. A
+        la derecha la caja es siempre la misma, con borde doble: la llamada
+        nueva <b>reemplaza</b> a la anterior y el marco dice a quién.</div>
       </div>
     </div>
   </div>

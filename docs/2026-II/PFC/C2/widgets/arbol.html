@@ -6,27 +6,48 @@
 <title>árbol — partir el problema en dos</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
-  #arbol { display: flex; flex-direction: column; gap: 0.45rem; padding: 0.5rem 0; }
-  .nivel { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
-  .rot-nivel { font-size: 0.78rem; color: #9aa3ad; width: 3.6rem; }
-  .nodo { font-family: ui-monospace, monospace; font-size: 0.88rem; border: 1px solid var(--borde);
-    border-radius: 6px; padding: 0.2rem 0.5rem; background: #fff; }
-  .nodo.hoja { border-style: dashed; }
-  .nodo.abierto { background: #fff6e0; border-color: #e0a800; color: #7a5b00; }
-  .nodo.resuelto { background: var(--verde-suave); border-color: var(--verde); color: var(--verde); }
-  .nodo.actual { outline: 2px solid currentColor; }
-  .nodo.oculto { border-color: transparent; color: #c5cad0; }
+  #arbol-svg { width: 100%; height: auto; display: block; font-family: ui-monospace, monospace; }
+  .rama { stroke: #c5cad0; stroke-width: 1.5; }
+  .rama.futura { stroke-dasharray: 3 4; stroke: #dde1e6; }
+  .rama.camino { stroke: #e0a800; stroke-width: 3.5; }
+  .nodo rect { fill: #fff; stroke: var(--borde); stroke-width: 1.2; }
+  .nodo.hoja rect { stroke-dasharray: 4 3; }
+  .nodo.oculto rect { stroke: #e6e9ed; }
+  .nodo.oculto .rotulo { fill: #c5cad0; }
+  .nodo.abierto rect { fill: #fff6e0; stroke: #e0a800; stroke-dasharray: none; }
+  .nodo.abierto .rotulo { fill: #7a5b00; }
+  .nodo.resuelto rect { fill: var(--verde-suave); stroke: var(--verde); stroke-dasharray: none; }
+  .nodo.resuelto .rotulo, .nodo.resuelto .valor { fill: var(--verde); }
+  .nodo.actual rect { stroke-width: 3; }
+  .nodo .rotulo { font-size: 12.5px; }
+  .nodo .valor { font-size: 12px; font-weight: 700; }
+  .nodo .insignia { fill: #3b434c; }
+  .nodo.abierto .insignia { fill: #e0a800; }
+  .nodo.resuelto .insignia { fill: var(--verde); }
+  .nodo .insignia-num { font-size: 11px; font-weight: 700; fill: #fff; font-family: system-ui, sans-serif; }
   #pie-arbol { margin-top: 0.4rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
-  .arbol-y-pila { display: grid; grid-template-columns: 1fr 14rem; gap: 1rem; align-items: start; }
+  .arbol-y-pila { display: grid; grid-template-columns: 1fr 17rem; gap: 1rem; align-items: start; }
   @media (max-width: 720px) { .arbol-y-pila { grid-template-columns: 1fr; } }
-  .pila { display: flex; flex-direction: column-reverse; gap: 0.22rem; min-height: 6rem;
+  .pila { display: flex; flex-direction: column-reverse; gap: 0.3rem; min-height: 6rem;
     padding: 0.45rem; border: 1px dashed var(--borde); border-radius: 8px; }
   .marco { font-family: ui-monospace, monospace; font-size: 0.86rem; border-radius: 6px;
-    padding: 0.22rem 0.55rem; width: fit-content; background: #fff6e0; border: 1px solid #e0a800; color: #7a5b00; }
+    padding: 0.3rem 0.55rem; background: #fff6e0; border: 1px solid #e0a800; color: #7a5b00;
+    display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.5rem; align-items: center; }
   .marco.cima { font-weight: 700; outline: 2px solid #e0a800; }
-  .marco.vacio { color: #9aa3ad; border: none; background: transparent; font-family: inherit; }
+  .marco .ins { grid-row: span 2; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #e0a800;
+    color: #fff; font-family: system-ui, sans-serif; font-size: 0.78rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; }
+  .marco .detalle { font-size: 0.78rem; font-weight: 400; color: #8a6d00; }
+  .marco.vacio { display: block; color: #9aa3ad; border: none; background: transparent; font-family: inherit; }
   .cuenta-pila { font-size: 0.82rem; color: #6b737c; margin-top: 0.3rem; }
   .rot-pila { font-size: 0.82rem; color: #6b737c; margin-bottom: 0.3rem; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 0.9rem; font-size: 0.82rem; color: #5b636c; margin-top: 0.5rem; }
+  .leyenda span::before { content: ""; display: inline-block; width: 0.9rem; height: 0.9rem; border-radius: 3px;
+    vertical-align: -2px; margin-right: 0.35rem; border: 1px solid var(--borde); }
+  .leyenda .l-abierto::before { background: #fff6e0; border-color: #e0a800; }
+  .leyenda .l-resuelto::before { background: var(--verde-suave); border-color: var(--verde); }
+  .leyenda .l-camino::before { background: #e0a800; border-color: #e0a800; height: 3px; vertical-align: 3px; }
+  .leyenda .l-oculto::before { border-color: #e6e9ed; }
 </style>
 </head>
 <body>
@@ -65,7 +86,13 @@
     <h2>2. Ejecute: el árbol a la izquierda, la pila a la derecha</h2>
     <div class="arbol-y-pila">
       <div>
-        <div id="arbol"></div>
+        <svg id="arbol-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="leyenda">
+          <span class="l-abierto">marco abierto</span>
+          <span class="l-resuelto">cerrado, con su valor</span>
+          <span class="l-camino">camino de la pila</span>
+          <span class="l-oculto">todavía no se ha llamado</span>
+        </div>
         <div id="pie-arbol"></div>
       </div>
       <div>
@@ -86,10 +113,11 @@
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
         <div class="nota">Cada llamada da dos pasos: uno al <b>entrar</b>, que
-        abre su marco y lo pinta de amarillo, y otro al <b>salir</b>, que lo
-        cierra y lo pinta de verde con su valor. La pila de la derecha es lo
-        que está abierto en ese instante. Mire cómo baja a uno antes de subir
-        por la segunda rama.</div>
+        abre su marco, lo pinta de amarillo y le pone el número de orden en
+        que se abrió; y otro al <b>salir</b>, que lo cierra y lo pinta de verde
+        con su valor. La rama gruesa es el camino de la raíz al marco actual:
+        exactamente lo que hay en la pila de la derecha, con los mismos
+        números. Cada marco abierto dice qué está esperando.</div>
       </div>
     </div>
   </div>

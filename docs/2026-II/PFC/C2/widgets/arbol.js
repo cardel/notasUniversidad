@@ -83,54 +83,104 @@
     });
   }
 
-  var API = { llamadas: llamadas, eventos: eventos, simular: simular, PRESETS: PRESETS };
+  var API = { llamadas: llamadas, eventos: eventos, simular: simular, PRESETS: PRESETS, posiciones: posiciones };
   if (typeof module !== "undefined") { module.exports = API; }
   if (typeof document === "undefined") { return; }
 
   function etiqueta(n) { return "producto(" + n.i + ", " + n.j + ")"; }
 
+  /* Posiciones: las hojas se reparten de izquierda a derecha en el orden en
+     que aparecen; cada nodo interno se centra sobre sus hijos. */
+  function posiciones(nodos) {
+    var hijos = {};
+    nodos.forEach(function (n) { hijos[n.id] = []; });
+    // los hijos de un nodo interno son el siguiente y el que sigue al último descendiente del siguiente
+    function ultimoDe(id) {
+      var n = nodos[id];
+      if (n.hoja) { return id; }
+      var izq = id + 1, der = ultimoDe(izq) + 1;
+      return ultimoDe(der);
+    }
+    nodos.forEach(function (n) {
+      if (!n.hoja) { var izq = n.id + 1; hijos[n.id] = [izq, ultimoDe(izq) + 1]; }
+    });
+    var x = {}, siguiente = 0;
+    function colocar(id) {
+      var n = nodos[id];
+      if (n.hoja) { x[id] = siguiente; siguiente = siguiente + 1; return; }
+      hijos[id].forEach(colocar);
+      x[id] = (x[hijos[id][0]] + x[hijos[id][1]]) / 2;
+    }
+    colocar(0);
+    return { x: x, hijos: hijos, hojas: siguiente };
+  }
+
+  var SVG = "http://www.w3.org/2000/svg";
+  function el(nombre, attrs) {
+    var e = document.createElementNS(SVG, nombre);
+    Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+
   function pintar(e) {
     var p = PRESETS[e.params];
     var r = eventos(p.i, p.j);
-    var nodos = r.nodos;
-    var pasos = e.pasos;
-    var k = e.k;
-    var actual = e.actual;
+    var nodos = r.nodos, pasos = e.pasos, k = e.k, actual = e.actual;
 
     // estado de cada nodo según los eventos ya ocurridos
-    var estado = {}, valorDe = {};
-    var m;
+    var estado = {}, ordenEntrada = {}, ordenSalida = {}, nEnt = 0, nSal = 0, m;
     for (m = 0; m < k; m = m + 1) {
-      if (pasos[m].tipo === "entra") { estado[pasos[m].nodo] = "abierto"; }
-      else { estado[pasos[m].nodo] = "resuelto"; valorDe[pasos[m].nodo] = nodos[pasos[m].nodo].valor; }
+      if (pasos[m].tipo === "entra") { nEnt = nEnt + 1; estado[pasos[m].nodo] = "abierto"; ordenEntrada[pasos[m].nodo] = nEnt; }
+      else { nSal = nSal + 1; estado[pasos[m].nodo] = "resuelto"; ordenSalida[pasos[m].nodo] = nSal; }
     }
+    var enPila = {};
+    (actual ? actual.pila : []).forEach(function (id) { enPila[id] = true; });
 
-    // el árbol por niveles
-    var caja = document.getElementById("arbol");
-    caja.innerHTML = "";
+    // el dibujo
+    var pos = posiciones(nodos);
+    var ANCHO = 150, ALTO = 74, MARGEN = 14;
     var maxH = Math.max.apply(null, nodos.map(function (n) { return n.hondura; }));
-    var h;
-    for (h = 1; h <= maxH; h = h + 1) {
-      var fila = document.createElement("div");
-      fila.className = "nivel";
-      var rot = document.createElement("span");
-      rot.className = "rot-nivel"; rot.textContent = "nivel " + h;
-      fila.appendChild(rot);
-      nodos.forEach(function (n) {
-        if (n.hondura !== h) { return; }
-        var c = document.createElement("span");
-        var est = estado[n.id];
-        if (!est) { c.className = "nodo oculto"; c.textContent = "·"; }
-        else {
-          c.className = "nodo " + est + (n.hoja ? " hoja" : "") + (actual && actual.nodo === n.id ? " actual" : "");
-          c.textContent = etiqueta(n) + (est === "resuelto" ? " = " + valorDe[n.id] : "");
-        }
-        fila.appendChild(c);
-      });
-      caja.appendChild(fila);
-    }
+    var w = pos.hojas * ANCHO + MARGEN * 2, h = maxH * ALTO + MARGEN;
+    var svg = document.getElementById("arbol-svg");
+    svg.innerHTML = "";
+    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+    function cx(id) { return MARGEN + pos.x[id] * ANCHO + ANCHO / 2; }
+    function cy(id) { return MARGEN + (nodos[id].hondura - 1) * ALTO + 22; }
 
-    // la pila de marcos abiertos, el más nuevo arriba
+    // ramas primero, para que queden debajo de los nodos
+    nodos.forEach(function (n) {
+      pos.hijos[n.id].forEach(function (hid) {
+        var visible = !!estado[hid];
+        var camino = enPila[n.id] && enPila[hid];
+        var clase = "rama" + (visible ? "" : " futura") + (camino ? " camino" : "");
+        svg.appendChild(el("line", { x1: cx(n.id), y1: cy(n.id) + 18, x2: cx(hid), y2: cy(hid) - 18, "class": clase }));
+      });
+    });
+
+    nodos.forEach(function (n) {
+      var est = estado[n.id] || "oculto";
+      var g = el("g", { "class": "nodo " + est + (n.hoja ? " hoja" : "") + (enPila[n.id] ? " en-pila" : "")
+        + (actual && actual.nodo === n.id ? " actual" : ""), transform: "translate(" + cx(n.id) + "," + cy(n.id) + ")" });
+      g.appendChild(el("rect", { x: -66, y: -18, width: 132, height: 36, rx: 8 }));
+      var txt = el("text", { y: est === "resuelto" ? -3 : 5, "text-anchor": "middle", "class": "rotulo" });
+      txt.textContent = est === "oculto" ? "·" : etiqueta(n);
+      g.appendChild(txt);
+      if (est === "resuelto") {
+        var val = el("text", { y: 12, "text-anchor": "middle", "class": "valor" });
+        val.textContent = "= " + n.valor;
+        g.appendChild(val);
+      }
+      if (est !== "oculto") {
+        // la insignia con el orden en que se abrió
+        g.appendChild(el("circle", { cx: -66, cy: -18, r: 10, "class": "insignia" }));
+        var num = el("text", { x: -66, y: -14, "text-anchor": "middle", "class": "insignia-num" });
+        num.textContent = ordenEntrada[n.id];
+        g.appendChild(num);
+      }
+      svg.appendChild(g);
+    });
+
+    // la pila de marcos abiertos, el más nuevo arriba, con la misma insignia
     var pila = document.getElementById("pila");
     pila.innerHTML = "";
     var abiertos = actual ? actual.pila : [];
@@ -139,9 +189,20 @@
     }
     var q;
     for (q = abiertos.length - 1; q >= 0; q = q - 1) {
+      var id = abiertos[q], nn = nodos[id];
       var mm = document.createElement("div");
       mm.className = "marco" + (q === abiertos.length - 1 ? " cima" : "");
-      mm.textContent = etiqueta(nodos[abiertos[q]]);
+      var ins = document.createElement("span"); ins.className = "ins"; ins.textContent = ordenEntrada[id];
+      var lab = document.createElement("span"); lab.textContent = etiqueta(nn);
+      var det = document.createElement("span"); det.className = "detalle";
+      if (nn.hoja) { det.textContent = "devuelve " + nn.valor; }
+      else {
+        var izq = pos.hijos[id][0], der = pos.hijos[id][1];
+        var vi = estado[izq] === "resuelto" ? nodos[izq].valor : "___";
+        var vd = estado[der] === "resuelto" ? nodos[der].valor : "___";
+        det.textContent = "espera " + vi + " * " + vd;
+      }
+      mm.appendChild(ins); mm.appendChild(lab); mm.appendChild(det);
       pila.appendChild(mm);
     }
     document.getElementById("pila-cuenta").textContent = abiertos.length
@@ -155,11 +216,13 @@
       pie.textContent = nodos.length + " llamadas en total, y nunca más de " + actual.maxAbiertos
         + " marcos abiertos al tiempo. Valor: " + nodos[0].valor + ".";
     } else if (actual.tipo === "entra" && n.hoja) {
-      pie.textContent = "Entra " + etiqueta(n) + ": es una hoja, devuelve " + n.valor + " sin partir nada.";
+      pie.textContent = "Se abre el marco " + ordenEntrada[n.id] + ", " + etiqueta(n) + ": es una hoja y devuelve " + n.valor + " de inmediato.";
     } else if (actual.tipo === "entra") {
-      pie.textContent = "Entra " + etiqueta(n) + " y parte en m = " + n.m + ". Su marco queda abierto esperando a los dos hijos.";
+      pie.textContent = "Se abre el marco " + ordenEntrada[n.id] + ", " + etiqueta(n) + ", y parte en m = " + n.m
+        + ". Queda esperando a sus dos hijos.";
     } else {
-      pie.textContent = "Sale " + etiqueta(n) + " con " + n.valor + ". Su marco se cierra y la pila baja a " + actual.pila.length + ".";
+      pie.textContent = "Se cierra el marco " + ordenEntrada[n.id] + ", " + etiqueta(n) + ", con " + n.valor
+        + ". La pila baja a " + actual.pila.length + ".";
     }
   }
 

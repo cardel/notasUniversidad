@@ -44,10 +44,12 @@ problema.
 ### [pendientes](widgets/pendientes.html){ target=_blank rel=noopener }
 
 `factorial` y `fact` corriendo lado a lado sobre la misma entrada, cada una
-con su pila de marcos dibujada debajo. A la izquierda cada llamada apila un
-marco nuevo y ninguno se cierra hasta que el de abajo devuelve: en el punto
-más hondo hay `n + 1` abiertos al tiempo. A la derecha la caja es una sola y
-cambia de contenido, porque cada llamada reemplaza a la anterior. El tercer
+con su pila de marcos dibujada debajo. Cada marco dice qué tiene adentro: a
+la izquierda los de abajo esperan su multiplicación —`espera 4 * ___`— y el
+de arriba está entrando o acaba de recibir el valor del que se cerró y hace
+su cuenta. Ninguno se cierra hasta que el de abajo devuelve, y en el punto
+más hondo hay `n + 1` abiertos al tiempo. A la derecha la caja es una sola,
+con borde doble, y dice a quién reemplazó y qué calculó antes de llamar. El tercer
 preset hace lo mismo con `sumaLineal` y `sumaIter`, que es el ejercicio de la
 sesión.
 
@@ -72,8 +74,11 @@ de volver, envolver la llamada en `math.max`— y una parece romperla y no: un
 ### [árbol](widgets/arbol.html){ target=_blank rel=noopener }
 
 `producto(i, j)` parte el rango por la mitad y el proceso deja de ser una fila.
-Cada llamada da dos pasos, uno al entrar y otro al salir, y al lado del árbol
-va la pila con los marcos abiertos en ese instante. Hay dos predicciones y
+El árbol se dibuja con sus ramas, y cada nodo lleva el número del orden en
+que se abrió: amarillo mientras su marco está abierto, verde con su valor
+cuando cerró. La rama gruesa es el camino de la raíz al marco actual, que es
+exactamente lo que hay en la pila de al lado, con los mismos números y con lo
+que cada marco espera. Hay dos predicciones y
 dan números distintos: las llamadas en total, `2n − 1`, y los marcos abiertos
 al mismo tiempo como máximo, que son los niveles del árbol. Lo que hay que
 mirar es la pila bajando a uno cuando termina la rama izquierda, antes de
