@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAD Pila — TAD Lista, Pila y Cola</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>TAD Pila</h1>
+  <p class="intro">Solo se toca el tope. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Apilar, desapilar, tope</h2>
+    <div class="codigo" id="codigo-ops"></div>
+    <div class="prediccion">
+      <span>primer tope:</span>
+      <input type="number" id="pred-t1" placeholder="?">
+      <span>segundo:</span>
+      <input type="number" id="pred-t2" placeholder="?">
+      <span>tamaño:</span>
+      <input type="number" id="pred-n" placeholder="?">
+      <button id="btn-ops" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-ops" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Contar sin destruir</h2>
+    <p style="margin-top:0">Con <code>p = ⟨4 9 4 4 1⟩</code> (el 1 es el
+    tope), ¿cuánto devuelve <code>contar(p, 4)</code> y cuál es el tope de
+    <code>p</code> después de la llamada?</p>
+    <div class="codigo" id="codigo-contar"></div>
+    <div class="prediccion">
+      <span>devuelve:</span>
+      <input type="number" id="pred-cuenta" placeholder="?">
+      <span>tope después:</span>
+      <input type="number" id="pred-tope" placeholder="?">
+      <button id="btn-contar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-contar" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-olvido" style="display:none">
+    <h2>3. Si se olvida el segundo ciclo</h2>
+    <p style="margin-top:0">Alguien borra el ciclo que devuelve los elementos
+    de <code>aux</code> a <code>p</code>. La cuenta sigue dando 3. ¿Cómo
+    queda <code>p</code> al terminar?</p>
+    <div class="opciones" id="opciones-olvido">
+      <button data-op="igual">Igual que antes</button>
+      <button data-op="vacia">Vacía</button>
+      <button data-op="invertida">Invertida</button>
+    </div>
+    <div id="veredicto-olvido" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Mirar una pila cuesta: para ver lo que está debajo
+    del tope hay que quitar el tope. Una función que recibe la pila por
+    referencia y solo quiere mirar tiene que devolver todo a su sitio, y
+    olvidarlo compila, corre y responde bien: el precio lo paga quien
+    llamó.</div>
+  </div>
+</div>
+<script src="pila.js"></script>
+</body>
+</html>
