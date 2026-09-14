@@ -26,82 +26,110 @@
   }
 
   /* marcos: las llamadas abiertas en ese instante, de la más vieja a la
-     más nueva. En la lineal cada llamada abre un marco nuevo y ninguno se
-     cierra hasta que el de abajo devuelve. */
-  function marcosFact(desde, hasta) {
+     más nueva. Cada uno dice qué tiene adentro: los de abajo esperan su
+     multiplicación; el de arriba está entrando, o acaba de recibir el valor
+     del que se cerró y hace su cuenta. */
+  function marcosFact(n, hasta, cima) {
     var M = [], k;
-    for (k = desde; k >= hasta; k = k - 1) { M.push("factorial(" + k + ")"); }
+    for (k = n; k >= hasta; k = k - 1) {
+      var m = { rotulo: "factorial(" + k + ")", detalle: "espera " + k + " * ___" };
+      if (k === hasta) {
+        if (cima.modo === "entra") { m.detalle = k === 0 ? "entra con n = 0: caso base, devuelve 1" : "entra con n = " + k; }
+        else { m.detalle = "recibe " + cima.recibe + ": hace " + k + " * " + cima.recibe + " = " + (k * cima.recibe); }
+      }
+      M.push(m);
+    }
     return M;
   }
 
   function lineal(n) {
     var L = [], pend = [], k, prod;
-    L.push({ expr: "factorial(" + n + ")", esperando: 0, linea: 2, marcos: marcosFact(n, n) });
+    L.push({ expr: "factorial(" + n + ")", esperando: 0, linea: 2, marcos: marcosFact(n, n, { modo: "entra" }) });
     for (k = n; k >= 1; k = k - 1) {
       pend.push(k);
       L.push({ expr: anidar(pend, "factorial(" + (k - 1) + ")"), esperando: pend.length,
-               linea: k - 1 === 0 ? 1 : 2, marcos: marcosFact(n, k - 1) });
+               linea: k - 1 === 0 ? 1 : 2, marcos: marcosFact(n, k - 1, { modo: "entra" }) });
     }
-    L.push({ expr: anidar(pend, "1"), esperando: pend.length, linea: null, marcos: marcosFact(n, 1) });
+    L.push({ expr: anidar(pend, "1"), esperando: pend.length, linea: null,
+             marcos: marcosFact(n, 1, { modo: "recibe", recibe: 1 }) });
     prod = 1;
     while (pend.length > 0) {
-      var c = pend.pop(); prod = c * prod;
+      var c = pend.pop(); var recibido = prod; prod = c * prod;
       L.push({ expr: anidar(pend, String(prod)), esperando: pend.length, linea: null,
-               marcos: marcosFact(n, c + 1) });
+               marcos: pend.length === 0 ? [] : marcosFact(n, c + 1, { modo: "recibe", recibe: prod }),
+               devuelto: pend.length === 0 ? prod : null });
     }
     return L;
   }
 
   /* En la de cola la llamada nueva reemplaza a la vieja: el marco es uno
-     solo y cambia de contenido. */
+     solo y cambia de contenido. El detalle dice a quién reemplazó y qué
+     cuenta hizo antes de llamar. */
   function cola(n) {
     var L = [], cont = 1, prod = 1;
-    L.push({ expr: "fact(" + n + ")", esperando: 0, linea: null, marcos: ["fact(" + n + ")"] });
+    L.push({ expr: "fact(" + n + ")", esperando: 0, linea: null,
+             marcos: [{ rotulo: "fact(" + n + ")", detalle: "entra y llama a factIter(1, 1, " + n + ")" }] });
+    var anterior = "fact(" + n + ")";
     while (cont <= n) {
       var f = "factIter(" + cont + ", " + prod + ", " + n + ")";
-      L.push({ expr: f, esperando: 0, linea: 4, marcos: [f] });
-      prod = cont * prod; cont = cont + 1;
+      L.push({ expr: f, esperando: 0, linea: 4,
+               marcos: [{ rotulo: f, detalle: "reemplaza a " + anterior + " · calcula " + cont + " * " + prod + " = " + (cont * prod) + " y llama" }] });
+      anterior = f; prod = cont * prod; cont = cont + 1;
     }
     var ult = "factIter(" + cont + ", " + prod + ", " + n + ")";
-    L.push({ expr: ult, esperando: 0, linea: 3, marcos: [ult] });
-    L.push({ expr: String(prod), esperando: 0, linea: null, marcos: [] });
+    L.push({ expr: ult, esperando: 0, linea: 3,
+             marcos: [{ rotulo: ult, detalle: "reemplaza a " + anterior + " · cont > n: devuelve prod" }] });
+    L.push({ expr: String(prod), esperando: 0, linea: null, marcos: [], devuelto: prod });
     return L;
   }
 
   function envolver(n, centro) { var s = centro, i; for (i = 0; i < n; i = i + 1) { s = "suc(" + s + ")"; } return s; }
 
-  function marcosSuma(desde, hasta, b) {
+  function marcosSuma(a, hasta, b, cima) {
     var M = [], k;
-    for (k = desde; k >= hasta; k = k - 1) { M.push("sumaLineal(" + k + ", " + b + ")"); }
+    for (k = a; k >= hasta; k = k - 1) {
+      var m = { rotulo: "sumaLineal(" + k + ", " + b + ")", detalle: "espera suc(___)" };
+      if (k === hasta) {
+        if (cima.modo === "entra") { m.detalle = k === 0 ? "entra con a = 0: caso base, devuelve " + b : "entra con a = " + k; }
+        else { m.detalle = "recibe " + cima.recibe + ": hace suc(" + cima.recibe + ") = " + (cima.recibe + 1); }
+      }
+      M.push(m);
+    }
     return M;
   }
 
   function sumaL(a, b) {
     var L = [], k, sucs = 0, v;
-    L.push({ expr: "sumaLineal(" + a + ", " + b + ")", esperando: 0, linea: 5, marcos: marcosSuma(a, a, b) });
+    L.push({ expr: "sumaLineal(" + a + ", " + b + ")", esperando: 0, linea: 5, marcos: marcosSuma(a, a, b, { modo: "entra" }) });
     for (k = a; k >= 1; k = k - 1) {
       sucs = sucs + 1;
       L.push({ expr: envolver(sucs, "sumaLineal(" + (k - 1) + ", " + b + ")"), esperando: sucs, linea: 5,
-               marcos: marcosSuma(a, k - 1, b) });
+               marcos: marcosSuma(a, k - 1, b, { modo: "entra" }) });
     }
-    L.push({ expr: envolver(sucs, String(b)), esperando: sucs, linea: null, marcos: marcosSuma(a, 1, b) });
+    L.push({ expr: envolver(sucs, String(b)), esperando: sucs, linea: null, marcos: marcosSuma(a, 1, b, { modo: "recibe", recibe: b }) });
     v = b;
     while (sucs > 0) {
       sucs = sucs - 1; v = v + 1;
-      L.push({ expr: envolver(sucs, String(v)), esperando: sucs, linea: null, marcos: marcosSuma(a, a - sucs + 1, b) });
+      L.push({ expr: envolver(sucs, String(v)), esperando: sucs, linea: null,
+               marcos: sucs === 0 ? [] : marcosSuma(a, a - sucs + 1, b, { modo: "recibe", recibe: v }),
+               devuelto: sucs === 0 ? v : null });
     }
     return L;
   }
 
   function sumaI(a, b) {
     var L = [];
-    L.push({ expr: "sumaIter(" + a + ", " + b + ")", esperando: 0, linea: 6, marcos: ["sumaIter(" + a + ", " + b + ")"] });
+    var f0 = "sumaIter(" + a + ", " + b + ")";
+    L.push({ expr: f0, esperando: 0, linea: 6, marcos: [{ rotulo: f0, detalle: "entra con a = " + a + ", b = " + b }] });
+    var anterior = f0;
     while (a > 0) {
-      a = a - 1; b = b + 1;
-      var f = "sumaIter(" + a + ", " + b + ")";
-      L.push({ expr: f, esperando: 0, linea: 6, marcos: [f] });
+      var na = a - 1, nb = b + 1;
+      var f = "sumaIter(" + na + ", " + nb + ")";
+      L.push({ expr: f, esperando: 0, linea: 6,
+               marcos: [{ rotulo: f, detalle: "reemplaza a " + anterior + " · pred(" + a + ") = " + na + ", suc(" + b + ") = " + nb }] });
+      anterior = f; a = na; b = nb;
     }
-    L.push({ expr: String(b), esperando: 0, linea: null, marcos: [] });
+    L.push({ expr: String(b), esperando: 0, linea: null, marcos: [], devuelto: b });
     return L;
   }
 
@@ -138,22 +166,28 @@
     caja.appendChild(pie);
   }
 
-  /* La pila: un marco por caja, el más nuevo arriba. En la de cola la caja
-     es la misma y solo cambia lo que dice. */
+  /* La pila: un marco por caja, el más nuevo arriba, con su número de
+     hondura y lo que tiene adentro. En la de cola la caja es la misma. */
   function pintarPila(id, lista, hasta, reemplaza) {
     var caja = document.getElementById(id);
-    var marcos = lista[Math.min(hasta, lista.length) - 1].marcos || [];
+    var paso = lista[Math.min(hasta, lista.length) - 1];
+    var marcos = paso.marcos || [];
     caja.innerHTML = "";
     if (marcos.length === 0) {
       var vacio = document.createElement("div");
-      vacio.className = "marco vacio"; vacio.textContent = "pila vacía";
+      vacio.className = "marco vacio";
+      vacio.textContent = paso.devuelto !== null && paso.devuelto !== undefined
+        ? "pila vacía: devolvió " + paso.devuelto : "pila vacía";
       caja.appendChild(vacio);
     }
     var i;
     for (i = marcos.length - 1; i >= 0; i = i - 1) {
       var m = document.createElement("div");
       m.className = "marco" + (i === marcos.length - 1 ? " cima" : "") + (reemplaza ? " reemplazado" : "");
-      m.textContent = marcos[i];
+      var ins = document.createElement("span"); ins.className = "ins"; ins.textContent = i + 1;
+      var rot = document.createElement("span"); rot.textContent = marcos[i].rotulo;
+      var det = document.createElement("span"); det.className = "detalle"; det.textContent = marcos[i].detalle;
+      m.appendChild(ins); m.appendChild(rot); m.appendChild(det);
       caja.appendChild(m);
     }
     var cuenta = document.getElementById(id + "-cuenta");
