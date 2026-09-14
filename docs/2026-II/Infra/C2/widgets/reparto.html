@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cortar el vector en trozos — quién se lleva el residuo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un vector de n elementos repartido entre k hilos</h1>
+  <p class="intro">El reparto de <code>con_hilos</code>, tal como está en el código: el paso es
+  la división entera y el último hilo se queda con lo que sobra. Escriba cuántos elementos
+  recibe el último hilo antes de ver la barra.</p>
+
+  <div class="carta">
+    <h2>1. Los datos y los hilos</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">size_t paso = v.size() / k;                  // n/k por tarea</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">for (int i = 0; i &lt; k; i++) {</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">  size_t ini = i * paso;</span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt">  size_t fin = (i == k - 1) ? v.size() : ini + paso;</span></div>
+      <div class="linea bloque-3"><span class="num">5</span><span class="txt">  hilos.emplace_back(sumar, cref(v), ini, fin, ref(parciales[i]));</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">}</span></div>
+    </div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <label>Elementos n:</label>
+      <span class="presets">
+        <button data-n="10">10</button>
+        <button data-n="17">17</button>
+        <button data-n="100">100</button>
+        <button data-n="1000">1.000</button>
+      </span>
+      <span class="valor-n">n = <span id="ver-n">10</span></span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label>Hilos k:</label>
+      <span class="presets">
+        <button data-k="1">1</button>
+        <button data-k="2">2</button>
+        <button data-k="3">3</button>
+        <button data-k="4">4</button>
+        <button data-k="5">5</button>
+        <button data-k="8">8</button>
+      </span>
+      <span class="valor-n">k = <span id="ver-k">4</span></span>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>Con n = <span id="pregunta-n">10</span> y k = <span id="pregunta-k">4</span>,
+      ¿cuántos elementos recibe el último hilo?</span>
+      <input type="number" id="prediccion" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El reparto</h2>
+    <div id="panel-barra"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Hilo</th><th>ini</th><th>fin</th><th>Elementos</th></tr></thead>
+        <tbody id="cuerpo-reparto"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-reparto" style="margin-top:0.6rem"></div>
+    <div class="nota">Los rangos son disjuntos y cada hilo escribe su propia posición de
+    <code>parciales</code>: por eso no hace falta sincronizar. El hilo que más recibe es el
+    que marca cuándo termina la suma.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué sucede al medirlo</h2>
+    <p style="margin-top:0">Suma de 200 millones de enteros, con el reparto de arriba:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Hilos</th><th>Tiempo</th><th>Aceleración</th></tr></thead>
+        <tbody id="cuerpo-medido"></tbody>
+      </table>
+    </div>
+    <p style="margin-bottom:0.3rem">¿Por qué ocho hilos no mejoran a cuatro?</p>
+    <div class="opciones" id="opciones-memoria">
+      <button data-op="residuo">Porque el último hilo se lleva el residuo</button>
+      <button data-op="correcta">Porque el camino a la memoria ya está saturado</button>
+      <button data-op="falso">Porque los parciales comparten línea de caché</button>
+      <button data-op="nucleos">Porque se acabaron los núcleos</button>
+    </div>
+    <div id="veredicto-memoria" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reparto.js"></script>
+</body>
+</html>
