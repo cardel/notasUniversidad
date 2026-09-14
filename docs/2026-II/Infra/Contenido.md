@@ -28,6 +28,11 @@ Se publican después de cada sesión.
    — speedup y eficiencia a partir de tiempos medidos, el techo que impone la
    parte que no se reparte, y las dos formas en que la caché decide el tiempo:
    el orden del recorrido y la línea compartida entre hilos.
+2. [Clase 2. Estrategias de paralelización: descomposición, granularidad y balanceo — 15 y 17 de septiembre](C2/Clase%202.%20Estrategias%20de%20paralelizacion.md)
+   — repartir datos o repartir trabajos, el tamaño de tarea a partir del cual
+   compensa, quién hace cada tarea cuando no cuestan lo mismo, y los tres
+   casos que no caben en esas preguntas: dependencias, pipeline y dejar que la
+   biblioteca decida.
 
 ### Corte 2
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Descomposición de tareas — un hilo por trabajo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un hilo por trabajo, no por trozo del vector</h1>
+  <p class="intro">Un vector de 50 millones de números y tres cálculos sobre
+  él: el máximo, la suma y cuántos son pares. Antes de ver la medición, decida
+  cuánto acelera un hilo por cálculo, qué haría un cuarto hilo y cuándo
+  conviene este reparto.</p>
+
+  <div class="carta">
+    <h2>1. Tres recorridos del mismo vector</h2>
+    <p style="margin-top:0">Uno tras otro, los tres recorridos tardan
+    <b>94 ms</b>. Ninguno necesita el resultado de los otros, así que cada
+    uno puede ir en su propio hilo:</p>
+    <div class="codigo" id="codigo-deck"></div>
+    <div class="nota">Cada hilo recibe el vector completo por referencia
+    constante y escribe su resultado en una variable propia: <code>m</code>,
+    <code>s</code> y <code>p</code>. Ninguno escribe donde lee otro.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Con tres hilos, uno por recorrido, ¿cuánto acelera?</h2>
+    <div class="opciones" id="opciones-a">
+      <button data-op="mas3">Más de 3</button>
+      <button data-op="tres">Exactamente 3</button>
+      <button data-op="correcta">Menos de 3</button>
+      <button data-op="menos1">Menos de 1</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div id="panel-medido" hidden>
+      <div id="panel-gantt" style="margin-top:0.8rem"></div>
+      <div class="chips" id="panel-chips" style="margin-top:0.6rem"></div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿Qué hace un cuarto hilo?</h2>
+    <div class="opciones" id="opciones-b">
+      <button data-op="mitad">Toma la mitad de la tarea más lenta</button>
+      <button data-op="memoria">Reparte la memoria</button>
+      <button data-op="correcta">Nada: no hay cuarto trabajo</button>
+      <button data-op="combina">Combina los parciales</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. ¿Cuándo conviene repartir trabajos y no datos?</h2>
+    <div class="opciones" id="opciones-c">
+      <button data-op="nucleos">Siempre que haya más de un núcleo</button>
+      <button data-op="enormes">Cuando los datos son enormes y la operación es una sola</button>
+      <button data-op="correcta">Cuando hay varias operaciones independientes sobre datos que caben</button>
+      <button data-op="dependen">Cuando una operación necesita el resultado de otra</button>
+    </div>
+    <div id="veredicto-c" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Un solo recorrido</h2>
+    <p style="margin:0">Si las tres tareas recorren la misma estructura, a
+    veces gana la versión secuencial que hace las tres cosas en una sola
+    pasada: cada elemento entra a caché una vez y sirve para el máximo, la
+    suma y el conteo. Con tres hilos el vector se lee tres veces desde
+    memoria, y esa lectura repetida es parte de lo que separa el 2,1 del 3.
+    Antes de repartir trabajos, se mide la pasada única.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="tareas.js"></script>
+</body>
+</html>
