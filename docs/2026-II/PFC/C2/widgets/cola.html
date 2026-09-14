@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cola — cuál sigue siendo de cola</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .variante { border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.9rem; margin: 0.6rem 0; }
+  .variante.marcada { border-color: var(--verde); }
+  .variante .cab { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; }
+  .variante pre { margin: 0.5rem 0 0; font-size: 0.92rem; background: var(--gris-suave, #f4f5f7);
+    border-radius: 6px; padding: 0.5rem 0.7rem; overflow-x: auto; }
+  .resultado { margin-top: 0.5rem; font-size: 0.9rem; min-height: 0; }
+  .resultado.bien { color: var(--verde); }
+  .resultado.mal { color: var(--rojo, #c0392b); }
+  .resultado code { color: #5b636c; font-size: 0.86rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>cola: cuál sigue siendo de cola</h1>
+  <p class="intro">Cinco versiones de <code>factIter</code>. Las cinco
+  compilan, las cinco devuelven <code>720</code> para <code>n = 6</code>, y
+  solo algunas aguantan <code>n = 100000</code>. Marque las que siguen siendo
+  <b>recursión de cola</b>: la llamada recursiva es lo último que hace el
+  cuerpo, sin nada alrededor esperando su resultado.</p>
+
+  <div class="carta">
+    <h2>1. Marque las que son de cola</h2>
+    <div id="variantes"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>2. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Tres maneras de romper la cola sin querer, y las
+    tres se ven inocentes: sumar y restar lo mismo, multiplicar después de
+    volver, envolver la llamada en otra función. Y una que parece romperla y
+    no: calcular un <code>val</code> antes de llamar.</p>
+    <p>La prueba no es leer el código: es preguntarse, en la línea de la
+    llamada, <b>¿queda algo por hacer cuando esto vuelva?</b> Si la respuesta
+    es sí, hay un marco de pila por vuelta, y para cien mil vueltas no
+    alcanza.</p>
+    <p>Scala puede confirmarlo por usted: <code>@tailrec</code> sobre la
+    función hace que el compilador rechace las que no son de cola. Pruébelo
+    con las cinco.</p>
+    <p><a href="arbol.html">Ir a <b>árbol</b>: partir el problema en dos →</a></p>
+  </div>
+</div>
+<script src="cola.js"></script>
+</body>
+</html>

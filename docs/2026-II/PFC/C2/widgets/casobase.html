@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>caso base — cuál de estas cuatro</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .variante { border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.9rem; margin: 0.6rem 0; }
+  .variante pre { margin: 0 0 0.5rem; font-size: 0.9rem; background: var(--gris-suave, #f4f5f7);
+    border-radius: 6px; padding: 0.5rem 0.7rem; overflow-x: auto; }
+  .resultado { margin-top: 0.5rem; font-size: 0.9rem; }
+  .resultado.bien { color: var(--verde); }
+  .resultado.mal { color: var(--rojo, #c0392b); }
+  table.valores { border-collapse: collapse; margin-top: 0.4rem; font-family: ui-monospace, monospace; font-size: 0.86rem; color: #3b434c; }
+  table.valores th, table.valores td { border: 1px solid var(--borde); padding: 0.2rem 0.5rem; text-align: center; }
+  table.valores td.soe { color: var(--rojo, #c0392b); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>caso base: cuál de estas cuatro</h1>
+  <p class="intro">Cuatro versiones de <code>producto</code>. La parte que
+  reparte el trabajo es idéntica en las cuatro; solo cambian los <b>casos
+  base</b>. Una es la de la sesión. Las otras tres fallan, y cada una falla de
+  una manera distinta: una no termina, una termina con el valor equivocado, y
+  una da el valor correcto en el caso que uno prueba.</p>
+
+  <div class="carta">
+    <h2>1. Elija la correcta</h2>
+    <div id="variantes"></div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>2. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La variante D es la que vale la pena recordar.
+    Da <code>24</code> para <code>producto(1, 5)</code>, igual que la
+    correcta, y todas las pruebas con <code>i &lt; j</code> pasan. Está mal
+    igual: el producto de ningún número es <code>1</code>, no <code>0</code>,
+    y <code>producto(3, 3)</code> lo muestra.</p>
+    <p>Un caso base es una afirmación sobre el problema más pequeño, no un
+    parche para que la recursión pare. Se escribe pensando en qué vale la
+    respuesta ahí, y se prueba <b>con ese caso</b>, aunque el programa grande
+    no lo visite nunca.</p>
+    <p>Con esto cierra la sesión. La siguiente pregunta es qué pasa cuando
+    lo que se pasa a una función es otra función.</p>
+  </div>
+</div>
+<script src="casobase.js"></script>
+</body>
+</html>
