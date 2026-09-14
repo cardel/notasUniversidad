@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predecir apply-env</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Predecir apply-env</h1>
+  <p class="intro">Una cadena de cuatro ligaduras, dos de ellas del mismo nombre, y preguntas sobre qué devuelve la búsqueda y en qué orden se construyó. El segundo bloque pide escribir la misma cadena con <code>let</code>, que es lo que un ambiente representa.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que <code>apply-env</code> hace y lo que no hace:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Hace</th><th>No hace</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>avanza del eslabón más nuevo al más viejo</td><td>buscar en todos y elegir</td></tr>
+          <tr><td>se detiene en la primera coincidencia</td><td>fundir dos ligaduras del mismo nombre</td></tr>
+          <tr><td>falla al llegar al vacío</td><td>devolver <code>#f</code> o un valor por defecto</td></tr>
+          <tr><td>lee el ambiente</td><td>modificarlo: extender produce otro ambiente</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Una cadena de ambientes es la historia de los
+    <code>let</code> anidados que la produjeron, leída de adentro hacia afuera.
+    Que una ligadura oculte a otra sin borrarla es lo que hace que, al salir
+    del ámbito interior, la de afuera vuelva a verse tal como estaba.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="ambiente.js"></script>
+</body>
+</html>
