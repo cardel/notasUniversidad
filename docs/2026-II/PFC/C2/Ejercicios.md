@@ -43,10 +43,13 @@ problema.
 
 ### [pendientes](widgets/pendientes.html){ target=_blank rel=noopener }
 
-`factorial` y `fact` corriendo lado a lado sobre la misma entrada, con el
-chip de cuántas operaciones esperan en cada columna. La izquierda sube hasta
-`n` y baja; la derecha se queda en cero todo el recorrido. El tercer preset
-hace lo mismo con `sumaLineal` y `sumaIter`, que es el ejercicio de la sesión.
+`factorial` y `fact` corriendo lado a lado sobre la misma entrada, cada una
+con su pila de marcos dibujada debajo. A la izquierda cada llamada apila un
+marco nuevo y ninguno se cierra hasta que el de abajo devuelve: en el punto
+más hondo hay `n + 1` abiertos al tiempo. A la derecha la caja es una sola y
+cambia de contenido, porque cada llamada reemplaza a la anterior. El tercer
+preset hace lo mismo con `sumaLineal` y `sumaIter`, que es el ejercicio de la
+sesión.
 
 ### [acumulador](widgets/acumulador.html){ target=_blank rel=noopener }
 
@@ -69,10 +72,12 @@ de volver, envolver la llamada en `math.max`— y una parece romperla y no: un
 ### [árbol](widgets/arbol.html){ target=_blank rel=noopener }
 
 `producto(i, j)` parte el rango por la mitad y el proceso deja de ser una fila.
-Se dibuja un nodo por paso, nivel por nivel, en el orden en que las llamadas
-ocurren. La predicción pide el total de llamadas: `n` hojas más `n − 1` nodos
-que parten, `2n − 1`. Es más que la versión lineal, y aun así la hondura
-máxima es la cantidad de niveles, no de números.
+Cada llamada da dos pasos, uno al entrar y otro al salir, y al lado del árbol
+va la pila con los marcos abiertos en ese instante. Hay dos predicciones y
+dan números distintos: las llamadas en total, `2n − 1`, y los marcos abiertos
+al mismo tiempo como máximo, que son los niveles del árbol. Lo que hay que
+mirar es la pila bajando a uno cuando termina la rama izquierda, antes de
+subir por la derecha: siete llamadas y nunca más de tres abiertas.
 
 ### [cuentas](widgets/cuentas.html){ target=_blank rel=noopener }
 
