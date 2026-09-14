@@ -12,10 +12,21 @@
   .nodo { font-family: ui-monospace, monospace; font-size: 0.88rem; border: 1px solid var(--borde);
     border-radius: 6px; padding: 0.2rem 0.5rem; background: #fff; }
   .nodo.hoja { border-style: dashed; }
+  .nodo.abierto { background: #fff6e0; border-color: #e0a800; color: #7a5b00; }
   .nodo.resuelto { background: var(--verde-suave); border-color: var(--verde); color: var(--verde); }
-  .nodo.actual { outline: 2px solid var(--verde); }
+  .nodo.actual { outline: 2px solid currentColor; }
   .nodo.oculto { border-color: transparent; color: #c5cad0; }
   #pie-arbol { margin-top: 0.4rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+  .arbol-y-pila { display: grid; grid-template-columns: 1fr 14rem; gap: 1rem; align-items: start; }
+  @media (max-width: 720px) { .arbol-y-pila { grid-template-columns: 1fr; } }
+  .pila { display: flex; flex-direction: column-reverse; gap: 0.22rem; min-height: 6rem;
+    padding: 0.45rem; border: 1px dashed var(--borde); border-radius: 8px; }
+  .marco { font-family: ui-monospace, monospace; font-size: 0.86rem; border-radius: 6px;
+    padding: 0.22rem 0.55rem; width: fit-content; background: #fff6e0; border: 1px solid #e0a800; color: #7a5b00; }
+  .marco.cima { font-weight: 700; outline: 2px solid #e0a800; }
+  .marco.vacio { color: #9aa3ad; border: none; background: transparent; font-family: inherit; }
+  .cuenta-pila { font-size: 0.82rem; color: #6b737c; margin-top: 0.3rem; }
+  .rot-pila { font-size: 0.82rem; color: #6b737c; margin-bottom: 0.3rem; }
 </style>
 </head>
 <body>
@@ -38,6 +49,12 @@
     </div>
     <div class="prediccion">
       <span>¿Cuántas llamadas a <code>producto</code> se hacen en total?</span>
+      <input type="number" id="prediccion-llamadas" min="0" placeholder="su número">
+      <button id="btn-comprobar-llamadas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-llamadas" class="veredicto"></div>
+    <div class="prediccion">
+      <span>Y como máximo, ¿cuántos marcos quedan abiertos <b>al mismo tiempo</b>?</span>
       <input type="number" id="prediccion" min="0" placeholder="su número">
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
@@ -45,9 +62,18 @@
   </div>
 
   <div class="carta">
-    <h2>2. Ejecute y vea crecer el árbol</h2>
-    <div id="arbol"></div>
-    <div id="pie-arbol"></div>
+    <h2>2. Ejecute: el árbol a la izquierda, la pila a la derecha</h2>
+    <div class="arbol-y-pila">
+      <div>
+        <div id="arbol"></div>
+        <div id="pie-arbol"></div>
+      </div>
+      <div>
+        <div class="rot-pila">Marcos abiertos ahora, el más nuevo arriba:</div>
+        <div class="pila" id="pila"></div>
+        <div class="cuenta-pila" id="pila-cuenta"></div>
+      </div>
+    </div>
     <div class="panel-doble" style="margin-top:0.7rem">
       <div class="codigo" id="panel-codigo"></div>
       <div class="estado">
@@ -59,9 +85,11 @@
           <button id="btn-fin">Al final</button>
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
-        <div class="nota">Un nodo se pone verde cuando ya tiene valor, es decir,
-        cuando sus dos hijos terminaron. Las hojas —borde punteado— tienen
-        valor de inmediato. La <b>hondura máxima</b> es lo que ocupa la pila.</div>
+        <div class="nota">Cada llamada da dos pasos: uno al <b>entrar</b>, que
+        abre su marco y lo pinta de amarillo, y otro al <b>salir</b>, que lo
+        cierra y lo pinta de verde con su valor. La pila de la derecha es lo
+        que está abierto en ese instante. Mire cómo baja a uno antes de subir
+        por la segunda rama.</div>
       </div>
     </div>
   </div>
@@ -72,10 +100,15 @@
     hojas y <code>n − 1</code> nodos que parten: <code>2n − 1</code> llamadas.
     Es más que las <code>n + 1</code> de la versión lineal, así que en
     <b>tiempo</b> no se ganó nada.</p>
-    <p>Lo que cambió es la <b>hondura</b>. La versión lineal apila
-    <code>n</code> marcos; el árbol apila tantos como niveles tenga, y eso es
-    <code>⌈log₂ n⌉ + 1</code>. Para <code>n = 1024</code>, once en vez de mil.
-    Mismo trabajo, repartido de otra forma.</p>
+    <p>Lo que cambió es cuántas de esas llamadas están abiertas <b>a la
+    vez</b>. La versión lineal las abre todas antes de cerrar la primera:
+    <code>n + 1</code> marcos. El árbol cierra la rama izquierda entera antes
+    de abrir la derecha, así que en la pila nunca hay más que un camino de la
+    raíz a una hoja: tantos marcos como niveles, <code>⌈log₂ n⌉ + 1</code>.
+    Para <code>n = 1024</code>, once en vez de mil y veinticinco.</p>
+    <p>Las dos predicciones dan números distintos porque miden cosas
+    distintas: las llamadas son el tiempo, los marcos abiertos al tiempo son el
+    espacio.</p>
     <p>El siguiente ejercicio pone los tres procesos en una tabla, para
     compararlos con los mismos números.</p>
     <p><a href="cuentas.html">Ir a <b>cuentas</b>: tres procesos, una tabla →</a></p>

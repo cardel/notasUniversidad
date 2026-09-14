@@ -88,7 +88,7 @@
     v = b;
     while (sucs > 0) {
       sucs = sucs - 1; v = v + 1;
-      L.push({ expr: envolver(sucs, String(v)), esperando: sucs, linea: null, marcos: marcosSuma(a, sucs + 1, b) });
+      L.push({ expr: envolver(sucs, String(v)), esperando: sucs, linea: null, marcos: marcosSuma(a, a - sucs + 1, b) });
     }
     return L;
   }

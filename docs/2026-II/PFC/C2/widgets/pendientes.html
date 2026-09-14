@@ -17,6 +17,15 @@
   .reduccion.ultima .expr { font-weight: 700; }
   .pie-columna { margin-top: 0.6rem; font-size: 0.86rem; color: #6b737c; }
   .pie-columna.bueno { color: var(--verde); font-weight: 700; }
+  .pila { display: flex; flex-direction: column-reverse; gap: 0.22rem; min-height: 5.5rem;
+    margin-top: 0.6rem; padding: 0.45rem; border: 1px dashed var(--borde); border-radius: 8px; }
+  .marco { font-family: ui-monospace, monospace; font-size: 0.86rem; border-radius: 6px;
+    padding: 0.22rem 0.55rem; width: fit-content; background: var(--gris-suave, #f4f5f7);
+    border: 1px solid var(--borde); }
+  .marco.cima { background: var(--verde-suave); border-color: var(--verde); color: var(--verde); font-weight: 700; }
+  .marco.reemplazado { border-style: double; }
+  .marco.vacio { color: #9aa3ad; border: none; background: transparent; font-family: inherit; }
+  .cuenta-pila { font-size: 0.82rem; color: #6b737c; margin-top: 0.3rem; }
 </style>
 </head>
 <body>
@@ -36,7 +45,7 @@
       <button data-preset="2">sumaLineal(3, 5) · sumaIter(3, 5)</button>
     </div>
     <div class="prediccion">
-      <span>En el punto más hondo, ¿cuántas operaciones esperan en la columna izquierda?</span>
+      <span>En el punto más hondo, ¿cuántos marcos quedan abiertos al tiempo en la columna izquierda?</span>
       <input type="number" id="prediccion" min="0" placeholder="su número">
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
@@ -49,10 +58,14 @@
       <div class="columna">
         <h3><span id="nom-izq"></span> <span class="sub">— recursión lineal</span></h3>
         <div id="col-izq"></div>
+        <div class="pila" id="pila-izq"></div>
+        <div class="cuenta-pila" id="pila-izq-cuenta"></div>
       </div>
       <div class="columna">
         <h3><span id="nom-der"></span> <span class="sub">— recursión de cola</span></h3>
         <div id="col-der"></div>
+        <div class="pila" id="pila-der"></div>
+        <div class="cuenta-pila" id="pila-der-cuenta"></div>
       </div>
     </div>
     <div class="panel-doble" style="margin-top:0.7rem">
@@ -66,10 +79,11 @@
           <button id="btn-fin">Al final</button>
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
-        <div class="nota">La izquierda abre paréntesis al bajar y los cierra al
-        subir. La derecha nunca abre ninguno: cada paso es una llamada nueva
-        con los parámetros ya actualizados, y el resultado viaja en
-        <code>prod</code> o en <code>b</code>.</div>
+        <div class="nota">La pila de cada columna muestra los marcos abiertos
+        en ese instante, el más nuevo arriba. A la izquierda cada llamada apila
+        uno nuevo y ninguno se cierra hasta que el de abajo devuelve. A la
+        derecha la caja es siempre la misma: la llamada nueva <b>reemplaza</b>
+        a la anterior, con los parámetros ya actualizados.</div>
       </div>
     </div>
   </div>
@@ -78,7 +92,9 @@
     <h2>3. Lo que se lleva de aquí</h2>
     <p style="margin-top:0">Las dos columnas terminan en el mismo valor y
     dan más o menos las mismas vueltas. La izquierda llega a tener
-    <code>n</code> operaciones esperando; la derecha, cero, siempre.</p>
+    <code>n + 1</code> marcos abiertos al tiempo; la derecha, uno, siempre.
+    Eso es el espacio, y es lo que se acaba en <code>factorial(100000)</code>
+    y no en <code>fact(100000)</code>.</p>
     <p>Eso tiene un nombre: la de la derecha es <b>recursión de cola</b>. La
     llamada recursiva es lo último que hace el cuerpo, sin nada alrededor
     esperando su resultado, así que no hace falta acordarse de nada mientras

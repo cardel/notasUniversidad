@@ -1,6 +1,7 @@
 /* Árbol: producto(i, j) parte el rango en dos y el proceso es un árbol
-   binario. Se dibuja un nodo por paso, en el orden en que se llama.
-   Reproduce 04_factorial_arbol.scala. */
+   binario. Cada llamada produce dos pasos, uno al entrar y otro al salir,
+   así que se ve cuántos marcos están abiertos al mismo tiempo. Reproduce
+   04_factorial_arbol.scala. */
 (function () {
   var CODIGO = [
     { txt: "def producto(i: Int, j: Int): Int =", num: null },
@@ -12,38 +13,55 @@
     { txt: "  }", num: null }
   ];
 
-  /* Recorre las llamadas en el orden en que ocurren y anota, por nodo, el
-     índice de su último descendiente: cuando ese índice ya se mostró, el
-     nodo tiene valor. */
+  /* Los nodos en orden de llamada, con su valor y su hondura. */
   function llamadas(i, j) {
     var nodos = [];
-    function visitar(i, j, hondura, padre) {
+    function visitar(i, j, hondura) {
       var id = nodos.length;
-      var nodo = { id: id, i: i, j: j, hondura: hondura, padre: padre, hoja: false, valor: null, ultimo: id };
+      var nodo = { id: id, i: i, j: j, hondura: hondura, hoja: false, valor: null, linea: 3 };
       nodos.push(nodo);
       if (i >= j) { nodo.hoja = true; nodo.valor = 1; nodo.linea = 1; }
       else if (i === j - 1) { nodo.hoja = true; nodo.valor = i; nodo.linea = 2; }
       else {
         var m = i + Math.floor((j - i) / 2);
-        nodo.linea = 3;
-        var izq = visitar(i, m, hondura + 1, id);
-        var der = visitar(m, j, hondura + 1, id);
+        nodo.m = m;
+        var izq = visitar(i, m, hondura + 1);
+        var der = visitar(m, j, hondura + 1);
         nodo.valor = izq.valor * der.valor;
-        nodo.ultimo = der.ultimo;
       }
       return nodo;
     }
-    visitar(i, j, 1, null);
+    visitar(i, j, 1);
     return nodos;
   }
 
-  function simular(preset) {
-    var p = PRESETS[preset];
-    var nodos = llamadas(p.i, p.j);
-    return nodos.map(function (n, k) {
-      return { linea: n.linea, llamadas: k + 1, hondura: n.hondura,
-               nodo: k, maxHondura: Math.max.apply(null, nodos.slice(0, k + 1).map(function (x) { return x.hondura; })) };
-    });
+  /* Los eventos: entrar a una llamada abre un marco; salir lo cierra. La
+     pila que se guarda en cada evento es la que queda después de él. */
+  function eventos(i, j) {
+    var nodos = llamadas(i, j), ev = [], pila = [];
+    function recorrer(id) {
+      var n = nodos[id];
+      pila.push(id);
+      ev.push({ tipo: "entra", nodo: id, pila: pila.slice() });
+      if (!n.hoja) {
+        // los hijos son los dos nodos que siguen en el orden de llamada
+        var izq = id + 1;
+        recorrer(izq);
+        var der = ultimoDe(izq) + 1;
+        recorrer(der);
+      }
+      pila.pop();
+      ev.push({ tipo: "sale", nodo: id, pila: pila.slice(), valor: n.valor });
+    }
+    function ultimoDe(id) {
+      var n = nodos[id];
+      if (n.hoja) { return id; }
+      var izq = id + 1;
+      var der = ultimoDe(izq) + 1;
+      return ultimoDe(der);
+    }
+    recorrer(0);
+    return { nodos: nodos, eventos: ev };
   }
 
   var PRESETS = [
@@ -52,14 +70,42 @@
     { i: 1, j: 9, rotulo: "producto(1, 9)" }
   ];
 
-  var API = { llamadas: llamadas, simular: simular, PRESETS: PRESETS };
+  function simular(preset) {
+    var p = PRESETS[preset];
+    var r = eventos(p.i, p.j);
+    var entradas = 0, maxAb = 0;
+    return r.eventos.map(function (e) {
+      if (e.tipo === "entra") { entradas = entradas + 1; }
+      maxAb = Math.max(maxAb, e.pila.length);
+      return { linea: e.tipo === "entra" ? r.nodos[e.nodo].linea : null,
+               llamadas: entradas, abiertos: e.pila.length, maxAbiertos: maxAb,
+               tipo: e.tipo, nodo: e.nodo, pila: e.pila };
+    });
+  }
+
+  var API = { llamadas: llamadas, eventos: eventos, simular: simular, PRESETS: PRESETS };
   if (typeof module !== "undefined") { module.exports = API; }
   if (typeof document === "undefined") { return; }
 
-  function pintarArbol(e) {
+  function etiqueta(n) { return "producto(" + n.i + ", " + n.j + ")"; }
+
+  function pintar(e) {
     var p = PRESETS[e.params];
-    var nodos = llamadas(p.i, p.j);
-    var visibles = e.k;
+    var r = eventos(p.i, p.j);
+    var nodos = r.nodos;
+    var pasos = e.pasos;
+    var k = e.k;
+    var actual = e.actual;
+
+    // estado de cada nodo según los eventos ya ocurridos
+    var estado = {}, valorDe = {};
+    var m;
+    for (m = 0; m < k; m = m + 1) {
+      if (pasos[m].tipo === "entra") { estado[pasos[m].nodo] = "abierto"; }
+      else { estado[pasos[m].nodo] = "resuelto"; valorDe[pasos[m].nodo] = nodos[pasos[m].nodo].valor; }
+    }
+
+    // el árbol por niveles
     var caja = document.getElementById("arbol");
     caja.innerHTML = "";
     var maxH = Math.max.apply(null, nodos.map(function (n) { return n.hondura; }));
@@ -72,28 +118,48 @@
       fila.appendChild(rot);
       nodos.forEach(function (n) {
         if (n.hondura !== h) { return; }
-        var caj = document.createElement("span");
-        if (n.id >= visibles) { caj.className = "nodo oculto"; caj.textContent = "·"; }
+        var c = document.createElement("span");
+        var est = estado[n.id];
+        if (!est) { c.className = "nodo oculto"; c.textContent = "·"; }
         else {
-          var resuelto = n.ultimo < visibles;
-          caj.className = "nodo" + (n.hoja ? " hoja" : "") + (resuelto ? " resuelto" : "")
-            + (n.id === visibles - 1 ? " actual" : "");
-          caj.textContent = "producto(" + n.i + ", " + n.j + ")" + (resuelto ? " = " + n.valor : "");
+          c.className = "nodo " + est + (n.hoja ? " hoja" : "") + (actual && actual.nodo === n.id ? " actual" : "");
+          c.textContent = etiqueta(n) + (est === "resuelto" ? " = " + valorDe[n.id] : "");
         }
-        fila.appendChild(caj);
+        fila.appendChild(c);
       });
       caja.appendChild(fila);
     }
+
+    // la pila de marcos abiertos, el más nuevo arriba
+    var pila = document.getElementById("pila");
+    pila.innerHTML = "";
+    var abiertos = actual ? actual.pila : [];
+    if (abiertos.length === 0) {
+      var v = document.createElement("div"); v.className = "marco vacio"; v.textContent = "pila vacía"; pila.appendChild(v);
+    }
+    var q;
+    for (q = abiertos.length - 1; q >= 0; q = q - 1) {
+      var mm = document.createElement("div");
+      mm.className = "marco" + (q === abiertos.length - 1 ? " cima" : "");
+      mm.textContent = etiqueta(nodos[abiertos[q]]);
+      pila.appendChild(mm);
+    }
+    document.getElementById("pila-cuenta").textContent = abiertos.length
+      + (abiertos.length === 1 ? " marco abierto" : " marcos abiertos");
+
+    // el pie
     var pie = document.getElementById("pie-arbol");
-    if (visibles === 0) { pie.textContent = "Nadie ha llamado todavía."; return; }
-    var n = nodos[visibles - 1];
+    if (!actual) { pie.textContent = "Nadie ha llamado todavía."; return; }
+    var n = nodos[actual.nodo];
     if (e.terminado) {
-      pie.textContent = nodos.length + " llamadas en total, " + maxH + " niveles. Valor: " + nodos[0].valor + ".";
-    } else if (n.hoja) {
-      pie.textContent = "producto(" + n.i + ", " + n.j + ") es una hoja: devuelve " + n.valor + " sin partir nada.";
+      pie.textContent = nodos.length + " llamadas en total, y nunca más de " + actual.maxAbiertos
+        + " marcos abiertos al tiempo. Valor: " + nodos[0].valor + ".";
+    } else if (actual.tipo === "entra" && n.hoja) {
+      pie.textContent = "Entra " + etiqueta(n) + ": es una hoja, devuelve " + n.valor + " sin partir nada.";
+    } else if (actual.tipo === "entra") {
+      pie.textContent = "Entra " + etiqueta(n) + " y parte en m = " + n.m + ". Su marco queda abierto esperando a los dos hijos.";
     } else {
-      var m = n.i + Math.floor((n.j - n.i) / 2);
-      pie.textContent = "producto(" + n.i + ", " + n.j + ") parte en m = " + m + ": producto(" + n.i + ", " + m + ") * producto(" + m + ", " + n.j + ").";
+      pie.textContent = "Sale " + etiqueta(n) + " con " + n.valor + ". Su marco se cierra y la pila baja a " + actual.pila.length + ".";
     }
   }
 
@@ -102,26 +168,50 @@
     paramsIniciales: 1,
     chips: [
       { campo: "llamadas", rotulo: "llamadas hechas" },
-      { campo: "hondura", rotulo: "hondura actual" },
-      { campo: "maxHondura", rotulo: "hondura máxima", clase: "alerta" }
+      { campo: "abiertos", rotulo: "marcos abiertos ahora", clase: "alerta" },
+      { campo: "maxAbiertos", rotulo: "máximo abierto hasta aquí" }
     ],
     simular: simular,
-    alPintar: pintarArbol
+    alPintar: pintar
   });
 
+  /* Predicción principal: el máximo de marcos abiertos al tiempo. */
   Motor.prediccionNumerica(function (valor, preset) {
     var p = PRESETS[preset];
-    var total = llamadas(p.i, p.j).length;
-    var n = p.j - p.i;
+    var r = eventos(p.i, p.j);
+    var maxH = Math.max.apply(null, r.nodos.map(function (n) { return n.hondura; }));
+    var total = r.nodos.length;
+    if (valor === maxH) {
+      return { ok: true, msg: "Correcto: nunca hay más de " + maxH + " marcos abiertos al tiempo, uno por nivel del árbol. "
+        + "Las " + total + " llamadas no están abiertas todas a la vez: cada rama se cierra antes de abrir la siguiente." };
+    }
     if (valor === total) {
-      return { ok: true, msg: "Correcto: " + total + " llamadas. Hay " + n + " hojas y " + (n - 1)
-        + " nodos que parten, y " + n + " + " + (n - 1) + " = 2n − 1." };
+      return { ok: false, msg: "No. " + total + " es el total de llamadas, pero no están abiertas todas a la vez. "
+        + "Cuando la rama izquierda termina, sus marcos ya se cerraron antes de abrir la derecha. El máximo es " + maxH + "." };
     }
-    if (valor === n) {
-      return { ok: false, msg: "No. " + n + " son solo las hojas. Cada nodo que parte también es una llamada: en total 2n − 1 = " + total + "." };
+    return { ok: false, msg: "No. Es " + maxH + ": la hondura del árbol. Avance y mire la pila: sube por una rama, "
+      + "vuelve a bajar, y solo entonces sube por la otra." };
+  });
+
+  /* Segunda predicción: el total de llamadas. */
+  document.getElementById("btn-comprobar-llamadas").addEventListener("click", function () {
+    var campo = document.getElementById("prediccion-llamadas");
+    var v = document.getElementById("veredicto-llamadas");
+    var valor = parseInt(campo.value, 10);
+    var preset = parseInt(document.querySelector("[data-preset].primario").getAttribute("data-preset"), 10);
+    var p = PRESETS[preset];
+    var total = llamadas(p.i, p.j).length, n = p.j - p.i;
+    if (isNaN(valor)) { v.className = "veredicto mal"; v.textContent = "Escriba un número primero."; return; }
+    if (valor === total) {
+      v.className = "veredicto bien";
+      v.textContent = "Correcto: " + total + " llamadas. " + n + " hojas y " + (n - 1) + " nodos que parten, 2n − 1.";
+    } else if (valor === n) {
+      v.className = "veredicto mal";
+      v.textContent = "No. " + n + " son solo las hojas. Los nodos que parten también son llamadas: 2n − 1 = " + total + ".";
+    } else {
+      v.className = "veredicto mal";
+      v.textContent = "No. Son " + total + ". El contador de la línea del * cuenta los que parten; el de las hojas, los que devuelven un número.";
     }
-    return { ok: false, msg: "No. Son " + total + ". Avance y cuente: el contador de la línea del * cuenta los nodos que parten, "
-      + "el de las hojas los que devuelven un número." };
   });
 
   document.querySelectorAll("[data-preset]").forEach(function (b) {
@@ -130,6 +220,8 @@
       b.className = "primario";
       Motor.limpiarVeredicto();
       document.getElementById("prediccion").value = "";
+      document.getElementById("prediccion-llamadas").value = "";
+      var vl = document.getElementById("veredicto-llamadas"); vl.className = "veredicto"; vl.textContent = "";
       Motor.reiniciar(parseInt(b.getAttribute("data-preset"), 10));
     });
   });
