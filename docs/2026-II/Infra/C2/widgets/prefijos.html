@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suma de prefijos en dos pasadas — los desplazamientos los escribe usted</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .caja.b1 { border-color: var(--azul); background: var(--azul-suave); }
+  .caja.b2 { border-color: var(--ambar); background: var(--ambar-suave); }
+  .caja.b3 { border-color: var(--verde); background: var(--verde-suave); }
+  .despl { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-top: 0.4rem; }
+  .despl label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: var(--gris); }
+  .despl input { width: 7rem; padding: 0.35rem 0.5rem; border: 1px solid var(--borde); border-radius: 6px; font: inherit; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Doce valores, tres bloques y dos pasadas</h1>
+  <p class="intro">La suma de prefijos parece secuencial: cada posición necesita la anterior.
+  Aquí se recorre en dos pasadas, como en <code>scan.cpp</code>; la primera la hace la
+  página, los desplazamientos los escribe usted, y la segunda arranca de lo que haya escrito.</p>
+
+  <div class="carta">
+    <h2>1. Los valores</h2>
+    <div class="fila-n">
+      <label>Operación:</label>
+      <span class="presets">
+        <button data-operacion="suma">suma</button>
+        <button data-operacion="maximo">máximo</button>
+      </span>
+      <span class="valor-n">ahora: <span id="ver-op">suma</span></span>
+      <button id="btn-otros">Otros valores</button>
+      <button id="btn-base">Los de la clase</button>
+    </div>
+    <div id="panel-valores" style="margin-top:0.6rem"></div>
+    <div class="nota">Tres bloques de cuatro, uno por hilo. Con máximo, cada posición guarda el
+    mayor valor visto hasta ahí: es el saldo máximo acumulado de los ejercicios de la sesión.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Primera pasada</h2>
+    <div class="botones"><button id="btn-totales" class="primario">Cada bloque reporta su total</button></div>
+    <div id="panel-totales" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los desplazamientos</h2>
+    <p style="margin-top:0">Con qué acumulado arranca cada bloque en la segunda pasada, para la
+    operación <b id="nombre-op">suma</b>.</p>
+    <div class="despl">
+      <label>bloque 1 <input type="number" id="despl-0" placeholder="su número"></label>
+      <label>bloque 2 <input type="number" id="despl-1" placeholder="su número"></label>
+      <label>bloque 3 <input type="number" id="despl-2" placeholder="su número"></label>
+      <button id="btn-despl" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-despl" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Segunda pasada</h2>
+    <div class="botones"><button id="btn-segunda" class="primario">Cada bloque rehace lo suyo desde su desplazamiento</button></div>
+    <div id="panel-segunda" style="margin-top:0.6rem"></div>
+    <div id="veredicto-segunda" class="veredicto"></div>
+    <div class="nota">La fila de abajo es el recorrido de corrido, con un solo hilo. Si
+    escribió algún desplazamiento, la segunda pasada usa los suyos; si no, los correctos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué sucede al medirlo</h2>
+    <p style="margin-top:0">20 millones de elementos y 4 hilos, con una operación costosa
+    por elemento: secuencial 2.731 ms, dos pasadas 1.636 ms. La versión paralela recorre los
+    datos dos veces y aun así gana.</p>
+    <div class="chips" id="chips-medida"></div>
+    <p style="margin-bottom:0.3rem">Si <code>peso(x)</code> fuera una suma pelada, sin la
+    operación costosa por elemento, ¿quién gana?</p>
+    <div class="opciones" id="opciones-medida">
+      <button data-op="span">Las dos pasadas, porque el span sigue siendo logarítmico</button>
+      <button data-op="correcta">La secuencial</button>
+      <button data-op="empate">Empatan</button>
+      <button data-op="hilos">Depende del número de hilos</button>
+    </div>
+    <div id="veredicto-medida" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="prefijos.js"></script>
+</body>
+</html>

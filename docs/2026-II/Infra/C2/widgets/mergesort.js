@@ -186,8 +186,7 @@ if (typeof document !== "undefined") (function () {
     var hojasN = hojas(N, prof, MINIMO);
     Motor.pintarChips("chips-arbol", [
       { texto: "hilos creados", valor: hilosCreados(N, prof, MINIMO), cuenta: true },
-      { texto: "hilos trabajando a la vez en las hojas", valor: hojasN },
-      { texto: "trozos (hojas)", valor: hojasN },
+      { texto: "trozos, uno por hilo en las hojas", valor: hojasN },
       { texto: "tamaño de cada hoja", valor: tam(N / hojasN) }
     ]);
   }

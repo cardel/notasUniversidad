@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ocho situaciones — qué estrategia pide cada problema</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .situacion { font-size: 1.05rem; padding: 0.8rem 1rem; border-left: 4px solid var(--azul);
+               background: var(--azul-suave); border-radius: 6px; margin: 0.6rem 0; min-height: 3.6rem; }
+  .opciones button.elegida { outline: 3px solid var(--azul); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ocho problemas y una estrategia para cada uno</h1>
+  <p class="intro">Cada situación cabe en tres líneas y las opciones son siempre las mismas
+  siete: las seis estrategias de la tabla de la clase y dejarlo secuencial. Cada respuesta
+  dice por qué sí o por qué no; el marcador cuenta los aciertos a la primera.</p>
+
+  <div class="carta">
+    <h2>1. La situación</h2>
+    <div class="progreso" id="progreso"></div>
+    <div class="situacion" id="texto-situacion"></div>
+    <div class="opciones" id="opciones">
+      <button data-clave="datos">Descomposición de datos</button>
+      <button data-clave="tareas">Descomposición de tareas</button>
+      <button data-clave="agrupar">Agrupar tareas y usar un grupo de hilos</button>
+      <button data-clave="demanda">Reparto por demanda</button>
+      <button data-clave="dospasadas">Reformular en dos pasadas</button>
+      <button data-clave="pipeline">Pipeline</button>
+      <button data-clave="secuencial">Dejarlo secuencial</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente situación</button>
+      <button id="btn-otra" hidden>Otra vez, en otro orden</button>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El marcador</h2>
+    <div class="chips" id="panel-marcador"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Situación</th><th>Primera respuesta</th><th>La estrategia</th></tr></thead>
+        <tbody id="cuerpo-marcador"></tbody>
+      </table>
+    </div>
+    <p id="resumen" hidden style="font-weight:600"></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="elegir.js"></script>
+</body>
+</html>
