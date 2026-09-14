@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El cliente una sola vez</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El cliente una sola vez</h1>
+  <p class="intro">Un TAD cola con cinco operaciones, tres clientes que solo pueden usarlas, y después la misma cola en otra representación. Los tres clientes se pegan tal cual en la segunda ronda: si pasan, no conocían la representación; si hay que tocarlos, la conocían.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los seis, resueltos</h2>
+    <p style="margin-top:0">Tres clientes, dos representaciones, y lo que cambió entre una y otra:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th></th><th>Representación A</th><th>Representación B</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>el dato</td><td>una lista</td><td>dos listas</td></tr>
+          <tr><td><code>enqueue</code></td><td><code>append</code>, recorre todo</td><td><code>cons</code>, un paso</td></tr>
+          <tr><td><code>front</code></td><td><code>car</code></td><td>puede voltear la segunda lista</td></tr>
+          <tr><td>los tres clientes</td><td colspan="2">los mismos, letra por letra</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Cuando la representación cambie de nuevo, el trabajo
+    será cambiar cinco procedimientos de la interfaz, no cada programa que use
+    colas. Eso es lo que compra la abstracción de datos, y el precio es no
+    poder tomar atajos por el dato ni cuando están a la vista.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (empty-queue) (list '() '()))
+(define (enqueue q v) (list (car q) (cons v (cadr q))))
+
+(enqueue (enqueue (empty-queue) 'a) 'b)</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="cola.js"></script>
+</body>
+</html>

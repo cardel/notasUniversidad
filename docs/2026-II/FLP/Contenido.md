@@ -56,6 +56,13 @@ quedan disponibles después para volver sobre el tema.
    siguiendo la gramática, declaración, referencia y alcance, y las ligaduras
    locales que el recorrido necesita. El código corre en la misma página.
 
+3. [Clase 2. Estrategias para representar datos — 15 de septiembre](C2/Ejercicios.md)
+   — cuatro actividades, una por tema de la sesión: juzgar qué clientes
+   sobreviven a un cambio de representación, escribir tres clientes de una
+   cola y probarlos contra dos representaciones, leer un mismo dato bajo
+   cinco representaciones del natural, y predecir `apply-env` sobre una
+   cadena con nombres repetidos.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
