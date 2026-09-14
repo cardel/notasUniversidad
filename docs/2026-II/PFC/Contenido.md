@@ -73,6 +73,7 @@ reuniones docentes y jornada de reflexión.
 | Clase | Tema | Ejercicios |
 |---:|---|---|
 | 1 | Principios y elementos de programación | [sustituir y evaluación](C1/Ejercicios.md) |
+| 2 | Funciones y los procesos que generan | [nueve ejercicios, tres por tema](C2/Ejercicios.md) |
 
 ## Ejercicios de clase
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>acumulador — el resultado viaja en un parámetro</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.traza { border-collapse: collapse; width: 100%; font-family: ui-monospace, monospace; font-size: 0.95rem; }
+  table.traza th, table.traza td { border: 1px solid var(--borde); padding: 0.35rem 0.6rem; text-align: center; }
+  table.traza th { background: var(--gris-suave, #f4f5f7); font-weight: 600; }
+  table.traza td.que { text-align: left; font-family: inherit; font-size: 0.86rem; color: #5b636c; }
+  table.traza td.dada { color: #6b737c; }
+  table.traza tr.actual td { background: var(--verde-suave); }
+  table.traza input { width: 5rem; text-align: center; font-family: inherit; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  table.traza input.bien { border-color: var(--verde); background: var(--verde-suave); }
+  table.traza input.mal { border-color: var(--rojo, #c0392b); background: #fdecea; }
+  table.traza .real { margin-left: 0.4rem; color: var(--verde); font-weight: 700; }
+  #pie-tabla { margin-top: 0.6rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>acumulador: el resultado viaja en un parámetro</h1>
+  <p class="intro">En <code>factIter</code> nada queda esperando porque el
+  resultado a medias no se guarda en la pila: <b>se pasa como argumento</b> a
+  la siguiente llamada. Cada fila de esta tabla es una llamada, y la columna
+  <code>prod</code> es el resultado creciendo. Llénela antes de mirar.</p>
+
+  <div class="carta">
+    <h2>1. Llene la columna <code>prod</code></h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Llamada:</span>
+      <button data-preset="3">fact(3)</button>
+      <button data-preset="4" class="primario">fact(4)</button>
+      <button data-preset="5">fact(5)</button>
+    </div>
+    <table class="traza">
+      <thead><tr><th>cont</th><th>prod</th><th>n</th><th>qué pasa</th></tr></thead>
+      <tbody id="cuerpo-tabla"></tbody>
+    </table>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-comprobar-tabla" class="primario">Comprobar la tabla</button>
+    </div>
+    <div id="veredicto-tabla" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y vea cómo se llena</h2>
+    <div id="pie-tabla"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La fila resaltada es la llamada en curso, y el valor
+        verde a la derecha de cada casilla es el <code>prod</code> real que
+        llegó. El <code>else</code> se usa <code>n</code> veces; el
+        <code>if</code>, una.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La regla de la tabla es la del código: el
+    <code>prod</code> de una fila es <code>cont × prod</code> de la fila de
+    arriba. Ese producto se calcula <b>antes</b> de llamar, y entra como
+    argumento. Por eso al volver no hay nada que hacer: la última llamada ya
+    tiene el resultado completo y solo lo devuelve.</p>
+    <p>Eso es lo que se llama llevar un <b>acumulador</b>. Es el mecanismo
+    que convierte una recursión lineal en una de cola, y aparece en casi
+    toda función iterativa escrita en estilo funcional.</p>
+    <p><a href="cola.html">Ir a <b>cola</b>: cuál sigue siendo de cola →</a></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="acumulador.js"></script>
+</body>
+</html>
