@@ -30,7 +30,7 @@ mismas estructuras ya empacadas.
 8. [Clase 8. Punteros, arreglos y arreglos bidimensionales — 2 de septiembre](C8/Clase%208.%20Punteros,%20arreglos%20y%20arreglos%20bidimensionales.md)
 9. [Clase 9. Paso de parámetros por referencia y repaso de POO — 4 de septiembre](C9/Clase%209.%20Paso%20de%20parámetros%20por%20referencia%20y%20repaso%20de%20POO.md)
 10. [Clase 10. Abstracción de datos y tipos abstractos de datos — 9 de septiembre](C10/Clase%2010.%20Abstracción%20de%20datos%20y%20tipos%20abstractos%20de%20datos.md)
-11. [Clase 11. TAD Lista, Pila y Cola: contrato y ejemplos de uso — 16 de septiembre (diapositivas)](C11/clase11.pdf)
+11. [Clase 11. Ejercicios interactivos de los TAD Lista, Pila y Cola — 16 de septiembre](C11/Ejercicios.md)
 12. [Clase 12. Ejercicios interactivos con los TAD Lista, Pila y Cola — 18 de septiembre](C12/Ejercicios.md)
 13. [Clase 13. Ejercicios interactivos de la STL de C++ — 19 de septiembre](C13/Ejercicios.md)
 
