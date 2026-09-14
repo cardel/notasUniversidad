@@ -57,11 +57,13 @@ quedan disponibles después para volver sobre el tema.
    locales que el recorrido necesita. El código corre en la misma página.
 
 3. [Clase 2. Estrategias para representar datos — 15 de septiembre](C2/Ejercicios.md)
-   — cuatro actividades, una por tema de la sesión: juzgar qué clientes
-   sobreviven a un cambio de representación, escribir tres clientes de una
-   cola y probarlos contra dos representaciones, leer un mismo dato bajo
-   cinco representaciones del natural, y predecir `apply-env` sobre una
-   cadena con nombres repetidos.
+   — ocho actividades, dos por tema de la sesión, una de analizar y una de
+   escribir: qué clientes sobreviven a un cambio de representación y cómo se
+   arreglan los que no, una cola con tres clientes contra dos
+   representaciones y un contrato con ecuaciones para juzgar candidatas, un
+   mismo dato leído bajo cinco representaciones del natural y la bignum en
+   base 10 con acarreo y préstamo, y `apply-env` predicho sobre una cadena
+   con nombres repetidos y cinco clientes del ambiente por la interfaz.
 
 ## Ejercicios de clase
 

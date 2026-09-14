@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clientes del ambiente</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Clientes del ambiente</h1>
+  <p class="intro">La representación con listas y su interfaz vienen dadas, con un ambiente donde un mismo nombre está ligado tres veces. Cinco procedimientos que recorren la cadena solo por la interfaz: preguntar sin fallar, listar los nombres, contar, sacar los valores ocultos y ver el ambiente completo.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">El mismo recorrido, y qué hace cada uno al encontrar el nombre:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>En el vacío</th><th>Al encontrar el nombre</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>apply-env</td><td>error</td><td>devuelve el valor y para</td></tr>
+          <tr><td>ligada?</td><td><code>#f</code></td><td>devuelve <code>#t</code> y para</td></tr>
+          <tr><td>cuantas-veces</td><td>0</td><td>cuenta uno y sigue</td></tr>
+          <tr><td>valores-de</td><td><code>()</code></td><td>guarda el valor y sigue</td></tr>
+          <tr><td>nombres, env-&gt;lista</td><td><code>()</code></td><td>no buscan: toman cada eslabón</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">apply-env es uno entre varios recorridos posibles de la
+    cadena, el que para en la primera coincidencia. Los demás ven lo que él
+    oculta: el <code>(1 3 4)</code> de <code>valores-de</code> muestra que las
+    ligaduras tapadas siguen ahí. Ninguno de los cinco tocó
+    <code>cadr</code> ni <code>cadddr</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (extend-env id val env) (list 'extend-env id val env))
+(define (empty-env) '(empty-env))
+
+(extend-env 'a 1 (extend-env 'b 2 (empty-env)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="env-clientes.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arreglar el cliente</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Arreglar el cliente</h1>
+  <p class="intro">Cuatro clientes que metían la mano en la representación, para reescribirlos con la interfaz. La representación del esqueleto es la anidada, que ninguno de los cuatro suponía: la versión vieja no pasa y la nueva sí, y esa diferencia es toda la actividad.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cuatro, resueltos</h2>
+    <p style="margin-top:0">Lo que cada cliente suponía y lo que pregunta ahora:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Cliente</th><th>Suponía</th><th>Ahora pregunta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>es-uno?</td><td>que ⌈1⌉ fuera <code>(#t)</code></td><td>si no es cero y su predecesor sí</td></tr>
+          <tr><td>natural-&gt;numero</td><td>—</td><td>cuántos pred hasta el cero</td></tr>
+          <tr><td>doble</td><td>que ⌈n⌉ fuera un número</td><td>dos succ por cada pred</td></tr>
+          <tr><td>mayor?</td><td>que el tamaño de la lista fuera el valor</td><td>cuál se agota primero</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Los clientes reescritos cuestan más: contar hasta cero
+    en vez de leer un número, bajar los dos en vez de comparar longitudes. Ese
+    costo es visible y es el precio de no saber cómo está guardado el dato.
+    Cuando la representación cambie, los originales habría que reescribirlos
+    otra vez; estos no.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define zero '())
+(define (succ n) (list n))
+
+(succ (succ (succ zero)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="arreglar.js"></script>
+</body>
+</html>
