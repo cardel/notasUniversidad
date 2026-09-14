@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>con una pila — ejercicios con los TAD</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Con una pila</h1>
+  <p class="intro">Dos problemas donde lo que importa es <b>lo último que
+  llegó</b>. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Tres cadenas para balanceado</h2>
+    <p style="margin-top:0">La función admite ahora también llaves. Para
+    cada cadena escriba <b>si</b> si es balanceada, <b>fin</b> si el ciclo
+    termina con aperturas sin cerrar, o el <b>índice</b> (desde 0) del
+    carácter donde <code>ok</code> pasa a falso.</p>
+    <div class="codigo" id="codigo-balanceado"></div>
+    <div class="prediccion">
+      <span><code>{[()]}(</code></span>
+      <input type="text" id="pred-cad-0" placeholder="si / fin / índice" style="width:9rem">
+      <button id="btn-cad-0" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cad-0" class="veredicto"></div>
+    <div class="prediccion">
+      <span><code>([{}])</code></span>
+      <input type="text" id="pred-cad-1" placeholder="si / fin / índice" style="width:9rem">
+      <button id="btn-cad-1" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cad-1" class="veredicto"></div>
+    <div class="prediccion">
+      <span><code>{(})</code></span>
+      <input type="text" id="pred-cad-2" placeholder="si / fin / índice" style="width:9rem">
+      <button id="btn-cad-2" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cad-2" class="veredicto"></div>
+    <div id="cierre-balanceado" class="nota" style="display:none">Tres
+    salidas distintas y tres partes distintas del código las deciden: el
+    <code>cierra</code> del ciclo, el <code>p.vacia()</code> del ciclo y el
+    <code>p.vacia()</code> del <code>return</code>. Quitar cualquiera de las
+    tres deja pasar cadenas malas.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Una postfija más larga</h2>
+    <p style="margin-top:0">Con <code>evaluar</code> tal como quedó en la
+    sesión, ¿cuánto vale <code>7 2 3 * - 4 +</code> y cuántos números llegó
+    a tener la pila en su momento más lleno?</p>
+    <div class="prediccion">
+      <span>valor:</span>
+      <input type="number" id="pred-post-valor" placeholder="?">
+      <span>profundidad máxima:</span>
+      <input type="number" id="pred-post-prof" placeholder="?">
+      <button id="btn-post" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-post" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-trampa" style="display:none">
+    <h2>3. El orden de la resta</h2>
+    <p style="margin-top:0">¿Cuánto vale <code>4 8 2 / -</code>?</p>
+    <div class="prediccion">
+      <span>valor:</span>
+      <input type="number" id="pred-trampa" placeholder="?">
+      <button id="btn-trampa" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-trampa" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">En los dos problemas la pila guarda lo que está
+    <b>pendiente</b>: aperturas sin cerrar, operandos sin operador. Y en los
+    dos, el error que compila y no viola ninguna precondición es el de
+    orden: cuál cierre corresponde a cuál apertura, cuál operando va
+    primero. La pila no lo sabe; lo pone el programador.</div>
+  </div>
+</div>
+<script src="pila.js"></script>
+</body>
+</html>

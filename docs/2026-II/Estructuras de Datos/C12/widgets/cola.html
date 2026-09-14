@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>con una cola — ejercicios con los TAD</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Con una cola</h1>
+  <p class="intro">Tres situaciones donde lo que importa es <b>el orden de
+  llegada</b>. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Cartas al aire</h2>
+    <p style="margin-top:0">Una baraja numerada de 1 a 7, en orden. Mientras
+    haya más de una carta: se descarta la de arriba y la siguiente pasa al
+    fondo. ¿En qué orden se descartan y cuál queda?</p>
+    <div class="codigo" id="codigo-cartas"></div>
+    <div class="prediccion">
+      <span>descartadas:</span>
+      <input type="text" id="pred-cartas-desc" placeholder="1 3 ..." style="width:9rem">
+      <span>queda:</span>
+      <input type="number" id="pred-cartas-queda" placeholder="?">
+      <button id="btn-cartas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cartas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La papa caliente con otros números</h2>
+    <p style="margin-top:0">Seis personas en círculo y la papa sale cada
+    <b>cuarta</b> (k = 4). Con <code>ultimo(6, 4)</code> tal como quedó en la
+    sesión, ¿en qué orden salen y quién queda?</p>
+    <div class="prediccion">
+      <span>salen:</span>
+      <input type="text" id="pred-papa-salen" placeholder="4 ..." style="width:9rem">
+      <span>queda:</span>
+      <input type="number" id="pred-papa-queda" placeholder="?">
+      <button id="btn-papa" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-papa" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Un ciclo que da la vuelta</h2>
+    <p style="margin-top:0">Alguien escribió <code>imprimir</code> para una
+    cola así, y la llama con <code>⟨7 2 9⟩</code>:</p>
+    <div class="codigo" id="codigo-bucle"></div>
+    <p style="margin-bottom:0.3rem">¿Qué pasa?</p>
+    <div class="opciones" id="opciones-bucle">
+      <button data-op="termina">Imprime 7 2 9 y termina con la cola intacta</button>
+      <button data-op="siempre">Imprime 7 2 9 7 2 9 ... y no termina nunca</button>
+      <button data-op="assert">Se detiene por la precondición de frente</button>
+    </div>
+    <div id="veredicto-bucle" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">La cola solo sabe hacer una cosa: devolver en el
+    orden en que recibió. Las cartas, la papa caliente y el recorrido son
+    la misma vuelta con distinta regla de salida, y el único error posible
+    es contar mal cuántas vueltas dar.</div>
+  </div>
+</div>
+<script src="cola.js"></script>
+</body>
+</html>

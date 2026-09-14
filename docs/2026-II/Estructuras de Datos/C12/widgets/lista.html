@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>con una lista — ejercicios con los TAD</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Con una lista</h1>
+  <p class="intro">Dos funciones sobre listas ordenadas donde lo que importa
+  es <b>la posición</b>. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Si p avanzara siempre</h2>
+    <p style="margin-top:0">Esta versión de <code>quitarRepetidos</code>
+    avanza <code>p</code> en cada vuelta, elimine o no. ¿Qué deja con
+    <code>⟨2 2 2 5 5 9⟩</code>?</p>
+    <div class="codigo" id="codigo-repetidos"></div>
+    <div class="prediccion">
+      <span>queda:</span>
+      <input type="text" id="pred-avanza" placeholder="2 ..." style="width:9rem">
+      <button id="btn-avanza" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-avanza" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La versión de la sesión</h2>
+    <p style="margin-top:0">Con la versión que solo avanza cuando los
+    vecinos son distintos, ¿qué deja con la misma lista y cuántas veces
+    llama a <code>eliminar</code>?</p>
+    <div class="prediccion">
+      <span>queda:</span>
+      <input type="text" id="pred-correcto" placeholder="2 ..." style="width:9rem">
+      <span>eliminaciones:</span>
+      <input type="number" id="pred-correcto-elim" placeholder="?">
+      <button id="btn-correcto" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-correcto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Unión ordenada</h2>
+    <p style="margin-top:0">Con la estructura de <code>interseccion</code>
+    (dos posiciones que avanzan) se escribe la unión: cada valor una sola
+    vez, ordenada. Para <code>⟨1 4 6 8⟩</code> y <code>⟨2 4 5 8 9⟩</code>,
+    ¿qué lista sale y cuántas comparaciones hace el ciclo principal, el que
+    corre mientras las dos listas tienen elementos?</p>
+    <div class="prediccion">
+      <span>unión:</span>
+      <input type="text" id="pred-union" placeholder="1 2 ..." style="width:10rem">
+      <span>comparaciones:</span>
+      <input type="number" id="pred-union-comp" placeholder="?">
+      <button id="btn-union" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-union" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Con listas, el error típico no es de contrato sino de
+    <b>índice</b>: qué posición se compara después de eliminar, cuál avanza
+    en cada rama. Y las tres funciones (mezclar, intersecar, unir) son el
+    mismo esqueleto con distinta decisión en cada comparación.</div>
+  </div>
+</div>
+<script src="lista.js"></script>
+</body>
+</html>

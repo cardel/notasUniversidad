@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lo que cobra cada operación — la STL de C++</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada operación</h1>
+  <p class="intro">Dos cuentas sobre un vector guardado como arreglo que
+  crece: cuántos elementos hay que <b>correr</b>.</p>
+
+  <div class="carta">
+    <h2>1. Un insert en la mitad</h2>
+    <p style="margin-top:0">Un vector con 6 elementos recibe
+    <code>v.insert(v.begin() + 2, x)</code>. ¿Cuántos elementos se corren
+    de lugar?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-insert" placeholder="?">
+      <button id="btn-insert" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-insert" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. revertir con insert al frente</h2>
+    <p style="margin-top:0"><code>revertir</code> recorre un vector de 5
+    elementos y hace <code>r.insert(r.begin(), l[p])</code> con cada uno.
+    Sumando todas las inserciones, ¿cuántos elementos se corren en
+    total?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-revertir" placeholder="?">
+      <button id="btn-revertir" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-revertir" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Para n elementos, revertir con insert al frente corre
+    0 + 1 + … + (n − 1) = n(n − 1)/2: del orden de n². Con push_back desde
+    el final, del orden de n. Esa tabla de costos es la que se va a
+    demostrar cuando el vector se construya a mano.</div>
+  </div>
+</div>
+<script src="costos.js"></script>
+</body>
+</html>
