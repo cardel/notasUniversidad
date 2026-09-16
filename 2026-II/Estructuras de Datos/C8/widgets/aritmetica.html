@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>aritmetica — punteros y arreglos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La aritmética de las direcciones</h1>
+  <p class="intro">Sumar a un puntero no suma bytes: avanza casillas del tipo
+  apuntado. Tres preguntas de la clase, con el dibujo al frente.</p>
+
+  <div class="carta">
+    <h2>1. ¿Cuánto vale p + 1?</h2>
+    <p style="margin-top:0">p es un <b>int *</b> y su valor es 2000.</p>
+    <div class="prediccion">
+      <span>p + 1 =</span>
+      <input type="number" id="prediccion-mas-uno" placeholder="dirección">
+      <button id="btn-mas-uno" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-mas-uno" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. ¿Qué imprime?</h2>
+    <p style="margin-top:0">Con el arreglo del dibujo y <b>int *p = A + 1;</b>,
+    ¿cuánto vale <b>*p + *(p + 2)</b>?</p>
+    <div class="arreglo fila-arreglo" id="arreglo-cajas"></div>
+    <div class="prediccion">
+      <span>*p + *(p + 2) =</span>
+      <input type="number" id="prediccion-expresion" placeholder="su número">
+      <button id="btn-expresion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-expresion" class="veredicto"></div>
+    <div id="tabla-expresion" style="display:none">
+      <div class="envoltura-tabla" style="margin-top:0.7rem">
+        <table>
+          <thead><tr><th>Expresión</th><th>Dirección</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>p = A + 1</td><td>2004</td><td>—</td></tr>
+            <tr><td>*p</td><td>2004</td><td>4</td></tr>
+            <tr><td>p + 2</td><td>2012</td><td>—</td></tr>
+            <tr><td>*(p + 2)</td><td>2012</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nota">El puntero puede arrancar en mitad del arreglo: desde
+      A + 1, saltar 2 casillas cae en A[3].</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La resta de punteros</h2>
+    <p style="margin-top:0">Con <b>p = A + 1</b> (dirección 2004) y
+    <b>q = A + 4</b> (dirección 2016), ¿qué mide <b>q − p</b>?</p>
+    <div class="opciones" id="opciones-resta">
+      <button data-op="bytes">12: los bytes entre los dos</button>
+      <button data-op="correcta">3: las casillas entre los dos</button>
+      <button data-op="valores">6: la resta de los valores</button>
+    </div>
+    <div id="veredicto-resta" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="aritmetica.js"></script>
+</body>
+</html>
