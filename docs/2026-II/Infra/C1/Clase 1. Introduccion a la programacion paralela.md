@@ -21,7 +21,7 @@ programador.
     con lo que cuesta, la taxonomía de Flynn y los tres muros que
     estancaron el reloj.
 
-    [:octicons-arrow-right-24: Entrar](Introduccion%20a%20la%20programacion%20paralela.md)
+    [:octicons-arrow-right-24: Entrar](./Introduccion%20a%20la%20programacion%20paralela.md)
 
 -   :material-format-list-checks:{ .lg .middle } **Ejercicios**
 
@@ -31,7 +31,7 @@ programador.
     localidades y el false sharing— y ejercicios en papel sobre speedup,
     dependencias, localidad y líneas de caché.
 
-    [:octicons-arrow-right-24: Entrar](Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
 
 -   :material-console:{ .lg .middle } **Código**
 
@@ -40,7 +40,7 @@ programador.
     Los dos programas que se corrieron en clase, con los comandos de
     `valgrind` y `cg_annotate` y las cifras que devuelven.
 
-    [:octicons-arrow-right-24: Entrar](codigo/README.md)
+    [:octicons-arrow-right-24: Entrar](./codigo/README.md)
 
 </div>
 
@@ -61,7 +61,7 @@ fuera. Está en la pestaña de ejercicios prácticos del Campus Virtual: se hace
 un fork, se resuelve, y al hacer push el flujo de GitHub Actions dice si la
 solución quedó bien. No lleva nota.
 
-Las tres actividades del navegador que están en [Ejercicios](Ejercicios.md) sí
+Las tres actividades del navegador que están en [Ejercicios](./Ejercicios.md) sí
 se alcanzaron a mostrar en clase, y son las que conviene tocar primero: la de
 localidad deja ver la espacial y la temporal por separado, cosa que midiendo un
 programa real es difícil de conseguir.
