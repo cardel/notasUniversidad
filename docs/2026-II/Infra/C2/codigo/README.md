@@ -36,7 +36,8 @@ Sobre `suma.cpp` se probaron tres cosas que no están en el archivo:
   `nanoseconds`. La fila de ocho hilos pasa a ser la más lenta: crear los
   hilos cuesta más que sumar mil doscientos números.
 - Acumular sobre `salida` dentro del ciclo en vez de sobre la local `s`. Con
-  doscientos millones, la fila de dos hilos gana un dígito: false sharing
+  doscientos millones, agregar hilos empeora el tiempo: 2,6 s con dos y
+  2,9 s con ocho, contra 0,6 s y 0,14 s de la versión local. False sharing
   sobre el vector de parciales.
 - Volver a doscientos millones y a milisegundos, que es como está el archivo.
 
