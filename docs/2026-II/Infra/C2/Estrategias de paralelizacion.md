@@ -345,6 +345,13 @@ habilitarlos, y clonar por SSH con una llave registrada en la cuenta. Desde
 esta sesión el repositorio tiene cuatro partes, una por tema, y quien lo
 bifurcó en clase tiene la versión de una sola; conviene rehacer el fork.
 
+## Los apuntes del tablero
+
+La hoja de la sesión, tal como quedó: las cifras de la suma con la variable
+local y con la compartida, y el árbol del mergesort con su recurrencia.
+
+![](attachments/2026-09-15-Note-16-13.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
 !!! note "El campus desde la red inalámbrica"
     En Linux, la red inalámbrica de la universidad no resuelve el nombre del
     campus virtual. Se arregla poniendo los DNS de Google, `8.8.8.8` y
