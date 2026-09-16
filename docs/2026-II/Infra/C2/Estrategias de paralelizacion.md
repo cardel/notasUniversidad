@@ -42,33 +42,36 @@ viene el `join` de cada uno: el programa principal espera ahí hasta que todos
 terminen, y solo entonces suma los parciales. Sin el `join`, el programa sigue
 sin que los hilos hayan acabado.
 
-Lo que dio en el portátil de la clase, compilado a mano sin `-O2`:
+Lo que dio en el portátil de la clase, compilado a mano sin `-O2`, con el
+reloj en nanosegundos y el total siempre en 400 000 000:
 
-| Hilos | Tiempo |
-|---:|---:|
-| 1 | 2 240 ms |
-| 2 | 933 ms |
-| 4 | 368 ms |
-| 8 | 169 ms |
+| Hilos | Acumulando en la local `s` | Acumulando sobre `salida` |
+|---:|---:|---:|
+| 1 | 1 946 ms | 2 041 ms |
+| 2 | 597 ms | 2 618 ms |
+| 4 | 256 ms | 2 805 ms |
+| 8 | 137 ms | 2 869 ms |
 
-Escala casi al ritmo de los hilos, y la razón importa: sin optimización,
-cada `v[i]` cuesta varias instrucciones y la suma está limitada por el
-procesador, no por la memoria. Con `-O2` el
-mismo programa se topa con el ancho de banda antes que con los núcleos, que
-es lo que muestra la tabla de las diapositivas.
+La columna de la izquierda escala casi al ritmo de los hilos, y la razón
+importa: sin optimización, cada `v[i]` cuesta varias instrucciones y la suma
+está limitada por el procesador, no por la memoria. Con `-O2` el mismo
+programa se topa con el ancho de banda antes que con los núcleos, que es lo
+que muestra la tabla de las diapositivas.
 
-Después se cambió `N` a diez mil y se pasó el reloj a nanosegundos, porque en
-milisegundos todo daba cero. El orden se invirtió: la fila de ocho hilos fue
-la más lenta. Con doscientos millones de números a cada hilo le tocan
-veinticinco millones; con diez mil le tocan mil doscientos cincuenta, que se
-suman en menos tiempo del que cuesta crear el hilo. Crear, planificar y unir
-un hilo no es gratis, y cuando la tarea dura menos que eso, repartir cuesta
-más que calcular.
+La columna de la derecha es el mismo programa con una sola línea cambiada:
+acumular directamente sobre `salida` en vez de sobre la local `s`. Con un
+hilo da casi lo mismo. Con dos ya es cuatro veces más lento que la versión
+local, y con ocho, veintiuna veces: agregar hilos lo empeora, porque los
+parciales viven en posiciones contiguas del vector y cada escritura de un
+hilo obliga a los demás a volver a cargar la línea. El resultado es idéntico
+en las ocho filas; lo único que cambió es dónde se acumula.
 
-La tercera variante fue acumular directamente sobre `salida` en vez de sobre
-la local `s`. Con doscientos millones de números, la fila de dos hilos ganó
-un dígito: los dos hilos se pelean la misma línea de caché en cada vuelta.
-El resultado es el mismo; el tiempo no.
+Después se cambió `N` a diez mil, y ahí el orden se invirtió: la fila de ocho
+hilos fue la más lenta. Con doscientos millones de números a cada hilo le
+tocan veinticinco millones; con diez mil le tocan mil doscientos cincuenta,
+que se suman en menos tiempo del que cuesta crear el hilo. Crear, planificar
+y unir un hilo no es gratis, y cuando la tarea dura menos que eso, repartir
+cuesta más que calcular.
 
 !!! note "Lo que hay que tener presente al repartir datos"
     Los hilos de un proceso no tienen memoria propia: comparten el espacio de
@@ -92,6 +95,13 @@ definición, y de vuelta se mezclan las dos mitades ordenadas. La mezcla se
 hizo paso a paso con `1 3 5` contra `2 4 6`: se comparan las cabezas, sale la
 menor, avanza ese lado, y lo que sobra al final se pega de corrido. Cuesta
 `n` porque recorre las dos mitades una vez.
+
+![El árbol del mergesort sobre 3 7 1 4 6 2 3, con las mezclas marcadas](imagenes/mergesort-tablero.png)
+
+La flecha verde recorre el árbol en el orden en que lo hace la recursión:
+toda la rama izquierda se resuelve antes de tocar la derecha, y las mezclas,
+en rojo, van de abajo hacia arriba. Al repartir, las dos ramas del mismo
+nivel corren a la vez y solo la mezcla que las une espera.
 
 De ahí sale la recurrencia $T(n) = 2T(n/2) + n$, que da $n \log n$. El
 costo espacial es $\Theta(n)$: la mezcla necesita un espacio temporal, porque
