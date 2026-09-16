@@ -418,6 +418,13 @@ nada más: mismos nombres, misma aridad, mismos resultados.
 (define extend-env->old-env (lambda (e) (e 3)))
 ```
 
+![Las dos representaciones del ambiente en el tablero: la lista con la etiqueta en el car y las piezas en cadr, caddr y cadddr, y la clausura que responde a la señal 0 con el tipo y a 1, 2 y 3 con cada pieza](imagenes/representaciones-tablero.png)
+
+En el tablero quedaron las dos lado a lado. En la lista, el tipo va adelante
+y cada pieza tiene una posición: `car`, `cadr`, `caddr`, `cadddr`. En el
+procedimiento, la posición se vuelve una señal, y lo que antes era la forma
+del dato ahora es el comportamiento de la clausura ante cada señal.
+
 `e` se define igual que antes y `apply-env` se copia carácter por carácter.
 `(apply-env e 'b)` sigue dando 2 y `(apply-env e 'z)` sigue dando 6. Lo que
 cambia es lo que se ve al imprimir `e`: ya no es una lista sino
@@ -459,6 +466,14 @@ expresión de trabajo es $\lambda e.(x\ \lambda p.y)$:
                (lambda-exp 'p
                            (var-exp 'y)))))
 ```
+
+![El árbol de sintaxis abstracta de la expresión de trabajo dibujado en el tablero: lambda-exp con id e y exp, la app-exp con rator y rand, y las hojas var-exp y lambda-exp](imagenes/ast-tablero.png)
+
+Esa expresión es un árbol, el **árbol de sintaxis abstracta**: cada nodo es
+un constructor y cada arista lleva el nombre del extractor que baja por ella.
+`lambda-exp` tiene dos hijos, `id` y `exp`; `app-exp` tiene `rator` y
+`rand`; `var-exp` solo tiene `id`. La hoja de abajo a la derecha quedó como
+`x` en el tablero, y en el código es `y`.
 
 `occurs-free?` recibe la expresión y la variable, y sigue la definición de
 tres casos: un identificador ocurre libre si es la variable; en una lambda,
@@ -552,6 +567,17 @@ En los clientes del ambiente, `ligada?` responde `#f` al llegar a `empty-env`
 en lugar de fallar, y en lo demás recorre la cadena igual que `apply-env`.
 Las demás actividades quedan para la casa: quien entienda esta sesión tiene
 resueltas dos de las tres representaciones del taller.
+
+## Los apuntes del tablero
+
+La hoja de la sesión, tal como quedó: las dos formas de definir un dato
+recursivo, por reglas de inferencia y por gramática; el esquema de
+implementación e interfaz con el `int` de C++ y el objeto de Python; la
+receta del TAD aplicada al ambiente, con sus constructores, predicados y
+extractores; las dos representaciones lado a lado, y el árbol de la
+expresión de trabajo.
+
+![](attachments/2026-09-15-Note-10-10-FLP.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que sigue
 
