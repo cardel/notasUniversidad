@@ -56,14 +56,14 @@ quedan disponibles después para volver sobre el tema.
    Acompañan el material de lectura y conviene resolverlas antes de la
    primera sesión de contenido.
 
-2. [Clase 1. Inducción y recursión — 8 de septiembre](C1/Ejercicios.md)
+2. [Ejercicios de la clase 1: inducción y recursión](C1/Ejercicios.md)
    — siete actividades, una por tema de la sesión: qué entra en un conjunto
    definido por reglas, los reconocedores que salen de esas reglas, las
    gramáticas BNF con sus cerraduras, recorrer listas, s-lists y árboles
    siguiendo la gramática, declaración, referencia y alcance, y las ligaduras
    locales que el recorrido necesita. El código corre en la misma página.
 
-3. [Clase 2. Estrategias para representar datos — 15 de septiembre](C2/Ejercicios.md)
+3. [Ejercicios de la clase 2: estrategias para representar datos](C2/Ejercicios.md)
    — ocho actividades, dos por tema de la sesión, una de analizar y una de
    escribir: qué clientes sobreviven a un cambio de representación y cómo se
    arreglan los que no, una cola con tres clientes contra dos
