@@ -31,6 +31,13 @@ Se publican después de cada sesión.
    El repaso del lenguaje va aparte, en
    [Racket, lo que hace falta para empezar](C1/Racket.md).
 
+2. [Clase 2. Estrategias para representar datos — 15 de septiembre](C2/Clase%202.%20Estrategias%20para%20representar%20datos.md)
+   — interfaz e implementación, el natural en representación unaria y en
+   bignum con un solo `suma`, la receta que saca constructores, predicados y
+   extractores de una gramática, el TAD ambiente con listas y con
+   procedimientos, y las expresiones del cálculo lambda con `occurs-free?` y
+   `occurs-bound?`. Incluye el código escrito en clase.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*
