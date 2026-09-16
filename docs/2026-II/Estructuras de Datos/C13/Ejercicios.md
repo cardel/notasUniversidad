@@ -39,5 +39,6 @@ y encuentra otro; y `find` con su posición y su `end`.
 
 ### [costos](widgets/costos.html){ target=_blank rel=noopener }
 
-Cuántos elementos corre un `insert` en la mitad y cuántos corre en total
-`revertir` cuando inserta siempre al frente.
+Cuántos elementos corre un `insert` en la mitad, cuántos corre en total
+`revertir` cuando inserta siempre al frente, cuántos pasos da
+`binary_search` en un millón y qué espacio pide `sort`.

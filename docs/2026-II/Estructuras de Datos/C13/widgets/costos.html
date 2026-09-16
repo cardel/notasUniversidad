@@ -38,6 +38,31 @@
     <div id="veredicto-revertir" class="veredicto"></div>
   </div>
 
+  <div class="carta">
+    <h2>3. Buscar en un millón</h2>
+    <p style="margin-top:0">Un <code>vector&lt;int&gt;</code> ordenado con un
+    millón de elementos. En el peor caso, ¿cuántos pasos da
+    <code>binary_search</code>?</p>
+    <div class="opciones" id="opciones-bin">
+      <button data-op="veinte">Unos 20</button>
+      <button data-op="mil">Unos 1000</button>
+      <button data-op="millon">Un millón</button>
+    </div>
+    <div id="veredicto-bin" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lo que pide sort</h2>
+    <p style="margin-top:0">¿Qué cuesta <code>sort</code> sobre un vector de n
+    elementos, en tiempo y en espacio aparte del vector?</p>
+    <div class="opciones" id="opciones-esp">
+      <button data-op="constante">O(n log n) y O(1)</button>
+      <button data-op="log">O(n log n) y O(log n)</button>
+      <button data-op="lineal">O(n log n) y O(n)</button>
+    </div>
+    <div id="veredicto-esp" class="veredicto"></div>
+  </div>
+
   <div class="carta" id="carta-cierre" style="display:none">
     <h2>Lo que quedó</h2>
     <div class="nota">Para n elementos, revertir con insert al frente corre

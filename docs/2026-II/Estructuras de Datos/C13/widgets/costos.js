@@ -13,16 +13,18 @@ var EJERCICIO = (function () {
     return total;
   }
 
-  return { casos: CASOS, corridosInsert: corridosInsert, corridosRevertir: corridosRevertir };
+  /* Pasos de binary_search en el peor caso: log2(n) redondeado hacia arriba. */
+  function pasosBinaria(n) { var p = 0; var m = 1; while (m < n) { m = m * 2; p = p + 1; } return p; }
+  return { casos: CASOS, corridosInsert: corridosInsert, corridosRevertir: corridosRevertir, pasosBinaria: pasosBinaria };
 })();
 
 if (typeof module !== "undefined") {
   module.exports = EJERCICIO;
 } else {
   (function () {
-    var logradas = { insert: false, revertir: false };
+    var logradas = { insert: false, revertir: false, binaria: false, espacio: false };
     function revisar() {
-      if (logradas.insert && logradas.revertir) {
+      if (logradas.insert && logradas.revertir && logradas.binaria && logradas.espacio) {
         document.getElementById("carta-cierre").style.display = "block";
       }
     }
@@ -65,6 +67,32 @@ if (typeof module !== "undefined") {
         v.className = "veredicto mal";
         v.textContent = "Sume lo que corre cada inserción: al insertar el k-ésimo al frente, ya hay k − 1 elementos.";
       }
+    });
+    var MENSAJES_BIN = {
+      veinte: null,
+      mil: "Mil sería la raíz cuadrada; la búsqueda binaria parte por la mitad, no por la raíz: log2(1 000 000) es un poco menos de 20.",
+      millon: "Un millón de pasos es find, que recorre. binary_search descarta la mitad en cada paso."
+    };
+    document.querySelectorAll("#opciones-bin button").forEach(function (boton) {
+      boton.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-bin");
+        var m = MENSAJES_BIN[boton.dataset.op];
+        if (m === null) { v.className = "veredicto bien"; v.textContent = "Correcto: unos 20 (2 elevado a la 20 pasa del millón). O(log n) contra los Θ(n) de find; a cambio, exige el vector ordenado."; logradas.binaria = true; revisar(); }
+        else { v.className = "veredicto mal"; v.textContent = m; }
+      });
+    });
+    var MENSAJES_ESP = {
+      constante: "sort no ordena con espacio constante: la recursión de partir por la mitad guarda del orden de log n niveles.",
+      log: null,
+      lineal: "No copia el vector entero: ordena en sitio, y lo que guarda aparte es la pila de la recursión, O(log n)."
+    };
+    document.querySelectorAll("#opciones-esp button").forEach(function (boton) {
+      boton.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-esp");
+        var m = MENSAJES_ESP[boton.dataset.op];
+        if (m === null) { v.className = "veredicto bien"; v.textContent = "Correcto: O(n log n) en tiempo y O(log n) de espacio aparte del vector. find, count, reverse y min_element van en Θ(n) y O(1)."; logradas.espacio = true; revisar(); }
+        else { v.className = "veredicto mal"; v.textContent = m; }
+      });
     });
   })();
 }

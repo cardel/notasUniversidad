@@ -37,3 +37,12 @@ comparaciones del ciclo principal.
 La cola con dos pilas frente a otra secuencia de operaciones: predecir
 los tres `frente` y contar los trasvases. El acierto destapa la traza de
 las dos pilas paso a paso.
+
+## Lo que costó cada solución
+
+### [costos](widgets/costos.html){ target=_blank rel=noopener }
+
+Cuatro cuentas: los pases de la papa caliente con `ultimo(7, 5)`, las
+casillas que corre `quitarRepetidos` sobre ⟨4 4 4 4 9⟩, los trasvases
+de la cola con dos pilas ante otra secuencia, y el costo en tiempo y
+espacio de `balanceado`.

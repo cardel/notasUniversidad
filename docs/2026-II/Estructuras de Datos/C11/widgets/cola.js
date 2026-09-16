@@ -142,7 +142,7 @@ if (typeof module !== "undefined") {
         var m = MENSAJES[boton.dataset.op];
         if (m === null) {
           v.className = "veredicto bien";
-          v.textContent = "Correcto. Salida real: vacia: 1 y luego cola.h:37: Elemento Cola::frente(): Assertion `n > 0' failed. La precondición de frente es la misma de tope y desencolar, y la vigila la implementación.";
+          v.textContent = "Correcto. Salida real: vacia: 1 y luego cola.h:35: Elemento Cola::frente(): Assertion `n > 0' failed. La precondición de frente es la misma de tope y desencolar, y la vigila la implementación.";
           logradas.vacia = true;
           revisar();
         } else {

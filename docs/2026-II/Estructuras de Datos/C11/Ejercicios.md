@@ -41,5 +41,7 @@ final; y el `frente` de una cola vacía frente al assert.
 ### [juntos](widgets/juntos.html){ target=_blank rel=noopener }
 
 Cinco líneas con meter, quitar y ver que responden distinto como pila y
-como cola, y cuatro tareas para escoger el contrato más pequeño que
-alcanza.
+como cola, cuatro tareas para escoger el contrato más pequeño que
+alcanza, y tres cuentas de costo: cuántas casillas corre un insertar, qué
+cuesta revertir insertando al frente y qué paga imprimir una pila sin
+destruirla.
