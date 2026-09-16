@@ -20,7 +20,11 @@ var EJERCICIO = (function () {
     { texto: "Deshacer la última operación", tad: "pila" },
     { texto: "Insertar un valor en la mitad", tad: "lista" }
   ];
-  return { programa: PROGRAMA, correr: correr, funciones: FUNCIONES };
+  /* Costos con la lista sobre arreglo: insertar en p corre n - p casillas. */
+  function corridasInsertar(n, p) { return n - p; }
+  /* revertir con insertar(0, ...): la k-esima insercion corre k - 1. */
+  function corridasRevertir(n) { var s = 0; var k = 0; while (k < n) { s = s + k; k = k + 1; } return s; }
+  return { programa: PROGRAMA, correr: correr, funciones: FUNCIONES, corridasInsertar: corridasInsertar, corridasRevertir: corridasRevertir };
 })();
 
 if (typeof module !== "undefined") {
@@ -75,6 +79,49 @@ if (typeof module !== "undefined") {
         v.textContent = "Corra el programa dos veces, una con apilar/desapilar/tope y otra con encolar/desencolar/frente.";
       }
     });
+    /* --- Carta 3: cuanto cuesta ----------------------------------- */
+    var costosOk = { insertar: false, revertir: false, mc: false };
+    function revisarCostos() {
+      if (costosOk.insertar && costosOk.revertir && costosOk.mc) {
+        document.getElementById("cierre-costos").style.display = "block";
+      }
+    }
+    document.getElementById("btn-c-insertar").addEventListener("click", function () {
+      var v = document.getElementById("veredicto-c-insertar");
+      var dado = parseInt(document.getElementById("pred-c-insertar").value, 10);
+      if (dado === EJERCICIO.corridasInsertar(8, 2)) {
+        v.className = "veredicto bien"; v.textContent = "Correcto: 6. Se corren las casillas de la posición 2 a la 7 para abrir campo; las posiciones 0 y 1 no se tocan. Por eso insertar en medio es O(n) y agregar al final O(1).";
+        costosOk.insertar = true; revisarCostos();
+      } else if (dado === 8) { v.className = "veredicto mal"; v.textContent = "No se corre todo el arreglo: lo que está antes de la posición 2 se queda quieto."; }
+      else if (dado === 2) { v.className = "veredicto mal"; v.textContent = "Se corre lo que está desde la posición 2 hasta el final, no lo de antes."; }
+      else { v.className = "veredicto mal"; v.textContent = "Dibuje ocho casillas e inserte en la 2: cuente cuántas cambian de lugar."; }
+    });
+    document.getElementById("btn-c-revertir").addEventListener("click", function () {
+      var v = document.getElementById("veredicto-c-revertir");
+      var dado = parseInt(document.getElementById("pred-c-revertir").value, 10);
+      if (dado === EJERCICIO.corridasRevertir(6)) {
+        v.className = "veredicto bien"; v.textContent = "Correcto: 0 + 1 + 2 + 3 + 4 + 5 = 15. Cada insertar al frente corre todo lo ya escrito: n(n − 1)/2 corridas, Θ(n²). Con agregar desde el final no se corre nada: Θ(n).";
+        costosOk.revertir = true; revisarCostos();
+      } else if (dado === 6) { v.className = "veredicto mal"; v.textContent = "Seis son las inserciones. La pregunta es cuántas casillas se corren en total: la primera corre 0, la segunda 1, la tercera 2..."; }
+      else if (dado === 21) { v.className = "veredicto mal"; v.textContent = "Casi: la primera inserción corre 0 casillas, no 1, porque la lista está vacía."; }
+      else { v.className = "veredicto mal"; v.textContent = "Sume lo que corre cada inserción: al insertar el k-ésimo al frente ya hay k − 1 elementos."; }
+    });
+    var MENSAJES_MC = {
+      lineal: "La pila auxiliar recibe los n elementos antes de devolverlos: el espacio aparte de la pila es Θ(n), no constante.",
+      constante: null,
+      cuadratico: "No hay nada cuadrático: son 2n operaciones de O(1) y una auxiliar que llega a n."
+    };
+    document.querySelectorAll("#opciones-c-mc button").forEach(function (boton) {
+      boton.addEventListener("click", function () {
+        var v = document.getElementById("veredicto-c-mc");
+        var m = MENSAJES_MC[boton.dataset.op];
+        if (m === null) {
+          v.className = "veredicto bien"; v.textContent = "Correcto: Θ(n) en tiempo y Θ(n) de espacio. Mirar sin destruir se paga con la pila auxiliar; en la cola, dar la vuelta cuesta Θ(n) de tiempo y Θ(1) de espacio.";
+          costosOk.mc = true; revisarCostos();
+        } else { v.className = "veredicto mal"; v.textContent = m; }
+      });
+    });
+
     var aciertos = EJERCICIO.funciones.map(function () { return false; });
     var PISTA = {
       cola: "Solo hace falta sacar en orden de llegada: la cola alcanza.",

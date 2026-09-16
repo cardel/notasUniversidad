@@ -61,6 +61,38 @@
     <div id="veredicto-fn-3" class="veredicto"></div>
   </div>
 
+  <div class="carta">
+    <h2>3. ¿Cuánto cuesta?</h2>
+    <p style="margin-top:0">Con la lista sobre un arreglo: una lista de 8
+    elementos recibe <code>insertar(2, x)</code>. ¿Cuántas casillas se
+    corren de lugar?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-c-insertar" placeholder="?">
+      <button id="btn-c-insertar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-c-insertar" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem"><code>revertir</code> recorre una lista de 6
+    elementos y hace <code>insertar(0, ...)</code> con cada uno. Sumando
+    todas las inserciones, ¿cuántas casillas se corren en total?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-c-revertir" placeholder="?">
+      <button id="btn-c-revertir" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-c-revertir" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem">Imprimir una pila de n elementos sin
+    destruirla, con una pila auxiliar: ¿qué cuesta?</p>
+    <div class="opciones" id="opciones-c-mc">
+      <button data-op="lineal">Θ(n) en tiempo y Θ(1) de espacio</button>
+      <button data-op="constante">Θ(n) en tiempo y Θ(n) de espacio</button>
+      <button data-op="cuadratico">Θ(n²) en tiempo</button>
+    </div>
+    <div id="veredicto-c-mc" class="veredicto"></div>
+    <div id="cierre-costos" class="nota" style="display:none">En pila y
+    cola todo cuesta O(1); en la lista, O(1) por posición y al final, O(n)
+    en medio. La misma función contra el mismo contrato puede ser lineal o
+    cuadrática según qué operación use.</div>
+  </div>
+
   <div class="carta" id="carta-cierre" style="display:none">
     <h2>Lo que quedó</h2>
     <div class="nota">Un programa escrito contra un contrato significa lo

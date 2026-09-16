@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lo que costó cada solución — ejercicios con los TAD</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que costó cada solución</h1>
+  <p class="intro">Cuatro cuentas sobre las soluciones de la sesión, con
+  otros valores. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. La papa caliente</h2>
+    <p style="margin-top:0">Con <code>ultimo(7, 5)</code>: siete personas y la
+    papa sale cada quinta. ¿Cuántos pases del frente al final hace la cola
+    en total, sin contar las salidas?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-papa" placeholder="?">
+      <button id="btn-papa" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-papa" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Quitar repetidos en sitio</h2>
+    <p style="margin-top:0">Con la lista sobre arreglo, cada
+    <code>eliminar(p + 1)</code> corre las casillas que siguen.
+    Para <code>⟨4 4 4 4 9⟩</code>, ¿cuántas casillas corre en total
+    <code>quitarRepetidos</code>?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-repetidos" placeholder="?">
+      <button id="btn-repetidos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-repetidos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La cola con dos pilas</h2>
+    <p style="margin-top:0">Sobre una <code>ColaDP</code> vacía se ejecutan, en
+    orden: encolar, encolar, encolar, frente, desencolar, desencolar,
+    encolar, encolar, desencolar, frente. ¿Cuántas veces se llama a
+    <code>trasvasar</code>?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-dp" placeholder="?">
+      <button id="btn-dp" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-dp" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Paréntesis balanceados</h2>
+    <p style="margin-top:0">Para una cadena de n caracteres, ¿qué cuesta
+    <code>balanceado</code>?</p>
+    <div class="opciones" id="opciones-bal">
+      <button data-op="constante">Θ(n) en tiempo y Θ(1) de espacio</button>
+      <button data-op="lineal">Θ(n) en tiempo y O(n) de espacio</button>
+      <button data-op="cuadratico">Θ(n²) en tiempo</button>
+    </div>
+    <div id="veredicto-bal" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">En pila y cola el costo de una solución es el número
+    de operaciones, porque cada una vale O(1). En la lista hay que mirar
+    cuál operación se usa: eliminar en medio es O(n) y vuelve cuadrático
+    lo que con una lista nueva sería lineal. El espacio es lo que la
+    solución pide aparte: una pila auxiliar, una lista nueva.</div>
+  </div>
+</div>
+<script src="costos.js"></script>
+</body>
+</html>
