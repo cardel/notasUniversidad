@@ -36,6 +36,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 4. [Clase 4. Invariantes: acumuladores, listas y ciclos anidados — 4 de septiembre](C4/Clase%204.%20Invariantes%20con%20ciclos%20anidados.md)
 5. [Clase 5. Introducción a grafos — semana del 7 de septiembre](C5/Clase%205.%20Introduccion%20a%20grafos.md)
 6. [Clase 6. Representaciones de grafos y recorridos — 11 de septiembre](C6/Clase%206.%20Representaciones%20y%20recorridos.md)
+7. [Clase 7. Grafos implícitos — 18 de septiembre](C7/Clase%207.%20Grafos%20implicitos.md)
 
 ## Clases en video
 
