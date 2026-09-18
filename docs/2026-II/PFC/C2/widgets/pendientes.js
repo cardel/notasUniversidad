@@ -7,12 +7,14 @@
     { txt: "  if (n == 0) 1", num: 1 },
     { txt: "  else n * factorial(n - 1)", num: 2 },
     { txt: "", num: null },
+    { txt: "@tailrec", num: null },
     { txt: "def factIter(cont: Int, prod: Int, n: Int): Int =", num: null },
     { txt: "  if (cont > n) prod", num: 3 },
     { txt: "  else factIter(cont + 1, cont * prod, n)", num: 4 },
     { txt: "", num: null },
     { txt: "def sumaLineal(a: Int, b: Int): Int =", num: null },
     { txt: "  if (a == 0) b else suc(sumaLineal(pred(a), b))", num: 5 },
+    { txt: "@tailrec", num: null },
     { txt: "def sumaIter(a: Int, b: Int): Int =", num: null },
     { txt: "  if (a == 0) b else sumaIter(pred(a), suc(b))", num: 6 }
   ];

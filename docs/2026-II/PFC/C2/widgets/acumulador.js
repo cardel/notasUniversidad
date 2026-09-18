@@ -3,6 +3,7 @@
    Reproduce 02_factorial_iterativo.scala. */
 (function () {
   var CODIGO = [
+    { txt: "@tailrec", num: null },
     { txt: "def factIter(cont: Int, prod: Int, n: Int): Int =", num: null },
     { txt: "  if (cont > n) prod", num: 1 },
     { txt: "  else factIter(cont + 1, cont * prod, n)", num: 2 },
