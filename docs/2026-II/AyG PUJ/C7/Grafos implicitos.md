@@ -403,7 +403,7 @@ con `input()`.
 
 ## Ejercicios
 
-Cinco interactivos, siete en papel y cinco para programar: están en la
+Seis interactivos, siete en papel y cinco para programar: están en la
 [página de ejercicios](./Ejercicios.md).
 
 ## Referencias

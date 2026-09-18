@@ -1,7 +1,8 @@
 # Ejercicios interactivos
 
-Cinco ejercicios para el navegador, en el orden de los temas de la sesión.
-Ninguno usa el laberinto, las redes ni los grafos de las diapositivas.
+Seis ejercicios para el navegador, en el orden de los temas de la sesión.
+Ninguno usa el laberinto, el bosque, las redes ni los grafos de las
+diapositivas.
 
 ## Recuento
 
@@ -23,10 +24,22 @@ donde el café queda en $-1$.
 
 ## UVa 10977: el bosque encantado
 
+### [bosque](widgets/bosque.html){ target=_blank rel=noopener }
+
 La amplitud del bosque es la misma del laberinto de arriba; lo que cambia es
-armar la matriz a partir de los Jigglypuffs, y eso va en papel: el ejercicio 4
-de abajo pide marcar a mano el peligro de un bosque pequeño y contar los
-pasos.
+armar el mundo a partir de los Jigglypuffs, y eso es lo que aquí se hace a
+mano: sobre el dibujo se marcan las celdas que quedan a distancia $L$ o menos
+de cada uno, y el recorrido no arranca hasta que la marca esté bien. Al
+comprobar, cada celda de más viene con su cuenta: $(2,2)$ está a $\sqrt{5}$
+del Jigglypuff de $(3,4)$, y $\sqrt{5}$ pasa de $2$. El peligro es un
+círculo, no un cuadrado.
+
+Tres bosques: uno con un solo Jigglypuff de volumen $2$, otro donde dos de
+volumen $1$ estrechan los pasos entre las rocas y la salida queda a $25$
+pasos cuando en línea recta serían $13$, y uno donde la salida misma cae
+dentro de un volumen y la respuesta es `Impossible.`. La última tarjeta
+pregunta qué hace el programa cuando la que cae en el volumen es la
+entrada.
 
 ## UVa 627: la ruta con menos saltos
 

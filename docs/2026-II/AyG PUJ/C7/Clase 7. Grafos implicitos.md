@@ -34,11 +34,11 @@ un imperio.
 
 ## Ejercicios
 
-Cinco interactivos, en el orden de la sesión: la amplitud sobre un laberinto
-nuevo, la ruta con predecesores en una red dirigida, los componentes pintados
-de colores, tres fallas para encontrar, y la cuadrícula donde marcar la celda
-falla y marcar el estado acierta. Después, siete en papel y cinco para
-programar.
+Seis interactivos, en el orden de la sesión: la amplitud sobre un laberinto
+nuevo, el bosque donde el peligro se marca a mano antes de recorrer, la ruta
+con predecesores en una red dirigida, los componentes pintados de colores,
+tres fallas para encontrar, y la cuadrícula donde marcar la celda falla y
+marcar el estado acierta. Después, siete en papel y cinco para programar.
 
 Todos están en la [página de ejercicios](./Ejercicios.md).
 
