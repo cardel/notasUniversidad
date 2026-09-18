@@ -17,7 +17,7 @@
     },
     {
       titulo: "fact(100000)",
-      codigo: "def factIter(cont: Int, prod: Int, n: Int): Int =\n  if (cont > n) prod\n  else factIter(cont + 1, cont * prod, n)\n\ndef fact(n: Int): Int = factIter(1, 1, n)",
+      codigo: "@tailrec\ndef factIter(cont: Int, prod: Int, n: Int): Int =\n  if (cont > n) prod\n  else factIter(cont + 1, cont * prod, n)\n\ndef fact(n: Int): Int = factIter(1, 1, n)",
       correcta: "nada",
       veredictos: {
         tiempo: "No. Son las mismas cien mil vueltas que factorial, y terminan en un instante.",
@@ -32,7 +32,7 @@
       correcta: "espacio",
       veredictos: {
         tiempo: "No. Las vueltas son las mismas que en fact. El problema no es cuántas, sino qué dejan detrás.",
-        espacio: "Correcto. El 1 + ... - 1 no cambia el valor, pero sí el proceso: la suma queda esperando a que vuelva la llamada. Cien mil sumas esperando, y la pila revienta igual que en factorial.",
+        espacio: "Correcto. El 1 + ... - 1 no cambia el valor, pero sí el proceso: la suma queda esperando a que vuelva la llamada. Cien mil sumas esperando, y la pila revienta igual que en factorial. Con @tailrec encima ni siquiera compila: el compilador avisa que la llamada no está en posición de cola.",
         nada: "No. Parece fact con adorno, y da lo mismo para n = 6. Para cien mil, StackOverflowError: el adorno es lo que rompe la cola."
       },
       salida: "factIterRota(1, 1, 100000): StackOverflowError"
