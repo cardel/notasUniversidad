@@ -251,11 +251,11 @@ if (typeof module !== "undefined") {
           veredicto("veredicto-vertice", true, "Correcto: cada celda libre es un vértice y cada par de celdas libres contiguas, una arista. Nadie guarda esa lista: la línea 13 y la 14 la calculan cuando hace falta.");
           document.getElementById("paso-1").classList.remove("bloqueado");
         } else if (op === "filas") {
-          veredicto("veredicto-vertice", false, "Una fila no se recorre como unidad: el simio pasa de una celda a otra, y esa es la escala del grafo.");
+          veredicto("veredicto-vertice", false, "Una fila no se recorre como unidad: Jaimico pasa de una celda a otra, y esa es la escala del grafo.");
         } else if (op === "paredes") {
           veredicto("veredicto-vertice", false, "Las paredes no son vértices: por ellas no se pasa. Son justamente las celdas que la regla de vecinos descarta.");
         } else {
-          veredicto("veredicto-vertice", false, "Los pasos son las aristas, no los vértices. Un vértice es un lugar donde el simio puede estar.");
+          veredicto("veredicto-vertice", false, "Los pasos son las aristas, no los vértices. Un vértice es un lugar donde Jaimico puede estar.");
         }
       });
     });

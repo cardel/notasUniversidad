@@ -2,13 +2,13 @@
 
 **Viernes 18 de septiembre de 2026.**
 
-Recorrer un grafo que nadie guardó. La cuadrícula del simio y el café es el
-primer caso; después, dos problemas del estilo de la tarea con el método
-completo.
+Recorrer un grafo que nadie guardó. La cuadrícula de Jaimico y el café es el
+primer caso; después, tres problemas de juez en línea con el método completo:
+entrada y salida, qué es el grafo, el algoritmo, el código y el costo.
 
 ## Diapositivas
 
-[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 55 láminas.
+[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 66 láminas.
 
 ## Lo que cuestan los recorridos
 
@@ -27,18 +27,20 @@ Sobre matriz de adyacencia cuestan $\Theta(V^2)$, porque los vecinos de $u$
 obligan a recorrer su fila completa; sobre lista de aristas,
 $\Theta(V \cdot E)$.
 
-## Un simio y una taza de café
+## Jaimico y el café
 
-Un laberinto de $R$ filas y $C$ columnas; cada celda es pared o es libre. El
-simio se mueve a una celda libre contigua por paso: arriba, abajo, izquierda o
-derecha. ¿Puede llegar al café? Y si puede, ¿en cuántos pasos como mínimo?
+Un laberinto de $n$ filas y $m$ columnas guardado en una matriz $M$:
+$M[i][j]$ vale $0$ si la celda está libre, $1$ donde está Jaimico, $2$ si es
+pared y $3$ donde está el café. En cada paso Jaimico se mueve a una celda
+contigua que no sea pared. ¿Puede llegar al café? Y si puede, ¿en cuántos
+pasos como mínimo?
 
 ```
-S..#....
-.#.#.##.
-.#...#..
-.####.#.
-......#C
+1 0 0 2 0 0 0 0
+0 2 0 2 0 2 2 0
+0 2 0 0 0 2 0 0
+0 2 2 2 2 0 2 0
+0 0 0 0 0 0 2 3
 ```
 
 **Definición (grafo implícito).** Un grafo cuyos vértices y aristas no están
@@ -46,100 +48,103 @@ guardados en ninguna estructura: hay una regla que dice qué es un vértice y
 una regla que, dado un vértice, produce sus vecinos. El recorrido llama a esa
 regla cada vez que necesita la lista de adyacencia de alguien.
 
-En el laberinto los vértices son las celdas libres $(r, c)$; las aristas,
-los pares de celdas libres contiguas, con $|r - r'| + |c - c'| = 1$; y los
-vecinos de $(r, c)$ se obtienen sumando $(1,0)$, $(-1,0)$, $(0,1)$ y $(0,-1)$
-y descartando lo que se sale del tablero o cae en pared.
+En el laberinto los vértices son las celdas $(r, c)$ con $M[r][c] \neq 2$; las
+aristas, los pares de celdas contiguas que no son pared; y los vecinos de
+$(r, c)$ se obtienen sumando los cuatro desplazamientos y descartando lo que
+se sale de la matriz o cae en pared. No se construye porque no hace falta: la
+lista de adyacencia de un laberinto de $500 \times 500$ tendría $250\,000$
+listas, todas deducibles de una suma.
 
-No se construye porque no hace falta: la lista de adyacencia de un laberinto
-de $500 \times 500$ tendría $250\,000$ listas y hasta un millón de entradas,
-todas deducibles de una suma.
-
-### La regla de los vecinos
+### El primer intento
 
 ```python
-DR = [1, -1, 0, 0]
-DC = [0, 0, 1, -1]
-
-def es_libre(laberinto, r, c):
-    # (r, c) existe y no es pared
-    R = len(laberinto)
-    C = len(laberinto[0])
-    return r >= 0 and r < R and c >= 0 and c < C and laberinto[r][c] != "#"
-
-def vecinos(laberinto, r, c):
-    # Las celdas contiguas a (r, c) por las que se puede pasar
-    res = []
-    k = 0
-    while k < 4:
-        nr = r + DR[k]
-        nc = c + DC[k]
-        if es_libre(laberinto, nr, nc):
-            res.append((nr, nc))
-        k = k + 1
-    return res
+def dfsAuxIngenuo(rJ, cJ, rC, cC, M, vis):
+    # Primer intento: un if por direccion
+    vis[rJ][cJ] = True
+    ans = rJ == rC and cJ == cC
+    if not ans and rJ - 1 >= 0 and not vis[rJ - 1][cJ] and M[rJ - 1][cJ] != 2:
+        ans = dfsAuxIngenuo(rJ - 1, cJ, rC, cC, M, vis)
+    if not ans and rJ + 1 < len(M) and not vis[rJ + 1][cJ] and M[rJ + 1][cJ] != 2:
+        ans = dfsAuxIngenuo(rJ + 1, cJ, rC, cC, M, vis)
+    if not ans and cJ - 1 >= 0 and not vis[rJ][cJ - 1] and M[rJ][cJ - 1] != 2:
+        ans = dfsAuxIngenuo(rJ, cJ - 1, rC, cC, M, vis)
+    if not ans and cJ + 1 < len(M[rJ]) and not vis[rJ][cJ + 1] and M[rJ][cJ + 1] != 2:
+        ans = dfsAuxIngenuo(rJ, cJ + 1, rC, cC, M, vis)
+    return ans
 ```
 
-`DR[k]` y `DC[k]` son el $k$-ésimo movimiento. Escribirlos así evita cuatro
-`if` y sirve igual para ocho direcciones o para los saltos de un caballo:
-cambia la tabla, no el recorrido.
+Funciona, y cuesta mantenerlo: cuatro veces la misma comprobación con los
+números cambiados. Para permitir diagonales habría que escribir cuatro `if`
+más.
 
-### ¿Puede llegar? Profundidad
+### La regla de los vecinos en una tabla
 
 ```python
-def dfs(laberinto, r, c, visitado):
-    # Marca (r, c) y sigue por cada vecino que falte
-    visitado[r][c] = True
-    for celda in vecinos(laberinto, r, c):
-        if not visitado[celda[0]][celda[1]]:
-            dfs(laberinto, celda[0], celda[1], visitado)
+dr = [0, -1, 0, 1]
+dc = [-1, 0, 1, 0]
 
-def puede_llegar(laberinto, r0, c0, rf, cf):
-    # True si hay camino de (r0, c0) a (rf, cf)
-    R = len(laberinto)
-    C = len(laberinto[0])
-    visitado = []
-    r = 0
-    while r < R:
-        visitado.append([False] * C)
-        r = r + 1
-    dfs(laberinto, r0, c0, visitado)
-    return visitado[rf][cf]
+
+def dfsAux(rJ, cJ, rC, cC, M, vis):
+    # True si desde (rJ, cJ) se llega al cafe; se detiene al encontrarlo
+    vis[rJ][cJ] = True
+    ans = rJ == rC and cJ == cC
+    i = 0
+    while i < 4 and not ans:
+        nr = rJ + dr[i]
+        nc = cJ + dc[i]
+        if nr >= 0 and nr < len(M) and nc >= 0 and nc < len(M[nr]):
+            if not vis[nr][nc] and M[nr][nc] != 2:
+                ans = dfsAux(nr, nc, rC, cC, M, vis)
+        i = i + 1
+    return ans
+
+
+def dfs(M):
+    # Puede Jaimico llegar al cafe?
+    n = len(M)
+    m = len(M[0])
+    jaimico = posicion_de(M, 1)
+    cafe = posicion_de(M, 3)
+    vis = tabla(n, m, False)
+    return dfsAux(jaimico[0], jaimico[1], cafe[0], cafe[1], M, vis)
 ```
 
-Es el $DFSAux$ de siempre. Donde antes decía `G[u]` ahora dice
-`vecinos(laberinto, r, c)`, y la marca es una matriz porque el vértice tiene
-dos coordenadas.
+`dr[i]` y `dc[i]` son el $i$-ésimo movimiento: izquierda, arriba, derecha,
+abajo. La condición `and not ans` detiene la búsqueda en cuanto el café
+aparece. `posicion_de(M, valor)` devuelve la fila y la columna donde está el
+valor y `tabla(n, m, valor)` arma una matriz llena de ese valor, creando una
+lista nueva por fila.
 
 ### ¿En cuántos pasos? Amplitud
 
 ```python
-from collections import deque
-
-def distancias(laberinto, r0, c0):
-    # d[r][c] = pasos minimos desde (r0, c0); -1 si no se llega
-    R = len(laberinto)
-    C = len(laberinto[0])
-    d = []
-    r = 0
-    while r < R:
-        d.append([-1] * C)
-        r = r + 1
-    d[r0][c0] = 0
+def bfs(M):
+    # Pasos minimos de Jaimico al cafe; -1 si no se llega
+    n = len(M)
+    m = len(M[0])
+    jaimico = posicion_de(M, 1)
+    cafe = posicion_de(M, 3)
+    d = tabla(n, m, -1)
+    d[jaimico[0]][jaimico[1]] = 0
     cola = deque()
-    cola.append((r0, c0))
+    cola.append(jaimico)
     while len(cola) > 0:
         actual = cola.popleft()
         r = actual[0]
         c = actual[1]
-        for celda in vecinos(laberinto, r, c):
-            if d[celda[0]][celda[1]] == -1:
-                d[celda[0]][celda[1]] = d[r][c] + 1
-                cola.append(celda)
-    return d
+        i = 0
+        while i < 4:
+            nr = r + dr[i]
+            nc = c + dc[i]
+            if nr >= 0 and nr < n and nc >= 0 and nc < m:
+                if M[nr][nc] != 2 and d[nr][nc] == -1:
+                    d[nr][nc] = d[r][c] + 1
+                    cola.append((nr, nc))
+            i = i + 1
+    return d[cafe[0]][cafe[1]]
 ```
 
-Sobre el laberinto de arriba, `distancias(LABERINTO, 0, 0)` deja:
+Sobre el laberinto de arriba, `bfs(M)` deja el café a 15 pasos:
 
 ```
  0  1  2  #  8  9 10 11
@@ -149,195 +154,256 @@ Sobre el laberinto de arriba, `distancias(LABERINTO, 0, 0)` deja:
  4  5  6  7  8  9  # 15
 ```
 
-El café queda a 15 pasos. El corredor de abajo llega hasta la celda marcada 10
-y ahí se cierra: la amplitud lo explora igual y lo descarta sola. El
-Teorema 22.5 vale aquí sin cambios: todas las aristas cuestan lo mismo y nada
-del argumento dependía de que el grafo estuviera guardado.
+El corredor de abajo llega hasta la celda marcada 10 y ahí se cierra: la
+amplitud lo explora igual y lo descarta sola.
 
 ### Lo que cuesta
 
-El grafo tiene a lo sumo $R \cdot C$ vértices y cada uno a lo sumo cuatro
-aristas, así que $E \leq 2 R C$ y el $\Theta(V+E)$ se convierte en
-$\Theta(R \cdot C)$. Calcular los vecinos cuesta $\Theta(1)$ por celda.
+El grafo tiene a lo sumo $n \cdot m$ vértices y cada uno a lo sumo cuatro
+aristas: $\Theta(n \cdot m)$. Un laberinto de $500 \times 500$ con un corredor
+largo lleva la profundidad recursiva a $250\,000$ llamadas anidadas, y Python
+se detiene mucho antes; sobre cuadrículas grandes, la amplitud con cola o la
+profundidad con pila explícita son las versiones que corren.
 
-Un laberinto de $500 \times 500$ con un corredor largo lleva la profundidad
-recursiva a $250\,000$ llamadas anidadas, y Python se detiene mucho antes.
-Sobre cuadrículas, la amplitud con cola o la profundidad con pila explícita
-son las versiones que corren.
+## UVa 10977 — Enchanted Forest
 
-## Un ejercicio tipo tarea: Rumor
+Enunciado en <https://onlinejudge.org/external/109/10977.pdf>; envío en
+<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1918>.
 
-Codeforces 893C, <https://codeforces.com/problemset/problem/893/C>.
+Un bosque de $R \times C$ intersecciones. Se entra por $(1,1)$ y se sale por
+$(R,C)$, moviendo una unidad por paso. Hay $m$ posiciones bloqueadas y $n$
+Jigglypuffs; cada uno, en $(x, y)$ con volumen $L$, hace peligrosa toda
+posición a distancia $L$ o menos. Longitud del camino más corto que evite lo
+bloqueado y lo peligroso, o `Impossible.`.
 
-En una ciudad hay $n$ personajes; algunos pares son amigos. Sobornar al
-personaje $i$ cuesta $c_i$ monedas y hace que empiece a contar un rumor;
-quien lo oye se lo cuenta a todos sus amigos, gratis. ¿Cuál es el mínimo de
-monedas para que todos conozcan el rumor?
+**Entrada:** varios casos; $R$ y $C$ ($1 \leq R, C \leq 200$), luego $m$ y
+$m$ pares, luego $n$ ($0 \leq n \leq 100$) y $n$ triplas $x$, $y$, $L$.
+Termina con $R = C = 0$.
 
-**Entrada:** varios casos; cada uno con $n$ y $m$ ($1 \leq n \leq 2 \cdot 10^4$,
-$0 \leq m \leq 4 \cdot 10^4$), la línea de costos y $m$ pares de amigos
-numerados desde $1$. Termina con $n = m = 0$. **Salida:** una línea por caso.
-
-**¿Entendimos el problema?** Primer caso de la muestra: $n = 5$, costos
-$2, 5, 3, 4, 8$, amigos $(1,4)$ y $(4,5)$. Tres grupos que no se hablan:
-$\{1,4,5\}$, $\{2\}$ y $\{3\}$. En cada uno basta sobornar al más barato:
-$2 + 5 + 3 = 10$. Sobornar solo al $1$ deja el rumor encerrado en su grupo.
-
-**El grafo.** Vértices, los personajes; aristas, las amistades. Quien lo oye se
-lo cuenta a todos sus amigos es exactamente *el rumor llega a todo lo
-alcanzable*: un soborno cubre un componente conexo completo. La pregunta es
-entonces, por cada componente, su menor costo, y la suma de esos mínimos.
-
-$OroMinimo(G, c)$:
-
-1. Marcar todos los nodos como no visitados; hacer $total = 0$
-2. Para cada nodo $u$ de $G$:
-    1. Si $u$ no ha sido visitado: recorrer el componente de $u$ llevando el
-       menor $c$, y hacer $total = total +$ ese menor
-3. Devolver $total$
-
-El paso 2 es el $DFS(G)$ completo con un acumulador dentro del recorrido.
+**¿Entendimos el problema?** La muestra es $5 \times 5$ con cinco bloqueadas y
+un Jigglypuff en $(4,3)$ con $L = 1$; la respuesta es 8. Lo que cambia respecto
+a Jaimico no está en el recorrido sino en cómo se arma la matriz: las celdas
+peligrosas no vienen listadas, se calculan con la distancia euclidiana
+$(x-i)^2 + (y-j)^2 \leq L^2$.
 
 ```python
-def minimo_del_componente(G, s, visitado, costo):
-    # Recorre el componente de s con una pila y devuelve su menor costo
-    menor = costo[s]
+def marcar_peligro(mundo, R, C, x, y, L):
+    # Bloquea las celdas a distancia euclidiana L o menos de (x, y)
+    i = max(1, x - L)
+    while i <= min(R, x + L):
+        j = max(1, y - L)
+        while j <= min(C, y + L):
+            if (x - i) * (x - i) + (y - j) * (y - j) <= L * L:
+                mundo[i][j] = -1
+            j = j + 1
+        i = i + 1
+
+
+def salida_mas_corta(mundo, R, C):
+    # Pasos minimos de (1, 1) a (R, C) por celdas con 0; -1 si no hay
+    d = matriz(R, C, -1)
+    cola = deque()
+    if mundo[1][1] == 0:
+        d[1][1] = 0
+        cola.append((1, 1))
+    while len(cola) > 0:
+        actual = cola.popleft()
+        r = actual[0]
+        c = actual[1]
+        k = 0
+        while k < 4:
+            nr = r + dr[k]
+            nc = c + dc[k]
+            if nr >= 1 and nr <= R and nc >= 1 and nc <= C:
+                if mundo[nr][nc] == 0 and d[nr][nc] == -1:
+                    d[nr][nc] = d[r][c] + 1
+                    cola.append((nr, nc))
+            k = k + 1
+    return d[R][C]
+```
+
+Basta mirar el cuadrado de lado $2L+1$ centrado en cada Jigglypuff, recortado
+al tablero. Aquí las filas y columnas van de $1$ a $R$ y de $1$ a $C$ como en
+el enunciado; la posición $0$ de `mundo` no se usa. Si la propia $(1,1)$ es
+peligrosa no se encola nada y sale `Impossible.` sin caso aparte. Costo:
+$\Theta(R \cdot C + n \cdot L^2)$ para armar el mundo y $\Theta(R \cdot C)$
+para recorrerlo.
+
+## UVa 627 — The Net
+
+Enunciado en <https://onlinejudge.org/external/6/627.pdf>; envío en
+<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=568>.
+
+Una red de a lo sumo 300 enrutadores. Cada uno tiene su lista de enrutadores
+visibles, en orden ascendente. Por consulta —origen y destino— la ruta con
+menos saltos; si hay varias, la de identificadores más bajos; si no hay,
+`connection impossible`.
+
+**Entrada:** varias redes. Cada una trae $n$, luego $n$ líneas como
+`3-1,2,5,6`, luego el número de consultas y una línea por consulta.
+**Salida:** por red, una línea con cinco guiones y una línea por consulta.
+
+**¿Entendimos el problema?** En la primera red de la muestra la consulta
+`1 6` responde `1 3 6`. Las listas de visibles no son simétricas: en la
+segunda red `5-1` pero `1-2`, así que el grafo es dirigido y `5 9` da
+`connection impossible` aunque el 9 sí vea al 5.
+
+**El grafo.** Vértices, los enrutadores; aristas, de $u$ a cada visible,
+dirigidas. Menos saltos es la distancia en aristas: amplitud desde el origen.
+Como la ruta se necesita completa, cada enrutador guarda desde cuál se llegó
+a él y la ruta se reconstruye subiendo por los predecesores.
+
+$Ruta(G, s, t)$:
+
+1. Hacer $s.pred = NIL$ y agregar $s$ a la cola $P$
+2. Mientras $P$ no esté vacía y $t$ no tenga predecesor:
+    1. Retirar el frente $w$ de $P$
+    2. Para cada $u$ visible desde $w$, en orden ascendente: si $u$ no
+       tiene predecesor, hacer $u.pred = w$ y agregar $u$ a $P$
+3. Si $t$ no tiene predecesor, no hay ruta; si no, subir por los
+   predecesores desde $t$ hasta $s$ e invertir
+
+Las listas vienen ascendentes y la primera vez que se descubre un enrutador
+queda fijado su predecesor. Por capas, los enrutadores salen de la cola en el
+orden de sus rutas, así que la primera ruta que llega a cada uno es la menor
+de su largo.
+
+```python
+def ruta(grafo, inicio, destino):
+    # Lista de enrutadores de inicio a destino, o [] si no hay conexion
+    pred = {}
+    pred[inicio] = -1
+    cola = deque()
+    cola.append(inicio)
+    while len(cola) > 0 and destino not in pred:
+        u = cola.popleft()
+        for v in grafo[u]:
+            if v not in pred:
+                pred[v] = u
+                cola.append(v)
+    camino = []
+    if destino in pred:
+        v = destino
+        while v != -1:
+            camino.append(v)
+            v = pred[v]
+        camino.reverse()
+    return camino
+```
+
+`pred` es un diccionario que hace de marca y de predecesor a la vez, y la
+condición del `while` detiene la amplitud en cuanto el destino tiene
+predecesor. Costo por consulta: $\Theta(V + E)$ con $V \leq 300$ y
+$E \leq 300 \cdot 50$. Lo delicado es leer la red: partir cada línea por el
+guion y después por las comas, aceptando la lista vacía de `2-`.
+
+## UVa 11749 — Poor Trade Advisor
+
+Enunciado en <https://onlinejudge.org/external/117/11749.pdf>; envío en
+<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2849>.
+
+$n$ ciudades y $m$ carreteras bidireccionales, cada una con una ganancia anual
+(PPA). Una provincia es un conjunto conexo y no vacío de carreteras con sus
+ciudades, y tiene que tener la mayor PPA promedio posible. ¿Cuántas ciudades
+puede tener, como máximo?
+
+**Entrada:** varios casos con $n$ ($1 < n \leq 500$) y $m$
+($1 \leq m \leq 10^6$) y $m$ líneas con los extremos y la PPA; termina con
+$n = m = 0$.
+
+**¿Entendimos el problema?** En el primer caso de la muestra el promedio más
+alto es 100 y solo se consigue con carreteras de PPA 100: meter una de PPA 1
+baja el promedio. Con las de 100 quedan conectadas 1, 2 y 3: tres ciudades.
+
+**La idea.** El promedio de un conjunto nunca supera a su elemento más grande
+y lo iguala solo cuando todos son ese máximo. La provincia usa únicamente
+carreteras de PPA máxima, y la pregunta se vuelve: en el grafo con solo esas
+carreteras, ¿cuál es el componente conexo más grande?
+
+```python
+def ppa_maxima(aristas):
+    # La mayor PPA entre todas las carreteras
+    mayor = aristas[0][2]
+    for arista in aristas:
+        if arista[2] > mayor:
+            mayor = arista[2]
+    return mayor
+
+
+def grafo_de_las_mejores(n, aristas, mayor):
+    # Lista de adyacencia con solo las carreteras de PPA igual a mayor
+    adj = []
+    i = 0
+    while i <= n:
+        adj.append([])
+        i = i + 1
+    for arista in aristas:
+        if arista[2] == mayor:
+            adj[arista[0]].append(arista[1])
+            adj[arista[1]].append(arista[0])
+    return adj
+
+
+def tamano_desde(adj, s, visitado):
+    # Cuenta las ciudades del componente de s
+    total = 0
     visitado[s] = True
     pila = [s]
     while len(pila) > 0:
         u = pila.pop()
-        if costo[u] < menor:
-            menor = costo[u]
-        for v in G[u]:
+        total = total + 1
+        for v in adj[u]:
             if not visitado[v]:
                 visitado[v] = True
                 pila.append(v)
-    return menor
-
-
-def oro_minimo(n, costo, G):
-    # Suma el minimo de cada componente; el ciclo externo los descubre
-    visitado = [False] * n
-    total = 0
-    u = 0
-    while u < n:
-        if not visitado[u]:
-            total = total + minimo_del_componente(G, u, visitado, costo)
-        u = u + 1
     return total
+
+
+def provincia_mas_grande(n, aristas):
+    # aristas: lista de (u, v, ppa); el componente mas grande del grafo
+    # que queda con solo las carreteras de PPA maxima
+    adj = grafo_de_las_mejores(n, aristas, ppa_maxima(aristas))
+    visitado = [False] * (n + 1)
+    mejor = 0
+    u = 1
+    while u <= n:
+        if not visitado[u]:
+            t = tamano_desde(adj, u, visitado)
+            if t > mejor:
+                mejor = t
+        u = u + 1
+    return mejor
 ```
 
-Costo $\Theta(n + m)$. Con $n$ hasta $2 \cdot 10^4$ la recursión puede pasarse
-del límite de Python; la pila explícita marca al apilar para que nadie entre
-dos veces. El orden de visita cambia, el componente no.
-
-## Un ejercicio con estado: Robot
-
-Un robot patrulla una cuadrícula de $m \times n$ ($1 \leq m, n \leq 100$). Se
-mueve a una celda contigua por paso. Algunas celdas tienen obstáculos: entrar
-en una obliga a usar el turbo, y el robot no puede pasar por más de $k$
-celdas con obstáculo seguidas ($0 \leq k \leq 100$). Hallar el mínimo de pasos
-de $(1,1)$ a $(m,n)$, que son celdas libres, o $-1$.
-
-**¿Entendimos el problema?** Con $m = 4$, $n = 6$, $k = 1$ y la cuadrícula
-
-```
-0 1 1 0 0 0
-0 0 1 0 1 1
-0 1 1 1 1 0
-0 1 1 1 0 0
-```
-
-la respuesta es $10$: un camino que pisa el obstáculo de la fila 2 columna 3 y
-el de la fila 2 columna 6, nunca dos seguidos. Con $k = 0$ no hay solución.
-
-**El primer intento, y por qué falla.** Recorrer las celdas llevando la racha
-de obstáculos y marcar la celda al llegar. A una celda con obstáculo se puede
-llegar con racha $1, 2, \ldots, k$ según por dónde se vino; si se marca la
-celda la primera vez, se descarta una llegada posterior con racha menor que
-sí deja seguir. El vértice del grafo **no es la celda**.
-
-**El grafo implícito de los estados.** Vértices, los estados $(r, c, t)$ con
-$t$ la racha, $0 \leq t \leq k$. Aristas, de $(r,c,t)$ a $(r',c',t')$ cuando
-las celdas son contiguas y $t' = t+1 \leq k$ si $(r',c')$ es obstáculo, o
-$t' = 0$ si es libre. Arranque $(0,0,0)$; llegada $(m-1, n-1, 0)$. Todas las
-aristas valen un paso: amplitud. Hay $m \cdot n \cdot (k+1)$ estados con a lo
-sumo cuatro aristas cada uno: $\Theta(m \cdot n \cdot k)$.
-
-```python
-def tabla_vacia(m, n, k):
-    # d[r][c][t] = -1 para todos los estados: ninguno visto todavia
-    d = []
-    r = 0
-    while r < m:
-        fila = []
-        c = 0
-        while c < n:
-            fila.append([-1] * (k + 1))
-            c = c + 1
-        d.append(fila)
-        r = r + 1
-    return d
-
-
-def vecinos_robot(m, n, k, a, r, c, t):
-    # Los estados a los que se pasa desde (r, c, t) en un movimiento
-    res = []
-    i = 0
-    while i < 4:
-        nr = r + DR[i]
-        nc = c + DC[i]
-        if nr >= 0 and nr < m and nc >= 0 and nc < n:
-            nt = 0
-            if a[nr][nc] == 1:
-                nt = t + 1
-            if nt <= k:
-                res.append((nr, nc, nt))
-        i = i + 1
-    return res
-
-
-def movimientos_minimos(m, n, k, a):
-    # BFS sobre los estados (r, c, t); -1 si (m-1, n-1) no se alcanza
-    d = tabla_vacia(m, n, k)
-    d[0][0][0] = 0
-    cola = deque()
-    cola.append((0, 0, 0))
-    while len(cola) > 0:
-        e = cola.popleft()
-        for s in vecinos_robot(m, n, k, a, e[0], e[1], e[2]):
-            if d[s[0]][s[1]][s[2]] == -1:
-                d[s[0]][s[1]][s[2]] = d[e[0]][e[1]][e[2]] + 1
-                cola.append(s)
-    return d[m - 1][n - 1][0]
-```
-
-Comparado con el laberinto del simio, lo único que cambió es la regla de los
-vecinos: `vecinos_robot` lleva la racha y descarta lo que pasa de $k$. El
-recorrido es el mismo.
+El `while` sobre `u` es el $DFS(G)$ completo: cada ciudad sin marcar arranca un
+recorrido, y ese recorrido es un componente. Costo: $\Theta(m)$ para hallar
+el máximo y armar el grafo, $\Theta(n + m)$ el recorrido. Con $m$ hasta un
+millón lo que pesa es leer la entrada: se lee todo de una vez y se parte por
+espacios.
 
 ## Errores comunes
 
-Al calcular los vecinos: salirse del tablero —la regla revisa $0 \leq r < R$ y
-$0 \leq c < C$ antes de mirar la celda, y en Python un índice negativo no
-falla, lee desde el final— y confundir fila con columna o la numeración desde
-$1$ con la desde $0$.
+Sobre cuadrículas: salirse del tablero —en Python un índice negativo no
+falla, lee desde el final—, confundir fila con columna o la numeración desde
+1 con la desde 0, usar profundidad recursiva sobre una cuadrícula grande, y
+buscar la distancia mínima con profundidad.
 
-Al recorrer: marcar la celda cuando el vértice es la celda más un estado;
-usar profundidad recursiva sobre una cuadrícula grande; buscar la distancia
-mínima con profundidad, que llega pero no por el camino corto; y olvidar el
-ciclo externo cuando la pregunta es por todos los componentes.
+Sobre rutas y componentes: tratar como no dirigido un grafo que el enunciado
+da dirigido, reconstruir la ruta sin invertirla, olvidar el ciclo externo
+cuando la pregunta es por todos los componentes, y leer un millón de líneas
+con `input()`.
 
 ## El código de la clase
 
-- [laberinto.py](codigo/laberinto.py) — la regla de vecinos, profundidad y
-  amplitud sobre el laberinto de la clase.
-- [rumor.py](codigo/rumor.py) — el mínimo por componente.
-- [robot.py](codigo/robot.py) — la amplitud sobre estados.
+- [jaimico.py](codigo/jaimico.py) — las dos versiones de `dfsAux`, `dfs` y
+  `bfs` sobre el laberinto de la clase.
+- [forest.py](codigo/forest.py) — UVa 10977.
+- [net.py](codigo/net.py) — UVa 627.
+- [advisor.py](codigo/advisor.py) — UVa 11749.
 
 ## Ejercicios
 
-Cuatro interactivos, seis en papel y tres para el juez: están en la
+Cinco interactivos, siete en papel y cinco para programar: están en la
 [página de ejercicios](./Ejercicios.md).
 
 ## Referencias
@@ -346,5 +412,5 @@ Cuatro interactivos, seis en papel y tres para el juez: están en la
   Press, 2009. Secciones 22.2 (pp. 594–602) y 22.3 (pp. 603–612).
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Sección 4.2
   y su tratamiento de las cuadrículas como grafos implícitos.
-- Codeforces Round 449, problema 893C, *Rumor*.
-  <https://codeforces.com/problemset/problem/893/C>
+- Universidad de Valladolid Online Judge: problemas 627, 10977 y 11749.
+  <https://onlinejudge.org>
