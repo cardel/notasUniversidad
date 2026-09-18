@@ -20,6 +20,16 @@ def tamano_desde(adj, s, visitado):
     return total
 
 
+def tamano_desde_recursivo(adj, u, visitado):
+    # La misma cuenta, con la pila de llamadas en lugar de la lista
+    visitado[u] = True
+    total = 1
+    for v in adj[u]:
+        if not visitado[v]:
+            total = total + tamano_desde_recursivo(adj, v, visitado)
+    return total
+
+
 def ppa_maxima(aristas):
     # La mayor PPA entre todas las carreteras
     mayor = aristas[0][2]

@@ -1,4 +1,5 @@
-/* Ejercicio interactivo: contar componentes conexos y su tamano (clase 7). */
+/* Ejercicio interactivo: contar componentes conexos y su tamano (clase 7).
+   El recorrido interno viene en dos versiones, con pila y recursivo. */
 var EJERCICIO = (function () {
   var CODIGO = [
     { txt: "def componentes(G):",                num: null },
@@ -26,7 +27,30 @@ var EJERCICIO = (function () {
     { txt: "    return cuenta",                  num: 20, bloque: 2 }
   ];
 
+  /* La misma cuenta con la pila de llamadas en lugar de la lista. */
+  var CODIGO_RECURSIVO = [
+    { txt: "def componentes(G):",                num: null },
+    { txt: "    n = len(G)",                     num: 1 },
+    { txt: "    visitado = [False] * n",         num: 2 },
+    { txt: "    tamanos = []",                   num: 3 },
+    { txt: "    u = 0",                          num: 4 },
+    { txt: "    while u < n:",                   num: 5,  bloque: 1 },
+    { txt: "        if not visitado[u]:",        num: 6,  bloque: 1 },
+    { txt: "            tamanos.append(tamano_desde(G, u, visitado))", num: 7, bloque: 1 },
+    { txt: "        u = u + 1",                  num: 8,  bloque: 1 },
+    { txt: "    return tamanos",                 num: 9 },
+    { txt: "",                                   num: null },
+    { txt: "def tamano_desde(G, u, visitado):",  num: null },
+    { txt: "    visitado[u] = True",             num: 10, bloque: 2 },
+    { txt: "    cuenta = 1",                     num: 11, bloque: 2 },
+    { txt: "    for v in G[u]:",                 num: 12, bloque: 2 },
+    { txt: "        if not visitado[v]:",        num: 13, bloque: 2 },
+    { txt: "            cuenta = cuenta + tamano_desde(G, v, visitado)", num: 14, bloque: 2 },
+    { txt: "    return cuenta",                  num: 15, bloque: 2 }
+  ];
+
   function simular(params) {
+    if (params.version === "rec") { return simularRecursivo(params); }
     var G = params.G;
     var n = G.length;
     var pasos = [];
@@ -87,6 +111,73 @@ var EJERCICIO = (function () {
     return pasos;
   }
 
+  /* En la version recursiva, "pila" es la pila de llamadas: los vertices
+     cuyo tamano_desde todavia no ha retornado. "cuenta" es la del marco
+     que esta corriendo. */
+  function simularRecursivo(params) {
+    var G = params.G;
+    var n = G.length;
+    var pasos = [];
+    var visitado = null, tamanos = null, u = null, comp = null, cuenta = null, llamadas = null;
+    var color = [];
+    var t = 0;
+    while (t < n) { color.push(-1); t = t + 1; }
+    function snap(linea, extra) {
+      var q = { linea: linea, u: u === null ? "–" : u, cuenta: cuenta === null ? "–" : cuenta,
+                comp: comp === null ? "–" : comp, color: color.slice(),
+                tamanos: tamanos === null ? [] : tamanos.slice(),
+                pila: llamadas === null ? [] : llamadas.slice() };
+      if (extra) { for (var x in extra) { q[x] = extra[x]; } }
+      pasos.push(q);
+    }
+    function tamanoDesde(w, raiz) {
+      llamadas.push(w);
+      u = w; cuenta = null;
+      visitado[w] = true; color[w] = comp; snap(10, { entra: w });
+      var mi = 1; cuenta = mi; snap(11);
+      var i = 0;
+      while (i < G[w].length) {
+        var v = G[w][i];
+        u = w; cuenta = mi;
+        snap(12); snap(13, { mira: v });
+        if (!visitado[v]) {
+          snap(14, { llama: v });
+          var sub = tamanoDesde(v, false);
+          mi = mi + sub;
+          u = w; cuenta = mi;
+        }
+        i = i + 1;
+      }
+      u = w; cuenta = mi;
+      if (raiz) { snap(15, { cierra: comp, tamano: mi }); } else { snap(15, { retorna: mi }); }
+      llamadas.pop();
+      return mi;
+    }
+    snap(1);
+    visitado = []; t = 0; while (t < n) { visitado.push(false); t = t + 1; }
+    snap(2);
+    tamanos = []; snap(3);
+    var uu = 0; u = 0; snap(4);
+    var sigue = true;
+    while (sigue) {
+      snap(5, { chequeoExterno: true });
+      if (uu < n) {
+        u = uu; snap(6);
+        if (!visitado[uu]) {
+          comp = tamanos.length;
+          llamadas = [];
+          var total = tamanoDesde(uu, true);
+          tamanos.push(total); u = uu; cuenta = null; snap(7);
+          llamadas = null;
+        }
+        uu = uu + 1; u = uu; snap(8);
+      } else { sigue = false; }
+    }
+    u = null;
+    snap(9, { fin: true });
+    return pasos;
+  }
+
   function tamanosRef(G) {
     var n = G.length, visitado = [], res = [];
     var t = 0; while (t < n) { visitado.push(false); t = t + 1; }
@@ -106,7 +197,8 @@ var EJERCICIO = (function () {
     return res;
   }
 
-  return { codigo: CODIGO, simular: simular, tamanosRef: tamanosRef };
+  return { codigo: CODIGO, codigoRecursivo: CODIGO_RECURSIVO, simular: simular,
+           tamanosRef: tamanosRef };
 })();
 
 if (typeof module !== "undefined") {
@@ -128,6 +220,12 @@ if (typeof module !== "undefined") {
     var POS = [[0, 2], [1, 2.6], [2, 2], [3.2, 2.6], [4.2, 2.6], [0.4, 0.4], [1.6, 0.9], [2.8, 0.4], [4.2, 0.9]];
     var COLORES = ["#1f5fa8", "#e8a13d", "#2e7d32", "#b3261e", "#6d28d9", "#0e7490", "#9d174d", "#4d7c0f", "#7c2d12"];
     var externoOK = false;
+    var presetActual = 0;
+    var version = "pila";
+
+    function paramsActuales() {
+      return { G: PRESETS[presetActual].G, version: version };
+    }
 
     function dibujar(params, color, actual) {
       var G = params.G, n = G.length;
@@ -160,7 +258,15 @@ if (typeof module !== "undefined") {
     function alPintar(e) {
       var a = e.actual;
       dibujar(e.params, a ? a.color : null, a && a.u !== "–" ? a.u : null);
-      document.getElementById("ver-pila").textContent = a && a.pila.length > 0 ? a.pila.join(", ") : "vacía";
+      var pila = a && a.pila.length > 0 ? a.pila : null;
+      if (e.params.version === "rec") {
+        document.getElementById("rotulo-pila").textContent = "Llamadas";
+        document.getElementById("ver-pila").textContent = pila
+          ? pila.map(function (w) { return "tamano_desde(" + w + ")"; }).join(" › ") : "ninguna";
+      } else {
+        document.getElementById("rotulo-pila").textContent = "Pila";
+        document.getElementById("ver-pila").textContent = pila ? pila.join(", ") : "vacía";
+      }
       document.getElementById("ver-tamanos").textContent = a && a.tamanos.length > 0 ? "[" + a.tamanos.join(", ") + "]" : "[ ]";
       var cuerpo = document.getElementById("cuerpo-traza");
       cuerpo.innerHTML = "";
@@ -181,13 +287,27 @@ if (typeof module !== "undefined") {
       if (fila === 0) { cuerpo.innerHTML = "<tr><td colspan='4' class='pend'>Ejecute: cada componente que se cierra agrega una fila.</td></tr>"; }
     }
 
-    Motor.iniciar({
-      codigo: EJERCICIO.codigo, simular: EJERCICIO.simular,
-      chips: [{ campo: "u", rotulo: "u" }, { campo: "comp", rotulo: "componente" }, { campo: "cuenta", rotulo: "cuenta", clase: "cuenta" }],
-      paramsIniciales: PRESETS[0], alPintar: alPintar
-    });
+    /* Cambiar de programa exige volver a iniciar el motor, y eso exige soltar
+       los escuchas viejos de los botones: se reemplazan por clones sin escuchas. */
+    function arrancar() {
+      var ids = ["btn-paso", "btn-auto", "btn-fin", "btn-reiniciar", "btn-comprobar"];
+      var t = 0;
+      while (t < ids.length) {
+        var b = document.getElementById(ids[t]);
+        b.parentNode.replaceChild(b.cloneNode(true), b);
+        t = t + 1;
+      }
+      Motor.iniciar({
+        codigo: version === "rec" ? EJERCICIO.codigoRecursivo : EJERCICIO.codigo,
+        simular: EJERCICIO.simular,
+        chips: [{ campo: "u", rotulo: "u" }, { campo: "comp", rotulo: "componente" }, { campo: "cuenta", rotulo: "cuenta", clase: "cuenta" }],
+        paramsIniciales: paramsActuales(), alPintar: alPintar
+      });
+      Motor.prediccionNumerica(evaluarPrediccion);
+      Motor.limpiarVeredicto();
+    }
 
-    Motor.prediccionNumerica(function (valor, params) {
+    function evaluarPrediccion(valor, params) {
       var tam = EJERCICIO.tamanosRef(params.G);
       var n = params.G.length;
       var aristas = 0; var u = 0; while (u < n) { aristas = aristas + params.G[u].length; u = u + 1; } aristas = aristas / 2;
@@ -197,14 +317,24 @@ if (typeof module !== "undefined") {
       if (valor === n) { return { ok: false, msg: "Ese es el número de vértices. Serían " + n + " componentes solo si no hubiera ninguna arista." }; }
       if (valor === aristas) { return { ok: false, msg: "Ese es el número de aristas. Los componentes se cuentan por grupos de vértices que se alcanzan entre sí." }; }
       return { ok: false, msg: "No coincide. Agrupe en el dibujo los vértices que se alcanzan entre sí y cuente los grupos; un vértice suelto es un grupo." };
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll("#presets-grafo button"), function (btn) {
+      btn.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll("#presets-grafo button"), function (b) { b.classList.remove("primario"); });
+        btn.classList.add("primario");
+        presetActual = parseInt(btn.getAttribute("data-preset"), 10);
+        Motor.limpiarVeredicto();
+        Motor.reiniciar(paramsActuales());
+      });
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll(".presets button"), function (btn) {
+    Array.prototype.forEach.call(document.querySelectorAll("#presets-version button"), function (btn) {
       btn.addEventListener("click", function () {
-        Array.prototype.forEach.call(document.querySelectorAll(".presets button"), function (b) { b.classList.remove("primario"); });
+        Array.prototype.forEach.call(document.querySelectorAll("#presets-version button"), function (b) { b.classList.remove("primario"); });
         btn.classList.add("primario");
-        Motor.limpiarVeredicto();
-        Motor.reiniciar(PRESETS[parseInt(btn.getAttribute("data-preset"), 10)]);
+        version = btn.getAttribute("data-version");
+        arrancar();
       });
     });
 
@@ -227,6 +357,23 @@ if (typeof module !== "undefined") {
       });
     });
 
+    Array.prototype.forEach.call(document.querySelectorAll("#opciones-version button"), function (btn) {
+      btn.addEventListener("click", function () {
+        var op = btn.getAttribute("data-op");
+        if (op === "correcta") {
+          veredicto("veredicto-version", true, "Correcto: cada llamado de tamano_desde que todavía no retornó es un vértice " +
+            "apilado, y el último que entró es el primero que termina. Cambie a la versión recursiva sobre «Ocho en fila» y " +
+            "mire las llamadas: llegan a ocho, una por vértice de la cadena, y esa profundidad es lo que Python limita.");
+        } else if (op === "visitado") {
+          veredicto("veredicto-version", false, "visitado dice quién ya entró, no quién está pendiente. La lista está en las " +
+            "dos versiones y no cambia entre ellas.");
+        } else {
+          veredicto("veredicto-version", false, "Sí hay pila: la de llamadas. Cada tamano_desde que espera a que vuelva el " +
+            "suyo es un marco apilado, y con una cadena de n vértices son n marcos.");
+        }
+      });
+    });
+
     Array.prototype.forEach.call(document.querySelectorAll("#paso-1 .opciones button"), function (btn) {
       btn.addEventListener("click", function () {
         var op = btn.getAttribute("data-p1");
@@ -234,11 +381,13 @@ if (typeof module !== "undefined") {
           veredicto("veredicto-p1", true, "Correcto: es un recorrido completo, Θ(n + m). Que se cuenten los componentes de paso no agrega nada al orden.");
           document.getElementById("paso-1").classList.add("hecho");
         } else if (op === "cuadratico") {
-          veredicto("veredicto-p1", false, "Cada vértice entra a la pila una sola vez y cada lista de vecinos se recorre una sola vez. Los k recorridos internos, sumados, tocan cada vértice y cada arista una vez: no se multiplican.");
+          veredicto("veredicto-p1", false, "Cada vértice entra al recorrido una sola vez y cada lista de vecinos se recorre una sola vez. Los k recorridos internos, sumados, tocan cada vértice y cada arista una vez: no se multiplican.");
         } else {
           veredicto("veredicto-p1", false, "Depende de n y de m, no solo de k. Un grafo con un solo componente y m aristas cuesta Θ(n + m) igual.");
         }
       });
     });
+
+    arrancar();
   })();
 }
