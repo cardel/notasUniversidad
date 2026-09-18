@@ -8,7 +8,7 @@ entrada y salida, qué es el grafo, el algoritmo, el código y el costo.
 
 ## Diapositivas
 
-[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 66 láminas.
+[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 67 láminas.
 
 ## Lo que cuestan los recorridos
 
