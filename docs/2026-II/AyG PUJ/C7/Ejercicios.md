@@ -61,6 +61,12 @@ descubre, y los contadores de las líneas 7 y 8 muestran la diferencia entre
 pasar por un vértice y arrancar un recorrido. Es la pieza que Poor Trade
 Advisor usa después de quedarse con las carreteras de PPA máxima.
 
+El recorrido interno se puede cambiar de la versión con pila a la recursiva
+sin perder el grafo: marcan y cuentan lo mismo, y lo que en una es la lista
+`pila` en la otra es la pila de llamadas, que se ve crecer y encogerse al lado
+del código. Sobre «Ocho en fila» llega a ocho llamados anidados, uno por
+vértice de la cadena.
+
 ## Errores comunes
 
 ### [errores](widgets/errores.html){ target=_blank rel=noopener }

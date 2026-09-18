@@ -375,6 +375,29 @@ def provincia_mas_grande(n, aristas):
     return mejor
 ```
 
+`tamano_desde` es el mismo recorrido con la pila de llamadas en lugar de la
+lista:
+
+```python
+def tamano_desde(adj, u, visitado):
+    # La misma cuenta, con la pila de llamadas en lugar de la lista
+    visitado[u] = True
+    total = 1
+    for v in adj[u]:
+        if not visitado[v]:
+            total = total + tamano_desde(adj, v, visitado)
+    return total
+```
+
+Es el $DFSAux$ de los recorridos con un contador: cada llamado devuelve
+cuántas ciudades tocó, y el de `u` suma las de sus vecinos nuevos más él
+mismo. Lo que en la otra versión guardaba `pila` aquí lo guarda la pila de
+llamadas: cada `tamano_desde` que espera a que vuelva el suyo es un vértice
+apilado. Las dos marcan, cuentan y devuelven lo mismo; la diferencia está en
+dónde queda lo pendiente. Una cadena de $n$ ciudades apila $n$ llamados y
+Python corta cerca de los mil, así que para $n$ grande se envía la de la
+lista. La recursiva es la que se escribe primero, porque es la que ya se sabe.
+
 El `while` sobre `u` es el $DFS(G)$ completo: cada ciudad sin marcar arranca un
 recorrido, y ese recorrido es un componente. Costo: $\Theta(m)$ para hallar
 el máximo y armar el grafo, $\Theta(n + m)$ el recorrido. Con $m$ hasta un
@@ -399,7 +422,8 @@ con `input()`.
   `bfs` sobre el laberinto de la clase.
 - [forest.py](codigo/forest.py) — UVa 10977.
 - [net.py](codigo/net.py) — UVa 627.
-- [advisor.py](codigo/advisor.py) — UVa 11749.
+- [advisor.py](codigo/advisor.py) — UVa 11749, con `tamano_desde` en sus dos
+  versiones, con pila y recursiva.
 
 ## Ejercicios
 
