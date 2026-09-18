@@ -4,10 +4,10 @@
 
 Un grafo cuyos vértices y aristas nadie guarda: hay una regla que dice qué es
 un vértice y otra que produce los vecinos, y el recorrido llama a esa regla
-cuando la necesita. La cuadrícula del simio y el café es el primer ejemplo, y
-de ahí se pasa a dos problemas del estilo de la tarea: uno donde el recorrido
-lleva un acumulador y otro donde el vértice no es la celda sino la celda más
-un estado.
+cuando la necesita. La cuadrícula de Jaimico y el café es el primer ejemplo, y
+de ahí se pasa a tres problemas de juez en línea: un bosque con zonas
+peligrosas, la ruta con menos saltos en una red, y el componente más grande de
+un imperio.
 
 <div class="grid cards" markdown>
 
@@ -15,9 +15,9 @@ un estado.
 
     ---
 
-    El costo de los recorridos, la cuadrícula como grafo, la regla de los
-    vecinos, DFS y BFS sobre el laberinto, y los dos ejercicios trabajados con
-    el método completo: entrada, salida, grafo, algoritmo, código y costo.
+    El costo de los recorridos, Jaimico y el café con las dos versiones del
+    DFS y la amplitud, y los tres problemas con el método completo: entrada,
+    salida, grafo, algoritmo, código y costo.
 
     [:octicons-arrow-right-24: Entrar](Grafos%20implicitos.md)
 
@@ -25,8 +25,8 @@ un estado.
 
     ---
 
-    Las 55 láminas de la sesión, con las figuras del laberinto por capas y del
-    robot con turbo.
+    Las 66 láminas de la sesión, con el laberinto por capas, el bosque de la
+    muestra y la red de enrutadores.
 
     [:octicons-arrow-right-24: Abrir](clase07-implicitos.pdf)
 
@@ -34,10 +34,11 @@ un estado.
 
 ## Ejercicios
 
-Cuatro interactivos, uno por tema y en el orden de la sesión: la amplitud
-sobre un laberinto nuevo, los componentes conexos pintados de colores, la
-cuadrícula donde marcar la celda falla y marcar el estado acierta, y tres
-fallas para encontrar. Después, seis en papel y tres para el juez.
+Cinco interactivos, en el orden de la sesión: la amplitud sobre un laberinto
+nuevo, la ruta con predecesores en una red dirigida, los componentes pintados
+de colores, tres fallas para encontrar, y la cuadrícula donde marcar la celda
+falla y marcar el estado acierta. Después, siete en papel y cinco para
+programar.
 
 Todos están en la [página de ejercicios](./Ejercicios.md).
 
