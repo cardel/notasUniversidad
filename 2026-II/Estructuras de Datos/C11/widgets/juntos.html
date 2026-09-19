@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>los tres contratos, juntos — TAD Lista, Pila y Cola</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Los tres contratos, juntos</h1>
+  <p class="intro">El mismo programa bajo dos disciplinas, y cuatro tareas
+  para escoger el contrato más pequeño que alcanza.</p>
+
+  <div class="carta">
+    <h2>1. Cinco líneas, dos respuestas</h2>
+    <p style="margin-top:0">Si <code>meter</code>, <code>quitar</code> y
+    <code>ver</code> son apilar, desapilar y tope, ¿qué imprime? ¿Y si son
+    encolar, desencolar y frente?</p>
+    <div class="codigo" id="codigo-programa"></div>
+    <div class="prediccion">
+      <span>como pila:</span>
+      <input type="number" id="pred-pila" placeholder="?">
+      <span>como cola:</span>
+      <input type="number" id="pred-cola" placeholder="?">
+      <button id="btn-programa" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-programa" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El contrato más pequeño que alcanza</h2>
+    <div class="codigo"><div class="linea"><span class="num">1</span><span class="txt">Atender turnos en el orden de llegada</span></div></div>
+    <div class="opciones">
+      <button data-fn="0" data-tad="lista">lista</button>
+      <button data-fn="0" data-tad="pila">pila</button>
+      <button data-fn="0" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-fn-0" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">2</span><span class="txt">Leer el tercer elemento sin quitar nada</span></div></div>
+    <div class="opciones">
+      <button data-fn="1" data-tad="lista">lista</button>
+      <button data-fn="1" data-tad="pila">pila</button>
+      <button data-fn="1" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-fn-1" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">3</span><span class="txt">Deshacer la última operación</span></div></div>
+    <div class="opciones">
+      <button data-fn="2" data-tad="lista">lista</button>
+      <button data-fn="2" data-tad="pila">pila</button>
+      <button data-fn="2" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-fn-2" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">4</span><span class="txt">Insertar un valor en la mitad</span></div></div>
+    <div class="opciones">
+      <button data-fn="3" data-tad="lista">lista</button>
+      <button data-fn="3" data-tad="pila">pila</button>
+      <button data-fn="3" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-fn-3" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿Cuánto cuesta?</h2>
+    <p style="margin-top:0">Con la lista sobre un arreglo: una lista de 8
+    elementos recibe <code>insertar(2, x)</code>. ¿Cuántas casillas se
+    corren de lugar?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-c-insertar" placeholder="?">
+      <button id="btn-c-insertar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-c-insertar" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem"><code>revertir</code> recorre una lista de 6
+    elementos y hace <code>insertar(0, ...)</code> con cada uno. Sumando
+    todas las inserciones, ¿cuántas casillas se corren en total?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-c-revertir" placeholder="?">
+      <button id="btn-c-revertir" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-c-revertir" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem">Imprimir una pila de n elementos sin
+    destruirla, con una pila auxiliar: ¿qué cuesta?</p>
+    <div class="opciones" id="opciones-c-mc">
+      <button data-op="lineal">Θ(n) en tiempo y Θ(1) de espacio</button>
+      <button data-op="constante">Θ(n) en tiempo y Θ(n) de espacio</button>
+      <button data-op="cuadratico">Θ(n²) en tiempo</button>
+    </div>
+    <div id="veredicto-c-mc" class="veredicto"></div>
+    <div id="cierre-costos" class="nota" style="display:none">En pila y
+    cola todo cuesta O(1); en la lista, O(1) por posición y al final, O(n)
+    en medio. La misma función contra el mismo contrato puede ser lineal o
+    cuadrática según qué operación use.</div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Un programa escrito contra un contrato significa lo
+    que el contrato dice: cambiar la disciplina cambia la respuesta sin
+    tocar una línea. Y prometer menos (pila o cola en vez de lista) es lo
+    que deja que la implementación cobre cada operación a costo constante.</div>
+  </div>
+</div>
+<script src="juntos.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dos_punteros — valores contra direcciones</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Copiar valores no es copiar direcciones</h1>
+  <p class="intro">Dos variables, dos punteros y dos asignaciones que se
+  parecen mucho y hacen cosas muy distintas: *p = *q mueve un valor,
+  q = p mueve una dirección.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <p style="margin-top:0">¿Qué imprime el programa?</p>
+    <div class="prediccion">
+      <span>a =</span>
+      <input type="number" id="prediccion-a" placeholder="a final">
+      <span>b =</span>
+      <input type="number" id="prediccion-b" placeholder="b final">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y siga a los dos punteros</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Los chips de p y q muestran a quién apunta cada
+        uno en cada paso.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza como tabla</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th style="text-align:left">Línea</th><th>a</th><th>b</th><th>p</th><th>q</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="nota-traza"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La pregunta de cierre</h2>
+    <p style="margin-top:0">¿En qué línea dejó q de hablarle a b?</p>
+    <div class="opciones" id="opciones-final">
+      <button data-op="copia">*p = *q;</button>
+      <button data-op="correcta">q = p;</button>
+      <button data-op="treinta">*q = 30;</button>
+      <button data-op="nunca">Nunca dejó de hablarle</button>
+    </div>
+    <div id="veredicto-final" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="dos_punteros.js"></script>
+</body>
+</html>

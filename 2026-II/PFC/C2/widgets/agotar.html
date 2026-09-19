@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agotar — qué se acaba primero</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #codigo-caso { white-space: pre; font-family: ui-monospace, monospace; font-size: 0.95rem;
+    background: var(--gris-suave, #f4f5f7); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.5rem 0; }
+  #salida-caso { font-family: ui-monospace, monospace; font-size: 0.9rem; color: #5b636c; min-height: 1.4em; margin-top: 0.4rem; }
+  .presets button.hecho::after { content: " ✓"; }
+  #progreso-casos { font-size: 0.86rem; color: #6b737c; margin-top: 0.4rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>agotar: qué se acaba primero</h1>
+  <p class="intro">Una llamada puede fallar por dos razones distintas que se
+  confunden todo el tiempo: porque <b>no termina</b> o porque <b>no cabe</b>.
+  La primera es tiempo; la segunda, espacio. Y hay una tercera posibilidad
+  que también sorprende: que termine sin problema aunque parezca que no.</p>
+
+  <div class="carta">
+    <h2>1. Elija la llamada</h2>
+    <div class="presets">
+      <button data-caso="0" class="primario">factorial(100000)</button>
+      <button data-caso="1">fact(100000)</button>
+      <button data-caso="2">factIterRota(1, 1, 100000)</button>
+      <button data-caso="3">primero(1, bucle)</button>
+    </div>
+    <div id="progreso-casos"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Con este código, <span id="titulo-caso"></span></h2>
+    <div id="codigo-caso"></div>
+    <p style="margin:0.6rem 0 0.3rem">¿Qué se agota?</p>
+    <div class="opciones" id="opciones">
+      <button data-op="tiempo">El tiempo: nunca termina</button>
+      <button data-op="espacio">El espacio: la pila revienta</button>
+      <button data-op="nada">Nada: termina y devuelve un valor</button>
+    </div>
+    <div id="veredicto-caso" class="veredicto"></div>
+    <div id="salida-caso"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las cuatro se llaman a sí mismas. Dos revientan la
+    pila, una gira sin fin y una termina, y lo que las separa no es cuántas
+    vueltas dan sino <b>qué dejan esperando alrededor de la llamada</b>.</p>
+    <ul>
+      <li>Si alrededor de la llamada hay una operación pendiente —un
+      <code>n *</code>, un <code>1 + ... - 1</code>—, cada vuelta gasta un
+      marco de pila. Eso es espacio, y se acaba.</li>
+      <li>Si no hay nada esperando, la vuelta no gasta pila. Puede girar cien
+      mil veces, o para siempre, sin reventar.</li>
+    </ul>
+    <p>El siguiente ejercicio pone las dos formas lado a lado para verlo
+    pasar.</p>
+    <p><a href="pendientes.html">Ir a <b>pendientes</b>: lineal frente a cola →</a></p>
+  </div>
+</div>
+<script src="agotar.js"></script>
+</body>
+</html>

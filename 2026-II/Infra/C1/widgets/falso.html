@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>False sharing — la línea que va y viene</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>False sharing: cuatro hilos, cuatro variables, una sola línea</h1>
+  <p class="intro">Cada hilo escribe en su propia posición del arreglo. No hay
+  condición de carrera y el resultado siempre sale bien. Aun así el programa
+  puede volverse lento, y aquí se ve por qué: la caché no mueve variables
+  sueltas sino líneas de 64 bytes, ocho <code>long</code> por línea.</p>
+
+  <div class="carta">
+    <h2>1. Las dos decisiones</h2>
+    <div class="fila-n">
+      <label>Disposición en memoria:</label>
+      <span class="presets">
+        <button data-pad="0" class="primario">long sumas[4]</button>
+        <button data-pad="1">con relleno a 64 bytes</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label>Orden de las escrituras:</label>
+      <span class="presets">
+        <button data-orden="inter" class="primario">intercaladas</button>
+        <button data-orden="bloque">por bloques</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="rango-r">Escrituras por hilo:</label>
+      <input type="range" id="rango-r" min="2" max="8" value="5">
+      <span class="valor-n">r = <span id="ver-r">5</span></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces tendrá que viajar una línea de un núcleo a otro?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La memoria, línea por línea</h2>
+    <div id="panel-memoria"></div>
+    <div class="chips" id="chips-nucleos" style="margin-top:0.8rem"></div>
+    <div class="progreso">Escritura <span id="ver-paso">0</span> de
+      <span id="ver-total">0</span> · viajes de línea:
+      <b id="ver-viajes">0</b></div>
+    <div class="botones" style="margin-top:0.5rem">
+      <button id="btn-paso" class="primario">Una escritura</button>
+      <button id="btn-auto">Auto</button>
+      <button id="btn-fin">Al final</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="nota" id="nota-paso">Cada celda es un <code>long</code> de 8
+    bytes. Una fila es una línea de caché.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las cuatro combinaciones</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Disposición</th><th>Orden</th><th>Viajes de línea</th><th>Por escritura</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="alerta" id="caja-lectura"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La pregunta que importa</h2>
+    <p style="margin-top:0">Mire la tabla. Sin relleno y por bloques el número
+    es tan bueno como con relleno. ¿Qué dice eso del false sharing?</p>
+    <div class="opciones" id="opciones-lectura">
+      <button data-op="concurrencia">Solo duele cuando las escrituras se intercalan</button>
+      <button data-op="siempre">Duele siempre que dos variables compartan línea</button>
+      <button data-op="carrera">Es una condición de carrera disfrazada</button>
+      <button data-op="relleno">El relleno es la única solución posible</button>
+    </div>
+    <div id="veredicto-lectura" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="falso.js"></script>
+</body>
+</html>
