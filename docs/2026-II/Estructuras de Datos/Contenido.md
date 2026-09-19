@@ -32,7 +32,7 @@ mismas estructuras ya empacadas.
 10. [Clase 10. Abstracción de datos y tipos abstractos de datos — 9 de septiembre](C10/Clase%2010.%20Abstracción%20de%20datos%20y%20tipos%20abstractos%20de%20datos.md)
 11. [Clase 11. TAD Lista, Pila y Cola — 16 de septiembre](C11/Clase%2011.%20TAD%20Lista,%20Pila%20y%20Cola.md)
 12. [Clase 12. Ejercicios con los TAD Lista, Pila y Cola — 18 de septiembre](C12/Clase%2012.%20Ejercicios%20con%20los%20TAD%20Lista,%20Pila%20y%20Cola.md)
-13. [Clase 13. Ejercicios interactivos de la STL de C++ — 19 de septiembre](C13/Ejercicios.md)
+13. [Clase 13. STL de C++ — 19 de septiembre](C13/Clase%2013.%20STL%20de%20C++.md)
 
 ## Apéndices
 
