@@ -14,11 +14,12 @@ se mide, y varias veces la versión secuencial gana.
 
     ---
 
-    Repartir datos o repartir trabajos, el mergesort partido con corte por
-    profundidad, la granularidad medida, el reparto fijo contra el reparto
-    por demanda, los tres bloques de TBB, la suma de prefijos en dos
-    pasadas, el pipeline, la tabla para elegir y lo que dejó el ejercicio
-    resuelto en vivo.
+    Repartir datos o repartir trabajos, la misma suma con y sin `-O2`, el
+    mergesort partido con corte por profundidad y por qué las bibliotecas
+    prefieren quicksort, la granularidad medida, el reparto fijo contra el
+    reparto por demanda, los tres bloques de TBB, la suma de prefijos en dos
+    pasadas con el ejemplo del tablero, el pipeline, la tabla para elegir y
+    lo que dejó el ejercicio resuelto en vivo.
 
     [:octicons-arrow-right-24: Entrar](./Estrategias%20de%20paralelizacion.md)
 

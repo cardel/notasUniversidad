@@ -36,14 +36,41 @@ misma línea de caché y cada escritura de un hilo invalida la copia del
 vecino: el false sharing de la sesión anterior.
 
 El reparto es de la forma más simple: `paso = n / k`, el hilo `h` toma de
-`h * paso` a `(h + 1) * paso`, y el último se queda con el resto. Los hilos
-se guardan en un `vector<thread>`, se lanzan con `emplace_back`, y después
-viene el `join` de cada uno: el programa principal espera ahí hasta que todos
-terminen, y solo entonces suma los parciales. Sin el `join`, el programa sigue
-sin que los hilos hayan acabado.
+`h * paso` a `(h + 1) * paso`, y el último se queda con el resto. Los rangos
+tienen que ser disjuntos y su unión tiene que ser el arreglo completo: si un
+elemento cae en dos rangos se suma dos veces, y si no cae en ninguno se
+pierde. El caso secuencial es el mismo esquema con un solo rango, de `0` a
+`n`.
 
-Lo que dio en el portátil de la clase, compilado a mano sin `-O2`, con el
-reloj en nanosegundos y el total siempre en 400 000 000:
+Los hilos se guardan en un `vector<thread>`, se lanzan con `emplace_back`, y
+después viene el `join` de cada uno: el programa principal espera ahí hasta
+que todos terminen, y solo entonces suma los parciales. Sin el `join`, el
+programa sigue sin que los hilos hayan acabado. Y el `join` va después de
+lanzarlos todos: si se pone justo después de cada `emplace_back`, el segundo
+hilo no arranca hasta que el primero termina y el programa vuelve a ser
+secuencial, con el costo de los hilos encima.
+
+Partir los datos y sumar los parciales da lo mismo que sumar de corrido
+porque la suma es asociativa: $(a + b) + c = a + (b + c)$. Con una operación
+que no lo sea, el reparto en trozos entrega otro resultado.
+
+El mismo programa se corrió de dos maneras en la semana, y la diferencia
+entre las dos es una lección aparte. Con `make`, que compila con `-O2`:
+
+| Hilos | Tiempo |
+|---:|---:|
+| 1 | 98 ms |
+| 2 | 61 ms |
+| 4 | 55 ms |
+| 8 | 50 ms |
+
+De uno a dos hilos se gana; de ahí en adelante casi nada. Sumar un elemento
+cuesta muy poco frente a traerlo de memoria, y con varios núcleos pidiendo a
+la vez el bus se satura antes que los núcleos: es el límite de ancho de banda
+de la sesión anterior.
+
+Compilado a mano sin `-O2`, con el reloj en nanosegundos y el total siempre
+en 400 000 000:
 
 | Hilos | Acumulando en la local `s` | Acumulando sobre `salida` |
 |---:|---:|---:|
@@ -54,9 +81,9 @@ reloj en nanosegundos y el total siempre en 400 000 000:
 
 La columna de la izquierda escala casi al ritmo de los hilos, y la razón
 importa: sin optimización, cada `v[i]` cuesta varias instrucciones y la suma
-está limitada por el procesador, no por la memoria. Con `-O2` el mismo
-programa se topa con el ancho de banda antes que con los núcleos, que es lo
-que muestra la tabla de las diapositivas.
+queda limitada por el procesador, no por la memoria. Es el mismo programa y
+la misma máquina; lo que cambió es cuánto trabajo le cuesta cada elemento, y
+con eso cambió el cuello de botella.
 
 La columna de la derecha es el mismo programa con una sola línea cambiada:
 acumular directamente sobre `salida` en vez de sobre la local `s`. Con un
@@ -81,11 +108,19 @@ cuesta más que calcular.
 
 ### Repartir los trabajos
 
-El otro reparto: tres recorridos distintos del mismo vector, el máximo, la
-suma y cuántos elementos son pares, cada uno en su hilo. Aquí no hay trozos:
-hay tres trabajos. El total lo marca el más lento de los tres, y con tres
-trabajos no hay forma de usar más de tres hilos. La descomposición de tareas
-escala con la cantidad de trabajos distintos, no con el tamaño de los datos.
+El otro reparto: tres recorridos distintos del mismo vector de cincuenta
+millones, el máximo, la suma y cuántos elementos son pares, cada uno en su
+hilo. Ninguna de las tres necesita el resultado de las otras dos, y esa es la
+condición. Aquí no hay trozos: hay tres trabajos. En clase los tres recorridos
+uno tras otro tardaron 87 ms, y los tres a la vez, 42 ms.
+
+El total lo marca el más lento de los tres, y con tres trabajos no hay forma
+de usar más de tres hilos. La descomposición de tareas escala con la cantidad
+de trabajos distintos, no con el tamaño de los datos. Las dos formas se
+pueden combinar, con los datos partidos también dentro de cada tarea, siempre
+que se lleve la cuenta de cuántos hilos salen en total. Y como los tres
+recorridos leen la misma memoria, a veces gana la versión secuencial, que la
+recorre una sola vez con buena localidad.
 
 ### Un problema que se parte en dos como él mismo
 
@@ -102,6 +137,18 @@ La flecha verde recorre el árbol en el orden en que lo hace la recursión:
 toda la rama izquierda se resuelve antes de tocar la derecha, y las mezclas,
 en rojo, van de abajo hacia arriba. Al repartir, las dos ramas del mismo
 nivel corren a la vez y solo la mezcla que las une espera.
+
+En el código la mezcla cabe en una línea por elemento:
+
+```cpp
+while (i < med && j < fin) tmp[k++] = (v[i] <= v[j]) ? v[i++] : v[j++];
+```
+
+El operador ternario elige de qué lado sale el menor, y el posincremento
+avanza ese lado después de leerlo: `v[i++]` entrega `v[i]` y luego mueve
+`i`. Con `++i` sería al revés, primero mueve y después lee, y saldría el
+elemento equivocado. Las dos líneas que siguen vacían lo que sobra de cada
+lado.
 
 De ahí sale la recurrencia $T(n) = 2T(n/2) + n$, que da $n \log n$. El
 costo espacial es $\Theta(n)$: la mezcla necesita un espacio temporal, porque
@@ -137,10 +184,13 @@ un tramo no se reparte. Sin ninguno de los dos, la recursión sobre veinte
 millones de enteros crearía más de dos mil hilos, y crearlos y unirlos cuesta
 más que ordenar en secuencial.
 
-En el portátil de la clase, compilado con `-O2`, la versión secuencial tardó
-cerca de 5,9 s. Con dos hilos bajó a la mitad, siguió bajando con cuatro y con
-ocho, y de ahí en adelante la ganancia fue mínima. La tabla de las
-diapositivas, sobre cuatro núcleos, dice lo mismo con números:
+Se corrió en dos máquinas durante la semana. En una, la versión secuencial
+tardó cerca de 5,9 s; con dos hilos bajó a la mitad, siguió bajando con
+cuatro y con ocho, y de ahí en adelante la ganancia fue mínima. En la otra,
+la secuencial tardó 2,6 s, un hilo 2 s, dos hilos 1,3 s, cuatro 683 ms, ocho
+cerca de 500 ms, y dieciséis todavía menos, para una aceleración cercana a
+siete. La tabla de las diapositivas, sobre cuatro núcleos, dice lo mismo con
+números:
 
 | Corte | Hilos | Tiempo | Aceleración |
 |---|---:|---:|---:|
@@ -159,6 +209,26 @@ Las condiciones para que un problema se pueda partir así son las mismas de
 divide y vencerás: los subproblemas son del mismo tipo y la misma función
 sirve para todos, son independientes entre sí, y combinarlos cuesta menos que
 resolverlos.
+
+!!! note "Por qué se usa quicksort y no mergesort"
+    El mergesort es $\Theta(n \log n)$ siempre y el quicksort tiene un peor
+    caso cuadrático, cuando el pivote deja un elemento a un lado y $n - 1$
+    al otro y la recurrencia queda $T(n) = T(n-1) + n$. Aun así las
+    bibliotecas ordenan con quicksort, con pivote aleatorio para que las
+    particiones queden cerca de la mitad. La razón es la memoria: el
+    mergesort necesita espacio temporal, y las versiones que crean un vector
+    izquierdo y otro derecho en cada llamada lo multiplican por cada marco de
+    pila; el quicksort solo guarda tres índices por llamada. La versión
+    paralela del mergesort agrava eso, porque tiene más marcos de pila vivos
+    al mismo tiempo: es más rápida y se queda sin memoria antes.
+
+La memoria de un programa tiene tres zonas: el código, el montículo donde
+viven los arreglos, y la pila, donde cada llamada a función ocupa un marco
+con sus variables. Cuando hay muchas llamadas pendientes la pila se llena y
+el programa termina con un desbordamiento de pila. Las búsquedas por
+profundidad y por amplitud de inteligencia artificial tienen ese problema
+multiplicado, y repartirlas en hilos lo agrava: a veces la respuesta es
+dejarlas secuenciales aunque tarden más.
 
 ## De qué tamaño hacer las tareas
 
@@ -199,6 +269,21 @@ mejor. Con bloques contiguos al último hilo le tocan las tareas más caras, y
 los otros tres pasan más de la mitad del tiempo esperando. Por demanda todos
 siguen ocupados hasta el final. El precio es el contador, que en el código es
 un `atomic<int>` con `fetch_add`: la forma barata de repartir sin cerrojo.
+Sin la operación atómica, dos hilos que terminan a la vez leen el mismo
+número y hacen la misma tarea dos veces.
+
+La comparación de la clase: cien libros para devolver a los estantes y
+cuatro monitores. Repartir veinticinco a cada uno parece justo hasta que a
+uno le tocan los estantes del fondo y los otros tres terminan y se quedan
+mirando. Si cada uno toma un libro, lo lleva y vuelve por el siguiente, el
+que tuvo estantes cerca lleva más libros y todos terminan casi al tiempo.
+
+Eso no hace al reparto por demanda mejor en general. Si las tareas cuestan
+lo mismo, el fijo gana, porque no hay nada que coordinar: las dos mitades
+del mergesort son el caso. Y si los costos son desiguales pero conocidos, también sirve un
+reparto fijo por peso: más tareas baratas para un hilo, menos tareas caras
+para otro. El reparto por demanda es para cuando el costo es
+desigual y no se conoce de antemano.
 
 Para saber si hay desbalance, hay que contar cuántas tareas hizo cada hilo,
 no solo mirar el tiempo total. Con `std::thread` el reparto lo decide el
@@ -233,7 +318,15 @@ Es la reducción de programación funcional. `fold` recorría la colección con
 un acumulador y una función de dos argumentos, el acumulado y el elemento
 actual; aquí la primera lambda hace eso sobre un subrango y la segunda dice
 cómo se juntan dos acumulados. Para que la reducción se pueda repartir la
-operación tiene que ser asociativa: la suma sirve, la resta no.
+operación tiene que ser asociativa: la suma sirve, la resta no. Y `init` es
+una variable local de cada tarea, por la misma razón que la `s` de la suma
+con hilos.
+
+Aquí se combinan las dos descomposiciones: `blocked_range` parte los datos y
+el planificador reparte los pedazos como tareas entre los hilos que tenga, y
+detecta cuántos tiene mirando el procesador de la máquina. En el parcial la
+documentación de las bibliotecas estará a la mano; lo que se pregunta es qué
+bloque usar y por qué, no la firma de memoria.
 
 | | `std::thread` | TBB |
 |---|---|---|
@@ -266,15 +359,26 @@ izquierda suma 3, el de la derecha 7, y el total 10. Con esos parciales cada
 mitad ya sabe cuánto tiene que arrastrar, y a partir de ahí las mitades se
 pueden resolver a la vez.
 
-En el programa de la sesión son dos pasadas sobre veinte millones de
-elementos. En la primera cada hilo suma su bloque y reporta el total; entre
-las dos, se acumulan esos totales para obtener el desplazamiento de cada
-bloque; en la segunda cada hilo rehace su bloque partiendo de su
-desplazamiento. Es más trabajo que la versión secuencial, porque recorre los
-datos dos veces, y aun así en el portátil de la clase la versión en dos
-pasadas terminó en 1,7 s y por delante de la secuencial. Para que el efecto
-se vea, el valor de cada posición cuesta algo de calcular; si el programa
-solo mueve memoria, la segunda pasada cuesta más de lo que ahorra el reparto.
+El ejemplo del tablero fue la suma de prefijos de `1` a `12` con cuatro
+hilos, tres números por hilo. Primera pasada: cada hilo suma su bloque y
+reporta `6`, `15`, `24` y `33`. Entre las dos pasadas se acumulan esos
+totales y sale el punto de partida de cada bloque: `0`, `6`, `21` y `45`.
+Segunda pasada: cada hilo rehace su bloque arrancando desde su punto de
+partida, y los cuatro corren a la vez porque ya ninguno depende del vecino:
+
+| Bloque | Datos | Partida | Prefijos |
+|---:|---|---:|---|
+| 1 | 1 2 3 | 0 | 1 3 6 |
+| 2 | 4 5 6 | 6 | 10 15 21 |
+| 3 | 7 8 9 | 21 | 28 36 45 |
+| 4 | 10 11 12 | 45 | 55 66 78 |
+
+En el programa de la sesión son esas mismas dos pasadas sobre veinte millones
+de elementos. Es más trabajo que la versión secuencial, porque recorre los
+datos dos veces, y aun así gana: en clase la secuencial tardó 2,3 s y la de
+dos pasadas 1,6 s. Para que el efecto se vea, el valor de cada posición
+cuesta algo de calcular; si el programa solo mueve memoria, la segunda pasada
+cuesta más de lo que ahorra el reparto.
 
 !!! note "Antes de declarar que algo no se puede paralelizar"
     Preguntarse si la dependencia es del problema o de cómo se escribió la
@@ -301,6 +405,14 @@ colas, y una cola entre dos hilos necesita un cerrojo: sin él, la etapa de
 calcular puede intentar tomar un lote que la de leer todavía no terminó de
 poner.
 
+El patrón aparece donde hay entrada y salida de por medio, porque la etapa
+que espera al disco o a la red no consume procesador: esa espera la atiende
+la tarjeta, y el núcleo queda libre para la etapa de al lado. Dos casos que
+se mencionaron: una API que responde en flujo, donde se procesa el primer
+paquete mientras llegan los demás en vez de esperar la respuesta completa; y
+el entrenamiento de redes por lotes, donde se calcula sobre un lote mientras
+se carga el siguiente.
+
 ## Cómo elegir
 
 | Situación | Estrategia |
@@ -313,18 +425,20 @@ poner.
 | Flujo continuo por etapas | Pipeline |
 
 Y tres pautas que valen para todas. Medir la versión secuencial antes de
-repartir nada: es el punto de comparación y a veces también el ganador.
-Verificar que el resultado paralelo coincide con el secuencial antes de mirar
-los tiempos. Y cuando la aceleración se estanque, revisar primero cuánta
-memoria mueve el programa por cada operación que hace, y si hay false sharing
-por ahí: casi siempre está.
+repartir nada: es el punto de comparación y a veces también el ganador; si
+la tarea completa dura menos de un milisegundo en secuencial, crear los hilos
+cuesta más que eso y se deja quieta. Verificar que el resultado paralelo
+coincide con el secuencial antes de mirar los tiempos. Y cuando la
+aceleración se estanque, revisar primero cuánta memoria mueve el programa por
+cada operación que hace, y si hay false sharing por ahí: casi siempre está.
 
 ## El ejercicio de la sesión
 
 El último tramo fue el ejercicio del repositorio, el producto de Hadamard con
 TBB: llenar `u` y `v`, calcular `w[i] = u[i] * v[i]` en paralelo, sumar `w`
 con una reducción paralela, e imprimir el resultado con el tiempo. Se resolvió
-en vivo, y quedaron tres cosas de esa resolución.
+en vivo en la primera de las dos sesiones, y quedaron tres cosas de esa
+resolución.
 
 El valor inicial de `parallel_reduce` va como `0L`. Con `0` a secas el
 acumulador se toma como `int`, y la suma de diez millones de productos
