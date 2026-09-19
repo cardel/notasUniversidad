@@ -31,6 +31,11 @@ Se publican después de cada sesión.
    de definir una función, evaluación por valor frente a por nombre, `val`
    frente a `def`, el `if` como expresión, cortocircuito de `&&`, y bloques y
    alcance léxico. Incluye el código escrito en clase.
+2. [Clase 2. Funciones y los procesos que generan — 17 de septiembre](C2/Clase%202.%20Funciones%20y%20los%20procesos%20que%20generan.md)
+   — función frente a proceso, la pila de llamadas y el `StackOverflowError`,
+   recursión lineal, recursión de cola con acumulador y `@tailrec`, recursión
+   de árbol con Fibonacci y con el producto por mitades, y las condiciones de
+   entrega del Taller 1. Incluye el código escrito en clase.
 
 ### Corte 2
 
@@ -83,7 +88,20 @@ reporta en el Campus Virtual antes de terminar la clase.
 
 | Sesión | Ejercicio |
 |---:|---|
-| 1 | [Scala, Gradle y pruebas](https://github.com/EjerciciosClasesCardel/pfc-2026-2-clase-01-introduccion-scala) |
+| 1 | [Scala, Gradle y pruebas](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-01-introduccion-scala) |
+| 2 | [Recursión de cola: sumatorias con acumulador](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-02-recursion-de-cola) |
+
+## Talleres
+
+Se entregan como fork del repositorio del taller, uno por grupo, y la entrega
+es la dirección del fork con el hash del último commit, registrada en el
+Campus Virtual antes del cierre. El enunciado completo, con la rúbrica, es el
+PDF del campus; el repositorio trae el proyecto configurado, las pruebas y los
+ejemplos de los informes.
+
+| Taller | Tema | Cierre |
+|---:|---|---|
+| 1 | [Cifrados clásicos con recursión](https://github.com/EjerciciosClasesCardel/pfc-taller-1-cifrados-clasicos) | jueves 8 de octubre, 23:59 |
 
 ## Reglas del código
 

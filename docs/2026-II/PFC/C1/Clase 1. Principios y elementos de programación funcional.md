@@ -10,7 +10,7 @@ que queda un valor.
 
 Las diapositivas están en el Campus Virtual. Aquí quedan las notas de lo que se
 dijo en el salón y el código que se escribió en vivo, en
-[`codigo/`](codigo/). Los dos ejercicios interactivos de la sesión están en
+[`codigo/`](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/PFC/C1/codigo). Los dos ejercicios interactivos de la sesión están en
 [Ejercicios](./Ejercicios.md).
 
 Referencia: Odersky, Spoon y Venners, *Programming in Scala*, 3.ª edición,
