@@ -8,7 +8,7 @@ entrada y salida, qué es el grafo, el algoritmo, el código y el costo.
 
 ## Diapositivas
 
-[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 67 láminas.
+[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 69 páginas: las 67 láminas anotadas en clase y dos de tablero.
 
 ## Lo que cuestan los recorridos
 
@@ -403,6 +403,44 @@ recorrido, y ese recorrido es un componente. Costo: $\Theta(m)$ para hallar
 el máximo y armar el grafo, $\Theta(n + m)$ el recorrido. Con $m$ hasta un
 millón lo que pesa es leer la entrada: se lee todo de una vez y se parte por
 espacios.
+
+### Los dos casos de la muestra, a mano
+
+Antes de correr el código conviene hacer lo que hace `grafo_de_las_mejores`
+con lápiz. En el primer caso la entrada trae cinco carreteras y la PPA
+máxima es 100; se marcan las líneas que la tienen y solo esas entran a la
+lista de adyacencia:
+
+```
+4 5
+1 2 100   <- entra
+1 3 100   <- entra
+1 4 1
+2 3 100   <- entra
+3 4 1
+```
+
+$$
+\texttt{adj} = \{\, 1: [2, 3],\ 2: [1, 3],\ 3: [1, 2],\ 4: [\,]\, \}
+$$
+
+La ciudad 4 queda con la lista vacía: sus dos carreteras son de PPA 1. El
+recorrido desde 1 toca 1, 2 y 3 y devuelve 3; el que arranca en 4 devuelve 1.
+Respuesta: 3.
+
+El segundo caso tiene nueve ciudades y catorce carreteras, y la PPA máxima
+es 9. Marcando las que la tienen quedan ocho: 1–2, 2–4,
+2–3, 4–3, 9–8, 7–8, 6–7 y
+7–5. Dibujadas, forman dos pedazos: $\{1, 2, 3, 4\}$, con el
+triángulo $2, 3, 4$ colgado del 1, y $\{5, 6, 7, 8, 9\}$, un camino
+$9, 8, 7$ que se abre en 6 y 5. El `while` sobre `u` arranca en 1 y el
+recorrido devuelve 4; las ciudades 2, 3 y 4 ya están marcadas cuando les
+llega el turno, así que el siguiente recorrido arranca en 5 y devuelve 5.
+Respuesta: 5.
+
+Lo que muestra el segundo caso es por qué el ciclo externo hace falta: un
+solo recorrido desde 1 habría contestado 4, y el componente más grande
+estaba en el otro pedazo.
 
 ## Errores comunes
 

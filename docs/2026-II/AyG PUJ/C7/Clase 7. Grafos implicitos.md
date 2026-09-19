@@ -25,8 +25,8 @@ un imperio.
 
     ---
 
-    Las 66 láminas de la sesión, con el laberinto por capas, el bosque de la
-    muestra y la red de enrutadores.
+    Las 67 láminas con las anotaciones de la sesión y dos páginas de tablero
+    con los casos de la muestra de Poor Trade Advisor.
 
     [:octicons-arrow-right-24: Abrir](clase07-implicitos.pdf)
 
