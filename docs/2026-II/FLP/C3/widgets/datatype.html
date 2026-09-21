@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Compila este datatype?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿Compila este datatype?</h1>
+  <p class="intro">Nueve declaraciones con <code>define-datatype</code>, unas bien y otras con el error que aparece cada semestre, y después siete expresiones sobre un datatype ya cargado, para predecir qué acepta el constructor y qué rechaza. Lo que se juzga es lo que DrRacket responde, con sus mensajes.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que se rechaza al compilar y lo que se rechaza al construir:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Lo detecta</th><th>Qué</th><th>El mensaje</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>el compilador</td><td>una variante o el predicado con el nombre del tipo</td><td><code>identifier already defined</code></td></tr>
+          <tr><td>el compilador</td><td>un campo sin predicado o sin paréntesis</td><td><code>expected a field name followed by a predicate</code></td></tr>
+          <tr><td>el compilador</td><td>dos campos o dos variantes iguales</td><td><code>duplicate</code></td></tr>
+          <tr><td>el constructor</td><td>un valor que no cumple el predicado del campo</td><td><code>bad value for … field</code></td></tr>
+          <tr><td>nadie</td><td>un símbolo válido con un significado que no existe</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">define-datatype define nombres y el constructor revisa
+    predicados. Lo que cae fuera de esas dos cosas —una dirección que no
+    existe, una lista donde iba un comando— solo se atrapa si el tipo lo dice:
+    un tipo aparte para las direcciones, <code>list-of</code> donde va una
+    lista. Cuanto más dice el tipo, menos programas mal formados llegan a
+    existir.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="datatype.js"></script>
+</body>
+</html>

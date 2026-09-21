@@ -72,6 +72,14 @@ quedan disponibles después para volver sobre el tema.
    base 10 con acarreo y préstamo, y `apply-env` predicho sobre una cadena
    con nombres repetidos y cinco clientes del ambiente por la interfaz.
 
+4. [Ejercicios de la clase 3: datatypes y árboles de sintaxis abstracta](C3/Ejercicios.md)
+   — cuatro actividades, en el orden de los temas de la sesión: declaraciones
+   con `define-datatype` para juzgar si DrRacket las acepta y qué admite el
+   constructor, un datatype de comandos de robot recorrido con `cases`,
+   programas y árboles dibujados para casar unos con otros, y el parser y
+   el unparser de esos comandos, con el árbol esperado de cada prueba
+   dibujado junto al que construye el código.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
