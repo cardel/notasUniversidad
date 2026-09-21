@@ -24,6 +24,15 @@ var MiniScheme = (function () {
   function Primitiva(nombre, minimo, maximo, fn) {
     this.nombre = nombre; this.minimo = minimo; this.maximo = maximo; this.fn = fn;
   }
+  /* Un tipo declarado con define-datatype: su nombre y, por cada variante,
+     los nombres de sus campos y las expresiones de sus predicados. */
+  function TipoDato(nombre, predicado) {
+    this.nombre = nombre; this.predicado = predicado; this.variantes = Object.create(null);
+  }
+  /* Un valor construido con uno de los constructores del tipo. */
+  function Dato(tipo, variante, campos) {
+    this.tipo = tipo; this.variante = variante; this.campos = campos;
+  }
 
   function ErrorScheme(mensaje) { this.mensaje = mensaje; }
   function fallar(mensaje) { throw new ErrorScheme(mensaje); }
@@ -116,6 +125,10 @@ var MiniScheme = (function () {
     if (v instanceof Simbolo) { return v.nombre; }
     if (v instanceof Cierre) { return "#<procedimiento " + v.nombre + ">"; }
     if (v instanceof Primitiva) { return "#<primitiva " + v.nombre + ">"; }
+    if (v instanceof TipoDato) { return "#<tipo " + v.nombre + ">"; }
+    if (v instanceof Dato) {
+      return "(" + [v.variante].concat(v.campos.map(escribir)).join(" ") + ")";
+    }
     if (v instanceof Par) {
       var partes = [], p = v;
       while (p instanceof Par) { partes.push(escribir(p.car)); p = p.cdr; }
@@ -136,6 +149,11 @@ var MiniScheme = (function () {
     if (typeof a === "string" && typeof b === "string") { return a === b; }
     if (a instanceof Par && b instanceof Par) {
       return iguales(a.car, b.car) && iguales(a.cdr, b.cdr);
+    }
+    if (a instanceof Dato && b instanceof Dato) {
+      if (a.tipo !== b.tipo || a.variante !== b.variante || a.campos.length !== b.campos.length) { return false; }
+      for (var i = 0; i < a.campos.length; i++) { if (!iguales(a.campos[i], b.campos[i])) { return false; } }
+      return true;
     }
     return false;
   }
@@ -265,6 +283,17 @@ var MiniScheme = (function () {
     prim("null?", 1, 1, function (a) { return a[0] === NULO; });
     prim("pair?", 1, 1, function (a) { return a[0] instanceof Par; });
     prim("list?", 1, 1, function (a) { return esLista(a[0]); });
+    /* (list-of pred) devuelve el predicado que acepta una lista cuyos
+       elementos cumplen pred, todos. */
+    prim("list-of", 1, 1, function (a) {
+      var pred = a[0];
+      return new Primitiva("(list-of " + escribir(pred) + ")", 1, 1, function (b, m) {
+        if (!esLista(b[0])) { return false; }
+        var xs = aArreglo(b[0]);
+        for (var i = 0; i < xs.length; i++) { if (m.aplicar(pred, [xs[i]]) !== true) { return false; } }
+        return true;
+      });
+    });
     prim("length", 1, 1, function (a) {
       if (!esLista(a[0])) { fallar("length esperaba una lista y recibió " + escribir(a[0]) + "."); }
       return aArreglo(a[0]).length;
@@ -409,6 +438,17 @@ var MiniScheme = (function () {
         }
       }
 
+      if (op instanceof Simbolo && op.nombre === "define-datatype") {
+        this.definirTipo(args, amb);
+        return undefined;
+      }
+      if (op instanceof Simbolo && op.nombre === "cases") {
+        var eleccion = this.elegirCaso(args, amb);
+        var cuerpoCaso = eleccion.cuerpo;
+        for (var cc = 0; cc < cuerpoCaso.length - 1; cc++) { this.evaluar(cuerpoCaso[cc], eleccion.amb); }
+        exp = cuerpoCaso[cuerpoCaso.length - 1]; amb = eleccion.amb; continue;
+      }
+
       var proceso = this.evaluar(op, amb);
       var valores = [];
       for (var m = 0; m < args.length; m++) { valores.push(this.evaluar(args[m], amb)); }
@@ -417,7 +457,7 @@ var MiniScheme = (function () {
         if (valores.length < proceso.minimo || valores.length > proceso.maximo) {
           fallar(proceso.nombre + " no recibe " + valores.length + " argumento(s).");
         }
-        return proceso.fn(valores);
+        return proceso.fn(valores, this);
       }
       if (!(proceso instanceof Cierre)) {
         fallar("El valor " + escribir(proceso) + " no es un procedimiento y aparece en posición de llamada.");
@@ -427,6 +467,128 @@ var MiniScheme = (function () {
       for (var q = 0; q < cuerpoP.length - 1; q++) { this.evaluar(cuerpoP[q], amb); }
       exp = cuerpoP[cuerpoP.length - 1];
     }
+  };
+
+  /* Aplica un procedimiento desde JavaScript: sirve para los predicados de
+     campo de define-datatype y para list-of. */
+  Maquina.prototype.aplicar = function (proc, valores) {
+    if (proc instanceof Primitiva) {
+      if (valores.length < proc.minimo || valores.length > proc.maximo) {
+        fallar(proc.nombre + " no recibe " + valores.length + " argumento(s).");
+      }
+      return proc.fn(valores, this);
+    }
+    if (!(proc instanceof Cierre)) {
+      fallar("El valor " + escribir(proc) + " no es un procedimiento y se intentó usar como predicado.");
+    }
+    var ambLocal = this.ligar(proc, valores);
+    var r;
+    for (var i = 0; i < proc.cuerpo.length; i++) { r = this.evaluar(proc.cuerpo[i], ambLocal); }
+    return r;
+  };
+
+  /* (define-datatype tipo tipo? (variante (campo predicado) ...) ...)
+     Declara el tipo, su predicado y un constructor por variante. El
+     constructor exige la cantidad exacta de campos y que cada uno cumpla su
+     predicado, que se evalúa en el momento de construir para que un tipo
+     pueda nombrarse a sí mismo. */
+  Maquina.prototype.definirTipo = function (args, amb) {
+    if (args.length < 2 || !(args[0] instanceof Simbolo) || !(args[1] instanceof Simbolo)) {
+      fallar("define-datatype necesita el nombre del tipo y el de su predicado.");
+    }
+    var nombreTipo = args[0].nombre, nombrePred = args[1].nombre;
+    var tipo = new TipoDato(nombreTipo, nombrePred);
+    var maquina = this;
+    if (args.length === 2) { fallar("El tipo " + nombreTipo + " no tiene ninguna variante."); }
+    for (var i = 2; i < args.length; i++) {
+      var decl = aArreglo(args[i]);
+      if (decl.length === 0 || !(decl[0] instanceof Simbolo)) {
+        fallar("Cada variante de " + nombreTipo + " empieza con su nombre entre paréntesis.");
+      }
+      var nombreVariante = decl[0].nombre;
+      if (nombreVariante === nombreTipo) {
+        fallar("La variante " + nombreVariante + " no puede llamarse igual que el tipo.");
+      }
+      var campos = [];
+      for (var c = 1; c < decl.length; c++) {
+        var campo = aArreglo(decl[c]);
+        if (campo.length !== 2 || !(campo[0] instanceof Simbolo)) {
+          fallar("En " + nombreVariante + " cada campo va como (nombre predicado); llegó " + escribir(decl[c]) + ".");
+        }
+        campos.push({ nombre: campo[0].nombre, predicado: campo[1] });
+      }
+      tipo.variantes[nombreVariante] = campos;
+      amb.definir(nombreVariante, (function (variante, campos) {
+        return new Primitiva(variante, campos.length, campos.length, function (valores, m) {
+          for (var k = 0; k < campos.length; k++) {
+            var pred = m.evaluar(campos[k].predicado, amb);
+            var cumple = m.aplicar(pred, [valores[k]]);
+            if (cumple !== true) {
+              fallar("El campo " + campos[k].nombre + " de " + variante + " debe cumplir " +
+                     escribir(campos[k].predicado) + " y recibió " + escribir(valores[k]) + ".");
+            }
+          }
+          return new Dato(tipo, variante, valores.slice());
+        });
+      })(nombreVariante, campos));
+    }
+    amb.definir(nombreTipo, tipo);
+    amb.definir(nombrePred, new Primitiva(nombrePred, 1, 1, function (a) {
+      return a[0] instanceof Dato && a[0].tipo === tipo;
+    }));
+  };
+
+  /* (cases tipo exp (variante (campo ...) cuerpo ...) ... (else cuerpo ...))
+     Devuelve la cláusula elegida y el ambiente con sus campos ligados. */
+  Maquina.prototype.elegirCaso = function (args, amb) {
+    if (args.length < 2 || !(args[0] instanceof Simbolo)) {
+      fallar("cases necesita el nombre del tipo y la expresión que se analiza.");
+    }
+    var tipo = amb.buscar(args[0].nombre);
+    if (!(tipo instanceof TipoDato)) {
+      fallar(args[0].nombre + " no es un tipo declarado con define-datatype.");
+    }
+    /* Sin else, las cláusulas tienen que cubrir todas las variantes: es lo
+       que Racket exige al compilar, y se revisa antes de mirar el valor. */
+    var cubiertas = Object.create(null), hayElse = false;
+    for (var q = 2; q < args.length; q++) {
+      var cab = aArreglo(args[q])[0];
+      if (cab instanceof Simbolo) { if (cab.nombre === "else") { hayElse = true; } else { cubiertas[cab.nombre] = true; } }
+    }
+    if (!hayElse) {
+      var faltan = Object.keys(tipo.variantes).filter(function (v) { return !cubiertas[v]; });
+      if (faltan.length) {
+        fallar("A este cases sobre " + tipo.nombre + " le faltan las variantes " + faltan.join(", ") + " y no tiene else.");
+      }
+    }
+    var valor = this.evaluar(args[1], amb);
+    if (!(valor instanceof Dato) || valor.tipo !== tipo) {
+      fallar("cases sobre " + tipo.nombre + " recibió " + escribir(valor) + ", que no es un " + tipo.nombre + ".");
+    }
+    for (var i = 2; i < args.length; i++) {
+      var clausula = aArreglo(args[i]);
+      if (clausula.length === 0 || !(clausula[0] instanceof Simbolo)) {
+        fallar("Cada cláusula de cases empieza con el nombre de una variante o con else.");
+      }
+      if (clausula[0].nombre === "else") {
+        return { cuerpo: clausula.slice(1), amb: amb };
+      }
+      if (!(clausula[0].nombre in tipo.variantes)) {
+        fallar(clausula[0].nombre + " no es una variante de " + tipo.nombre + ".");
+      }
+      if (clausula[0].nombre === valor.variante) {
+        var nombres = aArreglo(clausula[1]);
+        if (nombres.length !== valor.campos.length) {
+          fallar("La cláusula " + valor.variante + " de cases nombra " + nombres.length +
+                 " campo(s) y la variante tiene " + valor.campos.length + ".");
+        }
+        var nuevo = new Ambiente(amb);
+        for (var k = 0; k < nombres.length; k++) { nuevo.definir(nombres[k].nombre, valor.campos[k]); }
+        if (clausula.length < 3) { fallar("La cláusula " + valor.variante + " de cases no tiene cuerpo."); }
+        return { cuerpo: clausula.slice(2), amb: nuevo };
+      }
+    }
+    fallar("cases sobre " + tipo.nombre + " no tiene cláusula para la variante " + valor.variante + ".");
   };
 
   Maquina.prototype.cerrar = function (formales, cuerpo, amb, nombre) {
@@ -495,7 +657,19 @@ var MiniScheme = (function () {
              salida: r.salida, error: r.error };
   }
 
+  /* Describe un valor como estructura plana, para dibujarlo. */
+  function inspeccionar(v) {
+    if (v instanceof Dato) {
+      return { clase: "dato", variante: v.variante, campos: v.campos.map(inspeccionar) };
+    }
+    if (v instanceof Par && esLista(v)) {
+      return { clase: "lista", items: aArreglo(v).map(inspeccionar) };
+    }
+    return { clase: "atomo", texto: escribir(v) };
+  }
+
   return {
+    inspeccionar: inspeccionar,
     correr: correr,
     evaluarExpresion: evaluarExpresion,
     nuevaSesion: nuevaSesion,

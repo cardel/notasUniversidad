@@ -5,7 +5,9 @@
    Un reto es un objeto con: id, titulo, enunciado, gramatica (o null),
    esqueleto, pruebas (llamada y esperado), pistas (una función que recibe la
    llamada que falló, lo esperado y lo obtenido, y devuelve una explicación o
-   null) y cierre. */
+   null) y cierre. Con arbol: true, y dibujar-arbol.js cargado, cada prueba
+   cuyo resultado esperado es una lista se dibuja como árbol, y al fallar se
+   dibuja al lado el árbol que devolvió el código. */
 var MotorRetos = (function () {
   "use strict";
 
@@ -50,15 +52,50 @@ var MotorRetos = (function () {
     casos.innerHTML = "<b>Debe cumplir:</b>";
     var ul = document.createElement("ul");
     ul.className = "casos-lista";
+    var dibuja = reto.arbol && typeof DibujarArbol !== "undefined";
+    var items = [];
     reto.pruebas.forEach(function (p) {
       var li = document.createElement("li");
       li.innerHTML = "<code>" + p.llamada + "</code> → <code>" + p.esperado + "</code>";
+      if (dibuja && /^\(/.test(p.esperado)) {
+        var figuras = document.createElement("div");
+        figuras.className = "arboles-prueba";
+        figuras.innerHTML = "<figure>" + DibujarArbol.svg(DibujarArbol.desdeTexto(p.esperado)) +
+          "<figcaption>el árbol que se espera</figcaption></figure>";
+        li.appendChild(figuras);
+      }
       ul.appendChild(li);
+      items.push(li);
     });
     casos.appendChild(ul);
 
+    /* Con reto.arbol, la prueba que falla muestra al lado el árbol que el
+       código construyó, para comparar forma contra forma. */
+    function mostrarObtenido(llamada, obtenido) {
+      items.forEach(function (li) {
+        var viejo = li.querySelector(".arbol-obtenido");
+        if (viejo) { viejo.remove(); }
+      });
+      if (!dibuja || !/^\(/.test(obtenido)) { return; }
+      for (var i = 0; i < reto.pruebas.length; i++) {
+        if (reto.pruebas[i].llamada === llamada) {
+          var figuras = items[i].querySelector(".arboles-prueba");
+          if (!figuras) { return; }
+          var fig = document.createElement("figure");
+          fig.className = "arbol-obtenido";
+          try {
+            fig.innerHTML = DibujarArbol.svg(DibujarArbol.desdeTexto(obtenido)) +
+              "<figcaption>el árbol que construyó su código</figcaption>";
+            figuras.appendChild(fig);
+          } catch (e) { /* si no se puede dibujar, queda el texto */ }
+          return;
+        }
+      }
+    }
+
     var editor = carta.querySelector(".editor");
     editor.value = reto.esqueleto;
+    editor.rows = Math.min(24, Math.max(7, reto.esqueleto.split("\n").length + 1));
     var veredicto = carta.querySelector(".veredicto");
 
     carta.querySelector('[data-accion="reiniciar"]').addEventListener("click", function () {
@@ -74,6 +111,7 @@ var MotorRetos = (function () {
       }
       var r = correrRetoConCodigo(reto, editor.value);
       if (r.estado === "bien") {
+        mostrarObtenido(null, "");
         veredicto.className = "veredicto bien";
         veredicto.textContent = "Pasa las " + reto.pruebas.length + " pruebas. " + reto.cierre;
         alResolver(reto);
@@ -84,6 +122,7 @@ var MotorRetos = (function () {
         veredicto.textContent = r.mensaje;
         return;
       }
+      mostrarObtenido(r.llamada, r.obtenido);
       var pista = reto.pistas(r.llamada, r.esperado, r.obtenido);
       veredicto.textContent =
         r.llamada + " dio " + r.obtenido + " y debía dar " + r.esperado + "." +

@@ -76,3 +76,23 @@
 }
 .razon.mal { color: var(--rojo); }
 .razon.bien { color: var(--verde); }
+
+/* Árboles de sintaxis abstracta dibujados por dibujar-arbol.js */
+.arbol { display: block; max-width: 100%; height: auto; margin: 0.4rem 0 0.2rem; font-family: ui-monospace, "JetBrains Mono", Menlo, monospace; font-size: 12px; }
+.arbol-arista { stroke: #7a8390; stroke-width: 1.4; }
+.arbol-nodo { fill: #e7eefc; stroke: #4c6ab8; stroke-width: 1.2; }
+.arbol-lista { fill: #f4f4f4; stroke: #9a9a9a; stroke-width: 1; stroke-dasharray: 3 2; }
+.arbol-texto { fill: #1c2a4a; text-anchor: middle; dominant-baseline: central; }
+.arbol-hoja { fill: #333; text-anchor: middle; dominant-baseline: central; font-weight: 600; }
+.arboles-prueba { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-start; }
+.arboles-prueba figure { margin: 0; }
+.arboles-prueba figcaption { font-size: 0.8rem; color: #666; }
+.arbol-obtenido .arbol-nodo { fill: #fde8e8; stroke: #b84c4c; }
+.arbol-obtenido .arbol-lista { stroke: #c08a8a; }
+.arbol-obtenido figcaption { color: #a33; }
+.candidatos { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-start; margin-top: 0.4rem; }
+.candidatos figure { margin: 0; padding: 0.3rem 0.5rem; border: 1px solid #ddd; border-radius: 8px; background: #fff; }
+.candidatos figcaption { text-align: center; font-weight: 700; color: #4c6ab8; }
+.item .valor .programa { display: inline-block; margin-bottom: 0.2rem; font-size: 1rem; }
+.programas { margin: 0.4rem 0 0 1.2rem; padding: 0; }
+.programas li { margin: 0.15rem 0; }
