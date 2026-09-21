@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escribir el datatype</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Escribir el datatype</h1>
+  <p class="intro">Tres gramáticas y, para cada una, la declaración con <code>define-datatype</code> que le corresponde. Los nombres de las variantes y de los campos ya están en la gramática; lo que hay que decidir es el predicado de cada campo: el de un terminal, el del propio tipo, <code>list-of</code> para los puntos suspensivos, o el de otro tipo declarado al lado. Las pruebas construyen valores y preguntan por los predicados.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. El constructor de cada variante revisa
+    el número de campos y el predicado de cada uno, como en DrRacket, y los
+    valores se imprimen como <code>(var-exp p)</code> para poder leerlos. Lo
+    que se entrega se escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres, resueltos</h2>
+    <p style="margin-top:0">Lo que hay en la gramática y el predicado que le corresponde:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En la producción</th><th>En el campo</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>un terminal con información</td><td>el predicado de Scheme</td><td><code>(nombre symbol?)</code>, <code>(tamano number?)</code></td></tr>
+          <tr><td>el mismo no terminal que se declara</td><td>el predicado del propio tipo</td><td><code>(arg bexp?)</code></td></tr>
+          <tr><td>puntos suspensivos</td><td><code>list-of</code> del predicado</td><td><code>(hijos (list-of entrada?))</code></td></tr>
+          <tr><td>otro no terminal</td><td>el predicado del otro tipo</td><td><code>(first s-exp?)</code></td></tr>
+          <tr><td>solo una palabra clave</td><td>ninguno: variante sin campos</td><td><code>(true-exp)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Las palabras clave, los paréntesis y los signos no dejan
+    campo, estén adelante o en medio. Lo que sí deja campo es cada no
+    terminal y cada terminal que lleva información, y el predicado se lee de
+    la gramática: qué cosa es lo que va en esa posición.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar una declaración antes de pegarla en el
+    reto. Las definiciones se acumulan entre corridas hasta que se reinicie la
+    sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="7" spellcheck="false">(define-datatype punto punto?
+  (un-punto (x number?) (y number?)))
+
+(un-punto 3 4)
+(punto? (un-punto 3 4))
+(punto? '(un-punto 3 4))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+
+<script src="declarar.js"></script>
+</body>
+</html>

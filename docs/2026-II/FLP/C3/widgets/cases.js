@@ -63,11 +63,6 @@ var RETOS = (function () {
             "llama a distancia sobre cada comando, y distancia ya sabe qué " +
             "hacer con un repite.";
         }
-        if (obtenido.indexOf("esperaba una lista") !== -1) {
-          return "Se intentó abrir un comando con car o cdr. Un valor del " +
-            "datatype no es una lista: se abre con cases y los campos " +
-            "llegan ligados a los nombres de la cláusula.";
-        }
         return "Tres cláusulas: el número, cero, y n por lo que sume la " +
           "lista. El auxiliar suma la distancia de cada comando de la lista.";
       },

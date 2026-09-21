@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leer el programa como lista</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Leer el programa como lista</h1>
+  <p class="intro">Una expresión lambda guardada como lista de Scheme y los accesos con <code>car</code> y <code>cdr</code> que la destripan. Primero qué devuelve cada acceso; después qué hace <code>occurs-free?</code> con listas que no son expresiones; al final qué se rompe, y qué no se nota, cuando la representación cambia. La consola del final sirve para comprobar cada respuesta.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que cada bloque mostró y lo que la sección siguiente responde:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>El problema</th><th>Dónde se vio</th><th>Lo que hace falta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>el nombre del acceso no dice qué trae</td><td><code>caadr</code>, <code>(caadr (cadr (caddr e)))</code></td><td>un nombre por cada parte: <code>id</code>, <code>body</code>, <code>rator</code>, <code>rand</code></td></tr>
+          <tr><td>nada verifica la forma</td><td><code>(f)</code>, <code>(x y z)</code>, <code>(lambda (x))</code></td><td>que construir un valor mal formado sea un error</td></tr>
+          <tr><td>el cliente depende de la representación</td><td><code>(app g y)</code>, <code>(lambda y …)</code></td><td>que el cliente nombre las partes y no las posiciones</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Las tres columnas de la derecha son lo que da
+    <code>define-datatype</code>: un nombre para cada variante y cada campo,
+    un constructor que verifica al construir y un <code>cases</code> que
+    entrega los campos por nombre. Con eso, la representación puede cambiar
+    sin que ningún cliente se entere.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para comprobar cualquier ítem. La expresión y
+    <code>occurs-free?</code> ya están cargadas; las definiciones se acumulan
+    entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="12" spellcheck="false">(define e '(lambda (y) ((g y) (lambda (z) (h z)))))
+(define occurs-free?
+  (lambda (var exp)
+    (cond
+      ((symbol? exp) (eqv? var exp))
+      ((eqv? (car exp) 'lambda)
+       (and (not (eqv? var (caadr exp)))
+            (occurs-free? var (caddr exp))))
+      (else
+       (or (occurs-free? var (car exp))
+           (occurs-free? var (cadr exp)))))))
+(caadr (cadr (caddr e)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="lista.js"></script>
+</body>
+</html>
