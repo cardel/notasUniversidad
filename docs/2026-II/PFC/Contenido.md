@@ -91,6 +91,7 @@ reporta en el Campus Virtual antes de terminar la clase.
 |---:|---|
 | 1 | [Scala, Gradle y pruebas](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-01-introduccion-scala) |
 | 2 | [Recursión de cola: sumatorias con acumulador](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-02-recursion-de-cola) |
+| 3 | [Currificación: suma4, reducirC y composición](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-04-currificacion) |
 
 ## Talleres
 
