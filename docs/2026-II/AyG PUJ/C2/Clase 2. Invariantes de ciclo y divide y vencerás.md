@@ -36,8 +36,8 @@ en dos páginas: entre por la de su grupo.
 
 ## Apéndices
 
-Dos páginas que sirven a los dos grupos y que quedaron de preguntas de
-clase:
+Tres páginas que sirven a los dos grupos y que quedaron de preguntas de
+clase y de correo:
 
 - [El arreglo en el invariante y la inducción estructural](Apéndice.md) —
   qué pasa con el invariante cuando el algoritmo modifica el arreglo (tres
@@ -49,6 +49,13 @@ clase:
   $T(n) = 2\,T(n/2) + \Theta(1)$ y $T(n) = 2\,T(n/2) + \Theta(n)$
   desarrolladas paso a paso: las sustituciones, el patrón, la sumatoria y
   el aterrizaje en el caso base.
+- [Recursión: qué pasar en la llamada y dónde parar](Apéndice%20de%20recursión.md) —
+  las dos preguntas que más cuestan al escribir una función recursiva,
+  descubiertas sobre la pila de llamadas con la suma hasta $n$, los dígitos
+  de un número, la suma de un rango y la potencia; después la definición
+  formal, la demostración por inducción de `suma_arreglo` en cuatro partes,
+  el costo y el límite de la pila de Python. Con seis ejercicios y el código
+  en `codigo/recursion.py`.
 
 ## Ejercicios interactivos
 
