@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluar y reescribir</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Evaluar y reescribir</h1>
+  <p class="intro">Cuatro procedimientos con <code>cases</code> sobre las expresiones booleanas. Los dos primeros devuelven un valor de Scheme: el valor de verdad y una cuenta. Los dos últimos devuelven otra expresión booleana, reconstruida variante por variante, y en ellos el árbol que se espera va dibujado bajo cada prueba; si el código construye otro, aparece al lado el que construyó.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. Un <code>cases</code> sin <code>else</code>
+    tiene que cubrir todas las variantes, como en DrRacket. Lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cuatro, resueltos</h2>
+    <p style="margin-top:0">Lo que devuelve cada cláusula, según lo que devuelve el procedimiento:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>Devuelve</th><th>En las hojas</th><th>En not-exp</th><th>En los conectivos</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>evalua</td><td>un booleano</td><td>#t, #f, esta?</td><td>niega el valor del argumento</td><td>and u or de los valores de los lados</td></tr>
+          <tr><td>negaciones</td><td>un número</td><td>0</td><td>1 más el argumento</td><td>la suma de los lados</td></tr>
+          <tr><td>sin-doble-negacion</td><td>un bexp</td><td>la misma hoja</td><td>mira el argumento: si es not, su interior; si no, reconstruye</td><td>la misma variante con los lados simplificados</td></tr>
+          <tr><td>nnf</td><td>un bexp</td><td>la misma hoja</td><td>mira el argumento y aplica la regla que toca</td><td>la misma variante con los lados en nnf</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Cuando el resultado es un valor de Scheme, cada cláusula
+    combina lo que devuelven los hijos. Cuando el resultado es un valor del
+    mismo tipo, cada cláusula llama al constructor con los hijos ya
+    transformados, y el árbol original queda intacto: no hay asignación, hay
+    un árbol nuevo. Cuando la decisión depende de la forma del hijo, el
+    <code>cases</code> se anida.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="9" spellcheck="false">(define-datatype bexp bexp?
+  (true-exp)
+  (false-exp)
+  (var-exp   (nombre symbol?))
+  (not-exp   (arg bexp?))
+  (and-exp   (izq bexp?) (der bexp?))
+  (or-exp    (izq bexp?) (der bexp?)))
+
+(cases bexp (not-exp (var-exp 'p))
+  (not-exp (arg) arg)
+  (else 'no-es-not))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+
+<script src="evaluar.js"></script>
+</body>
+</html>

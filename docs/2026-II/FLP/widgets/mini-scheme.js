@@ -314,6 +314,7 @@ var MiniScheme = (function () {
     prim("reverse", 1, 1, function (a) { return desdeArreglo(aArreglo(a[0]).reverse()); });
     prim("not", 1, 1, function (a) { return a[0] === false; });
     prim("eq?", 2, 2, function (a) { return a[0] === a[1] || (typeof a[0] === "number" && a[0] === a[1]); });
+    prim("eqv?", 2, 2, function (a) { return a[0] === a[1] || (typeof a[0] === "number" && a[0] === a[1]); });
     prim("equal?", 2, 2, function (a) { return iguales(a[0], a[1]); });
     prim("number?", 1, 1, function (a) { return typeof a[0] === "number"; });
     prim("symbol?", 1, 1, function (a) { return a[0] instanceof Simbolo; });

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construir el árbol a mano</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Construir el árbol a mano</h1>
+  <p class="intro">Tres programas del lenguaje del curso en sintaxis concreta y, para cada uno, la expresión con los constructores que arma su árbol. El árbol que se espera va dibujado bajo la prueba; si el código construye otro, aparece al lado el que construyó, para comparar forma contra forma. Al cierre, un recorrido que devuelve las hojas en orden.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. Los valores se imprimen como
+    <code>(var-exp x)</code> para poder leerlos, y los símbolos que llegan a un
+    constructor van con comilla: <code>(var-exp 'x)</code>. Lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cuatro, resueltos</h2>
+    <p style="margin-top:0">Lo que el programa trae y lo que el árbol guarda:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En el programa</th><th>En el árbol</th><th>Al recorrerlo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>un paréntesis que abre</td><td>un nivel más</td><td>una llamada recursiva</td></tr>
+          <tr><td>un número o un identificador usado</td><td>una hoja envuelta</td><td>una lista de un elemento</td></tr>
+          <tr><td>el identificador que declara un <code>let</code></td><td>un símbolo suelto</td><td>también una hoja</td></tr>
+          <tr><td><code>then</code>, <code>else</code>, <code>=</code>, <code>in</code></td><td>nada</td><td>nada</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Construir el árbol a mano es lo que <code>parse</code>
+    hace solo, y por eso conviene haberlo hecho una vez: cada cláusula del
+    parser es una de estas expresiones con los campos sacados del programa en
+    lugar de escritos a mano.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="9" spellcheck="false">(define-datatype expresion expresion?
+  (const-exp (num number?))
+  (var-exp   (id symbol?))
+  (diff-exp  (exp1 expresion?) (exp2 expresion?))
+  (zero?-exp (exp1 expresion?))
+  (if-exp    (exp1 expresion?) (exp2 expresion?) (exp3 expresion?))
+  (let-exp   (id symbol?) (exp1 expresion?) (body expresion?)))
+
+(diff-exp (var-exp 'x) (const-exp 1))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+
+<script src="construir.js"></script>
+</body>
+</html>
