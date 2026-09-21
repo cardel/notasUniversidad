@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>esqueleto — qué cambia entre tres sumas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .suma-caso { border: 1px solid var(--borde); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.7rem 0; }
+  .formula { font-size: 1.05rem; margin-bottom: 0.4rem; }
+  .formula .rango { font-family: ui-monospace, monospace; font-size: 0.9rem; color: #5b636c; margin-left: 0.5rem; }
+  .fila-lit { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0.3rem 0; }
+  .fila-lit .rotulo-lit { font-family: ui-monospace, monospace; width: 4.2rem; color: #5b636c; }
+  .fila-lit button { font-family: ui-monospace, monospace; font-size: 0.88rem; padding: 0.25rem 0.55rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>esqueleto: qué cambia entre tres sumas</h1>
+  <p class="intro"><code>sumaEnteros</code>, <code>sumaCuadrados</code> y
+  <code>sumaPasoDos</code> comparten la condición de parada, el cero y la
+  llamada recursiva. Solo cambian dos cosas: <b>qué se hace con cada
+  término</b> y <b>cuál es el siguiente</b>. Esas dos cosas son los parámetros
+  <code>f</code> y <code>prox</code> de <code>suma</code>. Aquí las tres sumas
+  vienen escritas en matemáticas, no en código: hay que leer cuál es el término
+  y cuál el avance.</p>
+
+  <div class="carta">
+    <h2>1. Escoja <code>f</code> y <code>prox</code> para cada suma</h2>
+    <div class="codigo" style="margin-bottom:0.6rem"><div class="linea"><span class="num"></span><span class="txt">def suma(f: Int => Int, prox: Int => Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a > b) 0</span></div><div class="linea"><span class="num"></span><span class="txt">  else f(a) + suma(f, prox, prox(a), b)</span></div></div>
+    <div id="sumas"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>2. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las tres sumas son <b>la misma función</b> con dos
+    argumentos distintos. Eso es lo que hace una función de alto orden:
+    recibe las dos piezas que cambian y se queda con el esqueleto. La tercera
+    suma muestra que <code>prox</code> no tiene por qué sumar: el siguiente
+    término puede ser el doble, y <code>suma</code> no se entera.</p>
+    <p>Y la trampa que más se repite: <code>x => x + 3</code> puesto como
+    <code>f</code> suma 3 a cada término en lugar de avanzar de tres en tres.
+    Da un número, compila, y está mal.</p>
+    <p><a href="traza.html">Ir a <b>traza</b>: llene la tabla antes de correr →</a></p>
+  </div>
+</div>
+<script src="esqueleto.js"></script>
+</body>
+</html>

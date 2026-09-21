@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alReves — deduzca la versión desde la salida</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.salidas { border-collapse: collapse; width: 100%; font-family: ui-monospace, monospace; font-size: 0.95rem; }
+  table.salidas th, table.salidas td { border: 1px solid var(--borde); padding: 0.4rem 0.6rem; text-align: center; }
+  table.salidas th { background: var(--gris-suave, #f4f5f7); font-weight: 600; }
+  table.salidas td.llamada { text-align: left; }
+  .asignar { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.7rem; font-family: ui-monospace, monospace; }
+  .asignar label { display: flex; align-items: center; gap: 0.4rem; }
+  .asignar select { font-family: inherit; padding: 0.25rem; border: 1px solid var(--borde); border-radius: 4px; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>alReves: deduzca la versión desde la salida</h1>
+  <p class="intro">Tres funciones <code>A</code>, <code>B</code> y
+  <code>C</code>. Una es <code>suma</code>; otra es <code>sumaSinProx</code>,
+  que recibe <code>prox</code> y avanza siempre de uno; otra es
+  <code>sumaBaseUno</code>, que cierra con 1. No se ve el código de ninguna:
+  solo lo que imprimen para tres llamadas. Hay que decir cuál es cuál, y para
+  eso toca hacer las sumas.</p>
+
+  <div class="carta">
+    <h2>1. Las salidas</h2>
+    <table class="salidas">
+      <thead><tr><th>llamada</th><th>A</th><th>B</th><th>C</th></tr></thead>
+      <tbody id="cuerpo-salidas"></tbody>
+    </table>
+    <div class="asignar">
+      <label>A es <select id="sel-A"><option value="suma">suma</option><option value="sumaSinProx">sumaSinProx</option><option value="sumaBaseUno">sumaBaseUno</option></select></label>
+      <label>B es <select id="sel-B"><option value="suma">suma</option><option value="sumaSinProx">sumaSinProx</option><option value="sumaBaseUno">sumaBaseUno</option></select></label>
+      <label>C es <select id="sel-C"><option value="suma">suma</option><option value="sumaSinProx">sumaSinProx</option><option value="sumaBaseUno">sumaBaseUno</option></select></label>
+    </div>
+    <div class="botones" style="margin-top:0.6rem"><button id="btn-comprobar" class="primario">Comprobar</button></div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-dos">
+    <h2>2. ¿Con cuál llamada la buena y <code>sumaSinProx</code> no se distinguen?</h2>
+    <div class="opciones">
+      <button data-llamada="0">X(x => x, x => x + 2, 1, 10)</button>
+      <button data-llamada="1">X(x => x * x, x => x + 1, 1, 4)</button>
+      <button data-llamada="2">X(x => 1, x => x + 3, 1, 10)</button>
+    </div>
+    <div id="veredicto-dos" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Para atrapar a <code>sumaSinProx</code> hace
+    falta un <code>prox</code> que no sea <code>x + 1</code>; para atrapar a
+    <code>sumaBaseUno</code> basta cualquier llamada, porque el 1 de más
+    aparece siempre. Un caso de prueba que usa los valores más cómodos
+    (<code>x => x</code>, <code>x => x + 1</code>) deja pasar la mitad de
+    los errores. Es lo mismo que se pide en las pruebas de los talleres:
+    entradas que separen versiones, no entradas que las confundan.</p>
+    <p><a href="literales.html">Ir a <b>literales</b>: qué hace cada literal →</a></p>
+  </div>
+</div>
+<script src="alReves.js"></script>
+</body>
+</html>
