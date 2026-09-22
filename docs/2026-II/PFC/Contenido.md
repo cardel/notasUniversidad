@@ -92,6 +92,16 @@ reporta en el Campus Virtual antes de terminar la clase.
 | 1 | [Scala, Gradle y pruebas](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-01-introduccion-scala) |
 | 2 | [Recursión de cola: sumatorias con acumulador](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-02-recursion-de-cola) |
 | 3 | [Currificación: suma4, reducirC y composición](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-04-currificacion) |
+| 4 | [Funciones y datos I: clases, invariantes y operadores](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-05-numeros-complejos) |
+| 5 | [Funciones y datos II: figuras, patrones y expresiones](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-06-reconocimiento-de-patrones) |
+| 6 | [Listas I: if/else, match, inserción, aplanar y corridas](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-07-operaciones-sobre-listas) |
+| 6 | [Listas II: tuplas, merge sort y alto orden](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-08-merge-sort) |
+| 7 | [Colecciones I: secuencias, flatMap, for y conjuntos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-09-expresiones-for) |
+| 8 | [Colecciones II: índice, frecuencias, flujos y criba](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-10-maps-y-evaluacion-perezosa) |
+| 9 | [Principios de concurrencia: intercalaciones, carrera y medida](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-11-condiciones-de-carrera) |
+| 10 | [Abstracciones: parallel, umbral, task y Monte Carlo](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-12-parallel-y-task) |
+| 11 | [Complejidad: reduce paralelo, Amdahl y ScalaMeter](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-13-benchmark-scalameter) |
+| 12 | [Paralelismo de tareas y de datos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-14-divide-y-venceras-paralelo) |
 
 ## Talleres
 
