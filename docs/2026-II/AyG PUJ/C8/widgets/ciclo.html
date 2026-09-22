@@ -24,6 +24,10 @@
 
   <div class="carta">
     <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo dirigido en lista de
+    adyacencia, que puede tener ciclos. &nbsp;<b>Salida:</b> los vértices que
+    el algoritmo alcanza a emitir, y con ellos la respuesta a si el grafo
+    tiene un ciclo.</p>
     <div class="presets" id="presets-grafo">
       <span class="nota" style="margin-top:0">Grafo:</span>
       <button data-preset="0" class="primario">Un ciclo con cola</button>
@@ -66,7 +70,17 @@
   </div>
 
   <div class="carta">
-    <h2>3. Quién se queda por fuera</h2>
+    <h2>3. Una fila por vértice que sale</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Paso</th><th>Sale</th><th>Contadores que bajan</th><th>Cola después</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Quién se queda por fuera</h2>
     <div style="margin-bottom:0.3rem"><b>Cuando la cola se vacía antes de tiempo, ¿qué vértices quedaron sin salir?</b></div>
     <div class="opciones" id="opciones-fuera">
       <button data-op="solo">Solo los que forman el ciclo</button>
@@ -77,7 +91,7 @@
   </div>
 
   <div class="carta">
-    <h2>4. La señal</h2>
+    <h2>5. La señal</h2>
     <div style="margin-bottom:0.3rem"><b>¿Por qué <code>len(orden) &lt; n</code> equivale a que el grafo tiene ciclos, en las dos direcciones?</b></div>
     <div class="opciones" id="opciones-senal">
       <button data-op="cola">Porque cuando hay ciclo la cola se vacía, y cuando no hay ciclo no se vacía</button>
@@ -88,7 +102,7 @@
   </div>
 
   <div class="carta">
-    <h2>5. Para llevarse</h2>
+    <h2>6. Para llevarse</h2>
     <p style="margin-top:0">Sin solución aquí. Modifique <code>kahn</code>
     para que, además del orden, devuelva la lista de los vértices que quedaron
     por fuera, y con ella escriba una función que diga cuáles de esos vértices

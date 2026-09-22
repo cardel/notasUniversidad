@@ -17,10 +17,12 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>La cola de fuentes</h1>
-  <p class="intro">El algoritmo de Kahn sobre un grafo que no está en las
+  <p class="intro">El algoritmo de Kahn sobre grafos que no están en las
   diapositivas. Cada vértice lleva su contador de entrada dibujado encima; se
   ve bajar cuando sale un predecesor y ponerse en verde cuando llega a cero,
-  que es el instante en que el vértice entra a la cola.</p>
+  que es el instante en que el vértice entra a la cola. El primer grafo es el
+  más sencillo, con una sola fuente y sin nada que escoger; los otros dos
+  agregan una fuente de más y un vértice suelto.</p>
 
   <div class="carta">
     <h2>1. El grafo y la predicción</h2>
@@ -29,9 +31,9 @@
     vértice después de todos los que le apuntan.</p>
     <div class="presets" id="presets-grafo">
       <span class="nota" style="margin-top:0">Grafo:</span>
-      <button data-preset="0" class="primario">Ocho vértices</button>
-      <button data-preset="1">Una sola fuente</button>
-      <button data-preset="2">Con uno suelto</button>
+      <button data-preset="0" class="primario">Seis, una sola fuente</button>
+      <button data-preset="1">Ocho, dos fuentes</button>
+      <button data-preset="2">Siete, con uno suelto</button>
     </div>
     <div id="panel-grafo"></div>
     <div class="leyenda">
