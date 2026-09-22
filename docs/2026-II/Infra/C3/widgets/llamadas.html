@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Llamadas a fib — lo que cuenta cProfile</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #arbol { padding-top: 3px; }
+  #arbol .caja { flex: none; width: 32px; height: 32px; font-size: 0.85rem; border-radius: 6px; cursor: default; }
+  #arbol .caja.repetida { background: var(--ambar-suave); border-color: var(--ambar); }
+  #arbol .caja.futura { border-style: dashed; color: transparent; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuántas veces se llama fib y qué cuenta cProfile</h1>
+  <p class="intro">El <code>fib</code> recursivo de la clase, llamada por llamada: el árbol se
+  dibuja por profundidad y las cajas en ámbar son valores que ya se habían calculado, los que la
+  memoización se ahorra. Antes de ver cada número escríbalo; al final, cuatro filas reales de
+  <code>cProfile</code> sobre <code>ruta.py</code> para decidir qué función se toca primero y qué
+  tiempo va al informe.</p>
+
+  <div class="carta">
+    <h2>1. El árbol de fib(n)</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">def fib(n):</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">    if n &lt;= 1:</span></div>
+      <div class="linea bloque-1" id="linea-base"><span class="num">3</span><span class="txt">        return n</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    else:</span></div>
+      <div class="linea bloque-1" id="linea-rec"><span class="num">5</span><span class="txt">        return fib(n - 1) + fib(n - 2)</span></div>
+    </div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <label>n:</label>
+      <span class="presets">
+        <button data-n="3">3</button>
+        <button data-n="4">4</button>
+        <button data-n="5">5</button>
+        <button data-n="6">6</button>
+        <button data-n="7">7</button>
+      </span>
+      <span class="valor-n" id="ver-n">5</span>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div class="escalera" id="arbol"></div>
+    <p id="paso-texto" style="min-height:1.4rem;margin:0.2rem 0 0.5rem"></p>
+    <div class="chips" id="chips-arbol"></div>
+    <div class="nota">Cada fila es una profundidad de la recursión y cada caja una llamada, en
+    el orden en que Python las hace: primero fib(n - 1) hasta el fondo y después fib(n - 2). Una
+    caja en ámbar es un valor de n que ya se había calculado antes. Corra n = 4 y n = 5 completos
+    antes de pasar a la carta siguiente.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mover n</h2>
+    <div class="prediccion">
+      <span>¿Cuántas llamadas a <code>fib</code> hace <code>fib(6)</code>? La primera también
+      cuenta.</span>
+      <input type="number" id="prediccion-a" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div class="envoltura-tabla" id="tabla-crece" hidden style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>n</th><th>Llamadas a fib</th><th>Veces la de n − 1</th></tr></thead>
+        <tbody id="cuerpo-crece"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Con memoización</h2>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">1</span><span class="txt">from functools import lru_cache</span></div>
+      <div class="linea bloque-2"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">@lru_cache(maxsize=None)</span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt">def fib(n):</span></div>
+      <div class="linea bloque-2"><span class="num">5</span><span class="txt">    if n &lt;= 1:</span></div>
+      <div class="linea bloque-2"><span class="num">6</span><span class="txt">        return n</span></div>
+      <div class="linea bloque-2"><span class="num">7</span><span class="txt">    else:</span></div>
+      <div class="linea bloque-2"><span class="num">8</span><span class="txt">        return fib(n - 1) + fib(n - 2)</span></div>
+    </div>
+    <div class="prediccion">
+      <span>Con memoización, ¿cuántas llamadas ejecutan el cuerpo de <code>fib</code> para
+      <code>fib(6)</code>?</span>
+      <input type="number" id="prediccion-b" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead>
+          <tr><th></th><th colspan="2">fib(6)</th><th colspan="2">fib(35)</th></tr>
+          <tr><th></th><th>sin memo</th><th>con memo</th><th>sin memo</th><th>con memo</th></tr>
+        </thead>
+        <tbody id="cuerpo-memo"></tbody>
+      </table>
+    </div>
+    <div class="nota">Las cifras del reporte son las de la corrida de la clase con fib(35);
+    fib(6) no se midió. Los 4,957 s cargan el costo del perfilador: sin él, ese fib(35) corre
+    cerca de 3,5 s, entre un 30 y un 45 % menos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Leer la tabla de cProfile</h2>
+    <p style="margin-top:0"><code>ruta.py</code> busca, para cada uno de dos mil puntos, la
+    distancia a su vecino más cercano; antes espera medio segundo a un sensor. Cuatro filas de
+    <code>python3 -m cProfile -s cumulative ruta.py</code>:</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">         8004232 function calls in 2.963 seconds</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"></span></div>
+      <div class="linea"><span class="num"></span><span class="txt">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span></div>
+      <div class="linea bloque-1" id="fila-mas_cercano"><span class="num"></span><span class="txt">     2000    0.786    0.000    2.461    0.001 ruta.py:9(mas_cercano)</span></div>
+      <div class="linea bloque-1" id="fila-distancia"><span class="num"></span><span class="txt">  4000000    1.232    0.000    1.675    0.000 ruta.py:5(distancia)</span></div>
+      <div class="linea bloque-1" id="fila-sleep"><span class="num"></span><span class="txt">        1    0.500    0.500    0.500    0.500 {built-in method time.sleep}</span></div>
+      <div class="linea bloque-1" id="fila-sqrt"><span class="num"></span><span class="txt">  4000000    0.443    0.000    0.443    0.000 {built-in method math.sqrt}</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">¿Qué función conviene tocar primero?</p>
+    <div class="opciones" id="opciones-tocar">
+      <button data-op="mas_cercano">mas_cercano</button>
+      <button data-op="correcta">distancia</button>
+      <button data-op="sleep">time.sleep</button>
+      <button data-op="sqrt">math.sqrt</button>
+    </div>
+    <div id="veredicto-tocar" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem">El encabezado dice 2,963 s. Sin perfilador,
+    <code>time</code> dio 1,382 s. ¿Qué número va en el informe?</p>
+    <div class="opciones" id="opciones-informe">
+      <button data-op="perfilado">2,963 s, el del perfilador</button>
+      <button data-op="promedio">El promedio de los dos: 2,17 s</button>
+      <button data-op="correcta">1,382 s, el de la corrida sin perfilador</button>
+      <button data-op="menos30">2,963 s menos el 30 %: 2,07 s</button>
+    </div>
+    <div id="veredicto-informe" class="veredicto"></div>
+    <div class="nota">tottime es lo que la función gasta por su cuenta; cumtime le suma lo que
+    gastan las funciones que ella llama. Por eso el cumtime de mas_cercano contiene el de
+    distancia, y el de distancia contiene el de sqrt.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="llamadas.js"></script>
+</body>
+</html>
