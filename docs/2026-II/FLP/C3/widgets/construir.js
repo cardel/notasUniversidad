@@ -129,8 +129,59 @@ var RETOS = (function () {
         "simple vista."
     },
     {
+      id: "declarar-desde-arbol",
+      titulo: "4. El datatype que construye estos árboles",
+      enunciado:
+        "Un lenguaje de figuras que no se ha visto, y de él solo se tienen " +
+        "los árboles de las pruebas, dibujados abajo. Complete los campos de " +
+        "cada variante leyéndolos del árbol: cuántos hijos tiene el nodo, y " +
+        "si cada hijo es una hoja con un número, una hoja con una palabra, " +
+        "otra figura o una lista de figuras. Los nombres de los campos los " +
+        "escoge usted.",
+      gramatica:
+        "El árbol dice qué va en cada campo:\n\n" +
+        "  una hoja con un número          number?\n" +
+        "  una hoja con una palabra        symbol?\n" +
+        "  un nodo del mismo lenguaje      figura?\n" +
+        "  el nodo lista                   (list-of figura?)",
+      arbol: true,
+      esqueleto:
+        "(define-datatype figura figura?\n" +
+        "  (vacia-fig)\n" +
+        "  (circulo-fig ???)\n" +
+        "  (cuadrado-fig ???)\n" +
+        "  (color-fig ??? ???)\n" +
+        "  (encima-fig ??? ???)\n" +
+        "  (repetir-fig ??? ???)\n" +
+        "  (grupo-fig ???))\n",
+      pruebas: [
+        { llamada: "(figura? (vacia-fig))", esperado: "#t" },
+        { llamada: "(circulo-fig 3)", esperado: "(circulo-fig 3)" },
+        { llamada: "(encima-fig (circulo-fig 3) (cuadrado-fig 5))", esperado: "(encima-fig (circulo-fig 3) (cuadrado-fig 5))" },
+        { llamada: "(repetir-fig 4 (circulo-fig 2))", esperado: "(repetir-fig 4 (circulo-fig 2))" },
+        { llamada: "(color-fig 'rojo (cuadrado-fig 5))", esperado: "(color-fig rojo (cuadrado-fig 5))" },
+        { llamada: "(grupo-fig (list (circulo-fig 1) (cuadrado-fig 2) (vacia-fig)))", esperado: "(grupo-fig ((circulo-fig 1) (cuadrado-fig 2) (vacia-fig)))" },
+        { llamada: "(grupo-fig '())", esperado: "(grupo-fig ())" },
+        { llamada: "(figura? '(circulo-fig 3))", esperado: "#f" }
+      ],
+      pistas: function (llamada, esperado, obtenido) {
+        return "Cuente los hijos de cada nodo en el árbol dibujado y mire " +
+          "qué es cada uno. Cuando el predicado no corresponde, el " +
+          "constructor lo dice con el nombre del campo y el valor que " +
+          "recibió; cuando sobran o faltan campos, lo dice con el número de " +
+          "argumentos.";
+      },
+      cierre:
+        "Con el datatype escrito ya se tiene la gramática: cada variante es " +
+        "una producción, cada campo un no terminal o un terminal con " +
+        "información, y el campo con list-of, unos puntos suspensivos. Lo " +
+        "único que el árbol no dice es cómo se escriben los programas: si el " +
+        "círculo se teclea (circulo 3), circulo(3) o 3 circulo. Esa decisión " +
+        "es de la sintaxis concreta, y la toman el parser y el unparser."
+    },
+    {
       id: "hojas",
-      titulo: "4. Las hojas, de izquierda a derecha",
+      titulo: "5. Las hojas, de izquierda a derecha",
       enunciado:
         "Escriba <code>hojas</code>, que devuelve la lista de las hojas del " +
         "árbol en el orden en que se leen: los números, los identificadores " +
