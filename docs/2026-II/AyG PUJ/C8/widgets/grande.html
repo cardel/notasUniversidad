@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grande — catorce módulos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  #panel-grafo { margin: 0.4rem 0; overflow-x: auto; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; font-size: 0.85rem; }
+  #ver-fuera { margin-top: 0.5rem; min-height: 1.4rem; font-size: 0.92rem; }
+  .pareja { display: block; padding: 0.35rem 0.2rem; border-bottom: 1px solid var(--borde); cursor: pointer; }
+  .res { margin-left: 0.6rem; font-size: 0.9rem; }
+  .res.bien { color: var(--verde); }
+  .res.mal { color: var(--rojo); }
+  .leyenda span { display: inline-block; margin-right: 0.9rem; font-size: 0.9rem; }
+  .leyenda i { display: inline-block; width: 13px; height: 13px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 2px solid; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Catorce módulos</h1>
+  <p class="intro">Lo mismo de los ejercicios anteriores, sobre un grafo del
+  tamaño de un problema real: catorce módulos de un proyecto con diecinueve
+  dependencias, y la pregunta de en qué orden compilarlos. El algoritmo es el
+  de la clase, sin cambiar una línea; lo que cambia es que ya no se puede
+  seguir la traza de memoria.</p>
+
+  <div class="carta">
+    <h2>1. El proyecto</h2>
+    <p style="margin-top:0"><b>Entrada:</b> los catorce módulos y sus
+    dependencias. &nbsp;<b>Salida:</b> un orden en que compilarlos donde cada
+    módulo vaya después de todos los que necesita, o el aviso de que no
+    existe.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Dependencias:</span>
+      <button data-ciclo="no" class="primario">Las diecinueve</button>
+      <button data-ciclo="si">Con una de más</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="nota-grafo" style="margin-top:0">Diecinueve
+    dependencias. Una flecha de <b>a</b> a <b>b</b> quiere decir que
+    <b>a</b> se compila antes que <b>b</b>.</p>
+    <div class="leyenda">
+      <span><i style="border-color:#e8a13d;background:#fdf1dc"></i>en la cola</span>
+      <span><i style="border-color:#1f5fa8;background:#e3edf8"></i>saliendo</span>
+      <span><i style="border-color:#2e7d32;background:#e7f2e8"></i>ya compilado</span>
+      <span><i style="border-color:#b3261e;background:#fbe9e7"></i>se quedó</span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos módulos alcanza a emitir el algoritmo?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Cola: <span class="viva" id="ver-cola">vacía</span></div>
+        <div>Orden: <span class="viva" id="ver-orden">–</span></div>
+        <div id="ver-fuera"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Con «Auto» se ve el frente de compilación avanzar por el dibujo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una fila por módulo que sale</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Paso</th><th>Sale</th><th>Contadores que bajan</th><th>Cola después</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué deja libre el grafo</h2>
+    <p style="margin-top:0">Sobre las diecinueve dependencias, marque las
+    parejas cuyo orden relativo <b>no</b> está fijado: las que un orden
+    topológico puede poner en cualquiera de las dos formas.</p>
+    <div id="parejas"></div>
+    <div class="prediccion">
+      <button id="btn-parejas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-parejas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El último</h2>
+    <div style="margin-bottom:0.3rem"><b>En cualquier orden válido, <code>app</code> sale de último. ¿Por qué?</b></div>
+    <div class="opciones" id="opciones-ultimo">
+      <button data-op="contador">Porque es el módulo con el contador de entrada más alto</button>
+      <button data-op="correcta">Porque todos los demás módulos tienen algún camino de flechas hasta él</button>
+      <button data-op="numero">Porque es el módulo con el número más grande</button>
+    </div>
+    <div id="veredicto-ultimo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Con estas diecinueve
+    dependencias, ¿cuántos módulos se podrían compilar al mismo tiempo en
+    cada ronda, si en cada una se compilan todos los que ya tienen sus
+    dependencias listas? Cuente las rondas y diga cuál es la ronda más
+    cargada. Después: ¿qué le tendría que cambiar a <code>kahn</code> para
+    que, en vez de una lista, devuelva esas rondas?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="grande.js"></script>
+</body>
+</html>

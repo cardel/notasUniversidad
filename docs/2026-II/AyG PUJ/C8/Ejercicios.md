@@ -1,7 +1,7 @@
 # Ejercicios interactivos
 
-Ocho ejercicios para el navegador, organizados por los temas de la sesión y
-en el mismo orden. Ninguno usa el plan de estudios de las diapositivas, ni la
+Nueve ejercicios para el navegador, organizados por los temas de la sesión y
+en el mismo orden; el último junta todo sobre un grafo grande. Ninguno usa el plan de estudios de las diapositivas, ni la
 instancia de Ordering Tasks que se resolvió en clase: los grafos, las
 entradas y los números son otros.
 
@@ -89,6 +89,20 @@ versiones del algoritmo: con cola, con pila y con la fuente de número más
 bajo. Antes de correrlas hay que decir cuál orden devuelve cada una; los tres
 órdenes son distintos y los tres son topológicos, y la tabla muestra en cada
 paso qué fuentes había para escoger.
+
+## Todo junto, sobre un grafo grande
+
+### [grande](widgets/grande.html){ target=_blank rel=noopener }
+
+El último y el más exigente, para cuando los anteriores ya salen solos.
+Catorce módulos de un proyecto y diecinueve dependencias: demasiado para
+seguir la traza de memoria, que es justo el tamaño en que el algoritmo deja
+de ser un ejercicio de papel. Se predice cuántos módulos salen, se ejecuta y
+se ve el frente de compilación avanzar por el dibujo, se marcan las parejas
+cuyo orden el grafo deja libre —cinco, con el camino que fija a cada una de
+las otras— y se explica por qué `app` sale de último en cualquier orden
+válido. Con la dependencia de más, `app → config`, diez módulos se quedan
+sin compilar.
 
 ## Para resolver en papel
 

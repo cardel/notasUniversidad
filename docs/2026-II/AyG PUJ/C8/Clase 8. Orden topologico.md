@@ -33,13 +33,15 @@ propuestos para el parcial.
 
 ## Ejercicios
 
-Ocho interactivos, por los temas de la sesión y en su mismo orden: contar
+Nueve interactivos, por los temas de la sesión y en su mismo orden: contar
 los grados de entrada, decidir a mano cuáles listas son órdenes topológicos,
 el algoritmo de Kahn con los contadores a la vista, la cola que se vacía antes
 de tiempo cuando hay ciclos, la entrada del juez convertida en grafo, tres
 versiones con una línea equivocada, los colores y los tiempos de la búsqueda
-en profundidad, y las variantes con cola, pila y fuente menor. Después, siete
-en papel y tres para el juez.
+en profundidad, y las variantes con cola, pila y fuente menor. Cierra uno más
+largo, con catorce módulos y sus dependencias, para aplicar todo lo anterior
+sobre un grafo que ya no cabe en la cabeza. Después, siete en papel y tres
+para el juez.
 
 Todos están en la [página de ejercicios](./Ejercicios.md).
 
