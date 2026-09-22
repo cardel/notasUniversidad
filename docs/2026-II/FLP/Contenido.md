@@ -73,15 +73,16 @@ quedan disponibles después para volver sobre el tema.
    con nombres repetidos y cinco clientes del ambiente por la interfaz.
 
 4. [Ejercicios de la clase 3: datatypes y árboles de sintaxis abstracta](C3/Ejercicios.md)
-   — diez actividades, en el orden de los temas de la sesión: una expresión
+   — once actividades, en el orden de los temas de la sesión: una expresión
    lambda leída como lista con `car` y `cdr` y lo que se rompe al cambiar la
    representación, declaraciones con `define-datatype` para juzgar y para
    escribir, dos datatypes recorridos con `cases`, los comandos de un robot
    y las expresiones booleanas, producciones de gramáticas casadas con sus
-   variantes, árboles de sintaxis abstracta para reconocer y para construir
-   a mano, y el parser y el unparser de los dos lenguajes, uno con la
-   palabra clave adelante y otro con el conectivo en medio, con el árbol
-   esperado de cada prueba dibujado junto al que construye el código.
+   variantes y gramáticas escritas a partir de los árboles dibujados,
+   árboles de sintaxis abstracta para reconocer y para construir a mano, y
+   el parser y el unparser de los dos lenguajes, uno con la palabra clave
+   adelante y otro con el conectivo en medio, con el árbol esperado de cada
+   prueba dibujado junto al que construye el código.
 
 ## Ejercicios de clase
 

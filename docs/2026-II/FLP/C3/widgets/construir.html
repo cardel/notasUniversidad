@@ -11,7 +11,7 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>Construir el árbol a mano</h1>
-  <p class="intro">Tres programas del lenguaje del curso en sintaxis concreta y, para cada uno, la expresión con los constructores que arma su árbol. El árbol que se espera va dibujado bajo la prueba; si el código construye otro, aparece al lado el que construyó, para comparar forma contra forma. Al cierre, un recorrido que devuelve las hojas en orden.</p>
+  <p class="intro">Tres programas del lenguaje del curso en sintaxis concreta y, para cada uno, la expresión con los constructores que arma su árbol. El árbol que se espera va dibujado bajo la prueba; si el código construye otro, aparece al lado el que construyó, para comparar forma contra forma. Después, al revés: un lenguaje del que solo se tienen los árboles, y hay que escribir el datatype que los construye. Al cierre, un recorrido que devuelve las hojas en orden.</p>
 
   <div class="alerta">
     Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
@@ -26,7 +26,7 @@
   <div id="retos"></div>
 
   <div class="carta" id="carta-cierre" style="display:none">
-    <h2>Los cuatro, resueltos</h2>
+    <h2>Los cinco, resueltos</h2>
     <p style="margin-top:0">Lo que el programa trae y lo que el árbol guarda:</p>
     <div class="envoltura-tabla">
       <table>
@@ -38,6 +38,7 @@
           <tr><td>un número o un identificador usado</td><td>una hoja envuelta</td><td>una lista de un elemento</td></tr>
           <tr><td>el identificador que declara un <code>let</code></td><td>un símbolo suelto</td><td>también una hoja</td></tr>
           <tr><td><code>then</code>, <code>else</code>, <code>=</code>, <code>in</code></td><td>nada</td><td>nada</td></tr>
+          <tr><td>lo que no está en el programa</td><td>lo que el árbol sí muestra: cuántos hijos y de qué clase es cada uno</td><td>de ahí sale el <code>define-datatype</code></td></tr>
         </tbody>
       </table>
     </div>

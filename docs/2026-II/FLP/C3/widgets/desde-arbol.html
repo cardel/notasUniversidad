@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Del árbol a la gramática</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Del árbol a la gramática</h1>
+  <p class="intro">La receta al revés: los árboles están dibujados y lo que hay que escribir es la gramática que los genera. Primero una producción por árbol, después la gramática completa de un lenguaje leída de varios de sus árboles, y al final la producción que le falta a una gramática para que un árbol sea suyo.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <p style="margin-top:0">Qué se lee de cada parte del árbol:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En el árbol</th><th>En la producción</th><th>En el campo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>el nombre del nodo</td><td>la variante que la anota</td><td>—</td></tr>
+          <tr><td>una hoja con un número</td><td><code>&lt;numero&gt;</code></td><td><code>number?</code></td></tr>
+          <tr><td>una hoja con una palabra</td><td><code>&lt;identificador&gt;</code></td><td><code>symbol?</code></td></tr>
+          <tr><td>un hijo que es otro nodo del lenguaje</td><td>el mismo no terminal</td><td>el predicado del tipo</td></tr>
+          <tr><td>un hijo que es el nodo <code>lista</code></td><td>puntos suspensivos</td><td><code>list-of</code></td></tr>
+          <tr><td>un nodo sin hijos</td><td>una palabra clave sola</td><td>variante sin campos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Del árbol sale toda la información y ninguna de las
+    palabras: dónde van los paréntesis, qué palabra clave encabeza cada
+    producción y si una variable se escribe <code>x</code> o
+    <code>(var x)</code> son decisiones de la sintaxis concreta, y dos
+    lenguajes que las tomen distinto pueden compartir estos mismos árboles.</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="desde-arbol.js"></script>
+</body>
+</html>

@@ -82,6 +82,18 @@ guardan una palabra clave como campo, pierden un no terminal o ponen un
 al final el predicado que lleva cada campo: `number?`, `symbol?`, el del
 propio tipo o `list-of` de alguno de ellos.
 
+### [Del árbol a la gramática](widgets/desde-arbol.html){ target=_blank rel=noopener }
+
+La receta al revés, que es lo que se hace al extender un lenguaje: los
+árboles están dibujados y lo que falta es la gramática. Primero una
+producción por árbol, en un lenguaje de figuras: cuántos hijos tiene el nodo
+y si cada uno es una hoja con un número, una hoja con una palabra, otro nodo
+del mismo lenguaje o el nodo `lista`. Después la gramática completa de un
+lenguaje de listas de reproducción, leída de varios de sus árboles a la vez,
+que es lo que hace falta para saber si una lista puede ir vacía o si un campo
+admite más variantes de las que se ven en uno solo. Al final, un árbol que la
+gramática no genera y la producción que hay que agregarle.
+
 ## Árboles de sintaxis abstracta
 
 ### [¿Cuál árbol es?](widgets/arboles.html){ target=_blank rel=noopener }
@@ -98,9 +110,11 @@ Tres programas del lenguaje del curso y, para cada uno, la expresión con los
 constructores que arma su árbol: una resta dentro de otra, un `if` con una
 resta en la prueba y dos `let` anidados, donde el identificador que se
 declara va suelto y el que se usa va en `var-exp`. El árbol esperado va
-dibujado y, si el código construye otro, aparece al lado. Al cierre,
-`hojas`, el recorrido que devuelve las hojas del árbol de izquierda a
-derecha.
+dibujado y, si el código construye otro, aparece al lado. Después la
+dirección contraria: un lenguaje de figuras del que solo se tienen los
+árboles, y hay que escribir el `define-datatype` que los construye, contando
+los hijos de cada nodo y mirando qué es cada uno. Al cierre, `hojas`, el
+recorrido que devuelve las hojas del árbol de izquierda a derecha.
 
 ## El parser, el unparser y la ida y vuelta
 
