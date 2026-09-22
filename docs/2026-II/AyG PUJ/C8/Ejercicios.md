@@ -1,6 +1,6 @@
 # Ejercicios interactivos
 
-Siete ejercicios para el navegador, organizados por los temas de la sesión y
+Ocho ejercicios para el navegador, organizados por los temas de la sesión y
 en el mismo orden. Ninguno usa el plan de estudios de las diapositivas, ni la
 instancia de Ordering Tasks que se resolvió en clase: los grafos, las
 entradas y los números son otros.
@@ -70,6 +70,17 @@ predecesor, y la tercera pierde el vértice suelto y por eso reporta un ciclo
 que no existe.
 
 ## Ejercicios
+
+### [marcas](widgets/marcas.html){ target=_blank rel=noopener }
+
+Para el ejercicio 1. La búsqueda en profundidad con dos marcas más: el color
+de cada vértice, que pasa de blanco a gris al entrar y de gris a negro al
+salir, y un reloj que anota los dos instantes. Todo ocurre sobre el dibujo:
+los vértices se pintan, las marcas `d/f` aparecen encima y la flecha que se
+está mirando queda azul, o roja cuando llega a un vértice gris, que es lo que
+delata el ciclo. Tres grafos, del árbol al que tiene un ciclo, y las dos
+versiones del recorrido, la recursiva y la de pila explícita, que dejan las
+mismas marcas. Antes de ejecutar se predice en cuánto termina el reloj.
 
 ### [variantes](widgets/variantes.html){ target=_blank rel=noopener }
 
