@@ -12,9 +12,13 @@ var Motor = (function () {
     return d ? s.replace(/,?0+$/, "") : s;
   }
 
+  /* Un input type=number entrega el decimal siempre con punto, teclee el
+     estudiante coma o punto. Los puntos solo son separador de miles cuando
+     tambien hay una coma decimal ("1.234,5").                              */
   function leerNumero(id) {
-    var el = document.getElementById(id);
-    return parseFloat(String(el.value).replace(/\./g, "").replace(",", "."));
+    var s = String(document.getElementById(id).value).trim();
+    if (s.indexOf(",") >= 0) { s = s.replace(/\./g, "").replace(",", "."); }
+    return parseFloat(s);
   }
 
   /* Decide si la prediccion del estudiante vale como acierto.
@@ -29,7 +33,10 @@ var Motor = (function () {
     if (Number.isInteger(esperado)) {
       return { bien: dicho === esperado, motivo: "" };
     }
-    var margen = Math.max(Math.abs(esperado) * 0.02, 0.005);
+    // El margen minimo de 0,005 solo tiene sentido con esperados de 0,5 o mas;
+    // con 0,001 aceptaria cualquier cosa entre 0 y 0,006.
+    var margen = Math.abs(esperado) * 0.02;
+    if (Math.abs(esperado) >= 0.5) { margen = Math.max(margen, 0.005); }
     return { bien: Math.abs(dicho - esperado) <= margen, motivo: "" };
   }
 

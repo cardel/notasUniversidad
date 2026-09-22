@@ -33,6 +33,10 @@ Se publican después de cada sesión.
    compensa, quién hace cada tarea cuando no cuestan lo mismo, y los tres
    casos que no caben en esas preguntas: dependencias, pipeline y dejar que la
    biblioteca decida.
+3. [Clase 3. Profiling en Python e instrucciones AVX — 22 y 24 de septiembre](C3/Clase%203.%20Profiling%20en%20Python%20e%20instrucciones%20AVX.md)
+   — medir antes de tocar: `time` y `timeit` para el cuánto, `cProfile` y
+   Pyinstrument para el dónde, lo que cada herramienta deforma, y el paso a
+   las instrucciones vectoriales con NumPy, AVX y la GPU.
 
 ### Corte 2
 

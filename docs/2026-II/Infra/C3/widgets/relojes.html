@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reloj de pared y tiempo de CPU — un programa por tramos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  .tipo { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 3px; vertical-align: middle; margin-right: 0.35rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que espera el usuario y lo que gasta el procesador</h1>
+  <p class="intro">Un programa hecho de tramos: unos esperan el disco o la red, otros calculan,
+  y uno calcula con cuatro hilos a la vez. Escriba qué va a marcar <code>perf_counter</code> y
+  qué va a marcar <code>process_time</code> al terminar, y después vea los dos relojes avanzar
+  tramo por tramo.</p>
+
+  <div class="carta">
+    <h2>1. El programa por tramos</h2>
+    <div class="fila-n">
+      <label>Programa:</label>
+      <span class="presets">
+        <button data-preset="clase">el de la clase</button>
+        <button data-preset="servidor">servidor</button>
+        <button data-preset="cuatro">cuatro hilos un segundo</button>
+      </span>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Tramo</th><th>Tipo</th><th>Duración (s de reloj)</th><th>Hilos</th></tr></thead>
+        <tbody id="cuerpo-tramos"></tbody>
+      </table>
+    </div>
+    <div class="codigo" style="margin-top:0.8rem">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">t1 = time.perf_counter(), time.process_time()</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">programa()                  # los tramos, uno tras otro</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">t2 = time.perf_counter(), time.process_time()</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">print(f" Real: {t2[0] - t1[0]:.2f}s")</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">print(f" CPU:  {t2[1] - t1[1]:.2f}s")</span></div>
+    </div>
+    <div class="nota">Un tramo de espera es <code>time.sleep</code>, leer un archivo o aguardar
+    una respuesta por red: el reloj de pared corre y el proceso no ocupa ningún núcleo. Un tramo
+    de cálculo con <i>h</i> hilos tiene <i>h</i> núcleos ocupados durante toda su duración.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>¿Qué marca <code>perf_counter</code> al final? (s, dos decimales)</span>
+      <input type="number" id="prediccion-reloj" min="0" step="0.01" placeholder="segundos">
+      <button id="btn-comprobar-reloj" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-reloj" class="veredicto"></div>
+    <div class="prediccion">
+      <span>¿Qué marca <code>process_time</code>?</span>
+      <input type="number" id="prediccion-cpu" min="0" step="0.01" placeholder="segundos">
+      <button id="btn-comprobar-cpu" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cpu" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los dos relojes avanzan</h2>
+    <div class="botones">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-gantt" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-gantt"></div>
+    <div class="nota">La fila de CPU no es una línea de tiempo: es lo que <code>process_time</code>
+    lleva acumulado, un bloque por tramo de cálculo con ancho duración × hilos. Las esperas no
+    aparecen en ella, y con varios hilos puede quedar más larga que la de reloj.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué dice el cociente</h2>
+    <p style="margin-top:0">Con el programa <b>servidor</b>, la carta anterior termina con
+    CPU/reloj = 0,91. Leído solo por el cociente, el programa estaría calculando casi todo el
+    tiempo.</p>
+    <p style="margin-bottom:0.3rem">¿Dónde está el tiempo que no es CPU?</p>
+    <div class="opciones" id="opciones-cociente">
+      <button data-op="paralelo">En el tramo paralelo</button>
+      <button data-op="estadisticas">En calcular estadísticas</button>
+      <button data-op="correcta">En las dos esperas</button>
+      <button data-op="nohay">No hay: el cociente pasa de 0,9</button>
+    </div>
+    <div id="veredicto-cociente" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="relojes.js"></script>
+</body>
+</html>

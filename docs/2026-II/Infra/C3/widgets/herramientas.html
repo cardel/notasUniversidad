@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuatro herramientas — cuál contesta cada pregunta sobre ruta.py</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .pregunta { font-size: 1.05rem; padding: 0.8rem 1rem; border-left: 4px solid var(--azul);
+              background: var(--azul-suave); border-radius: 6px; margin: 0.6rem 0; min-height: 3.6rem; }
+  .opciones button.elegida { outline: 3px solid var(--azul); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ocho preguntas sobre ruta.py y la herramienta que contesta cada una</h1>
+  <p class="intro">El programa es <code>ruta.py</code>, el de la clase: para cada uno de dos mil
+  puntos busca el vecino más cercano, y antes espera medio segundo leyendo un sensor. Cada
+  pregunta se contesta con una de las cuatro herramientas de la tabla comparativa; escoja una,
+  lea por qué sí o por qué no, y el marcador cuenta los aciertos a la primera.</p>
+
+  <div class="carta">
+    <h2>1. La pregunta</h2>
+    <div class="chips" id="datos-programa"></div>
+    <div class="progreso" id="progreso" style="margin-top:0.7rem"></div>
+    <div class="pregunta" id="texto-pregunta"></div>
+    <div class="opciones" id="opciones">
+      <button data-clave="time">time.perf_counter</button>
+      <button data-clave="timeit">timeit</button>
+      <button data-clave="cprofile">cProfile</button>
+      <button data-clave="pyinstrument">Pyinstrument</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente pregunta</button>
+      <button id="btn-otra" hidden>Otra vez, en otro orden</button>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El marcador</h2>
+    <div class="chips" id="panel-marcador"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Pregunta</th><th>Primera respuesta</th><th>La que la contesta</th></tr></thead>
+        <tbody id="cuerpo-marcador"></tbody>
+      </table>
+    </div>
+    <p id="resumen" hidden style="font-weight:600"></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="herramientas.js"></script>
+</body>
+</html>

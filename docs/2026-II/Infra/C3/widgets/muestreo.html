@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muestreo — qué ve un perfilador estadístico</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .barras .barra-fila .rotulo { width: 11rem; font-family: ui-monospace, monospace; font-size: 0.8rem; }
+  .barras .barra-fila.par { margin-bottom: 0.75rem; }
+  .arbol .linea { font-size: 0.8rem; padding-top: 0.05rem; padding-bottom: 0.05rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Una foto del programa cada décima de segundo: qué ve el perfilador y qué se le escapa</h1>
+  <p class="intro">Pyinstrument no cuenta llamadas: despierta cada <code>interval</code> segundos,
+  anota en qué función está el programa y de ese conteo deduce el reparto del tiempo. Escriba
+  cuántas muestras salen y qué intervalo conviene antes de verlo, y después muestree el árbol
+  del Monte Carlo de la clase con 5, 132 o 1.000 muestras para medir cuánto se equivoca.</p>
+
+  <div class="carta">
+    <h2>1. Antes de correr</h2>
+    <div class="prediccion">
+      <span><code>fib(35)</code> tarda 4,64 s. Con <code>interval = 0,1</code>, ¿cuántas
+      muestras toma el perfilador?</span>
+      <input type="number" id="prediccion-a" min="0" step="1" placeholder="muestras">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div class="prediccion">
+      <span>¿Qué <code>interval</code> conviene para un programa de 0,1 s? En segundos, tres
+      decimales.</span>
+      <input type="number" id="prediccion-b" min="0" step="any" placeholder="segundos">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="nota">Entre muestra y muestra el programa corre solo, y por eso el overhead se
+    queda cerca del 5 %. Lo que dura menos que el intervalo no existe para el perfilador.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cuántas muestras hacen falta</h2>
+    <p style="margin-top:0">Para ver con confianza una función que pesa X % del tiempo hacen
+    falta cerca de 100/X muestras. Mueva el control y la tabla se destapa.</p>
+    <div class="fila-n">
+      <label for="rango-x">La función que quiero ver pesa:</label>
+      <input type="range" id="rango-x" min="1" max="50" value="10" step="1">
+      <span class="valor-n" id="ver-x">?</span>
+    </div>
+    <div class="chips" id="chips-regla" style="margin-top:0.6rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Peso de la función</th><th>Muestras necesarias</th><th>interval para 13,2 s</th></tr></thead>
+        <tbody id="cuerpo-regla"></tbody>
+      </table>
+    </div>
+    <div class="nota">De la última fila sale la regla práctica del intervalo: repartir en los 13,2 s
+    las muestras que pide la función más liviana da el <code>interval</code> con que se corrió el
+    Monte Carlo en clase.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Simular el muestreo</h2>
+    <p style="margin-top:0">El árbol del Monte Carlo con <code>uniform</code>, 13,2 s en total.
+    Cada muestra cae en el nodo que está corriendo en ese instante, los <code>[self]</code> y
+    las funciones de C, marcados a la izquierda; el reparto real es el de esos siete nodos.</p>
+    <div class="codigo arbol">
+      <div class="linea"><span class="txt">13.2 &lt;module&gt;  MonteCarlos.py:1</span></div>
+      <div class="linea"><span class="txt">└─ 13.2 estimate_pi  MonteCarlos.py:5</span></div>
+      <div class="linea"><span class="txt">   ├─ 12.6 &lt;genexpr&gt;  MonteCarlos.py:6</span></div>
+      <div class="linea"><span class="txt">   │  ├─ 8.2 point  MonteCarlos.py:13</span></div>
+      <div class="linea"><span class="txt">   │  │  ├─ 4.2 Random.uniform  random.py:500</span></div>
+      <div class="linea bloque-1"><span class="txt">   │  │  │  ├─ 2.7 [self]  random.py</span></div>
+      <div class="linea bloque-1"><span class="txt">   │  │  │  └─ 1.5 Random.random  &lt;built-in&gt;</span></div>
+      <div class="linea bloque-1"><span class="txt">   │  │  └─ 4.0 [self]  MonteCarlos.py</span></div>
+      <div class="linea bloque-1"><span class="txt">   │  ├─ 2.6 [self]  MonteCarlos.py</span></div>
+      <div class="linea"><span class="txt">   │  └─ 1.8 hits  MonteCarlos.py:9</span></div>
+      <div class="linea bloque-1"><span class="txt">   │     ├─ 1.3 [self]  MonteCarlos.py</span></div>
+      <div class="linea bloque-1"><span class="txt">   │     └─ 0.5 abs  &lt;built-in&gt;</span></div>
+      <div class="linea bloque-1"><span class="txt">   └─ 0.6 [self]  MonteCarlos.py</span></div>
+    </div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <label>Muestras:</label>
+      <span class="presets">
+        <button data-n="5">5</button>
+        <button data-n="13">13</button>
+        <button data-n="46">46</button>
+        <button data-n="132">132</button>
+        <button data-n="1000">1.000</button>
+      </span>
+      <span class="valor-n" id="ver-n">5</span>
+      <button id="btn-muestrear" class="primario">Muestrear</button>
+    </div>
+    <div class="chips" id="chips-interval" style="margin-top:0.6rem"></div>
+    <div class="progreso" id="nota-preset" style="margin-top:0.3rem"></div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-barras" class="barras" style="margin-top:0.5rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Nodo</th><th>Real</th><th>Muestras</th><th>Estimado</th><th>Diferencia (puntos)</th></tr></thead>
+        <tbody id="cuerpo-muestreo"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-muestreo" style="margin-top:0.6rem"></div>
+    <div class="nota">Con 5 muestras, <code>abs</code> (3,8 %) y <code>estimate_pi</code> (4,5 %)
+    casi siempre se quedan sin muestra y desaparecen del reporte: la regla de 100/X les pide 27
+    y 22 muestras. Con 132 el error máximo baja a unos cinco puntos; con 1.000 ronda los dos
+    puntos y ninguna función se pierde. Pulse Muestrear varias veces con el mismo número: lo que
+    cambia entre corridas es el ruido del muestreo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lo que no ve el muestreo</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">En el árbol de Pyinstrument de
+    <code>ruta.py</code> no aparece cuántas veces se llamó <code>distancia</code>. ¿Por qué?</p>
+    <div class="opciones" id="opciones-conteo">
+      <button data-op="intervalo">Porque el intervalo era muy grande</button>
+      <button data-op="correcta">Porque el muestreo mira dónde está el programa cada vez que
+      despierta; no cuenta entradas ni salidas de funciones</button>
+      <button data-op="c">Porque distancia está escrita en C</button>
+      <button data-op="pocas">Porque se llamó pocas veces</button>
+    </div>
+    <div id="veredicto-conteo" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="muestreo.js"></script>
+</body>
+</html>

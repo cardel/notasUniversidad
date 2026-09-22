@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operaciones por byte — cuándo compensa la GPU</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .detalle { font-size: 0.9rem; margin: 0.6rem 0 0.2rem; }
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Dos cálculos y un enlace de 12 GB/s: cuál paga el viaje a la GPU</h1>
+  <p class="intro">El enlace PCIe del computador de la clase mueve cerca de 12 GB/s y no calcula
+  nada: cada byte que cruza tiene que pagarse con operaciones del otro lado. Escriba cuánto dura
+  el viaje de un arreglo y cuántas operaciones por byte tiene un producto de matrices antes de
+  verlos, y al final decida qué le pasó a un cronómetro que marcó 40 µs.</p>
+
+  <div class="carta">
+    <h2>1. El viaje por PCIe</h2>
+    <div class="fila-n">
+      <label>Operación:</label>
+      <span class="presets">
+        <button data-preset="elemental">a * 2.5 + 1.0, 5 M float64</button>
+        <button data-preset="matmul4000">producto 4000 × 4000, float32</button>
+        <button data-preset="matmul500">producto 500 × 500, float32</button>
+      </span>
+    </div>
+    <p class="detalle" id="detalle"></p>
+    <div class="chips" id="chips-viaje"></div>
+    <div class="nota">La máquina de la clase: un Ryzen 5 3600 de un lado, una RTX 3060 Ti con
+    8 GiB propios del otro y, entre los dos, PCIe 3.0 ×16, cerca de 12 GB/s en la práctica.
+    Las dos cuentas con ? se destapan al comprobar las predicciones de abajo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>¿Cuántos ms tarda en ir y volver el arreglo de 5 M float64 por PCIe a 12 GB/s?
+      Un decimal.</span>
+      <input type="number" id="prediccion-a" min="0" step="0.1" placeholder="ms">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div id="panel-viaje" hidden style="margin-top:0.8rem"></div>
+    <div class="prediccion" style="margin-top:1rem">
+      <span>¿Cuántas operaciones por byte tiene el producto 4000 × 4000 en float32? Entero.</span>
+      <input type="number" id="prediccion-b" min="0" step="1" placeholder="op/byte">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Dos razones, dos decisiones</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Operación</th><th>Bytes</th><th>Operaciones</th><th>Op/byte</th><th>¿Se mueve?</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="fila-n" style="margin-top:1rem">
+      <label for="k">Operaciones encadenadas sobre los mismos 80 MB:</label>
+      <input type="range" id="k" min="1" max="50" value="1">
+      <span class="valor-n" id="ver-k">1</span>
+    </div>
+    <div class="chips" id="chips-k" style="margin-top:0.6rem"></div>
+    <div class="nota">Aquí el corte va en 10 op/byte: por debajo, el enlace manda y la GPU
+    espera con los carriles vacíos. Encadenar k operaciones sobre el mismo arreglo deja los
+    80 MB viajando una sola vez y multiplica la razón por k. Esa es la práctica: subir los
+    datos una vez, encadenar sobre ellos todo lo que se pueda y bajar solo el resultado; cada
+    ida y vuelta intermedia por PCIe se come la ganancia que dieron los carriles.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Medir lo que corre en la GPU</h2>
+    <div class="codigo">
+      <div class="linea"><span class="num">1</span><span class="txt">import time</span></div>
+      <div class="linea"><span class="num">2</span><span class="txt">import torch</span></div>
+      <div class="linea"><span class="num">3</span><span class="txt"></span></div>
+      <div class="linea"><span class="num">4</span><span class="txt">a = torch.rand(50_000_000, device="cuda")</span></div>
+      <div class="linea"><span class="num">5</span><span class="txt">t0 = time.perf_counter()</span></div>
+      <div class="linea bloque-2"><span class="num">6</span><span class="txt">b = a * 2.5 + 1.0</span></div>
+      <div class="linea"><span class="num">7</span><span class="txt">print(time.perf_counter() - t0)    # 4e-05</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">perf_counter marca 40 µs para <code>b = a * 2.5 + 1.0</code>
+    sobre 50 millones de <code>float32</code> en la GPU. ¿Qué pasó?</p>
+    <div class="opciones" id="opciones-medir">
+      <button data-op="rapida">La GPU es así de rápida</button>
+      <button data-op="correcta">La llamada encoló el trabajo y retornó antes de que la GPU terminara</button>
+      <button data-op="cprofile">Con cProfile habría salido bien</button>
+      <button data-op="perf">perf_counter no sirve para medir la GPU</button>
+    </div>
+    <div id="veredicto-medir" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="gpu.js"></script>
+</body>
+</html>
