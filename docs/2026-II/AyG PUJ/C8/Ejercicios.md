@@ -1,8 +1,19 @@
 # Ejercicios interactivos
 
-Cuatro ejercicios para el navegador, en el orden de los temas de la sesión.
-Ninguno usa el plan de estudios de las diapositivas ni la muestra de
-Ordering Tasks.
+Siete ejercicios para el navegador, organizados por los temas de la sesión y
+en el mismo orden. Ninguno usa el plan de estudios de las diapositivas, ni la
+instancia de Ordering Tasks que se resolvió en clase: los grafos, las
+entradas y los números son otros.
+
+## Recuento
+
+### [grados](widgets/grados.html){ target=_blank rel=noopener }
+
+El grado de salida se lee de un vistazo, el de entrada hay que contarlo. Un
+grafo de siete vértices donde primero se llenan a mano los siete contadores
+—con aviso aparte cuando lo que se escribió es el grado de salida— y después
+se ejecuta `grados_de_entrada` con la flecha que se está contando resaltada
+en el dibujo. Entre las dos cosas, cuántas veces corre la línea de la suma.
 
 ## Orden topológico
 
@@ -18,27 +29,51 @@ las $720$ permutaciones.
 
 ### [kahn](widgets/kahn.html){ target=_blank rel=noopener }
 
-El algoritmo paso a paso sobre tres grafos, con el contador de entrada de
-cada vértice dibujado encima: se ve bajar cuando sale un predecesor y ponerse
-en verde en el instante en que el vértice entra a la cola. Antes de ejecutar
-se predice cuántas fuentes hay, y la tabla de la tarjeta 3 registra cada
-salida con los contadores que bajó. Las dos preguntas del final son las que
-sostienen la demostración: cuándo entra un vértice a la cola y por qué eso
-basta para que el orden sea topológico.
+El algoritmo paso a paso, con el contador de entrada de cada vértice dibujado
+encima: se ve bajar cuando sale un predecesor y ponerse en verde en el
+instante en que el vértice entra a la cola. Se arranca con el grafo más
+sencillo, de seis vértices y una sola fuente; los otros dos agregan una
+fuente de más y un vértice suelto. Antes de ejecutar se predice cuántas
+fuentes hay, y la tabla registra cada salida con los contadores que bajó. Las
+dos preguntas del final son las que sostienen la demostración: cuándo entra
+un vértice a la cola y por qué eso basta para que el orden sea topológico.
 
 ### [ciclo](widgets/ciclo.html){ target=_blank rel=noopener }
 
 El mismo algoritmo sobre grafos con ciclos. La cola se vacía antes de tiempo
 y hay que predecir cuántos vértices alcanzan a salir; el tercer grafo no
-tiene ciclos y sirve de contraste. Las tarjetas 3 y 4 preguntan quién queda
-por fuera —los del ciclo y todo lo que depende de ellos— y por qué
-`len(orden) < n` es la señal en las dos direcciones.
+tiene ciclos y sirve de contraste. La tabla se detiene donde se detiene el
+algoritmo, y las dos últimas tarjetas preguntan quién queda por fuera —los
+del ciclo y todo lo que depende de ellos— y por qué `len(orden) < n` es la
+señal en las dos direcciones.
+
+## Un problema de juez
+
+### [tareas](widgets/tareas.html){ target=_blank rel=noopener }
+
+Ordering Tasks con otra instancia. Primero la entrada y qué espera a qué,
+leído a mano; después, cuál de cuatro listas de adyacencia construye la
+lectura —entre las otras tres están la de las flechas al revés y la que
+olvida el `- 1`—; después el paso a paso de `leer_grafo` con el grafo
+llenándose; y al final, cuál de tres líneas imprime el programa.
+
+## Errores comunes
+
+### [errores](widgets/errores.html){ target=_blank rel=noopener }
+
+Tres versiones del algoritmo con una línea equivocada cada una, sobre un
+grafo con un vértice suelto y otro de dos predecesores. Ninguna falla al
+correr: las tres devuelven una lista, y hay que mirarla. Al señalar la falla
+aparece lo que devuelve esa versión y en qué se diferencia de la correcta:
+una deja fuera a cuatro vértices, otra saca un vértice antes que su
+predecesor, y la tercera pierde el vértice suelto y por eso reporta un ciclo
+que no existe.
 
 ## Ejercicios
 
 ### [variantes](widgets/variantes.html){ target=_blank rel=noopener }
 
-Para los ejercicios 2 y 3 de la clase. Un grafo de siete vértices y las tres
+Para los ejercicios 2 y 3 de abajo. Un grafo de siete vértices y las tres
 versiones del algoritmo: con cola, con pila y con la fuente de número más
 bajo. Antes de correrlas hay que decir cuál orden devuelve cada una; los tres
 órdenes son distintos y los tres son topológicos, y la tabla muestra en cada

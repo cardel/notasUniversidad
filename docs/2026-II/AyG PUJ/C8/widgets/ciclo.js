@@ -215,6 +215,19 @@ if (typeof module !== "undefined") {
       } else {
         caja.textContent = "";
       }
+      var cuerpo = document.getElementById("cuerpo-traza");
+      cuerpo.innerHTML = "";
+      var filas = 0, m;
+      for (m = 0; m < e.k; m = m + 1) {
+        var q = e.pasos[m];
+        if (q.cierra !== undefined) {
+          filas = filas + 1;
+          var tr = document.createElement("tr");
+          tr.innerHTML = "<td>" + q.paso + "</td><td>" + q.cierra + "</td><td>" + (q.bajan.length > 0 ? q.bajan.join("; ") : "ninguno") + "</td><td>" + (q.colaDespues.length > 0 ? q.colaDespues.join(", ") : "vacía") + "</td>";
+          cuerpo.appendChild(tr);
+        }
+      }
+      if (filas === 0) { cuerpo.innerHTML = "<tr><td colspan='4' class='pend'>Ejecute: cada vértice que sale de la cola agrega una fila. La tabla se detiene donde se detiene el algoritmo.</td></tr>"; }
     }
 
     Motor.iniciar({

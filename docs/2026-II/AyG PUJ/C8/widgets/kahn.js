@@ -132,10 +132,10 @@ if (typeof module !== "undefined") {
       return G;
     }
     var PRESETS = [
-      { G: grafo(8, [[0, 2], [1, 2], [1, 3], [2, 4], [3, 4], [3, 5], [4, 6], [5, 6], [7, 5]]),
-        pos: [[0, 2.4], [0, 1.2], [1.4, 2.4], [1.4, 1.2], [2.8, 1.8], [2.8, 0.4], [4.2, 1.1], [1.4, 0]] },
       { G: grafo(6, [[3, 0], [3, 1], [0, 2], [1, 2], [2, 4], [2, 5], [4, 5]]),
         pos: [[1.4, 2.4], [1.4, 0.6], [2.8, 1.5], [0, 1.5], [4.2, 2.4], [4.2, 0.6]] },
+      { G: grafo(8, [[0, 2], [1, 2], [1, 3], [2, 4], [3, 4], [3, 5], [4, 6], [5, 6], [7, 5]]),
+        pos: [[0, 2.4], [0, 1.2], [1.4, 2.4], [1.4, 1.2], [2.8, 1.8], [2.8, 0.4], [4.2, 1.1], [1.4, 0]] },
       { G: grafo(7, [[1, 0], [2, 0], [0, 3], [4, 3], [5, 4]]),
         pos: [[1.4, 1.8], [0, 2.4], [0, 1.2], [2.8, 1.2], [1.4, 0.4], [0, 0], [4.2, 2.4]] }
     ];
@@ -235,9 +235,9 @@ if (typeof module !== "undefined") {
       btn.addEventListener("click", function () {
         var op = btn.getAttribute("data-op");
         if (op === "correcta") {
-          veredicto("veredicto-entra", true, "Correcto: la línea 16 se ejecuta solo cuando la resta de la línea 14 deja el contador en 0, y eso pasa una vez por vértice. En el primer grafo, el 4 recibe dos restas y entra en la segunda.");
+          veredicto("veredicto-entra", true, "Correcto: la línea 16 se ejecuta solo cuando la resta de la línea 14 deja el contador en 0, y eso pasa una vez por vértice. El 2 del primer grafo recibe dos restas, una por el 0 y otra por el 1, y entra en la segunda.");
         } else if (op === "primera") {
-          veredicto("veredicto-entra", false, "Con la primera resta el contador baja, pero si era 2 queda en 1: todavía le falta un predecesor. Mire el vértice 4 del primer grafo cuando sale el 2.");
+          veredicto("veredicto-entra", false, "Con la primera resta el contador baja, pero si era 2 queda en 1: todavía le falta un predecesor. Mire el vértice 2 del primer grafo cuando sale el 0.");
         } else {
           veredicto("veredicto-entra", false, "Los vecinos de salida no importan para entrar a la cola; lo que cuenta son las flechas que llegan. Un vértice sin vecinos de salida puede entrar de primero, como una fuente sin aristas.");
         }
@@ -250,9 +250,9 @@ if (typeof module !== "undefined") {
         if (op === "correcta") {
           veredicto("veredicto-orden", true, "Correcto: cada vértice sale después de que su contador llegó a 0, y el contador bajó una vez por cada predecesor que ya salió. En la tabla, ningún vértice sale antes que los que le apuntan.");
         } else if (op === "numero") {
-          veredicto("veredicto-orden", false, "El número no ordena: en el primer grafo el 7 sale antes que el 2. La cola saca las fuentes en el orden en que aparecieron, y aparecen cuando su contador llega a 0.");
+          veredicto("veredicto-orden", false, "El número no ordena: en el segundo grafo el 7 sale antes que el 2. La cola saca las fuentes en el orden en que aparecieron, y aparecen cuando su contador llega a 0.");
         } else {
-          veredicto("veredicto-orden", false, "No es por distancia a las fuentes: el 7 es fuente y sale de tercero. Es el contador: sale quien ya no tiene predecesores pendientes, en el orden en que llegó a la cola.");
+          veredicto("veredicto-orden", false, "No es por distancia a las fuentes: en el segundo grafo el 7 es fuente y sale de tercero. Es el contador: sale quien ya no tiene predecesores pendientes, en el orden en que llegó a la cola.");
         }
       });
     });
