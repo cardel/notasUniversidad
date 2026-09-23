@@ -38,6 +38,14 @@ Se publican después de cada sesión.
    procedimientos, y las expresiones del cálculo lambda con `occurs-free?` y
    `occurs-bound?`. Incluye el código escrito en clase.
 
+3. [Clase 3. Datatypes y árboles de sintaxis abstracta — 22 de septiembre](C3/Clase%203.%20Datatypes%20y%20%C3%A1rboles%20de%20sintaxis%20abstracta.md)
+   — el árbol binario escrito a mano y después con `define-datatype`, los
+   campos con su predicado y `list-of`, el análisis por variante con `cases`,
+   el árbol de sintaxis abstracta y el que Python construye de sus propios
+   programas, sintaxis concreta y abstracta, y el parser y el unparser del
+   cálculo lambda y de un lenguaje de comandos. Incluye el código escrito en
+   clase y los apuntes del tablero.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*
