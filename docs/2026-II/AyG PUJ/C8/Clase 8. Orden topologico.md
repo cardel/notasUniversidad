@@ -25,9 +25,9 @@ propuestos para el parcial.
 
     ---
 
-    Las 71 láminas de la sesión, con la ejecución del algoritmo paso a
-    paso sobre el plan de estudios: una lámina por vértice que sale, con
-    los colores y los contadores.
+    Las 71 láminas con las anotaciones de la sesión y una página de tablero,
+    con la ejecución del algoritmo paso a paso sobre el plan de estudios: una
+    lámina por vértice que sale, con los colores y los contadores.
 
     [:octicons-arrow-right-24: Abrir](clase08-orden-topologico.pdf)
 
