@@ -10,7 +10,10 @@ cuando no puede, que el grafo tiene un ciclo.
 
 ## Diapositivas
 
-[Orden topológico](clase08-orden-topologico.pdf){ target=_blank } — 61 páginas.
+[Orden topológico](clase08-orden-topologico.pdf){ target=_blank } — 71 páginas,
+con la ejecución del algoritmo lámina por lámina: en cada una, un color por
+vértice —blanco pendiente, naranja en la cola, verde ya emitido— y el
+contador de entrada al lado.
 
 ## Un plan de estudios
 
