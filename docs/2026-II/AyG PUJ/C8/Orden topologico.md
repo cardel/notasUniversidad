@@ -10,8 +10,9 @@ cuando no puede, que el grafo tiene un ciclo.
 
 ## Diapositivas
 
-[Orden topológico](clase08-orden-topologico.pdf){ target=_blank } — 71 páginas,
-con la ejecución del algoritmo lámina por lámina: en cada una, un color por
+[Orden topológico](clase08-orden-topologico.pdf){ target=_blank } — 72
+páginas: las 71 láminas con las anotaciones de la sesión y una de tablero.
+La ejecución del algoritmo va lámina por lámina: en cada una, un color por
 vértice —blanco pendiente, naranja en la cola, verde ya emitido— y el
 contador de entrada al lado.
 
@@ -230,6 +231,13 @@ entran a la cola en el paso 2: salen en el orden sin que nadie los mencione.
 Y el contador se resta *antes* de preguntar si llegó a $0$; al revés, la
 fuente nueva se pierde.
 
+La cola no se cambia por recursión. Los llamados recursivos vuelven en orden
+inverso al que se hicieron, que es una pila: el último en entrar es el primero
+en atenderse. Con una pila el orden que sale sigue siendo topológico —toda
+fuente se puede emitir— pero es otro, y se pierde la propiedad de la cola,
+que atiende las fuentes en el orden en que aparecieron. El recorrido que sí se
+escribe recursivo es la búsqueda en profundidad.
+
 ### A mano sobre el plan de estudios
 
 Contadores al arrancar: AyG $2$, Prog $0$, MD $1$, ED $1$, AA $1$, Lóg $0$,
@@ -346,6 +354,27 @@ con $n = m = 0$. Por instancia, una línea con los $n$ números.
 **Pregunta:** un orden topológico, cualquiera. El enunciado garantiza que
 existe, así que no hace falta reportar ciclos. Los números vienen desde $1$;
 el programa los pasa a desde $0$ al leer y los devuelve al imprimir.
+
+La muestra leída a mano, con $n = 5$ y $m = 4$. Cada pareja se baja en uno y
+se guarda en la lista del primero:
+
+```
+5 4
+1 2   ->  0: 1
+2 3   ->  1: 2
+1 3   ->  0: 2
+1 5   ->  0: 4
+0 0   ->  fin de la entrada
+```
+
+$$
+G = [\, [1, 2, 4],\ [2],\ [\,],\ [\,],\ [\,] \,]
+$$
+
+Las tareas $3$, $4$ y $5$ de la entrada, que en el programa son la $2$, la
+$3$ y la $4$, quedan con la lista vacía: de ellas no sale ninguna
+precedencia. La línea `0 0` no es un caso: es la señal de que ya no vienen
+más.
 
 ```python
 def leer_grafo(datos, p, n, m):
