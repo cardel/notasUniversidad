@@ -1,7 +1,10 @@
 /* Siguiente: la reducción de suma(cuadrado, suc, 1, 3) por sustitución,
    pero cada paso lo elige el estudiante entre tres expresiones. Los
    distractores cambian el valor o rompen el orden por valor. El resultado,
-   14, sale de 09_traza.scala. */
+   14, sale de 09_traza.scala.
+
+   La reducción se arma de arriba hacia abajo: cada paso resuelto queda con
+   su regla debajo, y la pregunta siguiente se agrega al final de la lista. */
 (function () {
   var B = 3;
 
@@ -86,6 +89,7 @@
 
   var k = 1;
   var errores = 0;
+  var mensajeMalo = "";
 
   function opcionesDe(paso, i) {
     var lista = [{ expr: paso.expr, ok: true }].concat(paso.malas.map(function (m) { return { expr: m.expr, ok: false, msg: m.msg }; }));
@@ -94,60 +98,78 @@
     return lista.slice(giro).concat(lista.slice(0, giro));
   }
 
-  function pintar() {
-    var caja = document.getElementById("panel-reduccion");
-    caja.innerHTML = "";
-    var i;
-    for (i = 0; i < k; i = i + 1) {
-      var fila = document.createElement("div");
-      fila.className = "reduccion" + (i === k - 1 ? " ultima" : "");
-      var flecha = document.createElement("span");
-      flecha.className = "flecha-red";
-      flecha.textContent = i === 0 ? "" : "→";
-      var texto = document.createElement("code");
-      texto.className = "expr";
-      texto.textContent = PASOS[i].expr;
-      fila.appendChild(flecha);
-      fila.appendChild(texto);
-      caja.appendChild(fila);
-    }
-    var ops = document.getElementById("opciones");
-    ops.innerHTML = "";
-    var v = document.getElementById("veredicto");
-    document.getElementById("progreso").textContent = "Paso " + (k - 1) + " de " + (PASOS.length - 1) + " · equivocaciones: " + errores;
-    if (k >= PASOS.length) {
-      v.className = "veredicto bien";
-      v.textContent = "Llegó a 14 en " + (PASOS.length - 1) + " pasos con " + errores + " equivocación(es). " + (errores === 0 ? "Sin una sola." : "Vuelva a mirar en cuáles: son las que el compilador no avisa.");
-      document.getElementById("carta-cierre").classList.remove("bloqueado");
-      return;
-    }
+  function crear(tag, clase, texto) {
+    var e = document.createElement(tag);
+    if (clase) { e.className = clase; }
+    if (texto !== undefined) { e.textContent = texto; }
+    return e;
+  }
+
+  /* Una línea de la reducción: flecha a la izquierda, expresión a la derecha. */
+  function lineaExpr(texto, conFlecha, clase) {
+    var fila = crear("div", "reduccion" + (clase ? " " + clase : ""));
+    fila.appendChild(crear("span", "flecha-red", conFlecha ? "→" : ""));
+    fila.appendChild(crear("code", "expr", texto));
+    return fila;
+  }
+
+  function bloquePregunta(traza) {
     var paso = PASOS[k];
+    var caja = crear("div", "paso pregunta");
+    caja.appendChild(lineaExpr("¿cuál es el paso que sigue?", true, "incognita"));
+    caja.appendChild(crear("div", "progreso", "Paso " + k + " de " + (PASOS.length - 1) + " · equivocaciones: " + errores));
+
+    var ops = crear("div", "opciones-red");
     opcionesDe(paso, k).forEach(function (o) {
-      var b = document.createElement("button");
-      b.textContent = o.expr;
+      var b = crear("button", null, o.expr);
       b.addEventListener("click", function () {
         if (o.ok) {
-          v.className = "veredicto bien";
-          v.textContent = paso.regla;
           k = k + 1;
-          pintar();
-          v.className = "veredicto bien";
-          v.textContent = paso.regla;
+          mensajeMalo = "";
         } else {
           errores = errores + 1;
-          v.className = "veredicto mal";
-          v.textContent = o.msg;
-          document.getElementById("progreso").textContent = "Paso " + (k - 1) + " de " + (PASOS.length - 1) + " · equivocaciones: " + errores;
+          mensajeMalo = o.msg;
         }
+        pintar();
       });
       ops.appendChild(b);
     });
+    caja.appendChild(ops);
+
+    if (mensajeMalo) {
+      caja.appendChild(crear("div", "veredicto mal", mensajeMalo));
+    }
+    traza.appendChild(caja);
+  }
+
+  function bloqueCierre(traza) {
+    var caja = crear("div", "paso");
+    var v = crear("div", "veredicto bien",
+      "Llegó a 14 en " + (PASOS.length - 1) + " pasos con " + errores + " equivocación(es). " +
+      (errores === 0 ? "Sin una sola." : "Vuelva a mirar en cuáles: son las que el compilador no avisa."));
+    caja.appendChild(v);
+    traza.appendChild(caja);
+    document.getElementById("carta-cierre").classList.remove("bloqueado");
+  }
+
+  function pintar() {
+    var traza = document.getElementById("traza");
+    var i, caja;
+    traza.innerHTML = "";
+    for (i = 0; i < k; i = i + 1) {
+      caja = crear("div", "paso" + (i === k - 1 ? " nuevo" : ""));
+      caja.appendChild(lineaExpr(PASOS[i].expr, i > 0, i === k - 1 ? "ultima" : null));
+      if (i > 0) { caja.appendChild(crear("div", "regla", PASOS[i].regla)); }
+      traza.appendChild(caja);
+    }
+    if (k < PASOS.length) { bloquePregunta(traza); } else { bloqueCierre(traza); }
   }
 
   document.getElementById("btn-reiniciar").addEventListener("click", function () {
-    k = 1; errores = 0;
-    document.getElementById("veredicto").className = "veredicto";
-    document.getElementById("veredicto").textContent = "";
+    k = 1;
+    errores = 0;
+    mensajeMalo = "";
+    document.getElementById("carta-cierre").classList.add("bloqueado");
     pintar();
   });
   pintar();

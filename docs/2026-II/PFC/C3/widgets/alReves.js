@@ -1,88 +1,165 @@
-/* AlReves: tres implementaciones ocultas y sus salidas para tres llamadas;
-   hay que deducir cuál es cuál. Las salidas salen de correr suma,
-   sumaSinProx y sumaBaseUno con scala-cli. */
+/* AlReves: banco de pruebas. Las tres versiones están a la vista; lo que
+   se arma es la llamada. Cada corrida dice cuál de los dos errores queda
+   al descubierto y cuál pasa sin que se note. Las tres implementaciones
+   reproducen 10_errores_parametro.scala. */
 (function () {
-  var LLAMADAS = [
-    { id: 0, txt: "X(x => x, x => x + 2, 1, 10)", suma: 25, sumaSinProx: 55, sumaBaseUno: 26 },
-    { id: 1, txt: "X(x => x * x, x => x + 1, 1, 4)", suma: 30, sumaSinProx: 30, sumaBaseUno: 31 },
-    { id: 2, txt: "X(x => 1, x => x + 3, 1, 10)", suma: 4, sumaSinProx: 10, sumaBaseUno: 5 }
-  ];
-  /* Qué versión se esconde detrás de cada letra. */
-  var LETRAS = { A: "sumaBaseUno", B: "suma", C: "sumaSinProx" };
-  var VERSIONES = ["suma", "sumaSinProx", "sumaBaseUno"];
-
-  function salida(letra, llamada) { return llamada[LETRAS[letra]]; }
-
-  /* La llamada en la que dos versiones coinciden: prox = x + 1 hace
-     invisible a sumaSinProx. */
-  function coinciden(llamada) {
-    var pares = [], i, j;
-    for (i = 0; i < VERSIONES.length; i = i + 1) {
-      for (j = i + 1; j < VERSIONES.length; j = j + 1) {
-        if (llamada[VERSIONES[i]] === llamada[VERSIONES[j]]) { pares.push([VERSIONES[i], VERSIONES[j]]); }
-      }
-    }
-    return pares;
+  function suma(f, prox, a, b) {
+    if (a > b) { return 0; }
+    return f(a) + suma(f, prox, prox(a), b);
+  }
+  function sumaSinProx(f, prox, a, b) {
+    if (a > b) { return 0; }
+    return f(a) + sumaSinProx(f, prox, a + 1, b);
+  }
+  function sumaBaseUno(f, prox, a, b) {
+    if (a > b) { return 1; }
+    return f(a) + sumaBaseUno(f, prox, prox(a), b);
   }
 
-  var API = { LLAMADAS: LLAMADAS, LETRAS: LETRAS, salida: salida, coinciden: coinciden };
+  var EFES = [
+    { txt: "x => x", fn: function (x) { return x; } },
+    { txt: "x => x * x", fn: function (x) { return x * x; } },
+    { txt: "x => 1", fn: function () { return 1; } }
+  ];
+  var PROXES = [
+    { txt: "x => x + 1", fn: function (x) { return x + 1; } },
+    { txt: "x => x + 2", fn: function (x) { return x + 2; } },
+    { txt: "x => x + 3", fn: function (x) { return x + 3; } },
+    { txt: "x => x * 2", fn: function (x) { return x * 2; } }
+  ];
+  var RANGOS = [
+    { txt: "1, 1", a: 1, b: 1 },
+    { txt: "1, 4", a: 1, b: 4 },
+    { txt: "1, 10", a: 1, b: 10 },
+    { txt: "2, 7", a: 2, b: 7 }
+  ];
+
+  /* Una corrida: los tres resultados y qué error queda al descubierto. */
+  function correr(f, prox, rango) {
+    var buena = suma(f.fn, prox.fn, rango.a, rango.b);
+    var sinProx = sumaSinProx(f.fn, prox.fn, rango.a, rango.b);
+    var baseUno = sumaBaseUno(f.fn, prox.fn, rango.a, rango.b);
+    return {
+      llamada: "X(" + f.txt + ", " + prox.txt + ", " + rango.txt + ")",
+      suma: buena,
+      sumaSinProx: sinProx,
+      sumaBaseUno: baseUno,
+      atrapaSinProx: sinProx !== buena,
+      atrapaBaseUno: baseUno !== buena
+    };
+  }
+
+  /* Todas las llamadas que se pueden armar con los menús. */
+  function todas() {
+    var salida = [];
+    EFES.forEach(function (f) {
+      PROXES.forEach(function (p) {
+        RANGOS.forEach(function (r) { salida.push(correr(f, p, r)); });
+      });
+    });
+    return salida;
+  }
+
+  var API = { suma: suma, sumaSinProx: sumaSinProx, sumaBaseUno: sumaBaseUno,
+              EFES: EFES, PROXES: PROXES, RANGOS: RANGOS, correr: correr, todas: todas };
   if (typeof module !== "undefined") { module.exports = API; }
   if (typeof document === "undefined") { return; }
 
-  function construirTabla() {
-    var cuerpo = document.getElementById("cuerpo-salidas");
-    cuerpo.innerHTML = "";
-    LLAMADAS.forEach(function (l) {
-      var tr = document.createElement("tr");
-      var td = document.createElement("td"); td.className = "llamada"; td.textContent = l.txt; tr.appendChild(td);
-      ["A", "B", "C"].forEach(function (letra) {
-        var c = document.createElement("td"); c.textContent = salida(letra, l); tr.appendChild(c);
-      });
-      cuerpo.appendChild(tr);
+  var corridas = [];
+  var logrado = false;
+
+  function llenarMenu(id, lista) {
+    var sel = document.getElementById(id);
+    lista.forEach(function (o, i) {
+      var op = document.createElement("option");
+      op.value = String(i);
+      op.textContent = o.txt;
+      sel.appendChild(op);
     });
   }
 
-  document.getElementById("btn-comprobar").addEventListener("click", function () {
-    var v = document.getElementById("veredicto");
-    var elegidas = {}, repetidas = false, malas = [];
-    ["A", "B", "C"].forEach(function (letra) {
-      var sel = document.getElementById("sel-" + letra).value;
-      if (elegidas[sel]) { repetidas = true; }
-      elegidas[sel] = true;
-      if (sel !== LETRAS[letra]) { malas.push(letra); }
-    });
-    if (repetidas) {
-      v.className = "veredicto mal";
-      v.textContent = "Hay una versión asignada a dos letras. Son tres versiones distintas.";
+  function celda(texto, clase) {
+    var td = document.createElement("td");
+    if (clase) { td.className = clase; }
+    td.textContent = texto;
+    return td;
+  }
+
+  function pintarTabla() {
+    var cuerpo = document.getElementById("cuerpo-corridas");
+    var tr, td;
+    cuerpo.innerHTML = "";
+    if (corridas.length === 0) {
+      tr = document.createElement("tr");
+      td = celda("Todavía no ha corrido ninguna llamada.", "pend");
+      td.setAttribute("colspan", "6");
+      tr.appendChild(td);
+      cuerpo.appendChild(tr);
       return;
     }
-    if (malas.length === 0) {
-      v.className = "veredicto bien";
-      v.textContent = "Correcto. A cierra con 1 (26, 31 y 5: siempre uno más que B). C ignora prox: 55 es 1 + 2 + … + 10, y 10 es diez unos. Y B es la buena: 1 + 3 + 5 + 7 + 9 = 25.";
-      document.getElementById("carta-dos").classList.remove("bloqueado");
-    } else {
-      v.className = "veredicto mal";
-      v.textContent = "Fallan " + malas.join(" y ") + ". Pistas: una versión da siempre exactamente uno más que otra en las tres llamadas; otra da lo mismo que la buena solo cuando prox es x + 1.";
+    corridas.forEach(function (c) {
+      var fila = document.createElement("tr");
+      if (c.atrapaSinProx && c.atrapaBaseUno) { fila.className = "doble"; }
+      fila.appendChild(celda(c.llamada, "llamada"));
+      fila.appendChild(celda(String(c.suma)));
+      fila.appendChild(celda(String(c.sumaSinProx)));
+      fila.appendChild(celda(String(c.sumaBaseUno)));
+      fila.appendChild(celda(c.atrapaSinProx ? "sí" : "no", c.atrapaSinProx ? "si" : "no"));
+      fila.appendChild(celda(c.atrapaBaseUno ? "sí" : "no", c.atrapaBaseUno ? "si" : "no"));
+      cuerpo.appendChild(fila);
+    });
+  }
+
+  function comentario(c) {
+    if (c.atrapaSinProx && c.atrapaBaseUno) {
+      return "Esa llamada sirve: las dos versiones con error dan un número distinto al de suma, " +
+        c.sumaSinProx + " y " + c.sumaBaseUno + " contra " + c.suma + ".";
+    }
+    if (c.atrapaBaseUno) {
+      return "Atrapa a sumaBaseUno (" + c.sumaBaseUno + " contra " + c.suma +
+        "), pero sumaSinProx da " + c.sumaSinProx + ", lo mismo que suma: con esta llamada su error no se ve. " +
+        "Mire el prox y el rango que eligió.";
+    }
+    return "Ninguna de las dos queda al descubierto con esa llamada.";
+  }
+
+  document.getElementById("btn-correr").addEventListener("click", function () {
+    var f = EFES[parseInt(document.getElementById("sel-f").value, 10)];
+    var p = PROXES[parseInt(document.getElementById("sel-prox").value, 10)];
+    var r = RANGOS[parseInt(document.getElementById("sel-rango").value, 10)];
+    var c = correr(f, p, r);
+    var repetida = corridas.some(function (x) { return x.llamada === c.llamada; });
+    if (!repetida) { corridas.push(c); }
+    pintarTabla();
+    document.getElementById("contador").textContent =
+      "llamadas corridas: " + corridas.length + " de " + (EFES.length * PROXES.length * RANGOS.length) + " posibles";
+    var v = document.getElementById("veredicto");
+    v.className = "veredicto " + (c.atrapaSinProx && c.atrapaBaseUno ? "bien" : "mal");
+    v.textContent = comentario(c);
+    if (c.atrapaSinProx && c.atrapaBaseUno && !logrado) {
+      logrado = true;
+      document.getElementById("carta-tres").classList.remove("bloqueado");
     }
   });
 
-  document.querySelectorAll("[data-llamada]").forEach(function (b) {
+  document.querySelectorAll("[data-razon]").forEach(function (b) {
     b.addEventListener("click", function () {
-      var i = parseInt(b.getAttribute("data-llamada"), 10);
-      var v = document.getElementById("veredicto-dos");
-      document.querySelectorAll("[data-llamada]").forEach(function (o) { o.className = ""; });
+      var v = document.getElementById("veredicto-tres");
+      document.querySelectorAll("[data-razon]").forEach(function (o) { o.className = ""; });
       b.className = "primario";
-      var pares = coinciden(LLAMADAS[i]);
-      if (pares.length > 0) {
+      if (b.getAttribute("data-razon") === "ok") {
         v.className = "veredicto bien";
-        v.textContent = "Esa. Con prox = x => x + 1, avanzar de uno y usar prox es lo mismo, así que suma y sumaSinProx dan 30 las dos. Una prueba con ese prox nunca atrapa el error.";
+        v.textContent = "Eso es. sumaSinProx avanza con a + 1 y descarta prox; cuando prox es justamente x => x + 1, avanzar de uno y usar prox dan el mismo término, y las dos funciones recorren la misma lista.";
         document.getElementById("carta-cierre").classList.remove("bloqueado");
       } else {
         v.className = "veredicto mal";
-        v.textContent = "En esa llamada las tres salidas son distintas: separa a las tres versiones. Busque la llamada donde dos columnas coinciden.";
+        v.textContent = b.getAttribute("data-msg");
       }
     });
   });
 
-  construirTabla();
+  llenarMenu("sel-f", EFES);
+  llenarMenu("sel-prox", PROXES);
+  llenarMenu("sel-rango", RANGOS);
+  pintarTabla();
 })();
