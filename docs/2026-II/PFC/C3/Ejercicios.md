@@ -4,8 +4,8 @@ Doce ejercicios para recorrer en el navegador, organizados por los temas de la
 sesión y en su mismo orden. Cambia la mecánica respecto a las sesiones
 anteriores: aquí nada se muestra antes de que usted lo produzca. Hay tablas
 que se llenan de memoria, reducciones en las que se elige el paso siguiente,
-una traza escrita con un error escondido y tres funciones que hay que
-reconocer solo por lo que imprimen. Los valores contra los que se comprueba
+una traza escrita con un error escondido y un banco de pruebas donde se
+arma la llamada que delata un error. Los valores contra los que se comprueba
 todo salieron de correr el código de la sesión.
 
 Lo que se conserva en esta sesión es **el esqueleto**: la condición de parada,
@@ -42,8 +42,9 @@ muestra: se construye. En cada uno de los trece pasos hay tres expresiones y
 solo una es la que sigue. Algunos distractores cambian el valor (aplicar `f`
 al término siguiente, avanzar `b`, cerrar con 1); otros no lo cambian y por
 eso cuestan más (sustituir un cuerpo sin reducir antes sus argumentos, cerrar
-la suma de afuera cuando la de adentro todavía no tiene dos valores). El
-contador de equivocaciones queda a la vista.
+la suma de afuera cuando la de adentro todavía no tiene dos valores). La
+reducción crece hacia abajo: cada paso resuelto queda con su regla debajo y
+la pregunta siempre al final, con el contador de equivocaciones.
 
 ### [trazaRota](widgets/trazaRota.html){ target=_blank rel=noopener }
 
@@ -55,12 +56,14 @@ ninguno, y nombrar la versión: `sumaSinProx` o `sumaBaseUno`.
 
 ### [alReves](widgets/alReves.html){ target=_blank rel=noopener }
 
-Tres funciones `A`, `B` y `C` de las que solo se ven las salidas para tres
-llamadas. Hay que deducir cuál es `suma`, cuál `sumaSinProx` y cuál
-`sumaBaseUno`, y para eso toca hacer las sumas: 25, 26 y 55 no se distinguen
-sin calcular. La segunda pregunta es cuál llamada no separa a dos de ellas, y
-la respuesta es una lección sobre casos de prueba: con `prox = x => x + 1` el
-error de `sumaSinProx` es invisible.
+Las tres versiones están a la vista —`suma`, `sumaSinProx` y `sumaBaseUno`—
+y lo que se arma es la llamada de prueba: se eligen `f`, `prox` y el rango, y
+la tabla dice cuál de los dos errores quedó al descubierto. Con los valores
+por omisión (`x => x`, `x => x + 1`, rango `(1, 1)`) el de `sumaSinProx` no
+aparece, y ahí está el ejercicio: de las 48 llamadas que se pueden armar, 21
+lo dejan pasar, y son exactamente las que usan `prox = x => x + 1` o un rango
+de un solo término. El 1 de más de `sumaBaseUno` se ve con cualquiera. Cierra
+preguntando por qué ese `prox` vuelve invisible el error.
 
 ## Funciones anónimas
 
