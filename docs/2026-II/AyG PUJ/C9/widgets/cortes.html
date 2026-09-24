@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cortes — puntos de articulación y puentes</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .fila-item { display: block; padding: 0.3rem 0.2rem; border-bottom: 1px solid var(--borde); }
+  .fila-item b { font-family: ui-monospace, monospace; margin-left: 0.2rem; }
+  .resultado { margin-left: 0.5rem; font-size: 0.88rem; }
+  .resultado.bien { color: var(--verde); }
+  .resultado.mal { color: var(--rojo); }
+  button.mini { padding: 0.1rem 0.45rem; font-size: 0.78rem; font-weight: 500; }
+  .columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+  @media (max-width: 760px) { .columnas { grid-template-columns: 1fr; } }
+  .opciones button { text-align: left; }
+  #opciones-relacion { flex-direction: column; align-items: stretch; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Puntos de articulación y puentes</h1>
+  <p class="intro">Las dos definiciones se comprueban igual: se quita la pieza,
+  se cuentan los componentes y se compara con los que había. Aquí cada vértice
+  y cada arista traen un botón que la quita del dibujo y vuelve a colorear lo
+  que queda, para que la respuesta se vea antes de escribirla.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Nueve vértices</button>
+      <button data-preset="1">Seis, con dos cuerdas</button>
+      <button data-preset="2">Siete, un árbol</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="ver-quitado" style="text-align:center"></p>
+    <div class="prediccion">
+      <span>¿Cuántos puntos de articulación tiene?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque las piezas que sostienen la conexión</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo no dirigido conexo.
+    &nbsp;<b>Salida:</b> los vértices cuya remoción aumenta el número de
+    componentes, y las aristas cuya remoción hace lo mismo.</p>
+    <div class="columnas">
+      <div>
+        <h2 style="font-size:0.95rem">Puntos de articulación</h2>
+        <div id="lista-vertices"></div>
+        <div class="prediccion">
+          <button id="btn-vertices" class="primario">Comprobar vértices</button>
+        </div>
+        <div id="veredicto-vertices" class="veredicto"></div>
+      </div>
+      <div>
+        <h2 style="font-size:0.95rem">Puentes</h2>
+        <div id="lista-aristas"></div>
+        <div class="prediccion">
+          <button id="btn-aristas" class="primario">Comprobar aristas</button>
+        </div>
+        <div id="veredicto-aristas" class="veredicto"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cómo se relacionan los dos conceptos</h2>
+    <div style="margin-bottom:0.3rem"><b>Mire el primer grafo y decida cuál de
+    estas afirmaciones se sostiene.</b></div>
+    <div class="opciones" id="opciones-relacion">
+      <button data-op="siempre">Todo punto de articulación tiene al menos un puente entre sus aristas</button>
+      <button data-op="correcta">Hay puntos de articulación sin ningún puente al lado, y extremos de puente que no son puntos de articulación</button>
+      <button data-op="extremo">Todo extremo de un puente es punto de articulación</button>
+    </div>
+    <div id="veredicto-relacion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el primer grafo, agregue una
+    sola arista que deje el grafo sin ningún puente y diga cuáles puntos de
+    articulación sobreviven. Después conteste, con el árbol del tercer grafo a
+    la vista: en un árbol de <i>n</i> vértices, ¿cuántos puentes hay y cuáles
+    vértices son puntos de articulación?</p>
+  </div>
+
+</div>
+<script src="cortes.js"></script>
+</body>
+</html>

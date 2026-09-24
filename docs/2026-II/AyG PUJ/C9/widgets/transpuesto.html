@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>transpuesto — el grafo al revés y el grafo de componentes</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo, #panel-condensa { text-align: center; margin: 0.4rem 0; }
+  .opciones button { text-align: left; }
+  #opciones-dag { flex-direction: column; align-items: stretch; }
+  .prediccion input[type="number"].corto { width: 4.5rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El grafo al revés y el grafo de componentes</h1>
+  <p class="intro">Un componente fuertemente conexo pide dos caminos entre cada
+  par de vértices, uno de ida y otro de vuelta. Invertir todas las flechas
+  intercambia esos dos caminos y deja la exigencia igual, así que los grupos no
+  se mueven. Contraer cada grupo a un solo nodo deja un grafo sin ciclos, y esa
+  es la pieza sobre la que se apoya Kosaraju.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0">Nueve vértices y trece flechas: 0 → 1, 1 → 2,
+    2 → 0, 1 → 3, 3 → 4, 4 → 3, 2 → 5, 5 → 6, 6 → 7, 7 → 5, 4 → 6, 6 → 8,
+    3 → 8.</p>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="ver-cual" style="text-align:center"></p>
+    <div class="presets">
+      <button id="btn-voltear" class="primario">Ver Gᵀ</button>
+      <button id="btn-pintar">Pintar los componentes</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos componentes fuertemente conexos tiene?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Los mismos grupos en los dos grafos</h2>
+    <p style="margin-top:0">Corra el algoritmo sobre G y sobre Gᵀ y compare los
+    grupos que devuelve cada uno.</p>
+    <div class="prediccion">
+      <button id="btn-comparar" class="primario">Calcular en los dos</button>
+    </div>
+    <div id="veredicto-comparar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Un camino y el mismo camino al revés</h2>
+    <p style="margin-top:0">Escoja dos vértices. Si hay camino del primero al
+    segundo en G, la misma secuencia leída al revés es un camino del segundo al
+    primero en Gᵀ, arista por arista. El camino queda resaltado en el dibujo de
+    arriba.</p>
+    <div class="prediccion">
+      <span>De</span>
+      <input type="number" id="origen" class="corto" min="0" max="8" value="0">
+      <span>a</span>
+      <input type="number" id="destino" class="corto" min="0" max="8" value="8">
+      <button id="btn-camino" class="primario">Ver los dos caminos</button>
+    </div>
+    <div id="veredicto-camino" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El grafo de componentes</h2>
+    <div id="panel-condensa"></div>
+    <div class="prediccion">
+      <span>¿Cuántas aristas tiene este grafo de componentes?</span>
+      <input type="number" id="cuantas" min="0" placeholder="su número">
+      <button id="btn-aristas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-aristas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Por qué no puede tener ciclos</h2>
+    <div style="margin-bottom:0.3rem"><b>¿Qué impide que el grafo de
+    componentes tenga un ciclo?</b></div>
+    <div class="opciones" id="opciones-dag">
+      <button data-op="aristas">Que tiene menos aristas que el grafo original</button>
+      <button data-op="correcta">Que un ciclo entre componentes distintos los volvería mutuamente alcanzables, y entonces serían un solo componente</button>
+      <button data-op="numeros">Que las aristas siempre van de un componente de número menor a uno de número mayor</button>
+    </div>
+    <div id="veredicto-dag" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Agregue al grafo la flecha
+    8 → 1 y diga, antes de comprobarlo, cuáles componentes se funden y cuántos
+    quedan. Después dibuje el grafo de componentes que resulta y verifique que
+    sigue sin ciclos.</p>
+  </div>
+
+</div>
+<script src="transpuesto.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>conexo — conexo, débil o fuerte</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .opciones button { text-align: left; }
+  #opciones-clase { flex-direction: column; align-items: stretch; }
+  #opciones-tabla { flex-direction: column; align-items: stretch; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Conexo, débil o fuerte</h1>
+  <p class="intro">Cinco grafos, dos sin dirección y tres con ella, y la misma
+  pregunta en las dos versiones: ¿se puede ir de cualquier vértice a cualquier
+  otro? Con las aristas sin punta hay una respuesta; con punta hay que
+  preguntar de ida y de vuelta, y las dos no tienen por qué coincidir.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div class="presets" id="presets-grafo">
+      <button data-preset="0" class="primario">A</button>
+      <button data-preset="1">B</button>
+      <button data-preset="2">C</button>
+      <button data-preset="3">D</button>
+      <button data-preset="4">E</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="ver-tipo" style="text-align:center"></p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Clasifíquelo</h2>
+    <p style="margin-top:0">Dos de las cinco opciones solo tienen sentido en
+    grafos no dirigidos y tres solo en dirigidos. Escoger la de la columna
+    equivocada también deja una explicación.</p>
+    <div class="opciones" id="opciones-clase">
+      <button data-op="conexo">Conexo</button>
+      <button data-op="noconexo">No conexo</button>
+      <button data-op="fuerte">Fuertemente conexo</button>
+      <button data-op="debil">Débilmente conexo, pero no fuertemente</button>
+      <button data-op="nidebil">Ni siquiera débilmente conexo</button>
+    </div>
+    <div id="veredicto-clase" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cuántos componentes</h2>
+    <div class="prediccion">
+      <span id="rotulo-cuantos">¿Cuántos componentes conexos tiene?</span>
+      <input type="number" id="cuantos" min="1" placeholder="su número">
+      <button id="btn-cuantos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuantos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La pregunta que no compila</h2>
+    <div style="margin-bottom:0.3rem"><b>¿Cuál de estas tres preguntas queda
+    sin respuesta definida?</b></div>
+    <div class="opciones" id="opciones-tabla">
+      <button data-op="puente">Cuáles aristas del grafo B son puentes</button>
+      <button data-op="correcta">Cuáles son los componentes conexos del grafo D</button>
+      <button data-op="scc">Cuáles son los componentes fuertemente conexos del grafo C</button>
+    </div>
+    <div id="veredicto-tabla" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Al grafo E agréguele la menor
+    cantidad de flechas que lo deje fuertemente conexo, y diga cuántas fueron y
+    por qué con una menos no alcanza. Después quítele al grafo C la flecha
+    2 → 0 y diga qué pasa con la clasificación y con el número de componentes
+    fuertemente conexos.</p>
+  </div>
+
+</div>
+<script src="conexo.js"></script>
+</body>
+</html>
