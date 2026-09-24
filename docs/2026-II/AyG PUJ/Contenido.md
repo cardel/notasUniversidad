@@ -38,6 +38,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 6. [Clase 6. Representaciones de grafos y recorridos — 11 de septiembre](C6/Clase%206.%20Representaciones%20y%20recorridos.md)
 7. [Clase 7. Grafos implícitos — 18 de septiembre](C7/Clase%207.%20Grafos%20implicitos.md)
 8. [Clase 8. Orden topológico — semana del 21 de septiembre](C8/Clase%208.%20Orden%20topologico.md)
+9. [Clase 9. Conectividad — 25 de septiembre](C9/Clase%209.%20Conectividad.md)
 
 ## Clases en video
 

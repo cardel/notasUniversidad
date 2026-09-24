@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>red — quince páginas y sus enlaces</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo, #panel-condensa { text-align: center; margin: 0.4rem 0; }
+  .prediccion input[type="number"].corto { width: 5rem; }
+  .datos code { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Quince páginas y sus enlaces</h1>
+  <p class="intro">El último y el más exigente, para cuando los anteriores ya
+  salen solos. Quince páginas de un sitio y veintitrés enlaces: demasiado para
+  seguir la traza de memoria, que es el tamaño en que estos algoritmos dejan de
+  ser un ejercicio de papel. Dos páginas están en el mismo bloque cuando se
+  puede ir y volver entre ellas siguiendo enlaces.</p>
+
+  <div class="carta">
+    <h2>1. El sitio</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota datos" style="margin-top:0">Veintitrés enlaces: 0 → 1,
+    1 → 2, 2 → 3, 3 → 0, 4 → 5, 5 → 4, 6 → 7, 7 → 8, 8 → 6, 10 → 11, 11 → 10,
+    13 → 14, 14 → 13, 1 → 4, 2 → 6, 5 → 6, 5 → 9, 7 → 9, 8 → 10, 9 → 12,
+    11 → 12, 12 → 13, 10 → 14.</p>
+    <div class="prediccion">
+      <span>¿Cuántos bloques de páginas mutuamente alcanzables hay?</span>
+      <input type="number" id="cuantos" min="1" placeholder="su número">
+      <button id="btn-cuantos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuantos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La segunda pasada, llamada por llamada</h2>
+    <p style="margin-top:0">La lista es <code>ord</code>, ya calculada por la
+    primera búsqueda en profundidad y leída de izquierda a derecha. Cada
+    llamada que encuentra su página sin asignar pinta un bloque entero; las
+    demás se devuelven sin hacer nada y quedan tachadas.</p>
+    <div class="secuencia" id="ver-ord"></div>
+    <div class="botones">
+      <button id="btn-siguiente" class="primario">Siguiente llamada</button>
+      <button id="btn-componente">Hasta el siguiente bloque</button>
+      <button id="btn-final">Al final</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso">Llamadas ejecutadas: <span id="ver-progreso">0 de 15</span></div>
+    <p class="nota" id="ver-nota"></p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Bloque</th><th>Arranca en</th><th>Páginas</th><th>Tamaño</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El mapa de bloques</h2>
+    <div class="prediccion">
+      <span>¿Cuántas aristas tiene el grafo de componentes?</span>
+      <input type="number" id="aristas" min="0" placeholder="su número">
+      <button id="btn-aristas" class="primario">Comprobar y dibujarlo</button>
+    </div>
+    <div id="veredicto-aristas" class="veredicto"></div>
+    <div id="panel-condensa"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El mismo sitio sin las direcciones</h2>
+    <p style="margin-top:0">Borre las puntas de los enlaces y quedan veinte
+    aristas sin dirección. Dos preguntas sobre ese grafo.</p>
+    <div class="prediccion">
+      <span>Componentes conexos:</span>
+      <input type="number" id="sin-comp" class="corto" min="1" placeholder="cuántos">
+      <span>puntos de articulación:</span>
+      <input type="number" id="sin-art" class="corto" min="0" placeholder="cuántos">
+      <button id="btn-sin" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-sin" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Un enlace de más</h2>
+    <p style="margin-top:0">El administrador agrega un enlace de vuelta desde
+    la página 14 hasta la portada, 14 → 0.</p>
+    <div class="prediccion">
+      <span>¿Cuántos bloques quedan entonces?</span>
+      <input type="number" id="extra" min="1" placeholder="su número">
+      <button id="btn-extra" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-extra" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Tres preguntas sobre el mismo
+    sitio.</p>
+    <ul style="margin-top:0.3rem">
+      <li>Quite el enlace 9 → 12 y diga qué pasa con los bloques y con el
+      grafo de componentes. ¿Sigue siendo posible llegar de la portada a la
+      página 13?</li>
+      <li>¿Cuál es el mínimo número de enlaces que hay que agregar para que
+      todo el sitio quede fuertemente conexo? Piense en cuántos bloques no
+      reciben enlaces de otro bloque y cuántos no envían ninguno.</li>
+      <li>Escriba un orden topológico del grafo de componentes distinto del
+      que devuelve Kosaraju, o argumente por qué no existe otro.</li>
+    </ul>
+  </div>
+
+</div>
+<script src="red.js"></script>
+</body>
+</html>
