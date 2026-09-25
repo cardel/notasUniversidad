@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parser y unparser de comandos</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Parser y unparser de comandos</h1>
+  <p class="intro">De la sintaxis concreta del robot al datatype y de vuelta. Cada prueba de <code>parse-cmd</code> muestra dibujado el árbol que se espera; si el código construye otro, aparece al lado el que construyó, para comparar forma contra forma. El último reto da la vuelta completa.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. Los valores de un datatype se imprimen
+    como <code>(avanza-cmd 3)</code> para poder leerlos, pero no son listas:
+    <code>car</code> sobre uno falla. Lo que se entrega se escribe y se corre en
+    DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres, resueltos</h2>
+    <p style="margin-top:0">Las dos direcciones, y con qué se abre el dato en cada una:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th></th><th>Recibe</th><th>Se abre con</th><th>Devuelve</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>parse-cmd</td><td>una lista</td><td><code>car</code>, <code>cadr</code>, <code>cddr</code></td><td>un valor del datatype</td></tr>
+          <tr><td>unparse-cmd</td><td>un valor del datatype</td><td><code>cases</code></td><td>una lista</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">parse es el único lugar donde car y cdr son legítimos,
+    porque es donde el dato todavía es una lista; desde que el constructor
+    devuelve, todo lo demás lo abre cases. Y la producción con puntos
+    suspensivos obliga en las dos direcciones a un auxiliar sobre la lista de
+    comandos, que es el nodo intermedio que aparece en los árboles.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="7" spellcheck="false">(define-datatype cmd cmd?
+  (avanza-cmd (n number?))
+  (gira-cmd   (dir symbol?))
+  (repite-cmd (n number?) (cmds (list-of cmd?))))
+
+(cmd? '(avanza-cmd 3))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="parser.js"></script>
+</body>
+</html>

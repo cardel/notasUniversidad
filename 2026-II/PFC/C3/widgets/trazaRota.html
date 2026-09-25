@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>trazaRota — encuentre el paso equivocado</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso-traza { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.3rem 0.5rem; border-radius: 6px; cursor: pointer; }
+  .paso-traza:first-child { cursor: default; }
+  .paso-traza:hover { background: var(--gris-suave, #f4f5f7); }
+  .paso-traza.marcado { background: #fdecea; outline: 2px solid var(--rojo, #c0392b); }
+  .paso-traza .num-paso { width: 1.2rem; color: #9aa3ad; font-weight: 700; }
+  .paso-traza code { font-size: 1.0rem; }
+  .presets button.hecho::after { content: " ✓"; }
+  #progreso { font-size: 0.86rem; color: #6b737c; margin-top: 0.4rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>trazaRota: encuentre el paso equivocado</h1>
+  <p class="intro">Tres trazas de <code>suma(x => x + 1, x => x + 2, 1, 7)</code>
+  escritas por alguien más. Dos salieron de versiones de <code>suma</code>
+  que compilan y dan un número equivocado; una está bien. Cada traza es
+  consistente consigo misma después del error, así que el total no delata
+  nada: hay que leer paso por paso. Marque el <b>primer</b> paso equivocado,
+  o diga que no hay ninguno, y nombre la versión que lo produjo.</p>
+
+  <div class="carta">
+    <div class="codigo" style="margin-bottom:0.6rem"><div class="linea"><span class="num"></span><span class="txt">def suma(f: Int => Int, prox: Int => Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a > b) 0</span></div><div class="linea"><span class="num"></span><span class="txt">  else f(a) + suma(f, prox, prox(a), b)</span></div><div class="linea"><span class="num"></span><span class="txt"></span></div><div class="linea"><span class="num"></span><span class="txt">def sumaSinProx(f: Int => Int, prox: Int => Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a > b) 0 else f(a) + sumaSinProx(f, prox, a + 1, b)</span></div><div class="linea"><span class="num"></span><span class="txt"></span></div><div class="linea"><span class="num"></span><span class="txt">def sumaBaseUno(f: Int => Int, prox: Int => Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a > b) 1 else f(a) + sumaBaseUno(f, prox, prox(a), b)</span></div></div>
+    <h2>1. Elija la traza</h2>
+    <div class="presets">
+      <button data-caso="0" class="primario">Traza A</button>
+      <button data-caso="1">Traza B</button>
+      <button data-caso="2">Traza C</button>
+    </div>
+    <div id="progreso"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque el primer paso equivocado</h2>
+    <div id="panel-traza"></div>
+    <div class="botones" style="margin-top:0.5rem"><button id="btn-ninguno">No hay ningún paso equivocado</button></div>
+    <h2 style="margin-top:0.9rem">3. ¿Qué versión la produjo?</h2>
+    <div class="opciones">
+      <button data-version="suma">suma: la buena</button>
+      <button data-version="sumaSinProx">sumaSinProx: avanza siempre de uno</button>
+      <button data-version="sumaBaseUno">sumaBaseUno: cierra con 1</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Una traza equivocada no se ve en el total: 35 y
+    21 son números tan creíbles como 20. Se ve en dos sitios concretos. El
+    <code>a</code> que entra en cada paso tiene que ser el <code>prox</code>
+    del anterior, y el valor con que cierra la última llamada tiene que ser
+    el neutro de la operación. Esos dos sitios son justamente los dos
+    parámetros que <code>suma</code> deja abiertos: quien los revisa, revisa
+    la función entera.</p>
+    <p><a href="alReves.html">Ir a <b>alReves</b>: arme la llamada que delata el error →</a></p>
+  </div>
+</div>
+<script src="trazaRota.js"></script>
+</body>
+</html>

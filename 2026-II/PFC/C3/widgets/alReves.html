@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alReves — arme la llamada que delata el error</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  td.llamada { text-align: left; font-family: ui-monospace, monospace; }
+  td.si { color: var(--verde); font-weight: 700; }
+  td.no { color: var(--rojo); }
+  tr.doble td { background: var(--verde-suave); }
+  .armar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 0.7rem; font-family: ui-monospace, monospace; }
+  .armar label { display: flex; align-items: center; gap: 0.4rem; }
+  .armar select { font-family: inherit; font-size: 0.95rem; padding: 0.25rem; border: 1px solid var(--borde); border-radius: 4px; }
+  .opciones { flex-direction: column; align-items: flex-start; }
+  .opciones button { text-align: left; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>alReves: arme la llamada que delata el error</h1>
+  <p class="intro">Aquí no hay nada escondido: las tres versiones están a la
+  vista y dos de ellas tienen un error. Lo que hay que construir es la
+  <b>llamada de prueba</b>. Se eligen <code>f</code>, <code>prox</code> y el
+  rango, se corre, y la tabla dice si cada versión con error quedó al
+  descubierto o entregó el mismo número que la buena. Una de las dos se cae
+  con cualquier llamada; la otra solo con algunas.</p>
+
+  <div class="carta">
+    <h2>1. Las tres versiones</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">def suma(f: Int =&gt; Int, prox: Int =&gt; Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a &gt; b) 0 else f(a) + suma(f, prox, prox(a), b)</span></div><div class="linea"><span class="num"></span><span class="txt"> </span></div><div class="linea"><span class="num"></span><span class="txt">def sumaSinProx(f: Int =&gt; Int, prox: Int =&gt; Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a &gt; b) 0 else f(a) + sumaSinProx(f, prox, a + 1, b)</span></div><div class="linea"><span class="num"></span><span class="txt"> </span></div><div class="linea"><span class="num"></span><span class="txt">def sumaBaseUno(f: Int =&gt; Int, prox: Int =&gt; Int, a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (a &gt; b) 1 else f(a) + sumaBaseUno(f, prox, prox(a), b)</span></div></div>
+    <p class="nota"><code>sumaSinProx</code> recibe <code>prox</code> y no lo
+    usa: avanza siempre de uno en uno. <code>sumaBaseUno</code> cierra con 1 en
+    lugar de 0. Las dos compilan y las dos devuelven un número.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Arme una llamada que atrape a las dos</h2>
+    <div class="armar">
+      <label>f = <select id="sel-f"></select></label>
+      <label>prox = <select id="sel-prox"></select></label>
+      <label>a, b = <select id="sel-rango"></select></label>
+      <button id="btn-correr" class="primario">Correr</button>
+    </div>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>llamada</th><th>suma</th><th>sumaSinProx</th><th>sumaBaseUno</th><th>¿atrapa a sumaSinProx?</th><th>¿atrapa a sumaBaseUno?</th></tr></thead>
+        <tbody id="cuerpo-corridas"></tbody>
+      </table>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="progreso" id="contador" style="margin-top:0.5rem">llamadas corridas: 0 de 48 posibles</div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. ¿Por qué con <code>prox = x =&gt; x + 1</code> el error de <code>sumaSinProx</code> no aparece nunca?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Porque sumaSinProx avanza con a + 1, y con ese prox eso es exactamente lo que hace suma.</button>
+      <button data-razon="base" data-msg="Las dos cierran con 0, y eso no las iguala: con prox = x => x + 2 dan números distintos. El caso base es lo que separa a sumaBaseUno, no a esta.">Porque las dos tienen el mismo caso base, 0.</button>
+      <button data-razon="f" data-msg="f es la misma en las dos, pero lo que cambia es a cuáles términos llega. Con x => x + 1 los términos coinciden; con cualquier otro prox, no.">Porque las dos aplican la misma f.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El error de <code>sumaBaseUno</code> se ve con
+    cualquier llamada: el 1 de más aparece siempre, porque el caso base se
+    alcanza una vez y solo una. El de <code>sumaSinProx</code> necesita dos
+    condiciones al tiempo: un <code>prox</code> distinto de
+    <code>x =&gt; x + 1</code> y un rango con más de un término. Con
+    <code>(1, 1)</code> las dos recorren un solo término y dan lo mismo, por
+    bien elegido que esté <code>prox</code>.</p>
+    <p>Una prueba escrita con los valores más cómodos —<code>x =&gt; x</code>,
+    <code>x =&gt; x + 1</code>, un rango corto— pasa en verde con las tres
+    versiones. Es lo que se pide en las pruebas de los talleres: entradas que
+    separen versiones, no entradas que las confundan.</p>
+    <p><a href="literales.html">Ir a <b>literales</b>: qué hace cada literal →</a></p>
+  </div>
+</div>
+<script src="alReves.js"></script>
+</body>
+</html>

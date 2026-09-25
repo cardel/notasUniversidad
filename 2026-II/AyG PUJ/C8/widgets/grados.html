@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grados — cuántas flechas llegan</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+  .res.bien { color: var(--verde); font-weight: 700; }
+  .res.mal { color: var(--rojo); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuántas flechas llegan</h1>
+  <p class="intro">El grado de salida de un vértice se lee de un vistazo: es
+  el largo de su lista. El de entrada no está en ninguna parte y hay que
+  contarlo recorriendo las listas de los demás. Aquí se llena a mano primero
+  y después se ejecuta el código de la clase.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div id="panel-grafo"></div>
+    <p style="margin:0.4rem 0 0">Siete vértices y ocho flechas, en lista de
+    adyacencia. Este grafo no está en las diapositivas.</p>
+    <p style="margin:0.4rem 0 0"><b>Entrada:</b> la lista de adyacencia
+    <code>G</code>. &nbsp;<b>Salida:</b> la lista <code>entrada</code>, donde
+    <code>entrada[v]</code> es cuántas flechas llegan a <code>v</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llene los grados de entrada</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th><code>G[u]</code></th><th>Grado de entrada</th><th></th></tr></thead>
+        <tbody id="cuerpo-mano"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <button id="btn-mano" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-mano" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cuántas veces se ejecuta la suma</h2>
+    <div class="prediccion">
+      <span>¿Cuántas veces se ejecuta la línea 6 sobre este grafo?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Ejecute el conteo</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>entrada: <span class="viva" id="ver-entrada">–</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La flecha que se está contando queda azul en el dibujo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Fuentes y sumideros</h2>
+    <div style="margin-bottom:0.3rem"><b>¿Cuáles vértices de este grafo son fuentes?</b></div>
+    <div class="opciones" id="opciones-fuente">
+      <button data-op="correcta">El 1 y el 2</button>
+      <button data-op="sumidero">El 4, que no recibe ninguna flecha</button>
+      <button data-op="lista">Los que tienen la lista de adyacencia vacía</button>
+    </div>
+    <div id="veredicto-fuente" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Escriba
+    <code>grados_de_salida(G)</code> y diga por qué cuesta Θ(n) mientras que
+    <code>grados_de_entrada(G)</code> cuesta Θ(n + m). Después, sobre matriz
+    de adyacencia: ¿cuánto cuesta cada uno de los dos?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="grados.js"></script>
+</body>
+</html>

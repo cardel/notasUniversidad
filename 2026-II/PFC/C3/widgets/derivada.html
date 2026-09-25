@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>derivada — calcule con la fórmula</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.traza { border-collapse: collapse; width: 100%; font-family: ui-monospace, monospace; font-size: 0.95rem; }
+  table.traza th, table.traza td { border: 1px solid var(--borde); padding: 0.35rem 0.6rem; text-align: center; }
+  table.traza th { background: var(--gris-suave, #f4f5f7); font-weight: 600; }
+  table.traza input { width: 7rem; text-align: center; font-family: inherit; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  input.bien { border-color: var(--verde) !important; background: var(--verde-suave); }
+  input.mal { border-color: var(--rojo, #c0392b) !important; background: #fdecea; }
+  td.impreso { color: var(--verde); font-weight: 700; }
+  .formula { font-size: 1.05rem; margin: 0.5rem 0; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>derivada: calcule con la fórmula</h1>
+  <p class="intro"><code>derivada(f, dx)</code> devuelve la función
+  <code>x => (f(x + dx) - f(x)) / dx</code>. Para <code>cube</code> en
+  <code>x = 2</code> la derivada exacta es 12, y lo que devuelve la función
+  fabricada no es 12: se le puede calcular <b>exactamente</b> cuánto se
+  aleja. Haga la cuenta antes de ver lo que imprime el programa.</p>
+
+  <div class="carta">
+    <div class="codigo" style="margin-bottom:0.6rem"><div class="linea"><span class="num"></span><span class="txt">def derivada(f: Double => Double, dx: Double): Double => Double =</span></div><div class="linea"><span class="num"></span><span class="txt">  (x: Double) => (f(x + dx) - f(x)) / dx</span></div><div class="linea"><span class="num"></span><span class="txt">def cube(x: Double): Double = x * x * x</span></div></div>
+    <h2>1. Llene la tabla con la expansión</h2>
+    <p class="formula">Con <code>f = cube</code> y <code>x = 2</code>:
+    ((2 + dx)³ − 8) / dx = (8 + 12·dx + 6·dx² + dx³ − 8) / dx = <b>12 + 6·dx + dx²</b>.</p>
+    <table class="traza">
+      <thead><tr><th>dx</th><th>12 + 6·dx + dx²</th><th>lo que imprime derivada(cube, dx)(2)</th></tr></thead>
+      <tbody>
+        <tr><td>1.0</td><td><input id="v-0" placeholder="?"></td><td class="impreso" id="imp-0"></td></tr>
+        <tr><td>0.1</td><td><input id="v-1" placeholder="?"></td><td class="impreso" id="imp-1"></td></tr>
+        <tr><td>0.0001</td><td><input id="v-2" placeholder="?"></td><td class="impreso" id="imp-2"></td></tr>
+      </tbody>
+    </table>
+    <div class="botones" style="margin-top:0.6rem"><button id="btn-comprobar-tabla" class="primario">Comprobar</button></div>
+    <div id="veredicto-tabla" class="veredicto"></div>
+    <div class="nota">Lo impreso no coincide exactamente con la fórmula en los
+    últimos decimales: es la aritmética de punto flotante, que no representa
+    0.1 de forma exacta. El error de la aproximación, 6·dx + dx², sí es el
+    que la fórmula dice.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. ¿Y si se deriva lo que devolvió <code>derivada</code>?</h2>
+    <p style="margin-top:0"><code>derivada(derivada(cube, 0.01), 0.01)(2)</code> imprime un número:</p>
+    <div class="opciones" id="opciones-segunda"></div>
+    <div id="veredicto-segunda" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>derivada</code> recibe una función y
+    devuelve otra del mismo tipo, y por eso se puede aplicar a su propio
+    resultado: la segunda derivada no necesita código nuevo. Lo que sí
+    cambia es el error, que se acumula en cada aplicación. La expansión
+    <code>12 + 6·dx + dx²</code> dice algo que ninguna corrida dice sola: el
+    error es lineal en <code>dx</code>, así que dividir <code>dx</code> por
+    10 divide el error por 10.</p>
+    <p><a href="tipos.html">Ir a <b>tipos</b>: qué tipo tiene cada expresión →</a></p>
+  </div>
+</div>
+<script src="derivada.js"></script>
+</body>
+</html>

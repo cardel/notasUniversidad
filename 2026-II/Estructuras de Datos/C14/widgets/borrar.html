@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>borrar — iteradores y algoritmos de la STL</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Borrar mientras se recorre</h1>
+  <p class="intro">Quitar los negativos de un vector, de dos maneras y con un
+  error en el medio.</p>
+
+  <div class="carta">
+    <h2>1. it = v.erase(it)</h2>
+    <div class="codigo" id="codigo-erase"></div>
+    <div class="prediccion">
+      <span>v queda:</span>
+      <input type="text" id="pred-erase" placeholder="a b c" style="width:8rem">
+      <button id="btn-erase" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-erase" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. v.erase(it) y luego ++it</h2>
+    <div class="codigo" id="codigo-error"></div>
+    <div class="opciones" id="opciones-error">
+      <button data-op="salta">Se salta el -3 y al final lee fuera del vector</button>
+      <button data-op="igual">Da lo mismo que la versión 1</button>
+      <button data-op="todos">Borra todos los negativos pero también el 5</button>
+    </div>
+    <div id="veredicto-error" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que cuesta cada versión</h2>
+    <p style="margin-top:0">Sobre el mismo vector de 7 elementos con 4
+    negativos: ¿cuántos elementos se <b>corren</b> en total con la versión 1,
+    sumando todos los erase? ¿Y cuántas <b>copias</b> hace la versión que
+    compacta hacia el frente y recorta al final?</p>
+    <div class="prediccion">
+      <span>corrimientos:</span>
+      <input type="number" id="pred-corridos" placeholder="?">
+      <span>copias:</span>
+      <input type="number" id="pred-copias" placeholder="?">
+      <button id="btn-costo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-costo" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Tras erase el iterador guardado no vale: se usa el
+    que erase devuelve, y se avanza solo cuando no se borró. Y borrar uno a
+    uno corre lo que sigue cada vez; compactar copia cada sobreviviente una
+    sola vez.</div>
+  </div>
+</div>
+<script src="borrar.js"></script>
+</body>
+</html>

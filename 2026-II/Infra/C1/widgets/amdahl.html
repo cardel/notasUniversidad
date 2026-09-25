@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ley de Amdahl — el techo de una paralelización</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ley de Amdahl: hasta dónde llega poner más núcleos</h1>
+  <p class="intro">Un programa tarda 1 unidad de tiempo en un núcleo. Una
+  fracción <b>p</b> de ese tiempo se reparte entre los núcleos disponibles; el
+  resto no se puede repartir. Mueva las dos perillas y mire qué pasa con el
+  tiempo total.</p>
+
+  <div class="carta">
+    <h2>1. Las dos perillas</h2>
+    <div class="fila-n">
+      <label for="rango-p">Parte paralelizable:</label>
+      <input type="range" id="rango-p" min="0" max="99" value="90">
+      <span class="valor-n">p = <span id="ver-p">0,90</span></span>
+      <span class="presets">
+        <button data-p="50">50&nbsp;%</button>
+        <button data-p="75">75&nbsp;%</button>
+        <button data-p="90">90&nbsp;%</button>
+        <button data-p="95">95&nbsp;%</button>
+        <button data-p="99">99&nbsp;%</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="rango-n">Núcleos:</label>
+      <input type="range" id="rango-n" min="1" max="64" value="8">
+      <span class="valor-n">n = <span id="ver-n">8</span></span>
+      <span class="presets">
+        <button data-n="1">1</button>
+        <button data-n="2">2</button>
+        <button data-n="4">4</button>
+        <button data-n="8">8</button>
+        <button data-n="16">16</button>
+        <button data-n="64">64</button>
+      </span>
+    </div>
+    <div class="prediccion">
+      <span>Antes de mirar abajo: ¿cuántas veces más rápido va?</span>
+      <input type="number" id="prediccion" min="0" step="0.01" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. En qué se va el tiempo</h2>
+    <div id="panel-barras"></div>
+    <div class="nota">La parte azul no se mueve por más núcleos que se pongan.
+    La ámbar se divide entre <b id="nota-n">8</b>. Cuando la ámbar se hace
+    despreciable, lo que queda es la azul: ese es el techo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Speedup y eficiencia al agregar núcleos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Núcleos</th><th>Tiempo</th><th>Speedup</th><th>Eficiencia</th><th>Ganancia sobre la fila anterior</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="alerta" id="caja-techo"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La fórmula del techo</h2>
+    <p style="margin-top:0">Con infinitos núcleos el término que se divide
+    desaparece. ¿Qué queda?</p>
+    <div class="opciones" id="opciones-techo">
+      <button data-op="correcta">1 / (1 − p)</button>
+      <button data-op="np">n · p</button>
+      <button data-op="unop">1 / p</button>
+      <button data-op="infinito">no hay techo</button>
+    </div>
+    <div id="veredicto-techo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Al revés: cuánto hay que paralelizar</h2>
+    <p style="margin-top:0">Le piden que el programa vaya <b>10 veces</b> más
+    rápido y le dan todos los núcleos que quiera. ¿Cuál es la mínima parte
+    paralelizable que se lo permite?</p>
+    <div class="opciones" id="opciones-inversa">
+      <button data-op="p50">50&nbsp;%</button>
+      <button data-op="p90">90&nbsp;%</button>
+      <button data-op="p95">95&nbsp;%</button>
+      <button data-op="p99">99&nbsp;%</button>
+    </div>
+    <div id="veredicto-inversa" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="amdahl.js"></script>
+</body>
+</html>

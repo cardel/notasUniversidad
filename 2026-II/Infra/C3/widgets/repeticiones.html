@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>timeit — la suma de las repeticiones y lo que el setup deja fuera</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .barras-v { position: relative; display: flex; align-items: flex-end; gap: 4px; height: 140px;
+              border-bottom: 1px solid var(--borde); margin-top: 0.6rem; padding: 1rem 6.5rem 0; }
+  .barra-v { flex: 1; max-width: 42px; min-height: 2px; background: var(--azul); border-radius: 3px 3px 0 0; }
+  .linea-h { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--ambar);
+             font-size: 0.75rem; color: var(--gris); line-height: 1; }
+  .linea-h span { background: rgba(255, 255, 255, 0.88); padding: 1px 3px; border-radius: 3px; }
+  @media (max-width: 600px) {
+    .barras-v { padding: 1.2rem 0.3rem 0; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cien repeticiones en un solo número: qué suma timeit y qué deja fuera</h1>
+  <p class="intro"><code>timeit</code> corre el fragmento <code>number</code> veces y entrega un
+  solo número. Antes de ver la cuenta, escriba cuánto tarda una llamada; después saque la
+  preparación del cronómetro, compare una medición suelta con veinte y decida dónde no
+  conviene usarlo.</p>
+
+  <div class="carta">
+    <h2>1. Lo que devuelve timeit</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">from timeit import timeit</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">def fib(n):</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    return n if n &lt; 2 else fib(n-2) + fib(n-1)</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">iterations = 100</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">total_time = timeit(</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">    "fib(30)",</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">    number=iterations,</span></div>
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt">    globals=globals()</span></div>
+      <div class="linea bloque-1"><span class="num">11</span><span class="txt">)</span></div>
+      <div class="linea bloque-1"><span class="num">12</span><span class="txt">print(f"total {total_time:.1f} s")</span></div>
+    </div>
+    <div class="chips" style="margin-top:0.6rem">
+      <span class="chip">en pantalla <b>total 15,8 s</b></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuánto tarda una llamada a <code>fib(30)</code>, en ms?</span>
+      <input type="number" id="prediccion-a" min="0" step="1" placeholder="ms">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>number</th><th>Lo que devuelve timeit</th><th>Por llamada</th></tr></thead>
+        <tbody id="cuerpo-total"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El setup dentro o fuera</h2>
+    <p style="margin-top:0">La operación que interesa trabaja sobre datos que hay que construir antes.
+    Dos formas de medirla:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num"></span><span class="txt"># generar_datos dentro de stmt: se repite con la operacion</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">tiempo = timeit(</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">    stmt="datos = generar_datos(1000); operacion(datos)",</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">    globals=globals(), number=1000)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"></span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt"># generar_datos en setup: corre una vez, fuera del cronometro</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">tiempo = timeit(</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">    stmt="operacion(datos)",</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">    setup="datos = generar_datos(1000)",</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">    globals=globals(), number=1000)</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">print(f"Promedio: {tiempo / 1000:.6f}s")</span></div>
+    </div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <label for="costo-generar"><code>generar_datos(1000)</code>:</label>
+      <input type="number" id="costo-generar" value="5" min="0" step="0.1" style="width:5rem;padding:0.3rem 0.4rem;border:1px solid var(--borde);border-radius:6px;font:inherit"> ms
+      <label for="costo-operacion"><code>operacion(datos)</code>:</label>
+      <input type="number" id="costo-operacion" value="0.2" min="0" step="0.1" style="width:5rem;padding:0.3rem 0.4rem;border:1px solid var(--borde);border-radius:6px;font:inherit"> ms
+      <label for="number-b"><code>number</code>:</label>
+      <input type="number" id="number-b" value="1000" min="1" step="100" style="width:5.5rem;padding:0.3rem 0.4rem;border:1px solid var(--borde);border-radius:6px;font:inherit">
+    </div>
+    <div class="prediccion">
+      <span>Si <code>generar_datos</code> va dentro de <code>stmt</code>, ¿qué promedio por
+      ejecución reporta timeit, en ms? Un decimal.</span>
+      <input type="number" id="prediccion-b" min="0" step="0.1" placeholder="ms">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Dónde va generar_datos</th><th>Qué paga cada vuelta</th><th>Total (ms)</th><th>Promedio (ms)</th></tr></thead>
+        <tbody id="cuerpo-setup"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-setup" style="margin-top:0.6rem"></div>
+    <div class="nota">Después de comprobar, cambie <code>number</code>: el total se mueve y el
+    promedio se queda quieto. Lo que infla la medición es qué entra en cada vuelta, no cuántas
+    veces se repite.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una medición contra muchas</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num"></span><span class="txt"># una medicion suelta</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">t0 = perf_counter()</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">fib(30)</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">print(f"{(perf_counter() - t0) * 1000:.1f} ms")</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt"># veinte repeticiones sumadas</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">total = timeit("fib(30)", number=20, globals=globals())</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">print(f"{total * 1000:.1f} ms en total")</span></div>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-una" class="primario">Medir una vez con time</button>
+      <button id="btn-veinte">timeit con number = 20</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div class="chips" id="chips-sueltas" style="margin-top:0.5rem"></div>
+    <div id="grafica"></div>
+    <div class="chips" id="chips-medidas" style="margin-top:0.6rem"></div>
+    <div class="nota">Cuando el ruido solo suma, la medición más baja es la que más se acerca a lo
+    que el código cuesta de verdad; las altas son otros procesos metiéndose en el cronómetro. Por
+    eso <code>timeit.repeat</code> devuelve la lista de cada corrida y la documentación del módulo
+    recomienda quedarse con el mínimo y no con la media. En la línea de comandos eso es lo que
+    reporta el <code>best of</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuándo no usar timeit</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">¿Por qué <code>timeit</code> no se deja corriendo
+    en un servidor en producción?</p>
+    <div class="opciones" id="opciones-produccion">
+      <button data-op="estandar">No está en la biblioteca estándar y hay que instalarlo</button>
+      <button data-op="correcta">Repite el fragmento muchas veces y apaga el recolector de basura</button>
+      <button data-op="cpu">Solo mide tiempo de CPU y en un servidor importa la espera</button>
+      <button data-op="setup">No acepta setup, así que mide también la preparación</button>
+    </div>
+    <div id="veredicto-produccion" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="repeticiones.js"></script>
+</body>
+</html>

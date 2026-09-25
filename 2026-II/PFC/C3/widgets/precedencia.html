@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>precedencia — hasta dónde llega el cuerpo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #def-caso { white-space: pre; font-family: ui-monospace, monospace; font-size: 0.95rem;
+    background: var(--gris-suave, #f4f5f7); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.5rem 0; }
+  .reduccion { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.22rem 0; }
+  .reduccion .flecha-red { width: 1.2rem; color: #9aa3ad; font-weight: 700; }
+  .reduccion .expr { font-size: 1.05rem; }
+  .reduccion.ultima .expr { font-weight: 700; }
+  #regla { margin-top: 0.5rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+  .presets button.hecho::after { content: " ✓"; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>precedencia: hasta dónde llega el cuerpo</h1>
+  <p class="intro">El cuerpo de un literal <code>x => …</code> se extiende
+  hasta donde alcance, y dentro de él mandan las reglas de siempre: el
+  <code>*</code> y el <code>/</code> antes que el <code>+</code> y el
+  <code>-</code>, y la división entre enteros descarta el resto. Un literal
+  que <i>parece</i> un promedio puede no serlo. Prediga el valor y después
+  siga la reducción operación por operación.</p>
+
+  <div class="carta">
+    <h2>1. Elija la llamada y prediga</h2>
+    <div class="presets">
+      <button data-caso="0" class="primario">promedioMal(4, 8)</button>
+      <button data-caso="1">promedio(4, 8)</button>
+      <button data-caso="2">promedioMal(7, 9)</button>
+      <button data-caso="3">promedio(7, 9)</button>
+      <button data-caso="4">f1(3)</button>
+      <button data-caso="5">f2(3)</button>
+      <button data-caso="6">f3(5)</button>
+    </div>
+    <div id="def-caso"></div>
+    <div class="prediccion">
+      <span>¿Cuánto vale <code id="rotulo-caso"></code>?</span>
+      <input type="number" id="prediccion" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="panel-ejecucion">
+    <h2>2. Operación por operación</h2>
+    <div id="panel-reduccion"></div>
+    <div id="regla"></div>
+    <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Un paso</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>(x, y) => x + y / 2</code> compila, tiene
+    el tipo correcto y devuelve un entero: nada avisa. Solo la reducción
+    muestra que divide primero. Cuando un literal tiene más de una operación,
+    los paréntesis no son estilo: son la única forma de decir qué se hace
+    primero, igual que en cualquier expresión.</p>
+    <p><a href="sumador.html">Ir a <b>sumador</b>: una función que fabrica funciones →</a></p>
+  </div>
+</div>
+<script src="precedencia.js"></script>
+</body>
+</html>

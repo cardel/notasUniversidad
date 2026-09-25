@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La pregunta antes del código — cuatro hilos que estorban o ayudan</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuatro hilos que estorban en una fila y ayudan en la otra</h1>
+  <p class="intro">Una tabla con dos mediciones del mismo programa: en una,
+  los cuatro hilos tardan más de dieciséis veces lo que la versión secuencial;
+  en la otra la aceleran 3,64 veces. Lea la tabla y responda tres preguntas:
+  qué cambió, en qué se fue el tiempo y qué concluir cuando los hilos no
+  aceleran nada.</p>
+
+  <div class="carta">
+    <h2>1. Las dos mediciones</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Tamaño de la tarea</th><th>Secuencial</th>
+        <th>4 hilos</th><th>Relación</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-tandas" style="margin-top:0.8rem"></div>
+    <div class="nota">Mismo programa, mismos 4 hilos, misma máquina. Las 400
+    tareas se lanzan en tandas de 4 hilos, una tanda tras otra. La relación
+    es el tiempo secuencial dividido entre el de 4 hilos: por encima de 1 los
+    hilos ayudaron, por debajo estorbaron.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Qué cambió</h2>
+    <p style="margin-top:0">¿Qué cambió entre las dos filas?</p>
+    <div class="opciones" id="opciones-cambio">
+      <button data-op="hilos">El número de hilos</button>
+      <button data-op="maquina">La máquina</button>
+      <button data-op="correcta">El tamaño de cada tarea</button>
+      <button data-op="algoritmo">El algoritmo</button>
+    </div>
+    <div id="veredicto-cambio" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. En qué se fue el tiempo</h2>
+    <p style="margin-top:0">En la primera fila, ¿en qué se fueron los 6,6 ms?</p>
+    <div class="opciones" id="opciones-tiempo">
+      <button data-op="lento">En calcular más lento con hilos</button>
+      <button data-op="correcta">En crear, planificar y unir 400 hilos en 100 tandas</button>
+      <button data-op="memoria">En esperar la memoria</button>
+      <button data-op="cache">En competir por la caché</button>
+    </div>
+    <div id="veredicto-tiempo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuando los hilos no aceleran nada</h2>
+    <p style="margin-top:0">Un programa envuelve su ciclo más largo en cuatro
+    hilos y tarda lo mismo. ¿Qué concluye?</p>
+    <div class="opciones" id="opciones-conclusion">
+      <button data-op="noparalelizable">El problema no es paralelizable</button>
+      <button data-op="nucleos">La máquina no tiene núcleos suficientes</button>
+      <button data-op="mashilos">Hay que poner más hilos</button>
+      <button data-op="correcta">Falta responder alguna de las tres preguntas:
+      qué se reparte, de qué tamaño y cómo se asigna</button>
+    </div>
+    <div id="veredicto-conclusion" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="pregunta.js"></script>
+</body>
+</html>

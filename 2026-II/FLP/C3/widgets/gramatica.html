@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cuál datatype le corresponde?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿Cuál datatype le corresponde?</h1>
+  <p class="intro">Producciones de varios lenguajes pequeños y las variantes que les corresponden, en los dos sentidos: de la producción a la variante y de la variante a la producción. Al final, el predicado que lleva cada campo. Los errores que acompañan a cada respuesta correcta son los de siempre: una palabra clave que sobrevive como campo, un no terminal que se pierde, un <code>list-of</code> que falta o que sobra.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <p style="margin-top:0">La receta, en una tabla:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En la producción</th><th>En el define-datatype</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>la producción completa</td><td>una variante, con el nombre que la anota</td></tr>
+          <tr><td>un no terminal del mismo tipo</td><td>un campo con <code>expresion?</code></td></tr>
+          <tr><td><code>&lt;number&gt;</code>, <code>&lt;identifier&gt;</code></td><td>un campo con <code>number?</code>, <code>symbol?</code></td></tr>
+          <tr><td>puntos suspensivos</td><td>un campo con <code>list-of</code></td></tr>
+          <tr><td>palabras clave, signos, paréntesis</td><td>nada</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">De la producción se puede llegar a la variante sin
+    pensar; de la variante a la producción no, porque el andamiaje se perdió.
+    Esa asimetría es la que hace útil a la sintaxis abstracta: el intérprete
+    trabaja sobre lo que sobrevive, y lo que sobrevive es lo que lleva
+    información.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="gramatica.js"></script>
+</body>
+</html>

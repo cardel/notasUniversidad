@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ruta — la ruta con menos saltos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La ruta con menos saltos</h1>
+  <p class="intro">Una red de enrutadores distinta a la de las diapositivas.
+  La amplitud guarda desde cuál enrutador se llegó a cada uno, y la ruta se
+  reconstruye subiendo por esos predecesores. Las flechas azules son los
+  predecesores; la verde, la ruta al final.</p>
+
+  <div class="carta">
+    <h2>1. La red y la predicción</h2>
+    <p style="margin-top:0">Las listas de visibles son dirigidas y van en
+    orden ascendente: <code>1-2,3</code>, <code>2-5</code>, <code>3-4</code>,
+    <code>4-7</code>, <code>5-7</code>, <code>6-1</code>, <code>7-</code>.
+    La cuarta consulta usa otra red: <code>1-2,3</code>, <code>2-6</code>,
+    <code>3-7</code>, <code>6-7</code>.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Consulta:</span>
+      <button data-preset="0" class="primario">1 → 7</button>
+      <button data-preset="1">7 → 1</button>
+      <button data-preset="2">6 → 7</button>
+      <button data-preset="3">1 → 7 en la otra red</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos saltos tiene la ruta? (−1 si no hay)</span>
+      <input type="number" id="prediccion" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute</h2>
+    <div id="panel-grafo"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Cola: <span class="viva" id="ver-cola">vacía</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La condición de la línea 5 detiene la amplitud en
+        cuanto el destino tiene predecesor.</div>
+      </div>
+    </div>
+    <div id="aviso-final"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los predecesores</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Enrutador</th><th>Se llegó desde</th></tr></thead>
+        <tbody id="cuerpo-pred"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Quién queda como predecesor</h2>
+    <div style="margin-bottom:0.3rem"><b>Cuando varios enrutadores ven a <code>v</code>, ¿cuál queda como su predecesor?</b></div>
+    <div class="opciones" id="opciones-pred">
+      <button data-op="correcta">El primero que lo descubre, que está en la capa anterior y llegó por la ruta menor</button>
+      <button data-op="ultimo">El último que lo mira, porque va reescribiendo</button>
+      <button data-op="menor">El que tenga el número más bajo</button>
+    </div>
+    <div id="veredicto-pred" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Detenerse a tiempo</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">¿Por qué es correcto detener la amplitud en cuanto el destino tiene predecesor?</div>
+      <div class="opciones">
+        <button data-p1="capa">Porque lo que queda en la cola está en la misma capa o en la siguiente, y no puede dar una ruta más corta</button>
+        <button data-p1="nunca">No es correcto: hay que vaciar la cola siempre</button>
+        <button data-p1="vecino">Porque se puede parar al primer vecino que aparezca</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">La distancia queda fijada al encolar, y la cola
+      nunca mezcla más de dos capas consecutivas. Una vez el destino tiene
+      predecesor, ninguna ruta pendiente llega antes.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En la cuarta red, desde el 1 el
+    vecino de menor número es el 2 y la ruta corta va por el 3. Escriba una
+    red donde elegir siempre el vecino de menor número lleve a un enrutador
+    sin salida aunque exista ruta, y explique con las capas por qué la
+    amplitud no cae en esa trampa.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="ruta.js"></script>
+</body>
+</html>
