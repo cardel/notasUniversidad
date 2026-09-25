@@ -27,7 +27,7 @@ y los puentes, las piezas que sostienen la conexión.
 
     ---
 
-    Las 126 láminas de la sesión, con los tres grafos de ejemplo dibujados
+    Las 127 láminas de la sesión, con los tres grafos de ejemplo dibujados
     lámina por lámina: el no dirigido de tres componentes, los dos triángulos
     unidos por un puente y el dirigido donde Kosaraju pinta cuatro
     componentes.
