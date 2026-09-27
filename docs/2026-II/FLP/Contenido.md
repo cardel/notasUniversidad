@@ -92,6 +92,18 @@ quedan disponibles después para volver sobre el tema.
    adelante y otro con el conectivo en medio, con el árbol esperado de cada
    prueba dibujado junto al que construye el código.
 
+5. [Ejercicios de la clase 4: del texto al resultado](C4/Ejercicios.md)
+   — ocho actividades, una por tema de la sesión, casi todas de analizar y
+   predecir: el reparto del trabajo entre scanner, parser e interpretador y
+   en qué etapa se detiene cada programa, lo que se nota al usar un lenguaje
+   compilado o interpretado, cuántos tokens deja cada programa y de qué
+   clase es cada lexema, cómo se lee una especificación de SLLGEN, los
+   valores expresados y denotados con el punto de entrada, el reparto del
+   trabajo al evaluar y la ligadura local con su cadena de ambientes. La
+   central es el simulador: se predice qué hará el interpretador y después
+   la página abre sus tres etapas sobre ese mismo programa, con los tokens,
+   el árbol dibujado y la traza fila por fila.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega

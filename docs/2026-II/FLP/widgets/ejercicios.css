@@ -100,3 +100,24 @@
 .gramaticas li { margin: 0.35rem 0; padding-left: 0.2rem; }
 .gramaticas li::marker { font-weight: 700; color: #4c6ab8; }
 .gramaticas .gramatica { margin: 0; }
+
+/* --- Simulador del interpretador ---------------------------------- */
+.programa-simulador { font-size: 1.05rem; margin: 0 0 0.6rem; }
+.campos-prediccion { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.6rem 0; }
+.campo { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
+.campo input { padding: 0.3rem 0.4rem; border: 1px solid #ccc; border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.campo input.bien { border-color: var(--verde); background: var(--verde-suave); }
+.campo input.mal { border-color: var(--rojo); background: var(--rojo-suave); }
+.proceso h3 { font-size: 0.95rem; color: var(--azul); margin: 1rem 0 0.4rem; }
+.tabla-tokens td:first-child, .tabla-traza td:first-child { width: 2rem; color: #888; }
+.tabla-traza td:nth-child(2) { text-align: left; }
+.proceso pre.codigo { white-space: pre-wrap; word-break: break-word; font-size: 0.8rem; }
+.tabla-traza .fila-creacion td { background: #fffbe6; font-size: 0.85rem; color: #7a5c00; }
+.marca-ambiente { font-size: 0.75rem; background: var(--azul-suave); color: var(--azul);
+  border-radius: 6px; padding: 0.05rem 0.35rem; margin-left: 0.3rem; }
+.conteos { font-size: 0.9rem; margin: 0.5rem 0 0; }
+.arbol-simulador { margin: 0.4rem 0; padding: 0.4rem; border: 1px solid #ddd;
+  border-radius: 8px; background: #fff; overflow-x: auto; }
+.ejemplos { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; }
+.ejemplos button { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8rem; }

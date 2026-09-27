@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El interpretador por dentro</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El interpretador por dentro</h1>
+  <p class="intro">Cinco programas para predecir qué hará el interpretador antes de verlo: cuánto vale, cuántas veces se llama a <code>eval-expression</code>, cuántas búsquedas hace en el ambiente. Al comprobar, la página abre las tres etapas de ese mismo programa: los tokens que emitió el scanner, el árbol que armó el parser y la traza del evaluador, fila por fila con su ambiente y su valor. Al final, la misma máquina para cualquier programa que quiera escribir.</p>
+
+  <div class="alerta">
+    El lenguaje es el de la sesión: números, variables, las primitivas
+    <code>+</code>, <code>-</code>, <code>*</code>, <code>add1</code> y
+    <code>sub1</code> escritas antes del paréntesis, y <code>let</code>. El
+    ambiente inicial liga <code>i = 1</code>, <code>v = 5</code> y
+    <code>x = 10</code>. Las tres etapas hacen lo mismo que el interpretador
+    en Racket de la sesión, con sus mismas decisiones: los nombres de las
+    primitivas y de las palabras clave se reconocen antes que los
+    identificadores, un menos pegado a un dígito es parte del número, y las
+    primitivas no verifican cuántos operandos reciben.
+  </div>
+
+  <div id="predicciones"></div>
+
+  <div class="carta" id="libre">
+    <h2>La máquina, abierta</h2>
+    <p style="margin-top:0">Escriba cualquier programa del lenguaje y vea sus
+    tres etapas. Los ejemplos de abajo incluyen dos que no llegan a evaluarse:
+    sirven para ver en qué etapa se detiene cada error.</p>
+    <textarea class="editor" rows="3" spellcheck="false">let z = -(x, i) in *(z, z)</textarea>
+    <div class="ejemplos"></div>
+    <div class="botones">
+      <button class="primario" data-accion="correr">Ver el proceso</button>
+      <span class="atajo">Ctrl + Enter también</span>
+    </div>
+    <div class="proceso" style="display:none"></div>
+  </div>
+
+  <div class="carta">
+    <h2>Lo que muestra cada etapa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Etapa</th><th>Recibe</th><th>Produce</th><th>Qué se ve en la página</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>scanner</td><td>la cadena de caracteres</td><td>tokens</td><td>la tabla con el lexema y la clase de cada uno</td></tr>
+          <tr><td>parser</td><td>los tokens</td><td>el árbol de sintaxis abstracta</td><td>el árbol dibujado y su forma escrita</td></tr>
+          <tr><td>interpretador</td><td>el árbol y un ambiente</td><td>un valor</td><td>una fila por llamada, con el ambiente y el valor</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">En la traza, la sangría marca a qué profundidad del
+    árbol está cada llamada, y las filas aparecen en el orden en que cada una
+    <em>termina</em>: una expresión no tiene valor hasta que sus partes lo
+    tienen. La etiqueta <span class="marca-ambiente">busca aquí</span> señala
+    las únicas llamadas que consultan el ambiente.</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/interprete-lenguaje.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-simulador.js"></script>
+
+<script src="simulador.js"></script>
+</body>
+</html>

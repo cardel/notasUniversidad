@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La ligadura local</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La ligadura local</h1>
+  <p class="intro">Una sola producción nueva, la del <code>let</code>, y con ella la primera regla de evaluación que usa dos ambientes distintos: la expresión ligada se evalúa en el de afuera y el cuerpo en uno nuevo. De ahí salen el alcance, el tapado de nombres y la cadena de ambientes.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Parte del <code>let</code></th><th>Dónde se evalúa</th><th>Por qué</th></tr></thead>
+        <tbody><tr><td>la expresión ligada</td><td>en el ambiente de afuera</td><td>el nuevo todavía no existe: hace falta su valor para construirlo</td></tr><tr><td>el cuerpo</td><td>en el ambiente nuevo</td><td>es el único lugar donde el nombre significa algo</td></tr><tr><td>un nombre que el <code>let</code> no liga</td><td>se busca en el nuevo y sigue por la cadena</td><td>el eslabón nuevo no tapa lo que no repite</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Extender no modifica: construye un eslabón que apunta al anterior. Por eso una ligadura tapa a la del mismo nombre mientras dura el cuerpo, y al salir reaparece la de antes sin que nadie la restaure.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="ambientes.js"></script>
+</body>
+</html>

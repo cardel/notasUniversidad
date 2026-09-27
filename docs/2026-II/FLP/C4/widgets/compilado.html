@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interpretar o compilar</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Interpretar o compilar</h1>
+  <p class="intro">Los dos caminos empiezan igual —el frontend arma el árbol— y se separan ahí: uno lo recorre para obtener el valor, el otro lo traduce a un programa equivalente en otro lenguaje. Lo que se juzga aquí no son las definiciones sino lo que se nota al usar cada uno, y los casos que hacen las dos cosas.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Aspecto</th><th>Compilado</th><th>Interpretado</th></tr></thead>
+        <tbody><tr><td>cuándo aparece un error de sintaxis</td><td>antes de ejecutar nada</td><td>al llegar a la línea que falla</td></tr><tr><td>qué se distribuye</td><td>un binario para una arquitectura</td><td>el código fuente, más el intérprete aparte</td></tr><tr><td>un cambio en el código</td><td>obliga a volver a construir</td><td>se prueba de inmediato</td></tr><tr><td>velocidad</td><td>mayor: la traducción ya se hizo</td><td>menor: se recorre el árbol cada vez</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Ninguna de esas propiedades es del lenguaje sino de cómo se lleva a la máquina, y por eso existen compiladores de Python e intérpretes de C. El camino híbrido —compilar a bytecode y que una máquina virtual lo ejecute— toma cosas de los dos.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="compilado.js"></script>
+</body>
+</html>
