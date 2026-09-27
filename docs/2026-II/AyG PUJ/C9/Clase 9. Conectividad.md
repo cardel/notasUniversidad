@@ -27,10 +27,10 @@ y los puentes, las piezas que sostienen la conexión.
 
     ---
 
-    Las 127 láminas de la sesión, con los tres grafos de ejemplo dibujados
-    lámina por lámina: el no dirigido de tres componentes, los dos triángulos
-    unidos por un puente y el dirigido donde Kosaraju pinta cuatro
-    componentes.
+    Las 127 láminas con las anotaciones de la sesión y una página de tablero.
+    Los tres grafos de ejemplo van dibujados lámina por lámina: el no dirigido
+    de tres componentes, los dos triángulos unidos por un puente y el dirigido
+    donde Kosaraju pinta cuatro componentes.
 
     [:octicons-arrow-right-24: Abrir](clase09-conectividad.pdf)
 
