@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memoria de los procesos — qué ve el padre y qué ve el hijo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  .espacios { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 0.7rem 0; }
+  .espacio { border: 2px solid var(--borde); border-radius: 10px; padding: 0.6rem 0.75rem;
+             background: var(--codigo-fondo); font-size: 0.9rem; }
+  .paso { display: flex; gap: 0.6rem; padding: 0.4rem 0.7rem; margin-bottom: 4px; font-size: 0.9rem;
+          border-left: 4px solid var(--borde); border-radius: 6px; background: var(--codigo-fondo); }
+  .paso.actual { border-left-color: var(--azul); background: var(--resalte); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Por qué el padre no ve lo que escribió el hijo</h1>
+  <p class="intro">El ejemplo de la lista global: diga qué imprime cada proceso antes de destapar
+  la salida, y después cambie el escenario para ver qué llega al padre cuando el dato va en un
+  argumento, en un <code>multiprocessing.Array</code> o en un <code>Manager</code>. Luego recorra
+  paso a paso lo que ocurre al crear un hijo con <code>fork</code>, <code>forkserver</code> y
+  <code>spawn</code>, y decida por qué un programa que anda en Linux se cae en Windows.</p>
+
+  <div class="carta">
+    <h2>1. El ejemplo de la lista global</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">import multiprocessing</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">resultado = []   # Variable global</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">def cuadrados(lista):</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    global resultado</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">    for num in lista:</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">        resultado.append(num * num)</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">    print("Resultado en p1: {}".format(resultado))</span></div>
+      <div class="linea bloque-2"><span class="num">10</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">11</span><span class="txt">if __name__ == "__main__":</span></div>
+      <div class="linea bloque-2"><span class="num">12</span><span class="txt">    lista = [1, 2, 3, 4]</span></div>
+      <div class="linea bloque-2"><span class="num">13</span><span class="txt">    p1 = multiprocessing.Process(target=cuadrados, args=(lista,))</span></div>
+      <div class="linea bloque-2"><span class="num">14</span><span class="txt">    p1.start()</span></div>
+      <div class="linea bloque-2"><span class="num">15</span><span class="txt">    p1.join()</span></div>
+      <div class="linea bloque-2"><span class="num">16</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">17</span><span class="txt">    print("Resultado en el programa principal: {}".format(resultado))</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">¿Qué imprime el programa?</p>
+    <div class="opciones" id="opciones-salida">
+      <button data-op="correcta">En el hijo [1, 4, 9, 16] y en el padre []</button>
+      <button data-op="hilos">[1, 4, 9, 16] en los dos</button>
+      <button data-op="vacias">[] en los dos</button>
+      <button data-op="error">Un error de acceso a memoria</button>
+    </div>
+    <div id="veredicto-salida" class="veredicto"></div>
+    <div class="codigo" id="salida-real" hidden style="margin-top:0.8rem"></div>
+    <div class="nota">El <code>print</code> del hijo sale antes del <code>join</code>; el del padre,
+    después. Los dos leen una variable que se llama <code>resultado</code>, y no es la misma.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Dos espacios de memoria</h2>
+    <div class="fila-n">
+      <label>El resultado se guarda en:</label>
+      <span class="presets">
+        <button data-escenario="global">una variable global</button>
+        <button data-escenario="argumento">un argumento</button>
+        <button data-escenario="array">multiprocessing.Array</button>
+        <button data-escenario="manager">un Manager</button>
+      </span>
+    </div>
+    <div class="espacios" id="panel-espacios"></div>
+    <p id="texto-escenario" style="min-height:3.2rem;margin:0.2rem 0 0.6rem"></p>
+    <div class="chips" id="chips-espacios"></div>
+    <div class="nota"><code>Array</code> y <code>Value</code> aceptan tipos simples de C
+    (<code>'i'</code> entero, <code>'d'</code> doble, <code>'l'</code> largo) y viven en un bloque que
+    el sistema operativo mapea en todos los procesos. <code>shared_memory</code> reserva un bloque de
+    bytes con nombre que cualquier proceso abre e interpreta como quiera, por ejemplo como un arreglo
+    de NumPy. Un <code>Manager</code> guarda objetos de Python completos y cobra un viaje al proceso
+    servidor por cada acceso.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cómo arranca un hijo</h2>
+    <div class="fila-n">
+      <label>Modo de arranque:</label>
+      <span class="presets">
+        <button data-modo="fork">fork</button>
+        <button data-modo="forkserver">forkserver</button>
+        <button data-modo="spawn">spawn</button>
+      </span>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="pasos" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:2.8rem;margin:0.2rem 0 0.6rem"></p>
+    <div class="chips" id="chips-pasos"></div>
+    <div class="alerta">Con <code>spawn</code> y <code>forkserver</code> el módulo se vuelve a
+    importar en cada hijo. Todo lo que esté escrito fuera de
+    <code>if __name__ == "__main__":</code> se ejecuta otra vez, y si allí se crean procesos, se
+    crean sin fin.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué se hereda en cada modo</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Modo</th><th>Variable global</th><th>Argumento pasado a Process</th><th>multiprocessing.Array</th></tr></thead>
+        <tbody id="cuerpo-hereda"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Un programa funciona en Linux leyendo una variable global
+    desde el hijo y falla en Windows. ¿Por qué?</p>
+    <div class="opciones" id="opciones-windows">
+      <button data-op="nohay">Windows no tiene multiprocessing</button>
+      <button data-op="correcta">En Windows el arranque es spawn y el hijo no hereda la memoria del padre</button>
+      <button data-op="lock">Falta un Lock</button>
+      <button data-op="grande">La variable es muy grande para copiarse</button>
+    </div>
+    <div id="veredicto-windows" class="veredicto"></div>
+    <p id="texto-hereda" style="margin:0.6rem 0 0"></p>
+    <div class="nota"><code>fork</code> existe solo en Unix. <code>forkserver</code> es el modo por
+    defecto en Linux desde Python 3.14. <code>spawn</code> es lo único que hay en Windows y macOS, y
+    se puede fijar a mano con <code>multiprocessing.set_start_method("spawn")</code> para probar en
+    Linux lo que va a pasar allá.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Array y Value no eximen de sincronizar</h2>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num">1</span><span class="txt">def acumular(ini, fin, total):</span></div>
+      <div class="linea bloque-3"><span class="num">2</span><span class="txt">    parcial = 0</span></div>
+      <div class="linea bloque-3"><span class="num">3</span><span class="txt">    for i in range(ini, fin):</span></div>
+      <div class="linea bloque-3"><span class="num">4</span><span class="txt">        parcial += i</span></div>
+      <div class="linea bloque-3"><span class="num">5</span><span class="txt">    total.value += parcial      # cuatro procesos, el mismo Value</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Cuatro procesos suman sobre el mismo
+    <code>multiprocessing.Value</code> y el total sale mal. ¿Qué falta?</p>
+    <div class="opciones" id="opciones-cerrojo">
+      <button data-op="array">Cambiar Value por Array</button>
+      <button data-op="correcta">Tomar el cerrojo del Value alrededor de la lectura y la escritura</button>
+      <button data-op="manager">Usar un Manager</button>
+      <button data-op="copia">Pasar el valor como argumento</button>
+    </div>
+    <div id="veredicto-cerrojo" class="veredicto"></div>
+    <div class="nota">En la suma paralela por segmentos no aparece este problema: cada proceso
+    escribe en su propio <code>Value</code> (<code>v1</code>, <code>v2</code>, <code>v3</code>,
+    <code>v4</code>) y el padre combina los cuatro cuando todos terminaron. Con dos escritores sobre
+    una misma posición hay dos salidas: repartir en segmentos disjuntos o proteger la
+    actualización.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="memoria.js"></script>
+</body>
+</html>

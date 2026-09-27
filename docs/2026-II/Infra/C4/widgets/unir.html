@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dónde va el join — dos hilos, dos versiones</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  .dos-codigos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .dos-codigos .codigo { font-size: 0.78rem; }
+  .dos-codigos .linea .txt { white-space: pre-wrap; flex: 1 1 auto; }
+  @media (max-width: 760px) { .dos-codigos { grid-template-columns: 1fr; } }
+  #codigo-version .linea .txt { white-space: pre-wrap; flex: 1 1 auto; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un join temprano convierte dos hilos en un programa en serie</h1>
+  <p class="intro">El mismo par de hilos con los <code>join</code> en dos sitios: los dos al final,
+  o cada uno pegado a su <code>start</code>. Escriba en cuántos segundos termina cada versión y
+  después recorra las cuatro operaciones una por una, mirando dónde se bloquea el hilo principal.</p>
+
+  <div class="carta">
+    <h2>1. Las dos versiones</h2>
+    <div class="fila-n">
+      <label>Duraciones:</label>
+      <span class="presets">
+        <button data-dur="3-2">3 s y 2 s</button>
+        <button data-dur="2-2">2 s y 2 s</button>
+        <button data-dur="1-4">1 s y 4 s</button>
+      </span>
+    </div>
+    <div class="chips" id="chips-duraciones" style="margin-top:0.6rem"></div>
+    <div class="dos-codigos">
+      <div class="codigo">
+        <div class="linea"><span class="num">1</span><span class="txt"># Sirve: los dos hilos corren a la vez</span></div>
+        <div class="linea bloque-1"><span class="num">2</span><span class="txt">t1.start()</span></div>
+        <div class="linea bloque-2"><span class="num">3</span><span class="txt">t2.start()</span></div>
+        <div class="linea bloque-1"><span class="num">4</span><span class="txt">t1.join()</span></div>
+        <div class="linea bloque-2"><span class="num">5</span><span class="txt">t2.join()</span></div>
+        <div class="linea"><span class="num">6</span><span class="txt">total = r1 + r2</span></div>
+      </div>
+      <div class="codigo">
+        <div class="linea"><span class="num">1</span><span class="txt"># No sirve: el segundo hilo arranca cuando el primero ya termino</span></div>
+        <div class="linea bloque-1"><span class="num">2</span><span class="txt">t1.start()</span></div>
+        <div class="linea bloque-1"><span class="num">3</span><span class="txt">t1.join()</span></div>
+        <div class="linea bloque-2"><span class="num">4</span><span class="txt">t2.start()</span></div>
+        <div class="linea bloque-2"><span class="num">5</span><span class="txt">t2.join()</span></div>
+        <div class="linea"><span class="num">6</span><span class="txt">total = r1 + r2</span></div>
+      </div>
+    </div>
+    <div class="nota">Las cuatro líneas son las mismas en las dos versiones y solo cambia el orden.
+    Un <code>start</code> deja el hilo corriendo y devuelve el control al principal de inmediato;
+    un <code>join</code> retiene al principal hasta que ese hilo termina. El
+    <code>join</code> va donde se necesitan los resultados del hilo, que aquí es la línea del
+    <code>total</code>. Para que los dos hilos avancen a la vez, el trabajo de cada uno tiene que
+    soltar el GIL: leer un archivo, esperar una respuesta por red o un <code>time.sleep</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>¿En cuántos segundos termina la versión start-start-join-join?</span>
+      <input type="number" id="prediccion-a" min="0" step="0.1" placeholder="segundos">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+    <div class="prediccion">
+      <span>¿Y la versión start-join-start-join?</span>
+      <input type="number" id="prediccion-b" min="0" step="0.1" placeholder="segundos">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="nota">Las dos versiones crean los mismos hilos, con el mismo trabajo y las
+    duraciones que están puestas arriba. Responda con esas duraciones antes de pasar al paso a paso.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Paso a paso</h2>
+    <div class="fila-n">
+      <label>Versión:</label>
+      <span class="presets">
+        <button data-version="a">start-start-join-join</button>
+        <button data-version="b">start-join-start-join</button>
+      </span>
+    </div>
+    <div class="codigo" id="codigo-version" style="margin-top:0.7rem"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-gantt" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-gantt"></div>
+    <div class="nota">La fila del principal solo dibuja los tramos en los que está bloqueado en un
+    <code>join</code>, en gris. Los huecos de esa fila son el tiempo en que el principal sigue
+    ejecutando sus propias líneas mientras los hilos trabajan.</div>
+    <div class="alerta">Poner el <code>join</code> demasiado pronto deja un programa que calcula
+    bien y corre en serie. La diferencia solo aparece al cronometrarlo, y un programa con dos hilos
+    que tarda lo mismo que uno secuencial pasa por correcto en cualquier revisión de la salida.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La traza</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Instante</th><th>start-start-join-join</th><th>start-join-start-join</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+    <p class="nota" id="aviso-traza"></p>
+    <div class="nota">Los instantes son el orden de los sucesos con hilo 1 de 3 s e hilo 2 de 2 s.
+    En start-start-join-join, en t3 el hilo 2 ya había terminado hace un segundo: su
+    <code>join</code> no espera, solo comprueba. En start-join-start-join hay un instante más,
+    y esa es la fila que mide el costo de haber unido temprano.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Dónde poner el join</h2>
+    <p style="margin-top:0">Un programa lanza cuatro hilos que escriben en cuatro archivos
+    distintos y después imprime un resumen con lo que quedó en cada archivo.</p>
+    <p style="margin-bottom:0.3rem">¿Dónde van los <code>join</code>?</p>
+    <div class="opciones" id="opciones-join">
+      <button data-op="pegados">Cada join después de su start</button>
+      <button data-op="correcta">Los cuatro start seguidos y los cuatro join antes del resumen</button>
+      <button data-op="lento">Un solo join, al hilo más lento</button>
+      <button data-op="ninguno">Ningún join: el programa espera solo al final</button>
+    </div>
+    <div id="veredicto-join" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="unir.js"></script>
+</body>
+</html>

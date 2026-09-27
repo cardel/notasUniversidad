@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue, Pipe y memoria compartida — lo que cuesta empaquetar un dato</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .situacion { border-top: 1px solid var(--borde); margin-top: 0.9rem; padding-top: 0.8rem; }
+  .situacion.primera { border-top: 0; margin-top: 0.2rem; padding-top: 0; }
+  .caso { font-weight: 600; margin: 0 0 0.3rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cuesta empaquetar un dato para mandarlo a otro proceso</h1>
+  <p class="intro">Los mismos datos pasan de un proceso a otro por tres caminos: un
+  <code>Array</code> en memoria compartida, un <code>Pipe</code> y una <code>Queue</code>.
+  Escriba cuántas veces más tarda la <code>Queue</code> antes de ver los tiempos, siga el viaje
+  de un dato por dentro y decida cuál de los tres usaría en seis situaciones.</p>
+
+  <div class="carta">
+    <h2>1. Los tres tiempos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Mecanismo</th><th>Tiempo</th><th>¿Serializa?</th></tr></thead>
+        <tbody id="cuerpo-tiempos"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>Pasar los datos por memoria compartida costó 0,10 s. ¿Cuántas veces más costó
+      pasarlos por una <code>Queue</code>?</span>
+      <input type="number" id="prediccion-factor" min="0" step="0.1" placeholder="veces">
+      <button id="btn-comprobar-factor" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-factor" class="veredicto"></div>
+    <p id="aviso-tiempos" class="nota">El tiempo del <code>Pipe</code> y el de la
+    <code>Queue</code> salen al comprobar.</p>
+    <div class="nota">Los tres caminos mueven los mismos datos entre dos procesos, medidos en un
+    AMD Ryzen 5 3600 de 6 núcleos y 12 hilos de hardware, 32 GB, con Python 3.14 sobre Linux.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Qué pasa por dentro</h2>
+    <div class="codigo">
+      <div class="linea bloque-2" id="ln-put"><span class="num">1</span><span class="txt">q.put(dato)        # productor: pickle convierte el objeto en bytes</span></div>
+      <div class="linea bloque-2" id="ln-get"><span class="num">2</span><span class="txt">dato = q.get()     # consumidor: pickle lo reconstruye</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"></span></div>
+      <div class="linea bloque-1" id="ln-esc"><span class="num">3</span><span class="txt">arr[i] = dato      # productor: escribe en el bloque compartido</span></div>
+      <div class="linea bloque-1" id="ln-lee"><span class="num">4</span><span class="txt">dato = arr[i]      # consumidor: lee la misma posición</span></div>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-etapas" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-etapas"></div>
+    <p id="aviso-segundos" class="nota">Las barras de segundos medidos aparecen al comprobar la
+    predicción de la tabla anterior.</p>
+    <div id="panel-segundos"></div>
+    <div class="nota">La comparación de etapas no está en segundos: cada etapa ocupa lo mismo
+    para que se vea que la <code>Queue</code> hace tres y el <code>Array</code> dos. Dos de esas
+    tres etapas son conversiones de pickle.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las cuatro diferencias</h2>
+    <p id="aviso-columnas" class="nota" style="margin-top:0">La tabla con las cuatro diferencias
+    aparece al comprobar la predicción.</p>
+    <div class="envoltura-tabla" id="tabla-columnas" hidden>
+      <table>
+        <thead><tr><th>Mecanismo</th><th>Serializa</th><th>Acepta cualquier objeto</th><th>Sincroniza solo</th><th>Extremos</th></tr></thead>
+        <tbody id="cuerpo-columnas"></tbody>
+      </table>
+    </div>
+    <div class="nota"><code>Pipe</code> y <code>Queue</code> mueven cualquier objeto que pickle
+    sepa convertir y avisan al otro lado cuando hay algo: el <code>get</code> y el
+    <code>recv</code> bloquean hasta que llega. El <code>Array</code> entrega memoria y nada
+    más.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuál usar</h2>
+    <p style="margin-top:0">Seis situaciones. Escoja el mecanismo que usaría en cada una; los
+    otros dos le dicen con qué dato se descartan.</p>
+
+    <div class="situacion primera">
+      <p class="caso" id="sit-1"></p>
+      <div class="opciones" id="opciones-s1">
+        <button data-mec="pipe">Pipe</button>
+        <button data-mec="queue">Queue</button>
+        <button data-mec="array">Array en memoria compartida</button>
+      </div>
+      <div id="veredicto-s1" class="veredicto"></div>
+    </div>
+
+    <div class="situacion">
+      <p class="caso" id="sit-2"></p>
+      <div class="opciones" id="opciones-s2">
+        <button data-mec="array">Array en memoria compartida</button>
+        <button data-mec="queue">Queue</button>
+        <button data-mec="pipe">Pipe</button>
+      </div>
+      <div id="veredicto-s2" class="veredicto"></div>
+    </div>
+
+    <div class="situacion">
+      <p class="caso" id="sit-3"></p>
+      <div class="opciones" id="opciones-s3">
+        <button data-mec="queue">Queue</button>
+        <button data-mec="array">Array en memoria compartida</button>
+        <button data-mec="pipe">Pipe</button>
+      </div>
+      <div id="veredicto-s3" class="veredicto"></div>
+    </div>
+
+    <div class="situacion">
+      <p class="caso" id="sit-4"></p>
+      <div class="opciones" id="opciones-s4">
+        <button data-mec="pipe">Pipe</button>
+        <button data-mec="array">Array en memoria compartida</button>
+        <button data-mec="queue">Queue</button>
+      </div>
+      <div id="veredicto-s4" class="veredicto"></div>
+    </div>
+
+    <div class="situacion">
+      <p class="caso" id="sit-5"></p>
+      <div class="opciones" id="opciones-s5">
+        <button data-mec="queue">Queue</button>
+        <button data-mec="pipe">Pipe</button>
+        <button data-mec="array">Array en memoria compartida</button>
+      </div>
+      <div id="veredicto-s5" class="veredicto"></div>
+    </div>
+
+    <div class="situacion">
+      <p class="caso" id="sit-6"></p>
+      <div class="opciones" id="opciones-s6">
+        <button data-mec="array">Array en memoria compartida</button>
+        <button data-mec="pipe">Pipe</button>
+        <button data-mec="queue">Queue</button>
+      </div>
+      <div id="veredicto-s6" class="veredicto"></div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Lo que no cambia</h2>
+    <p style="margin-top:0">La memoria compartida es el camino más rápido de los tres y el único
+    que no sincroniza por su cuenta.</p>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num">1</span><span class="txt">valor = arr[0]       # leer</span></div>
+      <div class="linea bloque-3"><span class="num">2</span><span class="txt">valor = valor + 1    # sumar</span></div>
+      <div class="linea bloque-3"><span class="num">3</span><span class="txt">arr[0] = valor       # escribir</span></div>
+    </div>
+    <div class="alerta">Aumentar una posición del <code>Array</code> sigue siendo leer, sumar y
+    escribir. Entre la lectura y la escritura otro proceso puede escribir en la misma posición, y
+    ese aumento se pierde: el <code>Array</code> comparte memoria, no turnos. Los 0,10 s vienen con
+    esa cuenta pendiente, y la paga el programa: un <code>Lock</code> alrededor de las tres líneas,
+    o tramos que no se cruzan.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="traspaso.js"></script>
+</body>
+</html>

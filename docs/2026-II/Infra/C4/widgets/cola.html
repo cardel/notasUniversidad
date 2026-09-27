@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La cola que bloquea — put y get sobre una Queue con capacidad</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #cola-caja .caja { cursor: default; }
+  #cola-caja .caja.hueco { border-style: dashed; color: var(--gris); font-weight: 400; }
+  .estado-proc { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.9rem; margin-top: 0.4rem; }
+  .estado-proc .dormido { color: var(--gris); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Quién espera cuando la cola se llena o se vacía</h1>
+  <p class="intro">Un proceso pone cuadrados en una <code>Queue</code> y otro los saca; usted
+  escoge la capacidad de la cola y el orden de las operaciones. Escriba cuántos <code>put</code>
+  alcanzan a completarse antes de que el productor se frene y después recorra la cola operación
+  por operación, con el estado de los dos procesos a la vista.</p>
+
+  <div class="carta">
+    <h2>1. El ejemplo de la clase</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">import multiprocessing</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">def cuadrados(lista, q):</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    for num in lista:</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">        q.put(num * num)</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">def imprimir_cola(q, cuantos):</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">    print("Elementos de la cola:")</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">    for _ in range(cuantos):</span></div>
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt">        print(q.get())</span></div>
+      <div class="linea bloque-1"><span class="num">11</span><span class="txt">    print("La cola quedó vacía")</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.6rem">
+      <div class="linea bloque-2"><span class="num">1</span><span class="txt">if __name__ == "__main__":</span></div>
+      <div class="linea bloque-2"><span class="num">2</span><span class="txt">    lista = [1, 2, 3, 4]</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">    q = multiprocessing.Queue()</span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">5</span><span class="txt">    p1 = multiprocessing.Process(</span></div>
+      <div class="linea bloque-2"><span class="num">6</span><span class="txt">        target=cuadrados, args=(lista, q))</span></div>
+      <div class="linea bloque-2"><span class="num">7</span><span class="txt">    p2 = multiprocessing.Process(</span></div>
+      <div class="linea bloque-2"><span class="num">8</span><span class="txt">        target=imprimir_cola, args=(q, len(lista)))</span></div>
+      <div class="linea bloque-2"><span class="num">9</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">10</span><span class="txt">    p1.start()</span></div>
+      <div class="linea bloque-2"><span class="num">11</span><span class="txt">    p1.join()</span></div>
+      <div class="linea bloque-2"><span class="num">12</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">13</span><span class="txt">    p2.start()</span></div>
+      <div class="linea bloque-2"><span class="num">14</span><span class="txt">    p2.join()</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Salida:</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">Elementos de la cola:</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">1</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">4</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">9</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">16</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">La cola quedó vacía</span></div>
+    </div>
+    <div class="nota"><code>put</code> inserta al final y <code>get</code> saca el primero que
+    entró: por eso los cuadrados salen en el mismo orden en que se pusieron, empezando por el 1.
+    El <code>p1.join()</code> está antes del <code>p2.start()</code>, así que los cuatro
+    cuadrados ya están en la cola cuando el consumidor arranca, y la cola de este ejemplo no
+    tiene <code>maxsize</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <p style="margin-top:0">El productor pone 6 elementos en una
+    <code>multiprocessing.Queue(maxsize=4)</code> y el consumidor todavía no ha sacado
+    ninguno.</p>
+    <div class="prediccion">
+      <span>¿Cuántos <code>put</code> alcanzan a completarse?</span>
+      <input type="number" id="prediccion-put" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-put" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-put" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>put</th><th>Dato</th><th>¿Se completa?</th><th>Elementos en la cola</th></tr></thead>
+        <tbody id="cuerpo-llenado"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Paso a paso</h2>
+    <div class="fila-n">
+      <label>Capacidad:</label>
+      <span class="presets">
+        <button data-cap="2">maxsize=2</button>
+        <button data-cap="4">maxsize=4</button>
+        <button data-cap="0">sin límite</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label>Orden de las operaciones:</label>
+      <span class="presets">
+        <button data-guion="rapido">productor rápido</button>
+        <button data-guion="alternado">alternado</button>
+        <button data-guion="consumidor">consumidor primero</button>
+      </span>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.6rem"></div>
+    <div class="arreglo fila-arreglo" id="cola-caja"></div>
+    <div class="estado-proc" id="estado-procesos"></div>
+    <p id="paso-texto" style="min-height:3rem;margin:0.6rem 0"></p>
+    <div class="chips" id="chips-cola"></div>
+    <div class="nota">La caja con borde punteado es un lugar libre: el <code>put</code> entra por
+    la derecha y el <code>get</code> saca por la izquierda. Cuando un proceso se bloquea el otro
+    sigue avanzando, y el que esperaba continúa en el momento en que la cola se lo permite: un
+    lugar libre despierta al <code>put</code> detenido y un elemento nuevo despierta al
+    <code>get</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué pasa si el consumidor llega primero</h2>
+    <p style="margin-top:0">Un proceso llama a <code>q.get()</code> sobre una cola vacía. ¿Qué
+    ocurre?</p>
+    <div class="opciones" id="opciones-vacia">
+      <button data-op="none">Devuelve None</button>
+      <button data-op="correcta">Se queda bloqueado hasta que alguien ponga algo</button>
+      <button data-op="empty">Lanza una excepción Empty</button>
+      <button data-op="ultimo">Devuelve el último elemento que hubo</button>
+    </div>
+    <div id="veredicto-vacia" class="veredicto"></div>
+    <div class="codigo" style="margin-top:0.8rem">
+      <div class="linea bloque-3"><span class="num">1</span><span class="txt">q = multiprocessing.Queue(maxsize=10)</span></div>
+      <div class="linea bloque-3"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-3"><span class="num">3</span><span class="txt">q.put(dato)              # bloquea si ya hay 10 elementos</span></div>
+      <div class="linea bloque-3"><span class="num">4</span><span class="txt">dato = q.get()           # bloquea hasta que haya algo</span></div>
+      <div class="linea bloque-3"><span class="num">5</span><span class="txt">dato = q.get(timeout=5)  # espera 5 s y lanza queue.Empty</span></div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El centinela</h2>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">1</span><span class="txt">while True:</span></div>
+      <div class="linea bloque-2"><span class="num">2</span><span class="txt">    dato = q.get()      # bloquea hasta que llegue algo</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">    if dato is None:    # marca de fin enviada por el productor</span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt">        break</span></div>
+      <div class="linea bloque-2"><span class="num">5</span><span class="txt">    procesar(dato)</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Tres procesos consumidores leen de la misma cola con ese
+    bucle. El productor ya puso su último dato. ¿Cómo se les avisa que no viene nada más?</p>
+    <div class="opciones" id="opciones-centinela">
+      <button data-op="close">Cerrar la cola con q.close()</button>
+      <button data-op="correcta">Poner tres centinelas, uno por consumidor</button>
+      <button data-op="vacia">Esperar a que la cola quede vacía</button>
+      <button data-op="uno">Poner un solo centinela al final</button>
+    </div>
+    <div id="veredicto-centinela" class="veredicto"></div>
+    <div class="alerta">Un <code>get()</code> sin plazo espera indefinidamente. Si el productor
+    terminó, falló o nunca envió la marca de fin, el consumidor se queda esperando y el
+    <code>join()</code> del padre nunca retorna.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="cola.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dos hilos abonando sobre el mismo saldo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #tabla-traza tr.actual td { background: var(--resalte); }
+  #tabla-traza td { font-family: ui-monospace, monospace; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Dos hilos abonando sobre el mismo saldo</h1>
+  <p class="intro">Escriba cuánto puede valer el saldo cuando cada uno de los dos hilos ya abonó
+  200.000 veces, y compárelo con lo que dieron cinco corridas seguidas del mismo archivo. Luego
+  recorra el abono micro-paso por micro-paso, con el intercalado que usted escoja, y mire en qué
+  instante una escritura tapa la anterior.</p>
+
+  <div class="carta">
+    <h2>1. El abono son tres pasos</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">REPETICIONES = 200_000</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">saldo = 0</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">def consultar():</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">    return saldo</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">def guardar(valor):</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">    global saldo</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">    saldo = valor</span></div>
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">11</span><span class="txt">def abonar():</span></div>
+      <div class="linea bloque-1"><span class="num">12</span><span class="txt">    for _ in range(REPETICIONES):</span></div>
+      <div class="linea bloque-1"><span class="num">13</span><span class="txt">        v = consultar()      # lee el saldo</span></div>
+      <div class="linea bloque-1"><span class="num">14</span><span class="txt">        guardar(v + 1)       # lo escribe aumentado</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">El aumento tampoco es una sola instrucción para el
+    intérprete:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">$ python3 -c "import dis; dis.dis('saldo = saldo + 1')"</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">  LOAD_NAME                0 (saldo)</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">  LOAD_SMALL_INT           1</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">  BINARY_OP                0 (+)</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">  STORE_NAME               0 (saldo)</span></div>
+    </div>
+    <div class="nota">Cuatro operaciones, y entre la que lee y la que escribe hay dos. Con
+    <code>consultar</code> y <code>guardar</code> la ventana se abre más todavía: cada llamada a
+    una función es un punto donde el intérprete considera pasarle el turno al otro hilo. Mientras
+    ese turno dura, el número leído vive en el registro del hilo y no en la variable compartida.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>Dos hilos abonan 200.000 veces cada uno sobre el mismo saldo. Al terminar, ¿cuánto
+      vale el saldo como máximo?</span>
+      <input type="number" id="prediccion-maximo" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-maximo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-maximo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Paso a paso, con dos abonos por hilo</h2>
+    <div class="fila-n">
+      <label>Intercalado:</label>
+      <span class="presets">
+        <button data-preset="ordenado">ordenado</button>
+        <button data-preset="alternado">alternado</button>
+        <button data-preset="barajado">barajado</button>
+      </span>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.5rem">
+      <table id="tabla-traza">
+        <thead><tr><th>Instante</th><th>Hilo</th><th>Acción</th><th>registro de A</th><th>registro de B</th><th>saldo</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-traza"></div>
+    <div class="nota">Cada abono son tres micro-pasos: leer el saldo, sumarle uno dentro del hilo
+    y escribirlo de vuelta. El intercalado <b>ordenado</b> deja que un hilo termine sus dos abonos
+    antes de que el otro empiece; el <b>alternado</b> es el de la traza de clase, donde B lee antes
+    de que A escriba; el <b>barajado</b> reparte los doce micro-pasos al azar y vuelve a repartirlos
+    cada vez que lo pulsa. Recorra los tres completos antes de seguir.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cinco corridas del mismo archivo</h2>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">$ for i in 1 2 3 4 5; do python3 actualizacion_perdida.py; done</span></div>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-correr" class="primario">Correr otra vez</button>
+    </div>
+    <div class="progreso" id="progreso-corridas" style="margin-top:0.5rem"></div>
+    <div class="chips" id="chips-corridas" style="margin-top:0.4rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Corrida</th><th>Obtenido</th><th>Perdidas</th><th>Porcentaje perdido</th></tr></thead>
+        <tbody id="cuerpo-medidas"></tbody>
+      </table>
+    </div>
+    <div class="alerta">Cinco corridas, cinco resultados y ninguno correcto. Un error que cambia
+    en cada ejecución no se reproduce con la depuración paso a paso: al detener el programa se
+    altera justo el intercalado que se quiere observar.</div>
+    <div class="nota">Las cinco corridas de la tabla se midieron en un AMD Ryzen 5 3600 de 6
+    núcleos y 12 hilos de hardware, 32 GB, Python 3.14 sobre Linux, con
+    <code>sys.setswitchinterval(1e-6)</code> para que el intérprete alterne mucho más seguido de
+    lo normal. Las que usted dispara con el botón salen de un generador calibrado a ese mismo
+    rango, entre el 26,7 % y el 30,9 % de abonos perdidos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué lo arregla</h2>
+    <p style="margin-bottom:0.3rem">¿Qué hace que el saldo quede siempre en 400.000?</p>
+    <div class="opciones" id="opciones-arreglo">
+      <button data-op="global">Poner el saldo en una variable global</button>
+      <button data-op="intervalo">Subir sys.setswitchinterval</button>
+      <button data-op="correcta">Un threading.Lock alrededor de los tres pasos</button>
+      <button data-op="cuatro">Usar cuatro hilos en vez de dos</button>
+    </div>
+    <div id="veredicto-arreglo" class="veredicto"></div>
+    <div class="codigo" id="codigo-cerrojo" hidden style="margin-top:0.8rem">
+      <div class="linea bloque-3"><span class="num">1</span><span class="txt">cerrojo = threading.Lock()</span></div>
+      <div class="linea bloque-3"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-3"><span class="num">3</span><span class="txt">def abonar():</span></div>
+      <div class="linea bloque-3"><span class="num">4</span><span class="txt">    for _ in range(REPETICIONES):</span></div>
+      <div class="linea bloque-3"><span class="num">5</span><span class="txt">        with cerrojo:                     # nadie lee entre esta lectura</span></div>
+      <div class="linea bloque-3"><span class="num">6</span><span class="txt">            guardar(consultar() + 1)      # y esta escritura</span></div>
+    </div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="carrera.js"></script>
+</body>
+</html>

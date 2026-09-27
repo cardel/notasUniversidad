@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El GIL — ocho tareas repartidas entre hilos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  .tipo { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 3px; vertical-align: middle; margin-right: 0.35rem; }
+  #panel-gantt .barra-fila .rotulo { width: 5.2rem; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Por qué cuatro hilos no parten el tiempo en cuatro</h1>
+  <p class="intro">Ocho tareas repartidas entre cuatro hilos, primero esperas de
+  red y después cálculo. Escriba cuánto tarda el de esperas, que sale de la tabla
+  de arriba, y mire luego, tramo por tramo, por qué el de cálculo no sigue esa
+  misma cuenta.</p>
+
+  <div class="carta">
+    <h2>1. El programa y los hilos</h2>
+    <div class="fila-n">
+      <label>Programa:</label>
+      <span class="presets">
+        <button data-programa="calculo">cálculo puro</button>
+        <button data-programa="espera">espera de red</button>
+        <button data-programa="mitad">mitad y mitad</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label>Hilos:</label>
+      <span class="presets">
+        <button data-hilos="1">1</button>
+        <button data-hilos="2">2</button>
+        <button data-hilos="4">4</button>
+        <button data-hilos="8">8</button>
+        <button data-hilos="16">16</button>
+      </span>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table>
+        <thead><tr><th>Tarea</th><th>Tipo</th><th>Duración</th><th>La ejecuta</th></tr></thead>
+        <tbody id="cuerpo-tareas"></tbody>
+      </table>
+    </div>
+    <div class="codigo" style="margin-top:0.8rem">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">hilos = [Thread(target=tarea, args=(t,)) for t in tareas]</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">for h in hilos: h.start()</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">for h in hilos: h.join()</span></div>
+    </div>
+    <div class="nota">Las ocho tareas se reparten por turnos: el hilo 0 toma la primera, el hilo 1
+    la segunda y así hasta volver al 0. Una tarea de cálculo suma su parte de la lista; una de
+    espera aguarda una respuesta por red.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>Las ocho tareas duran 0,63 s cada una. Con 4 hilos, ¿cuántos segundos
+      tarda el programa de espera de red? Dos decimales.</span>
+      <input type="number" id="prediccion-gil" min="0" step="0.01" placeholder="segundos">
+      <button id="btn-comprobar-gil" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-gil" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Quién tiene el GIL</h2>
+    <div class="botones">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-gantt" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:2.8rem;margin:0.2rem 0 0.6rem"></p>
+    <div class="chips" id="chips-gil"></div>
+    <div class="nota">Azul es cálculo y gris es espera. En las filas de los hilos nunca hay dos
+    azules a la vez: solo el que tiene el GIL ejecuta bytecode. Los grises sí se montan unos sobre
+    otros, porque un hilo que va a dormirse suelta el GIL primero. En la fila del GIL, los tramos
+    ámbar son el cambio de turno, tiempo en que nadie avanza.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los tiempos medidos</h2>
+    <p style="margin-top:0">Sumar cien millones de enteros de una lista de Python, repartidos
+    entre <i>h</i> hilos:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Hilos</th><th>Tiempo</th><th>Ganancia contra 1 hilo</th></tr></thead>
+        <tbody id="cuerpo-medido"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">El equipo tiene 6 núcleos físicos y 12 hilos de hardware,
+    así que trabajo para repartir sobra. ¿Por qué no baja el tiempo?</p>
+    <div class="opciones" id="opciones-nucleos">
+      <button data-op="nucleos">Faltan núcleos para 16 hilos</button>
+      <button data-op="correcta">Solo un hilo ejecuta bytecode a la vez</button>
+      <button data-op="cache">La lista es muy grande y no cabe en caché</button>
+      <button data-op="carrera">Hay una condición de carrera en la suma</button>
+    </div>
+    <div id="veredicto-nucleos" class="veredicto"></div>
+    <div class="nota">Las cinco medidas se tomaron en un AMD Ryzen 5 3600 de 6 núcleos y 12 hilos
+    de hardware, 32 GB de memoria, con Python 3.14 sobre Linux.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuándo sí sirven los hilos</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Tres programas. ¿En cuál no ayudan los hilos?</p>
+    <div class="opciones" id="opciones-sirven">
+      <button data-op="descargas">Descargar 50 páginas web</button>
+      <button data-op="correcta">Multiplicar dos matrices con bucles de Python</button>
+      <button data-op="archivos">Leer 200 archivos del disco</button>
+    </div>
+    <div id="veredicto-sirven" class="veredicto"></div>
+    <div class="alerta">La pregunta para cualquier programa es la misma: mientras corre, ¿el
+    proceso está ejecutando bytecode o aguardando a alguien? Si aguarda, los hilos solapan las
+    esperas; si ejecuta bytecode, se turnan el GIL y el trabajo sale igual de seguido.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="gil.js"></script>
+</body>
+</html>
