@@ -36,6 +36,12 @@ Se publican después de cada sesión.
    recursión lineal, recursión de cola con acumulador y `@tailrec`, recursión
    de árbol con Fibonacci y con el producto por mitades, y las condiciones de
    entrega del Taller 1. Incluye el código escrito en clase.
+3. [Clase 3. Funciones de alto orden — 24 de septiembre](C3/Clase%203.%20Funciones%20de%20alto%20orden.md)
+   — el esquema que se repite en tres sumas, funciones como parámetro,
+   funciones anónimas y cómo se lee un tipo con flecha, los huecos del avance
+   y de la operación con el neutro que se deduce de ella, funciones que
+   devuelven funciones, la derivada y el error de truncamiento, y
+   currificación. Incluye el código escrito en clase.
 
 ### Corte 2
 
