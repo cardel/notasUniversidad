@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leer una especificación de SLLGEN</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Leer una especificación de SLLGEN</h1>
+  <p class="intro">Con dos listas —la especificación léxica y la gramática— SLLGEN construye el scanner, el parser y los datatypes del árbol. Aquí se leen esas listas: las tres partes de una regla léxica y su salida, qué cadenas reconoce una expresión regular, y qué variante genera cada producción.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>En la especificación</th><th>Qué significa</th></tr></thead>
+        <tbody><tr><td><code>skip</code></td><td>se reconoce para descartarlo: no emite token</td></tr><tr><td><code>symbol</code> / <code>number</code></td><td>el lexema se convierte en un dato de Scheme</td></tr><tr><td><code>(arbno e)</code></td><td>cero o más repeticiones de <code>e</code></td></tr><tr><td>un elemento entre comillas en una producción</td><td>un literal: sirve para reconocer la forma y no deja campo</td></tr><tr><td>un no terminal en una producción</td><td>un campo de la variante</td></tr><tr><td><code>(separated-list e ",")</code></td><td>un solo campo, que es una lista</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Nadie escribe estos datatypes a mano. Cambiar una producción cambia la forma del árbol, y con ella las cláusulas del <code>cases</code> que lo recorre: la gramática manda sobre todo lo que viene después.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="sllgen.js"></script>
+</body>
+</html>

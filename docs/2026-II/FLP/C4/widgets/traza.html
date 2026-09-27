@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El reparto del trabajo al evaluar</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El reparto del trabajo al evaluar</h1>
+  <p class="intro">El evaluador decide qué hacer según la variante del nodo y delega el resto: los operandos a un auxiliar, la aritmética a las primitivas, la búsqueda de nombres al TAD ambiente. Aquí se reparte ese trabajo, se ordena lo que ocurre y se mira qué deja pasar la gramática que el evaluador no verifica.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Procedimiento</th><th>Qué hace</th><th>Necesita el ambiente</th></tr></thead>
+        <tbody><tr><td><code>eval-expression</code></td><td>decide según la variante y delega</td><td>sí, y se lo pasa a quien lo necesite</td></tr><tr><td><code>eval-rands</code></td><td>evalúa cada operando con <code>map</code></td><td>sí, el mismo para todos</td></tr><tr><td><code>apply-primitive</code></td><td>opera sobre valores ya obtenidos</td><td>no: no va a evaluar nada</td></tr><tr><td><code>apply-env</code></td><td>recorre la cadena buscando un nombre</td><td>es el ambiente</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">El orden lo fija la estructura del árbol: un nodo no tiene valor hasta que sus hijos lo tienen, y por eso la expresión completa siempre es la última. Y lo que la gramática deja pasar de más —cualquier cantidad de operandos— hay que atajarlo en el evaluador, o se cae con un mensaje que habla de Racket y no del lenguaje.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="traza.js"></script>
+</body>
+</html>

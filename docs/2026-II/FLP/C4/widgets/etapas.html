@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Del texto al resultado</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Del texto al resultado</h1>
+  <p class="intro">Tres etapas convierten una cadena de veinte caracteres en un número, y cada una sabe menos de lo que uno supondría. Aquí se reparte el trabajo entre ellas: qué tira a la basura el scanner, qué decide el parser, qué solo puede saberse al evaluar; y después, en qué etapa se detiene cada programa que no llega a dar un valor.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Etapa</th><th>Recibe</th><th>Produce</th><th>Qué error reporta</th></tr></thead>
+        <tbody><tr><td>scanner</td><td>la cadena de caracteres</td><td>tokens</td><td>un carácter que ninguna regla reconoce</td></tr><tr><td>parser</td><td>los tokens</td><td>el árbol de sintaxis abstracta</td><td>tokens legales en un orden que la gramática no genera</td></tr><tr><td>interpretador</td><td>el árbol y un ambiente</td><td>un valor</td><td>lo que el programa dice, no cómo está escrito</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Que las etapas estén separadas es lo que permite cambiarlas por separado: otro scanner que acepte comentarios de bloque no obliga a tocar el evaluador, y otra aritmética en el evaluador no obliga a tocar la gramática.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="etapas.js"></script>
+</body>
+</html>
