@@ -37,6 +37,10 @@ Se publican después de cada sesión.
    — medir antes de tocar: `time` y `timeit` para el cuánto, `cProfile` y
    Pyinstrument para el dónde, lo que cada herramienta deforma, y el paso a
    las instrucciones vectoriales con NumPy, AVX y la GPU.
+4. [Clase 4. Hilos y procesos en Python — 29 de septiembre y 1 de octubre](C4/Clase%204.%20Hilos%20y%20procesos%20en%20Python.md)
+   — el GIL y por qué los hilos no aceleran un cálculo en Python puro, dónde
+   sí sirven, la actualización perdida y los cerrojos, y el paso a procesos:
+   memoria separada, colas, tuberías y memoria compartida.
 
 ### Corte 2
 

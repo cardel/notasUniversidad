@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilos contra procesos — núcleos ocupados y tamaño mínimo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-modelo .rotulo { width: 11rem; font-size: 0.72rem; white-space: nowrap; }
+  .fila-n label { min-width: 10.5rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuatro hilos ocupan un núcleo y cuatro procesos ocupan tres</h1>
+  <p class="intro">El mismo cálculo corrido con cuatro hilos y con cuatro procesos, medido con
+  <code>perf stat</code> en un AMD Ryzen 5 3600 de 6 núcleos y 12 hilos de hardware. Escriba
+  cuántos núcleos ocupó cada versión antes de ver la tabla, y después mueva el costo de arranque
+  y el trabajo por elemento para encontrar desde qué tamaño paga repartir.</p>
+
+  <div class="carta">
+    <h2>1. Lo que midió perf</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">$ python3 hilos_vs_procesos.py</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">secuencial     1.37 s</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">4 hilos        1.42 s   speedup 0.97x</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">4 procesos     0.46 s   speedup 2.96x</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">$ perf stat -e task-clock python3 hilos_vs_procesos.py hilos</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">          1.607,65 msec task-clock:u</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">       1,617329927 seconds time elapsed</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">$ perf stat -e task-clock python3 hilos_vs_procesos.py procesos</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">          1.750,13 msec task-clock:u</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">       0,549521364 seconds time elapsed</span></div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Versión</th><th>task-clock</th><th>Transcurrido</th><th>Núcleos ocupados</th></tr></thead>
+        <tbody id="cuerpo-perf"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>Con 4 hilos, el programa gastó 1.607,65 ms de CPU en 1,617 s de reloj. ¿Cuántos
+      núcleos estuvo ocupando en promedio? Dos decimales.</span>
+      <input type="number" id="prediccion-nucleos" min="0" step="0.01" placeholder="núcleos">
+      <button id="btn-comprobar-nucleos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-nucleos" class="veredicto"></div>
+    <div class="nota"><code>task-clock</code> es el tiempo de CPU que acumulan todos los hilos y
+    procesos del programa; dividido entre el tiempo transcurrido sale el número de núcleos que
+    estuvieron ocupados. <code>perf</code> cronometra el proceso completo, con el arranque del
+    intérprete y los <code>import</code>, así que marca 1,617 s donde el cronómetro de dentro del
+    programa midió 1,42 s para <code>con_hilos()</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Hilos y procesos, lado a lado</h2>
+    <div class="progreso">Con 4 hilos: el reloj repartido en ocho turnos</div>
+    <div id="panel-hilos"></div>
+    <div class="progreso" style="margin-top:0.8rem">Con 4 procesos, a la misma escala</div>
+    <div id="panel-procesos"></div>
+    <div class="chips" id="chips-nucleos" style="margin-top:0.8rem"></div>
+    <div class="nota">Las dos líneas de tiempo están al mismo ancho, 1,617 s. En las filas de
+    hilos el bloque azul es el hilo que tiene el GIL y el gris es el que espera: en cada instante
+    hay uno solo ejecutando bytecode. En las de procesos, el filo ámbar de la izquierda es
+    arrancar su intérprete, unos 4,25 ms de los 17 que cuestan los cuatro, y el azul es el
+    cálculo, que esta vez sí corre a la vez en los cuatro. El tramo libre del final es recoger
+    los resultados y cerrar los procesos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. A partir de qué tamaño paga</h2>
+    <p style="margin-top:0">La misma suma, cinco tamaños de entrada, siempre 4 procesos:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Elementos</th><th>Secuencial</th><th>4 procesos</th><th>Speedup</th></tr></thead>
+        <tbody id="cuerpo-tamanos"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>Crear los cuatro procesos cuesta unos 17 ms. ¿Cuál es el primer tamaño de la tabla en
+      el que la versión con procesos gana? Escriba el número de elementos, por ejemplo 10000.</span>
+      <input type="number" id="prediccion-cruce" min="0" step="1" placeholder="elementos">
+      <button id="btn-comprobar-cruce" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cruce" class="veredicto"></div>
+    <div class="alerta">Crear un proceso obliga a montar un intérprete aparte, entregarle los
+    argumentos y abrir los canales por donde vuelve el resultado. Ese costo se paga completo, así
+    la tarea dure un milisegundo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Mover las perillas</h2>
+    <div class="fila-n">
+      <label for="rango-arranque">Arrancar los 4 procesos:</label>
+      <input type="range" id="rango-arranque" min="1" max="60" step="1" value="17">
+      <span class="valor-n" id="valor-arranque">17 ms</span>
+    </div>
+    <div class="fila-n">
+      <label for="rango-ns">Trabajo por elemento:</label>
+      <input type="range" id="rango-ns" min="10" max="100" step="1" value="48">
+      <span class="valor-n" id="valor-ns">48 ns</span>
+    </div>
+    <div id="panel-modelo" style="margin-top:0.8rem"></div>
+    <div class="chips" id="chips-modelo" style="margin-top:0.6rem"></div>
+    <div class="nota">Cada pareja de barras va a su propia escala: entre el primer tamaño y el
+    último hay cuatro órdenes de magnitud y con una escala común las primeras barras no se verían.
+    La barra verde es la versión con procesos cuando gana y la roja cuando pierde; el número que
+    lleva encima es el speedup del modelo. Con 48 ns por elemento y 17 ms de arranque, el modelo
+    empata cerca de 472.000 elementos, entre los dos tamaños medidos donde cambia el signo.</div>
+    <div class="alerta">Cómo decidir antes de escribir el código: cronometrar la versión
+    secuencial; si tarda menos que arrancar los procesos, no hay nada que paralelizar; si la tarea
+    es corta pero se repite miles de veces, agrupar las repeticiones en lotes grandes y repartir
+    los lotes.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué hacer en cada caso</h2>
+    <p style="margin-top:0">Una función tarda 2 ms y hay que aplicarla a 50.000 elementos.
+    ¿Cómo se reparte entre cuatro procesos?</p>
+    <div class="opciones" id="opciones-reparto">
+      <button data-op="uno">Un proceso por elemento</button>
+      <button data-op="pool">Pool.map elemento por elemento, chunksize 1</button>
+      <button data-op="correcta">En lotes de unos 12.500 elementos por proceso</button>
+      <button data-op="hilos">Con hilos, que cuestan menos de crear</button>
+    </div>
+    <div id="veredicto-reparto" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="procesos.js"></script>
+</body>
+</html>
