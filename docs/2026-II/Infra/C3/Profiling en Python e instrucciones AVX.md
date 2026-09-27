@@ -68,7 +68,16 @@ De ahí sale el criterio para no optimizar: un script que corre una vez y se
 archiva, o uno que tarda cuatro minutos mientras uno se toma un café, no
 justifica el trabajo. Si optimizar cuesta más que ejecutar, no se optimiza.
 Es la misma cuenta de la deuda técnica: antes de pagarla hay que ver qué se
-gana.
+gana. La deuda técnica funciona como el 4 × 1000, que entró como medida
+temporal después del terremoto del eje cafetero y sigue ahí: lo que se
+escribió con afán para salir del paso queda, y cada vez cuesta más quitarlo.
+
+El ejercicio de la sesión fue una tabla de cuatro funciones sobre un programa
+de 20 s: expresiones regulares con 1 s, un ciclo con el 70 %, insertar el
+resultado con el 20 % y escribir el archivo con el 5 %. La candidata es el
+ciclo, no porque sea la más fea sino porque es la que más pesa; y la escritura
+del archivo queda fuera de la discusión aunque se viera lenta, porque ahí
+manda el disco y el código no lo acelera.
 
 ## El ambiente: `venv` y `requirements.txt`
 
@@ -117,7 +126,17 @@ cosas distintas:
 
 La diferencia entre los dos primeros es la que delata una espera. Un programa
 que tarda veinte minutos de reloj y consume cinco de procesador pasó quince
-esperando algo: un archivo, una consulta, la red.
+esperando algo: un archivo, una consulta, la red. Las dos corridas de la
+sesión lo dejan ver en dos líneas:
+
+| Fragmento | `perf_counter` | `process_time` |
+|---|---:|---:|
+| `sleep(1.75)` | 1,75 s | 0 s |
+| Ciclo de cien millones de vueltas | 2,5 s | 2,5 s |
+
+El primero no gasta procesador: el proceso está dormido y el núcleo atiende
+otra cosa. El segundo gasta todo lo que dura. Con varios hilos el tiempo de
+procesador puede pasarse del de reloj, porque suma lo que consumió cada uno.
 
 El problema de `time` es que entrega una sola medición por ejecución, y esa
 medición trae el ruido del estado de la caché y de lo que esté haciendo la
@@ -137,12 +156,24 @@ reales: la máquina es finita, así que guarda el más cercano e introduce un
 error de truncamiento que se propaga al operar. Dividiendo una sola vez al
 final, ese error se paga una vez y no cien.
 
+Con `fib(30)` y cien repeticiones la corrida dio 15,8 s, y la división da
+0,158 s: 158 milisegundos por llamada. Ese es el número que se reporta, no
+los 15,8 s.
+
 !!! note "Los bancos no calculan en pesos"
     Calculan en centavos, con enteros, por esta misma razón. Un banco con
     veinte millones de clientes y un error de un centavo por cliente y por
     segundo pierde doscientos mil pesos por segundo. La regla para
     cualquier cálculo financiero es trabajar en la unidad entera mínima y
     dividir solo para mostrar.
+
+El argumento `setup` es lo que separa la preparación de lo que se mide, y
+dejarlo por fuera arruina la medición. El caso que se trabajó: preparar los
+datos cuesta 5 ms y la operación que interesa, 0,2 ms, con mil repeticiones.
+Si la preparación queda dentro del fragmento medido, cada iteración reporta
+5,2 ms y el resultado sale inflado veintiséis veces; en `setup` se paga una
+sola vez y las mil iteraciones suman 200 ms, que es lo que de verdad cuesta
+la operación.
 
 ## Dónde se va el tiempo: `cProfile`
 
@@ -170,6 +201,14 @@ todo el trabajo está dentro de una sola recursión que recalcula los mismos
 valores una y otra vez. La cota es $O(2^n)$, aunque el número exacto crece
 como $\varphi^n$ con la razón áurea, y por eso da veintinueve millones y no
 treinta y cuatro mil millones.
+
+Con números pequeños la cuenta se hace a mano y explica de dónde sale esa
+cifra. `fib(4)` gasta 9 llamadas, `fib(5)` gasta 15 y `fib(6)` gasta 25: cada
+una es la suma de las dos anteriores más uno, porque el árbol de `fib(n)`
+tiene el de `fib(n-1)` a la izquierda, el de `fib(n-2)` a la derecha y la
+llamada de la raíz. Siguiendo esa recurrencia hasta 35 se llega a 29 860 703
+llamadas a `fib`; las nueve que faltan para el total del encabezado son del
+`print` y de la maquinaria del perfilador.
 
 La corrección es memoizar: guardar cada resultado la primera vez que se
 calcula y devolverlo cuando lo vuelvan a pedir. `functools.lru_cache` lo hace
@@ -212,6 +251,13 @@ real de un programa. Y no va en producción: allí solo agrega tiempo de
 ejecución. Su lugar es el banco de pruebas, cuando alguien reporta que algo
 tarda y hay que decir dónde.
 
+!!! note "Qué tiempo va en el informe"
+    El del programa sin perfilador. En el ejemplo de la nube de puntos el
+    encabezado de `cProfile` anuncia 2,963 s y el mismo programa cronometrado
+    a secas tarda 1,382 s: la diferencia es el instrumento midiéndose a sí
+    mismo. El perfilador dice dónde se va el tiempo; cuánto tarda el programa
+    lo dice el cronómetro.
+
 ## Muestrear en vez de registrar: Pyinstrument
 
 Pyinstrument es un perfilador estadístico: en vez de anotar cada llamada,
@@ -220,11 +266,20 @@ cada cierto intervalo guarda la pila de llamadas y después reconstruye el
 exacto de llamadas.
 
 Para ver con confianza una función que consume el x % del tiempo hacen falta
-del orden de 100/x muestras, suponiendo que el programa se comporta parejo. Lo
-que dura menos que el intervalo no aparece. Por eso la
-herramienta no sirve para programas muy cortos, ni para programas erráticos,
-donde el muestreo puede caer siempre en el mismo sitio: ahí `cProfile` dice
-más.
+del orden de 100/x muestras, suponiendo que el programa se comporta parejo:
+una que pesa la mitad del tiempo se ve con dos, una que pesa el 10 % pide
+diez, y una que pesa el 1 % pide cien. De ahí sale el intervalo: si hay que
+ver algo que dura un segundo con cien muestras, el intervalo tiene que ser de
+diez milisegundos.
+
+La cuenta al revés también sirve. `fib(35)` sin memoizar dura 4,64 s, y con
+un intervalo de 0,1 s el perfilador alcanza a tomar unas 46 muestras: pocas,
+pero suficientes para ver dónde está el peso. La misma función memoizada dura
+tan poco que el perfilador sale con cero muestras y el reporte queda en
+blanco, aunque la optimización haya funcionado. Lo que dura menos que el
+intervalo no aparece, y por eso la herramienta no sirve para programas muy
+cortos ni para programas erráticos, donde el muestreo puede caer siempre en
+el mismo sitio: ahí `cProfile` dice más.
 
 El ejemplo de la sesión es la estimación de pi por Monte Carlo. Se tiran
 puntos al azar en un cuadrado con un círculo inscrito, y la proporción de los
@@ -386,12 +441,26 @@ volver a desenvolver.
     matemáticas vectorizadas, el *slicing* y el *broadcasting*; evitar los
     ciclos, la indexación elemento por elemento y sacar los datos a listas.
 
+Con las cadenas pasa lo mismo y por la misma razón. Las cadenas de Python son
+inmutables, así que armar uno grande a punta de `+=` crea una cadena nueva en
+cada vuelta y copia lo que ya había. `"".join(partes)` recorre la lista una
+vez, suma los tamaños, reserva la memoria de una sola vez y copia cada pedazo
+a su sitio.
+
 ## Instrucciones AVX
 
 AVX, *Advanced Vector Extensions*, son instrucciones SIMD: una sola
 instrucción sobre varios datos. En vez de sumar un par de números por
 instrucción, el procesador carga varios en un registro ancho y los opera de
 una vez.
+
+Es una diferencia de naturaleza con lo que se venía haciendo. Repartir en
+hilos es cosa del programa: alguien decide cuántos hilos hay y qué le toca a
+cada uno. Aquí el reparto lo hace el procesador dentro de una instrucción, y
+el programa ni se entera; lo único que se puede hacer es escribir el ciclo de
+forma que la biblioteca o el compilador puedan aprovecharlo. AVX está en los
+procesadores x86 desde 2010, así que un equipo que no lo traiga pasa de los
+quince años.
 
 | Registro | `float32` | `float64` |
 |---|---:|---:|
@@ -426,8 +495,11 @@ Los dos últimos quedan en el mismo orden de magnitud, y por motivos
 distintos. El `if` en bucle rompe la bifurcación, pero lo que lo hace
 catastrófico es el costo del intérprete recorriendo cinco millones de
 posiciones; `np.where` hace la misma decisión con una máscara vectorizada y
-cuesta 1,8×. La recurrencia sí es imposible de vectorizar: cada paso necesita
-el anterior, como la suma de prefijos de la sesión anterior.
+cuesta 1,8×. La recurrencia no se vectoriza tal como está escrita: cada paso
+necesita el anterior, como la suma de prefijos de la sesión de estrategias.
+Y la salida es la misma de allá: calcular los totales por bloque, acumular
+los desplazamientos y rehacer cada bloque desde el suyo. Una dependencia no
+siempre es del problema; a veces es de cómo quedó escrita la solución.
 
 El acceso disperso no rompe nada de la lógica, solo el orden: leer las
 posiciones salteadas deja de aprovechar la línea de caché y los elementos no
@@ -481,8 +553,14 @@ Python y el trabajo es de C.
 
 ## Lo que sigue
 
-Todo lo que se cargó al arrancar el intérprete vive en un contexto global
-—los `builtins`, los módulos importados— y ese contexto compartido es el que
-impide que dos hilos de Python ejecuten código del intérprete a la vez. Ese
-candado tiene nombre y es el tema de la sesión siguiente, junto con la
-diferencia entre repartir en hilos y repartir en procesos.
+Arrancar el intérprete es cargar cosas. `globals()` muestra el contexto en
+que uno está parado y `dir(__builtins__)` lista lo que viene puesto de
+fábrica: `list`, `dict`, `int`, `min`, `max`, `map`, `zip`, `str`. Nada de
+eso es palabra reservada del lenguaje; son objetos que el intérprete dejó
+cargados, y se pueden mirar uno por uno. Borrar ese contexto deja un Python
+que no sabe hacer una lista.
+
+Ese contexto compartido es el que impide que dos hilos de Python ejecuten
+código del intérprete a la vez. El candado tiene nombre y es el tema de la
+sesión siguiente, junto con la diferencia entre repartir en hilos y repartir
+en procesos.
