@@ -352,6 +352,12 @@ porque la pila entrega el último vecino que entró: el primer componente sale
 `[0, 2, 1]`. Con un grafo de $10^5$ vértices en fila la versión recursiva pasa
 del límite de recursión de Python y esta no.
 
+La otra diferencia está en la memoria. Cada llamado pendiente deja un marco en
+la pila de llamadas, con sus parámetros, sus variables locales y el punto al
+que hay que volver, así que una cadena de $n$ vértices tiene $n$ marcos
+abiertos a la vez, y el intérprete de Python corta cerca de los mil. Con la
+pila explícita lo pendiente son referencias a vértices dentro de una lista.
+
 ### La amplitud
 
 ```python
@@ -409,6 +415,25 @@ que $ComponentesConexosDFS$ corre en $\Theta(V+E)$. $\blacksquare$
 La versión con amplitud tiene la misma cuenta: cada vértice entra a la cola
 una sola vez y sale una sola vez, y el recorrido de las listas de adyacencia
 es el mismo.
+
+La cota es la de las listas de adyacencia, y con otra representación cambia. A
+la estructura se le hacen dos preguntas: quiénes son los vecinos de $u$, y si
+existe la arista $(u,v)$. Con listas de adyacencia, enumerar los vecinos de $u$
+cuesta $\Theta(\deg(u))$, que es lo que mide la lista, y la arista suelta
+cuesta $O(\deg(u))$, porque hay que buscarla ahí dentro. Con matriz de
+adyacencia la arista se responde en $\Theta(1)$ leyendo una casilla, pero los
+vecinos obligan a barrer la fila entera, $\Theta(V)$.
+
+| Operación | Lista de adyacencia | Matriz de adyacencia |
+|---|:---:|:---:|
+| Vecinos de $u$ | $\Theta(\deg(u))$ | $\Theta(V)$ |
+| Existencia de $(u,v)$ | $O(\deg(u))$ | $\Theta(1)$ |
+| Espacio | $\Theta(V+E)$ | $\Theta(V^2)$ |
+
+$ComponentesConexosDFS$ solo hace la primera pregunta, una vez por vértice, así
+que sobre matriz suma $|V|$ filas de $|V|$ casillas y sube a $\Theta(V^2)$, sin
+importar cuántas aristas haya. El espacio va por el mismo camino:
+$\Theta(V^2)$ contra $\Theta(V+E)$.
 
 ## Puntos de articulación y puentes
 
@@ -519,6 +544,18 @@ cada bloque: en $G$ de $\{a,b,e\}$ se llega a todos los demás; en $G^{T}$, a
 ninguno. Construirlo cuesta $\Theta(V+E)$: se recorre cada lista de adyacencia
 una vez y se agrega la arista al revés en la lista del otro extremo.
 
+En un grafo no dirigido el transpuesto es el mismo grafo. Invirtiendo las siete
+aristas del grafo de ocho vértices quedan las listas $0$: $[1, 2]$;
+$1$: $[0, 2]$; $2$: $[0, 1]$; $3$: $[4]$; $4$: $[3]$; $5$: $[6, 7]$;
+$6$: $[5, 7]$; $7$: $[5, 6]$, las ocho idénticas a las de partida. Cada arista
+estaba ya en las dos listas, la del primer extremo y la del segundo: voltear la
+$0$–$1$ es cambiar de lugar dos copias iguales y la estructura queda donde
+estaba. Visto como dirigido, con las dos flechas de cada arista, un grafo no
+dirigido conexo es fuertemente conexo y al contrario también: los dos caminos
+que pide la alcanzabilidad mutua son el mismo camino leído en los dos sentidos.
+Correr Kosaraju sobre él devuelve sus componentes conexos, y el paso 2 se gasta
+en copiar un grafo que ya estaba.
+
 ### El grafo de componentes
 
 **Definición ($G^{SCC}$).** El grafo donde cada nodo representa un componente
@@ -625,6 +662,28 @@ el grafo sobre el que el algoritmo lo usa: recorrerlo de izquierda a derecha
 es visitar los componentes desde las fuentes hacia los sumideros. Y $g$ es el
 vértice que arrancó la asignación, que hace de nombre del componente: dos
 vértices quedan en el mismo componente si les tocó el mismo $g$.
+
+### Kahn sobre el grafo de componentes
+
+El algoritmo de Kahn ordena un DAG contando aristas de entrada: arranca con los
+vértices que no reciben ninguna, y al sacar uno le descuenta una arista de
+entrada a cada sucesor, con lo que aparecen las fuentes siguientes. Los pasos 1
+y 3 de $Kosaraju$ hacen ese mismo recorrido sobre $G^{SCC}$.
+
+Cada llamada del paso 3 que encuentra su vértice sin asignar pinta un
+componente entero, y pintarlo es retirar su nodo de $G^{SCC}$: a los
+componentes hacia los que apuntaba les quita la arista de entrada que venía de
+él. El componente sin asignar con el $f$ más grande es justo el que ya no
+recibe ninguna, porque una arista entrante desde otro componente sin asignar
+exigiría un $f$ todavía mayor. Recorrer $ord$ de izquierda a derecha es
+entonces ir sacando las fuentes de $G^{SCC}$ una tras otra, lo que la cola de
+Kahn hace con las del grafo que recibe.
+
+La diferencia está en el conteo. Kahn necesita los grados de entrada porque el
+grafo le llega sin ningún orden; aquí la primera búsqueda en profundidad los
+dejó contados, y el orden por $f$ decreciente pone a cada componente después de
+todos los que le apuntan. $Asignar$ no pregunta cuántas aristas entraban: le
+basta encontrar el vértice sin asignar, que es lo que comprueba su paso 1.
 
 ### Por qué funciona
 
@@ -865,6 +924,15 @@ $ord = [\,a,\; b,\; e,\; c,\; g,\; f,\; d,\; h\,]$.
 Lo que $ord$ ordena son los componentes. Leído sobre $G^{SCC}$ da $\{a,b,e\}$,
 $\{c,d\}$, $\{f,g\}$, $\{h\}$, que es un orden topológico de ese DAG. Sobre
 $G$ la lista no ordena nada, y la arista $e \to a$ lo muestra: va hacia atrás.
+
+Los tiempos dependen de por dónde arranque el primer recorrido. Empezando en
+otro vértice, o leyendo las listas de adyacencia en otro orden, los $d$ y los
+$f$ salen distintos y $ord$ también. Lo que no cambia es la posición relativa
+de dos componentes unidos por una arista: si hay arista de $C$ a $C'$,
+cualquier búsqueda en profundidad sobre $G$ deja $f(C) > f(C')$, por el teorema
+de la Sección 22.5. Todo $ord$ posible es entonces un orden topológico de
+$G^{SCC}$ —lo que puede cambiar es cuál de dos componentes sin arista entre
+ellos va primero— y el paso 3 vuelve a pintar los mismos cuatro componentes.
 
 ### Tercer paso: el transpuesto
 
