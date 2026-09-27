@@ -18,11 +18,13 @@ partir de qué cuenta compensa llevar el cálculo a la GPU.
 
     Las tres preguntas antes de optimizar y el techo que pone Amdahl, el
     ambiente virtual y el archivo de dependencias, los dos relojes de
-    `time`, por qué `timeit` devuelve el total, `fib(35)` bajo `cProfile`
-    con y sin memoización, el árbol de Pyinstrument sobre Monte Carlo, lo
-    que cuesta cada perfilador, qué guarda una lista frente a un arreglo de
-    NumPy, las cuatro condiciones de SIMD con cinco patrones medidos y
-    cuándo compensa llevar el cálculo a la GPU.
+    `time` medidos sobre una espera y sobre un ciclo, por qué `timeit`
+    devuelve el total y para qué sirve `setup`, `fib(35)` bajo `cProfile`
+    con la traza de llamadas contada a mano, el árbol de Pyinstrument sobre
+    Monte Carlo y de dónde sale el intervalo de muestreo, qué tiempo va en
+    el informe, qué guarda una lista frente a un arreglo de NumPy, las
+    cuatro condiciones de SIMD con cinco patrones medidos y cuándo compensa
+    llevar el cálculo a la GPU.
 
     [:octicons-arrow-right-24: Entrar](./Profiling%20en%20Python%20e%20instrucciones%20AVX.md)
 
