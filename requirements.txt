@@ -1,0 +1,7 @@
+# Dependencias del sitio. Fijadas a propósito: Material anuncia que MkDocs 2.0
+# rompe el sistema de plugins, así que la versión se sube a mano y se comprueba.
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+mkdocs-roamlinks-plugin==0.3.2
+mkdocs-pdf==0.1.2
+pymdown-extensions==12.1
