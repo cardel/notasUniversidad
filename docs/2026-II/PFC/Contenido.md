@@ -120,6 +120,7 @@ ejemplos de los informes.
 | Taller | Tema | Cierre |
 |---:|---|---|
 | 1 | [Cifrados clásicos con recursión](https://github.com/EjerciciosClasesCardel/pfc-taller-1-cifrados-clasicos) | jueves 8 de octubre, 23:59 |
+| 2 | [Un robot en la cuadrícula](https://github.com/EjerciciosClasesCardel/pfc-taller-2-robot-en-cuadricula) | jueves 22 de octubre, 23:59 |
 
 ## Reglas del código
 
