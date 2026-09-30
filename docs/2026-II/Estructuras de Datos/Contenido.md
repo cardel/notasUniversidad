@@ -43,6 +43,9 @@ mano durante todo el semestre.
 - [Apéndice A. El juez automático](A1/Apéndice%20A.%20El%20juez%20automático.md)
   — cómo entrar a la arena, enviar una solución, leer los veredictos y qué hace el
   servidor con cada envío.
+- [Proyecto del curso](Proyecto/Proyecto%20del%20curso.md)
+  — los cuatro escenarios, qué se entrega en el avance y en la final, cómo se
+  califica y dónde vive el repositorio.
 
 ## Clases en video
 
