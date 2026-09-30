@@ -1,27 +1,50 @@
 name: pages
+
 on:
   push:
     branches:
       - master
       - main
+  workflow_dispatch:
+
+# Publicar por artefacto no necesita escribir en el repositorio: el sitio ya no
+# se copia a una rama gh-pages, se entrega directo a Pages.
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Los despliegues se encolan: un push nuevo espera al anterior en vez de
+# cancelarlo, para no cortar un deploy-pages a mitad.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
         with:
-          python-version: 3.x
-      - uses: actions/cache@v4
+          python-version: '3.14'
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - run: mkdocs build
+
+      - uses: actions/upload-pages-artifact@v5
         with:
-          key: ${{ github.ref }}
-          path: .cache
-      - run: pip install mkdocs-material
-      - run: pip install mkdocs-roamlinks-plugin
-      - run: pip install mkdocs-rss-plugin
-      - run: pip install mkdocs-mermaid2-plugin
-      - run: pip install pymdown-extensions
-      - run: pip install mkdocs-pdf
-      - run: mkdocs gh-deploy --force
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
