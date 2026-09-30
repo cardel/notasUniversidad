@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parser y unparser con sintaxis infija</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Parser y unparser con sintaxis infija</h1>
+  <p class="intro">Las expresiones booleanas se escriben con el conectivo en medio, <code>(p and q)</code>, y el parser tiene que buscar la palabra clave en la segunda posición. El árbol que se espera va dibujado bajo cada prueba; si el código construye otro, aparece al lado el que construyó. El último reto da la vuelta completa y muestra que el árbol no guarda dónde iba la palabra.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. Dentro de una lista con comilla,
+    <code>and</code>, <code>or</code>, <code>not</code>, <code>true</code> y
+    <code>false</code> son símbolos y nada más. Lo que se entrega se escribe y
+    se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres, resueltos</h2>
+    <p style="margin-top:0">Dónde mira el parser y qué repone el unparser, producción por producción:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Sintaxis concreta</th><th>Cómo la reconoce parse</th><th>Variante</th><th>Lo que unparse repone</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>true</code>, <code>false</code></td><td>un símbolo, y cuál es</td><td><code>true-exp</code>, <code>false-exp</code></td><td>la palabra</td></tr>
+          <tr><td><code>p</code></td><td>un símbolo que no es ninguno de los dos</td><td><code>var-exp</code></td><td>el nombre</td></tr>
+          <tr><td><code>(not …)</code></td><td><code>(car d)</code> es <code>not</code></td><td><code>not-exp</code></td><td><code>not</code> adelante</td></tr>
+          <tr><td><code>(… and …)</code>, <code>(… or …)</code></td><td><code>(cadr d)</code> es la palabra</td><td><code>and-exp</code>, <code>or-exp</code></td><td>la palabra en medio</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Los árboles de <code>(p and q)</code> y de un
+    <code>(- x 1)</code> del lenguaje del curso tienen la misma forma: una
+    raíz con dos hijos. Que la palabra clave vaya adelante o en medio es
+    asunto del parser y del unparser; el datatype, y todo lo que se escribe
+    con <code>cases</code> sobre él, no se entera.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define d '(p and (not q)))
+(car d)
+(cadr d)
+(caddr d)
+(symbol? (cadr d))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+
+<script src="parsear.js"></script>
+</body>
+</html>

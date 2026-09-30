@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bignum en base 10</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Bignum en base 10</h1>
+  <p class="intro">La representación bignum con el dígito menos significativo adelante. Los constructores tienen que mantener el dato dentro de la representación: <code>succ</code> con acarreo, <code>pred</code> con préstamo y sin ceros al final, las dos conversiones, y al cierre un <code>multiplica</code> que no sabe que son listas.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code> y las primitivas de listas y aritmética. No hay
+    <code>define-datatype</code> ni <code>cases</code>: para eso está DrRacket.
+    Sirve para probar una idea sin cambiar de ventana, y lo que se entrega se
+    escribe y se corre en DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cinco, resueltos</h2>
+    <p style="margin-top:0">Cada operación y lo que la mantiene dentro de la representación:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Operación</th><th>El caso que la hace difícil</th><th>Cómo lo resuelve</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>succ</td><td>un dígito en nueve</td><td>vuelve a cero y llama a succ sobre el resto</td></tr>
+          <tr><td>pred</td><td>un dígito en cero, y el uno solo</td><td>nueve y pred sobre el resto; el uno solo da la lista vacía</td></tr>
+          <tr><td>bignum-&gt;numero</td><td>el orden de los dígitos</td><td>el car más diez veces el resto</td></tr>
+          <tr><td>numero-&gt;bignum</td><td>el cero</td><td>la lista vacía, y por eso nunca hay ceros al final</td></tr>
+          <tr><td>multiplica</td><td>ninguno</td><td>no toca la representación</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">El acarreo y el préstamo son llamadas recursivas sobre
+    el resto de la lista, y el caso del cero al final es lo que garantiza que
+    cada número tenga una sola forma. <code>multiplica</code> produce
+    <code>(4 4 1)</code> sin un solo <code>car</code>: todo el trabajo con
+    dígitos lo hizo <code>succ</code>, muchas veces.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="6" spellcheck="false">(define (succ n)
+  (cond ((null? n) '(1))
+        ((= (car n) 9) (cons 0 (succ (cdr n))))
+        (else (cons (+ 1 (car n)) (cdr n)))))
+
+(succ (succ '(8 9)))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+<script src="bignum.js"></script>
+</body>
+</html>

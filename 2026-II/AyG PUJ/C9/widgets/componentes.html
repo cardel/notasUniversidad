@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>componentes — un recorrido por componente</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-all; }
+  .opciones button { text-align: left; }
+  #opciones-comparar { flex-direction: column; align-items: stretch; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un recorrido por componente</h1>
+  <p class="intro">El recorrido que arranca dentro de un componente lo entrega
+  entero y no se sale de él, porque ninguna arista cruza de un componente a
+  otro. El algoritmo es eso repetido: se arranca de nuevo desde el primer
+  vértice que quedó sin marcar. Aquí se ve la lista <code>actual</code>
+  llenándose y el color del componente ganando vértices.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo no dirigido en lista de
+    adyacencia. &nbsp;<b>Salida:</b> la lista de componentes, cada uno como
+    lista de vértices.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Nueve vértices</button>
+      <button data-preset="1">Seis, todos pegados</button>
+      <button data-preset="2">Diez vértices</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <div class="prediccion">
+      <span>¿Cuántos componentes conexos tiene?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute, con la versión que quiera</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Recorrido:</span>
+      <button data-version="recursiva" class="primario">Profundidad recursiva</button>
+      <button data-version="pila">Profundidad con pila</button>
+      <button data-version="amplitud">Amplitud</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Componente abierto: <span class="viva" id="ver-actual">(ninguno abierto)</span></div>
+        <div><span id="rot-estructura">Pendientes</span>: <span class="viva" id="ver-estructura">vacía</span></div>
+        <div>Devuelve: <span class="viva" id="ver-componentes">[ ]</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Cada componente estrena color. La arista azul es la
+        que se está mirando; se pone verde cuando lleva a un vértice sin
+        marcar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una fila por componente</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Componente</th><th>Arranca en</th><th>Vértices, en orden de visita</th><th>Tamaño</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué cambia entre las tres versiones</h2>
+    <div style="margin-bottom:0.3rem"><b>Corra las tres sobre el mismo grafo.
+    ¿En qué se diferencian las salidas?</b></div>
+    <div class="opciones" id="opciones-comparar">
+      <button data-op="correcta">En el orden de los vértices dentro de un componente, y en nada más</button>
+      <button data-op="reparto">En el reparto: algún vértice cae en un componente distinto según el recorrido</button>
+      <button data-op="numero">En el número de componentes que encuentra cada una</button>
+    </div>
+    <div id="veredicto-comparar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el grafo de nueve vértices,
+    invierta el orden de las listas de adyacencia (que cada vecino aparezca de
+    mayor a menor) y ejecute a mano la versión recursiva. Diga qué componente
+    sale primero, en qué orden quedan sus vértices, y qué parte del resultado
+    no se movió. Después agregue la arista 3–8 y diga cuántos componentes
+    quedan.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="componentes.js"></script>
+</body>
+</html>

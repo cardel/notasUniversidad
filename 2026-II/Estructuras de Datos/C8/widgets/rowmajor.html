@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rowmajor — la tabla en una sola calle</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La tabla en una sola calle</h1>
+  <p class="intro">La matriz M[3][4] empieza en la dirección 4000 y cada int
+  ocupa 4 bytes. La memoria guarda las filas una tras otra; ubique cada
+  casilla pedida en la calle.</p>
+
+  <div class="carta">
+    <h2>1. La matriz y la calle</h2>
+    <div id="grid-matriz"></div>
+    <div class="nota" style="margin-bottom:0.4rem">Y así se ve aplanada, con la
+    dirección de cada casilla encima:</div>
+    <div class="arreglo fila-arreglo" id="calle"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ubique la casilla</h2>
+    <p style="margin-top:0" id="enunciado-objetivo"></p>
+    <div class="prediccion">
+      <span>Dirección:</span>
+      <input type="number" id="prediccion-direccion" placeholder="p. ej. 4020">
+      <button id="btn-direccion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-direccion" class="veredicto"></div>
+    <div class="nota">Pista general: ¿cuántas casillas completas hay antes de
+    la marcada? Cada una ocupa 4 bytes.</div>
+  </div>
+
+  <div class="carta" id="carta-formula" style="display:none">
+    <h2>3. La fórmula general</h2>
+    <p style="margin-top:0">Para una matriz de m columnas que empieza en b,
+    ¿dónde vive M[i][j]?</p>
+    <div class="opciones" id="opciones-formula">
+      <button data-op="suma">b + (i + j) · 4</button>
+      <button data-op="correcta">b + (i · m + j) · 4</button>
+      <button data-op="columnas">b + (j · n + i) · 4</button>
+      <button data-op="producto">b + i · j · 4</button>
+    </div>
+    <div id="veredicto-formula" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="rowmajor.js"></script>
+</body>
+</html>

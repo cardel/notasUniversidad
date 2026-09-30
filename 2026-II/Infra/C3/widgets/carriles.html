@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carriles AVX — cuatro double por instrucción</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  .registro .caja { width: 40px; height: 34px; font-size: 0.8rem; cursor: default; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuatro double por instrucción: qué ahorra el registro ancho y qué lo rompe</h1>
+  <p class="intro">Un registro AVX de 256 bits carga cuatro double u ocho float y los opera con una
+  sola instrucción. Escriba cuántas instrucciones recorren cinco millones de elementos antes de
+  verlo, y después diga, para cada uno de los cinco patrones de la clase, cuál de las cuatro
+  condiciones rompe.</p>
+
+  <div class="carta">
+    <h2>1. Cuántas instrucciones</h2>
+    <div class="fila-n">
+      <label>Registro:</label>
+      <span class="presets">
+        <button data-reg="128">128 bits (SSE)</button>
+        <button data-reg="256" class="activo">256 bits (AVX)</button>
+        <button data-reg="512">512 bits (AVX-512)</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label>Dato:</label>
+      <span class="presets">
+        <button data-dato="32">float32 (32 bits)</button>
+        <button data-dato="64" class="activo">float64 (64 bits)</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label for="n">Elementos:</label>
+      <input type="number" id="n" value="5000000" min="1" step="1" style="width:8rem;padding:0.3rem 0.4rem;border:1px solid var(--borde);border-radius:6px;font:inherit">
+    </div>
+    <div class="prediccion">
+      <span>Con <b id="ver-reg">AVX (256 bits)</b> y <b id="ver-dato">float64</b>, ¿cuántas
+      instrucciones recorren un arreglo de n = <b id="ver-n">5.000.000</b>?</span>
+      <input type="number" id="prediccion" min="1" step="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div id="panel-registro" class="registro" style="margin-top:0.8rem"></div>
+    <div class="chips" id="chips-registro" style="margin-top:0.6rem"></div>
+    <div id="alerta-corto" class="alerta" hidden>Con tan pocos elementos la cuenta engaña: cargar el
+    registro, alinear los datos y descargar el resultado tiene un costo fijo que aquí domina, y la
+    versión vectorizada no se distingue de la escalar. La ganancia aparece con miles de elementos,
+    cuando ese costo se reparte.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Las cuatro condiciones</h2>
+    <p style="margin-top:0">Que los cuatro double quepan juntos en el registro depende de cuatro
+    condiciones sobre el bucle:</p>
+    <ol style="margin:0.2rem 0 0.4rem">
+      <li>La <b>misma</b> operación se aplica a todos los elementos.</li>
+      <li>Los elementos son <b>independientes</b>: ninguno necesita el resultado del anterior.</li>
+      <li>El acceso a memoria es <b>contiguo y regular</b>, con paso fijo.</li>
+      <li>No hay <b>bifurcación que dependa del dato</b> dentro del bucle.</li>
+    </ol>
+    <div class="nota">Cumplen las cuatro la suma de dos vectores, el producto punto,
+    <code>np.exp</code> sobre el arreglo completo y el escalado de un vector por un mismo factor.
+    La carta siguiente pregunta por los que no.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cinco patrones, ¿cuál condición rompe?</h2>
+    <p style="margin-top:0">El mismo arreglo de entrada y la misma máquina para los cinco:</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">n = 5_000_000</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">rng = np.random.default_rng(7)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">a = rng.random(n)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">idx = rng.permutation(n)          # indices dispersos</span></div>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.8rem"></div>
+    <div class="codigo" id="codigo-patron" style="margin-top:0.3rem"></div>
+    <p style="margin-bottom:0.3rem">¿Cuál de las cuatro condiciones rompe este patrón?</p>
+    <div class="opciones" id="opciones-patron">
+      <button data-clave="ninguna">Ninguna</button>
+      <button data-clave="regular">Acceso regular</button>
+      <button data-clave="bifurcacion">Bifurcación por dato</button>
+      <button data-clave="independencia">Independencia entre elementos</button>
+    </div>
+    <div id="veredicto-patron" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente patrón</button>
+      <button id="btn-otra" hidden>Otra vez</button>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Patrón</th><th>Tiempo</th><th>Factor</th><th>Condición que rompe</th></tr></thead>
+        <tbody id="cuerpo-patrones"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-patrones" style="margin-top:0.6rem"></div>
+    <div class="nota">Las cifras exactas cambian con la máquina y con la carga; el orden entre las
+    filas no.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Por qué los dos bucles cuestan casi lo mismo</h2>
+    <p style="margin-top:0">El <code>if</code> en bucle (1.578 ms) y la recurrencia (1.682 ms)
+    quedan en el mismo orden aunque solo una de las dos se puede vectorizar. ¿Por qué?</p>
+    <div class="opciones" id="opciones-bucles">
+      <button data-op="misma">Porque las dos rompen la misma condición</button>
+      <button data-op="correcta">Porque el costo del intérprete tapa la diferencia</button>
+      <button data-op="avx">Porque NumPy no tiene AVX para float64</button>
+      <button data-op="grande">Porque el arreglo es muy grande</button>
+    </div>
+    <div id="veredicto-bucles" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="carriles.js"></script>
+</body>
+</html>

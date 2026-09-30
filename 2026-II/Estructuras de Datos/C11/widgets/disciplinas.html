@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tres maneras de guardar muchos — TAD Lista, Pila y Cola</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres maneras de guardar muchos</h1>
+  <p class="intro">Seis situaciones. Para cada una, diga qué disciplina de
+  acceso necesita: <b>lista</b> (por posición), <b>pila</b> (por el último
+  que llegó) o <b>cola</b> (por el primero que llegó).</p>
+  <div class="carta">
+    <h2>¿Lista, pila o cola?</h2>
+    <div class="codigo"><div class="linea"><span class="num">1</span><span class="txt">Deshacer y rehacer en un editor de texto</span></div></div>
+    <div class="opciones">
+      <button data-esc="0" data-tad="lista">lista</button>
+      <button data-esc="0" data-tad="pila">pila</button>
+      <button data-esc="0" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-0" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">2</span><span class="txt">Los turnos de una EPS: se atiende en el orden en que se llega</span></div></div>
+    <div class="opciones">
+      <button data-esc="1" data-tad="lista">lista</button>
+      <button data-esc="1" data-tad="pila">pila</button>
+      <button data-esc="1" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-1" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">3</span><span class="txt">Una lista de reproducción donde se salta a la canción 7</span></div></div>
+    <div class="opciones">
+      <button data-esc="2" data-tad="lista">lista</button>
+      <button data-esc="2" data-tad="pila">pila</button>
+      <button data-esc="2" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-2" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">4</span><span class="txt">Las funciones que se llaman unas a otras: termina primero la última que entró</span></div></div>
+    <div class="opciones">
+      <button data-esc="3" data-tad="lista">lista</button>
+      <button data-esc="3" data-tad="pila">pila</button>
+      <button data-esc="3" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-3" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">5</span><span class="txt">Los documentos que esperan en una impresora compartida</span></div></div>
+    <div class="opciones">
+      <button data-esc="4" data-tad="lista">lista</button>
+      <button data-esc="4" data-tad="pila">pila</button>
+      <button data-esc="4" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-4" class="veredicto"></div>
+    <div class="codigo"><div class="linea"><span class="num">6</span><span class="txt">Los asientos de un bus, que se reservan por número</span></div></div>
+    <div class="opciones">
+      <button data-esc="5" data-tad="lista">lista</button>
+      <button data-esc="5" data-tad="pila">pila</button>
+      <button data-esc="5" data-tad="cola">cola</button>
+    </div>
+    <div id="veredicto-esc-5" class="veredicto"></div>
+  </div>
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Las seis guardan una secuencia. Lo que decide el TAD no
+    es qué se guarda sino <b>por dónde se entra y por dónde se sale</b>. Y
+    escoger el contrato más restrictivo que alcance no es perder poder: es
+    prometer un orden, y la implementación lo cobra más barato.</div>
+  </div>
+</div>
+<script src="disciplinas.js"></script>
+</body>
+</html>

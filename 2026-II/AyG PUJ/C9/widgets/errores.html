@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>errores — tres fallas en Kosaraju</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  .caso .opciones { flex-direction: column; align-items: stretch; }
+  .salida { display: none; margin-top: 0.7rem; padding: 0.7rem 0.9rem; background: var(--verde-suave); border-radius: 8px; font-size: 0.9rem; }
+  pre { background: var(--codigo-fondo); border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.82rem; margin: 0.5rem 0; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .datos code { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres fallas en Kosaraju</h1>
+  <p class="intro">Tres versiones del algoritmo sobre el mismo grafo, cada una
+  con una línea cambiada. Ninguna revienta al correr: las tres devuelven una
+  lista de listas que parece una respuesta. Al señalar la línea aparece lo que
+  devuelve esa versión y en qué se diferencia de la correcta.</p>
+
+  <div class="carta">
+    <h2>El grafo</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota datos" style="margin-top:0">Siete vértices y nueve flechas:
+    0 → 1, 1 → 0, 0 → 2, 2 → 3, 3 → 2, 2 → 4, 3 → 5, 5 → 6, 6 → 5.<br>
+    Respuesta correcta: <code id="ver-bien"></code>.<br>
+    <code>ord</code> = <code id="ver-ord"></code>.<br>
+    Listas de Gᵀ: <code id="ver-gt"></code>.</p>
+  </div>
+
+  <div class="carta caso" data-caso="sobreg">
+    <h2>1. La pasada que se sale del componente</h2>
+<pre>def kosaraju(grafo):
+    orden = orden_por_finalizacion(grafo)
+    GT = grafo_transpuesto(grafo)
+    comp = {}
+    for v in grafo:
+        comp[v] = None
+    for v in orden:
+        asignar(grafo, v, v, comp)
+    return agrupar(grafo, comp, orden)</pre>
+    <div class="opciones">
+      <button data-op="a">La lista <code>ord</code> se calcula mal</button>
+      <button data-op="b"><code>asignar</code> recibe <code>grafo</code> donde debería recibir <code>GT</code></button>
+      <button data-op="c">Falta la comprobación <code>comp[v] is None</code> dentro de <code>asignar</code></button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="reverse">
+    <h2>2. La lista que quedó al derecho</h2>
+<pre>def orden_por_finalizacion(grafo):
+    visitado = {}
+    for v in grafo:
+        visitado[v] = False
+    orden = []
+    for v in grafo:
+        if not visitado[v]:
+            orden_aux(grafo, v, visitado, orden)
+    return orden</pre>
+    <div class="opciones">
+      <button data-op="a"><code>orden_aux</code> agrega el vértice en el momento equivocado</button>
+      <button data-op="b">El <code>for</code> no debería arrancar desde cada vértice sin visitar</button>
+      <button data-op="c">Falta <code>orden.reverse()</code> antes de devolver</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="nombre">
+    <h2>3. El componente que perdió su nombre</h2>
+<pre>def asignar(GT, v, g, comp):
+    if comp[v] is None:
+        comp[v] = g
+        for u in GT[v]:
+            asignar(GT, u, u, comp)</pre>
+    <div class="opciones">
+      <button data-op="a">La recursión pasa <code>u</code> donde debería pasar <code>g</code></button>
+      <button data-op="b">El <code>for</code> debería recorrer <code>grafo[v]</code> y no <code>GT[v]</code></button>
+      <button data-op="c">La asignación <code>comp[v] = g</code> debería ir después del <code>for</code></button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuántos devuelve la segunda</h2>
+    <div class="prediccion">
+      <span>Antes de comprobarla: ¿cuántos grupos devuelve la versión sin <code>reverse</code>?</span>
+      <input type="number" id="cuantos" min="1" placeholder="su número">
+      <button id="btn-cuantos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuantos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Dibuje un grafo dirigido donde
+    la primera versión, la que recorre G en vez de Gᵀ, devuelva por casualidad
+    la respuesta correcta, y diga qué tiene ese grafo de particular. Después
+    conteste: la tercera versión devuelve siempre un grupo por vértice, sin
+    importar el grafo. ¿Por qué?</p>
+  </div>
+
+</div>
+<script src="errores.js"></script>
+</body>
+</html>

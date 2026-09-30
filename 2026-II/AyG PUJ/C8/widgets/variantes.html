@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>variantes — cola, pila y la fuente menor</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; font-family: ui-monospace, monospace; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cola, pila y la fuente menor</h1>
+  <p class="intro">El algoritmo de Kahn guarda las fuentes disponibles en
+  una cola. Cambiar la cola por una pila, o por una cola de prioridad que
+  entrega siempre la fuente de número más bajo, produce otro orden. Aquí las
+  tres versiones corren sobre el mismo grafo, que no está en las
+  diapositivas, y antes de correrlas hay que decir cuál orden devuelve cada
+  una.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div id="panel-grafo"></div>
+    <p style="margin:0.4rem 0 0">Siete vértices y ocho flechas. Al arrancar hay
+    dos fuentes, 2 y 6, y entran a la estructura en ese orden.</p>
+    <p style="margin:0.4rem 0 0"><b>Entrada:</b> este grafo.
+    &nbsp;<b>Salida:</b> un orden topológico; cuál de todos depende de qué
+    fuente se saca primero, y eso lo decide la estructura donde esperan las
+    fuentes disponibles.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. ¿Cuál orden devuelve la versión con pila?</h2>
+    <div class="opciones" id="opciones-pila">
+      <button data-op="cola"><span data-orden="cola"></span></button>
+      <button data-op="pila"><span data-orden="pila"></span></button>
+      <button data-op="menor"><span data-orden="menor"></span></button>
+    </div>
+    <div id="veredicto-pila" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿Y la versión que saca siempre la fuente de número más bajo?</h2>
+    <div class="opciones" id="opciones-menor">
+      <button data-op="pila"><span data-orden="pila"></span></button>
+      <button data-op="cola"><span data-orden="cola"></span></button>
+      <button data-op="menor"><span data-orden="menor"></span></button>
+    </div>
+    <div id="veredicto-menor" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Ejecute las tres</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Estructura:</span>
+      <button data-version="cola" class="primario">Cola</button>
+      <button data-version="pila">Pila</button>
+      <button data-version="menor">Fuente menor</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rotulo-lista">Cola</span>: <span class="viva" id="ver-lista">vacía</span></div>
+        <div>Orden: <span class="viva" id="ver-orden">[ ]</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Las líneas 3, 7, 11 y 16 son las únicas que cambian entre versiones.</div>
+      </div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Paso</th><th>Fuentes disponibles</th><th>Sale</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. ¿Cuáles de los tres órdenes son topológicos?</h2>
+    <div class="opciones" id="opciones-validos" style="font-family:inherit">
+      <button data-op="cola" style="font-family:inherit">Solo el de la cola: es el que demostramos en clase</button>
+      <button data-op="todos" style="font-family:inherit">Los tres: qué fuente sale primero no cambia que cada vértice salga después de sus predecesores</button>
+      <button data-op="ninguno" style="font-family:inherit">Ninguno con seguridad: depende del grafo</button>
+    </div>
+    <div id="veredicto-validos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. La versión de la fuente menor
+    usa una cola de prioridad y cuesta Θ((n + m) lg n). Diga qué costaría si
+    en vez de la cola de prioridad se buscara la fuente menor recorriendo la
+    lista de disponibles cada vez, y sobre qué grafos esa búsqueda sería tan
+    cara como la versión ingenua de la clase.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="variantes.js"></script>
+</body>
+</html>

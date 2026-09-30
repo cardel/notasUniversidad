@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>combinado — ¿cuál bloque manda?</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>combinado: tres bloques en secuencia</h1>
+  <p class="intro">La función tiene tres bloques seguidos: buscar el mayor,
+  contar las parejas que lo superan y contar cuántas veces cabe duplicar.
+  Cada bloque tiene su color en el código.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="fila-n">
+      <label for="rango-n">Tamaño de la entrada:</label>
+      <input type="range" id="rango-n" min="3" max="8" value="6">
+      <span class="valor-n">n = <span id="ver-n">6</span></span>
+      <span class="nota" style="margin-top:0">datos = <span id="ver-datos"></span></span>
+    </div>
+    <div class="prediccion">
+      <span>Cuando n crece, ¿cuál bloque ejecuta más líneas?</span>
+    </div>
+    <div class="opciones">
+      <button data-b="1">Bloque 1: el mayor</button>
+      <button data-b="2">Bloque 2: las parejas</button>
+      <button data-b="3">Bloque 3: duplicar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y cuente</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Bloques en secuencia: los conteos se suman, no se
+        multiplican.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El aporte de cada bloque</h2>
+    <div id="panel-barras"></div>
+    <div class="formula-esc" id="mensaje-barras"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. ¿Y cuando n crece de verdad?</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>n</th><th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th></tr></thead>
+        <tbody id="cuerpo-grandes"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="nota-grandes"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El análisis en términos de n</h2>
+    <p style="margin-top:0">En el peor caso (todas las comparaciones ciertas),
+    ¿cuál fórmula da el total de pasos de la función completa?</p>
+    <div class="opciones" id="opciones-analisis">
+      <button data-op="multiplica">2n² · (3⌊log₂ n⌋)</button>
+      <button data-op="sinquad">6n + 9</button>
+      <button data-op="correcta">2n² + 6n + 3⌊log₂ n⌋ + 9</button>
+      <button data-op="nombre">n²</button>
+    </div>
+    <div id="veredicto-analisis" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="combinado.js"></script>
+</body>
+</html>

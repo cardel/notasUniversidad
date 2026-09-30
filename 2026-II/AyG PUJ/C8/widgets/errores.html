@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>errores — tres fallas en Kahn</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  .salida { display: none; margin-top: 0.7rem; padding: 0.7rem 0.9rem; background: var(--verde-suave); border-radius: 8px; font-size: 0.9rem; }
+  pre { background: var(--codigo-fondo); border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.82rem; margin: 0.5rem 0; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres fallas en Kahn</h1>
+  <p class="intro">Tres versiones del algoritmo sobre el mismo grafo, cada
+  una con una línea equivocada. Ninguna da error al correr: las tres
+  devuelven una lista, y hay que mirarla para darse cuenta. Al señalar la
+  falla aparece lo que devuelve cada versión.</p>
+
+  <div class="carta">
+    <h2>El grafo</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota" style="margin-top:0">Siete vértices y cinco flechas, con
+    el contador de entrada de cada uno. El orden correcto es
+    <code id="ver-bien"></code>.</p>
+  </div>
+
+  <div class="carta caso" data-caso="antes">
+    <h2>1. El vecino que no entra</h2>
+<pre>while len(cola) &gt; 0:
+    u = cola.popleft()
+    orden.append(u)
+    for v in G[u]:
+        if entrada[v] == 0:
+            cola.append(v)
+        entrada[v] = entrada[v] - 1</pre>
+    <div class="opciones">
+      <button data-op="a">La cola inicial se arma mal</button>
+      <button data-op="b">La pregunta por el contador está antes de la resta</button>
+      <button data-op="c">El <code>for</code> debería recorrer solo el primer vecino</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="visitado">
+    <h2>2. La marca en vez del contador</h2>
+<pre>visitado = [False] * n
+cola = deque()
+u = 0
+while u &lt; n:
+    if entrada[u] == 0:
+        cola.append(u)
+        visitado[u] = True
+    u = u + 1
+orden = []
+while len(cola) &gt; 0:
+    u = cola.popleft()
+    orden.append(u)
+    for v in G[u]:
+        if not visitado[v]:
+            visitado[v] = True
+            cola.append(v)</pre>
+    <div class="opciones">
+      <button data-op="a">La cola inicial se arma mal</button>
+      <button data-op="b">Saca por el frente cuando debería sacar por el final</button>
+      <button data-op="c">Una marca de visitado no reemplaza al contador de entrada</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="aislados">
+    <h2>3. La cola inicial</h2>
+<pre>u = 0
+while u &lt; n:
+    if entrada[u] == 0 and len(G[u]) &gt; 0:
+        cola.append(u)
+    u = u + 1
+orden = []
+while len(cola) &gt; 0:
+    u = cola.popleft()
+    orden.append(u)
+    for v in G[u]:
+        entrada[v] = entrada[v] - 1
+        if entrada[v] == 0:
+            cola.append(v)</pre>
+    <div class="opciones">
+      <button data-op="a">La condición de la cola inicial pide algo de más</button>
+      <button data-op="b">La resta y la pregunta están en el orden equivocado</button>
+      <button data-op="c">Los vértices se agregan al final de <code>orden</code> y debería ser al principio</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Las tres versiones equivocadas
+    devuelven una lista más corta o desordenada, y ninguna avisa. Escriba una
+    función <code>revisar(G, orden)</code> que reciba un grafo y una lista y
+    diga si es un orden topológico completo: úsela como prueba de las tres
+    versiones de arriba. ¿Cuánto cuesta esa revisión comparada con el
+    algoritmo?</p>
+  </div>
+
+</div>
+<script src="errores.js"></script>
+</body>
+</html>

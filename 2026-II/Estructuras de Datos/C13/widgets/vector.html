@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vector — la STL de C++</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>vector</h1>
+  <p class="intro">El TAD Lista con los nombres de la biblioteca. Prediga
+  siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Las operaciones, una por una</h2>
+    <div class="codigo" id="codigo-ops"></div>
+    <div class="prediccion">
+      <span>imprime:</span>
+      <input type="text" id="pred-ops" placeholder="a b c" style="width:8rem">
+      <span>size:</span>
+      <input type="number" id="pred-ops-n" placeholder="?">
+      <button id="btn-ops" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-ops" class="veredicto"></div>
+    <div id="tabla-ops" style="display:none" class="envoltura-tabla">
+      <table>
+        <thead><tr><th>operación</th><th>estado</th></tr></thead>
+        <tbody id="cuerpo-ops"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. at fuera de rango</h2>
+    <div class="codigo" id="codigo-at"></div>
+    <div class="opciones" id="opciones-at">
+      <button data-op="excepcion">Termina con std::out_of_range</button>
+      <button data-op="basura">Imprime lo que haya en esa memoria y sigue</button>
+      <button data-op="cero">Imprime 0</button>
+    </div>
+    <div id="veredicto-at" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Corchetes fuera de rango</h2>
+    <div class="codigo" id="codigo-corchetes"></div>
+    <div class="opciones" id="opciones-corchetes">
+      <button data-op="excepcion">Termina con std::out_of_range</button>
+      <button data-op="cualquiera">Imprime cualquier cosa y sigue</button>
+      <button data-op="cero">Siempre imprime 0</button>
+    </div>
+    <div id="veredicto-corchetes" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Sin el &amp;</h2>
+    <div class="codigo" id="codigo-paso"></div>
+    <div class="prediccion">
+      <span>imprime:</span>
+      <input type="number" id="pred-paso" placeholder="?">
+      <button id="btn-paso" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-paso" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Tres cosas que la biblioteca no decide por el
+    programador: qué posición recibe cada operación, quién vigila el rango
+    (at sí, [] no) y si la función trabaja sobre el vector o sobre una
+    copia. El contrato es el de Lista; las trampas también.</div>
+  </div>
+</div>
+<script src="vector.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>contrato — precondiciones y this</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El contrato vigilado</h1>
+  <p class="intro">El mismo <b>TAD Hora</b> de la actividad de la caja, ahora
+  con la pregunta dura: qué pasa cuando una llamada no cumple lo que la caja
+  exige, y quién escribe los campos cuando los nombres chocan.</p>
+
+  <div class="carta">
+    <h2>1. La hora 26</h2>
+    <div class="codigo" id="codigo-assert"></div>
+    <p style="margin-bottom:0.3rem">La caja exige 0 ≤ h &lt; 24 y el
+    constructor lo vigila. ¿Qué hace este programa?</p>
+    <div class="opciones" id="opciones-assert">
+      <button data-op="literal">Imprime 26:00</button>
+      <button data-op="vuelta">Imprime 2:00: las horas dan la vuelta</button>
+      <button data-op="correcta">Se detiene y anuncia la condición que falló</button>
+    </div>
+    <div id="veredicto-assert" class="veredicto"></div>
+    <div id="salida-assert" style="display:none">
+      <div class="codigo" id="codigo-salida-assert" style="margin-top:0.7rem"></div>
+      <div class="nota">La salida textual de la corrida: ejecutable, archivo,
+      línea y la condición violada. La línea del printf nunca corre: después
+      de una hora 26 no hay nada que la implementación pueda prometer.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Exigir o acomodar</h2>
+    <p style="margin-top:0">Dos versiones del constructor para el minuto, dos
+    contratos distintos:</p>
+    <div class="codigo" id="codigo-contratos"></div>
+    <p style="margin-bottom:0.3rem">Llega la llamada
+    <b>Hora visita(18, 75);</b>. ¿Qué pasa bajo cada contrato?</p>
+    <div class="opciones" id="opciones-contratos">
+      <button data-op="ambos">Los dos contratos la aceptan</button>
+      <button data-op="correcta">E se detiene; N crea las 19:15</button>
+      <button data-op="alreves">E crea las 19:15; N se detiene</button>
+      <button data-op="compila">El contrato N no compila</button>
+    </div>
+    <div id="veredicto-contratos" class="veredicto"></div>
+    <div id="tabla-contratos" style="display:none">
+      <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table>
+        <tr><th></th><th>contrato E</th><th>contrato N</th></tr>
+        <tr><td><b>Hora visita(18, 75)</b></td><td>se detiene en el assert</td><td>vale y responde 19:15</td></tr>
+        <tr><td>el desborde lo acomoda</td><td>quien llama, antes de llamar</td><td>la representación, al responder</td></tr>
+        <tr><td>lo que se gana</td><td>toda Hora nace de datos limpios</td><td>comodidad para quien llama</td></tr>
+      </table>
+      </div>
+      <div class="nota">La precondición elegida se escribe en la caja y el
+      assert la copia textual. Decidir es parte del diseño.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El this que faltó</h2>
+    <div class="codigo" id="codigo-self"></div>
+    <p style="margin-bottom:0.3rem">Los parámetros se llaman igual que los
+    campos. ¿Qué imprime el programa?</p>
+    <div class="opciones" id="opciones-self">
+      <button data-op="normaliza">Imprime 11:10</button>
+      <button data-op="nocompila">No compila: h aparece dos veces</button>
+      <button data-op="correcta">Imprime valores que nadie escribió</button>
+    </div>
+    <div id="veredicto-self" class="veredicto"></div>
+    <div id="detalle-this" style="display:none">
+      <div class="codigo" id="codigo-fix" style="margin-top:0.7rem"></div>
+      <div class="nota">Dentro del constructor, el parámetro <b>h</b> tapa al
+      campo <b>h</b>, y <b>h = h</b> lo asigna sobre sí mismo. El arreglo
+      nombra al campo a través de <b>this</b>, el puntero al objeto de esta
+      llamada: las operaciones de un TAD son un solo código compartido y los
+      valores son muchos, y <b>this-&gt;h</b> dice exactamente en cuál de
+      ellos se escribe.</div>
+    </div>
+  </div>
+
+  <div id="carta-cierre" class="carta" style="display:none">
+    <h2>El contrato completo</h2>
+    <div class="alerta">
+      La caja dice qué responde cada operación y qué exige; el assert vigila
+      la exigencia en la frontera; y this deja claro, dentro de la
+      implementación, sobre qué valor se trabaja. Con esas piezas, los TAD
+      Lista, Pila y Cola que siguen en el curso llegan igual: la caja
+      primero, las implementaciones después.
+    </div>
+  </div>
+
+</div>
+<script src="contrato.js"></script>
+</body>
+</html>

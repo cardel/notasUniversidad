@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>costos — iteradores y algoritmos de la STL</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada operación</h1>
+  <p class="intro">Cuatro cuentas sobre los algoritmos de la sesión.</p>
+
+  <div class="carta">
+    <h2>1. lower_bound sobre 4096 elementos</h2>
+    <p style="margin-top:0">Un vector ordenado de 4096 elementos. ¿Cuántas
+    veces parte el rango por la mitad <code>lower_bound</code> hasta quedarse
+    con una sola posición?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-lb" placeholder="?">
+      <button id="btn-lb" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-lb" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Borrar k elementos uno a uno</h2>
+    <p style="margin-top:0">Un vector de n elementos y k de ellos, repartidos
+    en el medio, se borran con <code>it = v.erase(it)</code>. ¿Qué costo tiene
+    en tiempo?</p>
+    <div class="opciones" id="opciones-erase">
+      <button data-op="kn">O(kn): cada erase corre lo que sigue</button>
+      <button data-op="n">Θ(n): un solo recorrido</button>
+      <button data-op="k">O(k): un erase por borrado</button>
+    </div>
+    <div id="veredicto-erase" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Un millón de consultas</h2>
+    <p style="margin-top:0">Un vector de un millón de números y un millón de
+    preguntas "¿está x?". ¿Cuál cuesta menos comparaciones?</p>
+    <div class="opciones" id="opciones-consultas">
+      <button data-op="ordenar">sort una vez y lower_bound por consulta</button>
+      <button data-op="find">find por consulta, sin ordenar</button>
+      <button data-op="igual">Las dos cuestan lo mismo</button>
+    </div>
+    <div id="veredicto-consultas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El espacio de sort</h2>
+    <p style="margin-top:0">Aparte del vector que ordena, ¿cuánto espacio
+    pide <code>sort</code>?</p>
+    <div class="opciones" id="opciones-espacio">
+      <button data-op="logn">O(log n): la pila de la recursión</button>
+      <button data-op="n">Θ(n): una copia del vector</button>
+      <button data-op="uno">Θ(1): nada aparte</button>
+    </div>
+    <div id="veredicto-espacio" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Partir por la mitad cuesta log n y exige orden;
+    correr lo que sigue cuesta n por borrado; y una decisión de diseño,
+    ordenar una vez o recibir por valor, es la que fija el costo de todo lo
+    demás.</div>
+  </div>
+</div>
+<script src="costos.js"></script>
+</body>
+</html>

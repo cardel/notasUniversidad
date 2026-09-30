@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>errores — tres fallas sobre cuadrículas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  .salida { display: none; margin-top: 0.7rem; padding: 0.7rem 0.9rem; background: var(--verde-suave); border-radius: 8px; font-size: 0.9rem; }
+  pre { background: var(--codigo-fondo); border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.82rem; margin: 0.5rem 0; }
+  #panel-lab pre { display: inline-block; font-size: 1rem; letter-spacing: 0.3em; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres fallas sobre cuadrículas</h1>
+  <p class="intro">Tres programas sobre el mismo laberinto, cada uno con una
+  línea equivocada. Ninguno da error al correr. Al señalar la falla aparece lo
+  que devuelve cada versión.</p>
+
+  <div class="carta">
+    <h2>El laberinto</h2>
+    <div id="panel-lab"></div>
+    <p class="nota" style="margin-top:0">Cuatro por cuatro. De <b>S</b> a <b>C</b> hay 6 pasos.</p>
+  </div>
+
+  <div class="carta caso" data-caso="rango">
+    <h2>1. La regla de los vecinos</h2>
+<pre>def es_libre(lab, r, c):
+    return lab[r][c] != "#"
+
+def vecinos(lab, r, c):
+    res = []
+    k = 0
+    while k &lt; 4:
+        nr = r + DR[k]
+        nc = c + DC[k]
+        if es_libre(lab, nr, nc):
+            res.append((nr, nc))
+        k = k + 1
+    return res</pre>
+    <div class="opciones">
+      <button data-op="a">La comparación con <code>"#"</code> está al revés</button>
+      <button data-op="b">Falta comprobar que (r, c) esté dentro del tablero</button>
+      <button data-op="c">La tabla de desplazamientos tiene un movimiento de más</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="marca">
+    <h2>2. La amplitud</h2>
+<pre>while len(cola) &gt; 0:
+    actual = cola.popleft()
+    r = actual[0]
+    c = actual[1]
+    for celda in vecinos(lab, r, c):
+        d[celda[0]][celda[1]] = d[r][c] + 1
+        cola.append(celda)</pre>
+    <div class="opciones">
+      <button data-op="a">Falta preguntar si la celda ya tiene distancia antes de encolarla</button>
+      <button data-op="b">Debería sacar por el final de la cola</button>
+      <button data-op="c">La distancia debería ser <code>d[r][c] - 1</code></button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta caso" data-caso="dfs">
+    <h2>3. La distancia mínima</h2>
+<pre>def dfs(lab, r, c, nivel, d):
+    d[r][c] = nivel
+    for celda in vecinos(lab, r, c):
+        if d[celda[0]][celda[1]] == -1:
+            dfs(lab, celda[0], celda[1], nivel + 1, d)
+
+# ... y se lee d[rf][cf] como la distancia minima</pre>
+    <div class="opciones">
+      <button data-op="a">La marca se pone en el momento equivocado</button>
+      <button data-op="b">La recursión no llega a todas las celdas</button>
+      <button data-op="c">El nivel de la profundidad no es la distancia mínima</button>
+    </div>
+    <div class="veredicto"></div>
+    <div class="salida"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. El primer error no da excepción
+    en Python porque un índice negativo lee desde el final. Escriba una
+    cuadrícula donde ese error haga que el simio ``llegue al café en un solo
+    paso estando a diez de distancia, y diga por qué en C++ el mismo error se
+    comporta de otra manera.</p>
+  </div>
+
+</div>
+<script src="errores.js"></script>
+</body>
+</html>

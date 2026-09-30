@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stack y queue — la STL de C++</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>stack y queue</h1>
+  <p class="intro">Los contratos de pila y cola con los nombres de la
+  biblioteca. Prediga siempre antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Un stack pequeño</h2>
+    <div class="codigo" id="codigo-stack"></div>
+    <div class="prediccion">
+      <span>top:</span>
+      <input type="number" id="pred-top" placeholder="?">
+      <span>size:</span>
+      <input type="number" id="pred-size" placeholder="?">
+      <button id="btn-stack" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-stack" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cada operación con su nombre</h2>
+    <p style="margin-top:0">Escoja el nombre de la STL que corresponde a
+    cada operación del curso.</p>
+    <div id="nombres" class="prediccion" style="flex-wrap:wrap; gap:0.6rem">
+      <span>apilar → <select data-op="apilar"><option value="">…</option><option value="push">push</option><option value="pop">pop</option><option value="top">top</option><option value="front">front</option><option value="empty">empty</option></select></span>
+      <span>desapilar → <select data-op="desapilar"><option value="">…</option><option value="push">push</option><option value="pop">pop</option><option value="top">top</option><option value="front">front</option><option value="empty">empty</option></select></span>
+      <span>tope → <select data-op="tope"><option value="">…</option><option value="push">push</option><option value="pop">pop</option><option value="top">top</option><option value="front">front</option><option value="empty">empty</option></select></span>
+      <span>frente → <select data-op="frente"><option value="">…</option><option value="push">push</option><option value="pop">pop</option><option value="top">top</option><option value="front">front</option><option value="empty">empty</option></select></span>
+      <span>vacia → <select data-op="vacia"><option value="">…</option><option value="push">push</option><option value="pop">pop</option><option value="top">top</option><option value="front">front</option><option value="empty">empty</option></select></span>
+      <button id="btn-nombres" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-nombres" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">La biblioteca no agrega operaciones al contrato ni
+    vigila las precondiciones de top, front y pop: con el contenedor vacío
+    no avisan. El empty() antes de llamar sigue siendo del programador,
+    igual que con Pila y Cola.</div>
+  </div>
+</div>
+<script src="contenedores.js"></script>
+</body>
+</html>

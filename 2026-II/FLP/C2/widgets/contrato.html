@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cumple el contrato?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿Cumple el contrato?</h1>
+  <p class="intro">Un TAD conjunto especificado con cinco ecuaciones, y candidatas para implementar cada operación. Primero con listas, después con procedimientos. Lo que se juzga no es si la candidata parece razonable, sino si las ecuaciones se cumplen; y a veces la respuesta depende de qué haga otra operación.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que las ecuaciones deciden y lo que dejan libre:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Deciden</th><th>Dejan libre</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>qué responde <code>member?</code> después de cada operación</td><td>si el conjunto es una lista o una clausura</td></tr>
+          <tr><td>que <code>remove</code> deje fuera a v, esté las veces que esté</td><td>si <code>insert</code> permite repetidos</td></tr>
+          <tr><td>que lo demás no cambie</td><td>en qué orden se guardan los elementos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Tres <code>insert</code> distintos cumplen y son tres
+    representaciones legítimas del mismo conjunto. Y un <code>remove</code>
+    correcto con un <code>insert</code> puede dejar de serlo con otro: las
+    operaciones de un TAD se prueban juntas, porque el contrato habla de cómo
+    se comportan entre sí.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="contrato.js"></script>
+</body>
+</html>

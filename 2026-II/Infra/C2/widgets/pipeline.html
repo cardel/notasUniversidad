@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline de tres etapas — la etapa lenta manda</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .etapas { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; margin-top: 0.4rem; }
+  .etapa { border: 1px solid var(--borde); border-radius: 8px; padding: 0.6rem 0.8rem; min-width: 9rem; flex: 1; }
+  .etapa h3 { margin: 0 0 0.4rem; font-size: 0.95rem; color: var(--azul); }
+  .etapa label { display: block; font-size: 0.85rem; color: var(--gris); margin-top: 0.3rem; }
+  .etapa input, .etapa select { width: 100%; padding: 0.3rem 0.4rem; border: 1px solid var(--borde); border-radius: 6px; font: inherit; }
+  .cola { align-self: center; color: var(--gris); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Leer, calcular y escribir 24 lotes: quién trabaja en cada instante</h1>
+  <p class="intro">Tres etapas con una cola entre cada par, como en el programa de la clase.
+  Escriba en cuántos milisegundos terminan los lotes antes de verlo, y después cambie las
+  duraciones y las réplicas para ver qué mueve el total y qué no.</p>
+
+  <div class="carta">
+    <h2>1. Las etapas</h2>
+    <div class="etapas">
+      <div class="etapa">
+        <h3>Leer</h3>
+        <label>Duración por lote (ms)</label>
+        <input type="number" id="dura-0" value="10" min="1" step="1">
+        <label>Réplicas</label>
+        <select id="rep-0"><option value="1">1</option><option value="2">2</option></select>
+      </div>
+      <span class="cola">→ cola →</span>
+      <div class="etapa">
+        <h3>Calcular</h3>
+        <label>Duración por lote (ms)</label>
+        <input type="number" id="dura-1" value="20" min="1" step="1">
+        <label>Réplicas</label>
+        <select id="rep-1"><option value="1">1</option><option value="2">2</option></select>
+      </div>
+      <span class="cola">→ cola →</span>
+      <div class="etapa">
+        <h3>Escribir</h3>
+        <label>Duración por lote (ms)</label>
+        <input type="number" id="dura-2" value="10" min="1" step="1">
+        <label>Réplicas</label>
+        <select id="rep-2"><option value="1">1</option><option value="2">2</option></select>
+      </div>
+    </div>
+    <div class="fila-n" style="margin-top:0.8rem">
+      <label for="lotes">Lotes:</label>
+      <input type="number" id="lotes" value="24" min="1" step="1" style="width:5rem;padding:0.3rem 0.4rem;border:1px solid var(--borde);border-radius:6px;font:inherit">
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="nota">Cada etapa es un hilo y las colas no tienen tope. Una réplica más en una
+    etapa es un segundo hilo leyendo de la misma cola.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>¿En cuántos ms terminan los <span class="ver-lotes">24</span> lotes?</span>
+      <input type="number" id="prediccion" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Quién trabaja en cada instante</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Intervalo</th><th>Leer</th><th>Calcular</th><th>Escribir</th></tr></thead>
+        <tbody id="cuerpo-ocupacion"></tbody>
+      </table>
+    </div>
+    <div id="panel-gantt" style="margin-top:0.8rem"></div>
+    <div class="chips" id="panel-chips" style="margin-top:0.6rem"></div>
+    <div class="nota">Los huecos de Escribir son espera: la etapa de 10 ms se queda sin lote
+    porque Calcular le entrega uno cada 20.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Dos encargos</h2>
+    <p style="margin-top:0">Primero baje Leer a 5 ms y mire el total: se mueve solo lo que
+    cambió el llenado. Después vuelva a 10 y ponga dos réplicas en Calcular.</p>
+    <p style="margin-bottom:0.3rem">Después de replicar Calcular, ¿cuál etapa manda?</p>
+    <div class="opciones" id="opciones-manda">
+      <button data-op="calcular">Calcular, sigue siendo la más larga</button>
+      <button data-op="leer">Leer, porque es la primera</button>
+      <button data-op="correcta">Ninguna sobresale: las tres van a 10 ms por lote</button>
+      <button data-op="escribir">Escribir, por los huecos</button>
+    </div>
+    <div id="veredicto-manda" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="pipeline.js"></script>
+</body>
+</html>

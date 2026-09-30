@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recorrer con cases</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Recorrer con cases</h1>
+  <p class="intro">Un datatype nuevo, los comandos de un robot, y cuatro procedimientos que lo analizan por casos: cuánto avanza, cuántas veces gira, qué tan hondo se anidan los <code>repite</code> y cómo se desdoblan. Los valores no son listas, así que la única forma de abrirlos es <code>cases</code>.</p>
+
+  <div class="alerta">
+    Esto no es Racket. Es un evaluador pequeño que entiende <code>define</code>,
+    <code>lambda</code>, <code>if</code>, <code>cond</code>, <code>let</code>,
+    <code>letrec</code>, <code>define-datatype</code> y <code>cases</code>, con las
+    primitivas de listas y aritmética. Los valores de un datatype se imprimen
+    como <code>(avanza-cmd 3)</code> para poder leerlos, pero no son listas:
+    <code>car</code> sobre uno falla. Lo que se entrega se escribe y se corre en
+    DrRacket.
+  </div>
+
+  <div id="retos"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los cuatro, resueltos</h2>
+    <p style="margin-top:0">El mismo recorrido cuatro veces, y lo que cambia en cada cláusula:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Procedimiento</th><th>avanza-cmd</th><th>gira-cmd</th><th>repite-cmd</th><th>El auxiliar sobre la lista</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>distancia</td><td>n</td><td>0</td><td>n por la lista</td><td>suma</td></tr>
+          <tr><td>giros</td><td>0</td><td>1</td><td>n por la lista</td><td>suma</td></tr>
+          <tr><td>anidamiento</td><td>0</td><td>0</td><td>1 más la lista</td><td>máximo</td></tr>
+          <tr><td>desdobla</td><td>(lista c)</td><td>(lista c)</td><td>n copias de la lista</td><td>append</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Una cláusula por variante, y en cada una los campos ya
+    ligados: eso es lo que cases da y lo que <code>car</code> y
+    <code>cdr</code> no podrían dar sobre un valor que no es una lista. La
+    producción con puntos suspensivos es la que trae el auxiliar sobre la
+    lista, y ese auxiliar es donde se decide si se suma, se compara o se
+    concatena.</div>
+  </div>
+
+  <div class="carta">
+    <h2>Consola</h2>
+    <p style="margin-top:0">Para probar cualquier cosa. Las definiciones se
+    acumulan entre corridas hasta que se reinicie la sesión.</p>
+    <textarea id="consola-entrada" class="editor" rows="7" spellcheck="false">(define-datatype cmd cmd?
+  (avanza-cmd (n number?))
+  (gira-cmd   (dir symbol?))
+  (repite-cmd (n number?) (cmds (list-of cmd?))))
+
+(define c (repite-cmd 2 (list (avanza-cmd 1) (gira-cmd 'izq))))
+(cases cmd c
+  (repite-cmd (n cmds) (list n (length cmds)))
+  (else 'otro))</textarea>
+    <div class="botones">
+      <button id="btn-consola" class="primario">Ejecutar</button>
+      <button id="btn-limpiar">Reiniciar sesión</button>
+      <span class="atajo">Ctrl + Enter también ejecuta</span>
+    </div>
+    <div id="consola-salida" class="consola-salida">(sin valor)</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/motor-retos.js"></script>
+
+<script src="cases.js"></script>
+</body>
+</html>

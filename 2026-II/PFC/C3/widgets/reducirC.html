@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reducirC — lo que devuelve cada llamada</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.traza { border-collapse: collapse; width: 100%; font-family: ui-monospace, monospace; font-size: 0.95rem; }
+  table.traza th, table.traza td { border: 1px solid var(--borde); padding: 0.35rem 0.6rem; text-align: center; }
+  table.traza th { background: var(--gris-suave, #f4f5f7); font-weight: 600; }
+  table.traza td.que { text-align: left; font-size: 0.86rem; color: #5b636c; }
+  table.traza td.dada { color: #6b737c; }
+  table.traza tr.actual td { background: var(--verde-suave); }
+  table.traza input { width: 5rem; text-align: center; font-family: inherit; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  input.bien { border-color: var(--verde) !important; background: var(--verde-suave); }
+  input.mal { border-color: var(--rojo, #c0392b) !important; background: #fdecea; }
+  .real { margin-left: 0.4rem; color: var(--verde); font-weight: 700; }
+  #pie-tabla { margin-top: 0.6rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+  .pregunta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+  .pregunta input { width: 6rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 4px; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>reducirC: lo que devuelve cada llamada</h1>
+  <p class="intro"><code>reducirC</code> generaliza a <code>suma</code> y a
+  <code>producto</code>: recibe la operación <code>op</code> y su valor
+  inicial en los dos primeros grupos, y <code>f</code>, <code>prox</code> y
+  el rango en los otros. En la tabla cada fila es una llamada, y la columna
+  que hay que llenar es <b>lo que devuelve</b>. Se llena de abajo hacia
+  arriba, porque ninguna llamada sabe su valor hasta que vuelve la de abajo.</p>
+
+  <div class="carta">
+    <h2>1. Llene la columna <code>devuelve</code>, de abajo hacia arriba</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Llamada:</span>
+      <button data-preset="0" class="primario">reducirC((x, y) => x * y)(1)(x => x, x => x + 1)(1, 4)</button>
+      <button data-preset="1">reducirC((x, y) => x + y)(0)(x => x * x, x => x + 2)(1, 7)</button>
+    </div>
+    <table class="traza">
+      <thead><tr><th>a</th><th id="cab-f">f(a)</th><th id="cab-dev">devuelve</th><th>qué pasa</th></tr></thead>
+      <tbody id="cuerpo-tabla"></tbody>
+    </table>
+    <div class="botones" style="margin-top:0.6rem"><button id="btn-comprobar-tabla" class="primario">Comprobar la tabla</button></div>
+    <div id="veredicto-tabla" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y compare</h2>
+    <div id="pie-tabla"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La bajada solo prepara los <code>f(a)</code>; los
+        valores de la columna aparecen en la subida, desde la última fila.
+        La llamada recursiva repite los grupos: <code>reducirC(op)(inicio)(f, prox)(prox(a), b)</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿Y si <code>inicio</code> fuera 0 en el producto?</h2>
+    <div class="pregunta"><span><code>reducirC((x, y) => x * y)(0)(x => x, x => x + 1)(1, 4)</code> vale</span><input type="number" id="pred-inicio-cero" placeholder="?"><button id="btn-inicio-cero" class="primario">Comprobar</button></div>
+    <div id="ver-inicio-cero" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>suma</code> es <code>reducirC(+)(0)</code>
+    y <code>producto</code> es <code>reducirC(*)(1)</code>: la misma función,
+    dos pares de grupos fijados. Los dos primeros grupos van juntos porque
+    <code>inicio</code> tiene que ser el neutro de <code>op</code>; con
+    cualquier otro valor la tabla lo muestra en la última fila y lo arrastra
+    hasta la primera. Y la columna <code>devuelve</code> es la que
+    <code>@tailrec</code> no puede quitar: cada llamada espera a la de
+    abajo.</p>
+    <p><a href="../Ejercicios/">Volver a los ejercicios de la sesión</a></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reducirC.js"></script>
+</body>
+</html>

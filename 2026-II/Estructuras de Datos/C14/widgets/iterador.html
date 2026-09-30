@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iterador — iteradores y algoritmos de la STL</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un iterador es un puntero que sabe recorrer</h1>
+  <p class="intro">Tres preguntas sobre el mismo vector. Prediga siempre
+  antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Posición e índice</h2>
+    <div class="codigo" id="codigo-pos"></div>
+    <div class="prediccion">
+      <span>*it:</span>
+      <input type="number" id="pred-pos-valor" placeholder="?">
+      <span>it - v.begin():</span>
+      <input type="number" id="pred-pos-indice" placeholder="?">
+      <button id="btn-pos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-pos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Un recorrido que filtra</h2>
+    <div class="codigo" id="codigo-pares"></div>
+    <div class="prediccion">
+      <span>imprime:</span>
+      <input type="text" id="pred-pares" placeholder="a b c" style="width:8rem">
+      <span>veces que se lee *it:</span>
+      <input type="number" id="pred-pares-n" placeholder="?">
+      <button id="btn-pares" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-pares" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. ¿Ya es end()?</h2>
+    <div class="codigo" id="codigo-end"></div>
+    <div class="opciones" id="opciones-end">
+      <button data-op="si">Imprime 1: it llegó a end()</button>
+      <button data-op="no">Imprime 0: it señala el 3</button>
+      <button data-op="ultimo">Imprime 0: end() es el último elemento</button>
+    </div>
+    <div id="veredicto-end" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Un iterador sabe tres cosas: dónde está, qué hay
+    ahí y cuál es la siguiente casilla. begin() + k es la posición k,
+    it - begin() es el índice, y end() es la casilla que sigue a la
+    última: se compara, no se lee.</div>
+  </div>
+</div>
+<script src="iterador.js"></script>
+</body>
+</html>

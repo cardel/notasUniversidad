@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>trazas — paso de parámetros</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres firmas, un programa</h1>
+  <p class="intro">El mismo <b>main</b> llama a <b>ajuste</b> tres veces a lo
+  largo de la página, y solo cambia la firma del segundo parámetro. En cada
+  versión, prediga la línea final antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>El programa</h2>
+    <p style="margin-top:0"><b>main</b> es el mismo en las tres versiones;
+    cambia la función <b>ajuste</b> y la forma de llamarla.</p>
+    <div class="codigo" id="codigo-main"></div>
+    <div class="nota">La primera línea impresa siempre es
+    <b>x = 2 y = 10 z = 4</b>. Su tarea, en cada versión: la segunda línea.
+    Ojo con <b>w</b>: guarda la dirección de <b>x</b>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>1. Por valor: la llamada es <b>z = z + ajuste(x, y);</b></h2>
+    <div class="codigo" id="codigo-valor"></div>
+    <div class="prediccion">
+      <span>x =</span>
+      <input type="number" id="pred-valor-x">
+      <span>y =</span>
+      <input type="number" id="pred-valor-y">
+      <span>z =</span>
+      <input type="number" id="pred-valor-z">
+      <button id="btn-valor" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-valor" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Por puntero: la llamada es <b>z = z + ajuste(x, &amp;y);</b></h2>
+    <div class="codigo" id="codigo-puntero"></div>
+    <div class="prediccion">
+      <span>x =</span>
+      <input type="number" id="pred-puntero-x">
+      <span>y =</span>
+      <input type="number" id="pred-puntero-y">
+      <span>z =</span>
+      <input type="number" id="pred-puntero-z">
+      <button id="btn-puntero" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-puntero" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Por referencia (C++): la llamada es <b>z = z + ajuste(x, y);</b></h2>
+    <div class="codigo" id="codigo-referencia"></div>
+    <div class="prediccion">
+      <span>x =</span>
+      <input type="number" id="pred-referencia-x">
+      <span>y =</span>
+      <input type="number" id="pred-referencia-y">
+      <span>z =</span>
+      <input type="number" id="pred-referencia-z">
+      <button id="btn-referencia" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-referencia" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-tabla" style="display:none">
+    <h2>Lo que viajó en cada versión</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th></th><th>Por valor</th><th>Por puntero</th><th>Por referencia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>b</b> recibe</td><td>una copia de 10</td><td>la dirección de y</td><td>un alias de y</td></tr>
+          <tr><td>¿ajuste alcanzó a y?</td><td>no</td><td>sí, con *b</td><td>sí, sin asteriscos</td></tr>
+          <tr><td>¿quién cambió x?</td><td>main, con *w</td><td>main, con *w</td><td>main, con *w</td></tr>
+          <tr><td>Línea final</td><td>x = 3 y = 10 z = 7</td><td>x = 3 y = 3 z = 7</td><td>x = 3 y = 3 z = 7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">En las tres versiones, el cambio de x fue del llamador:
+    <b>w</b> guarda su dirección y <b>*w = *w + 1</b> la sube después de la
+    llamada. La función solo alcanza a y cuando recibe su dirección o un
+    alias, y en C++ la llamada no lo delata: hay que leer la firma.</div>
+  </div>
+
+</div>
+<script src="trazas.js"></script>
+</body>
+</html>

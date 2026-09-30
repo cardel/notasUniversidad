@@ -1,0 +1,15 @@
+>>> a = {1,2,3,4,4,4}
+>>> b = {1,4,5}
+>>> a.union(b) #Operacion de valor
+{1, 2, 3, 4, 5}
+>>> a.update(b) #Operacion inplace
+>>> a
+{1, 2, 3, 4, 5}
+>>> #Cuidado
+>>> l = [1,2,3,4]
+>>> f = l.append(10)
+>>> l #Modificado
+[1, 2, 3, 4, 10]
+>>> f #Valor nulo (la operacion no retorna valor)
+>>> type(f)
+<class 'NoneType'>

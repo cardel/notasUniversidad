@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bosque — el peligro se calcula, no se lee</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado, .carta.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  #panel-marcar, #panel-grid { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo);
+    border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; max-width: 100%; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; justify-content: center;
+    font-size: 0.85rem; color: var(--gris); margin-top: 0.3rem; }
+  .leyenda span::before { content: ""; display: inline-block; width: 0.9rem; height: 0.9rem;
+    border: 1px solid var(--borde); vertical-align: -0.15rem; margin-right: 0.3rem; }
+  .leyenda .l-roca::before { background: #9ca3af; }
+  .leyenda .l-jig::before { background: #f4a3b0; }
+  .leyenda .l-peligro::before { background: #fbd5d5; }
+  .leyenda .l-libre::before { background: #ffffff; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Enchanted Forest: el peligro se calcula, no se lee</h1>
+  <p class="intro">La amplitud es la misma del laberinto. Lo que cambia está
+  antes: las celdas prohibidas no vienen en la entrada, salen de la distancia
+  a cada Jigglypuff. Aquí hay que marcarlas a mano y comprobarlas antes de
+  que el recorrido arranque.</p>
+
+  <div class="carta">
+    <h2>1. El bosque y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un bosque de R × C
+    intersecciones, numeradas desde (1,1); m posiciones bloqueadas; n
+    Jigglypuffs, cada uno en (x, y) con volumen L. Una posición es peligrosa
+    si está a distancia euclidiana L o menos de algún Jigglypuff.
+    &nbsp;<b>Salida:</b> el mínimo de pasos de (1,1) a (R,C) sin pisar
+    bloqueadas ni peligrosas, o <code>Impossible.</code></p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Bosque:</span>
+      <button data-preset="0" class="primario">Uno con volumen 2</button>
+      <button data-preset="1">Dos entre las rocas</button>
+      <button data-preset="2">La salida en peligro</button>
+    </div>
+    <p class="nota" id="texto-bosque"></p>
+    <div class="prediccion">
+      <span>¿Cuántos pasos hay hasta la salida? (−1 si es imposible)</span>
+      <input type="number" id="prediccion" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque el peligro</h2>
+    <p style="margin-top:0" class="nota">Haga clic en cada celda que quede a
+    distancia L o menos de un Jigglypuff. Las rocas y los Jigglypuffs ya
+    están puestos; <b>E</b> es la entrada y <b>S</b> la salida. Las filas y
+    las columnas van numeradas como en el enunciado.</p>
+    <div id="panel-marcar"></div>
+    <div class="leyenda">
+      <span class="l-libre">libre</span>
+      <span class="l-roca">bloqueada</span>
+      <span class="l-jig">Jigglypuff</span>
+      <span class="l-peligro">peligrosa</span>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-peligro" class="primario">Comprobar el peligro</button>
+      <button id="btn-limpiar-peligro">Limpiar</button>
+    </div>
+    <div id="veredicto-peligro" class="veredicto"></div>
+    <div class="nota">Al comprobar, una celda que falta queda con borde ámbar
+    y un signo de pregunta; una que sobra, con borde rojo.</div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-ejecutar">
+    <h2>3. Ejecute y mire las capas</h2>
+    <div id="panel-grid"></div>
+    <p class="nota" style="text-align:center; margin-top:0">Azul oscuro: la
+    celda que salió de la cola. Borde ámbar: la celda que se está mirando.
+    Cada celda alcanzada muestra su distancia.</p>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Cola: <span class="viva" id="ver-cola">vacía</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La línea 15 pregunta por <code>mundo[nr][nc]</code>:
+        ahí es donde entra lo que usted marcó arriba. La amplitud no distingue
+        una roca de una celda peligrosa; para ella las dos valen −1.</div>
+      </div>
+    </div>
+    <div id="aviso-final"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-traza">
+    <h2>4. Una fila por celda que sale de la cola</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Turno</th><th>Sale</th><th>Su distancia</th><th>Encola</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué cae dentro del volumen</h2>
+    <div style="margin-bottom:0.3rem"><b>Un Jigglypuff con L = 1. Sin rocas alrededor, ¿qué celdas quedan peligrosas?</b></div>
+    <div class="opciones" id="opciones-volumen">
+      <button data-op="ocho">Él y las ocho de alrededor, el cuadrado de 3 × 3</button>
+      <button data-op="correcta">Él y las cuatro vecinas ortogonales, la cruz</button>
+      <button data-op="solo">Solo él</button>
+      <button data-op="camino">Las que estén a un paso de camino, esquivando rocas</button>
+    </div>
+    <div id="veredicto-volumen" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Cuando la entrada es peligrosa</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Si (1,1) queda dentro del volumen de un Jigglypuff, ¿qué hace <code>salida_mas_corta</code>?</div>
+      <div class="opciones">
+        <button data-p1="nada">No encola nada, el while no entra y devuelve el −1 con que arrancó d[R][C]</button>
+        <button data-p1="falla">Falla, porque mundo[1][1] no es una celda válida</button>
+        <button data-p1="encola">Encola (1,1) de todas formas y sale por la cola vacía</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">La pregunta de la línea 3 es la que cubre el
+      caso: si la entrada es −1 no hay nada que encolar, y la matriz de
+      distancias ya trae la respuesta. El programa imprime
+      <code>Impossible.</code> sin un <code>if</code> aparte para la
+      entrada.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>7. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. <code>marcar_peligro</code>
+    revisa solo el cuadrado de lado 2L + 1 centrado en cada Jigglypuff, en
+    vez de recorrer el bosque entero. Con R = C = 200 y un Jigglypuff de
+    L = 3, ¿cuántas celdas revisa de una forma y de la otra? ¿Y con los
+    n = 100 Jigglypuffs que admite el enunciado? Escriba el costo de armar
+    el mundo en términos de R, C, n y L, y diga a partir de qué L deja de
+    valer la pena el recorte.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="bosque.js"></script>
+</body>
+</html>

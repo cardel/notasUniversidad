@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>marcas — los colores y los tiempos del DFS</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+  #ver-retro { margin-top: 0.5rem; min-height: 1.4rem; font-size: 0.92rem; }
+  .leyenda span { display: inline-block; margin-right: 0.9rem; font-size: 0.9rem; }
+  .leyenda i { display: inline-block; width: 13px; height: 13px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 2px solid; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Los colores y los tiempos del DFS</h1>
+  <p class="intro">La búsqueda en profundidad con dos marcas más: un color
+  por vértice, que cambia de blanco a gris al entrar y de gris a negro al
+  salir, y un reloj que anota el instante de cada cambio. Con esas marcas,
+  encontrar un ciclo es mirar el color del vértice al que llega la flecha.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo dirigido y un vértice de
+    arranque. &nbsp;<b>Salida:</b> para cada vértice alcanzable, el instante
+    <code>d</code> en que se pintó de gris y el instante <code>f</code> en que
+    se pintó de negro; y si alguna flecha llegó a un vértice gris.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Cinco, en árbol</button>
+      <button data-preset="1">Seis, dos caminos</button>
+      <button data-preset="2">Seis, con ciclo</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="nota-grafo" style="margin-top:0"></p>
+    <div class="leyenda">
+      <span><i style="border-color:#d8dee6;background:#ffffff"></i>blanco: sin tocar</span>
+      <span><i style="border-color:#8b93a1;background:#d0d5dd"></i>gris: abierto</span>
+      <span><i style="border-color:#24292f;background:#3f4754"></i>negro: terminado</span>
+      <span><i style="border-color:#e8a13d;background:#ffffff"></i>en la pila</span>
+    </div>
+    <div class="prediccion">
+      <span>¿En cuánto queda el reloj al terminar?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire los colores</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Versión:</span>
+      <button data-version="rec" class="primario">Recursiva</button>
+      <button data-version="pila">Con pila</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Reloj: <span class="viva" id="ver-reloj">0</span></div>
+        <div><span id="rotulo-pila">Llamadas</span>: <span class="viva" id="ver-pila">vacía</span></div>
+        <div><code>hay</code>: <span class="viva" id="ver-hay">–</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La flecha que se está mirando queda azul; si llega a un vértice gris, roja.</div>
+      </div>
+    </div>
+    <div id="ver-retro"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las marcas de cada vértice</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th>Color</th><th><code>d</code></th><th><code>f</code></th></tr></thead>
+        <tbody id="cuerpo-marcas"></tbody>
+      </table>
+    </div>
+    <p class="nota" style="margin-top:0.4rem">Las filas grises son los
+    vértices abiertos en este instante: los mismos que están en la pila.</p>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué color delata un ciclo</h2>
+    <div style="margin-bottom:0.3rem"><b>La búsqueda está en <code>u</code> y mira la flecha <code>u → v</code>. ¿De qué color tiene que estar <code>v</code> para que esa flecha cierre un ciclo?</b></div>
+    <div class="opciones" id="opciones-color">
+      <button data-op="blanco">Blanco</button>
+      <button data-op="gris">Gris</button>
+      <button data-op="negro">Negro</button>
+    </div>
+    <div id="veredicto-color" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cómo quedan los intervalos</h2>
+    <div style="margin-bottom:0.3rem"><b>A cada vértice le queda el intervalo [<code>d</code>, <code>f</code>]. Tomando dos vértices cualesquiera, ¿cómo pueden quedar sus intervalos?</b></div>
+    <div class="opciones" id="opciones-anidado">
+      <button data-op="anidado">Uno dentro del otro, o ajenos; nunca cruzados a medias</button>
+      <button data-op="cruzado">De cualquier forma, incluso cruzados a medias</button>
+      <button data-op="siempre">Siempre uno dentro del otro</button>
+    </div>
+    <div id="veredicto-anidado" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Esta función arranca en un
+    solo vértice y solo ve lo alcanzable desde él. Escriba
+    <code>tiene_ciclo(G)</code> que decida si <em>todo</em> el grafo tiene
+    algún ciclo, usando esta función y sin reiniciar los colores entre
+    arranques. Después, ordene los vértices del segundo grafo de mayor a
+    menor <code>f</code> y compare esa lista con la que devuelve el algoritmo
+    de Kahn.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="marcas.js"></script>
+</body>
+</html>

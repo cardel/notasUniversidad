@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cuentas — tres procesos, una tabla</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.cuentas { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+  table.cuentas th, table.cuentas td { border: 1px solid var(--borde); padding: 0.4rem 0.6rem; text-align: center; }
+  table.cuentas th { background: var(--gris-suave, #f4f5f7); font-weight: 600; }
+  table.cuentas td.nombre { text-align: left; font-family: ui-monospace, monospace; }
+  table.cuentas td.forma { text-align: left; font-size: 0.86rem; color: #5b636c; }
+  table.cuentas input { width: 4.5rem; text-align: center; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  table.cuentas input.bien { border-color: var(--verde); background: var(--verde-suave); }
+  table.cuentas input.mal { border-color: var(--rojo, #c0392b); background: #fdecea; }
+  table.cuentas .real { margin-left: 0.3rem; color: var(--rojo, #c0392b); font-size: 0.86rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>cuentas: tres procesos, una tabla</h1>
+  <p class="intro">Tres funciones que calculan el factorial, las tres
+  recursivas, y tres procesos distintos. Aquí se comparan con dos números:
+  cuántas <b>llamadas</b> hacen y cuántos <b>marcos de pila</b> ocupan en el
+  punto más hondo. Llene la tabla de memoria y compruébela.</p>
+
+  <div class="carta">
+    <h2>1. Para n = <span id="n-actual">8</span>, llene las seis casillas</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">n:</span>
+      <button data-preset="4">4</button>
+      <button data-preset="8" class="primario">8</button>
+      <button data-preset="16">16</button>
+    </div>
+    <table class="cuentas">
+      <thead><tr><th>función</th><th>forma del proceso</th><th>llamadas</th><th>hondura</th></tr></thead>
+      <tbody>
+        <tr><td class="nombre">factorial(n)</td><td class="forma">recursivo lineal: crece y encoge</td>
+            <td><input type="number" id="factorial-llamadas" placeholder="?"><span class="real" id="real-factorial-llamadas"></span></td>
+            <td><input type="number" id="factorial-hondura" placeholder="?"><span class="real" id="real-factorial-hondura"></span></td></tr>
+        <tr><td class="nombre">fact(n)</td><td class="forma">iterativo: constante</td>
+            <td><input type="number" id="fact-llamadas" placeholder="?"><span class="real" id="real-fact-llamadas"></span></td>
+            <td><input type="number" id="fact-hondura" placeholder="?"><span class="real" id="real-fact-hondura"></span></td></tr>
+        <tr><td class="nombre">factArbol(n)</td><td class="forma">recursivo de árbol: binario</td>
+            <td><input type="number" id="factArbol-llamadas" placeholder="?"><span class="real" id="real-factArbol-llamadas"></span></td>
+            <td><input type="number" id="factArbol-hondura" placeholder="?"><span class="real" id="real-factArbol-hondura"></span></td></tr>
+      </tbody>
+    </table>
+    <div class="nota">Hondura: marcos de pila en el punto más hondo. Para la
+    de cola cuente el marco que se reutiliza; para el árbol, los niveles.</div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>2. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El árbol hace <b>más</b> llamadas que las otras
+    dos —casi el doble— y aun así ocupa mucho menos pila. Las dos columnas
+    miden cosas distintas: llamadas es tiempo, hondura es espacio, y una
+    función puede ganar en una perdiendo en la otra.</p>
+    <p>Y la trampa de siempre: las tres son funciones recursivas. Solo
+    <code>fact</code> genera un proceso iterativo. <b>Proceso recursivo no es
+    lo mismo que función recursiva</b>: lo que distingue el proceso es qué
+    queda esperando alrededor de la llamada, no cómo esté escrito el cuerpo.</p>
+    <p>Un último ejercicio sobre el árbol: qué pasa si el caso base está
+    mal.</p>
+    <p><a href="casobase.html">Ir a <b>caso base</b>: cuál de estas cuatro →</a></p>
+  </div>
+</div>
+<script src="cuentas.js"></script>
+</body>
+</html>

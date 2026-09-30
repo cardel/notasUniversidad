@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dos mayores — dos variables que se sostienen entre sí</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .conclusion { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    background: var(--verde-suave); color: var(--verde); border-radius: 8px; }
+  .caja.leida { background: var(--azul-suave); }
+  .caja.actual { outline: 3px solid var(--azul); }
+  .caja.pendiente { color: #b9c0c9; border-color: #e2e6eb; }
+  #panel-arreglo .arreglo { margin-top: 1.4rem; }
+  .opciones button { text-align: left; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>dosMayores: dos variables que se sostienen entre sí</h1>
+  <p class="intro">Un solo recorrido, dos acumuladores. Ninguno de los dos se
+  deja demostrar solo: el argumento de <code>segundo</code> necesita saber qué
+  guarda <code>mayor</code>, y al revés. Ese es el invariante conjunto que va a
+  encontrar aquí.</p>
+
+  <div class="carta">
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un arreglo A[0..N) de números con
+    N ≥ 2. &nbsp;<b>Salida:</b> el segundo mayor de A contando repeticiones,
+    esto es, si se ordena A de mayor a menor, el elemento que queda en la
+    segunda casilla.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Arreglo:</span>
+      <button data-preset="0" class="primario">[3, 9, 4, 1, 8, 2]</button>
+      <button data-preset="1">[5, 5, 5, 5]</button>
+      <button data-preset="2">[1, 2, 3, 4, 5]</button>
+      <button data-preset="3">[7, 2]</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Qué devuelve <code>dosMayores(A)</code>?</span>
+      <input type="number" id="prediccion" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire</h2>
+    <div id="panel-arreglo"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Las casillas azules son las que el ciclo ya leyó:
+        A[0..i). Cada vez que la ejecución pasa por la línea 8, el while
+        evalúa su condición y esa foto de (i, mayor, segundo) queda en la
+        tabla.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza por estados</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Chequeo</th><th>i</th><th>mayor</th><th>segundo</th><th id="col-patron">¿Qué se repite?</th></tr>
+        </thead>
+        <tbody id="cuerpo-estados"></tbody>
+      </table>
+    </div>
+    <div class="nota">La columna de la derecha se llena cuando acierte el
+    invariante en la tarjeta 4.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El invariante conjunto</h2>
+    <p style="margin-top:0">Todo cambia de fila en fila. Busque lo que se
+    cumple en <b>todas</b>, incluida la primera y la última, y escrito en
+    términos de N, i y A: no de los números de este arreglo.</p>
+
+    <div style="margin-bottom:0.3rem"><b>¿Qué guarda <code>mayor</code> en cada chequeo?</b> (ese será I₁)</div>
+    <div class="opciones" id="opciones-mayor">
+      <button data-op="ultimo">mayor = A[i−1]</button>
+      <button data-op="correcta">mayor = el máximo de A[0..i)</button>
+      <button data-op="concreto">mayor = 9</button>
+      <button data-op="todo">mayor = el máximo de todo A</button>
+    </div>
+    <div id="veredicto-mayor" class="veredicto"></div>
+
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Y <code>segundo</code>?</b> (ese será I₂)</div>
+    <div class="opciones" id="opciones-segundo">
+      <button data-op="sinmax">segundo = el máximo de A[0..i) quitando todas las copias de mayor</button>
+      <button data-op="correcta">segundo = el segundo elemento de A[0..i) ordenado de mayor a menor</button>
+      <button data-op="anterior">segundo = el valor que tenía mayor en el chequeo anterior</button>
+    </div>
+    <div id="veredicto-segundo" class="veredicto"></div>
+
+    <div style="margin:0.8rem 0 0.3rem"><b>¿Entre qué valores se mueve i en los chequeos?</b> (ese será I₀)</div>
+    <div class="opciones" id="opciones-cotas">
+      <button data-op="cero">0 ≤ i ≤ N</button>
+      <button data-op="correcta">2 ≤ i ≤ N</button>
+      <button data-op="estricta">2 ≤ i &lt; N</button>
+    </div>
+    <div id="veredicto-cotas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La demostración</h2>
+    <p style="margin-top:0" class="nota" id="nota-pasos">Encuentre primero los
+    tres invariantes en la tarjeta 4. El teorema a demostrar:
+    <b>Teorema 1 — los invariantes I₀, I₁ e I₂ se cumplen.</b></p>
+
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Inicialización: tras las líneas 2 a 7, ¿qué vale el estado (i, mayor, segundo)?</div>
+      <div class="opciones">
+        <button data-p1="dos">i = 2, y (mayor, segundo) son A[0] y A[1] puestos en orden</button>
+        <button data-p1="cero">i = 0, mayor = A[0], segundo = A[0]</button>
+        <button data-p1="uno">i = 1, mayor = A[0], segundo = A[1]</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">Para I₀: 2 ≤ 2 ≤ N, que se cumple porque la
+      precondición pide N ≥ 2. ✓ &nbsp;Para I₁ e I₂: A[0..2) tiene exactamente
+      dos elementos, A[0] y A[1]. Las líneas 2 a 6 los comparan y dejan el mayor
+      de los dos en <code>mayor</code> y el otro en <code>segundo</code>; eso
+      es justamente A[0..2) ordenado de mayor a menor. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-2">
+      <div class="titulo-paso">Estabilidad: ¿cuántos casos hay que considerar?</div>
+      <div class="opciones">
+        <button data-p2="tres">Tres: A[i] &gt; mayor, segundo &lt; A[i] ≤ mayor, y A[i] ≤ segundo</button>
+        <button data-p2="dos">Dos: A[i] &gt; mayor y A[i] ≤ mayor</button>
+        <button data-p2="uno">Uno: basta con mirar si A[i] &gt; mayor</button>
+      </div>
+      <div id="veredicto-p2" class="veredicto"></div>
+      <div class="texto-paso">Se toma una iteración arbitraria i = t con
+      2 ≤ t &lt; N y se asume que antes de ella valen I₀, I₁ e I₂ evaluados en
+      t. Al terminar el cuerpo, i = t + 1 y A[0..t+1) es A[0..t) con A[t]
+      añadido, de modo que hay que ver quiénes son ahora los dos primeros de
+      esa lista ordenada de mayor a menor.
+      <br><br>
+      <b>Caso 1, A[t] &gt; mayor.</b> Como mayor era el máximo de A[0..t),
+      A[t] es mayor que todos los de A[0..t) y por tanto es el máximo de
+      A[0..t+1): la línea 11 lo pone en <code>mayor</code>. ✓ El segundo de la
+      lista nueva es el primero de la vieja, que era <code>mayor</code>, y la
+      línea 10 lo guardó en <code>segundo</code> antes de sobrescribirlo. ✓
+      <br><br>
+      <b>Caso 2, segundo &lt; A[t] ≤ mayor.</b> El máximo no cambia, así que
+      I₁ sigue valiendo sin tocar nada. ✓ Y A[t] se cuela entre
+      <code>mayor</code> y <code>segundo</code>: pasa a ser el segundo de la
+      lista nueva, que es lo que hace la línea 13. ✓
+      <br><br>
+      <b>Caso 3, A[t] ≤ segundo.</b> A[t] no supera a ninguno de los dos, de
+      modo que los dos primeros de la lista nueva son los mismos de la vieja y
+      el código no asigna nada. ✓
+      <br><br>
+      I₀ vale porque t &lt; N implica 2 ≤ t + 1 ≤ N. Los tres invariantes son
+      estables. ✓</div>
+    </div>
+
+    <div class="paso bloqueado" id="paso-3">
+      <div class="titulo-paso">Terminación: ¿con qué valor de i termina el ciclo?</div>
+      <div class="opciones">
+        <button data-p3="n">i = N</button>
+        <button data-p3="nm1">i = N − 1</button>
+        <button data-p3="n1">i = N + 1</button>
+      </div>
+      <div id="veredicto-p3" class="veredicto"></div>
+      <div class="texto-paso">El ciclo termina porque i crece de 1 en 1 e I₀
+      lo acota por N. Al salir, la condición i &lt; N es falsa, o sea i ≥ N;
+      intersecando con I₀, que da i ≤ N, queda exactamente i = N. Sustituyendo
+      en I₂: <code>segundo</code> es el segundo elemento de A[0..N) ordenado de
+      mayor a menor, que es la poscondición. ∎</div>
+    </div>
+
+    <div class="conclusion" id="conclusion">
+      <b>Teorema 2.</b> La invocación <code>dosMayores(A)</code> sobre
+      cualquier arreglo A con N ≥ 2 devuelve el segundo mayor de A contando
+      repeticiones. <b>Demostración:</b> por el Teorema 1 los invariantes se
+      cumplen; la terminación deja i = N, y sustituir ese valor en I₂ da la
+      poscondición. ∎
+      <br><br>
+      Fíjese en lo que hizo falta: la estabilidad de I₂ usó I₁ (el caso 1
+      necesita saber que <code>mayor</code> era el máximo) y la de I₁ no usó
+      I₂. No se pueden demostrar por separado y por eso se enuncian juntos.
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Modifique el algoritmo para que
+    devuelva el <b>tercer</b> mayor con un solo recorrido, escriba los
+    invariantes de las tres variables y diga cuántos casos tiene ahora la
+    estabilidad. Después responda: con k variables, ¿cuántos casos hay y
+    cuánto cuesta el recorrido?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="mayores.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>profundidad — el nivel en el árbol de la búsqueda</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .paso { border-left: 4px solid var(--borde); padding: 0.4rem 0.8rem; margin: 0.7rem 0; }
+  .paso.hecho { border-left-color: var(--verde); }
+  .paso .titulo-paso { font-weight: 700; }
+  .paso .texto-paso { display: none; margin-top: 0.4rem; font-size: 0.92rem; }
+  .paso.hecho .texto-paso { display: block; }
+  .paso.bloqueado { opacity: 0.45; pointer-events: none; }
+  .opciones button { text-align: left; }
+  #panel-grafo { text-align: center; margin: 0.4rem 0 0.2rem; }
+  .pila-viva { font-family: ui-monospace, monospace; background: var(--ambar-suave);
+    border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>profundidades: el nivel en el árbol de la búsqueda</h1>
+  <p class="intro">La búsqueda en profundidad no solo dice a quién alcanza:
+  también deja, en cada vértice, a qué distancia quedó por el camino que ella
+  tomó. Ese número no es la distancia más corta, y ver dónde se separan las
+  dos es todo el ejercicio.</p>
+
+  <div class="carta">
+    <h2>1. La especificación y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo <code>G</code> en lista de
+    adyacencia y un vértice <code>s</code>. &nbsp;<b>Salida:</b> una lista
+    <code>p</code> donde <code>p[v]</code> es el número de aristas del camino
+    que la búsqueda recorrió desde <code>s</code> hasta <code>v</code>, y
+    <code>-1</code> si no llegó.</p>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Grafo y arranque:</span>
+      <button data-preset="0" class="primario">H1 desde 0</button>
+      <button data-preset="1">H1 desde 2</button>
+      <button data-preset="2">H2 dirigido desde 0</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuál es el nivel más alto que alcanza la búsqueda?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire bajar la búsqueda</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota" style="text-align:center; margin-top:0">Azul: ya visitado.
+    En naranja, junto a cada vértice, su nivel.</p>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Pila de llamadas: <span class="pila-viva" id="ver-pila">–</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La pila crece cuando la línea 7 baja a un vecino
+        nuevo y se encoge cuando una llamada se queda sin vecinos por mirar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una fila por llamada</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Llamada</th><th>Vértice</th><th>Nivel</th><th>Pila en ese momento</th></tr>
+        </thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué cuenta ese número</h2>
+    <div style="margin-bottom:0.3rem"><b>¿Qué es <code>p[v]</code>?</b></div>
+    <div class="opciones" id="opciones-orden">
+      <button data-op="corto">El número mínimo de aristas de <code>s</code> a <code>v</code></button>
+      <button data-op="correcta">El número de aristas del camino por el que la búsqueda llegó a <code>v</code></button>
+      <button data-op="orden">La posición de <code>v</code> en el orden de visita</button>
+      <button data-op="grado">El grado de <code>v</code></button>
+    </div>
+    <div id="veredicto-orden" class="veredicto"></div>
+
+    <div style="margin-top:1rem"><b>Nivel contra distancia</b></div>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Vértice</th><th>Nivel en el árbol</th><th>Distancia mínima</th><th></th></tr>
+        </thead>
+        <tbody id="cuerpo-comparacion">
+          <tr><td colspan="4" class="pend">Acierte la pregunta de arriba y lleve la ejecución hasta el final.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Las filas resaltadas son los vértices donde la búsqueda
+    en profundidad llegó dando un rodeo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Una pregunta más</h2>
+    <div class="paso bloqueado" id="paso-1">
+      <div class="titulo-paso">Si los vecinos de cada vértice estuvieran guardados en orden decreciente, ¿qué cambia?</div>
+      <div class="opciones">
+        <button data-p1="orden">Los niveles y el orden de visita; el conjunto de vértices alcanzados, no</button>
+        <button data-p1="nada">Nada: el resultado es el mismo</button>
+        <button data-p1="alcance">El conjunto de vértices alcanzados</button>
+      </div>
+      <div id="veredicto-p1" class="veredicto"></div>
+      <div class="texto-paso">La línea 5 recorre <code>G[u]</code> en el orden
+      en que esté guardado, y la línea 7 baja por el primero que encuentre sin
+      visitar. Cambiar ese orden cambia por dónde baja la búsqueda, y con ello
+      los niveles. Lo que no cambia es a quién alcanza: eso solo depende de
+      qué caminos existen.</div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Modifique <code>visitar</code>
+    para que además construya la lista <code>padre</code>, donde
+    <code>padre[v]</code> es el vértice desde el cual la búsqueda bajó a
+    <code>v</code>. Después responda: ¿cómo se reconstruye con ella el camino
+    de <code>s</code> a un vértice cualquiera, y por qué ese camino tiene
+    exactamente <code>p[v]</code> aristas?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="profundidad.js"></script>
+</body>
+</html>

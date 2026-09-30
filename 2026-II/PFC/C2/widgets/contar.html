@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>contar — la pila que crece y encoge</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #pila { display: flex; flex-direction: column-reverse; gap: 0.25rem; min-height: 6rem;
+    padding: 0.5rem; border: 1px dashed var(--borde); border-radius: 8px; }
+  .marco { font-family: ui-monospace, monospace; background: var(--verde-suave);
+    color: var(--verde); border-radius: 6px; padding: 0.25rem 0.6rem; width: fit-content; }
+  #pie-pila { margin-top: 0.6rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>contar: la pila que crece y encoge</h1>
+  <p class="intro">Una función recursiva hace su trabajo en dos viajes: baja
+  hasta el caso base y vuelve. Lo que importa aquí no es el resultado sino
+  <b>qué queda esperando</b> en cada viaje. Cada caja de la pila es una
+  multiplicación que no se puede hacer todavía.</p>
+
+  <div class="carta">
+    <h2>1. Antes de ejecutar, prediga</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Llamada de partida:</span>
+      <button data-preset="2">factorial(2)</button>
+      <button data-preset="4" class="primario">factorial(4)</button>
+      <button data-preset="6">factorial(6)</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas multiplicaciones va a hacer?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire la pila</h2>
+    <div class="panel-doble">
+      <div>
+        <div id="pila"></div>
+        <div id="pie-pila"></div>
+      </div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+    <div class="codigo" id="panel-codigo" style="margin-top:0.7rem"></div>
+    <div class="nota">El contador del <code>else</code> sube en la bajada, uno
+    por llamada. El caso base se usa una sola vez. Fíjese en qué paso la pila
+    llega a su punto más alto y compárelo con <code>n</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las multiplicaciones son <code>n</code>, y eso
+    es el <b>tiempo</b>. Pero en el punto más hondo hay también <code>n</code>
+    cajas esperando, y eso es el <b>espacio</b>: la función se acuerda de
+    <code>n</code> cosas a la vez antes de resolver la primera.</p>
+    <p>Los dos números coinciden aquí, y por eso es fácil confundirlos. El
+    siguiente ejercicio los separa.</p>
+    <p><a href="reducir.html">Ir a <b>reducir</b>: la expresión que se reemplaza →</a></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="contar.js"></script>
+</body>
+</html>

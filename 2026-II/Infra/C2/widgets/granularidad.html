@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Granularidad — cuándo repartir cuesta más que calcular</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuándo repartir cuesta más que calcular</h1>
+  <p class="intro">Hay 400 tareas iguales y se reparten de a cuatro entre
+  cuatro hilos, que se crean y se unen en cada tanda. Prediga en qué tamaño
+  de tarea la versión con hilos empieza a ganar y luego mueva el costo de
+  crear un hilo para ver adónde se corre ese punto.</p>
+
+  <div class="carta">
+    <h2>1. La tabla con una columna tapada</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt">long trabajo(long n) {</span></div>
+      <div class="linea bloque-1"><span class="num">11</span><span class="txt">  long s = 0;</span></div>
+      <div class="linea bloque-1"><span class="num">12</span><span class="txt">  for (long i = 0; i &lt; n; i++) s += i % 7;</span></div>
+      <div class="linea bloque-1"><span class="num">13</span><span class="txt">  return s;</span></div>
+      <div class="linea bloque-1"><span class="num">14</span><span class="txt">}</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">…</span></div>
+      <div class="linea bloque-2"><span class="num">28</span><span class="txt">for (int base = 0; base &lt; TAREAS; base += 4) {</span></div>
+      <div class="linea bloque-2"><span class="num">29</span><span class="txt">  vector&lt;thread&gt; hilos;</span></div>
+      <div class="linea bloque-2"><span class="num">30</span><span class="txt">  for (int j = 0; j &lt; 4; j++)</span></div>
+      <div class="linea bloque-2"><span class="num">31</span><span class="txt">    hilos.emplace_back([&amp;, base, j] { parciales[base + j] = trabajo(tamano); });</span></div>
+      <div class="linea bloque-2"><span class="num">32</span><span class="txt">  for (auto &amp;h : hilos) h.join();</span></div>
+      <div class="linea bloque-2"><span class="num">33</span><span class="txt">}</span></div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Tamaño de la tarea</th><th>Secuencial (medido)</th>
+        <th>4 hilos (medido)</th><th>Relación (medido)</th>
+        <th id="th-modelo" hidden>Relación (modelo)</th></tr></thead>
+        <tbody id="cuerpo-medido"></tbody>
+      </table>
+    </div>
+    <div class="nota">Cien tandas, y en cada una se crean cuatro hilos y se
+    unen. <code>trabajo(n)</code> es un ciclo de <code>n</code> iteraciones,
+    sin arreglo. La relación es el tiempo secuencial dividido entre el tiempo
+    con hilos: por encima de 1, los hilos ganan.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de destapar</h2>
+    <div class="prediccion">
+      <span>¿En qué fila cruza el 1? Escriba el exponente: 3, 4, 5, 6 o 7</span>
+      <input type="number" id="prediccion" min="3" max="7" step="1" placeholder="exponente">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="nota" id="nota-modelo" hidden>La columna nueva sale de dos
+    sumandos: crear y unir cada hilo cuesta 16 µs y cada iteración del ciclo
+    cuesta 1 ns. Con eso el modelo reproduce las cuatro primeras filas. En
+    10⁷ el modelo sigue subiendo, a 3,97, y la medición bajó a 3,23: ahí pesa
+    algo que estos dos sumandos no tienen.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las dos perillas</h2>
+    <div class="fila-n">
+      <label for="rango-h">Crear y unir un hilo:</label>
+      <input type="range" id="rango-h" min="1" max="200" step="1" value="16">
+      <span class="valor-n"><span id="ver-h">16</span> µs</span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="rango-c">Una iteración del ciclo:</label>
+      <input type="range" id="rango-c" min="0.5" max="5" step="0.5" value="1">
+      <span class="valor-n"><span id="ver-c">1</span> ns</span>
+    </div>
+    <div class="chips" id="chips-modelo" style="margin-top:0.8rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Tamaño de la tarea</th><th>Secuencial (modelo)</th>
+        <th>4 hilos (modelo)</th><th>Relación (modelo)</th></tr></thead>
+        <tbody id="cuerpo-modelo"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.9rem 0 0.2rem">De cada tanda con hilos, la parte que se
+    va en crear y unir los cuatro hilos:</p>
+    <div id="panel-barras"></div>
+    <div class="nota">Suba el costo del hilo a 160 µs y mire dónde queda el
+    cruce. Después devuélvalo a 16 µs y suba la iteración a 5 ns: el trabajo
+    por tarea crece y el cruce baja una fila.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. De quién es el punto de cruce</h2>
+    <p style="margin-top:0">El punto de cruce que vio aquí, ¿en qué máquina
+    vale?</p>
+    <div class="opciones" id="opciones-maquina">
+      <button data-op="correcta">En la que se midió</button>
+      <button data-op="cuatro">En cualquiera con cuatro núcleos</button>
+      <button data-op="algoritmo">En todas: es una propiedad del algoritmo</button>
+      <button data-op="memoria">En las que tengan la misma memoria</button>
+    </div>
+    <div id="veredicto-maquina" class="veredicto"></div>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="granularidad.js"></script>
+</body>
+</html>

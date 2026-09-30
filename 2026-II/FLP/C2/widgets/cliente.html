@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Sobrevive el cliente?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿Sobrevive el cliente?</h1>
+  <p class="intro">Dos bloques de código que usan un TAD, y una sola pregunta por fragmento: si la representación cambia, ¿sigue funcionando? La respuesta no depende de qué hace el cliente sino de por dónde toca el dato. Cada decisión muestra la razón, se acierte o no.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que separa a los clientes que sobreviven de los que se rompen:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>Sobrevive</th><th>Se rompe</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>construye con los constructores</td><td>arma el dato a mano</td></tr>
+          <tr><td>pregunta con los predicados</td><td>pregunta con <code>null?</code>, <code>equal?</code> o <code>length</code> sobre el dato</td></tr>
+          <tr><td>extrae con los extractores</td><td>extrae con <code>car</code>, <code>cadr</code>, <code>cadddr</code></td></tr>
+          <tr><td>se rompe en la interfaz, si acaso</td><td>a veces no se rompe: responde mal en silencio</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">La independencia de representación no admite grados. Un
+    cliente que pasa por la interfaz en cinco lugares y mete la mano en uno
+    depende de la representación igual que si lo hiciera en los seis, y los
+    que no dan error son los que más cuestan encontrar.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="cliente.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los valores del lenguaje y el punto de entrada</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Los valores del lenguaje y el punto de entrada</h1>
+  <p class="intro">Antes de escribir el evaluador hay que decidir dos conjuntos: qué puede resultar de evaluar una expresión y qué puede quedar ligado a un nombre. En este lenguaje los dos son el mismo, y no siempre será así. Después, el punto de entrada, que hace dos cosas y ninguna es evaluar.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Concepto</th><th>En este lenguaje</th><th>Cuando crezca</th></tr></thead>
+        <tbody><tr><td>valor expresado</td><td>número</td><td>número o booleano, al llegar <code>zero?</code> y el condicional</td></tr><tr><td>valor denotado</td><td>número</td><td>lo mismo, porque <code>let</code> liga el resultado de cualquier expresión</td></tr><tr><td><code>eval-program</code></td><td>abre el programa y arma el ambiente inicial</td><td>igual, más lo que vaya antes del cuerpo</td></tr><tr><td>el TAD ambiente</td><td>usado por su interfaz, sin mirar adentro</td><td>igual: cambiar su representación no toca al evaluador</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Los dos conjuntos son la especificación del evaluador: dicen qué tipos de cosas van a circular. Por eso se escriben antes que él y no después.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="valores.js"></script>
+</body>
+</html>

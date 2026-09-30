@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herramientas de sincronización — cuál pide cada situación</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .situacion { font-size: 1.05rem; padding: 0.8rem 1rem; border-left: 4px solid var(--azul);
+               background: var(--azul-suave); border-radius: 6px; margin: 0.6rem 0; min-height: 3.6rem; }
+  .opciones button.elegida { outline: 3px solid var(--azul); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El cerrojo que pide cada situación, y lo que cuesta ponerlo</h1>
+  <p class="intro">Ocho situaciones de programas con hilos, y como respuesta
+  <code>Lock</code>, <code>RLock</code>, <code>Semaphore</code>, <code>Event</code> o
+  <code>Condition</code>: escoja una, lea por qué sí o por qué no, y el marcador cuenta los
+  aciertos a la primera. La última carta pide un número antes de mostrarlo, el de un programa
+  de ocho hilos cuya sección crítica dura cuatro veces más que el resto del trabajo.</p>
+
+  <div class="carta">
+    <h2>1. La situación</h2>
+    <div class="chips" id="datos-situaciones"></div>
+    <div class="progreso" id="progreso" style="margin-top:0.7rem"></div>
+    <div class="situacion" id="texto-situacion"></div>
+    <div class="opciones" id="opciones">
+      <button data-clave="lock" data-op="lock">Lock</button>
+      <button data-clave="rlock" data-op="rlock">RLock</button>
+      <button data-clave="semaforo" data-op="semaforo">Semaphore</button>
+      <button data-clave="evento" data-op="evento">Event</button>
+      <button data-clave="condicion" data-op="condicion">Condition</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente situación</button>
+      <button id="btn-otra" hidden>Otra vez, en otro orden</button>
+    </div>
+    <div class="nota">Un <code>Lock</code> deja entrar a un hilo; un <code>RLock</code>, al mismo
+    hilo tantas veces como lo pida; un <code>Semaphore(k)</code>, a <i>k</i> a la vez; un
+    <code>Event</code> avisa a todos los que esperan; una <code>Condition</code> duerme a un hilo
+    hasta que otro le diga que el estado compartido cambió.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El marcador</h2>
+    <div class="chips" id="panel-marcador"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Situación</th><th>Primera respuesta</th><th>La que la resuelve</th></tr></thead>
+        <tbody id="cuerpo-marcador"></tbody>
+      </table>
+    </div>
+    <p id="resumen" hidden style="font-weight:600"></p>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que cuesta el cerrojo</h2>
+    <p style="margin-top:0">Ocho hilos hacen el mismo trabajo. Cada uno pasa 40 ms dentro de una
+    sección crítica protegida por un cerrojo y otros 10 ms en trabajo que no lo necesita. El
+    cerrojo lo tiene un hilo a la vez: mientras uno está adentro, los otros siete esperan en
+    <code>acquire</code>. Los ocho arrancan juntos.</p>
+    <div class="prediccion">
+      <span>Con ocho hilos, ¿cuántos ms tarda el programa?</span>
+      <input type="number" id="prediccion-tiempo" min="0" step="1" placeholder="ms">
+      <button id="btn-comprobar-tiempo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-tiempo" class="veredicto"></div>
+    <div id="panel-gantt" style="margin-top:0.8rem"></div>
+    <div class="chips" id="chips-gantt" style="margin-top:0.5rem"></div>
+    <div class="alerta" id="nota-costo" hidden>Cada cerrojo serializa una parte del programa. Si
+    la sección crítica es grande frente al resto, el resultado es un programa con muchos hilos
+    que corre como si tuviera uno: el hueco al comienzo de cada fila es tiempo de espera en
+    <code>acquire</code>, y ese hueco crece con cada hilo que se agregue.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="sincronizacion.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balanceo de carga — 64 tareas que no cuestan lo mismo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Sesenta y cuatro tareas, cuatro hilos y tres formas de repartirlas</h1>
+  <p class="intro">Las tareas de <code>balanceo.cpp</code>: la tarea <code>i</code> cuesta
+  <code>i²</code>. Antes de correr nada, escriba qué parte del trabajo carga el hilo que
+  termina último con bloques contiguos; después vea el reparto tarea por tarea.</p>
+
+  <div class="carta">
+    <h2>1. Las tareas</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">15</span><span class="txt">long trabajo(int i) {          // la tarea i cuesta proporcional a i*i</span></div>
+      <div class="linea bloque-1"><span class="num">16</span><span class="txt">  long s = 0;</span></div>
+      <div class="linea bloque-1"><span class="num">17</span><span class="txt">  for (long k = 0; k &lt; 2000000L * i * i / 100; k++) s += k % 3;</span></div>
+      <div class="linea bloque-1"><span class="num">18</span><span class="txt">  return s;</span></div>
+      <div class="linea bloque-1"><span class="num">19</span><span class="txt">}</span></div>
+    </div>
+    <div id="panel-tareas" style="margin-top:0.8rem"></div>
+    <div class="chips" id="chips-tareas" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>Con bloques contiguos, ¿qué porcentaje del trabajo total carga el hilo que
+      termina último? Redondee al entero.</span>
+      <input type="number" id="prediccion-a" min="0" max="100" step="1" placeholder="%">
+      <button id="btn-comprobar-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El reparto, tarea por tarea</h2>
+    <div class="fila-n">
+      <label>Reparto:</label>
+      <span class="presets">
+        <button data-modo="contiguo">bloques contiguos</button>
+        <button data-modo="turnos">por turnos</button>
+        <button data-modo="demanda">por demanda</button>
+      </span>
+      <span class="valor-n"><span id="ver-modo">bloques contiguos</span></span>
+    </div>
+    <div class="fila-n" style="margin-top:0.6rem">
+      <label for="erratico"><input type="checkbox" id="erratico"> Costos erráticos: los
+      mismos 64 costos, barajados</label>
+    </div>
+    <div class="codigo" style="margin-top:0.6rem">
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">contiguo:  for (int i = h * 16; i &lt; (h + 1) * 16; i++) parciales[h] += trabajo(i);</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">turnos:    for (int i = h; i &lt; TAREAS; i += HILOS)  parciales[h] += trabajo(i);</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">demanda:   while ((i = siguiente.fetch_add(1)) &lt; TAREAS) parciales[h] += trabajo(i);</span></div>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div id="panel-gantt" style="margin-top:0.5rem"></div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-gantt"></div>
+    <div class="nota">La escala es la misma para los tres repartos: la del contiguo, que es
+    el más largo. Lo vacío a la derecha de un hilo es espera: terminó y los demás siguen.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Contiguo contra demanda</h2>
+    <div class="prediccion">
+      <span>Con los costos i², ¿cuántas veces más tarda el reparto contiguo que el reparto
+      por demanda? Dos decimales.</span>
+      <input type="number" id="prediccion-b" min="0" step="0.01" placeholder="su número">
+      <button id="btn-comprobar-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="envoltura-tabla" id="tabla-comparacion" hidden style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Reparto</th><th>Termina en</th><th>Veces el ideal</th><th>Tareas por hilo</th></tr></thead>
+        <tbody id="cuerpo-comparacion"></tbody>
+      </table>
+    </div>
+    <div class="nota">Por turnos casi lo arregla, porque el costo crece de forma suave y
+    cada hilo recibe una tarea cara por cada barata. Marque la casilla de costos erráticos
+    y mire la tabla: por turnos vuelve a perder y por demanda aguanta.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuándo basta el reparto fijo</h2>
+    <div class="opciones" id="opciones-fijo">
+      <button data-op="turnos">Siempre, si se reparte por turnos</button>
+      <button data-op="correcta">Cuando el costo de las tareas es parejo</button>
+      <button data-op="demanda">Nunca: por demanda siempre gana</button>
+      <button data-op="muchas">Cuando hay más tareas que hilos</button>
+    </div>
+    <div id="veredicto-fijo" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="balanceo.js"></script>
+</body>
+</html>

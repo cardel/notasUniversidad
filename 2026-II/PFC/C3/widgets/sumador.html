@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sumador — una función que fabrica funciones</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .reduccion { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.22rem 0; }
+  .reduccion .flecha-red { width: 1.2rem; color: #9aa3ad; font-weight: 700; }
+  .reduccion .expr { font-size: 1.02rem; }
+  .reduccion.ultima .expr { font-weight: 700; }
+  #regla { margin-top: 0.5rem; font-size: 0.92rem; color: #5b636c; min-height: 2.4em; }
+  .presets button.hecho::after { content: " ✓"; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>sumador: una función que fabrica funciones</h1>
+  <p class="intro"><code>sumador(n)</code> no suma nada: devuelve la función
+  <i>sumar n</i>. Esa función recuerda su <code>n</code> y se puede aplicar,
+  guardar en un <code>val</code> o pasar a otra función. Lo que hay que ver
+  en la sustitución es <b>cuándo</b> se fabrica cada función y qué
+  <code>n</code> quedó adentro.</p>
+
+  <div class="carta">
+    <div class="codigo" style="margin-bottom:0.6rem"><div class="linea"><span class="num"></span><span class="txt">def sumador(n: Int): Int => Int = (x: Int) => x + n</span></div><div class="linea"><span class="num"></span><span class="txt">def aplicaDos(f: Int => Int, x: Int): Int = f(f(x))</span></div></div>
+    <h2>1. Elija la expresión y prediga su valor</h2>
+    <div class="presets">
+      <button data-caso="0" class="primario">sumador(5)(3)</button>
+      <button data-caso="1">val s = sumador(5); val t = sumador(s(1)); t(10)</button>
+      <button data-caso="2">aplicaDos(sumador(3), 4)</button>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuánto vale <code id="rotulo-caso"></code>?</span>
+      <input type="number" id="prediccion" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="panel-ejecucion">
+    <h2>2. La sustitución, y qué guarda cada función</h2>
+    <div id="panel-reduccion"></div>
+    <div id="regla"></div>
+    <div class="chips"><span class="chip alerta">n guardado = <b id="chip-n">–</b></span></div>
+    <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Un paso</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">En <code>sumador(s(1))</code> hay dos funciones
+    fabricadas con dos <code>n</code> distintos, y la segunda se construye
+    con el resultado de aplicar la primera. Nada de eso se ve en el código:
+    se ve en la sustitución, que por valor reduce <code>s(1)</code> antes de
+    llamar a <code>sumador</code>. Y en <code>aplicaDos(sumador(3), 4)</code>
+    la función se fabrica una vez y se usa dos: fabricar y aplicar son pasos
+    separados.</p>
+    <p><a href="suma2.html">Ir a <b>suma2</b>: cuándo corre lo que devuelve →</a></p>
+  </div>
+</div>
+<script src="sumador.js"></script>
+</body>
+</html>

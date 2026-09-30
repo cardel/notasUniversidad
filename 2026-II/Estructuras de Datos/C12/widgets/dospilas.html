@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>un TAD sobre otro — ejercicios con los TAD</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un TAD sobre otro</h1>
+  <p class="intro">La cola construida con dos pilas, <code>ColaDP</code>, tal
+  como quedó en la sesión, frente a otra secuencia de operaciones.</p>
+
+  <div class="carta">
+    <h2>1. Tres frentes y los trasvases</h2>
+    <p style="margin-top:0">Se ejecutan estas líneas en orden sobre una
+    <code>ColaDP</code> recién creada. ¿Qué imprime cada
+    <code>frente</code> y cuántas veces se llama a
+    <code>trasvasar</code> en total?</p>
+    <div class="codigo" id="codigo-ops"></div>
+    <div class="prediccion">
+      <span>1.er frente:</span>
+      <input type="number" id="pred-dp-0" placeholder="?">
+      <span>2.º:</span>
+      <input type="number" id="pred-dp-1" placeholder="?">
+      <span>3.º:</span>
+      <input type="number" id="pred-dp-2" placeholder="?">
+      <span>trasvases:</span>
+      <input type="number" id="pred-dp-tras" placeholder="?">
+      <button id="btn-dp" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-dp" class="veredicto"></div>
+    <div id="tabla-dp" style="display:none" class="envoltura-tabla">
+      <table>
+        <thead><tr><th>operación</th><th>entrada (tope a la derecha)</th><th>salida (tope a la derecha)</th></tr></thead>
+        <tbody id="cuerpo-dp"></tbody>
+      </table>
+      <div class="nota">Cada elemento se trasvasa una sola vez en su vida:
+      por eso el costo total de n operaciones es del orden de n, aunque
+      un trasvase suelto pueda costar mucho.</div>
+    </div>
+  </div>
+</div>
+<script src="dospilas.js"></script>
+</body>
+</html>

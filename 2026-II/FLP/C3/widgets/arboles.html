@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cuál árbol es?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿Cuál árbol es?</h1>
+  <p class="intro">Programas del lenguaje de la sesión y tres árboles candidatos para cada uno, dibujados; después al revés, un árbol dibujado y tres programas. Los dos errores que acompañan a cada respuesta correcta son los que aparecen cada semestre: hojas sin envolver, palabras clave que sobreviven, campos en otro orden.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <p style="margin-top:0">Lo que el árbol guarda y lo que el programa agrega:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>En el programa</th><th>En el árbol</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>paréntesis, <code>then</code>, <code>else</code>, <code>=</code>, <code>in</code></td><td>nada: era andamiaje para leer</td></tr>
+          <tr><td>un número o una variable</td><td>una hoja envuelta en su variante</td></tr>
+          <tr><td>el identificador que un <code>let</code> declara</td><td>un símbolo, sin envolver: se declara, no se usa</td></tr>
+          <tr><td>el orden de los operandos</td><td>el orden de los campos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">De un programa sale un solo árbol y de ese árbol sale
+    el mismo programa: parse quita el andamiaje y unparse lo repone. Lo único
+    que ninguno de los dos puede inventar es el orden, porque está en los
+    campos, y por eso las tres respuestas erradas de cada ítem son
+    programas distintos.</div>
+  </div>
+
+</div>
+<script src="../../widgets/mini-scheme.js"></script>
+<script src="../../widgets/dibujar-arbol.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="arboles.js"></script>
+</body>
+</html>

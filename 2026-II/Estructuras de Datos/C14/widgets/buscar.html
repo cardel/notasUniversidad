@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>buscar — iteradores y algoritmos de la STL</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>lower_bound, unique y accumulate</h1>
+  <p class="intro">Tres algoritmos que devuelven una posición o un valor.
+  Prediga antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. lower_bound, cuatro consultas</h2>
+    <div class="codigo" id="codigo-lb"></div>
+    <p style="margin-top:0">Para x = 4, 5, 11 y 12, ¿qué índice imprime cada
+    vez?</p>
+    <div class="prediccion">
+      <span>índices:</span>
+      <input type="text" id="pred-lb" placeholder="a b c d" style="width:8rem">
+      <button id="btn-lb" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-lb" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. sort, unique, erase</h2>
+    <div class="codigo" id="codigo-unique"></div>
+    <div class="prediccion">
+      <span>imprime:</span>
+      <input type="number" id="pred-unique-n" placeholder="?">
+      <span>v queda:</span>
+      <input type="text" id="pred-unique" placeholder="a b c" style="width:8rem">
+      <button id="btn-unique" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-unique" class="veredicto"></div>
+    <div id="nota-unique" class="nota" style="display:none"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. accumulate con 0</h2>
+    <div class="codigo" id="codigo-acc"></div>
+    <div class="opciones" id="opciones-acc">
+      <button data-op="negativo">Imprime un número negativo</button>
+      <button data-op="grande">Imprime 4000000000</button>
+      <button data-op="error">No compila: la suma no cabe en int</button>
+    </div>
+    <div id="veredicto-acc" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">lower_bound exige orden y devuelve una posición que
+    puede ser end(); unique solo junta repetidos consecutivos y no borra;
+    accumulate suma en el tipo del valor inicial. Los tres devuelven algo
+    que hay que comprobar antes de usar.</div>
+  </div>
+</div>
+<script src="buscar.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ejercicios — iteradores y algoritmos de la STL</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ejercicios con la biblioteca</h1>
+  <p class="intro">Los mismos tres ejercicios de la sesión con otros datos.
+  Prediga antes de comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Intersección con dos iteradores</h2>
+    <div class="codigo" id="codigo-inter"></div>
+    <div class="prediccion">
+      <span>r queda:</span>
+      <input type="text" id="pred-inter" placeholder="a b c" style="width:8rem">
+      <span>vueltas del while:</span>
+      <input type="number" id="pred-inter-n" placeholder="?">
+      <button id="btn-inter" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-inter" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Frecuencias con sort</h2>
+    <div class="codigo" id="codigo-frec"></div>
+    <div class="prediccion">
+      <span>imprime (líneas separadas por coma):</span>
+      <input type="text" id="pred-frec" placeholder="palabra n, palabra n, ..." style="width:20rem">
+      <button id="btn-frec" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-frec" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La mediana con sort</h2>
+    <p style="margin-top:0"><code>mediana</code> recibe el vector por
+    valor, ordena la copia y toma el del medio (o el promedio de los dos del
+    medio). ¿Qué devuelve con <code>{6, 1, 9, 4, 2}</code> y con
+    <code>{6, 1, 9, 4}</code>?</p>
+    <div class="prediccion">
+      <span>{6, 1, 9, 4, 2}:</span>
+      <input type="number" id="pred-med-impar" placeholder="?" step="0.5">
+      <span>{6, 1, 9, 4}:</span>
+      <input type="number" id="pred-med-par" placeholder="?" step="0.5">
+      <button id="btn-med" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-med" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Los tres ejercicios ya se habían resuelto con los
+    contratos del curso; con la biblioteca cambió la escritura y no la
+    idea ni el costo: dos iteradores que avanzan, un sort que junta los
+    iguales, una copia que se ordena.</div>
+  </div>
+</div>
+<script src="ejercicios.js"></script>
+</body>
+</html>

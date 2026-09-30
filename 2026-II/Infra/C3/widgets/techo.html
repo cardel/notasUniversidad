@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ley de Amdahl — cuánto rinde acelerar una función</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .perilla input[type="range"] { width: 220px; }
+  .barra-fila .rotulo { width: 4rem; }
+  .pista-barra .barra { white-space: nowrap; }
+  .formula { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.9rem; margin: 0.5rem 0 0; min-height: 1.4rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Acelerar una función al doble no deja el programa al doble</h1>
+  <p class="intro">Un programa de 20 segundos, cuatro funciones y el perfil de cuánto pesa cada
+  una. Escriba cuánto se acelera el programa antes de ver la cuenta, mueva las dos perillas de
+  la ley de Amdahl y decida cuál función conviene optimizar y cuándo no vale la pena tocar nada.</p>
+
+  <div class="carta">
+    <h2>1. Un perfil de cuatro funciones</h2>
+    <p style="margin-top:0">El perfilador corrió el programa entero y repartió los <b>20 s</b>
+    entre sus cuatro funciones.</p>
+    <div id="panel-perfil"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Función</th><th>Qué hace</th><th>Tiempo</th><th>Porcentaje</th></tr></thead>
+        <tbody id="cuerpo-perfil"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-perfil" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>Si B se acelera al doble, ¿cuántas veces más rápido queda el programa? Dos decimales.</span>
+      <input type="number" id="prediccion" min="0" step="0.01" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las dos perillas</h2>
+    <p style="margin-top:0">La ley de Amdahl tiene dos perillas: qué fracción <i>p</i> del tiempo
+    se acelera y cuántas veces <i>k</i> se acelera. Lo que no está en <i>p</i> no se mueve.</p>
+    <div class="fila-n perilla">
+      <label for="rango-p">Fracción que se acelera (p):</label>
+      <input type="range" id="rango-p" min="0" max="100" step="5" value="70">
+      <span class="valor-n" id="ver-p">70 %</span>
+      <span class="presets">
+        <button data-p="5">A o D, 5 %</button>
+        <button data-p="20">C, 20 %</button>
+        <button data-p="70">B, 70 %</button>
+      </span>
+    </div>
+    <div class="fila-n perilla" style="margin-top:0.5rem">
+      <label for="rango-k">Veces que se acelera (k):</label>
+      <input type="range" id="rango-k" min="1" max="20" step="1" value="2">
+      <span class="valor-n" id="ver-k">2×</span>
+    </div>
+    <div id="panel-perillas" style="margin-top:0.8rem"></div>
+    <div class="chips" id="chips-perillas" style="margin-top:0.6rem"></div>
+    <p class="formula" id="formula-perillas"></p>
+    <div class="nota">El tramo gris es el tiempo que no se toca; el azul, el de la función que se
+    acelera. La fila de después y las cuentas aparecen al comprobar la predicción de arriba.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. ¿Cuál función conviene optimizar?</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Función</th><th>Qué hace</th><th>Tiempo</th><th>Porcentaje</th></tr></thead>
+        <tbody id="cuerpo-perfil-2"></tbody>
+      </table>
+    </div>
+    <p style="margin-bottom:0.3rem">Hay tiempo para hacer una sola función 10 veces más rápida.
+    ¿Cuál?</p>
+    <div class="opciones" id="opciones-cual">
+      <button data-op="a">A, la de las expresiones regulares: se ve la más complicada</button>
+      <button data-op="correcta">B, el ciclo que recorre las filas</button>
+      <button data-op="c">C, el ordenamiento del resultado</button>
+      <button data-op="d">D, la escritura del archivo</button>
+    </div>
+    <div id="veredicto-cual" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Si va 10× más rápida</th><th>El programa tarda</th><th>Veces más rápido</th><th>Techo con k infinito</th></tr></thead>
+        <tbody id="cuerpo-diez"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuándo no optimizar</h2>
+    <p style="margin-top:0">Un script que se corre una vez para limpiar un archivo tarda 4 minutos.
+    Optimizarlo tomaría una tarde. ¿Qué se hace?</p>
+    <div class="opciones" id="opciones-cuando">
+      <button data-op="perfilar">Perfilarlo con cProfile para ver dónde se va el tiempo</button>
+      <button data-op="correcta">Se deja como está y se corre</button>
+      <button data-op="numpy">Reescribirlo con NumPy</button>
+      <button data-op="paralelo">Repartirlo entre los núcleos</button>
+    </div>
+    <div id="veredicto-cuando" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="techo.js"></script>
+</body>
+</html>

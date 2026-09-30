@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>string — la STL de C++</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>string</h1>
+  <p class="intro">Cuatro expresiones sobre cadenas. Escriba lo que
+  imprime <code>printf("%d", ...)</code> con cada una: 1 o 0 para las
+  comparaciones, el número para el tamaño.</p>
+
+  <div class="carta">
+    <h2>1. Al revés</h2>
+    <div class="prediccion">
+      <span><code>alReves("anilina") == "anilina"</code></span>
+      <input type="number" id="pred-reves" placeholder="?">
+      <button id="btn-reves" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-reves" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Menor, letra a letra</h2>
+    <div class="prediccion">
+      <span><code>string("mapa") &lt; string("mano")</code></span>
+      <input type="number" id="pred-menor" placeholder="?">
+      <button id="btn-menor" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-menor" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El prefijo</h2>
+    <div class="prediccion">
+      <span><code>string("cola") &lt; string("colar")</code></span>
+      <input type="number" id="pred-prefijo" placeholder="?">
+      <button id="btn-prefijo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-prefijo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Concatenar y medir</h2>
+    <div class="prediccion">
+      <span><code>(string("pila") + " y cola").size()</code></span>
+      <input type="number" id="pred-size" placeholder="?">
+      <button id="btn-size" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-size" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">string es un vector de caracteres con dos cosas
+    propias: el + concatena y el &lt; ordena como el diccionario, letra a
+    letra y con el prefijo primero. Todo lo demás (size, [], at,
+    push_back) es el mismo contrato de vector.</div>
+  </div>
+</div>
+<script src="cadena.js"></script>
+</body>
+</html>

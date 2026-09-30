@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tiempos — los dos relojes y el orden por finalización</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; }
+  .leyenda span { display: inline-block; margin-right: 0.8rem; font-size: 0.9rem; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 2px solid; }
+  .opciones button { text-align: left; }
+  table td:first-child { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Los dos relojes y el orden por finalización</h1>
+  <p class="intro">La búsqueda en profundidad anota dos instantes por vértice:
+  cuándo lo descubre y cuándo termina con él. El dibujo los muestra encima de
+  cada círculo mientras corre, y el vértice cambia de blanco a gris al entrar
+  y de gris a negro al salir. Al final, leer los <code>f</code> de mayor a
+  menor da la lista con la que arranca Kosaraju.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo dirigido en lista de
+    adyacencia. &nbsp;<b>Salida:</b> dos números por vértice, <code>d[u]</code>
+    y <code>f[u]</code>, tomados de un reloj que avanza en uno cada vez que un
+    vértice se descubre y cada vez que uno termina.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Siete, dos árboles</button>
+      <button data-preset="1">Seis, un solo árbol</button>
+      <button data-preset="2">Ocho, cuatro árboles</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span><i style="border-color:#d8dee6;background:#fff"></i>blanco, sin descubrir</span>
+      <span><i style="border-color:#1f5fa8;background:#e3edf8"></i>gris, en la pila de llamadas</span>
+      <span><i style="border-color:#24292f;background:#3c3f44"></i>negro, terminado</span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos árboles tendrá el bosque de profundidad?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="nota">Es lo mismo que preguntar cuántas veces se ejecuta la
+    línea 14.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire el reloj</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>Raíces: <span class="viva" id="ver-raices">ninguna todavía</span></div>
+        <div>Terminados, en orden: <span class="viva" id="ver-term">[ ]</span></div>
+        <div>Por <i>f</i> decreciente: <span class="viva" id="ver-orden">(falta terminar)</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La flecha azul es la que está mirando la línea 7; se
+        pone verde cuando el vértice del otro extremo está blanco y la línea 8
+        baja por ella.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los dos tiempos, vértice por vértice</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th><i>d</i></th><th><i>f</i></th><th>Color</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota">Mientras un vértice esté gris su <code>f</code> aparece
+    como un punto en el dibujo: todavía no se ha escrito.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuál termina de último</h2>
+    <div class="prediccion">
+      <span>¿Qué vértice tiene el <i>f</i> más grande?</span>
+      <input type="number" id="ultimo" min="0" placeholder="vértice">
+      <button id="btn-ultimo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-ultimo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. De dónde sale la lista que usa Kosaraju</h2>
+    <div style="margin-bottom:0.3rem"><b>El primer paso de Kosaraju pide los
+    vértices ordenados. ¿Ordenados por qué?</b></div>
+    <div class="opciones" id="opciones-orden">
+      <button data-op="descubrimiento">Por tiempo de descubrimiento, de menor a mayor</button>
+      <button data-op="correcta">Por tiempo de finalización, de mayor a menor</button>
+      <button data-op="numero">Por número de vértice, de menor a mayor</button>
+    </div>
+    <div id="veredicto-orden" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el primer grafo, escriba la
+    expresión de paréntesis del recorrido: un paréntesis que abre en cada
+    <code>d</code> y uno que cierra en cada <code>f</code>, con el nombre del
+    vértice al abrir. Verifique que queda bien formada y diga qué vértices son
+    descendientes del 0 en el bosque. Después agregue la flecha 6 → 0 y diga,
+    sin ejecutar, cuántos árboles quedan.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="tiempos.js"></script>
+</body>
+</html>

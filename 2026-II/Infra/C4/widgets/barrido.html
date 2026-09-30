@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barrido de hilos — sumar cien millones de enteros</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  td.baja { color: var(--rojo); font-weight: 700; }
+  td.sube { color: var(--verde); font-weight: 700; }
+  .rotulo-panel { font-size: 0.85rem; font-weight: 600; margin: 0.9rem 0 0.2rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Hilos que no aceleran y una suma 112 veces más rápida</h1>
+  <p class="intro">El mismo trabajo, sumar cien millones de enteros, corrido de dos maneras:
+  con una lista de Python recorrida por índices y con un arreglo de NumPy sumado por segmentos,
+  cada una con 1, 2, 4 y hasta 16 hilos. Escriba cuánto tarda cada versión antes de destapar
+  las tablas medidas y después compare las dos escalas de tiempo.</p>
+
+  <div class="carta">
+    <h2>1. El programa</h2>
+    <p style="margin-top:0">Con la lista de Python, cada hilo recorre su tramo de índices y
+    acumula en una variable local:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">import threading, time</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">size = 100_000_000</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">l = [2] * size</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">def sumar(lst, ini, fin):</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">    s = 0</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">    for i in range(ini, fin):</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">        s += lst[i]</span></div>
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt">    return s</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">Con NumPy cambian tres líneas, las marcadas en amarillo:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">1</span><span class="txt">import threading, time</span></div>
+      <div class="linea bloque-2 actual"><span class="num">2</span><span class="txt">import numpy as np</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt">size = 100_000_000</span></div>
+      <div class="linea bloque-2 actual"><span class="num">5</span><span class="txt">l = np.ones(size) * 2</span></div>
+      <div class="linea bloque-2"><span class="num">6</span><span class="txt"></span></div>
+      <div class="linea bloque-2"><span class="num">7</span><span class="txt">def sumar(lst, ini, fin):</span></div>
+      <div class="linea bloque-2 actual"><span class="num">8</span><span class="txt">    return lst[ini:fin].sum()   # suma vectorizada del segmento</span></div>
+    </div>
+    <div class="nota">El lanzamiento es idéntico en las dos versiones: un recorrido por 2, 4, 6,
+    8, 10, 12, 14 y 16 hilos que arma cada uno con
+    <code>t = threading.Thread(target=sumar, args=(l, ini, fin))</code>, le entrega
+    <code>size // num_hilos</code> elementos y espera a todos con <code>join</code>. El tiempo se
+    toma con <code>perf_counter</code> antes de crear el primer hilo y después del último
+    <code>join</code>. Las mediciones se tomaron en un AMD Ryzen 5 3600, 6 núcleos y 12 hilos de
+    hardware, 32 GB de memoria, con Python 3.14 sobre Linux.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de ver la tabla</h2>
+    <div class="prediccion">
+      <span>Con la lista de Python, ¿cuántos segundos tarda la suma con 4 hilos? Dos
+      decimales.</span>
+      <input type="number" id="prediccion-puro" min="0" step="0.01" placeholder="segundos">
+      <button id="btn-comprobar-puro" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-puro" class="veredicto"></div>
+    <div class="prediccion">
+      <span>Con NumPy y un solo hilo, ¿cuántos milisegundos tarda?</span>
+      <input type="number" id="prediccion-numpy" min="0" step="1" placeholder="ms">
+      <button id="btn-comprobar-numpy" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-numpy" class="veredicto"></div>
+    <div class="nota">Un hilo con la lista tardó 5,05 s. Los cuatro hilos se reparten el mismo
+    trabajo, veinticinco millones de sumas cada uno, y corren sobre una máquina con 6 núcleos
+    libres.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las dos tablas</h2>
+    <p style="margin-top:0">Cada fila se destapa cuando comprueba la predicción que le
+    corresponde. La ganancia de cada tabla es el tiempo de un hilo dividido por el tiempo de la
+    fila.</p>
+    <p class="rotulo-panel">Lista de Python y bucle de índices</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Hilos</th><th>Tiempo</th><th>Ganancia sobre el secuencial</th></tr></thead>
+        <tbody id="cuerpo-puro"></tbody>
+      </table>
+    </div>
+    <div id="panel-puro" style="margin-top:0.5rem"></div>
+    <p class="rotulo-panel">Arreglo de NumPy y <code>lst[ini:fin].sum()</code></p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Hilos</th><th>Tiempo</th><th>Ganancia sobre el secuencial</th></tr></thead>
+        <tbody id="cuerpo-numpy"></tbody>
+      </table>
+    </div>
+    <div id="panel-numpy" style="margin-top:0.5rem"></div>
+    <div class="chips" id="chips-barrido" style="margin-top:0.8rem"></div>
+    <div class="nota">Los dos paneles de barras tienen escalas distintas: cada uno toma como
+    pista completa la corrida más lenta de su propia tabla. A la escala del panel de la lista las
+    barras de NumPy no se verían, porque son cientos de veces más chicas. Las dos versiones se
+    comparan con los números de las tablas, no con el ancho de las barras.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Por qué NumPy sí escala</h2>
+    <p style="margin-top:0">Con la lista, agregar hilos subió el tiempo; con el arreglo, lo
+    bajó a la mitad. El programa que los lanza es el mismo.</p>
+    <div class="opciones" id="opciones-escala">
+      <button data-op="procesos">Porque NumPy usa procesos en vez de hilos</button>
+      <button data-op="correcta">Porque <code>.sum()</code> libera el GIL mientras recorre la memoria</button>
+      <button data-op="pequeno">Porque el arreglo de NumPy es más pequeño</button>
+      <button data-op="singil">Porque NumPy no tiene GIL</button>
+    </div>
+    <div id="veredicto-escala" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Por qué se estanca en 0,024 s</h2>
+    <p style="margin-top:0">De 2 a 16 hilos el tiempo con NumPy pasa de 0,027 a 0,024 s: ocho
+    veces más hilos para bajar 3 ms.</p>
+    <div class="opciones" id="opciones-techo">
+      <button data-op="gil">Porque el GIL vuelve a aparecer</button>
+      <button data-op="nucleos">Porque solo hay dos núcleos</button>
+      <button data-op="correcta">Porque el bus de memoria ya está saturado con dos hilos</button>
+      <button data-op="creacion">Porque 0,024 s es el costo de crear los hilos</button>
+    </div>
+    <div id="veredicto-techo" class="veredicto"></div>
+    <div class="nota">El arreglo ocupa unos 800 MB y la suma los recorre de punta a punta: cada
+    hilo pide memoria continuamente y el ancho de banda es el mismo para todos.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="barrido.js"></script>
+</body>
+</html>
