@@ -46,6 +46,14 @@ Se publican después de cada sesión.
    cálculo lambda y de un lenguaje de comandos. Incluye el código escrito en
    clase y los apuntes del tablero.
 
+4. [Clase 4. Del texto al resultado — 29 de septiembre](C4/Clase%204.%20Del%20texto%20al%20resultado.md)
+   — el reparto del trabajo entre scanner, parser e interpretador, qué separa
+   a un compilado de un interpretado con un programa en C llevado hasta su
+   binario, la especificación léxica y la gramática de SLLGEN con la
+   restricción que obliga a escribir `+(x, y)`, el primer interpretador
+   completo repartido en archivos, y `let` con sus cadenas de ambientes.
+   Incluye el código de la demostración y los apuntes del tablero.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*
