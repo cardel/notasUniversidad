@@ -1,7 +1,7 @@
 # Proyecto del curso
 
-Individual. Vale el 30 % del curso: el avance 10 y la entrega final con
-sustentación 20.
+En grupos de **hasta tres estudiantes**. Vale el 30 % del curso: el
+avance 10 y la entrega final con sustentación 20.
 
 | Entrega | Cierre |
 |---|---|
@@ -15,15 +15,23 @@ sustentación 20.
 
 ## Cómo se trabaja
 
-El proyecto vive en GitHub. El repositorio base es
-<https://github.com/EjerciciosClasesCardel/estr-2026-2-proyecto>: haga **fork** y
-trabaje sobre su copia. Llene `AUTOR.md` con su nombre, su código y el
-escenario que escogió; sin eso el repositorio no se puede asociar a
-nadie.
+El proyecto vive en GitHub, un repositorio por grupo. El repositorio
+base es
+<https://github.com/EjerciciosClasesCardel/estr-2026-2-proyecto>:
+
+1. Un integrante le hace **fork**.
+2. En **Settings › Collaborators** agrega a los demás integrantes, para
+   que cada uno confirme con su propia cuenta.
+3. Llenan `AUTOR.md` con el nombre, el código y el usuario de GitHub de
+   los tres, y el escenario escogido. Sin eso el repositorio no se puede
+   asociar a nadie.
 
 Se califica el último commit anterior a la hora de cierre de cada
-entrega, así que la historia de commits cuenta: un repositorio con un
-solo commit el día del cierre no muestra avance.
+entrega, así que la historia de commits cuenta doble: dice si hubo
+avance —un repositorio con un solo commit el día del cierre no lo
+muestra— y dice quién hizo qué. Todos los criterios son del grupo salvo
+la sustentación, que se pregunta a cada integrante y se califica por
+separado.
 
 ## Los cuatro escenarios
 
