@@ -16,7 +16,7 @@ sustentación 20.
 ## Cómo se trabaja
 
 El proyecto vive en GitHub. El repositorio base es
-<https://github.com/cardel/estr-2026-2-proyecto>: haga **fork** y
+<https://github.com/EjerciciosClasesCardel/estr-2026-2-proyecto>: haga **fork** y
 trabaje sobre su copia. Llene `AUTOR.md` con su nombre, su código y el
 escenario que escogió; sin eso el repositorio no se puede asociar a
 nadie.
