@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>corrimientos — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cuesta correr elementos</h1>
+  <p class="intro">Seis operaciones seguidas sobre la lista estática, desde la
+  lista vacía y en este orden: <code>agregar(3)</code>, <code>agregar(1)</code>,
+  <code>agregar(8)</code>, <code>insertar(0, 6)</code>,
+  <code>insertar(2, 4)</code>, <code>insertar(0, 9)</code>. Prediga antes de
+  comprobar.</p>
+
+  <div class="carta">
+    <h2>1. Los corrimientos de cada insertar</h2>
+    <div class="codigo" id="codigo-insertar"></div>
+    <p style="margin-top:0">Los tres <code>agregar</code> escriben en la casilla
+    <code>n</code>, que está libre. ¿Cuántas asignaciones
+    <code>datos[i] = datos[i - 1]</code> hace cada uno de los tres
+    <code>insertar</code>, en orden?</p>
+    <div class="prediccion">
+      <span>corrimientos:</span>
+      <input type="text" id="pred-corr" placeholder="a b c" style="width:8rem">
+      <button id="btn-corr" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-corr" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La lista al final</h2>
+    <p style="margin-top:0">Tras las seis operaciones, ¿qué contiene
+    <code>datos[0..n)</code>?</p>
+    <div class="prediccion">
+      <span>la lista:</span>
+      <input type="text" id="pred-final" placeholder="a b c d e f" style="width:11rem">
+      <button id="btn-final" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-final" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Operación por operación</h2>
+    <div class="estado">
+      <div class="chips" id="chips-corr"></div>
+      <div class="arreglo fila-arreglo" id="arreglo-corr"></div>
+      <div class="progreso" id="progreso-corr"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente operación</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La casilla con borde resaltado es la que recibió el
+    elemento nuevo.</div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Agregar al final es una escritura: la casilla
+    <code>n</code> ya está ahí. Insertar en la posición <code>p</code> corre
+    los <code>n - p</code> elementos que van de <code>p</code> en adelante, y
+    con <code>p = 0</code> eso es toda la lista. Las seis operaciones
+    costaron 10 corrimientos con 6 elementos; con un millón de elementos,
+    cada <code>insertar(0, e)</code> cuesta un millón.</div>
+  </div>
+</div>
+<script src="corrimientos.js"></script>
+</body>
+</html>

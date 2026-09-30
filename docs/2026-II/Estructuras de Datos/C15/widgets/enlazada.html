@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>enlazada — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La lista enlazada</h1>
+  <p class="intro">La lista es <code>5 → 2 → 7</code> y se ejecuta
+  <code>insertar(2, 9)</code>. Como la posición no es 0, el código toma la rama
+  que busca el nodo anterior.</p>
+
+  <div class="carta">
+    <h2>1. La cadena al terminar</h2>
+    <div class="codigo" id="codigo-insertar"></div>
+    <div class="prediccion">
+      <span>desde cabeza:</span>
+      <input type="text" id="pred-cadena" placeholder="a b c d" style="width:9rem">
+      <button id="btn-cadena" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cadena" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Línea por línea</h2>
+    <div class="estado">
+      <div class="chips" id="chips-traza"></div>
+      <div class="secuencia" id="cadena-traza"></div>
+      <div class="progreso" id="progreso-traza"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente línea</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La cadena es lo que se alcanza desde <code>cabeza</code>:
+    el nodo nuevo entra en ella solo cuando <code>anterior</code> lo toma.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las dos líneas al revés</h2>
+    <p style="margin-top:0">Se cambia el orden del empalme y queda
+    <code>anterior-&gt;siguiente = nuevo;</code> primero y
+    <code>nuevo-&gt;siguiente = anterior-&gt;siguiente;</code> después. ¿Qué
+    lista queda?</p>
+    <div class="opciones" id="opciones-orden">
+      <button data-op="ciclo">El nodo del 9 se apunta a sí mismo</button>
+      <button data-op="igual">La misma de antes: 5 2 9 7</button>
+      <button data-op="alfinal">Queda 5 2 7 9: el 9 se va al final</button>
+    </div>
+    <div id="veredicto-orden" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los pasos hasta el anterior</h2>
+    <p style="margin-top:0">Sobre una lista de cuatro elementos, ¿cuántos pasos
+    da <code>nodoEn(p - 1)</code> dentro de <code>insertar(p, e)</code> para
+    <code>p = 1</code>, <code>p = 2</code> y <code>p = 3</code>?</p>
+    <div class="prediccion">
+      <span>pasos:</span>
+      <input type="text" id="pred-pasos" placeholder="a b c" style="width:8rem">
+      <button id="btn-pasos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-pasos" class="veredicto"></div>
+    <p style="margin-bottom:0">¿Y con <code>p = 0</code>?</p>
+    <div class="opciones" id="opciones-cero">
+      <button data-op="nollama">No se llama</button>
+      <button data-op="cero">Se llama con 0 y da 0 pasos</button>
+      <button data-op="menos">Se llama con -1 y devuelve la cabeza</button>
+    </div>
+    <div id="veredicto-cero" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El empalme son dos escrituras y su orden no es libre: el
+    nodo nuevo toma el resto de la cadena antes de que el anterior lo tome a
+    él. Lo que cuesta es llegar al anterior, <code>p - 1</code> pasos desde la
+    cabeza, y por eso <code>insertar</code> es Θ(p) y Θ(1) cuando p es 0.</div>
+  </div>
+</div>
+<script src="enlazada.js"></script>
+</body>
+</html>
