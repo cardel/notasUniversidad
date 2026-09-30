@@ -22,9 +22,10 @@ base es
 1. Un integrante le hace **fork**.
 2. En **Settings › Collaborators** agrega a los demás integrantes, para
    que cada uno confirme con su propia cuenta.
-3. Llenan `AUTOR.md` con el nombre, el código y el usuario de GitHub de
-   los tres, y el escenario escogido. Sin eso el repositorio no se puede
-   asociar a nadie.
+3. Llenan el `README.md` con el nombre, el código, el correo
+   institucional y el usuario de GitHub de los integrantes, y el
+   escenario escogido. Si falta ese archivo o alguno de esos datos, la
+   entrega pierde el 20 % de la nota.
 
 Se califica el último commit anterior a la hora de cierre de cada
 entrega, así que la historia de commits cuenta doble: dice si hubo
@@ -67,3 +68,30 @@ informe final con sus diagramas y citas; y la sustentación de diez
 minutos.
 
 El detalle de cada criterio y su puntaje está en el PDF del enunciado.
+
+## Reglas del repositorio
+
+Las mismas del curso de Fundamentos de Lenguajes de Programación, y se
+califican:
+
+1. **Solo archivos de texto plano**: `.c`, `.cpp`, `.h`, `.md`, `.in`,
+   `.out`, `.csv` y el `Makefile`. Nada de comprimidos ni binarios
+   —`.pdf`, `.docx`, `.xlsx`, ejecutables, imágenes—.
+2. El `README.md` lleva el **nombre, el código y el correo
+   institucional** de cada integrante; si falta, la entrega pierde el
+   20 %.
+3. Las **primeras líneas de cada archivo de código** llevan los autores.
+4. Los **informes van en Markdown** dentro de `docs/`:
+   `informe-avance.md` e `informe-final.md`.
+5. La **notación matemática** en LaTeX dentro del Markdown, con `$...$`
+   y `$$...$$`: las cotas, los testigos y los invariantes van así.
+6. **Todos los diagramas en Mermaid**, incluida la gráfica de los
+   tiempos medidos, que usa `xychart-beta`.
+
+Guías de GitHub:
+[Markdown](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax),
+[matemáticas](https://docs.github.com/es/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions),
+[Mermaid](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams).
+
+El repositorio base ya trae la estructura y las plantillas de los dos
+informes en `docs/`.
