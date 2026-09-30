@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agregar — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Agregar sin recorrer</h1>
+  <p class="intro">La lista es <code>2 → 5 → 1</code> y se ejecuta
+  <code>agregar(7)</code> con las dos implementaciones: la que solo guarda
+  <code>cabeza</code> y la que además guarda <code>ultimo</code>.</p>
+
+  <div class="carta">
+    <h2>1. Cuántos nodos toca cada versión</h2>
+    <div class="codigo" id="codigo-sin"></div>
+    <div class="codigo" id="codigo-con"></div>
+    <p style="margin-top:0">Contando la cabeza y cada avance,
+    ¿cuántos nodos de la cadena vieja toca cada versión antes de enlazar el
+    nodo nuevo?</p>
+    <div class="prediccion">
+      <span>sin ultimo:</span>
+      <input type="number" id="pred-sin" placeholder="?">
+      <span>con ultimo:</span>
+      <input type="number" id="pred-con" placeholder="?">
+      <button id="btn-visitas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-visitas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Borrar el último</h2>
+    <p style="margin-top:0">Sobre la versión con <code>ultimo</code>, la lista
+    quedó en <code>2 → 5 → 1 → 7</code> y ahora se ejecuta
+    <code>eliminar(3)</code>, que borra el 7. ¿Qué tiene que pasar con
+    <code>ultimo</code>?</p>
+    <div class="opciones" id="opciones-ultimo">
+      <button data-op="anterior">Pasa a ser el nodo del 1</button>
+      <button data-op="colgante">Se queda como está, apuntando al nodo del 7</button>
+      <button data-op="nulo">Pasa a NULL porque se borró el último</button>
+    </div>
+    <div id="veredicto-ultimo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Vaciar por el frente</h2>
+    <p style="margin-top:0">Sobre <code>2 → 5 → 1</code> se ejecuta
+    <code>eliminar(0)</code> tres veces. ¿Con qué quedan <code>cabeza</code> y
+    <code>ultimo</code>?</p>
+    <div class="opciones" id="opciones-vaciar">
+      <button data-op="dosnulos">Los dos en NULL</button>
+      <button data-op="soloCabeza">cabeza en NULL y ultimo en el nodo del 1</button>
+      <button data-op="sintocar">cabeza en NULL y ultimo sin tocar, sobre memoria liberada</button>
+    </div>
+    <div id="veredicto-vaciar" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Guardar dónde termina la cadena baja
+    <code>agregar</code> de Θ(n) a Θ(1), y el precio son dos casos nuevos en
+    <code>eliminar</code>: cuando se borra el último nodo y cuando la lista se
+    vacía. Los dos escriben <code>ultimo</code>, y dejarlos por fuera es lo
+    que produce un puntero colgante.</div>
+  </div>
+</div>
+<script src="agregar.js"></script>
+</body>
+</html>

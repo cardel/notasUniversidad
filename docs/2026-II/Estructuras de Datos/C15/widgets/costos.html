@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>costos — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada operación</h1>
+  <p class="intro">Tres programas con el mismo contrato de lista y perfiles de
+  uso distintos. Para cada uno, la implementación que conviene.</p>
+
+  <div class="carta">
+    <h2>1. Muchas consultas por posición</h2>
+    <p style="margin-top:0">El programa lee <code>n</code> datos, los guarda en
+    la lista y después consulta <code>obtener(p)</code> con posiciones al azar
+    un millón de veces. No inserta ni borra nada más.</p>
+    <div class="opciones" id="opciones-consultas">
+      <button data-op="estatica">Estática, sobre arreglo</button>
+      <button data-op="enlazada">Enlazada</button>
+      <button data-op="igual">Da lo mismo</button>
+    </div>
+    <div id="veredicto-consultas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Siempre al principio</h2>
+    <p style="margin-top:0">El programa inserta cada dato que llega en la
+    posición 0 y, cuando ya no llegan más, recorre la lista una sola vez de
+    principio a fin.</p>
+    <div class="opciones" id="opciones-frente">
+      <button data-op="estatica">Estática, sobre arreglo</button>
+      <button data-op="enlazada">Enlazada</button>
+      <button data-op="igual">Da lo mismo</button>
+    </div>
+    <div id="veredicto-frente" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Sin saber cuántos datos llegan</h2>
+    <p style="margin-top:0">El programa no sabe de antemano cuántos datos va a
+    recibir y podría recibir muchos más que <code>CAPACIDAD</code>.</p>
+    <div class="opciones" id="opciones-techo">
+      <button data-op="estatica">Estática, sobre arreglo</button>
+      <button data-op="enlazada">Enlazada</button>
+      <button data-op="igual">Da lo mismo</button>
+    </div>
+    <div id="veredicto-techo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Las cuentas de insertar al frente</h2>
+    <div class="codigo" id="codigo-frente"></div>
+    <p style="margin-top:0">Con <code>n = 20</code> inserciones al frente,
+    ¿cuántas veces mueve un elemento el arreglo y cuántos punteros escribe la
+    enlazada?</p>
+    <div class="prediccion">
+      <span>movidas del arreglo:</span>
+      <input type="number" id="pred-arreglo" placeholder="?">
+      <span>escrituras de la enlazada:</span>
+      <input type="number" id="pred-enlazada" placeholder="?">
+      <button id="btn-cuentas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuentas" class="veredicto"></div>
+    <div id="nota-cuentas" class="nota" style="display:none"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Ninguna de las dos gana en todo. El arreglo calcula la
+    dirección y cobra al modificar; la enlazada camina hasta el nodo y regala
+    la modificación en el frente, y además no tiene techo. La estructura se
+    escoge por las operaciones que el programa repite, no por la que se ve más
+    elegante.</div>
+  </div>
+</div>
+<script src="costos.js"></script>
+</body>
+</html>

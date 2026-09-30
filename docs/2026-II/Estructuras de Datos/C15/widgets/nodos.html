@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nodos — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un dato y una dirección</h1>
+  <p class="intro">Cuatro nodos enlazados a mano con los datos 4, 1, 6 y 8. El
+  último apunta a <code>NULL</code>.</p>
+
+  <div class="carta">
+    <h2>1. Qué imprime el recorrido</h2>
+    <div class="codigo" id="codigo-cadena"></div>
+    <div class="secuencia" id="cadena-nodos"></div>
+    <div class="codigo" id="codigo-recorrido"></div>
+    <div class="opciones" id="opciones-salida">
+      <button data-op="tres">4 1 6</button>
+      <button data-op="cuatro">4 1 6 8</button>
+      <button data-op="sinprimero">1 6 8</button>
+      <button data-op="basura">4 1 6 8 y un número más</button>
+    </div>
+    <div id="veredicto-salida" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Liberar la cadena</h2>
+    <p style="margin-top:0">Las dos versiones recorren la cadena llamando a
+    <code>delete</code> una vez por nodo. Una de las dos deja de funcionar.</p>
+    <div class="codigo" id="codigo-libre-a"></div>
+    <div class="codigo" id="codigo-libre-b"></div>
+    <div class="opciones" id="opciones-liberar">
+      <button data-op="b">La B: lee actual-&gt;siguiente de un nodo ya liberado</button>
+      <button data-op="a">La A: libera antes de haber avanzado</button>
+      <button data-op="ninguna">Las dos sirven: delete no borra el campo siguiente</button>
+    </div>
+    <div id="veredicto-liberar" class="veredicto"></div>
+    <div id="nota-liberar" class="nota" style="display:none"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">La condición del ciclo decide dónde se detiene el
+    recorrido: con <code>actual != NULL</code> se visitan todos los nodos, y
+    con <code>actual-&gt;siguiente != NULL</code> se para en el penúltimo. Y al
+    liberar, la dirección del siguiente se guarda antes del
+    <code>delete</code>: después del <code>delete</code> el nodo ya no se
+    puede leer.</div>
+  </div>
+</div>
+<script src="nodos.js"></script>
+</body>
+</html>

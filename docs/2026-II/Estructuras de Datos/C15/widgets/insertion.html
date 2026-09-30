@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>insertion — la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ordenar insertando</h1>
+  <p class="intro">Insertion sort sobre <code>6 4 8 2 9 5</code>. En cada
+  vuelta la clave es <code>a[j]</code> y se corre a la derecha todo lo que sea
+  mayor que ella.</p>
+
+  <div class="carta">
+    <h2>1. Los corrimientos de cada vuelta</h2>
+    <div class="codigo" id="codigo-insertion"></div>
+    <p style="margin-top:0">¿Cuántos corrimientos hace el ciclo interno en las
+    vueltas <code>j = 1, 2, 3, 4, 5</code>, y cuántos suman?</p>
+    <div class="prediccion">
+      <span>por vuelta:</span>
+      <input type="text" id="pred-vueltas" placeholder="a b c d e" style="width:9rem">
+      <span>total:</span>
+      <input type="number" id="pred-total" placeholder="?">
+      <button id="btn-vueltas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-vueltas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El arreglo en dos cortes</h2>
+    <p style="margin-top:0">¿Cómo queda el arreglo al terminar la vuelta
+    <code>j = 3</code> y al terminar la vuelta <code>j = 5</code>?</p>
+    <div class="prediccion">
+      <span>tras j = 3:</span>
+      <input type="text" id="pred-j3" placeholder="a b c d e f" style="width:10rem">
+      <span>tras j = 5:</span>
+      <input type="text" id="pred-j5" placeholder="a b c d e f" style="width:10rem">
+      <button id="btn-cortes" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cortes" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza completa</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>j</th><th>clave</th><th>corrimientos</th><th>el arreglo al terminar la vuelta</th></tr>
+        </thead>
+        <tbody id="tabla-traza"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-vuelta" class="primario">Mostrar la vuelta siguiente</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-traza"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La entrada más cara</h2>
+    <p style="margin-top:0">Con la misma cantidad de elementos, ¿cuántos
+    corrimientos hace insertion sort sobre <code>9 8 6 5 4 2</code>?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-peor" placeholder="?">
+      <button id="btn-peor" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-peor" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El costo lo fijan los corrimientos, y los corrimientos
+    los fija el desorden de la entrada: una vuelta cuyo elemento ya es mayor
+    que todo lo de su izquierda cuesta una comparación, y una entrada
+    decreciente hace que la vuelta j corra los j elementos anteriores, con
+    n(n-1)/2 en total. El espacio aparte es Θ(1): se ordena en el sitio.</div>
+  </div>
+</div>
+<script src="insertion.js"></script>
+</body>
+</html>
