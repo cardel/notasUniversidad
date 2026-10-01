@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>circular — la cadena que se cierra</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La cadena que se cierra</h1>
+  <p class="intro">La lista circular doble tiene <code>4 ↔ 7 ↔ 2</code> con
+  <code>cabeza</code> en el 4, y el 2 cierra el círculo: su
+  <code>siguiente</code> es el 4 y el <code>anterior</code> del 4 es el 2. No
+  hay <code>NULL</code> en ningún enlace.</p>
+
+  <div class="carta">
+    <h2>1. <code>insertar(3, 8)</code></h2>
+    <div class="codigo" id="codigo-insertar"></div>
+    <p style="margin-bottom:0">La posición 3 es el final de una lista de tres
+    elementos. Antes de ver la traza:</p>
+    <div class="prediccion">
+      <span>cadena desde cabeza:</span>
+      <input type="text" id="pred-cadena-a" placeholder="a b c d" style="width:9rem">
+      <span>dato de <code>cabeza</code>:</span>
+      <input type="number" id="pred-cabeza-a" placeholder="?">
+      <button id="btn-a" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-a" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. <code>insertar(0, 5)</code> sobre lo que quedó</h2>
+    <p style="margin-top:0">Se parte de la lista de cuatro elementos de la carta
+    anterior y se inserta el 5 en la posición 0.</p>
+    <div class="prediccion">
+      <span>cadena desde cabeza:</span>
+      <input type="text" id="pred-cadena-b" placeholder="a b c d e" style="width:10rem">
+      <span>dato de <code>cabeza</code>:</span>
+      <input type="number" id="pred-cabeza-b" placeholder="?">
+      <button id="btn-b" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-b" class="veredicto"></div>
+    <div class="nota">Las dos inserciones ejecutan las mismas cuatro líneas del
+    empalme. La diferencia está en el <code>if</code> del final.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Línea por línea</h2>
+    <div class="botones">
+      <button id="btn-caso-a">insertar(3, 8)</button>
+      <button id="btn-caso-b">insertar(0, 5)</button>
+    </div>
+    <div class="estado">
+      <div class="chips" id="chips-traza"></div>
+      <div class="secuencia" id="cadena-traza"></div>
+      <div class="progreso" id="progreso-traza"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente línea</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La cadena se lee desde <code>cabeza</code> dando
+    <code>n</code> pasos: en un círculo, recorrer sin contar no termina.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Vaciar la lista con <code>eliminar(0)</code></h2>
+    <p style="margin-top:0">Sobre la lista de cinco elementos se llama cinco
+    veces <code>eliminar(0)</code>.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>llamado</th><th>cadena al terminar</th><th>cabeza</th><th>n</th></tr>
+        </thead>
+        <tbody id="tabla-vaciar"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-vaciar" class="primario">Mostrar el llamado siguiente</button>
+      <button id="btn-reinicio-vaciar">Volver al principio</button>
+    </div>
+    <p style="margin-bottom:0">Cuando queda un solo nodo, ¿a quién apuntan su
+    <code>siguiente</code> y su <code>anterior</code>?</p>
+    <div class="opciones" id="opciones-unico">
+      <button data-op="mismo">A él mismo, los dos</button>
+      <button data-op="null">A <code>NULL</code>, los dos</button>
+      <button data-op="mezcla">El <code>siguiente</code> a <code>NULL</code> y el <code>anterior</code> a él mismo</button>
+    </div>
+    <div id="veredicto-unico" class="veredicto"></div>
+    <p style="margin-bottom:0">Y al borrar ese nodo, ¿qué queda?</p>
+    <div class="opciones" id="opciones-vacia">
+      <button data-op="nulo"><code>cabeza</code> en <code>NULL</code> y <code>n</code> en 0</button>
+      <button data-op="colgante"><code>cabeza</code> apuntando a la memoria liberada y <code>n</code> en 0</button>
+      <button data-op="ciclo"><code>cabeza</code> apuntándose a sí misma y <code>n</code> en 0</button>
+    </div>
+    <div id="veredicto-vacia" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Las cuatro líneas del empalme sirven para cualquier
+    posición porque <code>x->anterior</code> siempre existe: insertar al final
+    es insertar antes de la cabeza, que en un círculo es el mismo lugar. El
+    único caso que sobrevive es el del nodo solo, que se apunta a sí mismo por
+    los dos lados y al borrarse deja <code>cabeza</code> en <code>NULL</code>.</div>
+  </div>
+</div>
+<script src="circular.js"></script>
+</body>
+</html>

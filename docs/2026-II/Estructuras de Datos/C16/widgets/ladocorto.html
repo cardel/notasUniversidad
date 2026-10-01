@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ladocorto — la mitad del camino</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La mitad del camino</h1>
+  <p class="intro">La lista circular doble tiene <code>n = 12</code> elementos.
+  Como la cadena se cierra y la lista guarda el contador, <code>nodoEn(p)</code>
+  puede salir de la cabeza hacia adelante o hacia atrás.</p>
+
+  <div class="carta">
+    <h2>1. Los dos caminos hasta la posición 10</h2>
+    <div class="codigo" id="codigo-nodoen"></div>
+    <div class="prediccion">
+      <span>pasos de frente:</span>
+      <input type="number" id="pred-frente" placeholder="?">
+      <span>pasos por el lado corto:</span>
+      <input type="number" id="pred-corto" placeholder="?">
+      <button id="btn-diez" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-diez" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Todas las posiciones</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>p</th><th>de frente</th><th>por el lado corto</th><th>sentido</th></tr>
+        </thead>
+        <tbody id="tabla-pasos"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-fila" class="primario">Mostrar la posición siguiente</button>
+      <button id="btn-todo">Mostrar todas</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-tabla"></div>
+    <div class="nota">El <code>if (p &lt;= n / 2)</code> parte las posiciones en
+    dos mitades: en la primera se camina con <code>siguiente</code> desde la
+    cabeza, y en la segunda con <code>anterior</code> desde el último.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Recorrer las doce posiciones</h2>
+    <p style="margin-top:0">Un programa pide <code>obtener(p)</code> una vez por
+    cada posición, de la 0 a la 11. ¿Cuántos pasos da en total cada versión?</p>
+    <div class="prediccion">
+      <span>total de frente:</span>
+      <input type="number" id="pred-total-frente" placeholder="?">
+      <span>total por el lado corto:</span>
+      <input type="number" id="pred-total-corto" placeholder="?">
+      <button id="btn-totales" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-totales" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La cota de <code>nodoEn</code></h2>
+    <p style="margin-top:0">Escogiendo el lado, ¿en qué queda la cota de
+    <code>nodoEn</code> sobre una lista de <code>n</code> elementos?</p>
+    <div class="opciones" id="opciones-cota">
+      <button data-op="n">Sigue siendo Θ(n)</button>
+      <button data-op="media">Θ(n/2), que es una clase distinta</button>
+      <button data-op="log">Θ(log n)</button>
+      <button data-op="uno">Θ(1)</button>
+    </div>
+    <div id="veredicto-cota" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El contador y el enlace hacia atrás compran escoger el
+    sentido: el peor caso baja de <code>n - 1</code> pasos a ⌈n/2⌉ y el total de
+    un recorrido por posiciones baja casi a la mitad. La cota asintótica no se
+    mueve, porque ⌈n/2⌉ crece como <code>n</code>; lo que se gana es una
+    constante, y eso sí se mide en el reloj.</div>
+  </div>
+</div>
+<script src="ladocorto.js"></script>
+</body>
+</html>

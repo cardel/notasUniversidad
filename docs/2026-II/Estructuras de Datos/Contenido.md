@@ -35,6 +35,7 @@ mismas estructuras ya empacadas.
 13. [Clase 13. STL de C++ — 19 de septiembre](C13/Clase%2013.%20STL%20de%20C++.md)
 14. [Clase 14. Iteradores y algoritmos de la STL — 23 de septiembre](C14/Clase%2014.%20Iteradores%20y%20algoritmos%20de%20la%20STL.md)
 15. [Clase 15. La lista enlazada — 30 de septiembre](C15/Clase%2015.%20La%20lista%20enlazada.md)
+16. [Clase 16. Variantes de la lista enlazada — 2 de octubre](C16/Clase%2016.%20Variantes%20de%20la%20lista%20enlazada.md)
 
 ## Apéndices
 

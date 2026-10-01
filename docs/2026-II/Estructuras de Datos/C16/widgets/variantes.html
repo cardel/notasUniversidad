@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>variantes — lo que cobra cada implementación</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada implementación</h1>
+  <p class="intro">Las cuatro implementaciones responden al mismo contrato de
+  lista: enlazada simple, doblemente enlazada, circular doble y circular doble
+  que llega a la posición por el lado corto. Cuatro programas, cada uno con su
+  perfil de uso.</p>
+
+  <div class="carta">
+    <h2>1. Borrar nodos que ya se tienen</h2>
+    <p style="margin-top:0">El programa guarda punteros a los elementos que
+    inserta y más tarde los borra uno por uno con esos punteros. No consulta
+    posiciones ni recorre hacia atrás.</p>
+    <div class="opciones" id="opciones-borrar">
+      <button data-op="simple">Enlazada simple</button>
+      <button data-op="doble">Doblemente enlazada</button>
+      <button data-op="circular">Circular doble</button>
+      <button data-op="corto">Circular, por el lado corto</button>
+    </div>
+    <div id="veredicto-borrar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Mover el frente en cada vuelta</h2>
+    <p style="margin-top:0">En cada vuelta el primer elemento pasa al final y el
+    segundo queda de primero. El orden relativo de los elementos no cambia.</p>
+    <div class="opciones" id="opciones-rotar">
+      <button data-op="simple">Enlazada simple</button>
+      <button data-op="doble">Doblemente enlazada</button>
+      <button data-op="circular">Circular doble</button>
+      <button data-op="corto">Circular, por el lado corto</button>
+    </div>
+    <div id="veredicto-rotar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Consultar posiciones cerca del final</h2>
+    <p style="margin-top:0">El programa llama <code>obtener(p)</code> muchas
+    veces, casi siempre con posiciones del último cuarto de la lista. Inserta
+    poco y no borra.</p>
+    <div class="opciones" id="opciones-final">
+      <button data-op="simple">Enlazada simple</button>
+      <button data-op="doble">Doblemente enlazada</button>
+      <button data-op="circular">Circular doble</button>
+      <button data-op="corto">Circular, por el lado corto</button>
+    </div>
+    <div id="veredicto-final" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Insertar al frente y recorrer una vez</h2>
+    <p style="margin-top:0">El programa inserta cada dato que llega en la
+    posición 0 y, cuando no llegan más, recorre la lista una sola vez de
+    principio a fin. Nada más.</p>
+    <div class="opciones" id="opciones-frente">
+      <button data-op="simple">Enlazada simple</button>
+      <button data-op="doble">Doblemente enlazada</button>
+      <button data-op="circular">Circular doble</button>
+      <button data-op="corto">Circular, por el lado corto</button>
+    </div>
+    <div id="veredicto-frente" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Lo que cuesta insertar al frente</h2>
+    <p style="margin-top:0">Sobre una lista que ya tiene elementos,
+    <code>insertar(0, e)</code> es Θ(1) en las cuatro, pero no ejecuta el mismo
+    número de asignaciones de puntero. Cuente las que ejecuta cada una, contando
+    la que mueve <code>cabeza</code> y la que deja un campo en
+    <code>NULL</code>.</p>
+    <div class="prediccion">
+      <span>simple:</span>
+      <input type="number" id="pred-simple" placeholder="?">
+      <span>doble:</span>
+      <input type="number" id="pred-doble" placeholder="?">
+      <span>circular:</span>
+      <input type="number" id="pred-circular" placeholder="?">
+      <span>lado corto:</span>
+      <input type="number" id="pred-corto" placeholder="?">
+      <button id="btn-escrituras" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-escrituras" class="veredicto"></div>
+    <div id="detalle-escrituras" style="display:none">
+      <div class="envoltura-tabla">
+        <table>
+          <thead>
+            <tr><th>variante</th><th>líneas que se ejecutan</th><th>asignaciones</th></tr>
+          </thead>
+          <tbody id="tabla-escrituras"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Ninguna de las cuatro gana en todo. Cada campo que se
+    agrega compra una operación y se cobra en espacio y en escrituras: el
+    <code>anterior</code> compra desenlazar sin recorrer, el círculo borra los
+    casos de los extremos y el contador deja escoger el sentido. La estructura
+    se escoge por las operaciones que el programa repite.</div>
+  </div>
+</div>
+<script src="variantes.js"></script>
+</body>
+</html>

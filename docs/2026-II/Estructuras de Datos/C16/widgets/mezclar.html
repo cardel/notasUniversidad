@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mezclar — ordenar partiendo y mezclando</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ordenar partiendo y mezclando</h1>
+  <p class="intro">La lista enlazada es <code>7 → 3 → 8 → 1 → 5 → 2</code> y se
+  ordena con merge sort: <code>partir</code> la corta en dos,
+  <code>ordenar</code> se llama sobre cada mitad y <code>mezclar</code> empalma
+  los nodos sin copiar datos.</p>
+
+  <div class="carta">
+    <h2>1. Dónde corta <code>partir</code></h2>
+    <div class="codigo" id="codigo-partir"></div>
+    <div class="prediccion">
+      <span>primera mitad:</span>
+      <input type="text" id="pred-primera" placeholder="a b c" style="width:8rem">
+      <span>segunda mitad:</span>
+      <input type="text" id="pred-segunda" placeholder="a b c" style="width:8rem">
+      <button id="btn-mitades" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-mitades" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El lento y el rápido, vuelta por vuelta</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>vuelta</th><th>lento señala</th><th>rápido señala</th></tr>
+        </thead>
+        <tbody id="tabla-vueltas"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-vuelta" class="primario">Mostrar la vuelta siguiente</button>
+      <button id="btn-reinicio-vueltas">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-vueltas"></div>
+    <div class="nota">El rápido avanza dos nodos por cada uno del lento. Cuando
+    el rápido se queda sin pareja, el lento está en el último nodo de la primera
+    mitad, y ahí se corta.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El total de comparaciones</h2>
+    <p style="margin-top:0">Cada <code>mezclar</code> compara un dato de cada
+    cadena y se lleva el menor. Sumando todas las mezclas de la recursión, hasta
+    dejar la lista ordenada, ¿cuántas comparaciones hace?</p>
+    <div class="prediccion">
+      <span>comparaciones en total:</span>
+      <input type="number" id="pred-total" placeholder="?">
+      <button id="btn-total" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-total" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Las mezclas en el orden en que ocurren</h2>
+    <div class="codigo" id="codigo-mezclar"></div>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>nivel</th><th>cadena a</th><th>cadena b</th><th>resultado</th><th>comparaciones</th><th>acumulado</th></tr>
+        </thead>
+        <tbody id="tabla-mezclas"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-mezcla" class="primario">Mostrar la mezcla siguiente</button>
+      <button id="btn-reinicio-mezclas">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-mezclas"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La mezcla de arriba</h2>
+    <p style="margin-top:0">La última mezcla junta dos cadenas de tres nodos y
+    hace cuatro comparaciones, no seis. ¿Por qué se ahorra las dos últimas?</p>
+    <div class="opciones" id="opciones-razon">
+      <button data-op="cola">Porque cuando una cadena se vacía, el resto de la otra se empalma de una vez</button>
+      <button data-op="orden">Porque los primeros elementos ya venían en orden</button>
+      <button data-op="mitad">Porque solo se comparan los datos de la primera cadena</button>
+    </div>
+    <div id="veredicto-razon" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Partir cuesta un recorrido y no copia nada; mezclar cuesta
+    una comparación por nodo que sale, y menos cuando una cadena se agota antes.
+    Cada nivel de la recursión toca los <code>n</code> nodos una vez y hay
+    ⌈log₂ n⌉ niveles: Θ(n log n) en tiempo, con Θ(1) de espacio en la mezcla
+    porque lo único que se reescribe es el campo <code>siguiente</code>.</div>
+  </div>
+</div>
+<script src="mezclar.js"></script>
+</body>
+</html>
