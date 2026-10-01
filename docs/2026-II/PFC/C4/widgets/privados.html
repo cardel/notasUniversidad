@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>privados — qué alcanza el cliente de Racional</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .caso { padding: 0.7rem 0; border-top: 1px solid var(--borde); }
+  .caso:first-child { border-top: none; padding-top: 0.2rem; }
+  .caso .expr {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 1rem; font-weight: 700; color: var(--tinta);
+  }
+  .caso.listo .expr { color: var(--verde); }
+  .opciones button { text-align: left; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  .cliente { margin-top: 0.7rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>privados: qué alcanza el cliente de <code>Racional</code></h1>
+  <p class="intro">Cinco expresiones escritas fuera de la clase. Dos cosas
+  distintas pueden detener una: el compilador, que revisa quién puede nombrar
+  qué, y la corrida, que revisa los valores que llegan. Clasifique cada
+  expresión en una de las tres columnas.</p>
+
+  <div class="carta">
+    <h2>1. La clase</h2>
+    <div class="codigo"><div class="linea"><span class="num">1</span><span class="txt">class Racional(x: Int, y: Int) {</span></div><div class="linea"><span class="num">2</span><span class="txt">  require(y &gt; 0, "El denominador debe ser positivo")</span></div><div class="linea"><span class="num">3</span><span class="txt"> </span></div><div class="linea"><span class="num">4</span><span class="txt">  private def mcd(a: Int, b: Int): Int =</span></div><div class="linea"><span class="num">5</span><span class="txt">    if (b == 0) a else mcd(b, a % b)</span></div><div class="linea"><span class="num">6</span><span class="txt"> </span></div><div class="linea"><span class="num">7</span><span class="txt">  private val m = mcd(math.abs(x), y)</span></div><div class="linea"><span class="num">8</span><span class="txt"> </span></div><div class="linea"><span class="num">9</span><span class="txt">  val numer: Int = x / m</span></div><div class="linea"><span class="num">10</span><span class="txt">  val denom: Int = y / m</span></div><div class="linea"><span class="num">11</span><span class="txt"> </span></div><div class="linea"><span class="num">12</span><span class="txt">  assert(denom &gt; 0, "Invariante: denom siempre positivo")</span></div><div class="linea"><span class="num">13</span><span class="txt"> </span></div><div class="linea"><span class="num">14</span><span class="txt">  def menorQue(r: Racional): Boolean =</span></div><div class="linea"><span class="num">15</span><span class="txt">    numer * r.denom &lt; denom * r.numer</span></div><div class="linea"><span class="num">16</span><span class="txt"> </span></div><div class="linea"><span class="num">17</span><span class="txt">  def max(r: Racional): Racional =</span></div><div class="linea"><span class="num">18</span><span class="txt">    if (this.menorQue(r)) r else this</span></div><div class="linea"><span class="num">19</span><span class="txt"> </span></div><div class="linea"><span class="num">20</span><span class="txt">  def suma(r: Racional): Racional =</span></div><div class="linea"><span class="num">21</span><span class="txt">    new Racional(</span></div><div class="linea"><span class="num">22</span><span class="txt">      numer * r.denom + denom * r.numer,</span></div><div class="linea"><span class="num">23</span><span class="txt">      denom * r.denom</span></div><div class="linea"><span class="num">24</span><span class="txt">    )</span></div><div class="linea"><span class="num">25</span><span class="txt"> </span></div><div class="linea"><span class="num">26</span><span class="txt">  override def toString: String = numer + "/" + denom</span></div><div class="linea"><span class="num">27</span><span class="txt">}</span></div></div>
+    <p class="nota cliente">Quien escribe las expresiones tiene esta línea y
+    nada más: <code>val r = new Racional(66, 42)</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Clasifique las cinco expresiones</h2>
+    <p class="nota" style="margin-top:0">«No compila» significa que el programa
+    no llega a existir. «Lanza una excepción al correr» significa que compiló y
+    se detuvo después, con el objeto a medio construir.</p>
+    <div id="casos"></div>
+    <div class="progreso" id="contador" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. ¿Qué separa a <code>r.m</code> de <code>new Racional(1, 0)</code>?</h2>
+    <div class="opciones">
+      <button data-razon="ok">A <code>r.m</code> lo detiene el compilador, porque <code>m</code> no se nombra desde fuera; <code>new Racional(1, 0)</code> le cuadra en tipos y la condición de <code>require</code> se evalúa al construir el objeto.</button>
+      <button data-razon="corren" data-msg="r.m no llega a correr: sin compilar no hay programa que pueda lanzar nada. De las cinco expresiones, la única que produce una excepción es new Racional(1, 0).">Las dos fallan al correr, cada una con una excepción distinta.</button>
+      <button data-razon="firma" data-msg="La firma es (x: Int, y: Int) y 0 es un Int. require es una llamada en el cuerpo de la clase, y lo que exige del valor no aparece en el tipo, así que el compilador deja pasar new Racional(1, 0).">A las dos las rechaza el compilador: <code>require</code> es parte de la firma del constructor.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>private</code> decide quién puede escribir el
+    nombre, y de eso se encarga el compilador: <code>r.mcd(66, 42)</code> y
+    <code>r.m</code> no alcanzan a ser programa. Dentro de la clase los dos
+    nombres están disponibles, y por eso <code>suma</code> construye un
+    <code>Racional</code> nuevo y cada construcción vuelve a pasar por
+    <code>mcd</code>: <code>1/3</code> más <code>5/7</code> más
+    <code>3/2</code> sale como <code>107/42</code> sin que nadie simplifique a
+    mano.</p>
+    <p><code>require</code> revisa valores, y los valores existen cuando el
+    programa corre. <code>new Racional(1, 0)</code> pasa la compilación con la
+    firma intacta y se detiene al construir el objeto, con
+    <code>IllegalArgumentException</code>. El <code>assert</code> de la línea
+    12 se evalúa en ese mismo momento, con otra intención:
+    <code>require</code> señala a quien llamó, <code>assert</code> señala a la
+    clase.</p>
+    <p>Hacia fuera queda lo que el cliente puede usar: <code>numer</code>,
+    <code>denom</code>, <code>menorQue</code>, <code>max</code>,
+    <code>suma</code> y <code>toString</code>. <code>mcd</code> y
+    <code>m</code> se pueden reescribir —otro algoritmo para el máximo común
+    divisor, o recalcularlo en cada acceso en lugar de guardarlo— y ninguna
+    expresión de las de arriba cambia de respuesta.</p>
+  </div>
+</div>
+<script src="privados.js"></script>
+</body>
+</html>

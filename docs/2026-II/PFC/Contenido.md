@@ -86,6 +86,7 @@ reuniones docentes y jornada de reflexión.
 | 1 | Principios y elementos de programación | [sustituir y evaluación](C1/Ejercicios.md) |
 | 2 | Funciones y los procesos que generan | [nueve ejercicios, tres por tema](C2/Ejercicios.md) |
 | 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](C3/Ejercicios.md) |
+| 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](C4/Ejercicios.md) |
 
 ## Ejercicios de clase
 

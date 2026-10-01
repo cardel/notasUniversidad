@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>punto2d — la tabla de Punto antes de correrla</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.tabla-punto { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  table.tabla-punto th, table.tabla-punto td { border: 1px solid var(--borde); padding: 0.35rem 0.6rem; text-align: center; vertical-align: top; }
+  table.tabla-punto th { background: var(--azul-suave); color: var(--azul); }
+  table.tabla-punto td.expr { text-align: left; font-family: ui-monospace, monospace; font-weight: 700; }
+  table.tabla-punto td.que { text-align: left; font-size: 0.84rem; color: var(--gris); }
+  table.tabla-punto tr.actual td { background: var(--verde-suave); }
+  table.tabla-punto input, table.tabla-punto select {
+    font-family: ui-monospace, monospace; font-size: 0.9rem; padding: 0.22rem 0.3rem;
+    border: 1px solid var(--borde); border-radius: 4px; background: #fff; color: inherit;
+  }
+  table.tabla-punto input { width: 7.5rem; text-align: center; }
+  input.bien, select.bien { border-color: var(--verde) !important; background: var(--verde-suave) !important; }
+  input.casi, select.casi { border-color: var(--ambar) !important; background: var(--ambar-suave) !important; }
+  input.mal, select.mal { border-color: var(--rojo) !important; background: var(--rojo-suave) !important; }
+  .real { display: block; margin-top: 0.2rem; font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--verde); font-weight: 700; min-height: 1.1em; }
+  #pie { margin-top: 0.2rem; font-size: 0.92rem; color: var(--gris); min-height: 3.2em; }
+  .opciones { flex-direction: column; align-items: flex-start; }
+  .opciones button { text-align: left; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>punto2d: la tabla de <code>Punto</code> antes de correrla</h1>
+  <p class="intro">Puntos en el plano con lo mismo que se usó en
+  <code>Racional</code>: métodos, un operador simbólico y
+  <code>toString</code>. Antes de ejecutar nada, escriba el tipo y el valor
+  que devuelve cada expresión; después siga la corrida paso a paso y compare.
+  Los decimales cuentan.</p>
+
+  <div class="carta">
+    <h2>1. La clase</h2>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">class Punto(val x: Double, val y: Double) {</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  def +(p: Punto): Punto = new Punto(x + p.x, y + p.y)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"> </span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  def distancia(p: Punto): Double = {</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    val dx = x - p.x</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    val dy = y - p.y</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    math.sqrt(dx * dx + dy * dy)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  }</span></div>
+      <div class="linea"><span class="num"></span><span class="txt"> </span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  override def toString: String = "(" + x + ", " + y + ")"</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">}</span></div>
+    </div>
+    <p class="nota">La cabecera declara los dos parámetros con
+    <code>val</code>. En <code>Racional</code> la cabecera es
+    <code>class Racional(x: Int, y: Int)</code>, sin <code>val</code>, y lo
+    que el cliente ve son los métodos <code>numer</code> y
+    <code>denom</code>.</p>
+    <p class="nota">Las dos expresiones del REPL que crean los puntos:
+    <code>val p1 = new Punto(1, 2)</code> y
+    <code>val p2 = new Punto(4, 6)</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llene la tabla</h2>
+    <p class="nota" style="margin-top:0">Escriba el valor tal como lo
+    escribiría el REPL, con el mismo formato que usa Scala para mostrarlo.</p>
+    <div class="envoltura-tabla">
+      <table class="tabla-punto">
+        <thead><tr><th>expresión</th><th>tipo</th><th>valor</th><th>qué corre</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar" class="primario">Comprobar la tabla</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Ejecute y compare</h2>
+    <div id="pie"></div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El contador de cada línea dice cuántas veces se
+        ejecutó. El cuerpo de <code>distancia</code> corre una vez por
+        llamada, y la cabecera cuenta también los accesos a
+        <code>x</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-racional">
+    <h2>4. El mismo acceso en <code>Racional</code></h2>
+    <p style="margin-top:0">Con <code>val r = new Racional(1, 2)</code>,
+    <code>r.numer</code> responde <code>1</code> y <code>r.x</code> no
+    compila: <i>value x is not a member of Racional</i>. ¿Qué lo explica?</p>
+    <div class="opciones">
+      <button data-razon="ok">En Racional, x es solo un parámetro del constructor; miembros son los def numer y denom. En Punto el val de la cabecera declara el campo, y por eso p1.x responde.</button>
+      <button data-razon="privado" data-msg="En la cabecera de Racional no hay private; private está en mcd y en el val m. No ser miembro es distinto de ser un miembro privado: el primero no existe para nadie fuera del cuerpo de la clase, el segundo existe y está cerrado.">Porque x está declarado private en Racional.</button>
+      <button data-razon="simplifica" data-msg="La simplificación la hacen numer y denom al dividir por m, y adentro x sigue valiendo 1. Lo que falla es el acceso desde afuera, no el valor guardado.">Porque Racional guarda la fracción simplificada y x ya no tiene el valor original.</button>
+      <button data-razon="tipo" data-msg="El tipo no decide nada: r.numer responde siendo Int, y p1.y responde siendo Double. Lo que decide es si el nombre quedó declarado como miembro.">Porque x es Int en Racional y los accesos con punto piden Double.</button>
+    </div>
+    <div id="veredicto-racional" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>5. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El <code>.0</code> no es adorno. La cabecera pide
+    <code>Double</code>, así que el literal <code>1</code> se convierte al
+    entrar: <code>p1.x</code> responde <code>1.0</code>, y
+    <code>toString</code> escribe <code>(1.0, 2.0)</code> aunque el objeto se
+    haya creado con <code>new Punto(1, 2)</code>.</p>
+    <p><code>distancia</code> da lo mismo en los dos sentidos porque
+    <code>dx</code> y <code>dy</code> cambian de signo y el cuadrado lo borra:
+    −3.0 y −4.0 en un sentido, 3.0 y 4.0 en el otro, y
+    <code>math.sqrt(9.0 + 16.0)</code> es 5.0 en ambos.</p>
+    <p><code>(p1 + p2).x</code> corre el <code>+</code> por segunda vez y lee
+    el campo del punto que acaba de construirse; <code>p1</code> sigue en
+    <code>(1.0, 2.0)</code> al final de la corrida. El <code>+</code>
+    construye, no modifica.</p>
+    <p>Y el acceso que no existe: <code>r.x</code>. Que un nombre responda
+    desde afuera no depende del valor que guarda, sino de que esté declarado
+    como miembro — con <code>val</code> en la cabecera, como en
+    <code>Punto</code>, o con <code>def</code> en el cuerpo, como
+    <code>numer</code>.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="punto2d.js"></script>
+</body>
+</html>

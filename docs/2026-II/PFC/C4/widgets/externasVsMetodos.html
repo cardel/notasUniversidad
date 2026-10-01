@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>externasVsMetodos — de funciones externas a métodos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.traza { font-family: ui-monospace, monospace; font-size: 0.88rem; }
+  table.traza td.paso { width: 3rem; color: var(--gris); }
+  table.traza td.expr { text-align: left; }
+  table.traza td.val { text-align: left; white-space: nowrap; }
+  table.traza tr.actual td { background: var(--resalte); }
+  .opciones { flex-direction: column; align-items: flex-start; }
+  .opciones button { text-align: left; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #pie { margin-top: 0.7rem; font-size: 0.92rem; color: #5b636c; min-height: 3.2em; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>externasVsMetodos: de funciones externas a métodos</h1>
+  <p class="intro">Las dos versiones de la suma de racionales están a la vista.
+  <code>sumaRacional</code> recibe los dos operandos como parámetros,
+  <code>r</code> y <code>s</code>; <code>suma</code> recibe uno solo, porque el
+  primero es el objeto sobre el que se llama. Avance paso a paso en cada una y
+  compare las líneas que se encienden: la aritmética del cuerpo es la misma
+  cuenta cruzada, y lo que cambia es de dónde sale el primer operando.</p>
+
+  <div class="carta">
+    <h2>1. Recorra las dos versiones</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Llamada:</span>
+      <button data-preset="0" class="primario">sumaRacional(x, y) con x = 1/2, y = 2/3</button>
+      <button data-preset="1">x.suma(y) con x = 1/3, y = 5/7</button>
+      <button data-preset="2">x.suma(y).mult(z) con z = 3/2</button>
+    </div>
+    <div class="panel-doble" style="margin-top:0.7rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El contador de cada línea dice cuántas veces se
+        evaluó algo en ella. La línea del numerador se enciende tres veces en
+        las dos versiones: los dos productos cruzados y la suma.</div>
+      </div>
+    </div>
+    <div id="pie"></div>
+    <div class="envoltura-tabla" style="margin-top:0.5rem">
+      <table class="traza">
+        <thead><tr><th>paso</th><th>expresión a evaluar</th><th>estado / valor</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-dos">
+    <h2>2. Dentro de <code>suma</code>, ¿qué nombra <code>numer</code> sin calificar?</h2>
+    <div class="opciones">
+      <button data-op="ok"><code>this.numer</code>: el numerador del receptor, el objeto que está a la izquierda del punto.</button>
+      <button data-op="arg" data-msg="Ese es r.numer, que aparece calificado en la misma línea. Si numer también fuera de r, el numerador quedaría r.numer * r.denom + r.denom * r.numer y x no entraría en la cuenta."><code>r.numer</code>: el numerador del argumento que recibe el método.</button>
+      <button data-op="clase" data-msg="numer devuelve el x del objeto sobre el que se llama, y cada racional tiene el suyo: en x vale 1 y en y vale 5. Por eso la misma línea del cuerpo da números distintos según quién sea el receptor."><code>x</code>, el parámetro de la clase, con el mismo valor para cualquier racional.</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las dos versiones calculan la cuenta cruzada
+    idéntica y construyen un racional nuevo; ninguna modifica los operandos.
+    La diferencia está en la firma y en el primer operando:
+    <code>sumaRacional(r, s)</code> pide los dos y puede escribirse a un lado
+    de la clase, mientras <code>suma(r)</code> pide uno y toma el otro del
+    receptor. Ese receptor es el que convierte
+    <code>convertirEnCadena(sumaRacional(x, y))</code>, que se lee de adentro
+    hacia afuera, en <code>x.suma(y).mult(z)</code>, que se lee de izquierda a
+    derecha y encadena.</p>
+    <p>La última llamada deja <code>66/42</code>, que es el número correcto y
+    no su forma más simple: <code>11/7</code>. La traza muestra dónde se pierde
+    la simplificación —en <code>new Racional</code>, que guarda los dos enteros
+    tal como llegaron— y de ahí sale la pregunta que sigue: ¿en qué momento
+    conviene dividir por el máximo común divisor, en cada operación o una sola
+    vez, al construir el objeto?</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="externasVsMetodos.js"></script>
+</body>
+</html>

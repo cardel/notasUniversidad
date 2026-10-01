@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mcdEnMemoria — cuántas veces corre el mcd</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.conteo th, table.conteo td { border: 1px solid var(--borde); padding: 0.35rem 0.6rem; text-align: center; }
+  table.conteo td.variante { text-align: left; font-size: 0.86rem; line-height: 1.35; }
+  table.conteo td.variante code { font-size: 0.8rem; color: var(--gris); }
+  table.conteo tr.sel td { background: var(--verde-suave); }
+  table.conteo input { width: 4.5rem; text-align: center; font-family: ui-monospace, monospace; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  input.bien { border-color: var(--verde) !important; background: var(--verde-suave); }
+  input.mal { border-color: var(--rojo) !important; background: var(--rojo-suave); }
+  .real { display: block; margin-top: 0.15rem; color: var(--verde); font-weight: 700; font-family: ui-monospace, monospace; font-size: 0.8rem; min-height: 1em; }
+  .linea.apagado { opacity: 0.3; }
+  #pie { margin-top: 0.6rem; font-size: 0.9rem; color: #5b636c; min-height: 3em; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  .cadena { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; margin: 0.6rem 0; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>mcdEnMemoria: cuántas veces corre el <code>mcd</code></h1>
+  <p class="intro">Cuatro versiones de <code>Racional</code> que un cliente usa
+  igual: <code>val r = new Racional(66, 42)</code>, y después
+  <code>r.numer</code>, <code>r.numer</code> y <code>r.denom</code>. Lo que
+  cambia por dentro es dónde se llama a <code>mcd</code>. Llene la tabla con
+  las cuentas y después corra cada variante para mirar los contadores de cada
+  línea.</p>
+
+  <div class="carta">
+    <h2>1. La cadena de <code>mcd(66, 42)</code></h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">private def mcd(a: Int, b: Int): Int =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (b == 0) a</span></div><div class="linea"><span class="num"></span><span class="txt">  else mcd(b, a % b)</span></div></div>
+    <div class="cadena">
+      <span class="ficha">mcd(66, 42)</span><span class="flecha">→</span>
+      <span class="ficha">mcd(42, 24)</span><span class="flecha">→</span>
+      <span class="ficha">mcd(24, 18)</span><span class="flecha">→</span>
+      <span class="ficha">mcd(18, 6)</span><span class="flecha">→</span>
+      <span class="ficha">mcd(6, 0)</span><span class="flecha">→</span>
+      <b>6</b>
+    </div>
+    <p class="nota" style="margin-top:0.2rem">Cinco llamadas de principio a
+    fin, y el resultado es 6. Esa cuenta no cambia entre las variantes:
+    <code>mcd</code> está escrito igual en todas. Lo que cambia es cuántas
+    veces se dispara la cadena.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llene la tabla</h2>
+    <p class="nota" style="margin-top:0">Para cada variante: cuántas llamadas a
+    <code>mcd</code> ocurren al construir el objeto, cuántas ocurren durante
+    las tres lecturas (<code>r.numer</code>, <code>r.numer</code>,
+    <code>r.denom</code>), el total, y qué devuelve <code>r.numer</code>.</p>
+    <div class="envoltura-tabla">
+      <table class="conteo">
+        <thead><tr><th>variante</th><th>mcd al construir</th><th>mcd en las 3 lecturas</th><th>total de mcd</th><th>r.numer</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-comprobar-tabla" class="primario">Comprobar la tabla</button>
+    </div>
+    <div id="veredicto-tabla" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Corra una variante y mire los contadores</h2>
+    <div class="presets">
+      <span class="nota" style="margin-top:0">Variante:</span>
+      <button data-preset="0" class="primario">Opción A</button>
+      <button data-preset="1">Opción B</button>
+      <button data-preset="2">private val m</button>
+      <button data-preset="3">Sin simplificación</button>
+    </div>
+    <div class="panel-doble" style="margin-top:0.8rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El contador de la línea
+        <code>private def mcd</code> es la respuesta de la fila: una marca por
+        llamada. Las líneas de las otras variantes quedan en gris y en × 0.</div>
+      </div>
+    </div>
+    <div id="pie"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las tres primeras variantes devuelven
+    <code>11/7</code> y el cliente las usa con las mismas tres líneas. Por
+    dentro una corre <code>mcd</code> quince veces y otra cinco, y la
+    diferencia está en una palabra: con <code>def</code> el lado derecho se
+    evalúa en cada lectura, con <code>val</code> una sola vez, al construir el
+    objeto. La opción B ya paga una vez por cada selectora porque tiene dos
+    lados derechos que llaman a <code>mcd</code>;
+    <code>private val m</code> deja uno solo y las selectoras se vuelven una
+    división.</p>
+    <p><code>mcd</code> y <code>m</code> van marcados <code>private</code>:
+    desde afuera no se pueden nombrar, y por eso cambiar de variante no rompe
+    ninguna línea del cliente. Lo que sí se nota desde afuera es la cuarta:
+    sin <code>mcd</code> en el constructor, <code>r.numer</code> entrega 66 y
+    el racional se imprime <code>66/42</code>. Ahí el cambio no es de
+    rendimiento, es de resultado.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="mcdEnMemoria.js"></script>
+</body>
+</html>

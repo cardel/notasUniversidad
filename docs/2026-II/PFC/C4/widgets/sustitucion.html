@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sustitucion — produzca cada reescritura antes de verla</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.pasos { font-family: ui-monospace, monospace; font-size: 0.86rem; }
+  table.pasos th { font-family: system-ui, -apple-system, sans-serif; }
+  table.pasos td { text-align: left; vertical-align: top; }
+  table.pasos td:first-child { text-align: center; width: 2.6rem; font-weight: 700; color: var(--gris); }
+  table.pasos td.nota-paso { color: #5b636c; font-size: 0.82rem; width: 15rem; }
+  table.pasos td.pend { color: var(--gris); }
+  table.pasos tr.activa td { background: var(--resalte); }
+  table.pasos tr.lista td.expr { color: var(--tinta); }
+  .opciones-paso { display: flex; flex-direction: column; gap: 0.35rem; align-items: stretch; }
+  .opciones-paso button { text-align: left; font-family: ui-monospace, monospace; font-size: 0.82rem; padding: 0.3rem 0.5rem; }
+  .casillas { display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; font-family: ui-monospace, monospace; }
+  .casillas input[type="number"] { width: 3.6rem; text-align: center; font-family: inherit; font-size: 0.9rem; padding: 0.2rem; border: 1px solid var(--borde); border-radius: 4px; }
+  .casillas button { margin-left: 0.4rem; }
+  input.bien { border-color: var(--verde) !important; background: var(--verde-suave); }
+  input.mal { border-color: var(--rojo) !important; background: var(--rojo-suave); }
+  button.marcado { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .opciones.en-columna { flex-direction: column; align-items: stretch; }
+  .opciones.en-columna button { text-align: left; font-family: ui-monospace, monospace; font-size: 0.85rem; }
+  .reglas { margin: 0.2rem 0 0.6rem; padding-left: 1.2rem; }
+  .reglas li { margin-bottom: 0.15rem; }
+  .reglas code { background: var(--codigo-fondo); padding: 0 0.2rem; border-radius: 3px; }
+  .notacion { font-family: ui-monospace, monospace; background: var(--azul-suave); color: var(--azul); border-radius: 8px; padding: 0.45rem 0.7rem; display: inline-block; font-size: 0.86rem; }
+  #reduccion-max { font-family: ui-monospace, monospace; font-size: 0.9rem; color: var(--verde); margin-top: 0.5rem; }
+  #estado-menorque { font-family: ui-monospace, monospace; font-size: 0.88rem; margin-bottom: 0.5rem; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>sustitucion: produzca cada reescritura antes de verla</h1>
+  <p class="intro">Una llamada a un método se reduce igual que una llamada a
+  una función, con tres reemplazos en lugar de uno: los parámetros del método,
+  los parámetros de la clase y <code>this</code>. La traza de abajo tiene seis
+  filas y solo la primera viene dada; cada una de las otras cinco se elige o se
+  escribe, y la siguiente aparece cuando la actual queda bien.</p>
+
+  <div class="carta">
+    <h2>1. La regla y un arranque</h2>
+    <p style="margin-top:0">Para <code>class C(x₁, …, xₘ)</code> con
+    <code>def f(y₁, …, yₙ) = b</code>, evaluar
+    <code>new C(v₁, …, vₘ).f(w₁, …, wₙ)</code> es reescribir el cuerpo
+    <code>b</code> con tres sustituciones, en este orden:</p>
+    <ol class="reglas">
+      <li>los parámetros del método: cada <code>yᵢ</code> por su
+      <code>wᵢ</code>;</li>
+      <li>los parámetros de la clase: cada <code>xⱼ</code> por su
+      <code>vⱼ</code>;</li>
+      <li><code>this</code> por <code>new C(v₁, …, vₘ)</code>.</li>
+    </ol>
+    <div class="notacion">[w₁/y₁, …][v₁/x₁, …][new C(v₁, …)/this] b</div>
+    <p style="margin-bottom:0.4rem">Con <code>def numer = x</code>, ¿cuál es la
+    primera reescritura de <code>new Racional(1,2).numer</code>?</p>
+    <div class="opciones en-columna">
+      <button data-arranque="0">x, con [1/x, 2/y][new Racional(1,2)/this]</button>
+      <button data-arranque="1">1/2</button>
+      <button data-arranque="2">new Racional(1,2).x</button>
+    </div>
+    <div id="veredicto-arranque" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Produzca las cinco reescrituras que faltan</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">def menorQue(r: Racional): Boolean =</span></div><div class="linea"><span class="num"></span><span class="txt">  numer * r.denom &lt; denom * r.numer</span></div><div class="linea"><span class="num"></span><span class="txt"> </span></div><div class="linea"><span class="num"></span><span class="txt">def max(r: Racional): Racional =</span></div><div class="linea"><span class="num"></span><span class="txt">  if (this.menorQue(r)) r else this</span></div></div>
+    <p class="nota">Escribir <code>numer</code> dentro de la clase es escribir
+    <code>this.numer</code>, y así aparece el cuerpo en la segunda fila. Los
+    miembros <code>numer</code> y <code>denom</code> son los de
+    <code>Racional</code> con <code>require</code> y simplificación por el mcd:
+    el constructor divide una vez y lo que queda guardado ya está reducido.</p>
+    <div class="presets" style="margin-top:0.7rem">
+      <span class="nota" style="margin-top:0">Expresión:</span>
+      <button data-preset="0" class="primario">new Racional(1, 2).menorQue(new Racional(2, 3))</button>
+      <button data-preset="1">new Racional(3, 4).menorQue(new Racional(2, 3))</button>
+      <button data-preset="2">new Racional(2, 4).menorQue(new Racional(2, 3))</button>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table class="pasos">
+        <thead><tr><th>paso</th><th>expresión actual</th><th>sustitución / cálculo</th></tr></thead>
+        <tbody id="cuerpo-pasos"></tbody>
+      </table>
+    </div>
+    <div id="veredicto-pasos" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-reiniciar-pasos">Reiniciar los pasos</button>
+    </div>
+    <div class="progreso" id="progreso-pasos" style="margin-top:0.4rem"></div>
+    <div class="nota">La fila 1 nombra los dos objetos; <span id="nota-preset"></span>
+    es la expresión que se está reduciendo.</div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Ahora <code>r1 max r2</code></h2>
+    <div id="estado-menorque"></div>
+    <p style="margin-top:0">El cuerpo de <code>max</code> es
+    <code>if (this.menorQue(r)) r else this</code>. ¿Qué queda al reducir
+    <code>r1 max r2</code>?</p>
+    <div id="opciones-max"></div>
+    <div id="veredicto-max" class="veredicto"></div>
+    <div id="reduccion-max"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las tres sustituciones entran en un orden y cada
+    una toca nombres distintos: <code>[r2/r]</code> cambia el parámetro del
+    método, <code>[r1/this]</code> cambia el objeto que ejecuta, y los
+    parámetros de la clase, <code>x</code> y <code>y</code>, se reemplazan más
+    adentro, al expandir <code>numer</code> y <code>denom</code>. Si se
+    confunden <code>r</code> y <code>this</code>, la expresión sigue
+    compilando y la comparación se invierte: con
+    <code>new Racional(1, 2)</code> y <code>new Racional(2, 3)</code>, en un
+    sentido queda <code>3 &lt; 4</code> y en el otro <code>4 &lt; 3</code>.</p>
+    <p>En <code>new Racional(2, 4)</code> los enteros que entran a la
+    comparación son 1 y 2, no 2 y 4: el <code>val</code> del constructor ya
+    dividió por el mcd, y la sustitución expande el miembro, no el número con
+    que se escribió el <code>new</code>.</p>
+    <p>Y hay algo que <code>max</code> no hace: construir. Su
+    <code>if</code> elige entre <code>r</code> y <code>this</code>, que nombran
+    los dos objetos que ya existían, así que la reducción termina en uno de
+    ellos y en ningún momento aparece un <code>new</code>. Los operadores
+    aritméticos van por el otro camino —<code>+</code> arma un
+    <code>new Racional</code> con los numeradores y denominadores cruzados—, y
+    ahí la reducción deja un objeto que antes no estaba.</p>
+  </div>
+</div>
+<script src="sustitucion.js"></script>
+</body>
+</html>
