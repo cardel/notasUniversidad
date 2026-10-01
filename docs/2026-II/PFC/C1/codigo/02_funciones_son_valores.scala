@@ -2,27 +2,32 @@
 // argumentos. Y el orden en que se reemplaza no es el orden en que se
 // imprime.
 
-val radio: Double = 3.0
-val areaVal: Double = math.Pi * radio * radio
+object FuncionesSonValores {
 
-def areaDef(r: Double): Double = math.Pi * r * r
+  val radio: Double = 3.0
+  val areaVal: Double = math.Pi * radio * radio
 
-def doble(n: Int): Int = 2 * n
+  def areaDef(r: Double): Double = math.Pi * r * r
 
-def dobleConRuido(n: Int): Int =
-  println(s"calculando el doble de $n")
-  2 * n
+  def doble(n: Int): Int = 2 * n
 
-@main def demo(): Unit =
-  println(s"areaVal        = $areaVal")
-  println(s"areaDef(3.0)   = ${areaDef(3.0)}")
-  println(s"areaDef(5.0)   = ${areaDef(5.0)}")
+  def dobleConRuido(n: Int): Int = {
+    println(s"calculando el doble de $n")
+    2 * n
+  }
 
-  println(s"doble(21) + doble(21) = ${doble(21) + doble(21)}")
+  def main(args: Array[String]): Unit = {
+    println(s"areaVal        = $areaVal")
+    println(s"areaDef(3.0)   = ${areaDef(3.0)}")
+    println(s"areaDef(5.0)   = ${areaDef(5.0)}")
 
-  println("dobleConRuido(21) + dobleConRuido(21):")
-  println(dobleConRuido(21) + dobleConRuido(21))
+    println(s"doble(21) + doble(21) = ${doble(21) + doble(21)}")
 
-  println("con el resultado ligado a un nombre:")
-  val d = dobleConRuido(21)
-  println(d + d)
+    println("dobleConRuido(21) + dobleConRuido(21):")
+    println(dobleConRuido(21) + dobleConRuido(21))
+
+    println("con el resultado ligado a un nombre:")
+    val d = dobleConRuido(21)
+    println(d + d)
+  }
+}

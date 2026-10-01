@@ -76,6 +76,26 @@
     }
   ];
 
+  function simular(preset) {
+    var p = PRESETS[preset];
+    var total = Math.max(p.cbv.length, p.cbn.length);
+    var salida = [];
+    var i;
+    for (i = 0; i < total; i = i + 1) {
+      var deCbv = p.cbv[Math.min(i, p.cbv.length - 1)];
+      salida.push({
+        linea: i < p.cbv.length ? deCbv.linea : null,
+        pasosCbv: Math.min(i + 1, p.cbv.length) + (p.cbv[p.cbv.length - 1].infinito ? "+" : ""),
+        pasosCbn: Math.min(i + 1, p.cbn.length)
+      });
+    }
+    return salida;
+  }
+
+  var API = { CODIGO: CODIGO, PRESETS: PRESETS, simular: simular };
+  if (typeof module !== "undefined") { module.exports = API; }
+  if (typeof document === "undefined") { return; }
+
   function resaltar(expr, marca) {
     var i = expr.indexOf(marca);
     if (i < 0) { return document.createTextNode(expr); }
@@ -140,21 +160,7 @@
       { campo: "pasosCbv", rotulo: "pasos por valor" },
       { campo: "pasosCbn", rotulo: "pasos por nombre" }
     ],
-    simular: function (preset) {
-      var p = PRESETS[preset];
-      var total = Math.max(p.cbv.length, p.cbn.length);
-      var salida = [];
-      var i;
-      for (i = 0; i < total; i = i + 1) {
-        var deCbv = p.cbv[Math.min(i, p.cbv.length - 1)];
-        salida.push({
-          linea: i < p.cbv.length ? deCbv.linea : null,
-          pasosCbv: Math.min(i + 1, p.cbv.length) + (p.cbv[p.cbv.length - 1].infinito ? "+" : ""),
-          pasosCbn: Math.min(i + 1, p.cbn.length)
-        });
-      }
-      return salida;
-    },
+    simular: simular,
     alPintar: pintar
   };
 

@@ -2,26 +2,31 @@
 // tal cual y se reducen solo si el cuerpo los usa. La flecha => en el
 // tipo de un parametro pide evaluacion por nombre.
 
-def bucle: Int = bucle
+object ValorYNombre {
 
-def primeroPorNombre(x: Int, y: => Int): Int = x
+  def bucle: Int = bucle
 
-def ruidoso(n: Int): Int =
-  println(s"  evaluando $n")
-  n
+  def primeroPorNombre(x: Int, y: => Int): Int = x
 
-def porValor(x: Int, y: Int): Int = x * x
-def porNombre(x: Int, y: => Int): Int = x * x
-def dosVeces(y: => Int): Int = y + y
+  def ruidoso(n: Int): Int = {
+    println(s"  evaluando $n")
+    n
+  }
 
-@main def demo(): Unit =
-  println(s"primeroPorNombre(1, bucle) = ${primeroPorNombre(1, bucle)}")
+  def porValor(x: Int, y: Int): Int = x * x
+  def porNombre(x: Int, y: => Int): Int = x * x
+  def dosVeces(y: => Int): Int = y + y
 
-  println("porValor(ruidoso(3), ruidoso(4)):")
-  println(porValor(ruidoso(3), ruidoso(4)))
+  def main(args: Array[String]): Unit = {
+    println(s"primeroPorNombre(1, bucle) = ${primeroPorNombre(1, bucle)}")
 
-  println("porNombre(ruidoso(3), ruidoso(4)):")
-  println(porNombre(ruidoso(3), ruidoso(4)))
+    println("porValor(ruidoso(3), ruidoso(4)):")
+    println(porValor(ruidoso(3), ruidoso(4)))
 
-  println("dosVeces(ruidoso(5)):")
-  println(dosVeces(ruidoso(5)))
+    println("porNombre(ruidoso(3), ruidoso(4)):")
+    println(porNombre(ruidoso(3), ruidoso(4)))
+
+    println("dosVeces(ruidoso(5)):")
+    println(dosVeces(ruidoso(5)))
+  }
+}
