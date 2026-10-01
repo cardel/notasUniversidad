@@ -39,6 +39,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 7. [Clase 7. Grafos implícitos — 18 de septiembre](C7/Clase%207.%20Grafos%20implicitos.md)
 8. [Clase 8. Orden topológico — semana del 21 de septiembre](C8/Clase%208.%20Orden%20topologico.md)
 9. [Clase 9. Conectividad — 25 de septiembre](C9/Clase%209.%20Conectividad.md)
+10. [Clase 10. Orden topológico con la profundidad y el valor low — 2 de octubre](C10/Clase%2010.%20Orden%20topologico%20y%20Tarjan.md)
 
 ## Clases en video
 

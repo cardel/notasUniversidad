@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>low — el valor low de cada vértice</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  #entradas { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.5rem; margin-bottom: 0.7rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El valor low de cada vértice</h1>
+  <p class="intro">En el algoritmo de Tarjan cada vértice guarda <code>d</code>,
+  el orden en que se descubre, y <code>low</code>, el menor <code>d</code> al
+  que llega desde su subárbol con a lo sumo una flecha que no es de árbol. Un
+  hijo de árbol aporta su <code>low</code>; cualquier otra flecha aporta el
+  <code>d</code> del otro extremo, pero solo si ese vértice sigue en la pila.
+  La búsqueda ya corrió: el árbol está dibujado y cada vértice trae su
+  <code>d</code>. Falta escribir el <code>low</code> de cada uno.</p>
+
+  <div class="carta">
+    <h2>1. El grafo con la búsqueda hecha</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Servicios, seis vértices</button>
+      <button data-preset="1">Módulos, siete</button>
+      <button data-preset="2">Mensajería, ocho</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">Flechas azules gruesas: el árbol de la búsqueda. Flechas
+    punteadas: las demás. La búsqueda arranca en el vértice 0 y recorre cada
+    lista en el orden en que está escrita.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Escriba el low de cada vértice</h2>
+    <p class="nota" style="margin-top:0">Conviene empezar por las hojas del árbol
+    y subir: el <code>low</code> de un vértice necesita el de sus hijos.</p>
+    <div id="entradas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div id="explicaciones"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el grafo de los módulos,
+    agregue la flecha ir → lex y diga qué cambia en los <code>low</code> y en
+    los componentes, y por qué. Después, en el grafo de mensajería, quite la
+    flecha router → origen, recalcule los <code>low</code> y escriba qué
+    componentes se cierran y en qué orden.</p>
+  </div>
+
+</div>
+<script src="low.js"></script>
+</body>
+</html>

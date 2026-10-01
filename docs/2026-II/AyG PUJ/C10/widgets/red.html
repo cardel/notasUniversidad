@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>red — la fibra de un campus y sus puntos únicos de falla</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .fila-item { display: block; padding: 0.3rem 0.2rem; border-bottom: 1px solid var(--borde); font-size: 0.9rem; }
+  .fila-item b { font-family: ui-monospace, monospace; margin-left: 0.2rem; }
+  .resultado { display: block; margin-left: 1.6rem; font-size: 0.84rem; }
+  .resultado.bien { color: var(--verde); }
+  .resultado.mal { color: var(--rojo); }
+  button.mini { padding: 0.1rem 0.45rem; font-size: 0.78rem; font-weight: 500; }
+  .columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+  @media (max-width: 860px) { .columnas { grid-template-columns: 1fr; } }
+  select { font: inherit; padding: 0.35rem 0.5rem; border: 1px solid var(--borde); border-radius: 8px; }
+  #tabla-numeros { display: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La fibra de un campus</h1>
+  <p class="intro">El último y el más exigente, para cuando los anteriores ya
+  salen solos. Quince edificios y veinte enlaces de fibra: demasiado para
+  trazar la búsqueda de memoria, que es el tamaño en que estos algoritmos dejan
+  de ser un ejercicio de papel. Un edificio o un enlace es un punto único de
+  falla cuando, al quedar fuera de servicio, la red se parte en pedazos que ya
+  no se ven entre sí.</p>
+
+  <div class="carta">
+    <h2>1. La red</h2>
+    <div id="panel-grafo"></div>
+    <p class="nota" id="ver-quitado" style="text-align:center"></p>
+    <p class="nota" style="margin-top:0">Cada nodo y cada enlace de las listas de
+    abajo trae un botón que lo quita del dibujo y vuelve a colorear lo que queda.
+    Un enlace de prueba, si se agrega más abajo, se dibuja punteado y no entra en
+    los botones de quitar.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque a mano los puntos únicos de falla</h2>
+    <p style="margin-top:0"><b>Entrada:</b> la red de fibra. &nbsp;<b>Salida:</b>
+    los edificios cuya caída parte la red, y los enlaces cuya caída hace lo
+    mismo. Pruebe con los botones de quitar y marque sus respuestas antes de
+    pasar al siguiente paso.</p>
+    <div class="columnas">
+      <div>
+        <h2 style="font-size:0.95rem">Edificios</h2>
+        <div id="lista-vertices"></div>
+      </div>
+      <div>
+        <h2 style="font-size:0.95rem">Enlaces</h2>
+        <div id="lista-aristas"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Corra cortes y compare</h2>
+    <div class="prediccion">
+      <button id="btn-correr" class="primario">Correr cortes y comparar con mis marcas</button>
+    </div>
+    <div id="veredicto-comparar" class="veredicto"></div>
+    <div id="ver-corrida" style="margin-top:0.6rem"></div>
+    <div id="tabla-numeros" class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Edificio</th><th>d</th><th>low</th><th>Padre en el árbol</th><th>Marca</th></tr></thead>
+        <tbody id="cuerpo-numeros"></tbody>
+      </table>
+    </div>
+    <p class="nota">Después de correr, los puntos de articulación quedan con
+    borde rojo en el dibujo y los puentes en rojo grueso.</p>
+  </div>
+
+  <div class="carta">
+    <h2>4. Reforzar la red con un enlace</h2>
+    <p style="margin-top:0">Escoja dos edificios que no estén unidos y agregue un
+    enlace de prueba. <code>cortes</code> corre de nuevo sobre la red con el enlace
+    y dice cuántos puntos únicos de falla quedan.</p>
+    <div class="prediccion">
+      <select id="sel-a"></select>
+      <span>con</span>
+      <select id="sel-b"></select>
+      <button id="btn-reforzar" class="primario">Agregar y volver a correr</button>
+      <button id="btn-quitar-extra">Quitar el enlace de prueba</button>
+    </div>
+    <div id="veredicto-refuerzo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Tres preguntas sobre la misma red.</p>
+    <ul style="margin-top:0.3rem">
+      <li>Encuentre un solo enlace que haga que ninguno de los tres puentes
+      siga siéndolo. ¿Cuántos puntos de articulación desaparecen con él, y cuáles
+      siguen?</li>
+      <li>¿Cuál es el mínimo de enlaces que hay que agregar para que la red no
+      tenga ningún punto único de falla? Mire los extremos de la red, los
+      pedazos que cuelgan de un solo punto.</li>
+      <li>Hay un edificio que es punto de articulación y no tiene ningún enlace
+      puente. Diga cuál es y por qué sigue siendo único.</li>
+    </ul>
+  </div>
+
+</div>
+<script src="red.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>topodfs — el orden topológico con la profundidad</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-all; }
+  .prediccion select { padding: 0.4rem 0.5rem; font-size: 1rem; border: 1px solid var(--borde); border-radius: 8px; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El orden topológico con la profundidad</h1>
+  <p class="intro">Una búsqueda en profundidad pinta cada vértice de gris al
+  entrar y de negro al salir, y cada vértice que se pinta de negro se agrega a
+  <code>orden</code>. La lista sale por tiempo de finalización creciente; al
+  invertirla queda el orden topológico. Si la búsqueda mira una flecha hacia un
+  vértice gris, encontró un ciclo. Aquí se ejecutan las dos formas del código:
+  la recursiva, donde lo pendiente vive en la pila de llamadas, y la de pila
+  explícita, donde vive en una lista de pares.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo dirigido en lista de
+    adyacencia. &nbsp;<b>Salida:</b> la lista <code>orden</code> y el valor de
+    <code>ciclo[0]</code>.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Receta, siete vértices</button>
+      <button data-preset="1">Proyecto, ocho</button>
+      <button data-preset="2">Paquetes, nueve</button>
+      <button data-preset="3">Con un ciclo, seis</button>
+    </div>
+    <div class="presets" id="presets-version" style="margin-top:0.5rem">
+      <span class="nota" style="margin-top:0">Versión:</span>
+      <button data-version="recursiva" class="primario">Recursiva</button>
+      <button data-version="pila">Con pila explícita</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">Sobre cada vértice, <i>d</i>/<i>f</i>: el punto es una <i>f</i> que todavía no se escribe. Blanco, gris y negro son los tres colores del código.</div>
+    <div class="prediccion">
+      <span id="pregunta"></span>
+      <select id="eleccion"></select>
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute la búsqueda</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rot-estructura">Pila de llamadas</span>: <span class="viva" id="ver-estructura">vacía</span></div>
+        <div><span id="rot-orden">orden (se llena por f creciente)</span>: <span class="viva" id="ver-orden">[ ]</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">La flecha azul es la que se está mirando y se pone
+        verde cuando el otro extremo está blanco y la búsqueda baja por ella.
+        Una flecha roja llega a un vértice gris: es la que activa
+        <code>ciclo[0]</code>.</div>
+      </div>
+    </div>
+    <div id="resultado-final" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los dos tiempos, vértice por vértice</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th><i>d</i></th><th><i>f</i></th><th>Color</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota">El reloj avanza al pintar de gris y al pintar de negro,
+    así que los tiempos van de 1 a 2|V|. En la versión con pila los
+    <i>d</i> y <i>f</i> pueden salir distintos de los de la recursiva: la pila
+    visita los vecinos en el orden contrario al de la lista, y el resultado
+    sigue siendo un orden válido.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el grafo de los paquetes,
+    ejecute las dos versiones y compare las tablas de <i>d</i> y <i>f</i>: diga
+    qué vértice cambia de tiempos y por qué, y compruebe flecha por flecha que
+    el orden de las dos sigue siendo válido. Después, en el de la receta,
+    agregue la flecha servir → cebolla y diga, sin ejecutar, en qué momento la
+    búsqueda llega a un vértice gris y cuál de las flechas del ciclo es la que
+    la delata.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="topodfs.js"></script>
+</body>
+</html>

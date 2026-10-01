@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tarjan — una sola búsqueda, una pila</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-all; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El algoritmo de Tarjan</h1>
+  <p class="intro">Una sola búsqueda en profundidad numera los vértices con
+  <code>d</code>, los apila al descubrirlos y calcula <code>low</code>, el menor
+  <code>d</code> que alcanza cada uno. Cuando al terminar un vértice
+  <code>low[u] == d[u]</code>, <code>u</code> es la raíz de un componente y todo
+  lo que quedó apilado encima de él, hasta <code>u</code>, sale junto con él. Se
+  ejecutan las dos formas del código: la recursiva, que usa la pila de llamadas,
+  y la que lleva su propia lista <code>llamadas</code> de pares
+  <code>[u, i]</code>.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo dirigido en lista de
+    adyacencia, con <span id="ver-n">7</span> vértices.
+    &nbsp;<b>Salida:</b> los componentes fuertemente conexos, en el orden en que
+    se cierran.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Páginas web, siete vértices</button>
+      <button data-preset="1">Ciudad, ocho</button>
+      <button data-preset="2">Seguidores, nueve</button>
+    </div>
+    <div class="presets" id="presets-version" style="margin-top:0.5rem">
+      <span class="nota" style="margin-top:0">Versión:</span>
+      <button data-version="recursiva" class="primario">Recursiva</button>
+      <button data-version="pila">Con lista de llamadas</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">Sobre cada vértice, <i>d</i>/<i>low</i>. Azul claro: en la
+    pila. Amarillo: ya desapilado, componente por cerrar. Cada componente
+    cerrado estrena color. Flecha ámbar: la que se mira; verde: baja a un vértice
+    nuevo; azul: del árbol; morada: la que actualiza <i>low</i>.</div>
+    <div class="prediccion">
+      <span>¿Cuántos componentes fuertemente conexos tiene?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute el algoritmo</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rot-llamadas">Pila de llamadas</span>: <span class="viva" id="ver-llamadas">vacía</span></div>
+        <div>pila de vértices (la cima es el último): <span class="viva" id="ver-pila">[ ]</span></div>
+        <div>en_pila[v] es True para: <span class="viva" id="ver-enpila">ninguno</span></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El reloj solo avanza al descubrir: <code>d</code> va de 1 a
+        |V|. Las primeras líneas de <code>en_blanco</code> se ejecutan una vez
+        por vértice; el algoritmo propiamente dicho empieza en la línea 22.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los tres arreglos, vértice por vértice</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th><code>d</code></th><th><code>low</code></th><th><code>en_pila</code></th><th>Componente</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los componentes, en el orden en que se cierran</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Cierre</th><th>Lo cierra</th><th>Vértices, en el orden en que salen de la pila</th><th>Tamaño</th></tr></thead>
+        <tbody id="cuerpo-comp"></tbody>
+      </table>
+    </div>
+    <div id="observacion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el grafo de las páginas web,
+    ejecute las dos versiones y compare las dos tablas de componentes. Después
+    cambie la línea 32 de la recursiva para que use <code>low[v]</code> en vez de
+    <code>d[v]</code> y compare los valores de <code>low</code> y los
+    componentes que salen en los tres grafos. Por último, agregue la flecha ayuda → inicio
+    y diga cuántos componentes quedan.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="tarjan.js"></script>
+</body>
+</html>

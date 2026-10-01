@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cortesdfs — puntos de articulación y puentes en una sola pasada</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-word; }
+  .opciones button { text-align: left; }
+  #opciones-raiz { flex-direction: column; align-items: stretch; }
+  .mensaje { min-height: 3.2rem; font-size: 0.9rem; background: var(--ambar-suave); border-radius: 8px; padding: 0.4rem 0.6rem; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Puntos de articulación y puentes en una sola pasada</h1>
+  <p class="intro">La búsqueda en profundidad lleva dos números por vértice, el
+  momento en que se descubre, <code>d</code>, y el más bajo que alcanza su
+  subárbol, <code>low</code>. Con ellos, una comparación al volver de cada hijo
+  decide si el vértice es punto de articulación y otra si la arista es puente.
+  Aquí se ejecutan las dos formas del recorrido, la recursiva y la de pila
+  explícita, y cada vértice muestra <code>d/low</code> mientras corre.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo no dirigido, sin aristas
+    repetidas. &nbsp;<b>Salida:</b> los puntos de articulación y los puentes.
+    La búsqueda arranca en el 0 y recorre los vecinos de menor a mayor.</p>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Nueve vértices, raíz con dos hijos</button>
+      <button data-preset="1">Ocho vértices, raíz con un solo hijo</button>
+      <button data-preset="2">Diez vértices, un punto sin puente</button>
+    </div>
+    <div id="panel-grafo"></div>
+    <div class="nota leyenda" style="text-align:center">
+      <span><b style="color:#1f5fa8">━</b> arista del árbol</span>
+      <span><b style="color:#2e7d32">┅</b> retroceso que baja un low</span>
+      <span><b style="color:#b3261e">━</b> puente</span>
+      <span><b style="color:#b3261e">●</b> punto de articulación</span>
+      <span>sobre cada vértice: <code>d/low</code></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos puntos de articulación tiene?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute, con la versión que quiera</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Recorrido:</span>
+      <button data-version="recursiva" class="primario">Profundidad recursiva</button>
+      <button data-version="pila">Profundidad con pila</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rot-pila">Pila de llamadas</span>: <span class="viva" id="ver-pila">vacía</span></div>
+        <div>Puntos de articulación: <span class="viva" id="ver-art">ninguno todavía</span></div>
+        <div>Puentes: <span class="viva" id="ver-puentes">ninguno todavía</span></div>
+        <div>Devuelve: <span class="viva" id="ver-devuelve">(aún no)</span></div>
+        <div class="mensaje" id="ver-msg"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los números, vértice por vértice</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Vértice</th><th>d</th><th>low</th><th>Marca</th></tr></thead>
+        <tbody id="cuerpo-vertices"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La raíz es distinta</h2>
+    <div style="margin-bottom:0.3rem"><b>Compare el primer grafo con el segundo.
+    ¿Qué decide que la raíz sea punto de articulación?</b></div>
+    <div class="opciones" id="opciones-raiz">
+      <button data-op="correcta">Cuántos hijos tiene en el árbol de la profundidad: con dos o más lo es, con uno no</button>
+      <button data-op="vecinos">Cuántos vecinos tiene en el grafo: con dos o más lo es</button>
+      <button data-op="low">Que low[v] ≥ d[raíz] para alguno de sus hijos, igual que en los demás vértices</button>
+    </div>
+    <div id="veredicto-raiz" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el tercer grafo, el vértice 2
+    es punto de articulación y ninguna de sus aristas es puente. Ejecute la
+    versión recursiva y encuentre la línea y el hijo por los que queda
+    marcado. Después cambie el orden de las listas de adyacencia, de mayor a
+    menor, y vuelva a trazar a mano: ¿cambian los puntos de articulación? ¿Y
+    los valores de <code>d</code>?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="cortesdfs.js"></script>
+</body>
+</html>
