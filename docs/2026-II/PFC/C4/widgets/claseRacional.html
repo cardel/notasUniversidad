@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>claseRacional — prediga lo que responde el REPL</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .pred { border-top: 1px solid var(--borde); padding-top: 0.8rem; margin-top: 0.8rem; }
+  .pred:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .expr {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.95rem; font-weight: 700; color: var(--azul);
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.35rem 0.6rem; display: inline-block;
+  }
+  .opciones-pred { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem; }
+  .opciones-pred button { font-family: ui-monospace, monospace; font-size: 0.9rem; }
+  pre.repl {
+    display: none; margin: 0.6rem 0 0;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-left: 4px solid var(--verde); border-radius: 8px;
+    padding: 0.5rem 0.7rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.84rem;
+  }
+  pre.repl.visible { display: block; }
+  .opciones { flex-direction: column; align-items: flex-start; }
+  .opciones button { text-align: left; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>claseRacional: prediga lo que responde el REPL</h1>
+  <p class="intro">Una clase de tres líneas y un objeto creado con
+  <code>new</code>. Abajo hay cuatro expresiones y, para cada una, cinco
+  respuestas posibles: elija la suya antes de ver la del REPL. Dos devuelven
+  un entero, una imprime algo que no se parece a un número y la cuarta no
+  llega a compilar.</p>
+
+  <div class="carta">
+    <h2>1. La clase y el objeto</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">class Racional(x: Int, y: Int) {</span></div><div class="linea"><span class="num"></span><span class="txt">  def numer = x</span></div><div class="linea"><span class="num"></span><span class="txt">  def denom = y</span></div><div class="linea"><span class="num"></span><span class="txt">}</span></div><div class="linea"><span class="num"></span><span class="txt"> </span></div><div class="linea"><span class="num"></span><span class="txt">scala&gt; val x = new Racional(1, 2)</span></div><div class="linea"><span class="num"></span><span class="txt">val x: Racional = Racional@2faf6e4a</span></div></div>
+    <p class="nota">La cabecera recibe el 1 y el 2 con los nombres
+    <code>x</code> y <code>y</code>. El cuerpo declara dos
+    <code>def</code>: <code>numer</code> y <code>denom</code>. El
+    <code>val x</code> del REPL es otro nombre, el del objeto, y es el que se
+    usa a la izquierda del punto.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Prediga las cuatro respuestas</h2>
+    <div id="predicciones"></div>
+    <div class="progreso" id="contador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Dentro de la clase <code>x</code> vale 1. ¿Por qué entonces <code>x.x</code> falla y <code>x.numer</code> responde 1?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Porque numer está declarado con def en el cuerpo y es miembro, mientras que x solo nombra el parámetro del constructor, que no lo es.</button>
+      <button data-razon="privado" data-msg="No hay ningún private escrito. La diferencia no está entre dos miembros con permisos distintos: x nunca llegó a ser miembro, es el nombre con que la cabecera recibe el 1.">Porque x es privado y numer es público.</button>
+      <button data-razon="choque" data-msg="No chocan: el x del REPL nombra el objeto y el x de la cabecera nombra el parámetro, y son dos ámbitos separados. x.x falla por lo que no existe a la derecha del punto.">Porque el nombre x ya está ocupado por el val x del REPL y los dos chocan.</button>
+      <button data-razon="orden" data-msg="El orden no cambia nada: numer se puede declarar antes o después y sigue respondiendo. Lo que decide es qué quedó declarado en el cuerpo con def.">Porque numer está escrito antes que y, y el REPL resuelve los nombres en orden.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La definición introduce dos cosas con el mismo
+    nombre: el tipo <code>Racional</code> y el constructor
+    <code>Racional</code>. Los nombres de la cabecera, <code>x</code> y
+    <code>y</code>, no entran en ese trato: sirven dentro del cuerpo y nadie
+    los alcanza desde afuera. Lo que el cliente selecciona con el punto es la
+    lista de <code>def</code> del cuerpo, y por eso el numerador se pide como
+    <code>x.numer</code> aunque adentro se llame <code>x</code>.</p>
+    <p>La respuesta <code>Racional@2faf6e4a</code> es la del
+    <code>toString</code> heredado, que imprime el nombre de la clase y una
+    dirección. Para que el REPL escriba <code>1/2</code> hay que escribirle a
+    <code>Racional</code> su propio <code>toString</code>.</p>
+  </div>
+</div>
+<script src="claseRacional.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>operadores — prediga las siete respuestas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  table.pred td.expr { text-align: left; font-family: ui-monospace, monospace; white-space: nowrap; }
+  table.pred input[type="text"] {
+    width: 7.5rem; text-align: center; font-family: ui-monospace, monospace;
+    font-size: 0.95rem; padding: 0.25rem; border: 1px solid var(--borde); border-radius: 4px;
+  }
+  table.pred input.bien { border-color: var(--verde) !important; background: var(--verde-suave); }
+  table.pred input.mal { border-color: var(--rojo) !important; background: var(--rojo-suave); }
+  table.pred tr.actual td { background: var(--resalte); }
+  table.pred td.real { font-family: ui-monospace, monospace; color: var(--verde); font-weight: 700; min-width: 4rem; }
+  table.pred td.pista { text-align: left; font-size: 0.82rem; color: var(--rojo); min-width: 15rem; }
+  #panel-codigo { position: relative; max-height: 430px; overflow-y: auto; }
+  #pie { margin-top: 0.7rem; font-size: 0.92rem; color: var(--gris); min-height: 3.4em; }
+  .opciones { flex-direction: column; align-items: flex-start; }
+  .opciones button { text-align: left; font-family: ui-monospace, monospace; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>operadores: prediga las siete respuestas</h1>
+  <p class="intro">Los siete métodos de <code>Racional</code> se llaman
+  <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>,
+  <code>==</code>, <code>&lt;</code> y <code>max</code>, y las siete líneas
+  del demo los invocan con <code>r1 = 1/2</code> y <code>r2 = 2/3</code>.
+  Escriba primero lo que espera en cada línea —un racional como
+  <code>7/6</code>, o <code>true</code> y <code>false</code> donde la línea
+  compara— y después ejecute: cada paso dice qué método entró, con qué
+  <code>this</code> y con qué <code>r</code>.</p>
+
+  <div class="carta">
+    <h2>1. Las siete líneas</h2>
+    <p class="nota" style="margin-top:0"><code>val r1 = new Racional(1, 2)</code>
+    y <code>val r2 = new Racional(2, 3)</code>. Fracciones equivalentes valen:
+    <code>2/6</code> cuenta como <code>1/3</code>.</p>
+    <div class="envoltura-tabla">
+      <table class="pred">
+        <thead><tr><th>línea</th><th>su respuesta</th><th>imprime</th><th></th></tr></thead>
+        <tbody id="cuerpo-predicciones"></tbody>
+      </table>
+    </div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-comprobar" class="primario">Comprobar las siete</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute y mire qué método entra</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El contador de cada <code>def</code> cuenta las veces
+        que ese método entró en las siete líneas. La columna
+        <b>imprime</b> de la tabla de arriba se va llenando a medida que cada
+        línea termina.</div>
+      </div>
+    </div>
+    <div id="pie"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Terminada la línea <code>r1 + r2</code>, ¿cuánto vale <code>r1</code>?</h2>
+    <div class="opciones">
+      <button data-q1="ok">1/2, lo mismo que antes</button>
+      <button data-q1="no" data-msg="7/6 es lo que devolvió la expresión, no lo que guarda r1. El método construyó un Racional nuevo con esos dos números; numer y denom de r1 siguen en 1 y 2.">7/6, el resultado de la suma</button>
+      <button data-q1="no" data-msg="Guardar el resultado no cambia a r1. Si nadie lo guarda, el objeto nuevo se descarta y r1 queda igual.">1/2 solo si el resultado se guardó en un val</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cuatro">
+    <h2>4. ¿Cómo se agrupa <code>r1 * r1 + r2 * r2</code>?</h2>
+    <div class="opciones">
+      <button data-q2="ok">(r1 * r1) + (r2 * r2)</button>
+      <button data-q2="no" data-msg="Así se lee de izquierda a derecha, y da 11/12 por 2/3 = 11/18. El agrupamiento no sigue el orden de lectura: * va antes que +.">((r1 * r1) + r2) * r2</button>
+      <button data-q2="no" data-msg="Para eso harían falta paréntesis escritos. Sin ellos, + recibe los dos productos ya calculados.">r1 * (r1 + r2) * r2</button>
+    </div>
+    <div id="veredicto-cuatro" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>5. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>r1 + r2</code> es <code>r1.+(r2)</code>:
+    <code>r1</code> entra como <code>this</code>, <code>r2</code> como
+    <code>r</code>, y el cuerpo del método hace un <code>new Racional</code> con
+    los dos números que calculó. Por eso <code>r1</code> sigue en
+    <code>1/2</code> cuando la línea termina, y <code>r2</code> en
+    <code>2/3</code>: los chips repitieron los mismos valores en los doce
+    pasos. El racional nuevo es otro objeto, y en el demo
+    <code>println</code> lo imprime y nadie lo guarda.</p>
+    <p>En <code>r1 * r1 + r2 * r2</code> el agrupamiento lo decide el primer
+    carácter del nombre del método, no el orden en que se lee la línea:
+    <code>*</code> antes que <code>+</code>. El paso a paso lo deja ver dos
+    veces seguidas en <code>*</code>, con <code>1/4</code> y <code>4/9</code>, y
+    una sola en <code>+</code> al final. Leyendo de izquierda a derecha saldría
+    <code>((r1 * r1) + r2) * r2 = 11/18</code>.</p>
+    <p>Dos renglones más del tablero final: <code>max</code> se usa entre sus
+    dos operandos igual que un símbolo, <code>r1 max r2</code>, y devuelve uno
+    de los objetos que ya existían en lugar de construir otro; y <code>/</code>
+    se queda en <code>× 0</code>, porque ninguna de las siete líneas lo
+    llama.</p>
+    <p><a href="../Ejercicios/">Volver a los ejercicios de la sesión →</a></p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="operadores.js"></script>
+</body>
+</html>

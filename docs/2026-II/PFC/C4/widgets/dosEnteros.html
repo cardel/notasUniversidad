@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dosEnteros — ¿por qué abstraer datos?</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  td.expr { text-align: left; font-family: ui-monospace, monospace; font-size: 0.85rem; }
+  td.si { color: var(--verde); font-weight: 700; }
+  td.no { color: var(--rojo); }
+  tr.doble td { background: var(--verde-suave); }
+  .opciones { flex-direction: column; align-items: stretch; }
+  .opciones button { text-align: left; font-family: ui-monospace, monospace; font-size: 0.88rem; }
+  .elegir { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; margin-bottom: 0.7rem; }
+  .elegir select { font-family: ui-monospace, monospace; font-size: 0.95rem; padding: 0.25rem; border: 1px solid var(--borde); border-radius: 4px; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #hueco { background: var(--resalte); padding: 0 0.2rem; }
+  #pie-pares { margin-top: 0.5rem; font-family: ui-monospace, monospace; font-size: 0.9rem; color: var(--gris); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>dosEnteros: el cruce que hay que acertar a mano</h1>
+  <p class="intro">Un racional guardado como dos enteros separados se suma
+  escribiendo el emparejamiento a mano. Cuatro expresiones compiten por la
+  línea de <code>numR</code>; las cuatro son de tipo <code>Int</code>, las
+  cuatro compilan y las cuatro devuelven un número. Elija la de la suma y
+  después compare las cuatro con otros racionales.</p>
+
+  <div class="carta">
+    <h2>1. Sin abstracción: cuatro enteros con nombre propio</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">val num1 = 1</span></div><div class="linea"><span class="num"></span><span class="txt">val den1 = 2</span></div><div class="linea"><span class="num"></span><span class="txt">val num2 = 2</span></div><div class="linea"><span class="num"></span><span class="txt">val den2 = 3</span></div><div class="linea"><span class="num"></span><span class="txt">// Sumar 1/2 + 2/3 ?</span></div><div class="linea"><span class="num"></span><span class="txt">val numR = <span id="hueco">???</span></span></div><div class="linea"><span class="num"></span><span class="txt">val denR = den1 * den2</span></div></div>
+    <p class="nota">Los cuatro enteros están a la vista y ninguno sabe de qué
+    racional viene: <code>den1</code> y <code>num2</code> valen 2 los dos.
+    <code>1/2 + 2/3</code> es <code>7/6</code>.</p>
+    <div class="opciones">
+      <button data-cand="propio">val numR = num1*den1 + num2*den2</button>
+      <button data-cand="cruzado">val numR = num1*den2 + num2*den1</button>
+      <button data-cand="tipos">val numR = num1*num2 + den1*den2</button>
+      <button data-cand="directo">val numR = num1 + num2 &nbsp;&nbsp;(con denR = den1 + den2)</button>
+    </div>
+    <div id="veredicto-numr" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-pares">
+    <h2>2. Las mismas cuatro candidatas con otros racionales</h2>
+    <div class="elegir">
+      <label>racionales a sumar: <select id="sel-par"></select></label>
+      <button id="btn-comparar" class="primario">Comparar las cuatro</button>
+    </div>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>numR</th><th>denR</th><th>resultado</th><th>valor</th><th>¿da la suma?</th></tr></thead>
+        <tbody id="cuerpo-pares"></tbody>
+      </table>
+    </div>
+    <div id="pie-pares"></div>
+    <div id="veredicto-pares" class="veredicto"></div>
+    <p class="nota">Con <code>1/2 + 2/3</code> dos de las candidatas
+    equivocadas dan 8 y empatan. Con <code>3/4 + 5/7</code> se separan, y con
+    <code>1/2 + 1/2</code> una equivocada entrega el número correcto.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-abstraccion">
+    <h2>3. Con abstracción: el cruce se escribe una vez</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">val r1 = new Racional(1, 2)</span></div><div class="linea"><span class="num"></span><span class="txt">val r2 = new Racional(2, 3)</span></div><div class="linea"><span class="num"></span><span class="txt">val r3 = r1.suma(r2)</span></div></div>
+    <p style="margin-top:0.7rem">Ahí no hay un solo entero nombrado. El
+    numerador de <code>r1</code> y el denominador de <code>r2</code> se
+    encuentran dentro de <code>suma</code>, que se escribe una vez y queda
+    escrita; quien suma dos racionales ya no puede equivocar el cruce porque
+    no lo escribe.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>racionales en cadena</th><th>nombres con enteros sueltos</th><th>nombres con <code>Racional</code></th><th>diferencia</th></tr></thead>
+        <tbody id="cuerpo-nombres"></tbody>
+      </table>
+    </div>
+    <p class="nota">Sumar dos: a la izquierda <code>num1</code>,
+    <code>den1</code>, <code>num2</code>, <code>den2</code>,
+    <code>numR</code> y <code>denR</code>; a la derecha <code>r1</code>,
+    <code>r2</code> y <code>r3</code>. Cada racional que se agrega cuesta
+    cuatro nombres a la izquierda y dos a la derecha.</p>
+
+    <h2 style="margin-top:1.2rem">4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El compilador acepta las cuatro candidatas: las
+    cuatro multiplican y suman <code>Int</code>, y <code>Int</code> es lo
+    único que declararon <code>num1</code>, <code>den1</code>,
+    <code>num2</code> y <code>den2</code>. Que <code>den1</code> sea el
+    denominador del primer racional y no del segundo vive en el nombre de la
+    variable, que el compilador no lee.</p>
+    <p>Con un tipo <code>Racional</code>, en cambio, <code>r1.suma(r2)</code>
+    tiene una sola lectura posible, y la prueba que la verifica se escribe
+    una vez para todos los racionales en lugar de revisarse cada vez que
+    alguien teclea el cruce.</p>
+    <p><a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a></p>
+  </div>
+</div>
+<script src="dosEnteros.js"></script>
+</body>
+</html>
