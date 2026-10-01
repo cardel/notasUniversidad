@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ordenes — cuáles listas son órdenes topológicos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .prop label { cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuáles listas son órdenes topológicos</h1>
+  <p class="intro">Un orden topológico pone cada vértice antes de todos los
+  que le siguen por una flecha. La búsqueda en profundidad entrega uno, pero
+  hay otras formas de ordenar los vértices con los mismos tiempos y no todas
+  sirven. Cada grafo trae la tabla de <i>d</i> y <i>f</i> de una búsqueda ya
+  hecha y varias propuestas; hay que marcar las que son órdenes topológicos y
+  después leer por qué falla cada una de las otras.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y los tiempos de la búsqueda</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Compilador, seis vértices</button>
+      <button data-preset="1">Mudanza, siete</button>
+      <button data-preset="2">Casa, ocho</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">Sobre cada vértice, <i>d</i>/<i>f</i> de una búsqueda que arranca en el vértice de número más bajo y recorre las listas en su orden.</div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem"><table id="tabla-tiempos"></table></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque los órdenes topológicos</h2>
+    <div id="propuestas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="resumen" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el grafo de la casa, el orden
+    por <i>d</i> creciente sí sirve. Agregue una flecha de plomería a eléctrica
+    y diga qué le pasa a ese orden y por qué el de <i>f</i> decreciente
+    sigue valiendo. Después escriba, para el grafo del compilador, otro orden de
+    Kahn distinto de los que aparecen y compruebe sus seis flechas.</p>
+  </div>
+
+</div>
+<script src="ordenes.js"></script>
+</body>
+</html>

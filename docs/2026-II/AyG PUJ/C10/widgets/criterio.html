@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>criterio — la comparación que decide</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+  @media (max-width: 760px) { .columnas { grid-template-columns: 1fr; } }
+  .navegacion { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .pregunta { margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid var(--borde); }
+  .pregunta b { display: block; margin-bottom: 0.3rem; }
+  table.datos td:first-child { text-align: left; width: 38%; }
+  table.datos td:last-child { text-align: left; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La comparación que decide</h1>
+  <p class="intro">Cada escenario es un grafo recorrido en profundidad desde el
+  0, con los vecinos de menor a mayor. Se da un vértice <code>u</code> y uno de
+  sus hijos <code>v</code> en el árbol, junto con los números que el código
+  tiene a la mano al volver de <code>v</code>. Hay que decidir si el hijo hace
+  de <code>u</code> un punto de articulación y si la arista <code>u–v</code> es
+  un puente. Cada respuesta equivocada explica qué comparación se hizo mal.</p>
+
+  <div class="carta">
+    <h2>Escenario <span id="num-escenario"></span></h2>
+    <div class="navegacion">
+      <button id="btn-anterior">← Anterior</button>
+      <button id="btn-siguiente" class="primario">Siguiente →</button>
+      <span class="nota" id="marcador" style="margin-top:0"></span>
+    </div>
+    <div class="columnas">
+      <div>
+        <div id="panel-grafo"></div>
+        <div class="nota" style="text-align:center">Azul: aristas del árbol. Verde punteado: aristas de retroceso. Sobre cada vértice, su <code>d</code>.</div>
+      </div>
+      <div>
+        <div class="envoltura-tabla">
+          <table class="datos">
+            <tbody id="cuerpo-datos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="pregunta">
+      <b id="pregunta-art"></b>
+      <div class="opciones">
+        <button data-pregunta="a" data-resp="si">Sí</button>
+        <button data-pregunta="a" data-resp="no">No</button>
+      </div>
+      <div id="veredicto-art" class="veredicto"></div>
+    </div>
+
+    <div class="pregunta">
+      <b>¿La arista (u, v) es un puente?</b>
+      <div class="opciones">
+        <button data-pregunta="p" data-resp="si">Sí</button>
+        <button data-pregunta="p" data-resp="no">No</button>
+      </div>
+      <div id="veredicto-puente" class="veredicto"></div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Hay un escenario donde un vértice
+    es punto de articulación y el hijo que se pregunta no es el motivo. Encuéntrelo
+    y diga cuál hijo sí lo es. Después construya un grafo no dirigido donde una
+    raíz de grado 3 no sea punto de articulación, y diga cuántos hijos tiene en el árbol.</p>
+  </div>
+
+</div>
+<script src="criterio.js"></script>
+</body>
+</html>
