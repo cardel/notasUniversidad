@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>desenlazar — el nodo que mira atrás</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El nodo que mira atrás</h1>
+  <p class="intro">La lista doblemente enlazada es <code>3 ↔ 9 ↔ 1 ↔ 6</code>:
+  <code>cabeza</code> señala el nodo del 3 y <code>ultimo</code> el del 6. A
+  <code>desenlazar(x)</code> se le pasa un puntero que ya está en la mano, así
+  que no hay nada que buscar.</p>
+
+  <div class="carta">
+    <h2>1. Desenlazar el nodo del 1</h2>
+    <div class="codigo" id="codigo-desenlazar"></div>
+    <div class="prediccion">
+      <span>escrituras de puntero:</span>
+      <input type="number" id="pred-escrituras" placeholder="?">
+      <span>cadena desde cabeza:</span>
+      <input type="text" id="pred-cadena" placeholder="a b c" style="width:8rem">
+      <button id="btn-uno" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-uno" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Línea por línea</h2>
+    <div class="botones">
+      <button id="btn-nodo-1">Sobre el nodo del 1</button>
+      <button id="btn-nodo-3">Sobre el nodo del 3, que es la cabeza</button>
+    </div>
+    <div class="estado">
+      <div class="chips" id="chips-traza"></div>
+      <div class="secuencia" id="adelante-traza"></div>
+      <div class="secuencia" id="atras-traza"></div>
+      <div class="progreso" id="progreso-traza"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente línea</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La primera fila es lo que se alcanza siguiendo
+    <code>siguiente</code> desde <code>cabeza</code>; la segunda, lo que se
+    alcanza siguiendo <code>anterior</code> desde <code>ultimo</code>. El nodo
+    sale de una antes que de la otra.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El mismo código sobre la cabeza</h2>
+    <p style="margin-top:0">Ahora <code>x</code> es el nodo del 3, el primero de
+    la cadena.</p>
+    <div class="prediccion">
+      <span>escrituras de puntero:</span>
+      <input type="number" id="pred-escrituras-3" placeholder="?">
+      <span>cadena desde cabeza:</span>
+      <input type="text" id="pred-cadena-3" placeholder="a b c" style="width:8rem">
+      <button id="btn-cabeza" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cabeza" class="veredicto"></div>
+    <p style="margin-bottom:0">¿Cuál de las dos escrituras cambia respecto al
+    caso del 1?</p>
+    <div class="opciones" id="opciones-primerif">
+      <button data-op="cabeza">La del primer <code>if</code>: escribe <code>cabeza</code></button>
+      <button data-op="ultimo">La del segundo <code>if</code>: escribe <code>ultimo</code></button>
+      <button data-op="ninguna">Ninguna: se ejecutan las mismas dos líneas</button>
+    </div>
+    <div id="veredicto-primerif" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lo mismo sin el campo <code>anterior</code></h2>
+    <p style="margin-top:0">La misma lista, ahora enlazada simple:
+    <code>3 → 9 → 1 → 6</code>. Se tiene en la mano el puntero al nodo del 1 y
+    hay que borrarlo. ¿Cuántos nodos hay que visitar desde la cabeza?</p>
+    <div class="opciones" id="opciones-simple">
+      <button data-op="0">Ninguno: el puntero ya está</button>
+      <button data-op="1">1</button>
+      <button data-op="2">2</button>
+      <button data-op="4">4</button>
+    </div>
+    <div id="veredicto-simple" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El campo <code>anterior</code> convierte el desenlace en
+    dos escrituras que no dependen del tamaño: Θ(1). Los dos <code>if</code>
+    son los extremos, donde del otro lado hay <code>NULL</code> y la escritura
+    cae sobre <code>cabeza</code> o sobre <code>ultimo</code>. En la simple el
+    empalme también son dos escrituras, pero antes hay que caminar hasta el
+    nodo anterior: Θ(n).</div>
+  </div>
+</div>
+<script src="desenlazar.js"></script>
+</body>
+</html>
