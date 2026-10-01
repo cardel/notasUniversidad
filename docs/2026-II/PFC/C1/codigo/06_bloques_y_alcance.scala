@@ -2,58 +2,67 @@
 // auxiliares y se reduce a su ultima expresion. Y lo de adentro tapa lo
 // de afuera sin tocarlo.
 
-def anuncia(): Int =
-  println("hola")
-  4
+object BloquesYAlcance {
 
-val conVal: Int = anuncia()      // imprime aqui, una sola vez
-def conDef: Int = anuncia()      // imprime cada vez que se use
+  def anuncia(): Int = {
+    println("hola")
+    4
+  }
 
-// Un bloque para calcular algo antes de devolver.
-def cuadradoConSigno(x: Int): Int =
-  val positivo = if (x < 0) -x else x
-  positivo * x
+  val conVal: Int = anuncia()      // imprime aqui, una sola vez
+  def conDef: Int = anuncia()      // imprime cada vez que se use
 
-// El if es una expresion: se reduce a un valor.
-val umbral = 5
-val k: Int = if (umbral < 3) 2 else 11
+  // Un bloque para calcular algo antes de devolver.
+  def cuadradoConSigno(x: Int): Int = {
+    val positivo = if (x < 0) -x else x
+    positivo * x
+  }
 
-// Alcance lexico: el x de adentro tapa al de afuera.
-val x = 5
-def f(y: Int): Int = y + 1
+  // El if es una expresion: se reduce a un valor.
+  val umbral = 5
+  val k: Int = if (umbral < 3) 2 else 11
 
-val resultado: Int =
-  val bloque =
-    val x = f(3)
-    x * x
-  bloque + x
+  // Alcance lexico: el x de adentro tapa al de afuera.
+  val x = 5
+  def f(y: Int): Int = y + 1
 
-// Cortocircuito: && para al primer false, & evalua los dos.
-def ruidosoBool(v: Boolean): Boolean =
-  println(s"  evaluando $v")
-  v
+  val resultado: Int = {
+    val bloque = {
+      val x = f(3)
+      x * x
+    }
+    bloque + x
+  }
 
-@main def demo(): Unit =
-  println("--- val frente a def ---")
-  println(s"conVal = $conVal")
-  println(s"conVal = $conVal")
-  println("ahora con def, dos usos:")
-  println(s"conDef = $conDef")
-  println(s"conDef = $conDef")
+  // Cortocircuito: && para al primer false, & evalua los dos.
+  def ruidosoBool(v: Boolean): Boolean = {
+    println(s"  evaluando $v")
+    v
+  }
 
-  println("--- el bloque ---")
-  println(s"cuadradoConSigno(5)  = ${cuadradoConSigno(5)}")
-  println(s"cuadradoConSigno(-5) = ${cuadradoConSigno(-5)}")
+  def main(args: Array[String]): Unit = {
+    println("--- val frente a def ---")
+    println(s"conVal = $conVal")
+    println(s"conVal = $conVal")
+    println("ahora con def, dos usos:")
+    println(s"conDef = $conDef")
+    println(s"conDef = $conDef")
 
-  println("--- el if es una expresion ---")
-  println(s"k = $k")
+    println("--- el bloque ---")
+    println(s"cuadradoConSigno(5)  = ${cuadradoConSigno(5)}")
+    println(s"cuadradoConSigno(-5) = ${cuadradoConSigno(-5)}")
 
-  println("--- alcance lexico ---")
-  println(s"resultado = $resultado")
-  println(s"x de afuera sigue siendo $x")
+    println("--- el if es una expresion ---")
+    println(s"k = $k")
 
-  println("--- cortocircuito ---")
-  println("false && ruidosoBool(true):")
-  println(false && ruidosoBool(true))
-  println("false & ruidosoBool(true):")
-  println(false & ruidosoBool(true))
+    println("--- alcance lexico ---")
+    println(s"resultado = $resultado")
+    println(s"x de afuera sigue siendo $x")
+
+    println("--- cortocircuito ---")
+    println("false && ruidosoBool(true):")
+    println(false && ruidosoBool(true))
+    println("false & ruidosoBool(true):")
+    println(false & ruidosoBool(true))
+  }
+}

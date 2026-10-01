@@ -118,6 +118,24 @@
     }
   ];
 
+  function simular(preset) {
+    return PRESETS[preset].pasos.map(function (p, i, todos) {
+      return {
+        linea: p.linea,
+        expr: p.expr,
+        restantes: todos.length - 1 - i
+      };
+    });
+  }
+
+  function reducciones(preset) {
+    return PRESETS[preset].pasos.length - 1;
+  }
+
+  var API = { CODIGO: CODIGO, PRESETS: PRESETS, simular: simular, reducciones: reducciones };
+  if (typeof module !== "undefined") { module.exports = API; }
+  if (typeof document === "undefined") { return; }
+
   function resaltar(expr, marca) {
     var i = expr.indexOf(marca);
     if (i < 0) { return document.createTextNode(expr); }
@@ -166,22 +184,14 @@
       { campo: "expr", rotulo: "expresión" },
       { campo: "restantes", rotulo: "pasos que faltan" }
     ],
-    simular: function (preset) {
-      return PRESETS[preset].pasos.map(function (p, i, todos) {
-        return {
-          linea: p.linea,
-          expr: p.expr,
-          restantes: todos.length - 1 - i
-        };
-      });
-    },
+    simular: simular,
     alPintar: pintarReduccion
   };
 
   Motor.iniciar(cfg);
 
   Motor.prediccionNumerica(function (valor, preset) {
-    var real = PRESETS[preset].pasos.length - 1;
+    var real = reducciones(preset);
     if (valor === real) {
       return { ok: true, msg: "Correcto: " + real + " reducciones hasta el valor." };
     }

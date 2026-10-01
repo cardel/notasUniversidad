@@ -1,9 +1,13 @@
 // El mismo llamado, pero con el segundo parametro por valor. No termina.
 // Se corre con timeout: el codigo de salida 124 dice que hubo que matarlo.
 
-def bucle: Int = bucle
+object PorValorSeCuelga {
 
-def primeroPorValor(x: Int, y: Int): Int = x
+  def bucle: Int = bucle
 
-@main def demo(): Unit =
-  println(primeroPorValor(1, bucle))
+  def primeroPorValor(x: Int, y: Int): Int = x
+
+  def main(args: Array[String]): Unit = {
+    println(primeroPorValor(1, bucle))
+  }
+}

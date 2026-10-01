@@ -131,9 +131,10 @@ Con `def doble(n: Int) = 2 * n`, la expresión `doble(21) + doble(21)`:
 Ahora la misma función, pero que anuncia lo que hace:
 
 ```scala
-def dobleConRuido(n: Int): Int =
+def dobleConRuido(n: Int): Int = {
   println(s"calculando el doble de $n")
   2 * n
+}
 ```
 
 ```
@@ -164,8 +165,8 @@ Scala trae los dos órdenes, y se recorren al revés:
 def siguiente(n: Int) = n + 1
 def alCuadrado(n: Int) = n * n
 
-val mismaCosa = siguiente andThen alCuadrado   // (x + 1)^2
-val alReves   = siguiente compose alCuadrado   // x^2 + 1
+val mismaCosa = (siguiente _) andThen alCuadrado   // (x + 1)^2
+val alReves   = (siguiente _) compose alCuadrado   // x^2 + 1
 ```
 
 `f andThen g` aplica primero `f`; es `g(f(x))`. `f compose g` aplica primero
@@ -190,7 +191,7 @@ tres decimales, por 1000:
 def area(r: Double) = math.Pi * r * r
 def dosDecimales(x: Double) = math.round(x * 100) / 100.0
 
-val areaRedondeada = area _ andThen dosDecimales
+val areaRedondeada = (area _) andThen dosDecimales
 ```
 
 ```
@@ -350,9 +351,10 @@ veces. **Por nombre significa cada vez que se use, no una vez y guardado.**
 Es la misma distinción, aplicada a nombrar en lugar de a pasar argumentos.
 
 ```scala
-def anuncia(): Int =
+def anuncia(): Int = {
   println("hola")
   4
+}
 
 val conVal = anuncia()   // se evalúa aquí, una vez
 def conDef = anuncia()   // se evalúa cada vez que se use
@@ -413,9 +415,10 @@ Esta se armó en el salón, buscando que el cuadrado conserve el signo de la
 entrada:
 
 ```scala
-def cuadradoConSigno(x: Int): Int =
+def cuadradoConSigno(x: Int): Int = {
   val positivo = if (x < 0) -x else x
   positivo * x
+}
 ```
 
 ```
@@ -434,11 +437,13 @@ ocultamiento:
 val x = 5
 def f(y: Int): Int = y + 1
 
-val resultado =
-  val bloque =
+val resultado: Int = {
+  val bloque = {
     val x = f(3)     // este x es otro, vale 4
     x * x            // 16
+  }
   bloque + x         // el x de afuera sigue siendo 5
+}
 ```
 
 ```
