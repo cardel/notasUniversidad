@@ -23,6 +23,10 @@ Un grafo sin ciclos con la tabla de `d` y `f` de una búsqueda ya hecha, y seis 
 
 Un grafo dirigido con la búsqueda ya corrida: el árbol dibujado y el `d` de cada vértice. Se escribe el `low` de cada uno, y la comprobación dice por vértice qué hijo o qué flecha lo bajó, por qué una flecha hacia un vértice que ya salió de la pila no cuenta y por qué en una flecha que no es de árbol se usa `d` y no `low`. Tres grafos ordenados por dificultad; el segundo trae una flecha cruzada hacia un componente ya cerrado.
 
+### [Los low de un componente](tarjan-valor-low.pdf){ target=_blank rel=noopener }
+
+Una página con un grafo de cinco vértices y los catorce pasos de Tarjan sobre él. Los dos componentes salen distintos: en uno los `low` coinciden y en el otro no, y agrupar por `low` daría tres grupos donde hay dos componentes. Conviene rehacer la ejecución a mano antes de mirar la tabla.
+
 ## El algoritmo de Tarjan
 
 ### [tarjan](widgets/tarjan.html){ target=_blank rel=noopener }
