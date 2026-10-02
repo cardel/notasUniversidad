@@ -42,6 +42,13 @@ Se publican después de cada sesión.
    y de la operación con el neutro que se deduce de ella, funciones que
    devuelven funciones, la derivada y el error de truncamiento, y
    currificación. Incluye el código escrito en clase.
+4. [Clase 4. Funciones y datos — 1 de octubre](C4/Clase%204.%20Funciones%20y%20datos.md)
+   — por qué un `Double` no sirve para un racional, la clase y su constructor,
+   `toString`, normalizar al construir con el máximo común divisor y con la
+   norma, encapsulación con `private`, el argumento implícito `this`, notación
+   infija, operadores como métodos y su precedencia, precondiciones con
+   `require` y el modelo de sustitución con clases. Incluye el código escrito
+   en clase.
 
 ### Corte 2
 
