@@ -162,6 +162,13 @@ Cada una de las seis aristas va de izquierda a derecha. Con la cola, Kahn dio
 Prog, Lóg, ED, MD, BD, AyG, AA: otro orden, y también válido. Un grafo
 acíclico puede tener muchos, y cada algoritmo encuentra uno.
 
+Los otros se arman a mano, sin ejecutar nada. Todo orden válido empieza en una
+fuente, un vértice sin predecesor, y el plan tiene dos: Prog y Lóg. Si se
+arranca en Prog y se baja hasta donde alcance antes de pasar a Lóg queda Prog,
+ED, BD, Lóg, MD, AyG, AA. Si se arranca en Lóg: Lóg, MD, Prog, ED, AyG, BD, AA.
+Son veintidós órdenes en total para estas siete materias. El de la profundidad
+es uno; el de Kahn, otro.
+
 ### La versión recursiva
 
 ```python
@@ -312,6 +319,23 @@ Se calcula en la misma recursión:
 Siempre $v.low \leq v.d$. Hay igualdad cuando nada del subárbol de $v$ sube
 por encima de $v$, y en ese caso $v$ es la raíz de su componente.
 
+Los $low$ de un componente no tienen que coincidir. Lo que lo marca es su raíz,
+el único de sus vértices con $low = d$. Con las aristas $1 \to 2$, $2 \to 1$,
+$1 \to 3$ y $3 \to 2$, arrancando la profundidad en $1$:
+
+| Vértice | $1$ | $2$ | $3$ |
+|---|:-:|:-:|:-:|
+| $d/low$ | $1/1$ | $2/1$ | $3/2$ |
+
+Los tres se alcanzan entre sí, así que el componente es $\{1,2,3\}$, y aun así
+$3.low = 2$: la única arista que sale del subárbol de $3$ es $3 \to 2$, y $2$
+está en la pila pero no es la raíz. El componente sale completo cuando termina
+$1$.
+
+El mismo grafo con un componente más, donde los dos $low$ sí coinciden, y los
+catorce pasos de la ejecución están en
+[esta página](tarjan-valor-low.pdf){ target=_blank rel=noopener }.
+
 Para $low$ solo importan las comparaciones entre tiempos de descubrimiento, así
 que el reloj avanza solo al descubrir y $v.d$ va de $1$ a $|V|$: es el orden en
 que la profundidad encuentra los vértices.
@@ -329,6 +353,18 @@ cerrado. De allí no se vuelve a $v$: si se pudiera, $v$ y $w$ estarían en el
 mismo componente y $w$ no se habría cerrado sin $v$. Esa arista no puede bajar
 $v.low$, y por eso se pregunta por `en_pila[w]` y no por si $w$ ya fue
 descubierto.
+
+De fondo está la definición de componente, que pide las dos direcciones: camino
+de $v$ a $w$ y camino de $w$ a $v$. La arista $(v,w)$ da el primero, así que lo
+único en duda es el de vuelta. Mientras $w$ esté en la pila su componente sigue
+abierto, el camino de vuelta no está descartado y los dos vértices pueden
+terminar juntos; de ahí que $w.d$ entre al mínimo de $v.low$. Un componente ya
+cerrado no admite ese camino y la arista no aporta nada.
+
+El color no distingue los dos casos. Un vértice negro sigue en la pila mientras
+su componente no se cierre, y una arista hacia él baja el $low$ igual que una
+hacia un gris. El color dice si la recursión terminó con el vértice; la pila, si
+su componente ya se repartió.
 
 ## El algoritmo de Tarjan
 
@@ -414,6 +450,12 @@ def tarjan(grafo):
 El paso 2.1 del algoritmo es la rama `if d[v] == 0`, con la actualización de
 `low[u]` justo después de que `visit(v)` vuelve; el paso 2.2 es la rama
 `elif en_pila[v]`.
+
+`pila.append(u)` y `pila.pop()` trabajan al final de la lista y cuestan $O(1)$
+amortizado: la lista reserva capacidad de sobra y solo de vez en cuando copia
+todo a un bloque mayor. Insertar o sacar al principio costaría $O(n)$, porque
+habría que correr los demás elementos una posición. Con el final, la pila no
+cambia el $\Theta(V+E)$ del recorrido.
 
 ### Tarjan con pila explícita
 
@@ -510,6 +552,40 @@ orden en que se desapiló.
 La arista $g \to h$ separa *en la pila* de *ya descubierto*. Si se contara,
 $g.low$ bajaría a $5$, $g$ no sería raíz y $\{f,g\}$ se iría con $\{c,d\}$ en
 un solo componente equivocado.
+
+### Cuatro componentes en siete vértices
+
+Ocho aristas sobre siete vértices numerados: $1 \to 4$, $4 \to 5$, $1 \to 2$,
+$2 \to 3$, $3 \to 1$, $1 \to 6$, $6 \to 7$ y $7 \to 6$. Las listas:
+$1$: $[4, 2, 6]$; $2$: $[3]$; $3$: $[1]$; $4$: $[5]$; $5$: $[\,]$; $6$: $[7]$;
+$7$: $[6]$. La profundidad arranca en $1$. Cada vértice con $d/low$ al terminar:
+
+| Vértice | $1$ | $2$ | $3$ | $4$ | $5$ | $6$ | $7$ |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| $d/low$ | $1/1$ | $4/1$ | $5/1$ | $2/2$ | $3/3$ | $6/6$ | $7/6$ |
+
+| Paso | Qué pasa | Pila |
+|---|---|---|
+| $1, 4, 5$ | se descubren con $d = 1,2,3$ | $1\,4\,5$ |
+| $5$ termina | $5.low = 5.d = 3$: sale $\{5\}$ | $1\,4$ |
+| $4$ termina | $4.low = 4.d = 2$: sale $\{4\}$ | $1$ |
+| $1 \to 2$, $2 \to 3$ | $2$: $d=4$; $3$: $d=5$ | $1\,2\,3$ |
+| $3 \to 1$ | $1$ en la pila: $3.low = 1$ | |
+| $3$ y $2$ terminan | $low = 1$ en los dos: se quedan | $1\,2\,3$ |
+| $1 \to 6$, $6 \to 7$ | $6$: $d=6$; $7$: $d=7$ | $1\,2\,3\,6\,7$ |
+| $7 \to 6$ | $6$ en la pila: $7.low = 6$ | |
+| $6$ termina | $6.low = 6.d = 6$: sale $\{6,7\}$ | $1\,2\,3$ |
+| $1$ termina | $1.low = 1.d = 1$: sale $\{1,2,3\}$ | vacía |
+
+Son cuatro, y salen en el orden $\{5\}$, $\{4\}$, $\{6,7\}$, $\{1,2,3\}$.
+Los dos primeros tienen un solo vértice: de $5$ no sale ninguna arista y la
+única que sale de $4$ lleva a $5$. $\{6,7\}$ se cierra antes que
+$\{1,2,3\}$ aunque $6$ se descubra después de $3$, porque $1$ tiene tres
+sucesores y no termina hasta recorrer el último. Las dos versiones del código
+devuelven `[[5], [4], [7, 6], [3, 2, 1]]`.
+
+Con la lista de $1$ en otro orden cambian los $d$ y puede cambiar el orden de
+cierre. Los cuatro componentes son los mismos.
 
 ### Tarjan o Kosaraju
 
@@ -851,17 +927,17 @@ $3 \cdot 10^{10}$ pasos a unos $3 \cdot 10^{5}$.
 ## Ejercicios
 
 Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los ocho que se propusieron en la
-sesión pueden aparecer en el parcial: un orden topológico a mano sobre un
-grafo de siete vértices, comparado con el de Kahn; el ciclo que aparece al
-agregarle una arista y lo que devuelve `orden_topologico_dfs`; un grafo
-acíclico de tres vértices donde el orden por $d$ creciente no es topológico y
-otro donde no lo es el de $f$ creciente; Tarjan a mano sobre un grafo de siete
-vértices, con la pila en cada cierre; un grafo de tres vértices donde
-`elif d[v] != 0` da componentes equivocados; los cortes de un grafo no
-dirigido de siete vértices calculados con $low$ y comparados con quitar pieza
-por pieza; la demostración en cuatro partes del criterio de la raíz, y un grafo
-con una arista de árbol $(v,w)$ en la que $w.low = v.d$.
+[página de ejercicios](./Ejercicios.md). Los ocho de las diapositivas pueden
+aparecer en el parcial: un orden topológico a mano sobre un grafo de siete
+vértices, comparado con el de Kahn; el ciclo que aparece al agregarle una
+arista y lo que devuelve `orden_topologico_dfs`; un grafo acíclico de tres
+vértices donde el orden por $d$ creciente no es topológico y otro donde no lo
+es el de $f$ creciente; Tarjan a mano sobre un grafo de siete vértices, con la
+pila en cada cierre; un grafo de tres vértices donde `elif d[v] != 0` da
+componentes equivocados; los cortes de un grafo no dirigido de siete vértices
+calculados con $low$ y comparados con quitar pieza por pieza; la demostración
+en cuatro partes del criterio de la raíz, y un grafo con una arista de árbol
+$(v,w)$ en la que $w.low = v.d$.
 
 ## Lo que sigue
 
