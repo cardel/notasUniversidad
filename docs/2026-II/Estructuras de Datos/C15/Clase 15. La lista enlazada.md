@@ -432,6 +432,12 @@ Nodo *ultimo;
 int n;
 ```
 
+Los dos punteros entran a la misma cadena: `cabeza` al primer nodo y `ultimo`
+al que la cierra, el que tiene `NULL` en su campo `siguiente`. `ultimo` no abre
+una cadena aparte ni guarda un nodo que no estuviera ya enlazado; es un atajo a
+un nodo al que antes se llegaba caminando. Cuesta un campo más por lista, no por
+nodo: $\Theta(1)$ de espacio.
+
 ```cpp
 void agregar(Elemento e) {
   Nodo *nuevo = new Nodo;
@@ -488,7 +494,9 @@ segunda agrega en $\Theta(1)$ y cobra el precio en los dos casos nuevos de
 Lo que el puntero al último no compra es borrar el último. Para sacarlo de la
 cadena hay que llegar al anterior, y un nodo sabe cuál es el siguiente y no
 cuál es el que lo apunta: `eliminar(n - 1)` sigue costando $\Theta(n)$ aunque
-`ultimo` esté guardado.
+`ultimo` esté guardado. Tampoco abarata `insertar(p, e)` en el medio: el
+anterior está a $p-1$ pasos de la cabeza, desde `ultimo` no se puede
+retroceder, y el costo se queda en $\Theta(p)$.
 
 ## Lo que cobra cada operación
 
@@ -540,6 +548,11 @@ escrituras = escrituras + 2;
 | 100 | 4950 | 200 |
 | 1000 | 499 500 | 2000 |
 
+La primera fila se puede seguir a mano: diez inserciones al frente cuestan 45
+corrimientos sobre el arreglo, que son $0 + 1 + \cdots + 9$, y 20 escrituras
+sobre la enlazada, dos por inserción y ninguna que dependa de cuántos elementos
+haya adentro.
+
 El arreglo hace $0 + 1 + \cdots + (n-1) = \frac{n(n-1)}{2}$ movidas; con
 $n = 1000$ son 499 500. La enlazada hace $2n$. Multiplicar $n$ por diez
 multiplica por cien el trabajo de una y por diez el de la otra, que es la
@@ -550,6 +563,9 @@ diferencia entre $\Theta(n^2)$ y $\Theta(n)$ vista en números.
 Quien reparte cartas las va acomodando: toma la que llega y la mete en su
 lugar entre las que ya tiene ordenadas, corriendo las mayores una posición a
 la derecha. Eso es insertion sort (CLRS, 4.ª edición, sección 2.1).
+
+Con 1, 2, 3, 7, 9 en la mano y un 5 que llega, el 5 va entre el 3 y el 7. Se
+corren el 7 y el 9; el 1, el 2 y el 3 se quedan donde están.
 
 En $\langle 5, 2, 9, 1, 7, 3 \rangle$, al llegar al 1 hay tres elementos ya
 ordenados a su izquierda, $\langle 2, 5, 9 \rangle$. El 9, el 5 y el 2 son
