@@ -33,7 +33,7 @@ Hay que predecir qué da cada condicional. Dos de ellos solo se diferencian
 en la prueba, y uno da 9 mientras el otro se detiene: la rama que no se
 escoge no se evalúa, así que puede mencionar lo que quiera. Después, la
 comparación entre delegar en el `if` de Racket y verificar con `boolean?`:
-con el primero, `(if 5 then 1 else 2)` devuelve 1 y el error queda
+con el primero, `if 5 then 1 else 2` devuelve 1 y el error queda
 enterrado.
 
 ## Ligaduras locales con let

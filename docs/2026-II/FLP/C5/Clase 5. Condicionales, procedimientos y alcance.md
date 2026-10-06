@@ -2,11 +2,12 @@
 
 Martes 6 de octubre de 2026.
 
-El lenguaje de la sesión anterior calcula y nada más. Tiene `zero?`, mayor y
-menor, así que puede producir un booleano, pero ninguna variante lo recibe
-para hacer algo con él: el valor se calcula y se pierde. Y aunque `let` nombra
-un resultado, no hay forma de nombrar un cálculo con sus argumentos sin
-resolver, de modo que `x + y` para varios pares hay que escribirlo tantas
+El lenguaje de la sesión anterior calcula y nada más. Sus primitivas son las
+cuatro aritméticas, `add1` y `sub1`, y ninguna produce un sí o un no; en el
+léxico no hay `true` ni `false`. Falta el valor con el que se escogería entre
+dos caminos, y con él la variante que lo recibiría. Aunque `let` nombra un
+resultado, tampoco hay forma de nombrar un cálculo con sus argumentos sin
+resolver, de modo que `+(x, y)` para varios pares hay que escribirlo tantas
 veces como pares haya.
 
 Esta sesión agrega las dos piezas que faltan, el condicional y el
@@ -42,18 +43,18 @@ La sintaxis tiene tres partes, y la regla de evaluación tiene un paso que no
 se puede saltar:
 
 ```scheme
-(if-exp (test-exp true-exp false-exp)
-        (let ((test-value (value-of test-exp env)))
+(if-exp (condicion hace-verdadero hace-falso)
+        (let ((test-value (evaluar-expresion condicion amb)))
           (if (boolean? test-value)
               (if test-value
-                  (value-of true-exp env)
-                  (value-of false-exp env))
-              (eopl:error 'if-exp "La prueba no es booleana: ~s" test-value))))
+                  (evaluar-expresion hace-verdadero amb)
+                  (evaluar-expresion hace-falso amb))
+              (eopl:error "El test-exp debe ser un booleano " condicion))))
 ```
 
 Primero se evalúa la prueba y su valor se guarda. Después se comprueba que sea
 booleano, y si no lo es el interpretador aborta. Solo entonces se ramifica.
-Nunca se le pasa al `if` de Racket el resultado de `value-of` sin antes
+Nunca se le pasa al `if` de Racket el resultado de `evaluar-expresion` sin antes
 preguntar por el tipo, porque Racket trata como verdadero todo lo que no sea
 `#f` y el error se escondería.
 
