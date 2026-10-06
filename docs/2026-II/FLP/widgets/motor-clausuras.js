@@ -73,6 +73,18 @@ var MotorClausuras = (function () {
     return partes.join("");
   }
 
+  /* Un programa puede detenerse en vez de dar un valor. Cuando eso pasa, la
+     respuesta correcta es decirlo, y se acepta escrita de cualquier manera. */
+  var DICE_ERROR = /error|detiene|detener|falla|fallo|no existe|no hay|no da|indefinid|nada|ningun|libre|sin ligar/;
+
+  function diceError(dado) {
+    return DICE_ERROR.test(dado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+  }
+
+  var AVISO_ERROR =
+    '<p class="aviso-campos">Si cree que el programa se detiene en vez de dar ' +
+    'un valor, escriba <code>error</code>.</p>';
+
   function proceso(r) {
     if (r.error) {
       var donde = { lectura: "al leer el programa", parser: "en el parser", evaluador: "al evaluar" };
@@ -89,7 +101,7 @@ var MotorClausuras = (function () {
         "<h2>" + p.titulo + "</h2>" +
         (p.enunciado ? "<p>" + p.enunciado + "</p>" : "") +
         '<pre class="codigo programa-simulador">' + escapar(p.programa) + "</pre>" +
-        '<div class="campos-prediccion"></div>' +
+        '<div class="campos-prediccion"></div>' + AVISO_ERROR +
         '<div class="botones">' +
           '<button class="primario" data-accion="comprobar">Comprobar</button>' +
           '<button data-accion="proceso" disabled>Ver el proceso</button>' +
@@ -114,8 +126,9 @@ var MotorClausuras = (function () {
         var entrada = carta.querySelector('input[data-clave="' + c + '"]');
         var esperado = r.error ? null : CAMPOS[c].leer(r);
         var dado = entrada.value.trim();
-        var bien = dado !== "" && esperado !== null &&
-          (String(esperado) === dado || String(esperado) === dado.replace(/\s+/g, ""));
+        var bien = dado !== "" && (r.error
+          ? diceError(dado)
+          : String(esperado) === dado || String(esperado) === dado.replace(/\s+/g, ""));
         if (!bien) { todo = false; }
         entrada.className = bien ? "bien" : "mal";
         lineas.push((bien ? "✓ " : "✗ ") + CAMPOS[c].etiqueta + ": " +
@@ -149,7 +162,7 @@ var MotorClausuras = (function () {
           '<input type="text" size="8" data-clave="est"></label>' +
           '<label class="campo"><span>Con alcance dinámico</span>' +
           '<input type="text" size="8" data-clave="din"></label>' +
-        "</div>" +
+        "</div>" + AVISO_ERROR +
         '<div class="botones">' +
           '<button class="primario" data-accion="comprobar">Comprobar</button>' +
           '<button data-accion="proceso" disabled>Ver las dos trazas</button>' +
@@ -169,8 +182,10 @@ var MotorClausuras = (function () {
         .forEach(function (par) {
           var entrada = carta.querySelector('input[data-clave="' + par[0] + '"]');
           var esperado = par[1].error ? null : par[1].texto;
-          var bien = entrada.value.trim() !== "" && esperado !== null &&
-            entrada.value.trim() === String(esperado);
+          var dado = entrada.value.trim();
+          var bien = dado !== "" && (par[1].error
+            ? diceError(dado)
+            : dado === String(esperado));
           if (!bien) { todo = false; }
           entrada.className = bien ? "bien" : "mal";
           lineas.push((bien ? "✓ " : "✗ ") + par[2] + ": " + escapar(resultado(par[1])));
