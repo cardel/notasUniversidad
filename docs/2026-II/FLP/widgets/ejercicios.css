@@ -109,6 +109,8 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .campo input.bien { border-color: var(--verde); background: var(--verde-suave); }
 .campo input.mal { border-color: var(--rojo); background: var(--rojo-suave); }
+.aviso-campos { font-size: 0.82rem; color: #666; margin: -0.2rem 0 0.6rem; }
+.aviso-campos code { font-size: 0.82rem; }
 .proceso h3 { font-size: 0.95rem; color: var(--azul); margin: 1rem 0 0.4rem; }
 .tabla-tokens td:first-child, .tabla-traza td:first-child { width: 2rem; color: #888; }
 .tabla-traza td:nth-child(2) { text-align: left; }
