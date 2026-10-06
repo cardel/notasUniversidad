@@ -71,6 +71,16 @@ la versión de `std::thread` tarda más que la secuencial: escriba cuánto antes
 verlo. Después, mil repeticiones del mismo ciclo muestran de
 dónde sale esa diferencia, y tres situaciones piden escoger biblioteca.
 
+## Depurar y verificar
+
+### [Depurar un programa de OpenMP](widgets/depurar.html){ target=_blank rel=noopener }
+
+Una sesión de `gdb` sobre la integral de pi con cuatro hilos y un reporte de
+ThreadSanitizer sobre una suma sin `reduction`. Prediga el valor de `i` en
+cada hilo detenido, por qué `print suma` responde 0 y qué pasa con `-O2`, y
+después lea el reporte para decir qué dos accesos chocan y qué cláusula los
+separa.
+
 ## Buenas prácticas y optimización
 
 ### [El codo de la curva](widgets/escalado.html){ target=_blank rel=noopener }

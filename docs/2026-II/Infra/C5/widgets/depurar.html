@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Depurar un programa de OpenMP</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Depurar un programa de OpenMP</h1>
+  <p class="intro">Una sesión de <code>gdb</code> sobre la integral de pi y un reporte de
+  ThreadSanitizer sobre una suma sin <code>reduction</code>. Cada pregunta pide una
+  predicción antes de mostrar la respuesta.</p>
+
+  <div class="carta">
+    <h2>1. Cuatro hilos detenidos en el ciclo</h2>
+    <p style="margin-top:0">El programa calcula pi con mil millones de iteraciones bajo
+    <code>#pragma omp parallel for reduction(+ : suma)</code>, con cuatro hilos y compilado
+    con <code>-g -O0</code>. Con el programa detenido dentro de la región:</p>
+    <div class="codigo">
+      <div class="linea"><span class="num">(gdb)</span><span class="txt">info threads</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num"></span><span class="txt">  Id   Target Id                        Frame</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">* 1    Thread ... (LWP 9828) "escalado" _Z8integrarv._omp_fn.0 () at escalado.cpp:14</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  2    Thread ... (LWP 9831) "escalado" _Z8integrarv._omp_fn.0 () at escalado.cpp:14</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  3    Thread ... (LWP 9832) "escalado" _Z8integrarv._omp_fn.0 () at escalado.cpp:14</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  4    Thread ... (LWP 9833) "escalado" _Z8integrarv._omp_fn.0 () at escalado.cpp:14</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num">(gdb)</span><span class="txt">thread 3</span></div>
+      <div class="linea"><span class="num">(gdb)</span><span class="txt">print i</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">$1 = 500000000</span></div>
+      <div class="linea"><span class="num">(gdb)</span><span class="txt">print suma</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">$2 = 0</span></div>
+    </div>
+    <p>Las iteraciones se reparten en cuatro bloques contiguos y el hilo 3 está en la
+    primera iteración del suyo. Si los otros tres estuvieran detenidos en el mismo punto
+    de su bloque, ¿qué valor de <code>i</code> mostraría <code>print i</code> en cada uno?</p>
+    <div class="prediccion">
+      <span>Valor de <code>i</code> en el hilo 1.</span>
+      <input type="number" id="pred-p1" min="0" step="1" placeholder="i">
+      <button id="btn-p1" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-p1" class="veredicto"></div>
+    <div class="prediccion">
+      <span>Valor de <code>i</code> en el hilo 2.</span>
+      <input type="number" id="pred-p2" min="0" step="1" placeholder="i">
+      <button id="btn-p2" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-p2" class="veredicto"></div>
+    <div class="prediccion">
+      <span>Valor de <code>i</code> en el hilo 4.</span>
+      <input type="number" id="pred-p4" min="0" step="1" placeholder="i">
+      <button id="btn-p4" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-p4" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-destapar">Destapar los cuatro hilos</button>
+    </div>
+    <div class="envoltura-tabla" id="tabla-hilos" hidden style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Hilo</th><th>i</th><th>Su bloque</th><th>suma</th></tr></thead>
+        <tbody id="cuerpo-hilos"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Por qué suma vale 0</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Si el ciclo acumula, ¿por qué <code>print suma</code> responde 0 dentro de la región, y cuándo deja de valer 0?</p>
+    <div class="opciones" id="op-arranque">
+      <button data-op="roto">El ciclo no está sumando: el programa tiene un error</button>
+      <button data-op="correcta">gdb muestra la copia privada de cada hilo, que parte en 0; la variable original recibe las copias al terminar la región</button>
+      <button data-op="compilador">El compilador eliminó la variable porque no se usa</button>
+      <button data-op="atomica">Cada suma es atómica y gdb todavía no la ve</button>
+    </div>
+    <div id="ver-arranque" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Por qué no aparece integrar</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">El marco dice <code>_Z8integrarv._omp_fn.0</code>, no <code>integrar</code>. ¿Por qué?</p>
+    <div class="opciones" id="op-nombre">
+      <button data-op="inlinea">El compilador copió integrar dentro de main</button>
+      <button data-op="correcta">El cuerpo de la región paralela se extrajo a una función nueva, _omp_fn.0, y _Z8integrarv es el nombre decorado de integrar()</button>
+      <button data-op="gdb">gdb agrega el sufijo para distinguir los hilos</button>
+      <button data-op="hilo">El 0 es el número del hilo que está detenido</button>
+    </div>
+    <div id="ver-nombre" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Lo mismo con -O2</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Se recompila con <code>-g -O2</code> y se repite la sesión. ¿Qué responde el depurador?</p>
+    <div class="opciones" id="op-o2">
+      <button data-op="igual">Lo mismo: print suma devuelve 0</button>
+      <button data-op="nodetiene">No se detiene: sin -O0 los puntos de parada no funcionan</button>
+      <button data-op="correcta">Se detiene donde debe, pero print suma responde que el valor fue optimizado</button>
+      <button data-op="nohilos">Arranca un solo hilo, porque -O2 desactiva OpenMP</button>
+    </div>
+    <div id="ver-o2" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El reporte de ThreadSanitizer</h2>
+    <p style="margin-top:0">La suma sin <code>reduction</code>, compilada con
+    <code>-fsanitize=thread</code>. La línea 7 es el <code>#pragma omp parallel for</code> y la 9 es
+    <code>suma += i</code>.</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">WARNING: ThreadSanitizer: data race (pid=22434)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  Write of size 8 at 0x7ffea2fdd5a0 by thread T2:</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    #0 main._omp_fn.0 carrera.cpp:9</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">  Previous read of size 8 at 0x7ffea2fdd5a0 by main thread:</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">    #0 main._omp_fn.0 carrera.cpp:7</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">SUMMARY: ThreadSanitizer: data race carrera.cpp:9 in main._omp_fn.0</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem"><b>a)</b> ¿Qué dos operaciones están en conflicto?</p>
+    <div class="opciones" id="op-pares">
+      <button data-op="dosescrituras">Dos escrituras de T2, una en la línea 7 y otra en la 9</button>
+      <button data-op="correcta">Una escritura de T2 en la línea 9 y una lectura anterior del hilo principal en la 7, sobre la misma dirección</button>
+      <button data-op="lineas">Una escritura en la línea 7 y una lectura en la 9</button>
+      <button data-op="mismohilo">Dos accesos del hilo principal, que se pisan a sí mismos</button>
+    </div>
+    <div id="ver-pares" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem;margin-top:1rem"><b>b)</b> ¿Qué cláusula arregla la carrera?</p>
+    <div class="opciones" id="op-clausula">
+      <button data-op="privada">private(suma)</button>
+      <button data-op="firstprivada">firstprivate(suma)</button>
+      <button data-op="dinamico">schedule(dynamic)</button>
+      <button data-op="correcta">reduction(+ : suma)</button>
+    </div>
+    <div id="ver-clausula" class="veredicto"></div>
+    <div class="nota">ThreadSanitizer instrumenta cada acceso a memoria y avisa cuando dos hilos
+    tocan la misma dirección, uno de ellos para escribir, sin sincronización. El programa corre
+    entre 5 y 15 veces más lento, y por eso se usa en pruebas y no en las mediciones.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="depurar.js"></script>
+</body>
+</html>
