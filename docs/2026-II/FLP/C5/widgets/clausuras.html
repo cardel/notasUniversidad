@@ -20,7 +20,7 @@
     <div class="envoltura-tabla">
       <table>
         <thead><tr><th>Momento</th><th>Qué ocurre</th></tr></thead>
-        <tbody><tr><td>al evaluar <code>(proc (ids) body)</code></td><td>se construye <code>(closure ids body env)</code> y nada más</td></tr><tr><td>al evaluar <code>(rator rands)</code></td><td>se evalúan el operador y los operandos, en el ambiente de la llamada</td></tr><tr><td>antes de aplicar</td><td>se verifica con <code>procval?</code> que el operador sea un procedimiento</td></tr><tr><td>al aplicar</td><td>se evalúa el cuerpo en el ambiente de la clausura extendido con los parámetros</td></tr></tbody>
+        <tbody><tr><td>al evaluar <code>proc(ids) cuerpo</code></td><td>se construye <code>(closure ids cuerpo amb)</code> y nada más</td></tr><tr><td>al evaluar <code>(rator rands)</code></td><td>se evalúan los operandos y después el operador, en el ambiente de la llamada</td></tr><tr><td>antes de aplicar</td><td>se verifica con <code>procval?</code> que el operador sea un procedimiento, y que la cantidad de argumentos coincida</td></tr><tr><td>al aplicar</td><td>se evalúa el cuerpo en el ambiente de la clausura extendido con los parámetros</td></tr></tbody>
       </table>
     </div>
     <div class="nota">Un procedimiento que nadie llama puede mencionar lo que quiera: su cuerpo no se evalúa. Y la cantidad de argumentos no se verifica, así que los que sobran se pierden y los que faltan dejan un parámetro sin ligar que falla más tarde.</div>

@@ -3,8 +3,8 @@
    dibuja mientras escribe; al comprobar, los compara con la cadena que tenía
    el interpretador en ese momento y señala la primera diferencia.
 
-   El ambiente inicial y el vacío los pone la página: lo que se pide es lo
-   que el programa construye encima. */
+   Los dos eslabones del ambiente inicial y el vacío los pone la página: lo
+   que se pide es lo que el programa construye encima. */
 var MotorDibujo = (function () {
   "use strict";
 
@@ -44,7 +44,7 @@ var MotorDibujo = (function () {
   function comparar(escritos, reales) {
     if (escritos.length !== reales.length) {
       return "Escribió " + escritos.length + " eslabón(es) y la cadena tiene " +
-        reales.length + ", sin contar env0 ni el vacío.";
+        reales.length + ", sin contar los del ambiente inicial ni el vacío.";
     }
     for (var i = 0; i < reales.length; i++) {
       var mio = escritos[i], suyo = reales[i].ligaduras;
@@ -66,29 +66,33 @@ var MotorDibujo = (function () {
   }
 
   /* --- Dibujos ------------------------------------------------------ */
-  function dibujar(eslabones, env0, destacar) {
+  function dibujar(eslabones, inicial, destacar) {
     var cadena = eslabones.map(function (lig, i) {
       return { nombre: "ρ" + (eslabones.length - i), ligaduras: lig,
                destacado: destacar && i === 0 };
     });
-    cadena.push({ nombre: "env0", ligaduras: env0.ligaduras });
+    inicial.forEach(function (e) {
+      cadena.push({ nombre: e.nombre, ligaduras: e.ligaduras });
+    });
     return '<div class="envoltura-ambientes">' +
       DibujarAmbientes.svg(cadena, { titulo: "cadena de ambientes" }) + "</div>";
   }
 
-  function dibujarReal(reales, env0) {
+  function dibujarReal(reales, inicial) {
     return dibujar(reales.map(function (e) {
       return e.ligaduras.map(function (l) {
         return [l[0], InterpreteClausuras.escribir(l[1])];
       });
-    }), env0, true);
+    }), inicial, true);
   }
 
   function pintar(ej) {
     var salida = InterpreteClausuras.ejecutar(ej.programa);
     var cadena = InterpreteClausuras.cadenaEn(salida, ej.momento);
-    var env0 = cadena[cadena.length - 1];
-    var reales = cadena.slice(0, cadena.length - 1);   // sin env0
+    /* Los dos últimos eslabones son el ambiente inicial del interpretador y
+       no se piden: el estudiante escribe lo que el programa construye. */
+    var inicial = cadena.slice(cadena.length - 2);
+    var reales = cadena.slice(0, cadena.length - 2);
 
     var carta = elemento(
       '<div class="carta">' +
@@ -98,7 +102,7 @@ var MotorDibujo = (function () {
         "<p>Dibuje la cadena tal como está <strong>en el momento en que se evalúa " +
           "<code>" + escapar(ej.momento) + "</code></strong>. Escriba un eslabón por " +
           "línea, del más nuevo al más viejo, con sus ligaduras entre corchetes. " +
-          "<code>env0</code> y el ambiente vacío los pone la página.</p>" +
+          "Los dos eslabones del ambiente inicial y el vacío los pone la página.</p>" +
         '<textarea class="editor" rows="4" spellcheck="false" ' +
           'placeholder="[b=9]&#10;[a=3]"></textarea>' +
         '<div class="botones">' +
@@ -118,7 +122,7 @@ var MotorDibujo = (function () {
     function repintar() {
       var escritos = leerEslabones(entrada.value);
       mio.innerHTML = escritos.length
-        ? "<p class=\"rotulo-dibujo\">Lo que escribió:</p>" + dibujar(escritos, env0, true)
+        ? "<p class=\"rotulo-dibujo\">Lo que escribió:</p>" + dibujar(escritos, inicial, true)
         : "";
     }
     entrada.addEventListener("input", repintar);
@@ -146,7 +150,7 @@ var MotorDibujo = (function () {
 
     carta.querySelector('[data-accion="ver"]').addEventListener("click", function () {
       suyo.innerHTML = "<p class=\"rotulo-dibujo\">La cadena del interpretador:</p>" +
-        dibujarReal(reales, env0) + (ej.cierre ? '<div class="nota">' + ej.cierre + "</div>" : "");
+        dibujarReal(reales, inicial) + (ej.cierre ? '<div class="nota">' + ej.cierre + "</div>" : "");
       suyo.style.display = "block";
     });
 

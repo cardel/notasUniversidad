@@ -1,7 +1,8 @@
 /* La ligadura local con varias ligaduras a la vez. Todas las partes
    derechas se evalúan en el ambiente de afuera y después se extiende una
-   sola vez, y de ahí salen los casos al borde. env0 liga x = 4, y = 2,
-   z = 5; los valores están medidos con el interpretador de la sesión. */
+   sola vez, y de ahí salen los casos al borde. El ambiente inicial es
+   [x=4, y=2, z=5] sobre [a=4, b=5, c=6]; los valores se midieron con el
+   interpretador de la sesión. */
 var BLOQUES = (function () {
   "use strict";
   function c(t) { return "<code>" + t.replace(/</g, "&lt;") + "</code>"; }
@@ -11,32 +12,32 @@ var BLOQUES = (function () {
       id: "cuanto-da",
       titulo: "1. Cuánto da cada let",
       definicion:
-        "(let {<identificador> = <expresion>}* in <expresion>)     let-exp (ids rands body)\n\n" +
+        "let {<identificador> = <expresion>}* in <expresion>     let-exp (ids rands body)\n\n" +
         "(let-exp (ids rands body)\n" +
-        "  (value-of body (extend-env ids (eval-rands rands env) env)))\n\n" +
-        "env0 liga  x = 4   y = 2   z = 5",
+        "  (evaluar-expresion body\n" +
+        "    (ambiente-extendido ids (map evaluar rands) amb)))\n\n" +
+        "ambiente inicial:  [x=4, y=2, z=5]  sobre  [a=4, b=5, c=6]",
       explicacion:
-        "Mire en qué ambiente se evalúa cada parte derecha antes de " +
-        "responder.",
+        "Mire en qué ambiente se evalúa cada parte derecha antes de responder.",
       opciones: ["A", "B", "C"],
       items: [
-        { valor: c("(let a = (+ y 1) in (let a = (* a 2) in (sub1 a)))") +
+        { valor: c("let a = +(y,1) in let a = *(a,2) in sub1(a)") +
             ' <span class="candidatos"><b>A.</b> 5 &nbsp; <b>B.</b> 11 &nbsp; <b>C.</b> 2</span>',
           correcta: 0,
-          razon: "Da 5. La a de afuera vale 3; la de adentro se calcula con esa, (* 3 2) = 6, y el cuerpo da 5. Cada let ve el ambiente que tiene encima en ese momento, no el inicial." },
-        { valor: c("(let z = (add1 z) in (* z z))") +
+          razon: "Da 5. La a de afuera vale 3; la de adentro se calcula con esa, *(3,2) = 6, y el cuerpo da 5. Cada let ve el ambiente que tiene encima en ese momento, no el inicial." },
+        { valor: c("let z = add1(z) in *(z,z)") +
             ' <span class="candidatos"><b>A.</b> 25 &nbsp; <b>B.</b> 36 &nbsp; <b>C.</b> se detiene: z se define en términos de sí misma</span>',
           correcta: 1,
           razon: "Da 36. La parte derecha se evalúa en el ambiente de afuera, donde z todavía vale 5, así que la z nueva vale 6. No hay circularidad: son dos ligaduras distintas que por casualidad comparten nombre." },
-        { valor: c("(let x = 1 in (let x = (+ x 1) w = (* x 10) in (+ x w)))") +
+        { valor: c("let x = 1 in let x = +(x,1) w = *(x,10) in +(x,w)") +
             ' <span class="candidatos"><b>A.</b> 12 &nbsp; <b>B.</b> 22 &nbsp; <b>C.</b> 24</span>',
           correcta: 0,
           razon: "Da 12. Las dos partes derechas del let interno se evalúan donde x vale 1: x pasa a 2 y w a 10. Quien lea de arriba abajo esperará que w use la x nueva y calcule 20; la regla dice que no." },
-        { valor: c("(let p = 10 q = (add1 p) in (- q p))") +
-            ' <span class="candidatos"><b>A.</b> 1 &nbsp; <b>B.</b> 11 &nbsp; <b>C.</b> se detiene: p no está ligada</span>',
+        { valor: c("let p = 10 q = add1(p) in -(q,p)") +
+            ' <span class="candidatos"><b>A.</b> 1 &nbsp; <b>B.</b> 11 &nbsp; <b>C.</b> se detiene: no encuentra p</span>',
           correcta: 2,
-          razon: "Se detiene. La ligadura de p todavía no existe cuando se evalúa la parte derecha de q, y en env0 no hay ninguna p. Un let con varias ligaduras no es una cadena de lets anidados." },
-        { valor: c("(let t = (let p = 3 q = 4 in (* p q)) in (+ t y))") +
+          razon: "Se detiene. La ligadura de p todavía no existe cuando se evalúa la parte derecha de q, y en el ambiente inicial no hay ninguna p. Un let con varias ligaduras no es una cadena de lets anidados." },
+        { valor: c("let t = let p = 3 q = 4 in *(p,q) in +(t,y)") +
             ' <span class="candidatos"><b>A.</b> 14 &nbsp; <b>B.</b> 12 &nbsp; <b>C.</b> se detiene: p no está ligada en el cuerpo</span>',
           correcta: 0,
           razon: "Da 14. El let interno sí puede estar en una parte derecha: crea su ambiente, calcula 12 y ese ambiente desaparece. Lo que sobrevive es el valor, no las ligaduras que lo produjeron." }
@@ -51,8 +52,7 @@ var BLOQUES = (function () {
     {
       id: "una-sola-extension",
       titulo: "2. Una sola extensión, no varias",
-      definicion:
-        "(let a = e1  b = e2  c = e3  in  cuerpo)",
+      definicion: "let a = e1  b = e2  c = e3  in  cuerpo",
       explicacion:
         "Compare ese <code>let</code> de tres ligaduras con tres " +
         "<code>let</code> anidados que liguen lo mismo. Juzgue cada " +
@@ -67,8 +67,8 @@ var BLOQUES = (function () {
           razon: "Cuando ninguna parte derecha menciona los nombres que el let está ligando, da igual cuál de las dos formas se use: todas se evalúan en ambientes donde esos nombres significan lo mismo." },
         { valor: "El orden en que se escriben las tres ligaduras cambia el resultado", correcta: 1,
           razon: "Como todas se evalúan en el mismo ambiente, el orden no importa. En los anidados sí importaría, porque cada uno ve lo que ligó el anterior." },
-        { valor: "Si dos ligaduras del mismo " + c("let") + " tienen el mismo nombre, la cadena queda con dos ligaduras de ese nombre en el mismo eslabón", correcta: 0,
-          razon: "Van las dos al mismo eslabón y la búsqueda encuentra la primera de la lista: el interpretador arma el ambiente con los dos pares y ninguna se pierde." }
+        { valor: c("let a = 1 a = 2 in a") + " vale 2, porque la última gana", correcta: 1,
+          razon: "Vale 1. Las dos ligaduras van al mismo eslabón y la búsqueda se queda con la primera de la lista: el interpretador arma el ambiente con los dos pares y ninguno se pierde." }
       ],
       cierre:
         "Que la extensión sea una sola es lo que hace que las ligaduras de " +
