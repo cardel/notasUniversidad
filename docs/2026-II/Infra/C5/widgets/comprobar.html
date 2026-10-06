@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo saber si de verdad corrieron doce hilos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .situacion { font-size: 1.05rem; padding: 0.8rem 1rem; border-left: 4px solid var(--azul);
+               background: var(--azul-suave); border-radius: 6px; margin: 0.6rem 0; min-height: 3.2rem; }
+  .opciones button.elegida { outline: 3px solid var(--azul); outline-offset: 1px; }
+  .codigo .linea .num { width: 1rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cómo saber si de verdad corrieron doce hilos</h1>
+  <p class="intro">Un binario que corre igual con uno y con doce hilos, y una salida
+  de <code>perf stat</code> de la misma máquina. Prediga la relación de tiempos y los
+  núcleos ocupados antes de destapar las columnas, y después escoja qué herramienta
+  responde cada pregunta.</p>
+
+  <div class="carta">
+    <h2>1. Dos corridas que deberían diferir</h2>
+    <p style="margin-top:0">La integral de pi dio 1.253,6 ms con un hilo y 256,1 ms con
+    doce. Aquí está el mismo programa, recompilado y corrido otra vez:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Invocación</th><th>pi</th><th>Tiempo</th></tr></thead>
+        <tbody id="cuerpo-sin-bandera"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>El mismo binario con uno y con doce hilos da 1.292,7 y 1.283,6 ms.
+      ¿Cuántas veces más rápido corrió con doce? Dos decimales.</span>
+      <input type="number" id="prediccion-relacion" min="0" step="0.01" placeholder="veces">
+      <button id="btn-comprobar-relacion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-relacion" class="veredicto"></div>
+    <div class="chips" id="chips-relacion" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-relacion" hidden>La variable de ambiente no fabrica hilos.
+    <code>OMP_NUM_THREADS=12</code> le pide doce hilos a una biblioteca que este binario no
+    tiene adentro, así que la petición se pierde y el programa recorre el ciclo completo en un
+    hilo. Dos tiempos iguales son el primer síntoma. Antes de comparar una tabla de
+    aceleraciones, mire la línea con que se compiló.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Qué pasa sin la bandera</h2>
+    <p style="margin-top:0">Primer intento: el archivo llama a <code>omp_get_max_threads</code>
+    para imprimir cuántos hilos trae el equipo, y se compila sin <code>-fopenmp</code>.</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">$</span><span class="txt">g++ -std=c++17 -O2 -Wall escalado.cpp -o escalado_sin</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num"></span><span class="txt">escalado.cpp:11: warning: ignoring ‘#pragma omp parallel’ [-Wunknown-pragmas]</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">   11 |     #pragma omp parallel for reduction(+ : suma)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">/usr/bin/ld: /tmp/cc46Zcwd.o: in function `main':</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">escalado.cpp:(.text.startup+0x105): undefined reference to `omp_get_max_threads'</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">collect2: error: ld returned 1 exit status</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Sin esa llamada, el archivo compila y corre:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">$</span><span class="txt">g++ -std=c++17 -O2 -Wall escalado_sin.cpp -o escalado_sin</span></div>
+      <div class="linea bloque-2"><span class="num">$</span><span class="txt">OMP_NUM_THREADS=1 ./escalado_sin</span></div>
+      <div class="linea bloque-2"><span class="num">$</span><span class="txt">OMP_NUM_THREADS=12 ./escalado_sin</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num"></span><span class="txt">escalado_sin.cpp:10: warning: ignoring ‘#pragma omp parallel’ [-Wunknown-pragmas]</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">   10 |     #pragma omp parallel for reduction(+ : suma)</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">pi = 3.1415926536     1292.7 ms</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">pi = 3.1415926536     1283.6 ms</span></div>
+    </div>
+    <div class="nota">Cuando el compilador no conoce una pragma, la descarta y sigue, porque
+    así el mismo archivo sirve con y sin OpenMP. El aviso de <code>-Wall</code> es entonces la
+    única señal: sin él solo queda el error del enlazador, y ese aparece nada más si el
+    programa llama a alguna función <code>omp_</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que dice perf stat</h2>
+    <p style="margin-top:0">Este es el binario con <code>-fopenmp</code>, medido con
+    <code>perf stat -e task-clock,cycles,instructions ./escalado</code>. El tiempo
+    transcurrido cubre las tres repeticiones que hace el programa.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Contador</th><th>1 hilo</th><th>12 hilos</th></tr></thead>
+        <tbody id="cuerpo-perf"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>Con un hilo, perf gastó 3.802 ms de CPU en 3,803 s de reloj. Con doce,
+      7.078 ms en 0,850 s. ¿Cuántos núcleos ocupó la segunda corrida? Dos decimales.</span>
+      <input type="number" id="prediccion-nucleos" min="0" step="0.01" placeholder="núcleos">
+      <button id="btn-comprobar-nucleos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-nucleos" class="veredicto"></div>
+    <div class="chips" id="chips-perf" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-perf" hidden>Son dos relojes y miden cosas distintas. El
+    tiempo transcurrido es el que espera quien lanzó el programa; el de CPU suma lo que
+    trabajaron todos los hilos, y crece con cada uno que entra. Bajar de 3,80 a 0,85 s costó
+    casi el doble de CPU, y en una máquina que se comparte eso se nota.</div>
+    <div class="nota">La tabla redondea lo que imprime perf: 7.077,69 msec de task-clock y
+    0,850174855 segundos transcurridos en la corrida de doce hilos. Las medidas son de un
+    AMD Ryzen 5 3600 de 6 núcleos y 12 hilos de hardware, con g++ -O2.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Las instrucciones no cambian, los ciclos sí</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Las instrucciones suben 0,2 % y los ciclos
+    71 %, con el IPC bajando de 2,39 a 1,40. ¿Qué pasó?</p>
+    <div class="opciones" id="opciones-ciclos">
+      <button data-op="trabajo">El programa hizo más trabajo</button>
+      <button data-op="correcta">Mismo trabajo, pero los hilos compiten por el procesador y por la memoria</button>
+      <button data-op="carrera">Hubo una carrera de datos</button>
+      <button data-op="compilador">El compilador optimizó distinto</button>
+    </div>
+    <div id="veredicto-ciclos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué herramienta para qué</h2>
+    <div class="chips" id="datos-herramientas"></div>
+    <div class="progreso" id="progreso-herramientas" style="margin-top:0.7rem"></div>
+    <div class="situacion" id="texto-situacion"></div>
+    <div class="opciones" id="opciones-herramientas">
+      <button data-clave="perf" data-op="perf">perf stat</button>
+      <button data-clave="gdb" data-op="gdb">gdb con info threads</button>
+      <button data-clave="tsan" data-op="tsan">ThreadSanitizer</button>
+      <button data-clave="bandera" data-op="bandera">Revisar la bandera de compilación</button>
+    </div>
+    <div id="veredicto-herramientas" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente situación</button>
+      <button id="btn-otra" hidden>Otra vez, en otro orden</button>
+    </div>
+    <div class="chips" id="panel-marcador" style="margin-top:0.8rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Situación</th><th>Primera respuesta</th><th>La que responde</th></tr></thead>
+        <tbody id="cuerpo-marcador"></tbody>
+      </table>
+    </div>
+    <p id="resumen" hidden style="font-weight:600"></p>
+    <div class="nota"><code>perf stat</code> cuenta ciclos, instrucciones y fallos de caché de
+    la corrida completa. <code>gdb</code>, con el programa compilado <code>-g -O0</code>, detiene
+    el proceso y <code>info threads</code> lista los hilos vivos. ThreadSanitizer
+    (<code>-fsanitize=thread</code>) reporta accesos a memoria sin sincronizar y hace correr el
+    programa entre 5 y 15 veces más lento. Y la línea de compilación dice si las pragmas
+    llegaron al binario.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="comprobar.js"></script>
+</body>
+</html>

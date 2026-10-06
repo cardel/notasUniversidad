@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reparto de iteraciones: schedule y regiones anidadas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #panel-gantt .barra-fila .rotulo { width: 4.6rem; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Quién se lleva cuáles iteraciones</h1>
+  <p class="intro">Reparta doce iteraciones entre tres hilos con cuatro políticas de schedule y
+  mire quién sigue trabajando cuando los demás ya acabaron. Después prediga dónde arranca cada
+  hilo con static, compare los cuatro tiempos medidos y resuelva qué hacer con un ciclo que lleva
+  otro adentro.</p>
+
+  <div class="carta">
+    <h2>1. Doce iteraciones, tres hilos</h2>
+    <div class="fila-n">
+      <label>Política:</label>
+      <span class="presets">
+        <button data-politica="static">static</button>
+        <button data-politica="static1">static 1</button>
+        <button data-politica="dynamic2">dynamic 2</button>
+        <button data-politica="guided">guided</button>
+      </span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label>Costo de cada iteración:</label>
+      <span class="presets">
+        <button data-patron="uniforme">uniforme</button>
+        <button data-patron="creciente">creciente</button>
+      </span>
+    </div>
+    <div class="codigo" id="codigo-panel" style="margin-top:0.8rem"></div>
+    <div id="panel-gantt" style="margin-top:0.9rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Hilo</th><th>Iteraciones que le tocaron</th><th>Termina en</th></tr></thead>
+        <tbody id="cuerpo-reparto"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-reparto" style="margin-top:0.7rem"></div>
+    <div class="nota">Cada bloque de color es un grupo de iteraciones y los huecos son espera.
+    Con el costo uniforme toda iteración vale una unidad. Con el creciente la iteración i cuesta
+    i + 1, como un ciclo cuyo trabajo crece con el índice.</div>
+    <div class="nota" id="nota-static"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de ver los tiempos</h2>
+    <div class="prediccion">
+      <span>Con el reparto static y doce iteraciones entre tres hilos, ¿qué iteración le toca de
+      primera al hilo 2?</span>
+      <input type="number" id="prediccion-static" min="0" step="1" placeholder="iteración">
+      <button id="btn-comprobar-static" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-static" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los cuatro tiempos medidos</h2>
+    <p style="margin-top:0">Un ciclo con n = 10.000 × 10.000 corrido con las cuatro políticas, en
+    un AMD Ryzen 5 3600 de 6 núcleos y 12 hilos de hardware.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Política</th><th>Tiempo</th></tr></thead>
+        <tbody id="cuerpo-tiempos"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">¿Cuál política dio el mejor tiempo?</p>
+    <div class="opciones" id="opciones-tiempos">
+      <button data-op="static">static</button>
+      <button data-op="correcta">dynamic con bloques de 2</button>
+      <button data-op="guided">guided</button>
+      <button data-op="dynamic1000">dynamic con bloques de 1000</button>
+    </div>
+    <div id="veredicto-tiempos" class="veredicto"></div>
+    <div id="extra-tiempos" style="display:none">
+      <p style="margin:0.9rem 0 0.3rem">Así se escriben las dos políticas en el ciclo:</p>
+      <div class="codigo">
+        <div class="linea"><span class="num">1</span><span class="txt">// Carga uniforme: static es ideal</span></div>
+        <div class="linea bloque-1"><span class="num">2</span><span class="txt">#pragma omp parallel for schedule(static)</span></div>
+        <div class="linea"><span class="num">3</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+        <div class="linea"><span class="num">4</span><span class="txt">    resultado[i] = dato[i] * 2;</span></div>
+        <div class="linea"><span class="num">5</span><span class="txt"> </span></div>
+        <div class="linea"><span class="num">6</span><span class="txt">// Carga variable: dynamic balancea mejor</span></div>
+        <div class="linea bloque-2"><span class="num">7</span><span class="txt">#pragma omp parallel for schedule(dynamic, 2)</span></div>
+        <div class="linea"><span class="num">8</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+        <div class="linea"><span class="num">9</span><span class="txt">    resultado[i] = trabajo_variable(i);</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Regiones anidadas</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">#pragma omp parallel          // equipo externo de hilos</span></div>
+      <div class="linea"><span class="num">2</span><span class="txt">{</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">    #pragma omp parallel for  // region anidada</span></div>
+      <div class="linea"><span class="num">4</span><span class="txt">    for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea"><span class="num">5</span><span class="txt">        trabajo(i);</span></div>
+      <div class="linea"><span class="num">6</span><span class="txt">}</span></div>
+    </div>
+    <div class="prediccion">
+      <span>Doce hilos externos y cada uno abre una región de doce. ¿Cuántos hilos pediría el
+      programa si el anidamiento estuviera activo?</span>
+      <input type="number" id="prediccion-anidado" min="0" step="1" placeholder="hilos">
+      <button id="btn-comprobar-anidado" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-anidado" class="veredicto"></div>
+    <div id="extra-anidado" style="display:none">
+      <p style="margin:0.9rem 0 0.3rem">Los dos ciclos en un solo reparto:</p>
+      <div class="codigo">
+        <div class="linea bloque-3"><span class="num">1</span><span class="txt">#pragma omp parallel for collapse(2)</span></div>
+        <div class="linea"><span class="num">2</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+        <div class="linea"><span class="num">3</span><span class="txt">    for (int j = 0; j &lt; m; j++)</span></div>
+        <div class="linea"><span class="num">4</span><span class="txt">        trabajo(i, j);</span></div>
+      </div>
+      <p style="margin:0.9rem 0 0.3rem">Si de verdad hacen falta dos niveles, se habilitan desde
+      el entorno:</p>
+      <div class="codigo">
+        <div class="linea"><span class="num">1</span><span class="txt">export OMP_MAX_ACTIVE_LEVELS=2   # habilita dos niveles de anidamiento</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué hacer con dos ciclos</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Un ciclo de 12 filas con uno de 10.000 columnas
+    adentro, en una máquina de 12 hilos de hardware. ¿Cómo se reparte?</p>
+    <div class="opciones" id="opciones-ciclos">
+      <button data-op="correcta">collapse(2) sobre los dos ciclos</button>
+      <button data-op="anidar">Activar el anidamiento con OMP_MAX_ACTIVE_LEVELS</button>
+      <button data-op="interno">parallel for solo en el ciclo interno</button>
+      <button data-op="externo">parallel for solo en el ciclo externo</button>
+    </div>
+    <div id="veredicto-ciclos" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reparto.js"></script>
+</body>
+</html>

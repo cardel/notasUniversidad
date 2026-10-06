@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escalado de la integral de pi: aceleración y eficiencia</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #grafica .barra-fila .rotulo { width: 9.5rem; font-size: 0.8rem; font-family: ui-monospace, monospace; }
+  td.marcada { background: var(--resalte); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Doce hilos no dan doce veces la velocidad</h1>
+  <p class="intro">Prediga con cuántos hilos la integral de pi llega a su mejor
+  tiempo y destape después la aceleración y la eficiencia de las doce corridas.
+  Con esas dos columnas estime qué fracción del programa quedó secuencial y
+  compare el codo medido contra el techo de Amdahl.</p>
+
+  <div class="carta">
+    <h2>1. El programa y el barrido</h2>
+    <p style="margin-top:0">Integral de 4/(1+x²) por rectángulos. El pragma reparte
+    el ciclo de mil millones de iteraciones y reduction junta las sumas parciales de
+    cada hilo:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">const long N = 1000000000L;      // mil millones de rectangulos</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">double integrar() {</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    double paso = 1.0 / N;</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    double suma = 0.0;</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">    #pragma omp parallel for reduction(+ : suma)</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    for (long i = 0; i &lt; N; i++) {</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">        double x = (i + 0.5) * paso;</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">        suma += 4.0 / (1.0 + x * x);</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">    }</span></div>
+      <div class="linea bloque-1"><span class="num">10</span><span class="txt">    return suma * paso;</span></div>
+      <div class="linea bloque-1"><span class="num">11</span><span class="txt">}</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Cada corrida repite la integral tres veces y
+    reporta la más rápida:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">12</span><span class="txt">int main() {</span></div>
+      <div class="linea bloque-2"><span class="num">13</span><span class="txt">    double mejor = 1e30, pi = 0.0;</span></div>
+      <div class="linea bloque-2"><span class="num">14</span><span class="txt">    for (int r = 0; r &lt; 3; r++) {</span></div>
+      <div class="linea bloque-2"><span class="num">15</span><span class="txt">        auto ini = chrono::high_resolution_clock::now();</span></div>
+      <div class="linea bloque-2"><span class="num">16</span><span class="txt">        pi = integrar();</span></div>
+      <div class="linea bloque-2"><span class="num">17</span><span class="txt">        auto fin = chrono::high_resolution_clock::now();</span></div>
+      <div class="linea bloque-2"><span class="num">18</span><span class="txt">        double ms = chrono::duration&lt;double, milli&gt;(fin - ini).count();</span></div>
+      <div class="linea bloque-2"><span class="num">19</span><span class="txt">        if (ms &lt; mejor) mejor = ms;</span></div>
+      <div class="linea bloque-2"><span class="num">20</span><span class="txt">    }</span></div>
+      <div class="linea bloque-2"><span class="num">21</span><span class="txt">    printf("%2d hilos   pi = %.10f   %8.1f ms\n",</span></div>
+      <div class="linea bloque-2"><span class="num">22</span><span class="txt">           omp_get_max_threads(), pi, mejor);</span></div>
+      <div class="linea bloque-2"><span class="num">23</span><span class="txt">    return 0;</span></div>
+      <div class="linea bloque-2"><span class="num">24</span><span class="txt">}</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">El barrido llama al mismo binario doce veces,
+    una por cada número de hilos:</p>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num">1</span><span class="txt">g++ -std=c++17 -fopenmp -O2 escalado.cpp -o escalado</span></div>
+      <div class="linea bloque-3"><span class="num">2</span><span class="txt">export OMP_DYNAMIC=false</span></div>
+      <div class="linea bloque-3"><span class="num">3</span><span class="txt">for t in $(seq 1 12); do OMP_NUM_THREADS=$t ./escalado; done</span></div>
+    </div>
+    <div class="nota">El barrido corrió en un AMD Ryzen 5 3600 de 6 núcleos y 12 hilos
+    de hardware, con g++ -O2. De cada número de hilos queda el mínimo de tres
+    repeticiones, y OMP_DYNAMIC=false deja fijo el número de hilos que pide
+    OMP_NUM_THREADS.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de ver la tabla</h2>
+    <div class="prediccion">
+      <span>El mismo binario corrió con 1, 2, 3 y así hasta 12 hilos sobre seis
+      núcleos físicos. ¿Con cuántos hilos se alcanza el mejor tiempo?</span>
+      <input type="number" id="prediccion-mejor" min="1" max="12" step="1" placeholder="hilos">
+      <button id="btn-comprobar-mejor" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-mejor" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Aceleración y eficiencia</h2>
+    <p style="margin-top:0">S(p) = T(1)/T(p) dice cuántas veces más rápido corre con
+    p hilos; E(p) = S(p)/p, cuánto de cada hilo se aprovecha.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Hilos</th><th>Tiempo (ms)</th><th>S(p)</th><th>E(p)</th></tr></thead>
+        <tbody id="cuerpo-escalado"></tbody>
+      </table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-se" class="primario">Calcular aceleración y eficiencia</button>
+    </div>
+    <div id="grafica" style="margin-top:0.8rem"></div>
+    <div class="nota" id="leyenda-grafica"></div>
+    <div class="chips" id="chips-escalado" style="margin-top:0.6rem"></div>
+    <div class="alerta">nproc cuenta hilos lógicos: 6 núcleos por 2. OpenMP toma los
+    12 por defecto, así que dos hilos se turnan las mismas unidades de ejecución. La
+    columna E(p) es donde eso se mide.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El codo</h2>
+    <p style="margin-top:0">Karp y Flatt despejan la fracción secuencial a partir de
+    la aceleración medida: f = (1/S(p) - 1/p) / (1 - 1/p).</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>p</th><th>2</th><th>4</th><th>6</th><th>8</th><th>12</th></tr></thead>
+        <tbody id="cuerpo-karp"></tbody>
+      </table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-karp" class="primario">Calcular la fracción secuencial</button>
+    </div>
+    <p id="lectura-codo" style="margin:0.7rem 0 0"></p>
+    <p style="margin:0.9rem 0 0.3rem">Con doce hilos la aceleración es 4,89 y con seis
+    es 4,96. ¿Qué dice eso?</p>
+    <div class="opciones" id="opciones-codo">
+      <button data-op="correcta">La mitad del equipo no está produciendo</button>
+      <button data-op="carrera">El programa tiene una carrera de datos</button>
+      <button data-op="nucleos">Hacen falta más núcleos</button>
+      <button data-op="medicion">La medición está mal</button>
+    </div>
+    <div id="veredicto-codo" class="veredicto"></div>
+    <div id="alerta-codo"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El techo de Amdahl</h2>
+    <p style="margin-top:0">Si una fracción f del programa corre secuencial,
+    S(p) = 1 / (f + (1 - f)/p) y el techo con cualquier número de hilos es 1/f. Mueva
+    las dos perillas:</p>
+    <div class="fila-n">
+      <label for="f-amdahl">Fracción secuencial f:</label>
+      <input type="range" id="f-amdahl" min="1" max="50" step="1" value="10">
+      <span class="valor-n" id="valor-f">10 %</span>
+    </div>
+    <div class="fila-n" style="margin-top:0.5rem">
+      <label for="p-amdahl">Hilos p:</label>
+      <input type="range" id="p-amdahl" min="1" max="64" step="1" value="12">
+      <span class="valor-n" id="valor-p">12</span>
+    </div>
+    <div class="chips" id="chips-amdahl" style="margin-top:0.7rem"></div>
+    <p id="cuenta-amdahl" style="margin:0.6rem 0 0.8rem"></p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>f secuencial</th><th>4 hilos</th><th>12 hilos</th><th>64 hilos</th><th>Techo 1/f</th></tr></thead>
+        <tbody id="cuerpo-amdahl"></tbody>
+      </table>
+    </div>
+    <div class="nota">Con un 10 % secuencial, pasar de 12 a 64 hilos gana apenas un
+    54 % y el techo está en 10. La fila del 25 % enseña el otro extremo: el techo es 4
+    y 64 hilos apenas alcanzan 3,8.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="escalado.js"></script>
+</body>
+</html>

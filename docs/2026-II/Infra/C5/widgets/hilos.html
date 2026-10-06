@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quién decide cuántos hilos abre la región</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #cuerpo-invocaciones code { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Quién decide cuántos hilos abre la región</h1>
+  <p class="intro">Escriba primero qué imprime un programa que pregunta por el
+  número de hilos antes de abrir cualquier región paralela. Después arme
+  ambientes con la variable, la llamada y la cláusula a la vez, y destape cuál
+  de las tres se queda con el equipo.</p>
+
+  <div class="carta">
+    <h2>1. Las tres formas de fijar el número</h2>
+    <p style="margin-top:0">Desde el ambiente, antes de arrancar el programa:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">export OMP_NUM_THREADS=4</span></div>
+      <div class="linea bloque-1"><span class="num"></span><span class="txt">./programa</span></div>
+    </div>
+    <p>En la directiva, para esa región y nada más:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">#pragma omp parallel num_threads(4)</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">{</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">    // el equipo de esta region abre con cuatro hilos</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">}</span></div>
+    </div>
+    <p>En tiempo de ejecución, desde el código:</p>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">#include &lt;omp.h&gt;</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">omp_set_num_threads(4);</span></div>
+    </div>
+    <div class="chips" id="chips-maquina" style="margin-top:0.8rem"></div>
+    <div class="nota">Las tres conviven y pueden pedir números distintos en la misma
+    corrida. Las tres cifras de arriba salen de <code>nproc</code> y de <code>lscpu</code>
+    en el equipo de la clase, un AMD Ryzen 5 3600 compilando con
+    <code>g++ -std=c++17 -fopenmp -O2</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">#include &lt;cstdio&gt;</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">#include &lt;omp.h&gt;</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt"></span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">int main() {</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">    printf("hilos = %d\n", omp_get_num_threads());</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    return 0;</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">}</span></div>
+    </div>
+    <div class="prediccion">
+      <span>El programa llama a <code>omp_get_num_threads()</code> antes de abrir
+      ninguna región paralela. ¿Qué imprime?</span>
+      <input type="number" id="prediccion-fuera" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-fuera" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-fuera" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Quién gana</h2>
+    <div class="fila-n">
+      <label>Ambiente:</label>
+      <span class="presets" id="presets-ambiente">
+        <button data-ambiente="libre">sin fijar nada</button>
+        <button data-ambiente="variable">OMP_NUM_THREADS=4</button>
+        <button data-ambiente="las-tres">las tres a la vez</button>
+      </span>
+    </div>
+    <div class="codigo" id="codigo-ambiente" style="margin-top:0.7rem"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-ver-precedencia" class="primario">Destapar las dos cifras</button>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Fuente, de la que más manda a la que menos</th><th>Valor en este ambiente</th><th>Qué decide</th></tr></thead>
+        <tbody id="cuerpo-precedencia"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-precedencia" style="margin-top:0.6rem"></div>
+    <p id="resumen-precedencia" style="min-height:2.6rem;margin:0.4rem 0 0"></p>
+    <div class="nota">Decida de cuál de las cuatro filas sale el equipo antes de pulsar
+    el botón. La cláusula vale solo para la región que la lleva; la llamada y la variable
+    valen para todas las que vengan después.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Doce hilos sobre seis núcleos</h2>
+    <p style="margin-top:0">El programa <code>hilos.cpp</code> imprime las dos cifras,
+    una desde el código secuencial y otra desde dentro de la región:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">printf("omp_get_max_threads() = %d\n", omp_get_max_threads());</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">#pragma omp parallel</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">{</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    #pragma omp single</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">    printf("hilos en la region    = %d\n", omp_get_num_threads());</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">}</span></div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table>
+        <thead><tr><th>Invocación</th><th><code>omp_get_max_threads()</code></th><th>hilos en la región</th></tr></thead>
+        <tbody id="cuerpo-invocaciones"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Lo que dice el sistema sobre la misma máquina:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">$ nproc</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">12</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">$ lscpu | grep -E 'Model name|Core\(s\) per socket|Thread\(s\) per core'</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">Model name:                              AMD Ryzen 5 3600 6-Core Processor</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">Thread(s) per core:                      2</span></div>
+      <div class="linea bloque-2"><span class="num"></span><span class="txt">Core(s) per socket:                      6</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem"><code>nproc</code> dice 12 y la máquina tiene 6
+    núcleos físicos. ¿Qué son esos 12?</p>
+    <div class="opciones" id="opciones-logicos">
+      <button data-op="fisicos">Doce núcleos físicos</button>
+      <button data-op="correcta">Hilos lógicos: 6 núcleos por 2 hilos por núcleo</button>
+      <button data-op="procesos">Doce procesos</button>
+      <button data-op="regiones">El número de regiones paralelas del programa</button>
+    </div>
+    <div id="veredicto-logicos" class="veredicto"></div>
+    <div class="alerta" id="alerta-nucleos" hidden>El barrido de hilos de la sesión mide lo
+    que cuestan esos doce: la aceleración llega a 4,89 y la eficiencia cae al 41 %, mientras
+    que con 6 hilos la aceleración es casi la misma y la eficiencia sube al 83 %. La mitad
+    del equipo cobra sin producir.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Antes de medir</h2>
+    <p style="margin-top:0">Dos corridas del mismo programa con la misma
+    <code>OMP_NUM_THREADS</code> dan tiempos distintos y un número de hilos distinto.
+    ¿Qué hay que fijar?</p>
+    <div class="opciones" id="opciones-dinamico">
+      <button data-op="subir">Subir OMP_NUM_THREADS</button>
+      <button data-op="o3">Compilar con -O3</button>
+      <button data-op="correcta">OMP_DYNAMIC en false</button>
+      <button data-op="llamada">Usar omp_set_num_threads en vez de la variable</button>
+    </div>
+    <div id="veredicto-dinamico" class="veredicto"></div>
+    <div class="codigo" id="codigo-dinamico" hidden style="margin-top:0.8rem">
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">export OMP_DYNAMIC=false</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">export OMP_NUM_THREADS=12</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">./programa</span></div>
+    </div>
+    <div class="nota" id="nota-dinamico" hidden>Con el ajuste dinámico activo, el tamaño del
+    equipo depende de cómo esté la máquina en ese instante, y entonces dos corridas no comparan
+    lo mismo. Esas dos líneas son lo primero que se escribe antes de tomar un tiempo.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="hilos.js"></script>
+</body>
+</html>

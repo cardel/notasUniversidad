@@ -41,6 +41,10 @@ Se publican después de cada sesión.
    — el GIL y por qué los hilos no aceleran un cálculo en Python puro, dónde
    sí sirven, la actualización perdida y los cerrojos, y el paso a procesos:
    memoria separada, colas, tuberías y memoria compartida.
+5. [Clase 5. OpenMP en C++ — 6 y 8 de octubre](C5/Clase%205.%20OpenMP%20en%20C++.md)
+   — una directiva donde antes iban catorce líneas: regiones paralelas,
+   reducción, visibilidad de variables y reparto de iteraciones, con lo que
+   cuesta cada mecanismo y cómo comprobar que el binario usó los hilos.
 
 ### Corte 2
 

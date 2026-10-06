@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proteger un acumulador: critical, atomic o reduction</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #tabla-traza tr.actual td { background: var(--resalte); }
+  #tabla-traza td { font-family: ui-monospace, monospace; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Proteger un acumulador: critical, atomic o reduction</h1>
+  <p class="intro">Prediga en cuánto queda una variable compartida cuando dos hilos la suman sin
+  protección y recorra la traza instante por instante, con el orden que usted escoja, hasta ver
+  cuál escritura tapa la otra. Después compare las tres formas de arreglarlo y decida cuál pide
+  cada caso.</p>
+
+  <div class="carta">
+    <h2>1. El ciclo que se pisa</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">double c = 0;</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">#pragma omp parallel for          // sin proteccion: carrera de datos</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    c += a[i] * b[i];             // leer c, sumar, escribir c</span></div>
+    </div>
+    <div class="nota">Lo que importa está en el comentario de la última línea: sumar sobre
+    <code>c</code> no es una instrucción, son tres. Entre la lectura y la escritura de vuelta queda
+    una ventana abierta. Y a <code>c</code> la ven los dos hilos, porque está declarada fuera de la
+    región paralela.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de mirar</h2>
+    <div class="prediccion">
+      <span>El hilo 0 suma 5 y el hilo 1 suma 7 sobre <code>c</code>, que arranca en 0. Si los dos
+      leen antes de que cualquiera escriba, ¿en cuánto queda <code>c</code>?</span>
+      <input type="number" id="prediccion-c" step="1" placeholder="su número">
+      <button id="btn-comprobar-c" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-c" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Paso a paso</h2>
+    <div class="fila-n">
+      <label>Orden de los micro-pasos:</label>
+      <span class="presets">
+        <button data-preset="clase">los dos leen primero</button>
+        <button data-preset="ordenado">un hilo y luego el otro</button>
+        <button data-preset="tardio">lectura tardía</button>
+      </span>
+    </div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.5rem">
+      <table id="tabla-traza">
+        <thead><tr><th>Instante</th><th>Hilo 0</th><th>Hilo 1</th><th>Valor de c</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+    <p id="paso-texto" style="min-height:1.4rem"></p>
+    <div class="chips" id="chips-traza"></div>
+    <div class="nota">Cada suma son tres micro-pasos: leer <code>c</code>, sumar el aporte del hilo
+    dentro de su registro y escribir ese registro de vuelta en <code>c</code>. Con el primer orden los dos
+    leen antes de que cualquiera escriba. El segundo le da el turno completo a un hilo y después al
+    otro, y en el tercero el hilo 0 lee cuando el hilo 1 ya escribió. Recorra los tres.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Tres formas de arreglarlo</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">#pragma omp parallel for</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">for (int i = 0; i &lt; n; i++) {</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    #pragma omp critical</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    {</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">        shared_counter++;</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    }</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">}</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.6rem">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">#pragma omp parallel for</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">for (int i = 0; i &lt; n; i++) {</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    #pragma omp atomic</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    shared_counter++;</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">}</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.6rem">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">double producto_punto(double* a, double* b, int n) {</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">    double c = 0;</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    #pragma omp parallel for reduction(+:c)</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">        c += a[i] * b[i];</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    return c;</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">}</span></div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Mecanismo</th><th>Qué protege</th><th>Costo</th></tr></thead>
+        <tbody id="cuerpo-mecanismos"></tbody>
+      </table>
+    </div>
+    <p style="margin-bottom:0.3rem">El ciclo acumula un millón de sumas sobre la misma variable.
+    ¿Cuál conviene?</p>
+    <div class="opciones" id="opciones-acumular">
+      <button data-op="critical">critical</button>
+      <button data-op="atomic">atomic</button>
+      <button data-op="correcta">reduction</button>
+      <button data-op="privada">ninguno: basta declarar la variable private</button>
+    </div>
+    <div id="veredicto-acumular" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuál de las dos</h2>
+    <p style="margin-bottom:0.3rem">Dos casos en el mismo programa: incrementar un contador
+    compartido y actualizar tres campos de una estructura que deben quedar consistentes entre sí.
+    ¿Qué pide cada uno?</p>
+    <div class="opciones" id="opciones-casos">
+      <button data-op="correcta">atomic para el contador y critical para los tres campos</button>
+      <button data-op="invertida">critical para el contador y atomic para los tres campos</button>
+      <button data-op="reduccion">atomic para el contador y reduction para los tres campos</button>
+      <button data-op="ambos">critical en los dos casos</button>
+    </div>
+    <div id="veredicto-casos" class="veredicto"></div>
+    <div class="alerta" id="alerta-preferencia" hidden></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="proteger.js"></script>
+</body>
+</html>
