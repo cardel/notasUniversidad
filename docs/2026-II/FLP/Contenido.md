@@ -54,6 +54,12 @@ Se publican después de cada sesión.
    completo repartido en archivos, y `let` con sus cadenas de ambientes.
    Incluye el código de la demostración y los apuntes del tablero.
 
+5. [Clase 5. Condicionales, procedimientos y alcance — 6 de octubre](C5/Clase%205.%20Condicionales%2C%20procedimientos%20y%20alcance.md)
+   — el condicional con su chequeo de booleano, los tres valores expresados,
+   la clausura y sus tres campos, la regla de la aplicación y el alcance
+   estático, con los ejercicios de cadenas de ambientes que se trabajaron en
+   el tablero. Incluye los apuntes de la sesión.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*
