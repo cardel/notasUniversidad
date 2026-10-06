@@ -11,7 +11,7 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>Los valores del lenguaje y el punto de entrada</h1>
-  <p class="intro">Antes de escribir el evaluador hay que decidir dos conjuntos: qué puede resultar de evaluar una expresión y qué puede quedar ligado a un nombre. En este lenguaje los dos son el mismo, y no siempre será así. Después, el punto de entrada, que hace dos cosas y ninguna es evaluar.</p>
+  <p class="intro">Antes de escribir el evaluador hay que decidir dos conjuntos: qué puede resultar de evaluar una expresión y qué puede quedar ligado a un nombre. En este lenguaje los dos son el mismo, y no siempre será así. Después, el punto de entrada, que no evalúa nada por su cuenta: abre el programa y entrega su expresión al evaluador junto con el ambiente inicial.</p>
 
   <div id="bloques"></div>
 
@@ -20,7 +20,7 @@
     <div class="envoltura-tabla">
       <table>
         <thead><tr><th>Concepto</th><th>En este lenguaje</th><th>Cuando crezca</th></tr></thead>
-        <tbody><tr><td>valor expresado</td><td>número</td><td>número o booleano, al llegar <code>zero?</code> y el condicional</td></tr><tr><td>valor denotado</td><td>número</td><td>lo mismo, porque <code>let</code> liga el resultado de cualquier expresión</td></tr><tr><td><code>eval-program</code></td><td>abre el programa y arma el ambiente inicial</td><td>igual, más lo que vaya antes del cuerpo</td></tr><tr><td>el TAD ambiente</td><td>usado por su interfaz, sin mirar adentro</td><td>igual: cambiar su representación no toca al evaluador</td></tr></tbody>
+        <tbody><tr><td>valor expresado</td><td>número</td><td>número o booleano, al llegar las primitivas de comparación y el condicional</td></tr><tr><td>valor denotado</td><td>número</td><td>lo mismo, porque <code>let</code> liga el resultado de cualquier expresión</td></tr><tr><td><code>evaluar-programa</code></td><td>abre el programa y evalúa su expresión en <code>ambiente-inicial</code></td><td>igual, más lo que vaya antes del cuerpo</td></tr><tr><td>el TAD ambiente</td><td>usado por su interfaz, sin mirar adentro</td><td>igual: cambiar su representación no toca al evaluador</td></tr></tbody>
       </table>
     </div>
     <div class="nota">Los dos conjuntos son la especificación del evaluador: dicen qué tipos de cosas van a circular. Por eso se escriben antes que él y no después.</div>

@@ -11,18 +11,23 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>El interpretador por dentro</h1>
-  <p class="intro">Cinco programas para predecir qué hará el interpretador antes de verlo: cuánto vale, cuántas veces se llama a <code>eval-expression</code>, cuántas búsquedas hace en el ambiente. Al comprobar, la página abre las tres etapas de ese mismo programa: los tokens que emitió el scanner, el árbol que armó el parser y la traza del evaluador, fila por fila con su ambiente y su valor. Al final, la misma máquina para cualquier programa que quiera escribir.</p>
+  <p class="intro">Cinco programas para predecir qué hará el interpretador antes de verlo: cuánto vale, cuántas veces se llama a <code>evaluar-expresion</code>, cuántas búsquedas hace en el ambiente. Al comprobar, la página abre las tres etapas de ese mismo programa: los tokens que emitió el scanner, el árbol que armó el parser y la traza del evaluador, fila por fila con su ambiente y su valor. Al final, la misma máquina para cualquier programa que quiera escribir.</p>
 
   <div class="alerta">
     El lenguaje es el de la sesión: números, variables, las primitivas
-    <code>+</code>, <code>-</code>, <code>*</code>, <code>add1</code> y
-    <code>sub1</code> escritas antes del paréntesis, y <code>let</code>. El
-    ambiente inicial liga <code>i = 1</code>, <code>v = 5</code> y
-    <code>x = 10</code>. Las tres etapas hacen lo mismo que el interpretador
-    en Racket de la sesión, con sus mismas decisiones: los nombres de las
-    primitivas y de las palabras clave se reconocen antes que los
-    identificadores, un menos pegado a un dígito es parte del número, y las
-    primitivas no verifican cuántos operandos reciben.
+    <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>,
+    <code>add1</code> y <code>sub1</code> escritas antes del paréntesis, y
+    <code>let</code>. Las cuatro primeras son n-arias: <code>+(x, y, z)</code>
+    suma los tres, la resta es el primer operando menos la suma de los demás
+    y la división es el primero dividido por el producto de los demás. El
+    ambiente inicial tiene dos eslabones, <code>x = 1</code>,
+    <code>y = 2</code>, <code>z = 3</code> sobre <code>a = 4</code>,
+    <code>b = 5</code>, <code>c = 6</code>, y de ahí al vacío. Las tres
+    etapas hacen lo mismo que el interpretador en Racket de la sesión, con
+    sus mismas decisiones: los nombres de las primitivas y de las palabras
+    clave se reconocen antes que los identificadores, un menos pegado a un
+    dígito es parte del número, y las primitivas no verifican cuántos
+    operandos reciben.
   </div>
 
   <div id="predicciones"></div>
@@ -32,7 +37,7 @@
     <p style="margin-top:0">Escriba cualquier programa del lenguaje y vea sus
     tres etapas. Los ejemplos de abajo incluyen dos que no llegan a evaluarse:
     sirven para ver en qué etapa se detiene cada error.</p>
-    <textarea class="editor" rows="3" spellcheck="false">let z = -(x, i) in *(z, z)</textarea>
+    <textarea class="editor" rows="3" spellcheck="false">let w = -(c, y) in *(w, w)</textarea>
     <div class="ejemplos"></div>
     <div class="botones">
       <button class="primario" data-accion="correr">Ver el proceso</button>

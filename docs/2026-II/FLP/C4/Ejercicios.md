@@ -7,8 +7,9 @@ pieza, así que casi todo es analizar y predecir: las respuestas muestran su
 razón, se acierte o no.
 
 El lenguaje es el de la sesión —números, variables, las primitivas `+`, `-`,
-`*`, `add1` y `sub1`, y `let`— con el ambiente inicial `i = 1`, `v = 5`,
-`x = 10`. Los programas no son los de clase: mismo lenguaje, ronda nueva.
+`*`, `/`, `add1` y `sub1`, y `let`— con el ambiente inicial de dos eslabones:
+`x = 1`, `y = 2`, `z = 3` sobre `a = 4`, `b = 5`, `c = 6`. Los programas no son
+los de clase: mismo lenguaje, ronda nueva.
 Lo que aquí se afirma sobre tokens, valores y número de llamadas se midió
 contra el interpretador en Racket de la sesión.
 
@@ -18,7 +19,7 @@ contra el interpretador en Racket de la sesión.
 
 El reparto del trabajo entre las tres etapas: quién tira a la basura los
 espacios y el comentario, quién decide que `-(x, 3)` es una primitiva con
-dos operandos, quién averigua que `x` vale 10. Después, qué recibe y qué
+dos operandos, quién averigua que `x` vale 1. Después, qué recibe y qué
 produce cada una, y en qué etapa se detiene cada programa que no llega a dar
 un valor: uno al que le falta el signo igual, uno que menciona una variable
 que nadie ligó, uno al que le sobra un token al final.
@@ -62,15 +63,16 @@ que no dejan campo.
 Los dos conjuntos que se deciden antes de escribir el evaluador: qué puede
 resultar de evaluar una expresión y qué puede quedar ligado a un nombre. En
 este lenguaje coinciden, y el bloque muestra qué los separa en cuanto el
-lenguaje crece. Después, el punto de entrada: qué hace `eval-program`
-—que no es evaluar— y por qué `init-env` es un procedimiento.
+lenguaje crece. Después, el punto de entrada: qué hace `evaluar-programa`
+—que no es evaluar— y por qué `ambiente-inicial` es una constante y no un
+procedimiento.
 
 ## Primitivas y evaluación
 
 ### [El interpretador por dentro](widgets/simulador.html){ target=_blank rel=noopener }
 
 Cinco programas para predecir qué hará el interpretador antes de verlo:
-cuánto vale, cuántas veces se llama a `eval-expression`, cuántas búsquedas
+cuánto vale, cuántas veces se llama a `evaluar-expresion`, cuántas búsquedas
 hace en el ambiente, cuántos ambientes crea. Al comprobar, la página abre
 las tres etapas de ese mismo programa: la tabla de tokens, el árbol dibujado
 y la traza del evaluador fila por fila, con su ambiente y su valor, y con
@@ -80,12 +82,12 @@ fallan: se ve en qué etapa se detienen.
 
 ### [El reparto del trabajo al evaluar](widgets/traza.html){ target=_blank rel=noopener }
 
-Quién hace qué entre `eval-expression`, `eval-rands`, `apply-primitive` y
-`apply-env`, y por qué la primitiva no recibe el ambiente. Después el orden:
+Quién hace qué entre `evaluar-expresion`, `map`, `evaluar-primitiva`,
+`operacion-prim` y `apply-env`, y por qué la primitiva no recibe el ambiente. Después el orden:
 de tres secuencias de valores, cuál es la que va obteniendo el
 interpretador. Y al final lo que la gramática deja pasar y el evaluador no
-verifica: `add1(v, 99)` vale 6 sin decir nada y `-(7)` se cae con un mensaje
-que habla de Racket.
+verifica: `add1(b, 99)` vale 6 sin decir nada y `-()` se cae con un
+mensaje que habla de Racket.
 
 ## Ligadura local
 
@@ -94,6 +96,6 @@ que habla de Racket.
 En qué ambiente se evalúa cada parte de un `let`, que es toda la regla: la
 expresión ligada en el de afuera y el cuerpo en el nuevo. Después, qué pasa
 cuando el nombre ya existía, con cuatro programas donde la respuesta depende
-de eso —`let v = *(v, v) in v` no es circular y vale 25—, y al final una
+de eso —`let b = *(b, b) in b` no es circular y vale 25—, y al final una
 cadena de tres eslabones sobre el inicial, con un nombre repetido y una
 ligadura que queda tapada pero no borrada.

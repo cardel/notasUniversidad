@@ -51,7 +51,7 @@ var BLOQUES = (function () {
         { valor: "Detectar un error de sintaxis", correcta: 0,
           razon: "Es el frontend el que lo encuentra, por eso los dos caminos lo reportan. Lo que cambia es el momento en que uno lo ve, no quién lo detecta." },
         { valor: "Recorrer el árbol y producir la respuesta", correcta: 1,
-          razon: "Eso es interpretar: examinar la estructura del árbol y ejecutar acciones que dependen de ella. Es exactamente lo que hace eval-expression." },
+          razon: "Eso es interpretar: examinar la estructura del árbol y ejecutar acciones que dependen de ella. Es exactamente lo que hace evaluar-expresion." },
         { valor: "Producir un archivo que la máquina ejecuta sin volver a ver el programa", correcta: 2,
           razon: "El traductor genera el código destino a partir del árbol. Después de eso el fuente ya no hace falta para ejecutar." },
         { valor: "Deducir información sobre el programa sin ejecutarlo", correcta: 2,

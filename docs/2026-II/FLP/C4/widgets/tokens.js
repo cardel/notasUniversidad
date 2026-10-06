@@ -10,11 +10,11 @@ var BLOQUES = (function () {
       id: "cuantos-tokens",
       titulo: "1. Cuántos tokens emite el scanner",
       definicion:
-        "white-sp   (whitespace)                          skip\n" +
-        "comment    (\"%\" (arbno (not #\\newline)))         skip\n" +
-        "identifier (letter (arbno (or letter digit \"?\")))  symbol\n" +
-        "number     (digit (arbno digit))                  number\n" +
-        "number     (\"-\" digit (arbno digit))              number",
+        "espacio-blanco (whitespace)                            skip\n" +
+        "comentario     (\"%\" (arbno (not #\\newline)))           skip\n" +
+        "identificador  (letter (arbno (or letter digit \"?\" \"$\")))  symbol\n" +
+        "numero         (digit (arbno digit))                    number\n" +
+        "numero         (\"-\" digit (arbno digit))                number",
       explicacion:
         "Esas son las reglas léxicas del lenguaje. Cada paréntesis, cada " +
         "coma y cada nombre de primitiva también es un token, porque son " +
@@ -22,14 +22,14 @@ var BLOQUES = (function () {
         "programa.",
       opciones: ["4", "6", "8"],
       items: [
-        { valor: c("add1(v)"), opciones: ["3", "4", "5"], correcta: 1,
-          razon: "Cuatro: add1, (, v y ). El nombre de la primitiva es un solo token, no cuatro letras sueltas, y los dos paréntesis cuentan uno cada uno." },
-        { valor: c("*(i, v)"), opciones: ["4", "5", "6"], correcta: 2,
-          razon: "Seis: *, (, i, la coma, v y ). Los espacios no dejan nada, y la coma sí es un token porque la gramática la escribe en la producción." },
+        { valor: c("add1(b)"), opciones: ["3", "4", "5"], correcta: 1,
+          razon: "Cuatro: add1, (, b y ). El nombre de la primitiva es un solo token, no cuatro letras sueltas, y los dos paréntesis cuentan uno cada uno." },
+        { valor: c("*(x, b)"), opciones: ["4", "5", "6"], correcta: 2,
+          razon: "Seis: *, (, x, la coma, b y ). Los espacios no dejan nada, y la coma sí es un token porque la gramática la escribe en la producción." },
         { valor: c("-(x,3)     % sin espacios"), opciones: ["6", "7", "9"], correcta: 0,
           razon: "Seis, los mismos que tendría con espacios. El comentario tampoco deja token: su regla léxica tiene salida skip, igual que la de los espacios." },
-        { valor: c("sub1(add1(v))"), opciones: ["5", "6", "7"], correcta: 2,
-          razon: "Siete: sub1, (, add1, (, v, ) y ). Los dos paréntesis de cierre son tokens distintos, y no hay ninguna coma porque cada una de estas primitivas lleva un solo operando." },
+        { valor: c("sub1(add1(b))"), opciones: ["5", "6", "7"], correcta: 2,
+          razon: "Siete: sub1, (, add1, (, b, ) y ). Los dos paréntesis de cierre son tokens distintos, y no hay ninguna coma porque cada una de estas primitivas lleva un solo operando." },
         { valor: c("let y = 7 in *(y, y)"), opciones: ["8", "10", "11"], correcta: 2,
           razon: "Once: let, y, =, 7, in, *, (, y, la coma, y, ). Seis de los once son literales de la gramática, y esa proporción es lo normal en un programa corto." },
         { valor: c("% nada más que esto"), opciones: ["Ninguno", "Uno", "Cuatro"], correcta: 0,
@@ -53,10 +53,10 @@ var BLOQUES = (function () {
       opciones: ["Palabra reservada o literal de la gramática", "Identificador", "Número"],
       items: [
         { valor: "El " + c("x") + " de " + c("let x = 5 in x"), correcta: 1,
-          razon: "Cae en la regla identifier: una letra seguida de letras, dígitos o signos de interrogación. Es el único de esa línea que el programador escogió libremente." },
+          razon: "Cae en la regla del identificador: una letra seguida de letras, dígitos, signos de interrogación o de dólar. Es el único de esa línea que el programador escogió libremente." },
         { valor: "El " + c("let") + " de " + c("let x = 5 in x"), correcta: 0,
           razon: "Está escrito en la producción, así que el scanner lo reconoce como literal y no como identificador. Esa es la razón de que no se pueda llamar let a una variable." },
-        { valor: "El " + c("add1") + " de " + c("add1(v)"), correcta: 0,
+        { valor: "El " + c("add1") + " de " + c("add1(b)"), correcta: 0,
           razon: "Aunque parezca un nombre cualquiera, la gramática lo escribe entre comillas en la producción de primitive. El scanner lo prefiere sobre la regla de identificador, y por eso let add1 = 5 in add1 es un error de sintaxis." },
         { valor: "El " + c("zero?") + " de " + c("let zero? = 4 in zero?"), correcta: 1,
           razon: "En el lenguaje de esta sesión zero? todavía no existe, así que ningún literal de la gramática lo reclama y queda como identificador. Por eso el programa es válido y devuelve 4. Cuando se agregue la primitiva, este mismo programa dejará de compilar." },
@@ -86,7 +86,7 @@ var BLOQUES = (function () {
           razon: "Uno. La regla del identificador sigue comiendo mientras haya letras o dígitos, y como el bocado más largo es x5, no se detiene en la x." },
         { valor: c("5x"), correcta: 1,
           razon: "Dos: el número 5 y el identificador x. Ninguna regla empieza por dígito y sigue con letras, así que el número corta y el identificador arranca. El parser después rechaza la pareja." },
-        { valor: c("add 1(v)") + " — las tres primeras", correcta: 2,
+        { valor: c("add 1(b)") + " — las tres primeras", correcta: 2,
           razon: "Tres: add como identificador, 1 como número y el paréntesis. El espacio impidió que add1 fuera un solo bocado, y con eso el nombre de la primitiva se perdió." },
         { valor: c("adding"), correcta: 0,
           razon: "Uno solo, y es un identificador. Aunque empieza con las letras de add1, el bocado más largo es la palabra entera, así que el literal no se reclama." },

@@ -10,8 +10,8 @@ var MotorSimulador = (function () {
 
   var CAMPOS = {
     valor:     { etiqueta: "El valor del programa", leer: function (r) { return r.valor; } },
-    evalExp:   { etiqueta: "Llamadas a eval-expression", leer: function (r) { return r.cuenta.evalExp; } },
-    applyPrim: { etiqueta: "Llamadas a apply-primitive", leer: function (r) { return r.cuenta.applyPrim; } },
+    evalExp:   { etiqueta: "Llamadas a evaluar-expresion", leer: function (r) { return r.cuenta.evalExp; } },
+    applyPrim: { etiqueta: "Llamadas a evaluar-primitiva", leer: function (r) { return r.cuenta.applyPrim; } },
     applyEnv:  { etiqueta: "Búsquedas en el ambiente", leer: function (r) { return r.cuenta.applyEnv; } },
     ambientes: { etiqueta: "Ambientes que se crean", leer: function (r) {
       return r.traza.filter(function (f) { return f.creacion; }).length; } },
@@ -54,13 +54,13 @@ var MotorSimulador = (function () {
         (f.consulta ? ' <span class="marca-ambiente">busca aquí</span>' : "") +
         "</td><td>" + f.valor + "</td></tr>";
     }).join("");
-    return "<h3>3. El interpretador: una fila por llamada a <code>eval-expression</code></h3>" +
+    return "<h3>3. El interpretador: una fila por llamada a <code>evaluar-expresion</code></h3>" +
       '<div class="envoltura-tabla"><table class="tabla-traza"><thead><tr><th>#</th>' +
       "<th>Expresión</th><th>Ambiente</th><th>Valor</th></tr></thead><tbody>" + filas +
       "</tbody></table></div>" +
       '<p class="conteos"><strong>Valor: ' + r.valor + "</strong> · " +
-      r.cuenta.evalExp + " llamadas a <code>eval-expression</code> · " +
-      r.cuenta.applyPrim + " a <code>apply-primitive</code> · " +
+      r.cuenta.evalExp + " llamadas a <code>evaluar-expresion</code> · " +
+      r.cuenta.applyPrim + " a <code>evaluar-primitiva</code> · " +
       r.cuenta.applyEnv + " búsquedas en el ambiente</p>";
   }
 

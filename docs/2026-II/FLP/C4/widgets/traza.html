@@ -11,7 +11,7 @@
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
   <h1>El reparto del trabajo al evaluar</h1>
-  <p class="intro">El evaluador decide qué hacer según la variante del nodo y delega el resto: los operandos a un auxiliar, la aritmética a las primitivas, la búsqueda de nombres al TAD ambiente. Aquí se reparte ese trabajo, se ordena lo que ocurre y se mira qué deja pasar la gramática que el evaluador no verifica.</p>
+  <p class="intro">El evaluador decide qué hacer según la variante del nodo y delega el resto: los operandos a <code>map</code>, la aritmética a las primitivas, el plegado de una lista n-aria a <code>operacion-prim</code>, la búsqueda de nombres al TAD ambiente. Aquí se reparte ese trabajo, se ordena lo que ocurre y se mira qué deja pasar la gramática que el evaluador no verifica.</p>
 
   <div id="bloques"></div>
 
@@ -20,10 +20,10 @@
     <div class="envoltura-tabla">
       <table>
         <thead><tr><th>Procedimiento</th><th>Qué hace</th><th>Necesita el ambiente</th></tr></thead>
-        <tbody><tr><td><code>eval-expression</code></td><td>decide según la variante y delega</td><td>sí, y se lo pasa a quien lo necesite</td></tr><tr><td><code>eval-rands</code></td><td>evalúa cada operando con <code>map</code></td><td>sí, el mismo para todos</td></tr><tr><td><code>apply-primitive</code></td><td>opera sobre valores ya obtenidos</td><td>no: no va a evaluar nada</td></tr><tr><td><code>apply-env</code></td><td>recorre la cadena buscando un nombre</td><td>es el ambiente</td></tr></tbody>
+        <tbody><tr><td><code>evaluar-expresion</code></td><td>decide según la variante y delega</td><td>sí, y se lo pasa a quien lo necesite</td></tr><tr><td><code>map</code></td><td>evalúa cada operando con el mismo evaluador</td><td>sí, el mismo para todos</td></tr><tr><td><code>evaluar-primitiva</code></td><td>escoge la operación y opera sobre valores ya obtenidos</td><td>no: no va a evaluar nada</td></tr><tr><td><code>operacion-prim</code></td><td>pliega la lista de operandos con la operación y su neutro</td><td>no: solo ve números</td></tr><tr><td><code>apply-env</code></td><td>recorre la cadena buscando un nombre</td><td>es el ambiente</td></tr></tbody>
       </table>
     </div>
-    <div class="nota">El orden lo fija la estructura del árbol: un nodo no tiene valor hasta que sus hijos lo tienen, y por eso la expresión completa siempre es la última. Y lo que la gramática deja pasar de más —cualquier cantidad de operandos— hay que atajarlo en el evaluador, o se cae con un mensaje que habla de Racket y no del lenguaje.</div>
+    <div class="nota">El orden lo fija la estructura del árbol: un nodo no tiene valor hasta que sus hijos lo tienen, y por eso la expresión completa siempre es la última. Y lo que la gramática deja pasar de más —cualquier cantidad de operandos— lo resuelve cada primitiva a su manera: las n-arias devuelven el neutro de su plegado cuando la lista llega vacía, y la resta y la división leen el primero con <code>car</code> y se caen con un mensaje que habla de Racket y no del lenguaje.</div>
   </div>
 
 </div>
