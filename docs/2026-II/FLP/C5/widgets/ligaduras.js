@@ -12,7 +12,7 @@ var BLOQUES = (function () {
       id: "cuanto-da",
       titulo: "1. Cuánto da cada let",
       definicion:
-        "let {<identificador> = <expresion>}* in <expresion>     let-exp (ids rands body)\n\n" +
+        "let {&lt;identificador&gt; = &lt;expresion&gt;}* in &lt;expresion&gt;     let-exp (ids rands body)\n\n" +
         "(let-exp (ids rands body)\n" +
         "  (evaluar-expresion body\n" +
         "    (ambiente-extendido ids (map evaluar rands) amb)))\n\n" +

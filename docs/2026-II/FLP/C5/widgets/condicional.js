@@ -12,7 +12,7 @@ var BLOQUES = (function () {
       id: "que-da-cada-if",
       titulo: "1. Qué da cada condicional",
       definicion:
-        "if <expresion> then <expresion> else <expresion>\n" +
+        "if &lt;expresion&gt; then &lt;expresion&gt; else &lt;expresion&gt;\n" +
         "        if-exp (condicion hace-verdadero hace-falso)\n\n" +
         "ambiente inicial:  [x=4, y=2, z=5]  sobre  [a=4, b=5, c=6]",
       explicacion:
