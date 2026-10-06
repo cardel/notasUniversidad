@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>residuo — la cola que ya tienen</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La cola que ya tienen</h1>
+  <p class="intro">Una cola sobre arreglo con <code>CAPACIDAD = 5</code>, que
+  arranca vacía con <code>inicio = 0</code> y <code>n = 0</code>. Se ejecuta
+  <code>encolar(a)</code>, <code>encolar(b)</code>, <code>encolar(c)</code>,
+  <code>encolar(d)</code>, <code>desencolar()</code>,
+  <code>desencolar()</code>, <code>encolar(e)</code> y
+  <code>encolar(f)</code>.</p>
+
+  <div class="carta">
+    <h2>1. Dónde cae cada <code>encolar</code></h2>
+    <div class="codigo" id="codigo-cola"></div>
+    <p>Los seis <code>encolar</code> en orden: a, b, c, d, e, f. ¿En qué casilla
+    escribe cada uno?</p>
+    <div class="prediccion">
+      <span>casillas:</span>
+      <input type="text" id="pred-casillas" placeholder="0 1 2 ..." style="width:11rem">
+      <button id="btn-casillas" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-casillas" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Operación por operación</h2>
+    <div class="estado">
+      <div class="chips" id="chips-cola"></div>
+      <div class="arreglo fila-arreglo" id="arreglo-cola"></div>
+      <div class="progreso" id="progreso-cola"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente operación</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La casilla con el borde grueso es el frente. Las de fondo
+    azul son las que ocupa la cola; en las demás queda el dato viejo, porque
+    <code>desencolar</code> no borra nada: solo adelanta <code>inicio</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los dos enteros al terminar</h2>
+    <div class="prediccion">
+      <span><code>inicio</code> =</span>
+      <input type="number" id="pred-inicio" placeholder="?">
+      <span><code>n</code> =</span>
+      <input type="number" id="pred-n" placeholder="?">
+      <button id="btn-enteros" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-enteros" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El contenido, del frente al final</h2>
+    <p style="margin-top:0">¿En qué orden saldrían los elementos que quedan si
+    se desencolara hasta vaciar la cola?</p>
+    <div class="prediccion">
+      <span>orden de salida:</span>
+      <input type="text" id="pred-contenido" placeholder="a b c ..." style="width:11rem">
+      <button id="btn-contenido" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-contenido" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El residuo convierte el arreglo en un anillo: la cola
+    ocupa <code>n</code> casillas consecutivas que empiezan en
+    <code>inicio</code> y pueden dar la vuelta. Ni encolar ni desencolar mueven
+    un elemento, así que las dos son Θ(1). Lo que se paga es el techo:
+    <code>CAPACIDAD</code> casillas reservadas desde el principio y un
+    <code>assert</code> que detiene el programa en el elemento que no cabe.</div>
+  </div>
+</div>
+<script src="residuo.js"></script>
+</body>
+</html>

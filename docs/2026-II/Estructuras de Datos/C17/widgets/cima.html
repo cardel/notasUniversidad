@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cima — sin la lista de por medio</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Sin la lista de por medio</h1>
+  <p class="intro">La pila directa sobre nodos guarda <code>cima</code> y
+  <code>n</code>, y no usa <code>nodoEn</code> ni las posiciones del medio. Las
+  dos líneas de punteros de <code>apilar</code> quedan a la vista, y su orden
+  no es libre.</p>
+
+  <div class="carta">
+    <h2>1. Las dos líneas al revés</h2>
+    <div class="codigo" id="codigo-apilar"></div>
+    <p style="margin-top:0">La pila tiene <code>5 1 8</code> leído desde
+    <code>cima</code> y llega <code>apilar(3)</code>, pero escrito al revés:
+    <code>cima = nuevo;</code> primero y
+    <code>nuevo-&gt;siguiente = cima;</code> después. ¿Qué queda?</p>
+    <div class="opciones" id="opciones-orden">
+      <button data-op="ciclo">El nodo del 3 se apunta a sí mismo y el resto de la pila queda inalcanzable</button>
+      <button data-op="igual">La misma pila de antes: 3 5 1 8</button>
+      <button data-op="vacia">La pila queda vacía</button>
+      <button data-op="uno">Se pierde solo el nodo del 5, el que era la cima</button>
+    </div>
+    <div id="veredicto-orden" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cuántos punteros escribe cada operación</h2>
+    <div class="codigo" id="codigo-operaciones"></div>
+    <p style="margin-top:0">Contando solo las escrituras de puntero de la
+    estructura, las que cambian <code>cima</code> o el campo
+    <code>siguiente</code> de un nodo, ¿cuántas hace cada operación?</p>
+    <div class="prediccion">
+      <span><code>apilar</code>:</span>
+      <input type="number" id="pred-apilar" placeholder="?">
+      <span><code>desapilar</code>:</span>
+      <input type="number" id="pred-desapilar" placeholder="?">
+      <span><code>tope</code>:</span>
+      <input type="number" id="pred-tope" placeholder="?">
+      <button id="btn-escrituras" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-escrituras" class="veredicto"></div>
+    <div id="nota-escrituras" class="nota" style="display:none"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Las tres operaciones escriben dos punteros, uno y
+    ninguno, y ninguna depende de cuántos elementos haya: Θ(1) las tres, con
+    Θ(n) de espacio y un puntero por elemento. Lo que no es libre es el orden:
+    cada línea lee el valor que la anterior dejó, así que el nodo nuevo tiene
+    que tomar la cadena antes de que <code>cima</code> lo tome a él, y en
+    <code>desapilar</code> el nodo que sale se guarda antes de mover
+    <code>cima</code> porque después del <code>delete</code> ya no se puede
+    leer.</div>
+  </div>
+</div>
+<script src="cima.js"></script>
+</body>
+</html>

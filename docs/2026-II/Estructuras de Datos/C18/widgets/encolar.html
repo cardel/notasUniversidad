@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>encolar — la cola sobre la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La cola sobre la lista enlazada</h1>
+  <p class="intro">La cola delega en la lista con puntero al último:
+  <code>encolar</code> llama a <code>agregar</code> y
+  <code>desencolar</code> llama a <code>eliminar(0)</code>. Sobre una cola
+  vacía se ejecuta <code>encolar(4)</code>, <code>encolar(9)</code>,
+  <code>desencolar()</code>, <code>encolar(6)</code>,
+  <code>desencolar()</code> y <code>desencolar()</code>.</p>
+
+  <div class="carta">
+    <h2>1. Lo que devuelve <code>frente()</code></h2>
+    <div class="codigo" id="codigo-cola"></div>
+    <p>Después de cada una de las cinco primeras llamadas se consulta
+    <code>frente()</code>. ¿Qué cinco valores salen?</p>
+    <div class="prediccion">
+      <span>frente:</span>
+      <input type="text" id="pred-frente" placeholder="? ? ? ? ?" style="width:10rem">
+      <button id="btn-frente" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-frente" class="veredicto"></div>
+    <div class="nota">Tras la sexta llamada la cola queda vacía y el
+    <code>assert(!vacia())</code> de <code>frente()</code> detiene el
+    programa.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llamada por llamada</h2>
+    <div class="codigo" id="codigo-lista"></div>
+    <div class="estado">
+      <div class="chips" id="chips-traza"></div>
+      <div class="secuencia" id="cadena-traza"></div>
+      <div class="progreso" id="progreso-traza"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente llamada</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Cuándo se le escribe a <code>ultimo</code></h2>
+    <p style="margin-top:0">Numerando las llamadas de 1 a 6, ¿en cuáles recibe
+    <code>ultimo</code> un valor nuevo?</p>
+    <div class="prediccion">
+      <span>llamadas:</span>
+      <input type="text" id="pred-ultimo" placeholder="1 2 ..." style="width:10rem">
+      <button id="btn-ultimo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-ultimo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los nodos que se piden y se devuelven</h2>
+    <p style="margin-top:0">En las seis llamadas, ¿cuántas veces se ejecuta
+    <code>new Nodo</code> y cuántas <code>delete</code>?</p>
+    <div class="prediccion">
+      <span><code>new</code>:</span>
+      <input type="number" id="pred-new" placeholder="?">
+      <span><code>delete</code>:</span>
+      <input type="number" id="pred-delete" placeholder="?">
+      <button id="btn-nodos" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-nodos" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El frente es la cabeza y el final es el nodo que guarda
+    <code>ultimo</code>, así que las dos operaciones de la cola son dos o tres
+    escrituras de puntero: Θ(1) cada una, sin importar cuántos elementos haya.
+    La cola no añade nada de su parte; toda la cuenta la lleva la lista de
+    abajo, y el único caso que pide cuidado es el que la deja vacía.</div>
+  </div>
+</div>
+<script src="encolar.js"></script>
+</body>
+</html>

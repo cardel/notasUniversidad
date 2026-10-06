@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>costos — lo que cobra cada operación</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada operación</h1>
+  <p class="intro">Hay cuatro formas de tener una pila con el mismo contrato:
+  el arreglo con tope, la lista sobre arreglo con el tope al frente, la lista
+  enlazada con el tope al frente y la pila directa sobre nodos. Tres programas
+  distintos, y para cada uno la que conviene.</p>
+
+  <div class="carta">
+    <h2>1. Un tope conocido y poca memoria</h2>
+    <p style="margin-top:0">El programa corre en un equipo con memoria escasa y
+    se sabe, por el enunciado del problema, que nunca habrá más de 200
+    elementos en la pila a la vez.</p>
+    <div class="opciones" id="opciones-techo">
+      <button data-op="arreglo">Arreglo con tope</button>
+      <button data-op="listaarreglo">Lista sobre arreglo, tope al frente</button>
+      <button data-op="enlazada">Lista enlazada, tope al frente</button>
+      <button data-op="nodos">Directa sobre nodos</button>
+    </div>
+    <div id="veredicto-techo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Sin saber cuántos elementos llegan</h2>
+    <p style="margin-top:0">El programa lee de la entrada hasta que se acaba y
+    no hay ninguna cota: pueden llegar diez elementos o diez millones.</p>
+    <div class="opciones" id="opciones-abierto">
+      <button data-op="arreglo">Arreglo con tope</button>
+      <button data-op="listaarreglo">Lista sobre arreglo, tope al frente</button>
+      <button data-op="enlazada">Lista enlazada, tope al frente</button>
+      <button data-op="nodos">Directa sobre nodos</button>
+    </div>
+    <div id="veredicto-abierto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una lista que ya existe</h2>
+    <p style="margin-top:0">El programa ya tiene una <code>Lista</code> enlazada
+    cargada y probada, y hay que ofrecer sobre ella una vista de pila, sin
+    copiar los elementos a otra parte ni volver a escribir el manejo de
+    nodos.</p>
+    <div class="opciones" id="opciones-millones">
+      <button data-op="arreglo">Arreglo con tope</button>
+      <button data-op="listaarreglo">Lista sobre arreglo, tope al frente</button>
+      <button data-op="enlazada">Lista enlazada, tope al frente</button>
+      <button data-op="nodos">Directa sobre nodos</button>
+    </div>
+    <div id="veredicto-millones" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El techo y lo que cuesta no tenerlo</h2>
+    <div class="codigo" id="codigo-techo"></div>
+    <p style="margin-top:0">Con <code>CAPACIDAD = 500</code> se intenta apilar
+    20000 elementos en cada una. ¿Cuántos quedan dentro, y cuánta memoria
+    ocupan los nodos de la enlazada?</p>
+    <div class="prediccion">
+      <span>caben en el arreglo:</span>
+      <input type="number" id="pred-arreglo" placeholder="?">
+      <span>caben en la enlazada:</span>
+      <input type="number" id="pred-enlazada" placeholder="?">
+      <span>KiB de los nodos:</span>
+      <input type="number" id="pred-memoria" placeholder="?">
+      <button id="btn-techo" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuentas" class="veredicto"></div>
+    <div id="nota-cuentas" class="nota" style="display:none"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Ninguna de las cuatro gana en todo. El arreglo con tope
+    da Θ(1) en las tres operaciones y no paga un puntero por elemento, a
+    cambio de reservar <code>CAPACIDAD</code> casillas aunque la pila esté
+    vacía y de detenerse en la que no cabe. La enlazada con el tope al frente
+    da Θ(1) en las tres y crece mientras haya memoria, a cambio de un puntero
+    por elemento. La lista sobre arreglo con el tope al frente es la única que
+    cobra Θ(n) por operación, y esa no se escoge para una pila. La pregunta no
+    es cuál es mejor, sino si se sabe de antemano cuántos elementos van a
+    caber.</div>
+  </div>
+</div>
+<script src="costos.js"></script>
+</body>
+</html>

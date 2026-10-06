@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>apilar — la pila sobre la lista enlazada</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La pila sobre la lista enlazada</h1>
+  <p class="intro">Con la lista enlazada debajo y el tope en la posición 0,
+  toda la pila son seis llamadas a la lista. Partiendo de la pila vacía se
+  ejecuta <code>apilar(4)</code>, <code>apilar(9)</code>,
+  <code>apilar(2)</code>, <code>desapilar()</code> y <code>apilar(6)</code>.</p>
+
+  <div class="carta">
+    <h2>1. La cadena al terminar</h2>
+    <div class="codigo" id="codigo-pila"></div>
+    <p style="margin-top:0">¿Qué queda en la cadena de la lista, leída desde
+    <code>cabeza</code>, y qué devuelven <code>tope()</code> y
+    <code>tamano()</code>?</p>
+    <div class="prediccion">
+      <span>cadena:</span>
+      <input type="text" id="pred-cadena" placeholder="a b c" style="width:8rem">
+      <span>tope():</span>
+      <input type="number" id="pred-tope" placeholder="?">
+      <span>tamano():</span>
+      <input type="number" id="pred-tamano" placeholder="?">
+      <button id="btn-cadena" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cadena" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Operación por operación</h2>
+    <div class="estado">
+      <div class="chips" id="chips-traza"></div>
+      <div class="secuencia" id="cadena-traza"></div>
+      <div class="progreso" id="progreso-traza"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente operación</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">El elemento que entra se queda de primero en la cadena,
+    así que el orden de la cadena es el inverso del orden de llegada: lo último
+    que entró es lo primero que sale.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que ninguna de las cinco hace</h2>
+    <p style="margin-top:0">Ninguna de las cinco operaciones visita un segundo
+    nodo, por grande que esté la pila. ¿Por qué?</p>
+    <div class="opciones" id="opciones-camina">
+      <button data-op="cabeza">Las tres llamadas son a la posición 0, y ahí la lista escribe o lee <code>cabeza</code> sin avanzar</button>
+      <button data-op="puntero">Porque la pila guarda aparte su propio puntero al tope</button>
+      <button data-op="corta">Porque la pila tiene pocos elementos; con muchos sí caminaría</button>
+      <button data-op="contador">Porque la lista guarda <code>n</code> y con eso ubica el nodo de una vez</button>
+    </div>
+    <div id="veredicto-camina" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota"><code>apilar</code> escribe dos punteros,
+    <code>desapilar</code> escribe uno y libera un nodo, y <code>tope()</code>
+    lee el dato de la cabeza: Θ(1) las tres, igual que
+    <code>tamano()</code> y <code>vacia()</code>, que solo devuelven el
+    contador. El espacio de la estructura es Θ(n) y cada elemento paga su dato
+    más un puntero. No aparece un solo <code>new</code> ni un solo
+    <code>delete</code>: eso ya lo resolvió la lista, y su destructor libera
+    los nodos cuando la pila sale de alcance.</div>
+  </div>
+</div>
+<script src="apilar.js"></script>
+</body>
+</html>
