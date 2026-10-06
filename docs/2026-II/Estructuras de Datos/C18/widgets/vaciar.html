@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vaciar — sin la lista de por medio</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Sin la lista de por medio</h1>
+  <p class="intro">La cola directa sobre nodos guarda <code>cabeza</code>,
+  <code>ultimo</code> y <code>n</code>. Al sacar el único elemento,
+  <code>cabeza</code> queda en <code>NULL</code> y hay que decidir qué pasa con
+  <code>ultimo</code>, que está apuntando al nodo que acaba de liberarse.</p>
+
+  <div class="carta">
+    <h2>1. El <code>ultimo</code> que quedó colgando</h2>
+    <p style="margin-top:0">A este <code>desencolar</code> le falta la línea que
+    devuelve <code>ultimo</code> a <code>NULL</code>. Sobre una cola vacía se
+    ejecuta <code>encolar(3)</code>, <code>desencolar()</code> y
+    <code>encolar(7)</code>.</p>
+    <div class="codigo" id="codigo-roto"></div>
+    <p>¿Qué pasa en ese último <code>encolar(7)</code>?</p>
+    <div class="opciones" id="opciones-roto">
+      <button data-op="nada">Nada: <code>cabeza</code> está en <code>NULL</code> y se arregla sola</button>
+      <button data-op="escribe">Se escribe <code>ultimo-&gt;siguiente</code> sobre memoria devuelta, <code>cabeza</code> se queda en <code>NULL</code> y el nodo nuevo queda inalcanzable</button>
+      <button data-op="dos">La cola queda con dos elementos: el 3 y el 7</button>
+      <button data-op="detiene">El programa se detiene siempre con un error de memoria</button>
+    </div>
+    <div id="veredicto-roto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Las escrituras de <code>desencolar</code></h2>
+    <p style="margin-top:0">Esta es la versión del deck, con la línea que
+    faltaba. ¿Cuántos punteros de la clase, de los dos que hay
+    (<code>cabeza</code> y <code>ultimo</code>), escribe una llamada a
+    <code>desencolar</code>? El local <code>muerto</code> no cuenta.</p>
+    <div class="codigo" id="codigo-desencolar"></div>
+    <div class="prediccion">
+      <span>con un solo elemento:</span>
+      <input type="number" id="pred-uno" placeholder="?">
+      <span>con varios:</span>
+      <input type="number" id="pred-varios" placeholder="?">
+      <button id="btn-escrituras" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-escrituras" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Vaciar una cola de cuatro</h2>
+    <p style="margin-top:0">Una cola con cuatro elementos recibe cuatro
+    <code>desencolar</code> seguidos. ¿Cuántas escrituras de puntero de la
+    clase se hacen en total?</p>
+    <div class="prediccion">
+      <span>total:</span>
+      <input type="number" id="pred-total" placeholder="?">
+      <button id="btn-total" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-total" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Los dos punteros de la clase tienen que estar de acuerdo:
+    <code>cabeza</code> en <code>NULL</code> y <code>ultimo</code> en
+    <code>NULL</code> describen la misma cola vacía, y dejar uno de los dos
+    apuntando a memoria devuelta queda a merced de quién lo lea primero. La
+    línea que lo arregla es una comparación y una asignación, así que
+    <code>desencolar</code> sigue siendo Θ(1).</div>
+  </div>
+</div>
+<script src="vaciar.js"></script>
+</body>
+</html>

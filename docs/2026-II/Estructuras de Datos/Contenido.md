@@ -36,6 +36,8 @@ mismas estructuras ya empacadas.
 14. [Clase 14. Iteradores y algoritmos de la STL — 23 de septiembre](C14/Clase%2014.%20Iteradores%20y%20algoritmos%20de%20la%20STL.md)
 15. [Clase 15. La lista enlazada — 30 de septiembre](C15/Clase%2015.%20La%20lista%20enlazada.md)
 16. [Clase 16. Variantes de la lista enlazada — 2 de octubre](C16/Clase%2016.%20Variantes%20de%20la%20lista%20enlazada.md)
+17. [Clase 17. El TAD Pila por dentro — 7 de octubre](C17/Clase%2017.%20El%20TAD%20Pila%20por%20dentro.md)
+18. [Clase 18. El TAD Cola por dentro — 9 de octubre](C18/Clase%2018.%20El%20TAD%20Cola%20por%20dentro.md)
 
 ## Apéndices
 

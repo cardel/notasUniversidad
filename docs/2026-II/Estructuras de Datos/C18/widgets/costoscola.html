@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>costoscola — lo que cobra cada operación</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que cobra cada operación</h1>
+  <p class="intro">Tres programas con el mismo contrato de cola y perfiles de
+  uso distintos. Las cuatro implementaciones en juego son el arreglo circular,
+  la cola sobre la lista de arreglo, la cola sobre la lista enlazada simple y
+  la cola sobre la lista con puntero al último.</p>
+
+  <div class="carta">
+    <h2>1. El máximo se conoce y la memoria está contada</h2>
+    <p style="margin-top:0">Un controlador recibe mediciones y nunca puede
+    tener más de 256 pendientes: el protocolo lo garantiza. Corre en un
+    dispositivo con poca memoria, así que lo que importa es cuántos bytes
+    ocupa cada medición guardada.</p>
+    <div class="opciones" id="opciones-maximo">
+      <button data-op="circular">Arreglo circular</button>
+      <button data-op="listaarreglo">Lista sobre arreglo</button>
+      <button data-op="simple">Lista enlazada simple</button>
+      <button data-op="conultimo">Lista con puntero al último</button>
+    </div>
+    <div id="veredicto-maximo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Sin saber cuántos van a llegar</h2>
+    <p style="margin-top:0">Un servidor encola las peticiones que llegan y las
+    atiende en orden. En una hora tranquila pasan cientos; en un pico pueden
+    ser cientos de miles, y nadie sabe de antemano cuál es el máximo.</p>
+    <div class="opciones" id="opciones-sintecho">
+      <button data-op="circular">Arreglo circular</button>
+      <button data-op="listaarreglo">Lista sobre arreglo</button>
+      <button data-op="simple">Lista enlazada simple</button>
+      <button data-op="conultimo">Lista con puntero al último</button>
+    </div>
+    <div id="veredicto-sintecho" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La propuesta de la enlazada simple</h2>
+    <p style="margin-top:0">Para el servidor del punto anterior alguien propone
+    la cola sobre la lista enlazada simple, con este argumento:
+    <em>desencolar es Θ(1), porque el frente es la cabeza y sacarla es mover un
+    puntero</em>. ¿Sirve?</p>
+    <div class="opciones" id="opciones-propuesta">
+      <button data-op="sirve">Sirve: encolar también es Θ(1), porque el nodo nuevo se cuelga del final</button>
+      <button data-op="encolarcamina">No sirve: encolar camina hasta el último nodo y queda Θ(n)</button>
+      <button data-op="desencolarcaro">No sirve: desencolar es Θ(n), no Θ(1)</button>
+      <button data-op="contador">Sirve si la lista guarda el contador <code>n</code></button>
+    </div>
+    <div id="veredicto-propuesta" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La cuenta de la que sí sirve</h2>
+    <p style="margin-top:0">Encolando <code>n = 40</code> veces y desencolando
+    los 40 sobre la lista con puntero al último, ¿cuántos elementos se tocan en
+    total? Tocar un elemento es correrlo en el arreglo o visitar su nodo en un
+    recorrido.</p>
+    <div class="prediccion">
+      <span>elementos tocados:</span>
+      <input type="number" id="pred-tocados" placeholder="?">
+      <button id="btn-tocados" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-tocados" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Ninguna implementación gana en todo. El arreglo circular
+    deja las dos operaciones en Θ(1) y guarda solo el dato, a cambio de un
+    techo que se fija al compilar; la lista con puntero al último también las
+    deja en Θ(1) y no tiene techo, a cambio de un puntero por elemento y una
+    reserva por nodo. Las otras dos cobran Θ(n) en uno de los dos extremos, y
+    una cola usa los dos. La implementación se escoge por lo que el programa
+    sabe de antemano: si conoce el máximo o no.</div>
+  </div>
+</div>
+<script src="costoscola.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dosextremos — la cola necesita los dos extremos</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La cola necesita los dos extremos</h1>
+  <p class="intro">Se encola <code>n = 40</code> veces y después se desencolan
+  los 40, sobre cuatro listas de abajo distintas. Se cuentan los elementos
+  tocados: los que se corren en el arreglo y los nodos que se visitan en la
+  enlazada.</p>
+
+  <div class="carta">
+    <h2>1. Las cuatro combinaciones</h2>
+    <div class="codigo" id="codigo-contadores"></div>
+    <p>Con <code>n = 40</code>, ¿cuántos elementos toca cada una? En el orden
+    de la tabla: arreglo entrando por el final, arreglo entrando por el frente,
+    enlazada simple y enlazada con puntero al último.</p>
+    <div class="prediccion">
+      <span>tocados:</span>
+      <input type="text" id="pred-cuatro" placeholder="? ? ? ?" style="width:12rem">
+      <button id="btn-cuatro" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuatro" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cómo crecen</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th><code>n</code></th><th>arreglo, entra al final</th>
+              <th>arreglo, entra al frente</th><th>enlazada simple</th>
+              <th>enlazada con <code>ultimo</code></th></tr>
+        </thead>
+        <tbody id="tabla-tocados"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-fila" class="primario">Mostrar la fila siguiente</button>
+      <button id="btn-todo">Mostrar todas</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-tabla"></div>
+    <div class="nota">Al doblar <code>n</code>, las tres primeras columnas se
+    multiplican por cuatro y la cuarta se queda donde está.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Por qué solo una llega a cero</h2>
+    <p style="margin-top:0">¿Qué tiene la lista con puntero al último que no
+    tienen las otras tres?</p>
+    <div class="opciones" id="opciones-cero">
+      <button data-op="arreglo">Que no usa arreglos, y los arreglos son los que obligan a correr elementos</button>
+      <button data-op="extremos">Que poner por un extremo y quitar por el otro caen las dos sobre operaciones baratas</button>
+      <button data-op="memoria">Que guardar un puntero más le ahorra memoria</button>
+      <button data-op="contador">Que lleva el contador <code>n</code> y así no tiene que recorrer</button>
+    </div>
+    <div id="veredicto-cero" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cambiar de extremo no arregla nada</h2>
+    <p style="margin-top:0">Las dos columnas del arreglo dan el mismo número.
+    ¿Por qué?</p>
+    <div class="opciones" id="opciones-arreglo">
+      <button data-op="coincidencia">Es coincidencia: con otro <code>n</code> se separan</button>
+      <button data-op="reparto">Porque el trabajo cambia de operación, no desaparece: entrar por el final deja el corrimiento en desencolar, y entrar por el frente lo deja en encolar</button>
+      <button data-op="mitad">Porque cada versión corre la mitad de los elementos y las dos mitades suman lo mismo</button>
+    </div>
+    <div id="veredicto-arreglo" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">La pila se construyó con un solo extremo y cualquiera de
+    las dos listas servía. La cola usa los dos, y ahí las implementaciones se
+    separan: el arreglo cobra Θ(n) en uno de los dos extremos, la enlazada
+    simple cobra Θ(n) al entrar por el final, y la enlazada que guarda el
+    último es la única donde los dos extremos caen sobre operaciones de Θ(1).
+    Encolar y desencolar <code>n</code> veces pasa de Θ(n²) a Θ(n).</div>
+  </div>
+</div>
+<script src="dosextremos.js"></script>
+</body>
+</html>

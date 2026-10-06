@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extremo — una pila es una lista por un solo extremo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Una pila es una lista por un solo extremo</h1>
+  <p class="intro">La pila se construye sobre el TAD Lista y hay que decidir
+  cuál extremo es el tope. Con la posición 0, <code>apilar</code> es
+  <code>insertar(0, e)</code> y <code>desapilar</code> es
+  <code>eliminar(0)</code>; con el final, <code>agregar(e)</code> y
+  <code>eliminar(tamano() - 1)</code>. Debajo puede haber la lista sobre
+  arreglo o la enlazada: cuatro combinaciones.</p>
+
+  <div class="carta">
+    <h2>1. Cuánto se mueve en cada combinación</h2>
+    <div class="codigo" id="codigo-contadores"></div>
+    <p style="margin-top:0">Se apila y se desapila <code>n = 50</code> veces,
+    contando los elementos que se corren en el arreglo y los nodos que se
+    visitan en la enlazada. ¿Cuántos sale en cada combinación?</p>
+    <div class="prediccion">
+      <span>arreglo, tope al frente:</span>
+      <input type="number" id="pred-af" placeholder="?">
+      <span>arreglo, tope al final:</span>
+      <input type="number" id="pred-aa" placeholder="?">
+    </div>
+    <div class="prediccion">
+      <span>enlazada, tope al frente:</span>
+      <input type="number" id="pred-ef" placeholder="?">
+      <span>enlazada, tope al final:</span>
+      <input type="number" id="pred-ea" placeholder="?">
+      <button id="btn-cuatro" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-cuatro" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Cómo crece con n</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead>
+          <tr><th>n</th><th>arreglo, frente</th><th>arreglo, final</th><th>enlazada, frente</th><th>enlazada, final</th></tr>
+        </thead>
+        <tbody id="tabla-n"></tbody>
+      </table>
+    </div>
+    <div class="botones">
+      <button id="btn-fila" class="primario">Mostrar el siguiente n</button>
+      <button id="btn-todo">Mostrar todos</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="progreso" id="progreso-tabla"></div>
+    <div class="nota">Las dos columnas que no son cero crecen como el cuadrado
+    de <code>n</code>: duplicar <code>n</code> multiplica el trabajo por cuatro.
+    Las otras dos no crecen.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Por qué salen en espejo</h2>
+    <p style="margin-top:0">El arreglo es gratis por un extremo y caro por el
+    otro, y la enlazada al contrario. ¿Cuál es la razón?</p>
+    <div class="opciones" id="opciones-espejo">
+      <button data-op="acceso">En el arreglo la casilla siguiente ya está lista y lo que cuesta es correr; en la enlazada la cabeza está a la mano y lo que cuesta es caminar</button>
+      <button data-op="memoria">El arreglo está en memoria contigua y la enlazada no, así que la enlazada siempre es más lenta</button>
+      <button data-op="tad">Es una propiedad del TAD Pila: <code>apilar</code> cuesta más por un lado que por el otro</button>
+      <button data-op="punteros">La enlazada escribe dos punteros y el arreglo solo uno, y esa diferencia se acumula</button>
+    </div>
+    <div id="veredicto-espejo" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El costo de <code>apilar</code> no es del TAD Pila: sale
+    de la lista que se ponga debajo y del extremo que se nombre tope. Sobre el
+    arreglo, el tope va al final y las tres operaciones quedan en Θ(1); sobre
+    la enlazada, al frente, y también quedan en Θ(1). Las otras dos
+    combinaciones son Θ(n) por operación y Θ(n²) en la secuencia completa.
+    Escribir O(1) al lado de <code>apilar</code> sin decir cuál de las cuatro
+    es afirmar algo que puede ser falso.</div>
+  </div>
+</div>
+<script src="extremo.js"></script>
+</body>
+</html>

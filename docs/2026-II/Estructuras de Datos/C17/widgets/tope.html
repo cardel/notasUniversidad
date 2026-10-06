@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tope — la pila que ya tienen</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La pila que ya tienen</h1>
+  <p class="intro">La pila sobre arreglo con <code>CAPACIDAD = 4</code>, partiendo
+  de la pila vacía, recibe esta secuencia:
+  <code>apilar(7)</code>, <code>apilar(3)</code>, <code>apilar(1)</code>,
+  <code>desapilar()</code>, <code>apilar(6)</code>, <code>apilar(2)</code>,
+  <code>apilar(9)</code>.</p>
+
+  <div class="carta">
+    <h2>1. El tope y el contador</h2>
+    <div class="codigo" id="codigo-pila"></div>
+    <p style="margin-top:0">Para las seis primeras operaciones, ¿qué devuelve
+    <code>tope()</code> y cuánto vale <code>n</code> después de cada una?</p>
+    <div class="prediccion">
+      <span>topes:</span>
+      <input type="text" id="pred-topes" placeholder="a b c d e f" style="width:10rem">
+      <span>valores de n:</span>
+      <input type="text" id="pred-enes" placeholder="a b c d e f" style="width:10rem">
+      <button id="btn-prediccion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-prediccion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Operación por operación</h2>
+    <div class="estado">
+      <div class="chips" id="chips-pila"></div>
+      <div class="arreglo fila-arreglo" id="arreglo-pila"></div>
+      <div class="progreso" id="progreso-pila"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente operación</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">Las casillas sombreadas son las que están dentro de la
+    pila: de la 0 a la <code>n - 1</code>. Lo que queda escrito más allá de
+    <code>n</code> no pertenece a la pila, aunque siga en memoria.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La séptima</h2>
+    <p style="margin-top:0">Con la pila en cuatro elementos llega
+    <code>apilar(9)</code>. ¿Qué pasa?</p>
+    <div class="opciones" id="opciones-septima">
+      <button data-op="entra">Entra y el tope queda en 9</button>
+      <button data-op="assert">El <code>assert</code> no se cumple y la operación no se ejecuta</button>
+      <button data-op="pierde">Se descarta el 7, el más viejo, y entra el 9</button>
+      <button data-op="escribe">Escribe en <code>datos[4]</code> y <code>n</code> pasa a 5</button>
+    </div>
+    <div id="veredicto-septima" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Apilar y desapilar escriben una casilla y mueven el
+    contador: Θ(1) las dos, y <code>tope()</code> lee
+    <code>datos[n - 1]</code>, también Θ(1). El espacio es
+    Θ(<code>CAPACIDAD</code>) aunque la pila esté vacía, y
+    <code>CAPACIDAD</code> se fija al compilar: el elemento que no cabe
+    detiene el programa. Ese es el techo que la pila enlazada no tiene.</div>
+  </div>
+</div>
+<script src="tope.js"></script>
+</body>
+</html>
