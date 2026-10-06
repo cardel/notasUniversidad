@@ -15,10 +15,12 @@ var InterpreteLenguaje = (function () {
 
   /* Los literales de la gramática, del más largo al más corto: el scanner
      toma el bocado más largo que coincida. */
-  var LITERALES = ["add1", "sub1", "let", "in", "+", "-", "*", "(", ")", ",", "="];
+  var LITERALES = ["add1", "sub1", "let", "in", "+", "-", "*", "/", "(", ")", ",", "="];
   var PALABRAS = { "let": 1, "in": 1, "add1": 1, "sub1": 1 };
-  var PRIMITIVAS = { "+": "add-prim", "-": "substract-prim", "*": "mult-prim",
-                     "add1": "incr-prim", "sub1": "decr-prim" };
+  /* Los nombres son los que genera SLLGEN a partir de la gramática del
+     interpretador: add-prim es add1, no la suma. */
+  var PRIMITIVAS = { "+": "sum-prim", "-": "minus-prim", "*": "mult-prim",
+                     "/": "div-prim", "add1": "add-prim", "sub1": "sub-prim" };
 
   function esLetra(c) { return /[a-zA-Z]/.test(c); }
   function esDigito(c) { return /[0-9]/.test(c); }
@@ -57,7 +59,8 @@ var InterpreteLenguaje = (function () {
         var lit = LITERALES[L];
         if (texto.slice(i, i + lit.length) === lit) {
           var siguiente = texto[i + lit.length] || "";
-          if (esLetra(lit[0]) && (esLetra(siguiente) || esDigito(siguiente) || siguiente === "?")) { continue; }
+          if (esLetra(lit[0]) && (esLetra(siguiente) || esDigito(siguiente) ||
+              siguiente === "?" || siguiente === "$")) { continue; }
           literal = lit;
           break;
         }
@@ -70,7 +73,8 @@ var InterpreteLenguaje = (function () {
       }
       if (esLetra(c)) {
         var m = i;
-        while (m < texto.length && (esLetra(texto[m]) || esDigito(texto[m]) || texto[m] === "?")) { m++; }
+        while (m < texto.length && (esLetra(texto[m]) || esDigito(texto[m]) ||
+               texto[m] === "?" || texto[m] === "$")) { m++; }
         tokens.push({ lexema: texto.slice(i, m), clase: "identificador" });
         i = m;
         continue;
@@ -125,7 +129,7 @@ var InterpreteLenguaje = (function () {
           while (mirar() && mirar().lexema === ",") { pos++; rands.push(expresion()); }
         }
         comer(")");
-        return { v: "primapp-exp", campos: [prim, { lista: rands }] };
+        return { v: "prim-exp", campos: [prim, { lista: rands }] };
       }
       fallar("una expresión");
     }
@@ -155,7 +159,7 @@ var InterpreteLenguaje = (function () {
       case "var-exp": return n.campos[0];
       case "let-exp": return "let " + n.campos[0] + " = " + aPrograma(n.campos[1]) +
         " in " + aPrograma(n.campos[2]);
-      case "primapp-exp":
+      case "prim-exp":
         var nombre = Object.keys(PRIMITIVAS).filter(function (k) {
           return PRIMITIVAS[k] === n.campos[0].v;
         })[0];
@@ -168,7 +172,14 @@ var InterpreteLenguaje = (function () {
      Una cadena de eslabones. Cada uno se nombra ρ0, ρ1, … en el orden en
      que se crea, para poder señalarlos en la traza. */
   function ambienteInicial() {
-    return { nombre: "ρ0", ligaduras: [["i", 1], ["v", 5], ["x", 10]], viejo: null };
+    /* Los dos eslabones de ambiente-inicial, copiados de ambiente.rkt del
+       interpretador de la sesión. La búsqueda de a, b o c recorre el
+       primero sin encontrarlas y sigue al segundo. */
+    return {
+      nombre: "ρ0",
+      ligaduras: [["x", 1], ["y", 2], ["z", 3]],
+      viejo: { nombre: "ρ00", ligaduras: [["a", 4], ["b", 5], ["c", 6]], viejo: null }
+    };
   }
   function extender(env, id, valor, nombre) {
     return { nombre: nombre, ligaduras: [[id, valor]], viejo: env };
@@ -192,20 +203,29 @@ var InterpreteLenguaje = (function () {
   }
 
   /* --- Evaluador ----------------------------------------------------
-     Una fila de traza por cada llamada a eval-expression, anotada cuando
+     Una fila de traza por cada llamada a evaluar-expresion, anotada cuando
      termina: ahí es cuando se conoce el valor. */
   function evaluar(arbol) {
     var traza = [], creados = 0;
     var cuenta = { evalExp: 0, applyPrim: 0, applyEnv: 0 };
 
+    /* Calcado de primitivas.rkt: las cuatro aritméticas son n-arias. La
+       resta es el primero menos la suma del resto, y la división el
+       primero dividido el producto del resto. */
+    function plegar(lista, op, neutro) {
+      return lista.reduce(function (acc, v) { return op(acc, v); }, neutro);
+    }
     function aplicar(prim, args) {
       cuenta.applyPrim++;
+      var suma = function (a, b) { return a + b; };
+      var producto = function (a, b) { return a * b; };
       switch (prim) {
-        case "add-prim": return args[0] + args[1];
-        case "substract-prim": return args[0] - args[1];
-        case "mult-prim": return args[0] * args[1];
-        case "incr-prim": return args[0] + 1;
-        case "decr-prim": return args[0] - 1;
+        case "sum-prim":   return plegar(args, suma, 0);
+        case "minus-prim": return args[0] - plegar(args.slice(1), suma, 0);
+        case "mult-prim":  return plegar(args, producto, 1);
+        case "div-prim":   return args[0] / plegar(args.slice(1), producto, 1);
+        case "add-prim":   return args[0] + 1;
+        case "sub-prim":   return args[0] - 1;
       }
     }
 
@@ -221,13 +241,19 @@ var InterpreteLenguaje = (function () {
           consulta = true;
           valor = buscar(env, exp.campos[0]);
           break;
-        case "primapp-exp":
+        case "prim-exp":
           var args = exp.campos[1].lista.map(function (r) { return evalExp(r, env, nivel + 1); });
           prim = exp.campos[0].v;
-          if (prim !== "incr-prim" && prim !== "decr-prim" && args.length < 2) {
-            throw new Error("La primitiva recibió " + args.length +
-              " operando(s) y lee dos: el interpretador de la sesión no verifica cuántos llegan, " +
-              "así que aquí falla al leer el segundo.");
+          /* El interpretador no verifica cuántos operandos llegan. Las n-arias
+             aceptan cualquier cantidad: +() da 0 y *() da 1, sus neutros. La
+             resta y la división sí leen el primero, y sin operandos fallan
+             igual que el car de una lista vacía en Racket. */
+          if (prim !== "sum-prim" && prim !== "mult-prim" && args.length === 0) {
+            throw new Error("car: se esperaba un par y la lista de operandos está vacía.");
+          }
+          if (prim === "div-prim" &&
+              args.slice(1).reduce(function (a, b) { return a * b; }, 1) === 0) {
+            throw new Error("/: división por cero.");
           }
           valor = aplicar(prim, args);
           break;

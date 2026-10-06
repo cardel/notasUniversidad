@@ -43,11 +43,13 @@ El significado lo pone el interpretador, que averigua cuánto vale `x` y hace
 la resta.
 
 De ahí sale en qué etapa se detiene cada programa que no llega a dar un
-valor. Un carácter que ninguna regla léxica reconoce lo para el scanner.
-Tokens legales en un orden que la gramática no genera, o tokens que sobran al
-final, los para el parser. Y una variable que nadie ligó no la detecta
-ninguno de los dos: está bien escrita, y solo falla cuando el interpretador
-va a buscar su valor.
+valor. Tokens legales en un orden que la gramática no genera, o tokens que
+sobran al final, los para el parser: `+(x, 3) 4` termina con un reclamo por los
+símbolos que quedaron sueltos. Un carácter que ninguna regla léxica reconoce
+tampoco para al scanner, que corta la lista de tokens ahí mismo y sigue; el
+que falla es otra vez el parser, ahora por lo que le falta. Y una variable que
+nadie ligó no la detecta ninguno de los dos: está bien escrita, y solo falla
+cuando el interpretador va a buscar su valor.
 
 ## Interpretación y compilación
 
@@ -156,7 +158,8 @@ porque el signo hace parte del número negativo, mientras que `- 7` son dos.
 
 Cuando el scanner encuentra un carácter que ninguna regla reconoce, como `#`,
 no levanta un error: corta ahí y devuelve la lista de tokens que alcanzó a
-formar.
+formar. El reclamo llega después, del parser, que se queda esperando un token
+que ya no viene.
 
 ## SLLGEN: la especificación léxica y la gramática
 
@@ -168,11 +171,16 @@ lleva tres cosas: un nombre arbitrario, una expresión regular y una acción.
 
 ```scheme
 (define especificacion-lexica
-  '((espacio-blanco (whitespace) skip)
+  '(
+    (espacio-blanco (whitespace) skip)
     (comentario ("%" (arbno (not #\newline))) skip)
-    (identificador (letter (arbno (or letter digit "_" "-" "?"))) symbol)
+    (identificador (letter (arbno (or letter digit "?" "$"))) symbol)
     (numero (digit (arbno digit)) number)
-    (numero ("-" digit (arbno digit)) number)))
+    (numero ("-" digit (arbno digit)) number)
+    (numero (digit (arbno digit)"." digit (arbno digit)) number)
+    (numero ("-" digit (arbno digit)"." digit (arbno digit)) number)
+    )
+  )
 ```
 
 Las acciones son cuatro y no hay más: `skip` para lo que se reconoce solo para
@@ -185,12 +193,19 @@ termina con el nombre de la variante que SLLGEN va a generar:
 
 ```scheme
 (define especificacion-gramatical
-  '((programa (expresion) a-program)
+  '(
+    (programa (expresion) a-program)
     (expresion (numero) lit-exp)
     (expresion (identificador) var-exp)
-    (expresion (primitiva "(" (separated-list expresion ",") ")") primapp-exp)
-    (primitiva ("+") add-prim)
-    (primitiva ("-") subs-prim)))
+    (expresion (primitiva "(" (separated-list expresion ",") ")") prim-exp)
+    (primitiva ("+") sum-prim)
+    (primitiva ("-") minus-prim)
+    (primitiva ("*") mult-prim)
+    (primitiva ("/") div-prim)
+    (primitiva ("add1") add-prim)
+    (primitiva ("sub1") sub-prim)
+    )
+  )
 ```
 
 Lo que queda entre comillas es un literal y no se captura; cada no terminal es
@@ -236,9 +251,9 @@ Y el interpretador ya no vive en un archivo:
 | Archivo | Qué tiene |
 |---|---|
 | `sintaxis` | las dos especificaciones, los datatypes, el scanner y el parser |
-| `ambiente` | `empty-env`, `extend-env` y `apply-env` |
-| `primitivas` | `eval-primitive` y las verificaciones |
-| `interprete` | `eval-program` y `eval-expression` |
+| `ambiente` | `ambiente-vacio`, `ambiente-extendido` y `apply-env` |
+| `primitivas` | `evaluar-primitiva` y su auxiliar de plegado |
+| `interprete` | `evaluar-programa` y `evaluar-expresion` |
 | `interfaz` | el punto de entrada y el REPL |
 
 Los interpretadores del curso están en el Campus Virtual repartidos así, y es
@@ -249,25 +264,39 @@ la misma estructura del proyecto final. Quien ya hizo el fork lo sincroniza.
 El punto de entrada abre el envoltorio y arranca:
 
 ```scheme
-(define eval-program
+(define evaluar-programa
   (lambda (pgm)
     (cases programa pgm
-      (a-program (body) (eval-expression body init-env)))))
+      (a-program (exp) (evaluar-expresion exp ambiente-inicial))
+      ))
+  )
 ```
 
-`eval-expression` tiene un caso por variante de expresión. Un literal devuelve
+`ambiente-inicial` es el ambiente con el que arranca cualquier programa: dos
+eslabones de ligaduras, `x = 1`, `y = 2`, `z = 3` sobre `a = 4`, `b = 5`,
+`c = 6`, y el vacío al final de la cadena.
+
+`evaluar-expresion` tiene un caso por variante de expresión. Un literal devuelve
 su número; una variable se busca en el ambiente; una primitiva evalúa primero
 todos sus operandos y después aplica la operación:
 
 ```scheme
-(define eval-expression
-  (lambda (exp env)
+(define evaluar-expresion
+  (lambda (exp amb)
     (cases expresion exp
       (lit-exp (dato) dato)
-      (var-exp (id) (apply-env env id))
-      (primapp-exp (prim rands)
-                   (let ((args (map (lambda (r) (eval-expression r env)) rands)))
-                     (eval-primitive prim args))))))
+      (var-exp (id) (apply-env amb id))
+      (prim-exp (prim args)
+                (let
+                    (
+                     (lista-numeros (map (lambda (x) (evaluar-expresion x amb)) args))
+                     )
+                  (evaluar-primitiva prim lista-numeros)
+                  )
+                )
+      )
+    )
+  )
 ```
 
 Las primitivas reciben una lista de operandos, no dos, y de ahí sale una
@@ -287,24 +316,30 @@ El ambiente guarda sus valores con un predicado que siempre responde
 verdadero. Un valor puede ser cualquier cosa que Racket reconozca, y combinar
 `number?`, `symbol?` y los demás sería más frágil que aceptarlos todos.
 
-En el REPL, con `x` ligada a 1:
+En el REPL, sobre ese ambiente:
 
 ```
-+(x, 3)      4
-+(x, x)      2
-add1(x)      2
-sub1(x)      0
++(x, 3)       4
++(x, x)       2
+add1(x)       2
+sub1(x)       0
++(x, y, z)    6
+-(c, y, x)    3
 ```
 
-`(scan&parse "x")` devuelve el árbol con su envoltorio `a-program`, y
-`(eval-program (scan&parse "x"))` devuelve 1. Con algo más largo,
+Las dos últimas usan la lista de operandos: `+(x, y, z)` suma los tres, y
+`-(c, y, x)` le resta a `c` la suma de los otros dos, $6 - 3 = 3$. La `c` sale
+del segundo eslabón, que se consulta porque en el primero no está.
+
+`(parser "x")` devuelve el árbol con su envoltorio `a-program`, y
+`(evaluar-programa (parser "x"))` devuelve 1. Con algo más largo,
 `+(1, +(x, y))` produce una primitiva de suma cuyo primer operando es el
 literal 1 y cuyo segundo es otra suma de dos variables. Partir el texto en
 varias líneas no cambia nada: el salto de línea es espacio en blanco.
 
 Agregar una operación cuesta dos cambios y nada más. Para el módulo: una
 producción nueva de primitiva en la gramática, con su nombre de variante, y su
-caso en `eval-primitive`. No hay que programar el módulo, porque `modulo` ya
+caso en `evaluar-primitiva`. No hay que programar el módulo, porque `modulo` ya
 es de Racket. Ahí está la distinción que conviene tener presente: una cosa es
 lo que hace el lenguaje que se está construyendo, y otra lo que hace Racket
 cuando lo procesa. La suma del lenguaje es la suma de Racket.
@@ -315,65 +350,66 @@ Con lo anterior solo se pueden usar las variables del ambiente inicial. `let`
 extiende el ambiente:
 
 ```
-let <identificador> = <expresion> in <expresion>
+let {<identificador> = <expresion>}* in <expresion>
 ```
 
-La variante guarda tres campos: el identificador, la expresión ligada y el
-cuerpo. Y la regla de evaluación tiene dos mitades que conviene no confundir:
+La variante guarda tres campos: la lista de identificadores, la lista de
+expresiones ligadas y el cuerpo. Y la regla de evaluación tiene dos mitades
+que conviene no confundir:
 
-- la expresión ligada se evalúa en el ambiente actual, el de antes del `let`;
-- el cuerpo se evalúa en el ambiente extendido, el que ya incluye la ligadura
-  nueva.
+- las expresiones ligadas se evalúan en el ambiente actual, el de antes del
+  `let`;
+- el cuerpo se evalúa en el ambiente extendido, el que ya incluye las
+  ligaduras nuevas.
 
 Por eso `let x = x in …` no tiene ningún problema: la `x` de la derecha se
 busca en el ambiente anterior. Y por eso el orden importa al dibujar.
 
 ### Tres `let` anidados
 
-Con $\rho_0 = [i = 1,\; v = 5,\; x = 10]$:
-
-![El ejercicio en el tablero: el programa con tres let anidados, la cadena de cuatro ambientes desde el vacío, y los tres pasos de cálculo que dan 4](imagenes/anidados-tablero.png)
+Con el ambiente inicial, $\rho_0 = [x = 1,\; y = 2,\; z = 3]$ sobre
+$[a = 4,\; b = 5,\; c = 6]$:
 
 ```
-let y = sub1(x)
-in let m = *(y, i)
-   in let y = +(m, v)
-      in -(y, +(m, i))
+let m = sub1(c)
+in let n = *(m, y)
+   in let m = +(n, b)
+      in -(m, +(n, y))
 ```
 
 Cada `let` crea un eslabón:
 
 | Ambiente | Ligadura | De dónde sale |
 |---|---|---|
-| $\rho_0$ | `i = 1`, `v = 5`, `x = 10` | el inicial |
-| $\rho_1$ | `y = 9` | `sub1(x)` con `x = 10` |
-| $\rho_2$ | `m = 9` | `*(y, i)` con `y = 9`, `i = 1` |
-| $\rho_3$ | `y = 14` | `+(m, v)` con `m = 9`, `v = 5` |
+| $\rho_0$ | `x = 1`, `y = 2`, `z = 3` sobre `a = 4`, `b = 5`, `c = 6` | el inicial |
+| $\rho_1$ | `m = 5` | `sub1(c)` con `c = 6` |
+| $\rho_2$ | `n = 10` | `*(m, y)` con `m = 5`, `y = 2` |
+| $\rho_3$ | `m = 15` | `+(n, b)` con `n = 10`, `b = 5` |
 
-El cuerpo se evalúa en $\rho_3$: `-(y, +(m, i))` es `-(14, +(9, 1))`, o sea
-$14 - 10 = 4$.
+El cuerpo se evalúa en $\rho_3$: `-(m, +(n, y))` es `-(15, +(10, 2))`, o sea
+$15 - 12 = 3$.
 
-La `y` del último `let` tapa a la del primero, y el `m` del segundo sigue
-visible porque la búsqueda va de adentro hacia afuera. El ambiente vacío va
+La `m` del último `let` tapa a la del primero, y la `n` del segundo sigue
+visible porque la búsqueda va de adentro hacia afuera. La `y` y la `b` nunca se
+ligaron aquí: salen de los dos eslabones del inicial. El ambiente vacío va
 siempre al inicio de la cadena; sin él, el diagrama está mal desde el
 principio.
 
 ### Cuando la ligadura nueva se llama igual
 
-![El ejercicio del tablero: let x = +(x,1) in let x = +(x,2) in x, con la cadena de tres ambientes donde x vale 4, 5 y 7](imagenes/ocultamiento-tablero.png)
-
 ```
-let x = +(x, 1) in let x = +(x, 2) in x
+let a = +(a, 1) in let a = +(a, 2) in a
 ```
 
-Con `x = 4` en el ambiente inicial, el resultado es 7 y no 6. La expresión
-ligada del segundo `let` se evalúa en $\rho_1$, donde `x` ya vale 5, no en
-$\rho_0$ donde valía 4. La cadena queda `x = 4`, `x = 5`, `x = 7`, y cada
+Con `a = 4` en el ambiente inicial, el resultado es 7 y no 6. La expresión
+ligada del segundo `let` se evalúa en $\rho_1$, donde `a` ya vale 5, no en
+$\rho_0$ donde valía 4. La cadena queda `a = 4`, `a = 5`, `a = 7`, y cada
 eslabón tapa al anterior sin borrarlo.
 
 ### Un `let` con tres ligaduras y lets adentro
 
-El último ejercicio de la sesión, con `x`, `y`, `z` ligadas a 1, 2 y 3:
+El último ejercicio de la sesión, con `x`, `y`, `z` ligadas a 1, 2 y 3 en el
+primer eslabón del inicial:
 
 ![El programa del tablero: un let con tres ligaduras, cada una con un let adentro, y el cuerpo que suma las tres](imagenes/tres-ligaduras-tablero.png)
 
@@ -414,14 +450,15 @@ La segunda mitad fue sobre las [actividades interactivas](./Ejercicios.md) de
 la sesión, y varias se resolvieron en el tablero.
 
 En las de leer una especificación de SLLGEN, lo que se juzga es qué captura
-cada producción. `Expression ::= Number` deja un solo campo; la del `let`, con identificador,
-expresión y expresión, deja tres; y lo que va entre comillas no deja campo. Saber cuántos campos vienen y en qué orden es lo que después
-permite escribir el `cases`.
+cada producción. `(expresion (numero) lit-exp)` deja un solo campo; la del
+`let`, con la lista de identificadores, la de expresiones ligadas y el cuerpo,
+deja tres; y lo que va entre comillas no deja campo. Saber cuántos campos
+vienen y en qué orden es lo que después permite escribir el `cases`.
 
 En las de contar llamadas, la cuenta sale de recorrer el árbol: cada literal,
-cada variable y cada primitiva son una llamada a `eval-expression`, y solo las
-variables llaman a `apply-env`. Un programa que evalúa a 14 con dos
-operaciones internas da seis llamadas y tres búsquedas.
+cada variable y cada primitiva son una llamada a `evaluar-expresion`, y solo
+las variables llaman a `apply-env`. `+(*(y, b), add1(z))` evalúa a 14 con seis
+llamadas y tres búsquedas.
 
 En las de cadenas de ambientes, la pregunta que más discusión tuvo fue si una
 ligadura vieja se sigue alcanzando después de que otra con el mismo nombre la
@@ -440,7 +477,8 @@ lo que se evalúa en el extendido.
 
 ## Lo que sigue
 
-El lenguaje solo tiene números. Al agregar `zero?` y el condicional aparecen
+El lenguaje solo tiene números. Al agregar las comparaciones `==`, `<` y `>`
+y el condicional aparecen
 los booleanos, y con ellos los valores expresados dejan de ser una sola clase:
 `if` evalúa la prueba, comprueba que sea booleana y solo entonces escoge la
 rama. Las dos sesiones siguientes son de diagramas de ambientes, que es lo que
