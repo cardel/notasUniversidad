@@ -353,6 +353,15 @@ decide.
 El perfilado con `perf` se trabaja completo en la sesión de herramientas de
 profiling en Linux.
 
+## Los apuntes del tablero
+
+La hoja de la sesión, tal como quedó: los dos recorridos de la matriz con la
+cuenta de la línea de caché, el producto punto con la reducción marcada, la
+lista de directivas en el orden en que fueron saliendo y las banderas de aviso
+que se agregaron a la orden de compilación.
+
+![](attachments/2026-10-06-Note-16-10.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
 ## Lo que quedó pendiente
 
 Los ejercicios prácticos de OpenMP quedaron para la casa: reparto, `schedule`,
