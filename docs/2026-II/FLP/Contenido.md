@@ -112,6 +112,16 @@ quedan disponibles después para volver sobre el tema.
    la página abre sus tres etapas sobre ese mismo programa, con los tokens,
    el árbol dibujado y la traza fila por fila.
 
+6. [Ejercicios de la clase 5: condicionales, procedimientos y alcance](C5/Ejercicios.md)
+   — siete actividades, una por tema de la sesión: qué encargos no se podían
+   escribir con el lenguaje anterior, el condicional y su verificación con
+   `boolean?`, el `let` de varias ligaduras y sus casos al borde, la cadena
+   de ambientes dibujada con el ambiente vacío al final, qué guarda una
+   clausura y qué verifica el interpretador antes de aplicar, los
+   procedimientos que reciben y devuelven procedimientos, y el mismo
+   programa bajo alcance estático y dinámico, con las dos trazas lado a
+   lado.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega

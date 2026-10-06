@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Varias ligaduras a la vez</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Varias ligaduras a la vez</h1>
+  <p class="intro">El <code>let</code> de esta sesión liga varios nombres de una sola vez, y eso tiene una consecuencia que se cobra cara: todas las partes derechas se evalúan en el ambiente de afuera, donde esos nombres todavía no significan nada.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Parte del <code>let</code></th><th>En qué ambiente</th><th>Consecuencia</th></tr></thead>
+        <tbody><tr><td>todas las partes derechas</td><td>el de afuera</td><td>una ligadura no ve a sus vecinas ni a sí misma</td></tr><tr><td>el cuerpo</td><td>el nuevo, con todos los nombres</td><td>ahí sí valen las ligaduras, todas juntas</td></tr><tr><td>un <code>let</code> dentro de una parte derecha</td><td>crea su propio eslabón</td><td>sobrevive el valor, no sus ligaduras</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Un <code>let</code> de tres ligaduras no es lo mismo que tres <code>let</code> anidados: crea un eslabón en vez de tres, y sus ligaduras son simultáneas en vez de sucesivas. Cuando se quiere que una vea a la otra, la forma es anidar.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="ligaduras.js"></script>
+</body>
+</html>

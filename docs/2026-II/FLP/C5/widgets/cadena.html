@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La cadena de ambientes</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La cadena de ambientes</h1>
+  <p class="intro">Se predice cuánto vale el programa, cuántos eslabones crea y cuántas variables se evalúan; al comprobar, la página abre la traza con el ambiente de cada paso y dibuja la cadena en su punto más hondo, con el ambiente vacío al final y las flechas del más nuevo al más viejo.</p>
+
+  <div class="alerta">
+    El lenguaje es el de la sesión, en notación de listas: números,
+    variables, <code>true</code> y <code>false</code>, las primitivas
+    <code>+</code> <code>-</code> <code>*</code> <code>add1</code>
+    <code>sub1</code> <code>zero?</code> <code>&gt;</code> <code>&lt;</code>,
+    <code>(if e then e else e)</code>, <code>(let id = e … in e)</code>,
+    <code>(proc (id …) e)</code> y la aplicación <code>(e e …)</code>. El
+    ambiente inicial liga <code>x = 4</code>, <code>y = 2</code> y
+    <code>z = 5</code>. El interpretador de la página hace lo mismo que el de
+    la sesión, con sus mismas decisiones: verifica la prueba del
+    <code>if</code> y el operador de una aplicación, y no verifica cuántos
+    operandos o argumentos le llegan.
+  </div>
+
+  <div id="predicciones"></div>
+
+  <div class="carta" id="libre">
+    <h2>La máquina, abierta</h2>
+    <p style="margin-top:0">Escriba cualquier programa del lenguaje y vea su
+    traza, su cadena de ambientes y las clausuras que construyó.</p>
+    <textarea class="editor" rows="3" spellcheck="false">(let a = 3 in (let b = (* a a) in (let a = (+ a b) in (- a b))))</textarea>
+    <div class="ejemplos"></div>
+    <div class="botones">
+      <button class="primario" data-accion="correr">Ver el proceso</button>
+      <label class="campo"><input type="checkbox"> <span>con alcance dinámico</span></label>
+      <span class="atajo">Ctrl + Enter también</span>
+    </div>
+    <div class="proceso" style="display:none"></div>
+  </div>
+
+</div>
+<script src="../../widgets/interprete-clausuras.js"></script>
+<script src="../../widgets/dibujar-ambientes.js"></script>
+<script src="../../widgets/motor-clausuras.js"></script>
+
+<script src="cadena.js"></script>
+</body>
+</html>

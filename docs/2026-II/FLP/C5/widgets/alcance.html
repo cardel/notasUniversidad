@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alcance estático y alcance dinámico</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Alcance estático y alcance dinámico</h1>
+  <p class="intro">El mismo programa con las dos reglas, para ver en qué se separan. Con alcance estático, que es el del lenguaje, el cuerpo se evalúa en el ambiente que la clausura capturó; con alcance dinámico, en el de quien llama. Se predicen los dos resultados y después se abren las dos trazas, una debajo de la otra.</p>
+
+  <div class="alerta">
+    El lenguaje es el de la sesión, en notación de listas: números,
+    variables, <code>true</code> y <code>false</code>, las primitivas
+    <code>+</code> <code>-</code> <code>*</code> <code>add1</code>
+    <code>sub1</code> <code>zero?</code> <code>&gt;</code> <code>&lt;</code>,
+    <code>(if e then e else e)</code>, <code>(let id = e … in e)</code>,
+    <code>(proc (id …) e)</code> y la aplicación <code>(e e …)</code>. El
+    ambiente inicial liga <code>x = 4</code>, <code>y = 2</code> y
+    <code>z = 5</code>. El interpretador de la página hace lo mismo que el de
+    la sesión, con sus mismas decisiones: verifica la prueba del
+    <code>if</code> y el operador de una aplicación, y no verifica cuántos
+    operandos o argumentos le llegan.
+  </div>
+
+  <div id="predicciones"></div>
+
+</div>
+<script src="../../widgets/interprete-clausuras.js"></script>
+<script src="../../widgets/dibujar-ambientes.js"></script>
+<script src="../../widgets/motor-clausuras.js"></script>
+
+<script src="alcance.js"></script>
+</body>
+</html>

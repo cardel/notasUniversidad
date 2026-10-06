@@ -121,3 +121,19 @@
   border-radius: 8px; background: #fff; overflow-x: auto; }
 .ejemplos { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; }
 .ejemplos button { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8rem; }
+
+/* --- Diagrama de la cadena de ambientes --------------------------- */
+.diagrama-ambientes { max-width: 100%; height: auto; }
+.amb-caja { fill: #fff; stroke: #4c6ab8; stroke-width: 1.3; }
+.amb-caja.amb-vacio { fill: #f0f0f0; stroke: #999; stroke-dasharray: none; }
+.amb-caja.amb-nuevo { stroke: #c79400; stroke-width: 2; stroke-dasharray: 5 3; }
+.amb-nombre { font: 700 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  fill: #1f5fa8; text-anchor: middle; }
+.amb-vacio + .amb-nombre, .amb-caja.amb-vacio ~ .amb-nombre { fill: #666; }
+.amb-ligadura { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  fill: #333; text-anchor: middle; }
+.amb-flecha { stroke: #666; stroke-width: 1.3; }
+.amb-punta { fill: #666; }
+.amb-rotulo { font: 10px system-ui, sans-serif; fill: #888; text-anchor: middle; }
+.envoltura-ambientes { overflow-x: auto; margin: 0.5rem 0; padding: 0.3rem;
+  border: 1px solid #ddd; border-radius: 8px; background: #fff; }

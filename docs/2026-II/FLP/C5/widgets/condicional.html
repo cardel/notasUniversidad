@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El condicional y su regla</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El condicional y su regla</h1>
+  <p class="intro">Una prueba, dos ramas y una sola que se evalúa. Aquí se predice qué da cada condicional, qué pasa cuando la prueba no es un booleano y por qué el interpretador lo verifica en vez de dejar que decida el <code>if</code> de Racket.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Paso</th><th>Qué se hace</th></tr></thead>
+        <tbody><tr><td>1</td><td>evaluar la expresión de prueba en el ambiente actual</td></tr><tr><td>2</td><td>verificar con <code>boolean?</code> que el resultado sea booleano</td></tr><tr><td>3</td><td>si no lo es, abortar con un mensaje que diga qué llegó</td></tr><tr><td>4</td><td>solo entonces evaluar una de las dos ramas, en el mismo ambiente</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">La rama que no se escoge no se evalúa, y por eso puede mencionar cosas que no existen sin que pase nada. Cambiar la prueba cambia qué subárbol se recorre, y con eso si el programa da un valor o un error.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="condicional.js"></script>
+</body>
+</html>
