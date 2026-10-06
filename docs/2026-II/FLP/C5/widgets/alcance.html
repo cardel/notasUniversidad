@@ -14,17 +14,20 @@
   <p class="intro">El mismo programa con las dos reglas, para ver en qué se separan. Con alcance estático, que es el del lenguaje, el cuerpo se evalúa en el ambiente que la clausura capturó; con alcance dinámico, en el de quien llama. Se predicen los dos resultados y después se abren las dos trazas, una debajo de la otra.</p>
 
   <div class="alerta">
-    El lenguaje es el de la sesión, en notación de listas: números,
-    variables, <code>true</code> y <code>false</code>, las primitivas
-    <code>+</code> <code>-</code> <code>*</code> <code>add1</code>
-    <code>sub1</code> <code>zero?</code> <code>&gt;</code> <code>&lt;</code>,
-    <code>(if e then e else e)</code>, <code>(let id = e … in e)</code>,
-    <code>(proc (id …) e)</code> y la aplicación <code>(e e …)</code>. El
-    ambiente inicial liga <code>x = 4</code>, <code>y = 2</code> y
-    <code>z = 5</code>. El interpretador de la página hace lo mismo que el de
-    la sesión, con sus mismas decisiones: verifica la prueba del
-    <code>if</code> y el operador de una aplicación, y no verifica cuántos
-    operandos o argumentos le llegan.
+    El lenguaje y la escritura son los del interpretador de la sesión:
+    números, variables, <code>true</code> y <code>false</code>, las
+    primitivas escritas antes del paréntesis —<code>+(e,e)</code>,
+    <code>-(e,e)</code>, <code>*(e,e)</code>, <code>add1(e)</code>,
+    <code>sub1(e)</code>, <code>&gt;(e,e)</code>, <code>&lt;(e,e)</code>,
+    <code>==(e,e)</code>—, <code>if e then e else e</code>,
+    <code>let id = e … in e</code>, <code>proc(id, …) cuerpo</code> y la
+    aplicación <code>(rator rand …)</code>. El ambiente inicial liga
+    <code>x = 4</code>, <code>y = 2</code>, <code>z = 5</code> sobre otro
+    eslabón con <code>a = 4</code>, <code>b = 5</code>, <code>c = 6</code>.
+    La página hace lo mismo que el interpretador en Racket, con sus
+    verificaciones: la prueba del <code>if</code> con <code>boolean?</code>,
+    el operador de una aplicación con <code>procval?</code> y la cantidad de
+    argumentos contra la de parámetros.
   </div>
 
   <div id="predicciones"></div>

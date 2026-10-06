@@ -1,144 +1,178 @@
-/* El interpretador de la sesión de procedimientos, escrito en JavaScript
-   para poder mostrar lo que hace: el lenguaje con condicionales, ligadura
-   local múltiple, procedimientos y clausuras, en la notación de listas que
-   reciben parse y value-of.
+/* El interpretador de procedimientos del curso, escrito en JavaScript para
+   poder mostrar lo que hace. Calca al de `5.SemanticaProcedimientos`: su
+   sintaxis, su semántica y sus verificaciones.
 
-      (+ e e) (- e e) (* e e) (add1 e) (sub1 e) (zero? e) (> e e) (< e e)
-      true   false   (if e then e else e)
-      (let id = e  id = e … in e)   (proc (id …) e)   (e e …)
+      <expresion> ::= <numero> | <identificador> | true | false
+                  ::= if <exp> then <exp> else <exp>
+                  ::= let {<id> = <exp>}* in <exp>
+                  ::= proc ( {<id>}*(,) ) <exp>
+                  ::= ( <exp> {<exp>}* )
+                  ::= <primitiva> ( {<exp>}*(,) )
+      <primitiva> ::= + | - | * | / | add1 | sub1 | > | >= | < | <= | ==
 
-   El ambiente inicial liga x = 4, y = 2, z = 5.
+   El ambiente inicial es el del curso: [x=4, y=2, z=5] sobre
+   [a=4, b=5, c=6] sobre el vacío.
 
-   Dos reglas de alcance: con alcance estático —el del lenguaje— el cuerpo
-   de un procedimiento se evalúa en el ambiente que la clausura capturó;
-   con alcance dinámico, en el de quien la llama. La segunda existe para
-   poder contrastarlas sobre el mismo programa. */
+   Acepta { dinamico: true } para evaluar con alcance dinámico, que no es la
+   regla del lenguaje y está solo para contrastarla con la estática. */
 var InterpreteClausuras = (function () {
   "use strict";
 
-  /* Cuántos operandos lee cada primitiva. La suma y el producto son
-     asociativos y recorren todos los que lleguen, como en (+ a b c f g);
-     las demás leen los que necesitan y no verifican cuántos llegaron, igual
-     que el interpretador de la sesión: si sobran los ignoran y si faltan
-     fallan al leerlos. */
-  var PRIMITIVAS = {
-    "+": "varios", "*": "varios", "-": 2, ">": 2, "<": 2,
-    "add1": 1, "sub1": 1, "zero?": 1
-  };
+  var PRIMITIVAS = ["+", "-", "*", "/", "add1", "sub1", ">=", "<=", "==", ">", "<"];
+  var PALABRAS = ["if", "then", "else", "let", "in", "proc", "true", "false"];
 
-  /* --- Lector de s-expresiones -------------------------------------- */
-  function leer(texto) {
-    var i = 0;
-    function espacios() {
-      while (i < texto.length && (/\s/.test(texto[i]) || texto[i] === "%")) {
-        if (texto[i] === "%") { while (i < texto.length && texto[i] !== "\n") { i++; } }
-        else { i++; }
-      }
-    }
-    function forma() {
-      espacios();
-      if (i >= texto.length) { throw new Error("El programa se acabó antes de tiempo."); }
-      if (texto[i] === "(") {
-        i++;
-        var lista = [];
-        for (;;) {
-          espacios();
-          if (i >= texto.length) { throw new Error("Falta un paréntesis de cierre."); }
-          if (texto[i] === ")") { i++; return lista; }
-          lista.push(forma());
+  /* --- Scanner ------------------------------------------------------- */
+  function tokenizar(texto) {
+    var tokens = [], i = 0;
+    function letra(c) { return /[a-zA-Z]/.test(c); }
+    function digito(c) { return /[0-9]/.test(c); }
+
+    while (i < texto.length) {
+      var c = texto[i];
+      if (/\s/.test(c)) { i++; continue; }
+      if (c === "%") { while (i < texto.length && texto[i] !== "\n") { i++; } continue; }
+
+      /* Un menos pegado a un dígito es parte del número. */
+      if ((digito(c)) || (c === "-" && digito(texto[i + 1] || ""))) {
+        var j = i + (c === "-" ? 1 : 0);
+        while (j < texto.length && digito(texto[j])) { j++; }
+        if (texto[j] === "." && digito(texto[j + 1] || "")) {
+          j++;
+          while (j < texto.length && digito(texto[j])) { j++; }
         }
+        tokens.push({ clase: "numero", lexema: texto.slice(i, j), valor: parseFloat(texto.slice(i, j)) });
+        i = j;
+        continue;
       }
-      if (texto[i] === ")") { throw new Error("Hay un paréntesis de cierre de más."); }
-      var j = i;
-      while (j < texto.length && !/[\s()]/.test(texto[j])) { j++; }
-      var pieza = texto.slice(i, j);
-      i = j;
-      return /^-?\d+$/.test(pieza) ? parseInt(pieza, 10) : { simbolo: pieza };
+      if (letra(c)) {
+        var k = i;
+        while (k < texto.length && (letra(texto[k]) || digito(texto[k]) ||
+                                    texto[k] === "?" || texto[k] === "$")) { k++; }
+        var palabra = texto.slice(i, k);
+        tokens.push({ clase: PALABRAS.indexOf(palabra) !== -1 ? "palabra"
+                            : PRIMITIVAS.indexOf(palabra) !== -1 ? "primitiva" : "identificador",
+                      lexema: palabra });
+        i = k;
+        continue;
+      }
+      var prim = PRIMITIVAS.filter(function (p) {
+        return !letra(p[0]) && texto.slice(i, i + p.length) === p;
+      })[0];
+      if (prim) { tokens.push({ clase: "primitiva", lexema: prim }); i += prim.length; continue; }
+      if ("(),=".indexOf(c) !== -1) { tokens.push({ clase: "signo", lexema: c }); i++; continue; }
+      throw new Error("El scanner no reconoce el carácter " + c + ".");
     }
-    var r = forma();
-    espacios();
-    if (i < texto.length) { throw new Error("Sobra texto después de la expresión: " + texto.slice(i).trim()); }
-    return r;
+    return tokens;
   }
 
-  function esSimbolo(s, nombre) {
-    return s && s.simbolo !== undefined && (nombre === undefined || s.simbolo === nombre);
+  /* --- Parser --------------------------------------------------------- */
+  function parsear(tokens) {
+    var pos = 0;
+    function mirar() { return tokens[pos]; }
+    function fallar(que) {
+      var t = mirar();
+      throw new Error("El parser esperaba " + que +
+        (t ? " y encontró " + t.lexema : " y el programa se acabó") + ".");
+    }
+    function comer(lexema) {
+      var t = mirar();
+      if (!t || t.lexema !== lexema) { fallar(lexema); }
+      pos++;
+      return t;
+    }
+
+    function expresion() {
+      var t = mirar();
+      if (!t) { fallar("una expresión"); }
+
+      if (t.clase === "numero") { pos++; return { v: "lit-exp", campos: [t.valor] }; }
+      if (t.clase === "identificador") { pos++; return { v: "var-exp", campos: [t.lexema] }; }
+      if (t.lexema === "true") { pos++; return { v: "true-exp", campos: [] }; }
+      if (t.lexema === "false") { pos++; return { v: "false-exp", campos: [] }; }
+
+      if (t.lexema === "if") {
+        pos++;
+        var prueba = expresion();
+        comer("then");
+        var siSi = expresion();
+        comer("else");
+        return { v: "if-exp", campos: [prueba, siSi, expresion()] };
+      }
+      if (t.lexema === "let") {
+        pos++;
+        var ids = [], rands = [];
+        while (mirar() && mirar().clase === "identificador") {
+          ids.push(mirar().lexema);
+          pos++;
+          comer("=");
+          rands.push(expresion());
+        }
+        comer("in");
+        return { v: "let-exp", campos: [ids, rands, expresion()] };
+      }
+      if (t.lexema === "proc") {
+        pos++;
+        comer("(");
+        var params = [];
+        if (mirar() && mirar().lexema !== ")") {
+          params.push(comerIdentificador());
+          while (mirar() && mirar().lexema === ",") { pos++; params.push(comerIdentificador()); }
+        }
+        comer(")");
+        return { v: "proc-exp", campos: [params, expresion()] };
+      }
+      if (t.clase === "primitiva") {
+        pos++;
+        comer("(");
+        var args = [];
+        if (mirar() && mirar().lexema !== ")") {
+          args.push(expresion());
+          while (mirar() && mirar().lexema === ",") { pos++; args.push(expresion()); }
+        }
+        comer(")");
+        return { v: "prim-exp", campos: [t.lexema, args] };
+      }
+      if (t.lexema === "(") {
+        pos++;
+        var rator = expresion();
+        var rands2 = [];
+        while (mirar() && mirar().lexema !== ")") { rands2.push(expresion()); }
+        comer(")");
+        return { v: "app-exp", campos: [rator, rands2] };
+      }
+      fallar("una expresión");
+    }
+
+    function comerIdentificador() {
+      var t = mirar();
+      if (!t || t.clase !== "identificador") { fallar("un identificador"); }
+      pos++;
+      return t.lexema;
+    }
+
+    var arbol = expresion();
+    if (pos < tokens.length) {
+      throw new Error("El parser terminó la expresión y todavía quedaban tokens, desde " +
+                      tokens[pos].lexema + ".");
+    }
+    return arbol;
   }
 
-  /* --- Parser: de la lista al árbol de sintaxis abstracta ----------- */
-  function parsear(s) {
-    if (typeof s === "number") { return { v: "const-exp", campos: [s] }; }
-    if (esSimbolo(s)) {
-      if (s.simbolo === "true") { return { v: "true-exp", campos: [] }; }
-      if (s.simbolo === "false") { return { v: "false-exp", campos: [] }; }
-      return { v: "var-exp", campos: [s.simbolo] };
-    }
-    if (!s.length) { throw new Error("La lista vacía no es una expresión."); }
-    var cabeza = s[0];
-    if (esSimbolo(cabeza) && PRIMITIVAS[cabeza.simbolo] !== undefined) {
-      return { v: "prim-exp", campos: [cabeza.simbolo, s.slice(1).map(parsear)] };
-    }
-    if (esSimbolo(cabeza, "if")) {
-      if (s.length !== 6 || !esSimbolo(s[2], "then") || !esSimbolo(s[4], "else")) {
-        throw new Error("Un if se escribe (if e then e else e).");
-      }
-      return { v: "if-exp", campos: [parsear(s[1]), parsear(s[3]), parsear(s[5])] };
-    }
-    if (esSimbolo(cabeza, "let")) {
-      var ids = [], rands = [], k = 1;
-      while (k < s.length && !esSimbolo(s[k], "in")) {
-        if (!esSimbolo(s[k])) { throw new Error("Un let liga identificadores."); }
-        if (!esSimbolo(s[k + 1], "=")) { throw new Error("Falta el = de una ligadura del let."); }
-        ids.push(s[k].simbolo);
-        rands.push(parsear(s[k + 2]));
-        k += 3;
-      }
-      if (k >= s.length) { throw new Error("A este let le falta el in."); }
-      if (k + 2 !== s.length) { throw new Error("Después del cuerpo del let sobra algo."); }
-      return { v: "let-exp", campos: [ids, rands, parsear(s[k + 1])] };
-    }
-    if (esSimbolo(cabeza, "proc")) {
-      if (s.length !== 3 || !Array.isArray(s[1])) {
-        throw new Error("Un proc se escribe (proc (id …) cuerpo).");
-      }
-      return { v: "proc-exp", campos: [s[1].map(function (p) { return p.simbolo; }), parsear(s[2])] };
-    }
-    return { v: "call-exp", campos: [parsear(cabeza), s.slice(1).map(parsear)] };
-  }
-
-  /* --- Cómo se escribe cada cosa ------------------------------------ */
+  /* --- Cómo se escribe cada cosa -------------------------------------- */
   function texto(n) {
     switch (n.v) {
-      case "const-exp": return String(n.campos[0]);
+      case "lit-exp": return String(n.campos[0]);
       case "var-exp": return n.campos[0];
       case "true-exp": return "true";
       case "false-exp": return "false";
-      case "prim-exp": return "(" + n.campos[0] + " " + n.campos[1].map(texto).join(" ") + ")";
-      case "if-exp": return "(if " + texto(n.campos[0]) + " then " + texto(n.campos[1]) +
-        " else " + texto(n.campos[2]) + ")";
-      case "let-exp": return "(let " + n.campos[0].map(function (id, k) {
-        return id + " = " + texto(n.campos[1][k]); }).join(" ") + " in " + texto(n.campos[2]) + ")";
-      case "proc-exp": return "(proc (" + n.campos[0].join(" ") + ") " + texto(n.campos[1]) + ")";
-      case "call-exp": return "(" + texto(n.campos[0]) +
+      case "prim-exp": return n.campos[0] + "(" + n.campos[1].map(texto).join(", ") + ")";
+      case "if-exp": return "if " + texto(n.campos[0]) + " then " + texto(n.campos[1]) +
+        " else " + texto(n.campos[2]);
+      case "let-exp": return "let " + n.campos[0].map(function (id, k) {
+        return id + " = " + texto(n.campos[1][k]); }).join(" ") + " in " + texto(n.campos[2]);
+      case "proc-exp": return "proc(" + n.campos[0].join(", ") + ") " + texto(n.campos[1]);
+      case "app-exp": return "(" + texto(n.campos[0]) +
         (n.campos[1].length ? " " + n.campos[1].map(texto).join(" ") : "") + ")";
-    }
-    return "?";
-  }
-
-  /* El árbol en la forma que dibuja dibujar-arbol.js. */
-  function arbolTexto(n) {
-    switch (n.v) {
-      case "const-exp": case "var-exp": return "(" + n.v + " " + n.campos[0] + ")";
-      case "true-exp": case "false-exp": return "(" + n.v + ")";
-      case "prim-exp": return "(" + n.v + " " + n.campos[0] + " (" +
-        n.campos[1].map(arbolTexto).join(" ") + "))";
-      case "if-exp": return "(" + n.v + " " + n.campos.map(arbolTexto).join(" ") + ")";
-      case "let-exp": return "(" + n.v + " (" + n.campos[0].join(" ") + ") (" +
-        n.campos[1].map(arbolTexto).join(" ") + ") " + arbolTexto(n.campos[2]) + ")";
-      case "proc-exp": return "(" + n.v + " (" + n.campos[0].join(" ") + ") " +
-        arbolTexto(n.campos[1]) + ")";
-      case "call-exp": return "(" + n.v + " " + arbolTexto(n.campos[0]) + " (" +
-        n.campos[1].map(arbolTexto).join(" ") + "))";
     }
     return "?";
   }
@@ -147,14 +181,15 @@ var InterpreteClausuras = (function () {
     if (v === true) { return "#t"; }
     if (v === false) { return "#f"; }
     if (v && v.clausura) {
-      return "(closure (" + v.ids.join(" ") + ") " + texto(v.cuerpo) + " " + v.env.nombre + ")";
+      return "(closure (" + v.ids.join(", ") + ") " + texto(v.cuerpo) + " " + v.env.nombre + ")";
     }
     return String(v);
   }
 
-  /* --- Ambientes ----------------------------------------------------- */
+  /* --- Ambiente inicial del curso ------------------------------------- */
   function ambienteInicial() {
-    return { nombre: "env0", ligaduras: [["x", 4], ["y", 2], ["z", 5]], viejo: null };
+    return { nombre: "amb0", ligaduras: [["x", 4], ["y", 2], ["z", 5]],
+             viejo: { nombre: "base", ligaduras: [["a", 4], ["b", 5], ["c", 6]], viejo: null } };
   }
 
   /* --- Evaluador ------------------------------------------------------ */
@@ -164,8 +199,8 @@ var InterpreteClausuras = (function () {
     var traza = [], creados = 0, clausuras = [], masProfundo = null, ultimaLlamada = null;
     var cuenta = { valueOf: 0, applyProc: 0, variables: 0, ambientes: 0, clausuras: 0 };
 
-    /* Una búsqueda por cada variable que se evalúa, y aparte los eslabones
-       que hubo que recorrer para encontrarla. */
+    function hondura(env) { var n = 0; while (env) { n++; env = env.viejo; } return n; }
+
     function buscar(env, id) {
       cuenta.variables++;
       var e = env;
@@ -175,76 +210,64 @@ var InterpreteClausuras = (function () {
         }
         e = e.viejo;
       }
-      throw new Error("La variable " + id + " no está ligada en el ambiente.");
+      throw new Error("No se encontró la variable " + id + " en el ambiente.");
     }
 
     function extender(env, ids, vals) {
       creados++;
       cuenta.ambientes++;
-      var nuevo = { nombre: "env" + creados, viejo: env,
-                    ligaduras: ids.filter(function (id, k) { return k < vals.length; })
-                                  .map(function (id, k) { return [id, vals[k]]; }) };
+      var nuevo = { nombre: "amb" + creados, viejo: env,
+                    ligaduras: ids.map(function (id, k) { return [id, vals[k]]; }) };
       if (!masProfundo || hondura(nuevo) >= hondura(masProfundo)) { masProfundo = nuevo; }
       return nuevo;
     }
 
-    /* Cuántos eslabones tiene la cadena, para quedarse con la más larga. */
-    function hondura(env) {
-      var n = 0;
-      while (env) { n++; env = env.viejo; }
-      return n;
-    }
-
+    /* Las primitivas del curso: + y * recorren todos los operandos, - y /
+       toman el primero contra el resto, y las comparaciones los dos
+       primeros. */
     function aplicarPrim(prim, args) {
-      var n = PRIMITIVAS[prim];
-      if (n === "varios" ? !args.length : args.length < n) {
-        throw new Error("La primitiva " + prim + " lee " +
-          (n === "varios" ? "al menos un operando" : n + " operando(s)") +
-          " y solo le llegaron " + args.length + ".");
+      function pide(n) {
+        if (args.length < n) {
+          throw new Error("La primitiva " + prim + " lee " + n + " operando(s) y le llegaron " +
+                          args.length + ".");
+        }
       }
       switch (prim) {
-        case "+": return args.reduce(function (a, b) { return a + b; });
-        case "-": return args[0] - args[1];
-        case "*": return args.reduce(function (a, b) { return a * b; });
-        case ">": return args[0] > args[1];
-        case "<": return args[0] < args[1];
-        case "add1": return args[0] + 1;
-        case "sub1": return args[0] - 1;
-        case "zero?": return args[0] === 0;
+        case "+": return args.reduce(function (a, b) { return a + b; }, 0);
+        case "*": return args.reduce(function (a, b) { return a * b; }, 1);
+        case "-": pide(1); return args[0] - args.slice(1).reduce(function (a, b) { return a + b; }, 0);
+        case "/": pide(1); return args[0] / args.slice(1).reduce(function (a, b) { return a * b; }, 1);
+        case "add1": pide(1); return args[0] + 1;
+        case "sub1": pide(1); return args[0] - 1;
+        case ">": pide(2); return args[0] > args[1];
+        case ">=": pide(2); return args[0] >= args[1];
+        case "<": pide(2); return args[0] < args[1];
+        case "<=": pide(2); return args[0] <= args[1];
+        case "==": pide(2); return args[0] === args[1];
       }
     }
 
-    /* No se verifica cuántos argumentos llegaron: los que sobran se
-       ignoran y, si faltan, el parámetro se queda sin ligar y el error
-       aparece cuando el cuerpo lo use. */
-    function aplicarProc(proc, args, envLlamada) {
-      cuenta.applyProc++;
-      var base = dinamico ? envLlamada : proc.env;
-      var dentro = extender(base, proc.ids, args);
-      ultimaLlamada = dentro;
-      return valueOf(proc.cuerpo, dentro);
-    }
-
-    function anotar(exp, env, valor, nota) {
+    function anotar(exp, env, valor) {
       traza.push({ expresion: texto(exp), ambiente: env.nombre, valor: escribir(valor),
-                   env: env, consulta: exp.v === "var-exp", nota: nota || "" });
+                   env: env, consulta: exp.v === "var-exp" });
     }
 
     function valueOf(exp, env) {
       cuenta.valueOf++;
       var valor;
       switch (exp.v) {
-        case "const-exp": valor = exp.campos[0]; break;
+        case "lit-exp": valor = exp.campos[0]; break;
         case "true-exp": valor = true; break;
         case "false-exp": valor = false; break;
         case "var-exp": valor = buscar(env, exp.campos[0]); break;
         case "prim-exp":
-          valor = aplicarPrim(exp.campos[0], exp.campos[1].map(function (r) { return valueOf(r, env); }));
+          valor = aplicarPrim(exp.campos[0],
+                              exp.campos[1].map(function (r) { return valueOf(r, env); }));
           break;
         case "if-exp":
           var prueba = valueOf(exp.campos[0], env);
           if (typeof prueba !== "boolean") {
-            throw new Error("La prueba de un if debe ser booleana y llegó " + escribir(prueba) + ".");
+            throw new Error("El test-exp debe ser un booleano y llegó " + escribir(prueba) + ".");
           }
           valor = valueOf(exp.campos[prueba ? 1 : 2], env);
           break;
@@ -253,8 +276,8 @@ var InterpreteClausuras = (function () {
           var nuevo = extender(env, exp.campos[0], vals);
           traza.push({ creacion: true, ambiente: nuevo.nombre, env: nuevo,
                        expresion: "se crea " + nuevo.nombre + " = [" +
-                         exp.campos[0].map(function (id, k) { return id + "=" + escribir(vals[k]); }).join(", ") +
-                         "]" + env.nombre });
+                         exp.campos[0].map(function (id, k) {
+                           return id + "=" + escribir(vals[k]); }).join(", ") + "]" + env.nombre });
           valor = valueOf(exp.campos[2], nuevo);
           break;
         case "proc-exp":
@@ -262,31 +285,42 @@ var InterpreteClausuras = (function () {
           valor = { clausura: true, ids: exp.campos[0], cuerpo: exp.campos[1], env: env };
           clausuras.push({ texto: escribir(valor), env: env, creada: texto(exp) });
           break;
-        case "call-exp":
-          var proc = valueOf(exp.campos[0], env);
+        case "app-exp":
+          /* El interpretador evalúa primero los operandos y después el
+             operador, y verifica el procval y la cantidad de argumentos. */
           var args = exp.campos[1].map(function (r) { return valueOf(r, env); });
+          var proc = valueOf(exp.campos[0], env);
           if (!(proc && proc.clausura)) {
-            throw new Error("El operador no es un procedimiento: " + escribir(proc) + ".");
+            throw new Error("No puede evaluarse algo que no sea un procedimiento: " +
+                            escribir(proc) + ".");
           }
-          valor = aplicarProc(proc, args, env);
+          if (proc.ids.length !== args.length) {
+            throw new Error("El número de argumentos no es correcto: debe enviar " +
+                            proc.ids.length + " y usted ha enviado " + args.length + ".");
+          }
+          cuenta.applyProc++;
+          var dentro = extender(dinamico ? env : proc.env, proc.ids, args);
+          ultimaLlamada = dentro;
+          valor = valueOf(proc.cuerpo, dentro);
           break;
       }
       anotar(exp, env, valor);
       return valor;
     }
 
-    var env0 = ambienteInicial();
-    var valor = valueOf(arbol, env0);
+    var amb0 = ambienteInicial();
+    var valor = valueOf(arbol, amb0);
     return { valor: valor, texto: escribir(valor), traza: traza, cuenta: cuenta,
-             env0: env0, clausuras: clausuras, masProfundo: masProfundo || env0,
+             env0: amb0, clausuras: clausuras, masProfundo: masProfundo || amb0,
              ultimaLlamada: ultimaLlamada, dinamico: dinamico };
   }
 
   function ejecutar(programa, opciones) {
     var salida = { programa: programa };
-    var s;
-    try { s = leer(programa); } catch (e) { salida.error = e.message; salida.etapa = "lectura"; return salida; }
-    try { salida.arbol = parsear(s); salida.arbolTexto = arbolTexto(salida.arbol); }
+    var tokens;
+    try { tokens = tokenizar(programa); salida.tokens = tokens; }
+    catch (e) { salida.error = e.message; salida.etapa = "scanner"; return salida; }
+    try { salida.arbol = parsear(tokens); }
     catch (e) { salida.error = e.message; salida.etapa = "parser"; return salida; }
     try {
       var r = evaluar(salida.arbol, opciones);
@@ -299,8 +333,7 @@ var InterpreteClausuras = (function () {
   }
 
   /* La cadena de ambientes en el momento en que se evalúa la expresión que
-     se nombre, escrita del eslabón más nuevo al más viejo. Sirve para pedir
-     «dibuje la cadena cuando se evalúa (+ k y)». */
+     se nombre, del eslabón más nuevo al más viejo. */
   function cadenaEn(salida, expresion) {
     if (!salida.traza) { return null; }
     var fila = salida.traza.filter(function (f) {
@@ -312,9 +345,8 @@ var InterpreteClausuras = (function () {
     return cadena;
   }
 
-  return { leer: leer, parsear: parsear, evaluar: evaluar, ejecutar: ejecutar,
-           texto: texto, escribir: escribir, arbolTexto: arbolTexto,
-           cadenaEn: cadenaEn };
+  return { tokenizar: tokenizar, parsear: parsear, evaluar: evaluar, ejecutar: ejecutar,
+           texto: texto, escribir: escribir, cadenaEn: cadenaEn };
 })();
 
 if (typeof module !== "undefined") { module.exports = InterpreteClausuras; }

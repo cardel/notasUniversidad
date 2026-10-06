@@ -9,10 +9,10 @@ var PREDICCIONES = [
     alcances: true,
     enunciado:
       "El cuerpo de <code>p</code> menciona <code>y</code>, que no es " +
-      "parámetro suyo. Hay dos candidatas: la <code>y</code> de " +
-      "<code>env0</code>, que vale 2, y la que el <code>let</code> de " +
-      "adentro liga a 100. Diga qué da con cada regla.",
-    programa: "(let p = (proc (u) (+ u y)) in (let y = 100 in (p 1)))",
+      "parámetro suyo. Hay dos candidatas: la <code>y</code> del ambiente " +
+      "inicial, que vale 2, y la que el <code>let</code> de adentro liga a " +
+      "100. Diga qué da con cada regla.",
+    programa: "let p = proc(u) +(u,y) in let y = 100 in (p 1)",
     pista:
       "Con alcance estático gana el ambiente donde el proc fue creado; con " +
       "dinámico, el de donde fue llamado. El lenguaje usa el primero."
@@ -24,7 +24,7 @@ var PREDICCIONES = [
     enunciado:
       "Ahora el nombre libre es <code>n</code> y se liga dos veces, antes y " +
       "después de crear el procedimiento.",
-    programa: "(let n = 2 in (let f = (proc (k) (* k n)) in (let n = 10 in (f 5))))",
+    programa: "let n = 2 in let f = proc(k) *(k,n) in let n = 10 in (f 5)",
     pista:
       "La clausura se construyó cuando n valía 2 y guardó ese ambiente. La " +
       "ligadura posterior no la alcanza, por más que esté más cerca en el " +
@@ -37,7 +37,7 @@ var PREDICCIONES = [
     enunciado:
       "Este cuerpo no menciona ninguna variable que no sea su parámetro. " +
       "Diga qué da con cada regla.",
-    programa: "(let f = (proc (k) (* k k)) in (let n = 10 in (f 5)))",
+    programa: "let f = proc(k) *(k,k) in let n = 10 in (f 5)",
     razonIguales:
       "el cuerpo no tiene variables libres, así que da igual en qué " +
       "ambiente se evalúe. La diferencia entre las dos reglas solo se nota " +
@@ -52,7 +52,7 @@ var PREDICCIONES = [
       "El cuerpo menciona <code>w</code>, que no existe donde el " +
       "procedimiento se crea pero sí donde se llama. Este es el caso que " +
       "separa a las dos reglas del todo.",
-    programa: "(let f = (proc (k) (+ k w)) in (let w = 3 in (f 1)))",
+    programa: "let f = proc(k) +(k,w) in let w = 3 in (f 1)",
     pista:
       "Pregúntese qué nombres hay en cada uno de los dos ambientes " +
       "candidatos. Con uno de ellos la búsqueda de w no encuentra nada."

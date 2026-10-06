@@ -6,13 +6,13 @@ instalar nada. La sesión es de entender qué hace el interpretador, así que
 casi todo es analizar y predecir: las respuestas muestran su razón, se
 acierte o no.
 
-El lenguaje va en notación de listas, que es la que reciben `parse` y
-`value-of`: `(+ y 11)`, `(if (> x 4) then 1 else 2)`,
-`(let x = (- y 1) in (add1 x))`, `(proc (u) (* u u))`, `(f z)`. El ambiente
-inicial liga `x = 4`, `y = 2` y `z = 5`. Los programas no son los de clase:
-mismo lenguaje, ronda nueva. Lo que aquí se afirma sobre valores, ambientes
-y número de llamadas se midió contra el interpretador en Racket de la
-sesión.
+Los programas están escritos como los recibe el interpretador del curso:
+`+(y,11)`, `if >(x,4) then 1 else 2`, `let x = -(y,1) in add1(x)`,
+`proc(u) *(u,u)`, `(f z)`. El ambiente inicial liga `x = 4`, `y = 2`,
+`z = 5` sobre otro eslabón con `a = 4`, `b = 5`, `c = 6`. Los programas no
+son los de clase: mismo lenguaje, ronda nueva. Lo que aquí se afirma sobre
+valores, ambientes y número de llamadas se midió corriéndolo contra el
+interpretador de `5.SemanticaProcedimientos`.
 
 ## Qué le falta al evaluador
 
@@ -71,11 +71,11 @@ decir, y en el otro sobrevive un eslabón de una aplicación que ya terminó.
 ### [Procedimientos y clausuras](widgets/clausuras.html){ target=_blank rel=noopener }
 
 Qué guarda una clausura: los parámetros, el cuerpo sin evaluar y el ambiente
-donde se creó. También qué no guarda. `(let f = (proc (u) (g u)) in 7)` vale 7
-aunque `g` no exista en ninguna parte, y el mismo cuerpo se detiene en cuanto
+donde se creó. También qué no guarda. `let f = proc(u) (g u) in 7` vale 7 aunque
+`g` no exista en ninguna parte, y el mismo cuerpo se detiene en cuanto
 alguien aplica `f`. Después, qué pasa al aplicar: `(3 4)` se detiene porque
 el operador no es un procedimiento, y una llamada con argumentos de más o de
-menos no se queja.
+menos se detiene por la verificación de la cantidad.
 
 ## Alcance estático
 
