@@ -227,7 +227,7 @@ var InterpreteClausuras = (function () {
 
     function anotar(exp, env, valor, nota) {
       traza.push({ expresion: texto(exp), ambiente: env.nombre, valor: escribir(valor),
-                   consulta: exp.v === "var-exp", nota: nota || "" });
+                   env: env, consulta: exp.v === "var-exp", nota: nota || "" });
     }
 
     function valueOf(exp, env) {
@@ -298,8 +298,23 @@ var InterpreteClausuras = (function () {
     return salida;
   }
 
+  /* La cadena de ambientes en el momento en que se evalúa la expresión que
+     se nombre, escrita del eslabón más nuevo al más viejo. Sirve para pedir
+     «dibuje la cadena cuando se evalúa (+ k y)». */
+  function cadenaEn(salida, expresion) {
+    if (!salida.traza) { return null; }
+    var fila = salida.traza.filter(function (f) {
+      return !f.creacion && f.expresion === expresion;
+    })[0];
+    if (!fila) { return null; }
+    var cadena = [], env = fila.env;
+    while (env) { cadena.push(env); env = env.viejo; }
+    return cadena;
+  }
+
   return { leer: leer, parsear: parsear, evaluar: evaluar, ejecutar: ejecutar,
-           texto: texto, escribir: escribir, arbolTexto: arbolTexto };
+           texto: texto, escribir: escribir, arbolTexto: arbolTexto,
+           cadenaEn: cadenaEn };
 })();
 
 if (typeof module !== "undefined") { module.exports = InterpreteClausuras; }

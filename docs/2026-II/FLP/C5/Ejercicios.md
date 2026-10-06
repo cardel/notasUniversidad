@@ -56,6 +56,16 @@ de cada paso y dibuja la cadena en su punto más hondo, con el ambiente vacío
 al final y las flechas del más nuevo al más viejo. Al final queda la máquina
 abierta para cualquier programa que se quiera escribir.
 
+### [Dibujar la cadena de ambientes](widgets/dibujar.html){ target=_blank rel=noopener }
+
+Lo mismo, pero al revés: en vez de leer la cadena hay que construirla. Para
+cada programa se señala un momento de la evaluación y se escriben los
+eslabones que existen entonces, uno por línea y del más nuevo al más viejo;
+la página los dibuja mientras se escriben y al comprobar señala la primera
+diferencia con la del interpretador. Los dos últimos tienen procedimientos:
+en uno, el eslabón del parámetro no cuelga de donde el programa parece
+decir, y en el otro sobrevive un eslabón de una aplicación que ya terminó.
+
 ## Procedimientos y clausuras
 
 ### [Procedimientos y clausuras](widgets/clausuras.html){ target=_blank rel=noopener }
