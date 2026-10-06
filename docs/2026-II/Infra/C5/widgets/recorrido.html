@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El orden del recorrido y la línea de caché</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #tabla-traza td { font-family: ui-monospace, monospace; font-size: 0.84rem; }
+  #tabla-traza td.fallo { color: var(--rojo); background: var(--rojo-suave); font-weight: 700; }
+  #tabla-traza td.acierto { color: var(--verde); background: var(--verde-suave); font-weight: 700; }
+  @media (max-width: 480px) { #tabla-traza th, #tabla-traza td { padding: 0.3rem 0.25rem; font-size: 0.68rem; overflow-wrap: anywhere; } #tabla-traza th:first-child { overflow-wrap: normal; } }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El orden del recorrido pesa más que el número de hilos</h1>
+  <p class="intro">Dos ciclos llenan la misma matriz de 10.000 × 10.000 enteros, ninguno
+  lanza un hilo y entre los dos hay dos minutos de diferencia. Prediga cuántos accesos
+  aprovecha cada línea de caché, recorra la traza de los primeros accesos y termine con
+  cuatro hilos que escriben en cuatro enteros vecinos y tardan más que uno solo.</p>
+
+  <div class="carta">
+    <h2>1. El mismo trabajo, dos órdenes</h2>
+    <p style="margin:0 0 0.3rem">A, por filas:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">  for (int j = 0; j &lt; n; j++)</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    arr[i][j] = i + j;</span></div>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">B, por columnas:</p>
+    <div class="codigo">
+      <div class="linea bloque-2"><span class="num">1</span><span class="txt">for (int j = 0; j &lt; n; j++)</span></div>
+      <div class="linea bloque-2"><span class="num">2</span><span class="txt">  for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">    arr[i][j] = i + j;</span></div>
+    </div>
+    <div class="nota">Las dos versiones escriben el mismo valor en las mismas
+    100.000.000 de posiciones y ninguna lanza un hilo. La única diferencia es cuál de los
+    dos índices recorre el ciclo interno.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de ver el reloj</h2>
+    <div class="prediccion">
+      <span>Una línea de caché son 64 bytes y un entero 4. ¿Cuántos accesos aprovechan
+      cada línea traída, recorriendo por filas?</span>
+      <input type="number" id="prediccion-linea" min="0" step="1" placeholder="accesos">
+      <button id="btn-comprobar-linea" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-linea" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La traza</h2>
+    <p style="margin:0 0 0.3rem">Los primeros diecisiete accesos de cada versión, uno por
+    paso, y lo que encuentra la caché en cada uno.</p>
+    <div class="botones">
+      <button id="btn-siguiente" class="primario">Siguiente</button>
+      <button id="btn-todo">Todo</button>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+    <div class="progreso" id="progreso" style="margin-top:0.5rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.5rem">
+      <table id="tabla-traza">
+        <thead><tr><th>Paso</th><th>Acceso A</th><th>Caché A</th><th>Acceso B</th><th>Desplazamiento B</th><th>Caché B</th></tr></thead>
+        <tbody id="cuerpo-traza"></tbody>
+      </table>
+    </div>
+    <p id="paso-texto" style="min-height:2.8rem;margin:0.4rem 0 0.6rem"></p>
+    <div class="chips" id="chips-traza"></div>
+    <div class="envoltura-tabla" style="margin-top:0.9rem">
+      <table>
+        <thead><tr><th>Nivel</th><th>Tamaño</th><th>Latencia</th></tr></thead>
+        <tbody>
+          <tr><td>Registros</td><td>sin tamaño</td><td>~1 ns</td></tr>
+          <tr><td>Caché L1</td><td>32 KB</td><td>~4 ns</td></tr>
+          <tr><td>Caché L2</td><td>512 KB</td><td>~10 ns</td></tr>
+          <tr><td>Caché L3</td><td>16 MB</td><td>~40 ns</td></tr>
+          <tr><td>RAM</td><td>GB</td><td>~100 ns</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Un acierto en L1 se sirve en unos 4 ns; un fallo que baja hasta la
+    RAM, en unos 100 ns. La matriz ocupa 400 MB y la L3 tiene 16 MB, así que esos fallos
+    se pagan contra la RAM.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Los dos tiempos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Recorrido</th><th>Tiempo</th></tr></thead>
+        <tbody id="cuerpo-tiempos"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0.3rem">Los dos programas hacen las mismas 100.000.000 de
+    asignaciones y ninguno usa hilos. ¿De dónde sale la diferencia?</p>
+    <div class="opciones" id="opciones-diferencia">
+      <button data-op="trabajo">El segundo hace más trabajo</button>
+      <button data-op="nucleos">El primero usa varios núcleos</button>
+      <button data-op="correcta">Del número de fallos de caché</button>
+      <button data-op="tamano">La matriz del segundo es más grande</button>
+    </div>
+    <div id="veredicto-diferencia" class="veredicto"></div>
+    <div class="alerta" id="alerta-cuello" hidden>El cuello de botella no fue el número
+    de núcleos: los 120 segundos de diferencia salieron con un solo hilo en las dos
+    corridas. Un programa rinde según cómo toque la caché, no solo según cuántos hilos
+    lance, y el orden de los índices se revisa antes de repartir el ciclo.</div>
+    <div class="nota">Las dos medidas se tomaron en un AMD Ryzen 5 3600 (6 núcleos, 12
+    hilos de hardware).</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Falsa compartición</h2>
+    <p style="margin:0 0 0.3rem">Ahora sí hay hilos. Cuatro suman en paralelo y cada uno
+    guarda su total en su propia casilla de un arreglo de cuatro enteros: nadie escribe en
+    la casilla de otro y el resultado sale correcto, pero el programa tarda más que la
+    versión secuencial. Los cuatro enteros ocupan 16 de los 64 bytes de una línea y caben
+    en la misma. La caché no trabaja por variable, trabaja por línea.</p>
+    <div class="arreglo fila-arreglo" id="linea-falsa">
+      <div class="caja" data-hilo="0"><span class="indice">suma[0]</span>h0</div>
+      <div class="caja" data-hilo="1"><span class="indice">suma[1]</span>h1</div>
+      <div class="caja" data-hilo="2"><span class="indice">suma[2]</span>h2</div>
+      <div class="caja" data-hilo="3"><span class="indice">suma[3]</span>h3</div>
+    </div>
+    <p id="texto-falsa" style="min-height:2.8rem;margin:0.4rem 0 0.6rem"></p>
+    <div class="chips" id="chips-falsa"></div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button id="btn-limpiar">Vaciar la línea</button>
+    </div>
+    <p style="margin:0.9rem 0 0.3rem">La línea va y viene en cada iteración del ciclo.
+    ¿Qué detiene el ping-pong?</p>
+    <div class="opciones" id="opciones-falsa">
+      <button data-op="critico">Poner un critical alrededor de la escritura</button>
+      <button data-op="correcta">Acumular en una variable local por hilo y combinar al final</button>
+      <button data-op="privado">Declarar el arreglo como private</button>
+      <button data-op="mas">Usar más hilos</button>
+    </div>
+    <div id="veredicto-falsa" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="recorrido.js"></script>
+</body>
+</html>

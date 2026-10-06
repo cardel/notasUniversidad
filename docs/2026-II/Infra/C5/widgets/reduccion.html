@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tres escrituras de la misma reducción en OpenMP</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #tabla-escrituras code { font-size: 0.8rem; }
+  #tabla-escrituras td { vertical-align: top; }
+  .linea .txt { flex: 1 1 0; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Una reducción se delata en el número; la otra, solo en el reloj</h1>
+  <p class="intro">Tres escrituras del mismo producto punto: una reparte el ciclo entre los
+  hilos y dos lo calculan mal sin que el compilador lo impida. Prediga qué imprime la que
+  olvidó el <code>for</code>, destape los números y los tiempos de las tres, y decida al final
+  qué se mira primero cuando una reducción parece rápida.</p>
+
+  <div class="carta">
+    <h2>1. Las tres escrituras</h2>
+    <p style="margin-top:0">La función suma los productos de dos vectores de
+    <code>SIZE</code> enteros:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">long producto() {</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">    long suma = 0L;</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    #pragma omp parallel for reduction(+ : suma)</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    for (int i = 0; i &lt; SIZE; i++)</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">        suma += (long) u[i] * v[i];</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">    return suma;</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">}</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">La directiva del tercer renglón es lo único que cambia
+    entre las tres. A es la que acaba de ver:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">A</span><span class="txt">#pragma omp parallel for reduction(+ : suma)</span></div>
+      <div class="linea bloque-2"><span class="num">B</span><span class="txt">#pragma omp parallel reduction(+ : suma)</span></div>
+      <div class="linea bloque-3"><span class="num">C</span><span class="txt">#pragma parallel reduce(suma : +)</span></div>
+    </div>
+    <div class="nota">Los dos vectores tienen 100.000.000 de enteros llenos de 10, así que la
+    suma de productos vale 10.000.000.000. Las tres corridas se hicieron con cuatro hilos en
+    un AMD Ryzen 5 3600 de 6 núcleos y 12 hilos de hardware, compilando con
+    <code>g++ -std=c++17 -fopenmp -O2</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>La escritura B dice <code>parallel</code> sin <code>for</code>, con cuatro hilos y
+      un resultado correcto de 10.000.000.000. ¿Qué número imprime?</span>
+      <input type="number" id="prediccion-sin-for" min="0" step="1" placeholder="su número">
+      <button id="btn-comprobar-sin-for" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-sin-for" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Qué delata a cada una</h2>
+    <div class="progreso" id="progreso-escrituras"></div>
+    <div class="envoltura-tabla" style="margin-top:0.5rem">
+      <table id="tabla-escrituras">
+        <thead><tr><th>Escritura</th><th>Resultado</th><th>Tiempo</th><th>Qué lo delata</th></tr></thead>
+        <tbody id="cuerpo-escrituras"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-escrituras" style="margin-top:0.6rem"></div>
+    <p style="margin:0.9rem 0 0.3rem">De las tres, solo C deja rastro en la compilación, y
+    únicamente si se pide <code>-Wall</code>:</p>
+    <div class="codigo">
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">$ g++ -std=c++17 -fopenmp -O2 -Wall producto.cpp -o producto</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">producto.cpp:27: warning: ignoring '#pragma parallel reduce'</span></div>
+      <div class="linea bloque-3"><span class="num"></span><span class="txt">[-Wunknown-pragmas]</span></div>
+    </div>
+    <div class="alerta">El compilador no conoce <code>#pragma parallel reduce</code>, la ignora
+    y sigue. El ciclo queda sin paralelizar y el programa imprime la suma correcta, calculada en
+    un solo hilo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. El mismo cálculo, dos recorridos</h2>
+    <p style="margin-top:0">La misma reducción sobre una matriz de 10.000 × 10.000 enteros, con
+    los dos ciclos en un orden y en el otro:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">void reduce(int** arr, int n, long &amp;sum) {</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">    sum = 0;</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">    #pragma omp parallel for reduction(+:sum)</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    for (int i = 0; i &lt; n; i++)          // por filas</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">        for (int j = 0; j &lt; n; j++)</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">            sum += arr[i][j];</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">}</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea bloque-2"><span class="num">3</span><span class="txt">    #pragma omp parallel for reduction(+:sum)</span></div>
+      <div class="linea bloque-2"><span class="num">4</span><span class="txt">    for (int j = 0; j &lt; n; j++)          // por columnas</span></div>
+      <div class="linea bloque-2"><span class="num">5</span><span class="txt">        for (int i = 0; i &lt; n; i++)</span></div>
+      <div class="linea bloque-2"><span class="num">6</span><span class="txt">            sum += arr[i][j];</span></div>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.8rem">
+      <table>
+        <thead><tr><th>Versión</th><th>Tiempo</th><th>Ganancia</th></tr></thead>
+        <tbody id="cuerpo-dosd"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.9rem 0 0.3rem">La versión por columnas tarda 140,24 ms y la de filas
+    47,72 ms, con el mismo número de hilos. ¿Por qué?</p>
+    <div class="opciones" id="opciones-recorrido">
+      <button data-op="correcta">El recorrido por columnas desperdicia cada línea de caché</button>
+      <button data-op="carrera">Porque por columnas hay carrera de datos</button>
+      <button data-op="hilos">Porque por columnas usa menos hilos</button>
+      <button data-op="tamano">Porque la matriz es más grande</button>
+    </div>
+    <div id="veredicto-recorrido" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cómo se revisa una reducción</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Antes de creerle a los 31 ms, ¿qué se mira
+    primero?</p>
+    <div class="opciones" id="opciones-revision">
+      <button data-op="correcta">Que el número impreso sea el correcto</button>
+      <button data-op="tiempo">El tiempo contra la versión secuencial</button>
+      <button data-op="avisos">Que compile sin avisos</button>
+      <button data-op="conteo">Cuántos hilos arrancó</button>
+    </div>
+    <div id="veredicto-revision" class="veredicto"></div>
+    <div class="nota">La salida de una reducción paralela se lee en tres renglones: el número,
+    el tiempo y lo que dijo el compilador. Con los tres a la vista, un programa que quedó en un
+    hilo no pasa por paralelo.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reduccion.js"></script>
+</body>
+</html>

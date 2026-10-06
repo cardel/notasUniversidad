@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tres formas de paralelizar el mismo ciclo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #barras-tiempos .barra-fila .rotulo { width: 7.5rem; font-family: ui-monospace, monospace; font-size: 0.8rem; }
+  .fila-n .chips { margin-left: 0.2rem; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Tres formas de paralelizar el mismo ciclo</h1>
+  <p class="intro">El mismo ciclo que suma un vector de un millón de enteros,
+  escrito con <code>std::thread</code>, con TBB y con OpenMP. Escriba cuánto cree
+  que tarda la versión de hilos manuales antes de destapar los tiempos medidos y
+  después decida qué enfoque le conviene a cada una de tres situaciones.</p>
+
+  <div class="carta">
+    <h2>1. El mismo ciclo, tres veces</h2>
+    <p style="margin-top:0">Sumar un vector de 1.000.000 de enteros con cuatro
+    hilos. Las tres versiones calculan lo mismo; lo que cambia es cuánto hay que
+    escribir y quién administra los hilos.</p>
+
+    <div class="fila-n" style="margin-top:0.9rem">
+      <label>Enfoque 1: std::thread</label>
+      <div class="chips" id="chips-thread"></div>
+    </div>
+    <div class="codigo">
+      <div class="linea"><span class="num">1</span><span class="txt">#include &lt;thread&gt;</span></div>
+      <div class="linea"><span class="num">2</span><span class="txt">#include &lt;vector&gt;</span></div>
+      <div class="linea"><span class="num">3</span><span class="txt">using namespace std;</span></div>
+      <div class="linea"><span class="num">4</span><span class="txt"> </span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">void sumar_parcial(int ini, int fin,</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">                   const vector&lt;int&gt;&amp; v, long&amp; salida) {</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">    for (int i = ini; i &lt; fin; i++)</span></div>
+      <div class="linea bloque-1"><span class="num">8</span><span class="txt">        salida += v[i];</span></div>
+      <div class="linea bloque-1"><span class="num">9</span><span class="txt">}</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.4rem">
+      <div class="linea"><span class="num">10</span><span class="txt">int main() {</span></div>
+      <div class="linea"><span class="num">11</span><span class="txt">    const int SIZE = 1000000;</span></div>
+      <div class="linea"><span class="num">12</span><span class="txt">    vector&lt;int&gt; datos(SIZE, 1);</span></div>
+      <div class="linea bloque-1"><span class="num">13</span><span class="txt">    long sal1 = 0, sal2 = 0, sal3 = 0, sal4 = 0;</span></div>
+      <div class="linea"><span class="num">14</span><span class="txt"> </span></div>
+      <div class="linea bloque-1"><span class="num">15</span><span class="txt">    thread t1(sumar_parcial, 0,        SIZE/4,   ref(datos), ref(sal1));</span></div>
+      <div class="linea bloque-1"><span class="num">16</span><span class="txt">    thread t2(sumar_parcial, SIZE/4,   SIZE/2,   ref(datos), ref(sal2));</span></div>
+      <div class="linea bloque-1"><span class="num">17</span><span class="txt">    thread t3(sumar_parcial, SIZE/2,   3*SIZE/4, ref(datos), ref(sal3));</span></div>
+      <div class="linea bloque-1"><span class="num">18</span><span class="txt">    thread t4(sumar_parcial, 3*SIZE/4, SIZE,     ref(datos), ref(sal4));</span></div>
+      <div class="linea"><span class="num">19</span><span class="txt"> </span></div>
+      <div class="linea bloque-1"><span class="num">20</span><span class="txt">    t1.join(); t2.join(); t3.join(); t4.join();</span></div>
+      <div class="linea bloque-1"><span class="num">21</span><span class="txt">    long resultado = sal1 + sal2 + sal3 + sal4;</span></div>
+      <div class="linea"><span class="num">22</span><span class="txt">    return 0;</span></div>
+      <div class="linea"><span class="num">23</span><span class="txt">}</span></div>
+    </div>
+
+    <div class="fila-n" style="margin-top:0.9rem">
+      <label>Enfoque 2: Intel TBB</label>
+      <div class="chips" id="chips-tbb"></div>
+    </div>
+    <div class="codigo">
+      <div class="linea"><span class="num">1</span><span class="txt">#include &lt;tbb/tbb.h&gt;</span></div>
+      <div class="linea"><span class="num">2</span><span class="txt">#include &lt;vector&gt;</span></div>
+      <div class="linea"><span class="num">3</span><span class="txt">using namespace std;</span></div>
+      <div class="linea"><span class="num">4</span><span class="txt"> </span></div>
+      <div class="linea"><span class="num">5</span><span class="txt">int main() {</span></div>
+      <div class="linea"><span class="num">6</span><span class="txt">    const int SIZE = 1000000;</span></div>
+      <div class="linea"><span class="num">7</span><span class="txt">    vector&lt;int&gt; datos(SIZE, 1);</span></div>
+      <div class="linea"><span class="num">8</span><span class="txt"> </span></div>
+      <div class="linea bloque-3"><span class="num">9</span><span class="txt">    long resultado = tbb::parallel_reduce(</span></div>
+      <div class="linea bloque-3"><span class="num">10</span><span class="txt">        tbb::blocked_range&lt;int&gt;(0, SIZE),</span></div>
+      <div class="linea bloque-3"><span class="num">11</span><span class="txt">        0L,</span></div>
+      <div class="linea bloque-3"><span class="num">12</span><span class="txt">        [&amp;](tbb::blocked_range&lt;int&gt; r, long init) -&gt; long {</span></div>
+      <div class="linea bloque-3"><span class="num">13</span><span class="txt">            for (int i = r.begin(); i &lt; r.end(); i++)</span></div>
+      <div class="linea bloque-3"><span class="num">14</span><span class="txt">                init += datos[i];</span></div>
+      <div class="linea bloque-3"><span class="num">15</span><span class="txt">            return init;</span></div>
+      <div class="linea bloque-3"><span class="num">16</span><span class="txt">        },</span></div>
+      <div class="linea bloque-3"><span class="num">17</span><span class="txt">        [](long x, long y) -&gt; long {</span></div>
+      <div class="linea bloque-3"><span class="num">18</span><span class="txt">            return x + y;</span></div>
+      <div class="linea bloque-3"><span class="num">19</span><span class="txt">        }</span></div>
+      <div class="linea bloque-3"><span class="num">20</span><span class="txt">    );</span></div>
+      <div class="linea"><span class="num">21</span><span class="txt">    return 0;</span></div>
+      <div class="linea"><span class="num">22</span><span class="txt">}</span></div>
+    </div>
+
+    <div class="fila-n" style="margin-top:0.9rem">
+      <label>Enfoque 3: OpenMP</label>
+      <div class="chips" id="chips-openmp"></div>
+    </div>
+    <div class="codigo">
+      <div class="linea"><span class="num">1</span><span class="txt">#include &lt;omp.h&gt;</span></div>
+      <div class="linea"><span class="num">2</span><span class="txt">#include &lt;vector&gt;</span></div>
+      <div class="linea"><span class="num">3</span><span class="txt">using namespace std;</span></div>
+      <div class="linea"><span class="num">4</span><span class="txt"> </span></div>
+      <div class="linea"><span class="num">5</span><span class="txt">int main() {</span></div>
+      <div class="linea"><span class="num">6</span><span class="txt">    const int SIZE = 1000000;</span></div>
+      <div class="linea"><span class="num">7</span><span class="txt">    vector&lt;int&gt; datos(SIZE, 1);</span></div>
+      <div class="linea"><span class="num">8</span><span class="txt">    long resultado = 0;</span></div>
+      <div class="linea"><span class="num">9</span><span class="txt"> </span></div>
+      <div class="linea bloque-2"><span class="num">10</span><span class="txt">    #pragma omp parallel for reduction(+:resultado)</span></div>
+      <div class="linea bloque-2"><span class="num">11</span><span class="txt">    for (int i = 0; i &lt; SIZE; i++)</span></div>
+      <div class="linea bloque-2"><span class="num">12</span><span class="txt">        resultado += datos[i];</span></div>
+      <div class="linea"><span class="num">13</span><span class="txt"> </span></div>
+      <div class="linea"><span class="num">14</span><span class="txt">    return 0;</span></div>
+      <div class="linea"><span class="num">15</span><span class="txt">}</span></div>
+    </div>
+
+    <div class="nota">La barra de color marca lo que cada enfoque agrega sobre el
+    ciclo: la función parcial, los cuatro hilos con sus subrangos y la combinación
+    de los parciales en el primero; la llamada a <code>parallel_reduce</code> con
+    sus dos lambdas en el segundo; la directiva en el tercero. Las cifras de
+    líneas son las de la tabla comparativa de la sesión. Con OpenMP el ciclo
+    secuencial queda intacto y lo único nuevo es la línea del
+    <code>#pragma</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de ver los tiempos</h2>
+    <div class="prediccion">
+      <span>Un millón de enteros, cuatro hilos. La versión secuencial tarda
+      0,13 ms. ¿Cuánto tarda la de <code>std::thread</code>? Dos decimales.</span>
+      <input type="number" id="prediccion-thread" min="0" step="0.01" placeholder="ms">
+      <button id="btn-comprobar-thread" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-thread" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los cuatro tiempos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Enfoque</th><th>Tiempo</th><th>Contra el secuencial</th></tr></thead>
+        <tbody id="cuerpo-tiempos"></tbody>
+      </table>
+    </div>
+    <div id="barras-tiempos" style="margin-top:0.8rem"></div>
+    <div class="nota" id="nota-tiempos"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Mil repeticiones</h2>
+    <p style="margin-top:0">Ahora el ciclo se repite mil veces sobre un vector de
+    100.000 enteros, siempre con cuatro hilos. OpenMP abre mil regiones paralelas;
+    la versión con <code>std::thread</code> crea sus cuatro hilos en cada
+    repetición.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Estrategia</th><th>Total</th><th>Por repetición</th></tr></thead>
+        <tbody id="cuerpo-repeticiones"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-repeticiones" style="margin-top:0.7rem"></div>
+    <p style="margin:0.9rem 0 0.3rem">El mismo ciclo mil veces: OpenMP 24 ms y
+    <code>std::thread</code> 116 ms. ¿De dónde sale la diferencia?</p>
+    <div class="opciones" id="opciones-overhead">
+      <button data-op="menos-hilos">OpenMP usa menos hilos</button>
+      <button data-op="correcta">OpenMP reutiliza el equipo de hilos</button>
+      <button data-op="menos-trabajo">El ciclo de OpenMP hace menos trabajo</button>
+      <button data-op="tbb">TBB sería aún más lento</button>
+    </div>
+    <div id="veredicto-overhead" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuál usar</h2>
+    <p style="margin-top:0">Tres situaciones de un proyecto real. Elija el enfoque
+    que menos trabajo cuesta en cada una.</p>
+
+    <p id="texto-caso-a" style="margin:0.9rem 0 0.3rem"></p>
+    <div class="opciones" id="opciones-caso-a">
+      <button data-op="thread">std::thread</button>
+      <button data-op="tbb">Intel TBB</button>
+      <button data-op="correcta">OpenMP</button>
+    </div>
+    <div id="veredicto-caso-a" class="veredicto"></div>
+
+    <p id="texto-caso-b" style="margin:0.9rem 0 0.3rem"></p>
+    <div class="opciones" id="opciones-caso-b">
+      <button data-op="correcta">std::thread</button>
+      <button data-op="tbb">Intel TBB</button>
+      <button data-op="openmp">OpenMP</button>
+    </div>
+    <div id="veredicto-caso-b" class="veredicto"></div>
+
+    <p id="texto-caso-c" style="margin:0.9rem 0 0.3rem"></p>
+    <div class="opciones" id="opciones-caso-c">
+      <button data-op="thread">std::thread</button>
+      <button data-op="correcta">Intel TBB</button>
+      <button data-op="openmp">OpenMP</button>
+    </div>
+    <div id="veredicto-caso-c" class="veredicto"></div>
+
+    <div id="caja-cualitativa" hidden style="margin-top:1rem">
+      <div class="envoltura-tabla">
+        <table>
+          <thead><tr><th></th><th>std::thread</th><th>Intel TBB</th><th>OpenMP</th></tr></thead>
+          <tbody id="cuerpo-cualitativa"></tbody>
+        </table>
+      </div>
+      <div class="alerta">El reparto habitual: <code>std::thread</code> cuando se
+      necesita control total sobre la creación y la sincronización, o cuando los
+      hilos son de larga vida y hacen tareas distintas; TBB en aplicaciones con
+      patrones map-reduce, grafos de tareas y ajuste automático del tamaño de
+      bloque; OpenMP para paralelizar ciclos y secciones de un programa que ya
+      existe.</div>
+    </div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="enfoques.js"></script>
+</body>
+</html>

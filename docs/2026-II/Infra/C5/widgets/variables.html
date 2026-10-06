@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variables en una región paralela: shared, private y firstprivate</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .presets button.activo { background: var(--azul-suave); border-color: var(--azul); color: var(--azul); }
+  #cuerpo-hilos td.cod { font-family: ui-monospace, monospace; }
+  p.caso { margin: 0.9rem 0 0.2rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Qué vale x dentro de la región paralela</h1>
+  <p class="intro">Un programa pone x en 10, abre una región paralela con cuatro
+  hilos y cada hilo escribe su identificador. Prediga qué queda impreso al cerrar
+  la región y después compare, hilo por hilo, lo que hacen shared, private y
+  firstprivate.</p>
+
+  <div class="carta">
+    <h2>1. El programa</h2>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">1</span><span class="txt">int x = 10;</span></div>
+      <div class="linea bloque-1"><span class="num">2</span><span class="txt">#pragma omp parallel private(x)</span></div>
+      <div class="linea bloque-1"><span class="num">3</span><span class="txt">{</span></div>
+      <div class="linea bloque-1"><span class="num">4</span><span class="txt">    x = omp_get_thread_num();</span></div>
+      <div class="linea bloque-1"><span class="num">5</span><span class="txt">    printf("Hilo %d: x = %d\n", omp_get_thread_num(), x);</span></div>
+      <div class="linea bloque-1"><span class="num">6</span><span class="txt">}</span></div>
+      <div class="linea bloque-1"><span class="num">7</span><span class="txt">printf("Afuera: x = %d\n", x);</span></div>
+    </div>
+    <div class="nota">El equipo trae cuatro hilos, así que omp_get_thread_num() devuelve
+    0, 1, 2 y 3. Las líneas 4 y 5 las ejecutan los cuatro; la línea 7 corre cuando la
+    región ya cerró y solo queda el hilo que la abrió.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Antes de correr</h2>
+    <div class="prediccion">
+      <span>x vale 10 antes de la región. Con private(x), cada hilo le asigna su
+      identificador y la línea 7 imprime x. ¿Qué número sale?</span>
+      <input type="number" id="prediccion-x" step="1" placeholder="x afuera">
+      <button id="btn-comprobar-x" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-x" class="veredicto"></div>
+    <div class="alerta" id="aviso-copia" hidden>El error más repetido con esta cláusula
+    es suponer que la copia privada hereda lo de afuera. No lo hereda: leer una variable
+    private antes de asignarle algo devuelve basura. Para que la copia arranque con el
+    valor de afuera existe firstprivate.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Las tres cláusulas, lado a lado</h2>
+    <div class="fila-n">
+      <label>Cláusula:</label>
+      <span class="presets">
+        <button data-clausula="shared">shared</button>
+        <button data-clausula="private">private</button>
+        <button data-clausula="firstprivate">firstprivate</button>
+      </span>
+    </div>
+    <div class="progreso" id="progreso-clausula" style="margin-top:0.5rem"></div>
+    <div class="codigo" id="codigo-clausula" style="margin-top:0.5rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.7rem">
+      <table>
+        <thead><tr><th>Hilo</th><th>Ve al entrar</th><th>Escribe</th><th>Sale con</th></tr></thead>
+        <tbody id="cuerpo-hilos"></tbody>
+      </table>
+    </div>
+    <p id="linea-afuera" style="min-height:1.6rem;margin:0.6rem 0 0.5rem"></p>
+    <div class="chips" id="chips-clausula"></div>
+    <div class="nota" id="nota-clausula"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La tabla</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Cláusula</th><th>¿Copia por hilo?</th><th>¿Valor al entrar?</th><th>¿Se ve afuera?</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota" id="nota-tabla"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué cláusula pide cada caso</h2>
+    <div class="chips" id="panel-marcador"></div>
+    <p class="caso">Un acumulador temporal: cada hilo lo pone en cero al entrar y
+    suma ahí su parte del arreglo.</p>
+    <div class="opciones" id="opciones-acumulador">
+      <button data-op="shared">shared</button>
+      <button data-op="correcta">private</button>
+      <button data-op="firstprivate">firstprivate</button>
+    </div>
+    <div id="veredicto-acumulador" class="veredicto"></div>
+
+    <p class="caso">Una tabla de consulta grande que los hilos leen y
+    ninguno modifica.</p>
+    <div class="opciones" id="opciones-consulta">
+      <button data-op="correcta">shared</button>
+      <button data-op="private">private</button>
+      <button data-op="firstprivate">firstprivate</button>
+    </div>
+    <div id="veredicto-consulta" class="veredicto"></div>
+
+    <p class="caso">Un contador de errores que vale 0 antes de la región y cada hilo
+    necesita ese 0 de partida en su copia.</p>
+    <div class="opciones" id="opciones-contador">
+      <button data-op="shared">shared</button>
+      <button data-op="private">private</button>
+      <button data-op="correcta">firstprivate</button>
+    </div>
+    <div id="veredicto-contador" class="veredicto"></div>
+
+    <p class="caso">El arreglo de salida donde cada hilo escribe las posiciones que le
+    tocaron.</p>
+    <div class="opciones" id="opciones-salida">
+      <button data-op="correcta">shared</button>
+      <button data-op="private">private</button>
+      <button data-op="firstprivate">firstprivate</button>
+    </div>
+    <div id="veredicto-salida" class="veredicto"></div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="variables.js"></script>
+</body>
+</html>
