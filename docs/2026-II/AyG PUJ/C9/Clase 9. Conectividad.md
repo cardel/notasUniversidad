@@ -21,7 +21,7 @@ y los puentes, las piezas que sostienen la conexión.
     y $G^{SCC}$, Kosaraju con su demostración y su costo, y la traza completa
     sobre el grafo dirigido de ocho vértices.
 
-    [:octicons-arrow-right-24: Entrar](Conectividad.md)
+    [:octicons-arrow-right-24: Entrar](./Conectividad.md)
 
 -   :material-file-pdf-box:{ .lg .middle } **Diapositivas**
 

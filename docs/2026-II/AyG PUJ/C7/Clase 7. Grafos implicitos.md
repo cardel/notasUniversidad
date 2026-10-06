@@ -19,7 +19,7 @@ un imperio.
     DFS y la amplitud, y los tres problemas con el método completo: entrada,
     salida, grafo, algoritmo, código y costo.
 
-    [:octicons-arrow-right-24: Entrar](Grafos%20implicitos.md)
+    [:octicons-arrow-right-24: Entrar](./Grafos%20implicitos.md)
 
 -   :material-file-pdf-box:{ .lg .middle } **Diapositivas**
 

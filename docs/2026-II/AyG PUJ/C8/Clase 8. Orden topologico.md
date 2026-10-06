@@ -19,7 +19,7 @@ propuestos para el parcial.
     versión ingenua y con la cola, la traza a mano, las demostraciones de
     correctitud y de costo, la detección de ciclos y Ordering Tasks.
 
-    [:octicons-arrow-right-24: Entrar](Orden%20topologico.md)
+    [:octicons-arrow-right-24: Entrar](./Orden%20topologico.md)
 
 -   :material-file-pdf-box:{ .lg .middle } **Diapositivas**
 

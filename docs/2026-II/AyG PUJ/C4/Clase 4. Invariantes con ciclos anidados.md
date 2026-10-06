@@ -17,7 +17,7 @@ variantes de la búsqueda binaria.
     la salida es una lista que crece, y cuando hay un ciclo dentro de otro:
     el interno como lema, el externo sobre esa conclusión.
 
-    [:octicons-arrow-right-24: Entrar](Invariantes%20con%20ciclos%20anidados.md)
+    [:octicons-arrow-right-24: Entrar](./Invariantes%20con%20ciclos%20anidados.md)
 
 -   :material-magnify:{ .lg .middle } **Variantes de la búsqueda binaria**
 
@@ -27,7 +27,7 @@ variantes de la búsqueda binaria.
     bloque de repetidos, cuántas copias hay, y el mayor elemento que no
     supera a $x$ cuando $x$ no está.
 
-    [:octicons-arrow-right-24: Entrar](Invariantes%20con%20ciclos%20anidados.md#variantes-de-la-busqueda-binaria)
+    [:octicons-arrow-right-24: Entrar](./Invariantes%20con%20ciclos%20anidados.md#variantes-de-la-busqueda-binaria)
 
 </div>
 

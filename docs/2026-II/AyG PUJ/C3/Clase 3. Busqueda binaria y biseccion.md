@@ -19,7 +19,7 @@ recorre esa clase de divide y vencerás.
     sobre funciones continuas y el patrón de búsqueda sobre la
     respuesta.
 
-    [:octicons-arrow-right-24: Entrar](Busqueda%20binaria%20y%20biseccion.md)
+    [:octicons-arrow-right-24: Entrar](./Busqueda%20binaria%20y%20biseccion.md)
 
 -   :material-call-split:{ .lg .middle } **Divide y vencerás**
 

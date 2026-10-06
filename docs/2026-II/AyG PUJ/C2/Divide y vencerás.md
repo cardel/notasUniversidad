@@ -107,7 +107,7 @@ arreglo de números de tamaño $N$. Pero si el algoritmo modificara el arreglo,
 una suma acumulada en sitio, un intercambio, cualquier escritura, entonces sí:
 el arreglo entra al estado y el invariante tiene que decir qué cumple.
 
-De esa pregunta quedó el [apéndice](Apéndice.md) prometido en clase: tres
+De esa pregunta quedó el [apéndice](./Apéndice.md) prometido en clase: tres
 ejercicios resueltos donde el arreglo se modifica y hace parte del
 invariante, incluido uno con dos ciclos anidados.
 
@@ -118,8 +118,8 @@ invariante se escribe tal cual como una afirmación junto a la condición del
 ciclo, y si es falso en algún chequeo, el programa revienta ahí mismo y dice
 dónde. En Python es un `assert` directo; en Java tocaría lanzar una excepción
 cuando la condición no se cumpla. Los archivos de la
-[nota de invariantes](Invariantes%20de%20ciclo.md#codigo-de-la-clase) y del
-[apéndice](Apéndice.md) están construidos así.
+[nota de invariantes](./Invariantes%20de%20ciclo.md#codigo-de-la-clase) y del
+[apéndice](./Apéndice.md) están construidos así.
 
 ## Un problema para partir en dos
 
@@ -166,7 +166,7 @@ máximo: el de tamaño 1, porque es su propio máximo. Hasta ahí se divide.
 recursivo asume que las llamadas sobre problemas más pequeños son correctas.
 Es la pareja de los invariantes, que cubren los iterativos. La escritura
 completa de una de estas pruebas está en el
-[apéndice](Apéndice.md#la-induccion-estructural-del-maximo).
+[apéndice](./Apéndice.md#la-induccion-estructural-del-maximo).
 
 El costo de un algoritmo de divide y vencerás queda descrito por una
 **ecuación de recurrencia**: si el problema de tamaño $n$ se parte en $a$
@@ -384,7 +384,7 @@ aporta el menor, el mismo esquema de la búsqueda del repaso. Así, con un
 invariante cuya estabilidad se revisa por casos, es como CLRS demuestra la
 correctitud de su procedimiento Merge (pp. 31--33); la escritura completa
 queda como ejercicio. Un detalle que conecta con el
-[apéndice](Apéndice.md): aquí el arreglo se modifica, pero el invariante no
+[apéndice](./Apéndice.md): aquí el arreglo se modifica, pero el invariante no
 necesita la cláusula de la zona intacta, porque el ciclo nunca lee de
 `lista` — todo lo que lee viene de las copias.
 
@@ -439,7 +439,7 @@ el método.
 
 El mismo conteo escrito como álgebra —sustituir la recurrencia dentro de sí
 misma, encontrar el patrón y resolver la sumatoria— está en el
-[apéndice de recurrencias por expansión](Recurrencias%20por%20expansión.md),
+[apéndice de recurrencias por expansión](./Recurrencias%20por%20expansión.md),
 con esta recurrencia y la del máximo desarrolladas paso a paso. Es la forma
 de justificar la cota cuando el enunciado pide la cuenta y no el dibujo.
 
@@ -486,7 +486,7 @@ clásico. Pero la mayoría de los algoritmos de esta familia tienen las dos part
 
 Cuando un `while` vive adentro de otro, cada uno lleva su propia pareja de
 invariantes, la del interno continuando la numeración ($I_2$, $I_3$). El
-[apéndice](Apéndice.md#ejemplo-3-dos-ciclos-anidados) trae un ejemplo
+[apéndice](./Apéndice.md#ejemplo-3-dos-ciclos-anidados) trae un ejemplo
 completo.
 
 ## Errores comunes
@@ -551,7 +551,7 @@ Los de invariantes, `sumar` y `factorial`, siguen disponibles para el repaso.
 ## Lo que queda pendiente
 
 La escritura formal de la inducción estructural y los ciclos anidados se
-trabajan con el profesor titular. El [apéndice](Apéndice.md) trae la prueba
+trabajan con el profesor titular. El [apéndice](./Apéndice.md) trae la prueba
 del máximo recursivo escrita completa y un ejercicio de dos ciclos con sus
 dos parejas de invariantes. El material de divide y vencerás del profesor en
 su página, incluido el del semestre pasado, cubre lo mismo que esta

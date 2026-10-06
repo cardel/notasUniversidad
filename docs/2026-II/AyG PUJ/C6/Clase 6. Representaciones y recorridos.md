@@ -17,7 +17,7 @@ amplitud.
     pseudocódigo y en Python, y por qué ambos cuestan $\Theta(V+E)$ sobre
     listas y $\Theta(V^2)$ sobre matriz.
 
-    [:octicons-arrow-right-24: Entrar](Representaciones%20y%20recorridos.md)
+    [:octicons-arrow-right-24: Entrar](./Representaciones%20y%20recorridos.md)
 
 -   :material-book-open-variant:{ .lg .middle } **Repaso de grafos**
 

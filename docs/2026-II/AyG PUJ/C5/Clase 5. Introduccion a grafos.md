@@ -18,7 +18,7 @@ alcanzar.
     apretón de manos, y las tres representaciones con su implementación y
     su costo.
 
-    [:octicons-arrow-right-24: Entrar](Introduccion%20a%20grafos.md)
+    [:octicons-arrow-right-24: Entrar](./Introduccion%20a%20grafos.md)
 
 -   :material-format-list-checks:{ .lg .middle } **Ejercicios**
 

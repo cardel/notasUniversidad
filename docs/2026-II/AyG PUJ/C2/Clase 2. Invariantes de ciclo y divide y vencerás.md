@@ -19,7 +19,7 @@ en dos páginas: entre por la de su grupo.
     ciclo, y la demostración de correctitud por inicialización,
     estabilidad y terminación.
 
-    [:octicons-arrow-right-24: Entrar](Invariantes%20de%20ciclo.md)
+    [:octicons-arrow-right-24: Entrar](./Invariantes%20de%20ciclo.md)
 
 -   :material-call-split:{ .lg .middle } **Divide y vencerás**
 
@@ -30,7 +30,7 @@ en dos páginas: entre por la de su grupo.
     con el máximo, el ordenamiento por mezcla y la recurrencia
     T(n) = 2·T(n/2) + Θ(n).
 
-    [:octicons-arrow-right-24: Entrar](Divide%20y%20vencerás.md)
+    [:octicons-arrow-right-24: Entrar](./Divide%20y%20vencerás.md)
 
 </div>
 
@@ -39,17 +39,17 @@ en dos páginas: entre por la de su grupo.
 Tres páginas que sirven a los dos grupos y que quedaron de preguntas de
 clase y de correo:
 
-- [El arreglo en el invariante y la inducción estructural](Apéndice.md) —
+- [El arreglo en el invariante y la inducción estructural](./Apéndice.md) —
   qué pasa con el invariante cuando el algoritmo modifica el arreglo (tres
   ejercicios resueltos, uno con dos ciclos anidados y sus dos parejas de
   invariantes) y la demostración por inducción estructural del máximo
   recursivo, escrita completa.
-- [Resolver recurrencias por expansión](Recurrencias%20por%20expansión.md) —
+- [Resolver recurrencias por expansión](./Recurrencias%20por%20expansión.md) —
   el álgebra que hay detrás del árbol de llamadas, con
   $T(n) = 2\,T(n/2) + \Theta(1)$ y $T(n) = 2\,T(n/2) + \Theta(n)$
   desarrolladas paso a paso: las sustituciones, el patrón, la sumatoria y
   el aterrizaje en el caso base.
-- [Recursión: qué pasar en la llamada y dónde parar](Apéndice%20de%20recursión.md) —
+- [Recursión: qué pasar en la llamada y dónde parar](./Apéndice%20de%20recursión.md) —
   las dos preguntas que más cuestan al escribir una función recursiva,
   descubiertas sobre la pila de llamadas con la suma hasta $n$, los dígitos
   de un número, la suma de un rango y la potencia; después la definición

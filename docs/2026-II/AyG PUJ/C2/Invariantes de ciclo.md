@@ -477,7 +477,7 @@ de 2026-1 sirve igual: el curso no cambia.
 ## Apéndice
 
 De la pregunta que salió en la clase de las 9 quedó un
-[apéndice](Apéndice.md) que extiende esta nota: qué pasa con el invariante
+[apéndice](./Apéndice.md) que extiende esta nota: qué pasa con el invariante
 cuando el algoritmo *modifica* el arreglo (dos ejercicios resueltos, con la
 copia $A'$ y la zona intacta), cómo se manejan dos ciclos anidados con una
 pareja de invariantes por ciclo ($I_0$, $I_1$ para el externo; $I_2$, $I_3$

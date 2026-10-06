@@ -24,7 +24,7 @@ de quitar las piezas una por una.
     los demás vértices y los puentes, con la tabla de un grafo de tres
     triángulos.
 
-    [:octicons-arrow-right-24: Entrar](Orden%20topologico%20y%20Tarjan.md)
+    [:octicons-arrow-right-24: Entrar](./Orden%20topologico%20y%20Tarjan.md)
 
 -   :material-file-pdf-box:{ .lg .middle } **Diapositivas**
 
