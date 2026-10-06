@@ -327,7 +327,7 @@ para todo rango válido; en particular `suma_arreglo(A, 0, N-1)` produce la
 suma del arreglo completo. $\blacksquare$
 
 Compare con la demostración del máximo recursivo en el
-[apéndice de inducción estructural](Apéndice.md#la-induccion-estructural-del-maximo):
+[apéndice de inducción estructural](./Apéndice.md#la-induccion-estructural-del-maximo):
 es la misma forma, con dos llamadas en vez de una y una partición por la
 mitad en vez de un corrimiento de uno. Las dos obligaciones del caso
 inductivo son siempre las mismas: que la llamada quede dentro de la
@@ -346,7 +346,7 @@ tamaño $n - 1$: $T(n) = T(n-1) + \Theta(1)$, que es $\Theta(n)$.
 `contar_digitos` reduce dividiendo por $10$: $T(n) = T(n/10) + \Theta(1)$,
 que es $\Theta(\lg n)$. `potencia` lo mismo con $e/2$: $\Theta(\lg e)$. Las
 recurrencias con dos llamadas, como la del máximo, se resuelven en
-[Recurrencias por expansión](Recurrencias%20por%20expansión.md).
+[Recurrencias por expansión](./Recurrencias%20por%20expansión.md).
 
 **La pila de Python.** Cada llamada pendiente ocupa un lugar en la pila, y
 Python la limita a unas mil llamadas anidadas. `suma_arreglo` sobre un
@@ -408,6 +408,6 @@ saber si el caso base y la reducción quedaron bien.
 - Cormen, Leiserson, Rivest, Stein. *Introduction to Algorithms*, 3.ª ed. MIT
   Press, 2009. Sección 2.3.1 (pp. 30–34), el patrón de dividir y conquistar,
   y Sección 4.1 (pp. 68–74), la recurrencia de un algoritmo recursivo.
-- Las páginas de [dividir y conquistar](Divide%20y%20vencerás.md), de
-  [inducción estructural](Apéndice.md) y de
-  [recurrencias por expansión](Recurrencias%20por%20expansión.md).
+- Las páginas de [dividir y conquistar](./Divide%20y%20vencerás.md), de
+  [inducción estructural](./Apéndice.md) y de
+  [recurrencias por expansión](./Recurrencias%20por%20expansión.md).
