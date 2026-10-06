@@ -137,3 +137,5 @@
 .amb-rotulo { font: 10px system-ui, sans-serif; fill: #888; text-anchor: middle; }
 .envoltura-ambientes { overflow-x: auto; margin: 0.5rem 0; padding: 0.3rem;
   border: 1px solid #ddd; border-radius: 8px; background: #fff; }
+.rotulo-dibujo { font-size: 0.85rem; color: #666; margin: 0.6rem 0 0.2rem; }
+.dibujo-estudiante .diagrama-ambientes { opacity: 0.95; }

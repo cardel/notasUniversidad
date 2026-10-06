@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dibujar la cadena de ambientes</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Dibujar la cadena de ambientes</h1>
+  <p class="intro">Cinco programas y, para cada uno, un momento concreto de la evaluación. Hay que escribir los eslabones que existen en ese momento, uno por línea y del más nuevo al más viejo; la página los dibuja mientras se escriben y después los compara con los del interpretador, señalando la primera diferencia.</p>
+
+  <div class="alerta">
+    Un eslabón se escribe con sus ligaduras entre corchetes, así:
+    <code>[b=9]</code>, y uno que ligue dos nombres, <code>[m=2, n=5]</code>.
+    El ambiente inicial <code>env0</code>, que liga <code>x = 4</code>,
+    <code>y = 2</code> y <code>z = 5</code>, y el ambiente vacío del final
+    los pone la página: lo que se pide es lo que el programa construye
+    encima. Si una ligadura guarda un procedimiento, basta con escribir
+    <code>closure</code> como su valor. Los nombres de los eslabones no se
+    revisan, solo el orden y lo que liga cada uno.
+  </div>
+
+  <div id="ejercicios"></div>
+
+  <div class="carta">
+    <h2>La convención del curso</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>En el diagrama</th><th>Qué significa</th></tr></thead>
+        <tbody>
+          <tr><td>la caja de la izquierda</td><td>el eslabón más nuevo: ahí empieza toda búsqueda</td></tr>
+          <tr><td>la flecha</td><td>va del ambiente que extiende hacia el que extendió</td></tr>
+          <tr><td>la caja gris del final</td><td>el ambiente vacío, que siempre se dibuja</td></tr>
+          <tr><td>el borde discontinuo</td><td>el eslabón recién creado</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">Buscar un nombre es recorrer la cadena de izquierda a
+    derecha y quedarse con la primera ligadura que lo tenga. Dibujar bien la
+    cadena es, por eso, lo mismo que saber qué valor va a encontrar cada
+    variable.</div>
+  </div>
+
+</div>
+<script src="../../widgets/interprete-clausuras.js"></script>
+<script src="../../widgets/dibujar-ambientes.js"></script>
+<script src="../../widgets/motor-dibujo.js"></script>
+
+<script src="dibujar.js"></script>
+</body>
+</html>
