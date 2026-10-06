@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qué le falta al evaluador</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Qué le falta al evaluador</h1>
+  <p class="intro">Con lo que había hasta la sesión pasada hay encargos que no se pueden escribir y cálculos que se hacen pero no sirven de nada. De ese diagnóstico salen las dos cosas que llegan hoy: escoger entre dos caminos y nombrar un cálculo con huecos.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los dos bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Lo que falta</th><th>Qué lo resuelve</th><th>Qué valor nuevo aparece</th></tr></thead>
+        <tbody><tr><td>escoger entre dos caminos según una comparación</td><td>el condicional</td><td>el booleano deja de perderse</td></tr><tr><td>nombrar un cálculo y repetirlo con otros datos</td><td>el procedimiento</td><td>la clausura, un valor más del lenguaje</td></tr><tr><td>—</td><td>ninguno: una fórmula fija ya se escribía con primitivas y <code>let</code></td><td>—</td></tr></tbody>
+      </table>
+    </div>
+    <div class="nota">Cada vez que el conjunto de valores crece hacen falta dos cosas: una forma sintáctica que construya los valores nuevos y una verificación donde antes no podía llegar otra cosa. El <code>if</code> y la aplicación son esos dos lugares.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="falta.js"></script>
+</body>
+</html>
