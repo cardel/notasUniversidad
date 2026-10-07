@@ -14,4 +14,4 @@
 # Temas.
 
 1. [Herencia y clases abstracta](Herencia%20y%20clases%20abstracta.md)
-2. [Listas](Listas.md)
+2. [Listas](./Listas.md)

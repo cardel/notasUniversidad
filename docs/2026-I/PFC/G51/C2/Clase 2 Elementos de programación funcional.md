@@ -9,8 +9,8 @@
 # Temas
 
 1. [Generalidades Scala](Generalidades%20Scala.md)
-2. [Listas](Listas.md)
+2. [Listas](./Listas.md)
 3. [Expresiones](Expresiones.md)
 4. [Mecanismos de evaluación](Mecanismos%20de%20evaluación.md)
-5. [Alcance lexico](Alcance%20lexico.md)
-6. [Resumen](Resumen.md)
+5. [Alcance lexico](./Alcance%20lexico.md)
+6. [Resumen](./Resumen.md)

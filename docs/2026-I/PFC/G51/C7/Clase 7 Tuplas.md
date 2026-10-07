@@ -18,7 +18,7 @@ Identificamos que las listas vienen en dos formas
 
 # Temas
 
-1. [Tuplas](Tuplas.md)
-2. [Map y filter](Map%20y%20filter.md)
-3. [Reduce y Fold](Reduce%20y%20Fold.md)
-4. [Resumen](Resumen.md)
+1. [Tuplas](./Tuplas.md)
+2. [Map y filter](./Map%20y%20filter.md)
+3. [Reduce y Fold](./Reduce%20y%20Fold.md)
+4. [Resumen](./Resumen.md)

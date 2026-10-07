@@ -8,8 +8,8 @@
 
 # Temas
 
-1. [Listas](Listas.md)
-2. [Reconocimiento de patrones I](Reconocimiento%20de%20patrones%20I.md)
+1. [Listas](./Listas.md)
+2. [Reconocimiento de patrones I](./Reconocimiento%20de%20patrones%20I.md)
 3. [Reconocimiento de patrones II](Reconocimiento%20de%20patrones%20II.md)
 4. [Ejemplos reconocimiento patrones](Ejemplos%20reconocimiento.md)
 

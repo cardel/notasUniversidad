@@ -71,7 +71,7 @@ object Main {
 
 ## Explicación de las expresiones for:
 
-Como se menciona en [[Expresiones for]], estas expresiones se utilizan para consultas similares a las de bases de datos:
+Como se vio arriba, estas expresiones se utilizan para consultas similares a las de bases de datos:
 
 - **query1**: Filtra libros cuyo título contiene "de" (case insensitive)
 - **query2**: Encuentra autores que aparecen en múltiples libros mediante un join implícito

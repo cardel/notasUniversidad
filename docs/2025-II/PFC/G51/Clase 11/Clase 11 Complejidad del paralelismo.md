@@ -8,7 +8,7 @@
 
 1. [Complejidad de programas secuenciales](Complejidad%20de%20programas%20secuenciales.md)
 2. [Ley Ahmdal](Ley%20Ahmdal.md)
-3. [Benchmarking](Benchmarking.md)
-4. [Ejemplo](Ejemplo.md)
-5. [Ejercicio](Ejercicio.md)
-6. [Resumen](Resumen.md)
+3. [Benchmarking](./Benchmarking.md)
+4. [Ejemplo](./Ejemplo.md)
+5. [Ejercicio](./Ejercicio.md)
+6. [Resumen](./Resumen.md)

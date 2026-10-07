@@ -89,8 +89,8 @@ El x, y de f solo viven en el.
 
 # Temas
 
-1. [Recursión lineal](Recursión%20lineal.md)
-2. [Recursion de cola](Recursion%20de%20cola.md)
-3. [Recursion de arbol](Recursion%20de%20arbol.md)
-4. [Recursión estructural](Recursión%20estructural.md)
-5. [Resumen](Resumen.md)
+1. [Recursión lineal](./Recursión%20lineal.md)
+2. [Recursion de cola](./Recursion%20de%20cola.md)
+3. [Recursion de arbol](./Recursion%20de%20arbol.md)
+4. [Recursión estructural](./Recursión%20estructural.md)
+5. [Resumen](./Resumen.md)

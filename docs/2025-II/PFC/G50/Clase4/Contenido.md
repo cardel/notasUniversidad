@@ -7,6 +7,6 @@
 
 # Estructura
 
-1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
-2. [Currificación](Currificación.md)
-3. [Ejemplo](Ejemplo.md)
+1. [Funciones de alto orden](./Funciones%20de%20alto%20orden.md)
+2. [Currificación](./Currificación.md)
+3. [Ejemplo](./Ejemplo.md)

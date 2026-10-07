@@ -23,6 +23,6 @@
 
 1. [Usando Thread](Usando%20Thread.md)
 2. [Ejercicio Thread](Ejercicio%20Thread.md)
-3. [Libreria TBB](Libreria%20TBB.md)
+3. [Libreria TBB](./Libreria%20TBB.md)
 4. [Ejercicio TBB](Ejercicio%20TBB.md)
-5. [Resumen](Resumen.md)
+5. [Resumen](./Resumen.md)

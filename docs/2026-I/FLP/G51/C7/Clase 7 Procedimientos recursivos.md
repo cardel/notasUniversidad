@@ -39,5 +39,5 @@ graph TD
 # Temas
 
 1. [Implementacion letrec](Implementacion%20letrec.md)
-2. [Ejemplo](Ejemplo.md)
-3. [Ejercicio](Ejercicio.md)
+2. [Ejemplo](./Ejemplo.md)
+3. [Ejercicio](./Ejercicio.md)

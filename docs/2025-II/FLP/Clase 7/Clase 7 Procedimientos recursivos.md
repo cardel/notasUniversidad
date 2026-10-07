@@ -82,8 +82,8 @@ Al intentar buscar $f$ no lo va encontrar y por ende va fallar.
 1. [Implementación de procedimientos recursivos I](Implementación%20de%20procedimientos%20recursivos%20I.md)
 2. [Implementación de procedimientos recursivos II](Implementación%20de%20procedimientos%20recursivos%20II.md)
 3. [Evaluación procedimiento recursivos](Evaluación%20procedimiento%20recursivos.md)
-4. [Ejercicio](Ejercicio.md)
-5. [Resumen](Resumen.md)
+4. [Ejercicio](./Ejercicio.md)
+5. [Resumen](./Resumen.md)
 
 
 # Intreprete

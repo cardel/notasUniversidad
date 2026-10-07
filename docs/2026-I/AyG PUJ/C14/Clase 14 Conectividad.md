@@ -59,6 +59,6 @@ Estudiar la conectividad nos permite determinar de antemano si los vértices son
 
 # Temas
 
-1. [Conectividad](Conectividad.md)
+1. [Conectividad](./Conectividad.md)
 
 

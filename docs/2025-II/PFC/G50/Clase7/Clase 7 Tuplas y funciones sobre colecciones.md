@@ -6,7 +6,7 @@
 
 # Temas
 
-1. [Tuplas](Tuplas.md)
-2. [Map y filter](Map%20y%20filter.md)
+1. [Tuplas](./Tuplas.md)
+2. [Map y filter](./Map%20y%20filter.md)
 3. [Reduce o reducir](Reduce%20o%20reducir.md)
-4. [Resumen](Resumen.md)
+4. [Resumen](./Resumen.md)

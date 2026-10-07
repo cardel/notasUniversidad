@@ -16,7 +16,7 @@ La librería threads permite gestionar manualmente la creación y ejecución de 
 
 1. [Paralelización en C++](Paralelización%20en%20C++.md)
 2. [Libreria thread](Libreria%20thread.md)
-3. [Libreria TBB](Libreria%20TBB.md)
+3. [Libreria TBB](./Libreria%20TBB.md)
 
 # Resumen de Paralelización en C++ - Tabla Comparativa
 

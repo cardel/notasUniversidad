@@ -8,4 +8,4 @@
 
 1. [Simplex no factible](Simplex%20no%20factible.md)
 2. [Programacion entera](Programacion%20entera.md)
-3. [Resumen](Resumen.md)
+3. [Resumen](./Resumen.md)

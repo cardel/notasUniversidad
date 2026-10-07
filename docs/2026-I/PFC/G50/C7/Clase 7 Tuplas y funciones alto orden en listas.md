@@ -32,7 +32,7 @@ Con esto nos estamos evitando tener que pensar en acceder a l.head o l.tail y li
 
 # Temas
 
-1. [Tuplas](Tuplas.md)
-2. [Map y Filter](Map%20y%20Filter.md)
-3. [Reduce y Fold](Reduce%20y%20Fold.md)
-4. [Resumen](Resumen.md)
+1. [Tuplas](./Tuplas.md)
+2. [Map y Filter](./Map%20y%20Filter.md)
+3. [Reduce y Fold](./Reduce%20y%20Fold.md)
+4. [Resumen](./Resumen.md)

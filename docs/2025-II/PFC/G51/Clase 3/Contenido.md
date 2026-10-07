@@ -9,7 +9,7 @@
 
 # Contenido
 
-1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
+1. [Funciones de alto orden](./Funciones%20de%20alto%20orden.md)
 2. [Funciones anonimas](Funciones%20anonimas.md)
 3. [Recursion como proceso (lineal y de cola)](Recursion%20como%20proceso.md)
 4. [Recursion de árbol](Recursion%20de%20árbol.md)

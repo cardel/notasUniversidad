@@ -9,7 +9,7 @@
 
 # Temas
 
-1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
+1. [Funciones de alto orden](./Funciones%20de%20alto%20orden.md)
 2. [Currying](Currying.md)
 
 # Mencion sobre complejidad
