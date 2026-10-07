@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · FLP C4
 
 Clase 4 — del texto al resultado: el proceso completo del interpretador
 (29 de septiembre). Cada enlace abre una actividad que se trabaja directo en

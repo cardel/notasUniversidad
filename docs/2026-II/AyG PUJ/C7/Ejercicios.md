@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C7
 
 Seis ejercicios para el navegador, en el orden de los temas de la sesión.
 Ninguno usa el laberinto, el bosque, las redes ni los grafos de las

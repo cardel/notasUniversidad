@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · Infra C4
 
 Clase 4 — hilos y procesos en Python (29 de septiembre y 1 de octubre). Los
 apartados van en el orden de la clase y todos se resuelven en el navegador.

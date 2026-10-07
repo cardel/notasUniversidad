@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C17
 
 Clase 17 — el TAD Pila por dentro (7 de octubre). Cada enlace abre una
 actividad que se trabaja directo en el navegador, en el mismo orden de los

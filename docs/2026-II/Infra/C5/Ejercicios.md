@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · Infra C5
 
 Clase 5 — OpenMP en C++ (6 y 8 de octubre). Los apartados van en el orden de la
 clase y todos se resuelven en el navegador. Cada uno parte de una medición de

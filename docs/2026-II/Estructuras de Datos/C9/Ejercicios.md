@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C9
 
 Clase 9 — paso de parámetros por referencia y repaso de POO (4 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el

@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · AyG PUJ C5
 
 Los primeros se hacen en papel y no toman más de veinte minutos: sirven
 para fijar el vocabulario antes de programar. Los dos últimos van al juez
