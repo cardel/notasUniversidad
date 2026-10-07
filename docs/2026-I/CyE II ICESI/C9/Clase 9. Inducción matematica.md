@@ -57,4 +57,4 @@ println(f(20)) //22 oculta el valor de x = 10
 
 Inducción matematica
 
-1. [Inducción matematica](Inducción%20matematica.md)
+1. [Inducción matematica](./Inducción%20matematica.md)

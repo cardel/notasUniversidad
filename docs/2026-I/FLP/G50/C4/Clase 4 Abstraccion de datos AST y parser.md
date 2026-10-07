@@ -38,7 +38,7 @@ Vamos a dos temas
 
 # Contenido
 
-1. [Define-datatype](Define-datatype.md)
+1. [Define-datatype](./Define-datatype.md)
 2. [Ejercicio datatypes](Ejercicio%20datatypes.md)
 3. [AST](AST.md)
 4. [Ejercicio AST](Ejercicio%20AST.md)

@@ -25,4 +25,4 @@ Al calcula $\epsilon(v)$ llegamos a un vértice $u$ ese camino Q, se va intersec
 
 # Implementaciones
 
-[Codigos](Codigos.md)
+[Codigos](./Codigos.md)

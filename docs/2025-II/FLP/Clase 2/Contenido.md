@@ -10,7 +10,7 @@ Alcance de variables/ligaduras
 - letrec
 
 # Contenido
-1. [Representación inductiva](Representación%20inductiva.md)
+1. [Representación inductiva](./Representación%20inductiva.md)
 2. [Representacion gramaticas](Representacion%20gramaticas.md)
 3. [Especificacion recursiva de programas](Especificacion%20recursiva%20de%20programas.md)
 4. [Alcance](Alcance.md)

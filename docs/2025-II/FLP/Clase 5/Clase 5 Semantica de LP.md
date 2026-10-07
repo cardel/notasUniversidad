@@ -9,5 +9,5 @@
 
 1. [Lenguajes interpretado vs compilados](Lenguajes%20interpretado%20vs%20compilados.md)
 2. [Introducción al Interpretador](Introduccion%20Interpretador.md)
-3. [Interpretador I](Interpretador.md)
+3. [Interpretador I](./Interpretador.md)
 4. [Intepretador II](Intepretador%20II.md)

@@ -6,7 +6,7 @@
 
 La idea es introducir al estudiante sobre las funciones de alto orden: puede recibir o retornar funciones. La currificación es una técnica que nos sirve para abstracción funcional.
 
-1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
+1. [Funciones de alto orden](./Funciones%20de%20alto%20orden.md)
 2. [Ejemplo de currificación](Ejemplo%20de%20currificación.md)
 
 # Resumen

@@ -13,4 +13,4 @@
 1. [Algoritmo Tarjan para puentes y puntos articulación](Algoritmo%20Tarjan%20para%20puentes%20y%20puntos%20articulación.md)
 2. [Componentes biconexas](Componentes%20biconexas.md)
 3. [Algoritmo de Pila de Aristas](Algoritmo%20de%20Pila%20de%20Aristas.md)
-4. [Resumen](Resumen.md)
+4. [Resumen](./Resumen.md)

@@ -12,4 +12,4 @@ Hay que tener en cuenta que esto nos va imponer algunas restricciones.
 
 1. [Aspectos sobre concurrencia](Aspectos%20sobre%20concurrencia.md)
 2. [Paralelismo vs concurrencia](Paralelismo%20vs%20concurrencia.md)
-3. [Parallel y Task](Parallel%20y%20Task.md)
+3. [Parallel y Task](./Parallel%20y%20Task.md)

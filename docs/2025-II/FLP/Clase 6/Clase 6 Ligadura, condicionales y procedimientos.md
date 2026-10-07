@@ -9,9 +9,9 @@
 
 # Temas
 
-1. [Condicionales](Condicionales.md)
-2. [Ligaduras locales](Ligaduras%20locales.md)
-3. [Procedimientos](Procedimientos.md)
+1. [Condicionales](./Condicionales.md)
+2. [Ligaduras locales](./Ligaduras%20locales.md)
+3. [Procedimientos](./Procedimientos.md)
 
 # Interprete de clase
 

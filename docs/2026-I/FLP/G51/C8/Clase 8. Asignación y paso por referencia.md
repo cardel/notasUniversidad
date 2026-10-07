@@ -14,9 +14,9 @@ Hasta este punto las variables no puede cambiar, la computación se dirige funda
 
 # Temas
 
-1. [Asignación](Asignación.md)
-2. [Paso por referencia](Paso%20por%20referencia.md)
-3. [Paradigmas](Paradigmas.md)
+1. [Asignación](./Asignación.md)
+2. [Paso por referencia](./Paso%20por%20referencia.md)
+3. [Paradigmas](./Paradigmas.md)
 4. [Ejemplo paso por referencia](Ejemplo%20paso%20por%20referencia.md)
 
 

@@ -89,4 +89,4 @@ Recordar que las expresiones se evaluan de izquierda a derecha
 1. [Recursion lineal](Recursion%20lineal.md)
 2. [Ejemplo de recursion lineal y de cola](Ejemplo%20de%20recursion%20lineal%20y%20de%20cola.md)
 3. [Recursión de arbol](Recursión%20de%20arbol.md)
-4. [Resumen](Resumen.md)
+4. [Resumen](./Resumen.md)

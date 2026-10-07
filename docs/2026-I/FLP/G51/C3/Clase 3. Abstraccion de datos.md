@@ -27,9 +27,9 @@ Hemos visto como especificar datos recursivos
 
 # Temas
 
-1. [Abstracción de datos](Abstracción%20de%20datos.md)
-2. [Ejemplo ambientes](Ejemplo%20ambientes.md)
+1. [Abstracción de datos](./Abstracción%20de%20datos.md)
+2. [Ejemplo ambientes](./Ejemplo%20ambientes.md)
 3. [Ejemplo Expresion Calculo Lambda](Ejemplo%20Expresion%20Calculo%20Lambda.md)
 4. [Ejemplo tuplas](Ejemplo%20tuplas.md)
-5. [Resumen](Resumen.md)
+5. [Resumen](./Resumen.md)
 

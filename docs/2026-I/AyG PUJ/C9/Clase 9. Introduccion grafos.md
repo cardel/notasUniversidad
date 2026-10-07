@@ -14,7 +14,7 @@
 1. [Introduccion de los grafos](Introduccion%20de%20los%20grafos.md)
 2. [Teoremas de grafos](Teoremas%20de%20grafos.md)
 3. [Familias de grafos](Familias%20de%20grafos.md)
-4. [Resumen](Resumen.md)
+4. [Resumen](./Resumen.md)
 
 # Slides
 

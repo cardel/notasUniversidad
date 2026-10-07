@@ -58,5 +58,5 @@ Si suponemos que hay paralelización infinita, $T_\infty = \frac{1}{f}$, que es 
 
 # Temas
 
-1. [Benchmarking](Benchmarking.md)
+1. [Benchmarking](./Benchmarking.md)
 2. [Ejemplo Benchmarking](Ejemplo%20Benchmarking.md)

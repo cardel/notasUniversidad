@@ -4,4 +4,4 @@
 
 # Ejemplos
 
-[Ejemplos](Ejemplos.md)
+[Ejemplos](./Ejemplos.md)

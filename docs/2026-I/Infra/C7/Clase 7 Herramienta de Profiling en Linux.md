@@ -20,5 +20,5 @@
 Como podemos perfilar programas que ya están en en ejecución usando herramientas del sistema operativo.
 
 1. [Procesos del sistema](Procesos%20del%20sistema.md)
-2. [Valgrind](Valgrind.md)
-3. [Perf](Perf.md)
+2. [Valgrind](./Valgrind.md)
+3. [Perf](./Perf.md)

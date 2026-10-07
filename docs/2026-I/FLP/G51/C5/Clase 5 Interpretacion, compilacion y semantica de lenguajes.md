@@ -41,4 +41,4 @@
 3. [Especificacion lexica y gramatical](Especificacion%20lexica%20y%20gramatical.md)
 4. [Interpretación y compilación](Interpretación%20y%20compilación.md)
 5. [Interprete simple](Interprete%20simple.md)
-6. [Resumen](Resumen.md)
+6. [Resumen](./Resumen.md)

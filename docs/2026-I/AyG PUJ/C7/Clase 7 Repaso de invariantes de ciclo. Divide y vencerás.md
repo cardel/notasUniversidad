@@ -7,5 +7,5 @@
 # Temas
 
 1. [Invariantes de ciclos](Invariantes%20de%20ciclos.md)
-2. [Divide y vencerás](Divide%20y%20vencerás.md)
-3. [Resumen](Resumen.md)
+2. [Divide y vencerás](./Divide%20y%20vencerás.md)
+3. [Resumen](./Resumen.md)

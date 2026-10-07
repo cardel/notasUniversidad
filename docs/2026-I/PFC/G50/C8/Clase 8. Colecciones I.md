@@ -6,6 +6,6 @@
 
 # Temas
 
-1. [Colecciones](Colecciones.md)
+1. [Colecciones](./Colecciones.md)
 2.[Operaciones sobre colecciones](Operaciones%20sobre%20colecciones.md) 
 
