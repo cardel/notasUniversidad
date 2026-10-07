@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · Infra C3
 
 Clase 3 — profiling en Python e instrucciones AVX (22 y 24 de septiembre). Los
 apartados van en el orden de la clase y todos se resuelven en el navegador.

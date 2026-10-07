@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C14
 
 Clase 14 — iteradores y algoritmos de la STL (23 de septiembre). Cada
 enlace abre una actividad que se trabaja directo en el navegador, en el

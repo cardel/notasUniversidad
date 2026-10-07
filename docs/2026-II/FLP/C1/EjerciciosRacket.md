@@ -1,4 +1,4 @@
-# Ejercicios de Racket
+# Ejercicios Racket · FLP C1
 
 El lenguaje del curso, practicado antes de que aparezca el primer intérprete.
 El repaso de Racket es material de lectura, y estas tres actividades son la

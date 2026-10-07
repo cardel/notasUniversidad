@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C9
 
 Ocho ejercicios para el navegador, organizados por los temas de la sesión y en
 el mismo orden; el último junta todo sobre un sitio de quince páginas. Ninguno

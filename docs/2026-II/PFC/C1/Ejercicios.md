@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · PFC C1
 
 Los dos ejercicios de la sesión, para recorrer en el navegador. La mecánica
 es la de siempre: prediga antes de ejecutar, avance paso a paso y busque qué

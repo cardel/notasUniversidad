@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C16
 
 Clase 16 — variantes de la lista enlazada y merge sort (2 de octubre). Cada
 enlace abre una actividad que se trabaja directo en el navegador, en el mismo

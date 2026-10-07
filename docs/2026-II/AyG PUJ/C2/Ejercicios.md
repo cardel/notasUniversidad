@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C2
 
 Cada enlace abre un ejercicio que se trabaja directo en el navegador. La
 mecánica es la de siempre: prediga antes de ejecutar, recorra el algoritmo

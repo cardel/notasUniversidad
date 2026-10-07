@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C4
 
 Cuatro ejercicios que se trabajan en el navegador, uno por cada forma de ciclo
 de la sesión. Ninguno repite los ejemplos de las diapositivas: la idea es

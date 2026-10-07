@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · PFC C2
 
 Nueve ejercicios para recorrer en el navegador, tres por cada tema de la
 sesión y en su mismo orden. La mecánica es la de siempre: prediga antes de
