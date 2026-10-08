@@ -577,8 +577,7 @@ Ahí es donde el problema mide la pila. Sobre palabras de pocas letras las jugad
 se hacen y se deshacen miles de veces, y cada una que se deshace cuesta otra
 operación. Con la pila enlazada y el tope al frente las dos
 son $\Theta(1)$ y el tiempo se va en recorrer las secuencias, no en mantener la
-estructura. En el juez la biblioteca estándar está permitida y `std::stack`
-sirve.
+estructura. El programa que viene se apoya en la pila de la sesión.
 
 Antes de entrar a probar jugadas conviene descartar: si las dos palabras tienen
 distinta longitud, o si no tienen las mismas letras con las mismas repeticiones,
@@ -598,6 +597,168 @@ no existe ninguna secuencia y el caso se resuelve sin buscar nada.
     Una palabra de salida que no sea anagrama de la de entrada no imprime
     ninguna línea, pero sí imprime los corchetes. En el ejemplo, `long` y
     `short` producen un bloque vacío.
+
+### El programa
+
+El programa es corto porque la pila ya está escrita. Lo nuevo es la función que
+prueba jugadas y se devuelve cuando la rama no lleva a ninguna parte.
+
+```cpp
+// UVa 732 - Anagrams by Stack: todas las secuencias de i y o que convierten
+// la palabra de entrada en la de salida, en orden alfabetico.
+#include <iostream>
+#include <string>
+#include "pila_nodos.h"
+
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+
+string entrada;
+string salida;
+int largo;        // las dos palabras miden lo mismo cuando se busca
+string jugadas;   // la secuencia en construccion: 2 * largo jugadas
+
+void imprimir() {
+  int k = 0;
+  while (k < 2 * largo) {
+    if (k > 0) {
+      cout << " ";
+    }
+    cout << jugadas[k];
+    k = k + 1;
+  }
+  cout << endl;
+}
+
+// metidas: letras de la entrada que ya estan en la pila o salieron de ella.
+// escritas: letras de la salida ya escritas.
+// La jugada que se decide aqui es la numero metidas + escritas.
+void buscar(Pila &p, int metidas, int escritas) {
+  if (escritas == largo) {
+    imprimir();
+  } else {
+    if (metidas < largo) {
+      p.apilar(entrada[metidas]);
+      jugadas[metidas + escritas] = 'i';
+      buscar(p, metidas + 1, escritas);
+      p.desapilar();
+    }
+    if (!p.vacia() && p.tope() == salida[escritas]) {
+      Elemento letra = p.tope();
+      p.desapilar();
+      jugadas[metidas + escritas] = 'o';
+      buscar(p, metidas, escritas + 1);
+      p.apilar(letra);
+    }
+  }
+}
+
+int main() {
+  while (cin >> entrada >> salida) {
+    cout << "[" << endl;
+    if (entrada.size() == salida.size()) {
+      largo = entrada.size();
+      jugadas = string(2 * largo, 'i');
+      Pila p;
+      buscar(p, 0, 0);
+    }
+    cout << "]" << endl;
+  }
+  return 0;
+}
+```
+
+`buscar` recibe cuántas letras de la entrada ya se metieron y cuántas de la
+salida ya se escribieron. Esos dos números describen el estado completo: la
+próxima letra por meter es `entrada[metidas]` y la que la salida necesita ahora
+es `salida[escritas]`. Cuando `escritas` llega al largo de la palabra la
+secuencia está terminada y se imprime. No hay que comprobar nada más: escribir
+$m$ letras exigió sacar $m$ veces, sacar $m$ veces exigió meter $m$, y entonces
+la entrada se agotó y la pila quedó vacía.
+
+Las dos jugadas son los dos `if` de adentro. La primera mete `entrada[metidas]`
+mientras queden letras por meter. La segunda saca el tope, y solo cuando el tope
+es la letra que la salida necesita: sacar otra escribe una letra equivocada y
+ninguna jugada posterior la arregla, porque lo escrito no se borra.
+
+La jugada que se decide en cada llamada es la número `metidas + escritas`, que es
+la cuenta de jugadas hechas hasta ahí. Ese es el índice en que se anota la letra,
+y por eso deshacer no tiene que borrarla: la otra rama escribe encima, en la
+misma casilla.
+
+`main` imprime el corchete de apertura y el de cierre alrededor de la búsqueda,
+así que una pareja sin solución deja el bloque vacío. Si los dos largos no
+coinciden no se busca nada, porque cada letra de la entrada se mete una vez y
+cada letra de la salida se saca una vez; `long` y `short` caen en ese caso.
+El `while (cin >> entrada >> salida)` se vuelve falso cuando ya no hay nada por
+leer.
+
+### Por qué se intenta `i` antes que `o`
+
+Todas las secuencias válidas de un mismo caso miden lo mismo, $2m$ letras. Entre
+dos de ellas, entonces, el orden alfabético lo decide la primera posición en que
+difieren, y en esa posición una tiene `i` y la otra tiene `o`. La `i` va primero
+en el alfabeto. Agotar la rama de meter antes de abrir la de sacar imprime las
+secuencias de menor a mayor, y no queda nada por ordenar al final: cambiar los
+dos `if` de orden imprime las mismas secuencias al revés.
+
+### Deshacer una jugada
+
+Deshacer es devolver el estado al que había antes de la jugada. Los dos índices
+se deshacen solos: viajan como parámetros, cada llamada tiene su copia y al
+volver de la recursión los de aquí siguen donde estaban. La pila no. Es un solo
+objeto que todas las llamadas comparten, y lo que una rama le deje hecho lo
+encuentra la siguiente.
+
+La `i` se deshace con `desapilar`, que quita la letra que se metió. La `o` se
+deshace con `apilar(letra)`, con la letra que se leyó con `tope()` antes de
+sacarla: `desapilar` libera el nodo y después no hay de dónde leerla. Una `o`
+deshecha sin devolver la letra deja la pila más corta, y entonces el programa
+sigue corriendo sobre un estado que no corresponde a ninguna jugada e imprime
+secuencias que no convierten una palabra en la otra.
+
+### Qué cuesta
+
+| Qué | Costo | Por qué |
+|---|---|---|
+| hacer y deshacer una `i` | $\Theta(1)$ | `apilar` y `desapilar` trabajan en la cabeza de la cadena |
+| hacer y deshacer una `o` | $\Theta(1)$ | `tope`, `desapilar` y el `apilar` que devuelve la letra |
+| imprimir una secuencia | $\Theta(m)$ | se recorren las $2m$ jugadas anotadas |
+| el recorrido completo | $O(4^m)$ estados | a lo sumo dos ramas por estado, profundidad $2m$ |
+| espacio | $\Theta(m)$ | $2m$ marcos de recursión, $m$ nodos en la pila, $2m$ letras anotadas |
+
+El peor caso es la palabra de una sola letra repetida. Ahí cualquier secuencia
+que respete la precondición de la pila escribe la palabra de salida, y cuántas
+hay lo dice el número de Catalan $C_m = \binom{2m}{m}/(m+1)$: con `aaaa` el programa
+imprime 14 secuencias, con `aaaaa` imprime 42 y con diez letras iguales, 16 796.
+Contando lo que cuesta imprimir cada una, el tiempo total queda en $O(m\,4^m)$.
+
+Con letras todas distintas pasa lo contrario. El tope coincide con la letra
+que toca en un solo momento, la rama de sacar casi nunca abre y sobrevive a lo
+sumo una secuencia: `abcdefgh` contra `hgfedcba` da exactamente una. Las cuatro
+parejas del enunciado dan 4, 4, 0 y 1, y `foo` contra `oof` da 2,
+`i i i o o o` y `i i o i o o`.
+
+El espacio no depende de cuántas secuencias se impriman. En el punto más
+profundo hay $2m$ marcos de recursión abiertos, la pila llega a $m$ nodos y la
+secuencia en construcción ocupa $2m$ letras.
+
+### Compilar y probar
+
+El fuente está en [uva732.cpp](codigo/uva732.cpp), con la entrada del enunciado
+en [uva732.in](codigo/uva732.in) y la salida esperada en
+[uva732.out](codigo/uva732.out). La cabecera `pila_nodos.h` es la misma de más
+arriba y vive en esa carpeta.
+
+```bash
+g++ -Wall -Wextra uva732.cpp -o sol
+./sol < uva732.in > salida.txt
+diff salida.txt uva732.out
+```
+
+El `diff` no imprime nada cuando los cuatro bloques salen como en el enunciado.
 
 ## Ejercicios
 
@@ -757,6 +918,13 @@ Los dos ejecutables imprimen las mismas cuatro líneas, `2 3`, `8 2`, `9 8 5` y
   $n = 100$, 1000 y 10 000.
 - [techo.cpp](codigo/techo.cpp) — hasta dónde aguanta cada una con capacidad
   1000, el tamaño de un `Nodo` y la memoria que ocupan los nodos.
+
+**La solución del problema del juez**
+
+- [uva732.cpp](codigo/uva732.cpp) — las secuencias de `i` y `o` que convierten
+  una palabra en la otra, con retroceso sobre la pila de la sesión.
+- [uva732.in](codigo/uva732.in) y [uva732.out](codigo/uva732.out) — la entrada y
+  la salida de ejemplo del enunciado, para probar con `./sol < uva732.in`.
 
 ## Referencias
 
