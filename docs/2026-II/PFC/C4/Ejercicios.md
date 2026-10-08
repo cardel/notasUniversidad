@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · PFC C4
 
 Ocho ejercicios para recorrer en el navegador, organizados por los temas de la
 sesión y en su mismo orden. Lo que cambia respecto a las sesiones anteriores es

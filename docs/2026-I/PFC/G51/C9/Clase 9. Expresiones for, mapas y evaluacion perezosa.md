@@ -36,5 +36,5 @@ val res0: List[(Int, String)] = List((1,a), (1,b), (1,c), (2,a), (2,b), (2,c), (
 # Temas
 
 1. [Expresiones for extendido](Expresiones%20for%20extendido.md)
-2. [Map](Map.md)
+2. [Map](./Map.md)
 3. [Evaluación perezosa](Evaluación%20perezosa.md)

@@ -1,9 +1,9 @@
 
 # Contenido
 
-1. [Interprete de chequeo](Interprete%20de%20chequeo.md)
+1. [Interprete de chequeo](./Interprete%20de%20chequeo.md)
 2. [Pruebas sobre el interprete](Pruebas%20sobre%20el%20interprete.md)
-3. [Ejercicio](Ejercicio.md)
+3. [Ejercicio](./Ejercicio.md)
 
 Un tipo es un conjunto de valores sobre el cual realizamos operaciones
 

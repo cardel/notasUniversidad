@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · Infra C1
 
 Clase 1 — introducción a la programación paralela, ley de Amdahl y localidad
 de caché (8 y 10 de septiembre). Los apartados van en el orden de la clase.

@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · FLP C3
 
 Clase 3 — datatypes y árboles de sintaxis abstracta (22 de septiembre). Cada
 enlace abre una actividad que se trabaja directo en el navegador, sin instalar

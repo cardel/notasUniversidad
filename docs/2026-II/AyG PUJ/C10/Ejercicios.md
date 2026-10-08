@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C10
 
 Ocho ejercicios para el navegador, organizados por los temas de la sesión y en
 el mismo orden; el último junta los cortes sobre la red de un campus. Ninguno

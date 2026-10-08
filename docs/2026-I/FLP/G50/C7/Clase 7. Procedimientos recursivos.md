@@ -35,5 +35,5 @@ Al intentar buscar f en este ambiente, terminamos en el ambiente vacio lo que pr
 # Temas
 
 1. [Cambios interprete proc recursivos](Cambios%20interprete%20proc%20recursivos.md)
-2. [Ejemplo](Ejemplo.md)
-3. [Ejercicio](Ejercicio.md)
+2. [Ejemplo](./Ejemplo.md)
+3. [Ejercicio](./Ejercicio.md)

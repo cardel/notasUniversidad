@@ -6,7 +6,7 @@
 
 # Temas
 1. [Consultas con expresiones for](Consultas%20con%20expresiones%20for.md)
-2. [Maps](Maps.md)
-3. [Evaluacion perezosa](Evaluacion%20perezosa.md)
-4. [Ejercicio](Ejercicio.md)
-5. [Resumen](Resumen.md)
+2. [Maps](./Maps.md)
+3. [Evaluacion perezosa](./Evaluacion%20perezosa.md)
+4. [Ejercicio](./Ejercicio.md)
+5. [Resumen](./Resumen.md)

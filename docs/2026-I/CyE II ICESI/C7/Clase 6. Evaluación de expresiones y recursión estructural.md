@@ -86,5 +86,5 @@ def factorial(n: Int): Int = {
 # Temas
 
 1. [Evaluación de expresiones](Evaluación%20de%20expresiones.md)
-2. [Recursión estructural](Recursión%20estructural.md)
-3. [Resumen](Resumen.md)
+2. [Recursión estructural](./Recursión%20estructural.md)
+3. [Resumen](./Resumen.md)

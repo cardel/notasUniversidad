@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · FLP C1
 
 Clase 1 — inducción y recursión: especificación de datos y de programas (8 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el

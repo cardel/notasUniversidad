@@ -18,7 +18,7 @@
 
 1. [Metodo de expansion](Metodo%20de%20expansion.md)
 2. [Metodo de arbol](Metodo%20de%20arbol.md)
-3. [Resumen](Resumen.md)
+3. [Resumen](./Resumen.md)
 
 
 

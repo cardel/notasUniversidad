@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · PFC C3
 
 Doce ejercicios para recorrer en el navegador, organizados por los temas de la
 sesión y en su mismo orden. Cambia la mecánica respecto a las sesiones

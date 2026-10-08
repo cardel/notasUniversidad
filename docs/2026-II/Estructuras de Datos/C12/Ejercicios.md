@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C12
 
 Clase 12 — ejercicios con los TAD Lista, Pila y Cola (18 de septiembre).
 Cada enlace abre una actividad que se trabaja directo en el navegador,

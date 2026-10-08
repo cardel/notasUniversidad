@@ -11,6 +11,6 @@ En la clase anterior hablamos sobre las funciones de alto orden
 
 # Temas
 
-1. [Map y filter](Map%20y%20filter.md)
-2. [Reduce y Fold](Reduce%20y%20Fold.md)
+1. [Map y filter](./Map%20y%20filter.md)
+2. [Reduce y Fold](./Reduce%20y%20Fold.md)
 3. 

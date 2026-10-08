@@ -1,6 +1,6 @@
 # ADA I
 
-[0. Explicación Notas de Cornell (1)](0%20Notas%20Cornell.md)
+[0. Explicación Notas de Cornell (1)](./0%20Notas%20Cornell.md)
 
 [1. Relaciones de recurrencia método de arbol](1%20%20Relaciones%20de%20recurrencia%20método%20de%20arbol.md)
 

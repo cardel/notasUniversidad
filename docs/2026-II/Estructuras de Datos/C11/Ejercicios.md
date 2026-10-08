@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C11
 
 Clase 11 — TAD Lista, Pila y Cola: contrato y ejemplos de uso (16 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el

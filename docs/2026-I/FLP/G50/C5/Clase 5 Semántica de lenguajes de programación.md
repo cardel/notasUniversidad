@@ -98,4 +98,4 @@
 2. [Scanner parser interprete](Scanner%20parser%20interprete.md)
 3. [Introduccion a la interpretacion y compilacion](Introduccion%20a%20la%20interpretacion%20y%20compilacion.md)
 4. [Interpretador simple](Interpretador%20simple.md)
-5. [Resumen](Resumen.md)
+5. [Resumen](./Resumen.md)

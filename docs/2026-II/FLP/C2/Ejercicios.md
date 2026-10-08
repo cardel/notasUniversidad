@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · FLP C2
 
 Clase 2 — estrategias para representar datos: TAD y ambientes (15 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el

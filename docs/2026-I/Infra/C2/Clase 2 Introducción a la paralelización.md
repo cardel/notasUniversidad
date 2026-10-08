@@ -11,4 +11,4 @@
 2. [Recursos compartidos](Recursos%20compartidos.md)
 3. [Dependencias](Dependencias.md)
 4. [Limitaciones](Limitaciones.md)
-5. [Resumen](Resumen.md)
+5. [Resumen](./Resumen.md)

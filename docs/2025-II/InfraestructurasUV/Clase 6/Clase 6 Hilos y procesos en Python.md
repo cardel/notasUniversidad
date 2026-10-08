@@ -6,7 +6,7 @@
 
 # Temas
 1. [Hilos y procesos](Hilos%20y%20procesos.md)
-2. [Threading en Python](Threading%20en%20Python.md)
+2. [Threading en Python](./Threading%20en%20Python.md)
 3. [Multiproceso en Python I](Multiproceso%20en%20Python%20I.md)
 4. [Multiproceso en Python II](Multiproceso%20en%20Python%20II.md)
 

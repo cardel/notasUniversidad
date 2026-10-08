@@ -5,7 +5,7 @@
 
 # Temario
 
-[Repaso Relaciones](Relaciones.md)
+[Repaso Relaciones](./Relaciones.md)
 
 
 

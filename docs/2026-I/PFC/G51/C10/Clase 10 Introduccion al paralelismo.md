@@ -65,4 +65,4 @@ Esto se debe a que como incrementar corre al tiempo en ambos hilos, es posible q
 
 1. [Paralelismo y concurrencia](Paralelismo%20y%20concurrencia.md)
 2. [Aspectos de la paralelizacion](Aspectos%20de%20la%20paralelizacion.md)
-3. [Parallel y Task](Parallel%20y%20Task.md)
+3. [Parallel y Task](./Parallel%20y%20Task.md)

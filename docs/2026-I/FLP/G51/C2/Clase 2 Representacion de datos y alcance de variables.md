@@ -9,9 +9,9 @@
 
 # Temas
 
-1. [Representación inductiva](Representación%20inductiva.md)
+1. [Representación inductiva](./Representación%20inductiva.md)
 2. [Representación mediante BNF](Representación%20mediante%20BNF.md)
 3. [Especificación recursiva de programas](Especificación%20recursiva%20de%20programas.md)
-4. [Ligaduras](Ligaduras.md)
-5. [Alcance de variables](Alcance%20de%20variables.md)
-6. [Resumen](Resumen.md)
+4. [Ligaduras](./Ligaduras.md)
+5. [Alcance de variables](./Alcance%20de%20variables.md)
+6. [Resumen](./Resumen.md)

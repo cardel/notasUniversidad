@@ -6,8 +6,8 @@
 
 # Temas
 
-1. [Expresiones for](Expresiones%20for.md)
-2. [Map](Map.md)
-3. [Evaluacion perezosa](Evaluacion%20perezosa.md)
-4. [Problema](Problema.md)
-5. [Resumen](Resumen.md)
+1. [Expresiones for](./Expresiones%20for.md)
+2. [Map](./Map.md)
+3. [Evaluacion perezosa](./Evaluacion%20perezosa.md)
+4. [Problema](./Problema.md)
+5. [Resumen](./Resumen.md)

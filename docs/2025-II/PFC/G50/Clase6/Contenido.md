@@ -6,6 +6,6 @@
 
 # Temas
 
-1. [Listas](Listas.md)
-2. [Reconocimiento de patrones I](Reconocimiento%20de%20patrones%20I.md)
+1. [Listas](./Listas.md)
+2. [Reconocimiento de patrones I](./Reconocimiento%20de%20patrones%20I.md)
 3. [Reconocimientos de patrones II](Reconocimientos%20de%20patrones%20II.md)
