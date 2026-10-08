@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>paloma — el valor de cada estación, UVa 10765 · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  #entradas { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 0.5rem; margin-bottom: 0.7rem; }
+  label.campo-valor { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem 0.5rem; }
+  label.campo-valor .mono { font-family: ui-monospace, monospace; white-space: nowrap; }
+  label.campo-valor input { width: 3.6rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 6px; }
+  .piezas { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+  button.pieza { font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.25rem 0.55rem; }
+  #ver-datos { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--gris); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El valor de cada estación, UVa 10765</h1>
+  <p class="intro">El valor paloma de una estación es en cuántos pedazos queda
+  la red al bombardearla, que es cuántas palomas hacen falta para que un
+  mensaje llegue a todas las estaciones que siguen en pie. Al quitar un vértice
+  se desprende un pedazo por cada hijo <code>w</code> con
+  <code>low[w] ≥ d[u]</code>, y queda además el pedazo que sigue pegado al
+  padre. La raíz no tiene padre: su valor es el número de hijos. La profundidad
+  ya corrió y cada vértice trae su <code>d/low</code>.</p>
+
+  <div class="carta">
+    <h2>1. La red con la profundidad hecha</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Red:</span>
+      <button data-preset="0" class="primario">Siete estaciones</button>
+      <button data-preset="1">Nueve estaciones</button>
+      <button data-preset="2">Once estaciones</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p class="nota" id="ver-datos"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span><b style="color:#1f5fa8">━</b> arista del árbol</span>
+      <span><b style="color:#2e7d32">┅</b> arista de retroceso</span>
+      <span>sobre cada vértice, <code>d/low</code></span>
+    </div>
+    <p class="nota" style="text-align:center">Las estaciones van de 0 a n−1 y la
+    profundidad arranca en la 0, recorriendo los vecinos de menor a mayor.</p>
+    <div class="prediccion">
+      <span>¿Cuál es el valor paloma más alto de esta red?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-prediccion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-prediccion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Escriba el valor de cada estación</h2>
+    <p class="nota" style="margin-top:0">Para cada vértice que no es la raíz, el
+    valor arranca en 1 y suma un hijo por cada <code>low[w] ≥ d[u]</code>. La
+    comparación admite la igualdad: si el subárbol de <code>w</code> vuelve a
+    <code>u</code> pero no sube más, quitar <code>u</code> lo deja aparte igual.</p>
+    <div id="entradas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div id="explicaciones"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Quite una estación y cuente</h2>
+    <p style="margin-top:0">La definición ejecutada: se bombardea una estación y
+    el dibujo recolorea los pedazos que quedan.</p>
+    <div class="piezas" id="botones-quitar"></div>
+    <div id="veredicto-quitar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La salida que pide el juez</h2>
+    <p style="margin-top:0">Las <span id="ver-m"></span> estaciones de mayor
+    valor, ordenadas por valor decreciente y, a igual valor, por número
+    creciente. Las parejas se arman como <code>(-valor, v)</code> y se ordenan
+    de forma corriente: el signo invierte el primer campo y deja el segundo como
+    está.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Línea</th><th>Sale</th><th>Por qué va ahí</th></tr></thead>
+        <tbody id="cuerpo-salida"></tbody>
+      </table>
+    </div>
+    <p class="nota">La tabla se llena al comprobar los valores de arriba.</p>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En la segunda red, agregue una vía
+    entre la estación de mayor valor y la que está más lejos de ella en el
+    árbol, y diga cuántos valores cambian. Después, en la tercera, corra la
+    profundidad desde la estación 2 en lugar de la 0: los <code>d</code> y los
+    <code>low</code> cambian, y la que era raíz deja de serlo. ¿Cambia algún
+    valor paloma? Y por último: encuentre en alguna de las tres redes un vértice
+    cuyo valor sea 2 sin que ninguna de sus vías sea puente, y explique con
+    <code>d</code> y <code>low</code> por qué pasa.</p>
+  </div>
+
+</div>
+<script src="paloma.js"></script>
+</body>
+</html>

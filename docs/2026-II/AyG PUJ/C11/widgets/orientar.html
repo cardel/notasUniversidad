@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>orientar — las calles de una ciudad, UVa 610 · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo, #panel-traza { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-word; }
+  .mensaje { min-height: 3.2rem; font-size: 0.9rem; background: var(--ambar-suave); border-radius: 8px; padding: 0.4rem 0.6rem; }
+  .piezas { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+  button.pieza { font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.25rem 0.55rem; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  #ver-datos { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--gris); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Las calles de una ciudad, UVa 610</h1>
+  <p class="intro">Hay que convertir en una vía tantas calles como se pueda, de
+  modo que desde cada intersección se siga pudiendo llegar a todas las demás.
+  La profundidad orienta las aristas de árbol del padre al hijo y las de
+  retroceso del descendiente al ancestro; la calle que no se puede convertir se
+  emite en los dos sentidos. Aquí se ejecuta la orientación y se comprueba
+  cuáles calles quedaron de doble vía.</p>
+
+  <div class="carta">
+    <h2>1. La ciudad y la predicción</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Ciudad:</span>
+      <button data-preset="0" class="primario">Seis intersecciones</button>
+      <button data-preset="1">Ocho intersecciones</button>
+      <button data-preset="2">Siete intersecciones</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p style="margin-top:0"><b>Entrada:</b> las intersecciones de 1 a n y las
+    calles de doble vía, a lo sumo una por cada par; con todas de doble vía se
+    puede ir de cualquier intersección a cualquier otra. &nbsp;<b>Salida:</b>
+    cada calle como una pareja orientada; la que no se puede convertir, dos
+    veces.</p>
+    <p class="nota" id="ver-datos"></p>
+    <div id="panel-grafo"></div>
+    <div class="prediccion">
+      <span>¿Cuántas líneas tiene la salida?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute la orientación</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Recorrido:</span>
+      <button data-version="recursiva">Profundidad recursiva</button>
+      <button data-version="pila" class="primario">Profundidad con pila</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rot-pila">llamadas</span>: <span class="viva" id="ver-pila">vacía</span></div>
+        <div><code>salida</code> (<span id="ver-lineas">0</span> líneas): <span class="viva" id="ver-salida">vacía</span></div>
+        <div class="mensaje" id="ver-msg"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+    <div id="panel-traza"></div>
+    <div class="leyenda">
+      <span><b style="color:#1f5fa8">→</b> calle ya orientada, una vía</span>
+      <span><b style="color:#b3261e">→</b> calle de doble vía</span>
+      <span>sobre cada intersección, <code>d/low</code></span>
+    </div>
+    <p class="nota" style="text-align:center">La versión de pila explícita es la
+    que se envía al juez: con mil intersecciones en línea la rama tiene
+    profundidad mil y la recursiva se cae contra el límite de Python.</p>
+  </div>
+
+  <div class="carta">
+    <h2>3. Calle por calle</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Calle</th><th>Extremos</th><th>Sentidos emitidos</th><th>Queda</th><th>¿Es puente?</th><th></th></tr></thead>
+        <tbody id="cuerpo-calles"></tbody>
+      </table>
+    </div>
+    <p id="ver-coincidencia" style="margin-bottom:0"></p>
+  </div>
+
+  <div class="carta">
+    <h2>4. ¿Se llega a todas?</h2>
+    <p style="margin-top:0">Elija una intersección y vea a cuáles se llega por
+    la ciudad ya orientada. Con la orientación completa hay que llegar a todas
+    desde cualquiera: eso es lo que pide el enunciado.</p>
+    <div class="piezas" id="origenes"></div>
+    <div id="veredicto-alcance" class="veredicto"></div>
+    <p class="nota" id="ver-fuerte"></p>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En la primera ciudad, oriente a
+    mano arrancando en la 5 en vez de en la 1: la lista de parejas cambia, la
+    calle de doble vía no. Explique por qué, con el teorema que dice que el
+    conjunto de puentes no depende de dónde arranque la profundidad. Después,
+    en la segunda ciudad, borre la comparación <code>d[v] &lt; d[u]</code> del
+    <code>elif</code> y diga cuántas líneas tendría la salida y por qué el juez
+    la rechaza aunque la orientación sea fuertemente conexa. Y por último, en
+    la tercera ciudad, agregue una intersección nueva colgada de la 4 por una
+    sola calle: ¿cuántas calles quedan sin convertir?</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="orientar.js"></script>
+</body>
+</html>

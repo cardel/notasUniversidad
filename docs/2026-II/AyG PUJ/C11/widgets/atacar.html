@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>atacar — leer el enunciado y decidir por dónde se corta · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .navegacion { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.6rem; }
+  .pregunta { margin-top: 0.9rem; padding-top: 0.6rem; border-top: 1px solid var(--borde); }
+  .pregunta b { display: block; margin-bottom: 0.35rem; }
+  .opciones { flex-direction: column; align-items: stretch; }
+  .opciones button { text-align: left; }
+  #enunciado { background: var(--codigo-fondo); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0 0 0.3rem; }
+  ol.pasos { margin: 0.3rem 0 0; padding-left: 1.3rem; }
+  ol.pasos li { margin-bottom: 0.25rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Leer el enunciado y decidir por dónde se corta</h1>
+  <p class="intro">El paso que más se salta es el segundo: decidir si lo que el
+  enunciado quita o rompe es un vértice o una arista. Un enunciado que habla de
+  destruir ciudades pide articulaciones; uno que habla de cortar cables o
+  inundar carreteras pide puentes. Resolver el otro da una respuesta razonable
+  que el juez rechaza. Aquí hay tres enunciados cortos y, en cada uno, cuatro
+  decisiones.</p>
+
+  <div class="carta">
+    <h2>Los cinco pasos</h2>
+    <ol class="pasos">
+      <li><b>Leer el grafo.</b> Quiénes son los vértices y quiénes las aristas, y si viene dirigido o no.</li>
+      <li><b>Decidir qué se corta.</b> Un vértice pide el criterio de articulación; una arista, el de puente.</li>
+      <li><b>Calcular con Tarjan.</b> Una profundidad, <code>d</code> y <code>low</code>, en Θ(V+E).</li>
+      <li><b>Contraer, si la pregunta no es local.</b> Caminos, distancias o cuántos puentes se cruzan piden el árbol de puentes.</li>
+      <li><b>Recorrer lo que quedó.</b> Sobre el árbol, una profundidad o una amplitud más.</li>
+    </ol>
+  </div>
+
+  <div class="carta">
+    <h2>Enunciado <span id="num-escenario"></span></h2>
+    <div class="navegacion">
+      <button id="btn-anterior">← Anterior</button>
+      <button id="btn-siguiente" class="primario">Siguiente →</button>
+      <span class="nota" id="marcador" style="margin-top:0"></span>
+    </div>
+    <p id="enunciado"></p>
+    <div id="preguntas"></div>
+  </div>
+
+  <div class="carta">
+    <h2>Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Reescriba el enunciado del dique
+    cambiando una sola palabra, de modo que el corte pase a ser por vértice y la
+    respuesta cambie. Después tome el del riego y agréguele una pregunta que
+    obligue a llegar al paso 5 por un camino, no por un tamaño. Y por último:
+    uno de los tres enunciados sigue teniendo la misma respuesta si el grafo
+    llega con dos aristas entre el mismo par; diga cuál y por qué los otros dos
+    no.</p>
+  </div>
+
+</div>
+<script src="atacar.js"></script>
+</body>
+</html>
