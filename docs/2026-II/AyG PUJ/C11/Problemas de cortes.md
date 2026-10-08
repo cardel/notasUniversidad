@@ -28,11 +28,12 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase11-problemas-cortes.pdf](./clase11-problemas-cortes.pdf){ target=_blank rel=noopener },
-106 páginas. Los grafos van dibujados: el de diez vértices con los tres
+118 páginas. Los grafos van dibujados: el de diez vértices con los tres
 puentes en rojo, el mismo con $d/low$ debajo de cada vértice, el mismo con
 cada componente encerrado en una caja, el árbol de puentes que sale de
-contraerlo, la ciudad de siete intersecciones antes y después de orientarla,
-y la red de ocho estaciones.
+contraerlo, la ciudad de siete intersecciones en sus tres versiones (sin
+orientar, orientada por el número de la intersección y orientada con la
+profundidad) y la red de ocho estaciones.
 
 ## Recuento
 
@@ -419,6 +420,10 @@ Las aristas de árbol, en el orden en que la recursión vuelve por ellas:
 | $(1,2)$ | $1 < 2$ | no | |
 | $(0,1)$ | $1 = 1$ | no | |
 
+$(5,7)$ tiene $8 > 6$ y la columna dice puente. $(7,8)$ tiene $8 = 8$ y dice que
+no, igual que $(0,1)$ con $1 = 1$. ¿Qué cambia cuando el $low$ del hijo cae
+justo en el $d$ del padre, y no por debajo?
+
 Las dos igualdades valen la pena. En $(0,1)$ y en $(7,8)$ el retroceso llega
 hasta $v$ mismo y cierra un ciclo que contiene la arista, así que no hay
 puente. Con el criterio de articulación, que admite la igualdad, el $0$ y el
@@ -474,6 +479,28 @@ El dato del enunciado que decide todo es este: con todas las calles de doble
 vía se puede ir de cualquier intersección a cualquier otra. El grafo es
 conexo.
 
+### El ejemplo del enunciado
+
+En una frase: un solo sentido para el mayor número de calles, sin que ninguna
+intersección quede incomunicada de otra.
+
+Las entradas del primer caso de ejemplo son $n = 7$, $m = 10$ y las calles
+$1$–$2$, $1$–$3$, $2$–$4$, $3$–$4$, $4$–$5$, $4$–$6$, $5$–$7$, $6$–$7$,
+$2$–$5$, $3$–$6$. La salida trae el número de caso, una línea en blanco, una
+línea por cada sentido habilitado y una línea con `#`; para ese caso el
+ejemplo imprime diez: `1 2`, `2 4`, `3 1`, `3 6`, `4 3`, `5 2`, `5 4`, `6 4`,
+`6 7`, `7 5`.
+
+Cada línea se busca en la lista de calles. `1 2` es la calle $1$–$2$. `3 1` es
+la $1$–$3$, leída de $3$ a $1$. `5 2` es la $2$–$5$, y `4 3` es la $3$–$4$.
+Siguiendo así con las diez líneas se cubren las diez calles sin repetir
+ninguna: aquí todas quedaron de una vía. El segundo caso trae nueve calles y su
+salida ocupa diez líneas, y ahí aparecen `4 5` y `5 4`, la calle $4$–$5$ en los
+dos sentidos.
+
+¿Por qué el segundo caso gasta diez líneas en nueve calles, y el primero diez en
+diez? La calle repetida es la $4$–$5$. ¿Qué tiene de distinta?
+
 ### Qué es el grafo
 
 El segundo caso de ejemplo tiene siete intersecciones y nueve calles: $1$–$2$,
@@ -500,6 +527,27 @@ $v$ no hay forma de volver a $u$; si se orienta $v \rightarrow u$, desde $u$
 no hay forma de llegar a $v$. Por lo tanto, se puede concluir que un puente
 tiene que quedar en doble vía, y las calles que el enunciado llama no
 convertibles son exactamente los puentes. $\blacksquare$
+
+### Orientar por el número de la intersección
+
+El puente $4$–$5$ queda en doble vía, que es lo único que ya se sabe. Las otras
+ocho calles reciben un sentido cualquiera, y el más fácil de escribir es de la
+intersección menor a la mayor.
+
+La orientación se rompe en dos sitios. Al $1$ no entra nada: sus tres calles, $1$–$2$, $1$–$3$
+y $1$–$4$, salieron todas. Del $7$ no sale nada: sus dos calles, $5$–$7$ y
+$6$–$7$, entraron las dos. Nadie llega al $1$, y quien llegue al $7$ se queda
+ahí.
+
+Voltear la $1$–$2$ le da entrada al $1$, pero entonces las dos calles del $2$
+salen de él y el $2$ se queda sin entrada. Voltear la $6$–$7$ le da salida al
+$7$ y deja al $6$ sin salida. El agujero se mueve.
+
+Orientando siempre del número menor al mayor, todo camino dirigido aumenta el
+número: no hay ciclos. Y en un grafo dirigido sin ciclos nadie vuelve al punto
+de partida. El sentido de una calle no se decide mirándola sola, y el orden de
+los números no sabe nada de la ciudad. El recorrido que sí sabe por dónde se
+llegó a cada intersección es la profundidad.
 
 ### Las demás sí, y la profundidad las orienta
 
@@ -721,6 +769,26 @@ El valor es el número de pedazos porque una paloma entra a un pedazo y de ahí
 el mensaje sigue en tren. Cada pedazo necesita la suya, y una sola no alcanza
 para dos pedazos: la paloma no vuelve a volar.
 
+### El ejemplo del enunciado
+
+Para cada estación hay que contar en cuántos pedazos queda la red si esa
+estación cae, y listar las $m$ que dejan más pedazos.
+
+Las entradas del caso de ejemplo: $n = 8$, $m = 4$ y las ocho vías $0$–$4$,
+$1$–$2$, $2$–$3$, $2$–$4$, $3$–$5$, $3$–$6$, $3$–$7$, $6$–$7$, cerradas con el
+`-1 -1`. Las salidas: $m = 4$ líneas con la estación y su valor, que en el
+ejemplo son `2 3`, `3 3`, `4 2` y `0 1`.
+
+Sin el $2$ la red queda en $\{0,4\}$, $\{1\}$ y $\{3,5,6,7\}$: tres pedazos. Sin
+el $3$ queda en $\{0,1,2,4\}$, $\{5\}$ y $\{6,7\}$: tres otra vez. Sin el $4$
+queda en $\{0\}$ y el resto: dos. Las otras cinco estaciones se pueden quitar
+sin partir nada, así que valen $1$.
+
+La vía $0$–$4$ es la única que toca al $0$, y aun así el $0$ vale $1$ mientras
+el $4$ vale $2$. ¿Por qué los dos extremos de una misma vía no valen lo mismo?
+Y de las cinco estaciones que valen $1$ se imprime una sola: ¿por qué la cuarta
+línea es `0 1` y no `1 1`?
+
 ### Qué es el grafo
 
 El caso de ejemplo tiene ocho estaciones y ocho vías: $0$–$4$, $1$–$2$,
@@ -734,6 +802,28 @@ $G - v$.
 
 Antes del algoritmo, sobre el dibujo: ¿cuánto vale el $3$? ¿Y el $2$? ¿Y el
 $6$? Una de las tres respuestas es $1$, y conviene ver por qué.
+
+### La red sin el $3$
+
+Se borra el $3$ y con él las cuatro vías que lo tocan: $2$–$3$, $3$–$5$, $3$–$6$
+y $3$–$7$. Quedan siete estaciones y cuatro vías. Hay dos números a mano que
+podrían dar la respuesta. Uno es el grado del $3$, que es $4$. El otro es su
+número de hijos en el árbol de la profundidad: bajando desde el $0$ el
+recorrido pasa por $0$, $4$, $2$, y del $2$ salen el $1$ y el $3$; del $3$ bajan
+el $5$ y el $6$, y del $6$ el $7$, de modo que el $3$ tiene dos hijos. ¿Cuál
+de los dos números tiene algo que ver con la respuesta?
+
+Quedan tres pedazos: $\{5\}$, que colgaba solo del $3$; $\{6,7\}$, que conserva
+su vía $6$–$7$ y perdió las dos que lo sostenían; y $\{0,1,2,4\}$, el lado por
+donde la profundidad llegó al $3$. El número que los cuenta es el de los
+hijos: son dos, el $5$ y el $6$, y los dos subárboles se desprendieron: $1 + 2 = 3$, donde ese $1$
+es el lado que contiene al $0$. El grado $4$ no sirve, porque la vía $2$–$3$
+sube al pedazo de arriba y la $3$–$6$ y la $3$–$7$ llegan las dos al mismo
+pedazo de abajo.
+
+El triángulo no salva al $6$ ni al $7$. El $3$, el $6$ y el $7$ lo forman, y el
+par $6$–$7$ se desprende igual: las dos vías que lo unían al resto iban al $3$.
+Un ciclo aguanta la caída de una vía, no la del vértice que lo cierra.
 
 ### De contar componentes a contar hijos
 
@@ -925,6 +1015,10 @@ baja $7.low$ y $6.low$ a $5$.
 
 Los valores son $2{:}3$, $3{:}3$, $4{:}2$ y $1$ para las demás, así que con
 $m = 4$ las cuatro líneas quedan `2 3`, `3 3`, `4 2`, `0 1`.
+
+El $6$ tiene un hijo, el $7$, y se queda en $1$. El $3$ tiene dos hijos y llega
+a $3$. Los tres están en el mismo triángulo. ¿Qué tiene el $7$ que no tengan
+el $5$ ni el $6$?
 
 La fila del $7$ está en la tabla y no suma. $7.low = 5$ es menor que
 $6.d = 7$: el retroceso $7$–$3$ salta por encima del $6$ y lo deja fuera del

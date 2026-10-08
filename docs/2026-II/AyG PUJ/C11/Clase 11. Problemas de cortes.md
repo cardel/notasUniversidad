@@ -30,8 +30,10 @@ es una pasada más.
 
     ---
 
-    El deck de la sesión, con los dos problemas de juez resueltos y el código
-    de cada pieza en sus dos formas, la recursiva y la de pila explícita.
+    El deck de la sesión, con los dos problemas de juez resueltos: el caso de
+    ejemplo de cada enunciado recorrido a mano, el intento de orientar las
+    calles por el número de la intersección y dónde falla, y el código de cada
+    pieza en sus dos formas, la recursiva y la de pila explícita.
 
     [:octicons-arrow-right-24: Abrir](./clase11-problemas-cortes.pdf)
 
