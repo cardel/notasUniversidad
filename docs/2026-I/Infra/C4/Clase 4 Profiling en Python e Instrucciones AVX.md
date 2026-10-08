@@ -11,4 +11,4 @@
 3. [Profiler de tiempo time y timeit](Profiler%20de%20tiempo%20time%20y%20timeit.md)
 4. [Perfilado deterministico CProfile](Perfilado%20deterministico.md)
 5. [Perfilador estadistico](Perfilador%20estadistico.md)
-6. [Resumen](Resumen.md)
+6. [Resumen](./Resumen.md)

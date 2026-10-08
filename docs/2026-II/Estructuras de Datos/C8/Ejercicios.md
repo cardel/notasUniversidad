@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C8
 
 Clase 8 — punteros, arreglos y arreglos bidimensionales (2 de septiembre).
 Cada enlace abre una actividad que se trabaja directo en el navegador, con

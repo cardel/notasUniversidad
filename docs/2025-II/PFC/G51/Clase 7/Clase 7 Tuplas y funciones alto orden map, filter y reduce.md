@@ -9,9 +9,9 @@
 
 # Temas
 
-1. [Tuplas](Tuplas.md)
+1. [Tuplas](./Tuplas.md)
 2. [Parametrizacion de tipos](Parametrizacion%20de%20tipos.md)
-3. [Map y Filter](Map%20y%20Filter.md)
+3. [Map y Filter](./Map%20y%20Filter.md)
 4. [Reduce](Reduce.md)
 5. [FoldLeft y FoldRight](FoldLeft%20y%20FoldRight.md)
-6. [Resumen](Resumen.md)
+6. [Resumen](./Resumen.md)

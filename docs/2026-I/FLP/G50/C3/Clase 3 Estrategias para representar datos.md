@@ -41,7 +41,7 @@ En general, estamos dependiendo del tipo de dato, es decir, de las listas.
 
 # Temas
 
-1. [Abstraccion de datos](Abstraccion%20de%20datos.md)
+1. [Abstraccion de datos](./Abstraccion%20de%20datos.md)
 2. [Estrategia para la construcción de TAD](Estrategia%20para%20la%20construcción%20de%20TAD.md)
 3. [Ejemplo creacion TAD](Ejemplo%20TAD.md)
 4. [Ejemplo Calculo Lambda](Ejemplo%20Calculo%20Lambda.md)

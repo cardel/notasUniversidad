@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · FLP C5
 
 Clase 5 — condicionales, procedimientos y alcance estático (6 de octubre).
 Cada enlace abre una actividad que se trabaja directo en el navegador, sin

@@ -1,6 +1,6 @@
 # 2024-I
 
-[Programación funcional (PFC)](Programación%20funcional.md)
+[Programación funcional (PFC)](./Programación%20funcional.md)
 
 [Vida artificial](Vida%20artficial.md)
 
@@ -8,7 +8,7 @@
 
 [Introducción análisis numérico](Introducción%20análisis%20numerico.md)
 
-[FLP](FLP.md)
+[FLP](./FLP.md)
 
 [IA innovador](IA%20innovador.md)
 

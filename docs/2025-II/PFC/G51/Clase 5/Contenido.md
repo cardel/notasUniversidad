@@ -6,5 +6,5 @@
 
 # Temas
 
-1 [Abstracción de datos](Abstracción%20de%20datos.md)
-2 [Jerarquia de clases](Jerarquia%20de%20clases.md)
+1 [Abstracción de datos](./Abstracción%20de%20datos.md)
+2 [Jerarquia de clases](./Jerarquia%20de%20clases.md)

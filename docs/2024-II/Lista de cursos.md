@@ -1,12 +1,12 @@
 # 2024-II
 
-[FLP](FLP.md)
+[FLP](./FLP.md)
 
-[Programación funcional](Programación%20funcional.md)
+[Programación funcional](./Programación%20funcional.md)
 
 [Redes Neuronales](Redes%20Neuronales.md)
 
-[Infraestructuras](Infraestructuras.md)
+[Infraestructuras](./Infraestructuras.md)
 
 [ADA II](ADA%20II.md)
 

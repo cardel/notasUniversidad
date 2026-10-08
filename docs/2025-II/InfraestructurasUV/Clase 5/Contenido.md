@@ -6,5 +6,5 @@
 
 # Temas
 
-1. [Instrucciones AVX](Instrucciones%20AVX.md)
+1. [Instrucciones AVX](./Instrucciones%20AVX.md)
 2. [Resumen AVX](Resumen%20AVX.md)

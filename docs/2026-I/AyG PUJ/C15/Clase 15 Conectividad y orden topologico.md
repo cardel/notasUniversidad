@@ -16,4 +16,4 @@
 # Temas
 
 1. [Conectividad II](Conectividad%20II.md)
-2. [Orden topologico](Orden%20topologico.md)
+2. [Orden topologico](./Orden%20topologico.md)

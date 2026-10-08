@@ -10,4 +10,4 @@
 # Temas.
 
 1. [Reconocimiento de patrones](Reconocimiento%20de%20patrones.md)
-2. [Divide y vencerás](Divide%20y%20vencerás.md)
+2. [Divide y vencerás](./Divide%20y%20vencerás.md)

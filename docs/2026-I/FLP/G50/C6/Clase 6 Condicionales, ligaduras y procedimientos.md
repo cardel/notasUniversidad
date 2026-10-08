@@ -29,8 +29,8 @@
 
 # Contenido
 
-1. [Condicionales](Condicionales.md)
-2. [Ligaduras](Ligaduras.md)
+1. [Condicionales](./Condicionales.md)
+2. [Ligaduras](./Ligaduras.md)
 3. [Ejercicio ligaduras](Ejercicio%20ligaduras.md)
 4. [Ejericicio 2 Ligaduras y condicionales](Ejericicio%202%20Ligaduras%20y%20condicionales.md)
-5. [Procedimientos](Procedimientos.md)
+5. [Procedimientos](./Procedimientos.md)

@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C7
 
 Clase 7 — manejo de memoria en C (28 de agosto). Cada enlace abre una
 actividad que se trabaja directo en el navegador: prediga antes de ejecutar

@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C13
 
 Clase 13 — la STL de C++ (19 de septiembre). Cada enlace abre una
 actividad que se trabaja directo en el navegador, en el mismo orden de

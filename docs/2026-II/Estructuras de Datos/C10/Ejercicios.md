@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C10
 
 Clase 10 — abstracción de datos y tipos abstractos de datos (9 de
 septiembre). Cada enlace abre una actividad que se trabaja directo en el

@@ -1,4 +1,4 @@
-# Ejercicios
+# Ejercicios · Infra C2
 
 Clase 2 — estrategias de paralelización: descomposición, granularidad y
 balanceo (15 y 17 de septiembre). Los apartados van en el orden de la clase y

@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C6
 
 Siete ejercicios para el navegador, uno por cada tema de la sesión y en el
 mismo orden en que se dieron. Ninguno usa los programas ni los grafos de las

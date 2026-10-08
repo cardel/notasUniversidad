@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C3
 
 Los dos algoritmos de la sesión, para recorrer en el navegador. La mecánica
 es la de siempre: prediga antes de ejecutar, avance paso a paso y busque

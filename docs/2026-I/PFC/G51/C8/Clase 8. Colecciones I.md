@@ -9,7 +9,7 @@
 
 # Temas
 
-1. [Colecciones](Colecciones.md)
-2. [Flatmap](Flatmap.md)
-3. [Expresiones for](Expresiones%20for.md)
+1. [Colecciones](./Colecciones.md)
+2. [Flatmap](./Flatmap.md)
+3. [Expresiones for](./Expresiones%20for.md)
 

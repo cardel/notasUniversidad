@@ -5,9 +5,9 @@
 3. Recursión: lineal, de cola y de árbol
 
 # Tabla de contenido
-1. [Funciones de alto orden](Funciones%20de%20alto%20orden.md)
-2. [Currificación](Currificación.md)
+1. [Funciones de alto orden](./Funciones%20de%20alto%20orden.md)
+2. [Currificación](./Currificación.md)
 3. [Recursion lineal y cola](Recursion%20lineal%20y%20cola.md)
-4. [Recursion de arbol](Recursion%20de%20arbol.md)
+4. [Recursion de arbol](./Recursion%20de%20arbol.md)
 
 

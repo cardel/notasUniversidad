@@ -9,4 +9,4 @@
 # Temas
 
 1. [Introducción a los tipos](Introducción%20a%20los%20tipos.md)
-2. [Interpretador](Interpretador.md)
+2. [Interpretador](./Interpretador.md)

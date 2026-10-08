@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C18
 
 Clase 18 — el TAD Cola por dentro (9 de octubre). Cada enlace abre una
 actividad que se trabaja directo en el navegador, en el mismo orden de los

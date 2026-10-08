@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C5
 
 Cada enlace abre un ejercicio de conteo que se trabaja directo en el
 navegador. La mecánica es la misma en todos: elija la entrada, escriba su

@@ -27,4 +27,4 @@ Las expresiones for son más sencilla de leer y mantener
 # Temas
 
 1. [Generalizacion de las expresiones For](Generalizacion%20de%20las%20expresiones%20For.md)
-2. [Maps](Maps.md)
+2. [Maps](./Maps.md)

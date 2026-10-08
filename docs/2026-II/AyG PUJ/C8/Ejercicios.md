@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · AyG PUJ C8
 
 Nueve ejercicios para el navegador, organizados por los temas de la sesión y
 en el mismo orden; el último junta todo sobre un grafo grande. Ninguno usa el plan de estudios de las diapositivas, ni la

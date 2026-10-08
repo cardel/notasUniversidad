@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C6
 
 Clase 6 — la notación O (26 de agosto). Cada enlace abre una actividad que
 se trabaja directo en el navegador: proponga su respuesta antes de comprobar

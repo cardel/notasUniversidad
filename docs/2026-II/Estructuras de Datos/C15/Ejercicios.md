@@ -1,4 +1,4 @@
-# Ejercicios interactivos
+# Ejercicios · Estructuras de Datos C15
 
 Clase 15 — la lista enlazada (30 de septiembre). Cada enlace abre una
 actividad que se trabaja directo en el navegador, en el mismo orden de los
