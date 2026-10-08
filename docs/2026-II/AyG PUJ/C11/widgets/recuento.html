@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>recuento — low, puntos de articulación y puentes · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  #entradas { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.5rem; margin-bottom: 0.7rem; }
+  label.campo-low { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem 0.5rem; }
+  label.campo-low .mono { font-family: ui-monospace, monospace; white-space: nowrap; }
+  label.campo-low input { width: 4rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 6px; }
+  .piezas { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+  button.pieza { font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.25rem 0.55rem; }
+  #lista-aristas { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--gris); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>low, puntos de articulación y puentes</h1>
+  <p class="intro">Una sola profundidad deja dos números por vértice: <code>d</code>,
+  el momento en que se descubre, y <code>low</code>, el <code>d</code> más bajo
+  al que llega su subárbol con un salto de retroceso. Con esos dos números salen
+  los puntos de articulación y los puentes. La profundidad ya corrió: el árbol
+  está dibujado y cada vértice trae su <code>d</code>. Falta escribir los
+  <code>low</code> y después marcar las piezas de corte.</p>
+
+  <div class="carta">
+    <h2>1. El grafo con la profundidad hecha</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Siete vértices, un puente</button>
+      <button data-preset="1">Ocho vértices, ningún puente</button>
+      <button data-preset="2">Diez vértices, tres puentes</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span><b style="color:#1f5fa8">━</b> arista del árbol</span>
+      <span><b style="color:#2e7d32">┅</b> arista de retroceso</span>
+      <span>el número gris sobre cada arista es su identificador</span>
+    </div>
+    <p class="nota" style="text-align:center">La profundidad arranca en el 0 y
+    recorre los vecinos de menor a mayor. Aristas: <span id="lista-aristas"></span></p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Escriba el low de cada vértice</h2>
+    <p class="nota" style="margin-top:0">Conviene empezar por las hojas del árbol
+    y subir: el <code>low</code> de un vértice necesita el de sus hijos. Cada
+    hijo aporta su <code>low</code>, cada retroceso aporta el <code>d</code> del
+    otro extremo, y la arista por la que se llegó no aporta nada.</p>
+    <div id="entradas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div id="explicaciones"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Marque los puntos de articulación y los puentes</h2>
+    <p style="margin-top:0">La raíz es punto de articulación cuando tiene dos
+    hijos o más en el árbol; cualquier otro vértice, cuando algún hijo
+    <code>w</code> cumple <code>low[w] ≥ d[u]</code>. Una arista de árbol es
+    puente cuando <code>low[w] &gt; d[v]</code>, con desigualdad estricta.</p>
+    <div><b>Vértices que son punto de articulación:</b></div>
+    <div class="piezas" id="marcas-vertices"></div>
+    <div><b>Aristas que son puente:</b></div>
+    <div class="piezas" id="marcas-aristas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar-marcas" class="primario">Comprobar las marcas</button>
+    </div>
+    <div id="veredicto-marcas" class="veredicto"></div>
+    <div id="detalle-marcas"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el segundo grafo hay dos
+    puntos de articulación y ningún puente: diga, para cada uno, cuál es el
+    hijo que lo marca y por qué la arista hacia ese hijo no es puente. En el
+    tercer grafo, agregue la arista 4–5 y vuelva a trazar a mano: ¿qué puentes
+    sobreviven y qué puntos de articulación se pierden? Y en el primero, corra
+    la profundidad desde el 4 en lugar del 0: los <code>d</code> y los
+    <code>low</code> cambian, el puente no.</p>
+  </div>
+
+</div>
+<script src="recuento.js"></script>
+</body>
+</html>

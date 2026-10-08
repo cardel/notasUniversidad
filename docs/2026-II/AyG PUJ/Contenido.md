@@ -40,6 +40,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 8. [Clase 8. Orden topológico — semana del 21 de septiembre](C8/Clase%208.%20Orden%20topologico.md)
 9. [Clase 9. Conectividad — 25 de septiembre](C9/Clase%209.%20Conectividad.md)
 10. [Clase 10. Orden topológico con la profundidad y el valor low — 2 de octubre](C10/Clase%2010.%20Orden%20topologico%20y%20Tarjan.md)
+11. [Clase 11. Problemas de cortes — 9 de octubre](C11/Clase%2011.%20Problemas%20de%20cortes.md)
 
 ## Clases en video
 

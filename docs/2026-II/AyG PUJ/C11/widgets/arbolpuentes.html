@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arbolpuentes — el árbol de puentes paso a paso · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo, #panel-traza, #panel-arbol { text-align: center; margin: 0.4rem 0; }
+  .viva { font-family: ui-monospace, monospace; background: var(--codigo-fondo); border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-word; }
+  .mensaje { min-height: 3.2rem; font-size: 0.9rem; background: var(--ambar-suave); border-radius: 8px; padding: 0.4rem 0.6rem; }
+  .piezas { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+  button.pieza { font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.25rem 0.55rem; }
+  #entradas-comp { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.4rem; margin-bottom: 0.7rem; }
+  label.campo-comp { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem 0.5rem; }
+  label.campo-comp .mono { font-family: ui-monospace, monospace; white-space: nowrap; }
+  label.campo-comp input { width: 3.4rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 6px; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  table.cuenta th { text-align: left; width: 34%; }
+  table.cuenta td { text-align: left; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El árbol de puentes paso a paso</h1>
+  <p class="intro">Borrar los puentes de un grafo no dirigido lo parte en
+  componentes 2-arista-conexos. Si cada pedazo se encoge a un nodo y cada
+  puente se deja como arista entre esos nodos, lo que queda es un árbol, y
+  sobre un árbol casi todo es un recorrido. Se construye en tres pasadas:
+  los puentes con Tarjan, un etiquetado que no los cruza y una pasada por las
+  aristas puente. Aquí se hacen las tres, en orden.</p>
+
+  <div class="carta">
+    <h2>1. El grafo y la predicción</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Nueve vértices, dos puentes</button>
+      <button data-preset="1">Once vértices, tres puentes</button>
+      <button data-preset="2">Doce vértices, cuatro puentes</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p style="margin-top:0"><b>Entrada:</b> un grafo no dirigido conexo de
+    <span id="ver-n"></span>, sin aristas repetidas. &nbsp;<b>Salida:</b> el
+    árbol de puentes. La profundidad arranca en el 0 y recorre los vecinos de
+    menor a mayor.</p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span><b style="color:#b3261e">━</b> puente</span>
+      <span>el número gris sobre cada arista es su identificador</span>
+      <span>sobre cada vértice, su <code>comp</code></span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos nodos va a tener el árbol?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Primera pasada: los puentes</h2>
+    <p style="margin-top:0">Una arista de árbol <code>(v, w)</code>, con
+    <code>w</code> hijo de <code>v</code>, es puente cuando
+    <code>low[w] &gt; d[v]</code>, con desigualdad estricta. Una arista de
+    retroceso nunca lo es. Marque las que lo son.</p>
+    <div class="piezas" id="marcas-aristas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar-puentes" class="primario">Comprobar los puentes</button>
+    </div>
+    <div id="veredicto-puentes" class="veredicto"></div>
+    <div id="detalle-puentes"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Segunda pasada: el etiquetado</h2>
+    <p style="margin-top:0">Para cada vértice sin componente, un recorrido que
+    <b>no cruza puentes</b>; a todo lo que alcanza se le pone el mismo número.
+    Esa es la única condición del recorrido, y es la que separa los pedazos.
+    Escriba el <code>comp</code> de cada vértice, numerando desde el 0 en el
+    orden en que el código abre los componentes.</p>
+    <div id="entradas-comp"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar-comp" class="primario">Comprobar el etiquetado</button>
+    </div>
+    <div id="veredicto-comp" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Las pasadas dos y tres, línea por línea</h2>
+    <div class="presets" id="presets-version" style="margin-bottom:0.6rem">
+      <span class="nota" style="margin-top:0">Recorrido:</span>
+      <button data-version="recursiva">Etiquetado recursivo</button>
+      <button data-version="pila" class="primario">Etiquetado con pila</button>
+    </div>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div><span id="rot-pila">pila</span>: <span class="viva" id="ver-pila">vacía</span></div>
+        <div><code>comp</code>: <span class="viva" id="ver-comp">aún no</span></div>
+        <div><code>T</code>: <span class="viva" id="ver-arbol">aún no</span></div>
+        <div class="mensaje" id="ver-msg"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+    <div id="panel-traza"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. El árbol que queda</h2>
+    <div id="panel-arbol"></div>
+    <div class="envoltura-tabla">
+      <table class="cuenta">
+        <tbody id="cuenta-arbol"></tbody>
+      </table>
+    </div>
+    <div class="prediccion" style="margin-top:0.7rem">
+      <span id="pregunta-dist"></span>
+      <input type="number" id="dist-correcta" min="0" placeholder="su número">
+      <button id="btn-dist" class="primario">Comprobar</button>
+    </div>
+    <p class="nota" id="dato-dist" style="margin-top:0.2rem"></p>
+    <div id="veredicto-dist" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el tercer grafo, agregue una
+    arista entre los dos vértices que son hoja del árbol y vuelva a construirlo:
+    ¿cuántos nodos tiene ahora y qué forma tiene? Después conteste con el
+    segundo grafo: si el árbol de puentes tiene <code>L</code> hojas, ¿cuántas
+    aristas nuevas hacen falta como mínimo para que el grafo quede sin ningún
+    puente, y entre cuáles vértices se ponen? Y por último, en el primer grafo,
+    quite el etiquetado de la segunda pasada y use en su lugar una profundidad
+    corriente: diga qué nodos y qué aristas pierde el árbol.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="arbolpuentes.js"></script>
+</body>
+</html>
