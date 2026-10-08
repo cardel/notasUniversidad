@@ -28,7 +28,7 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase11-problemas-cortes.pdf](./clase11-problemas-cortes.pdf){ target=_blank rel=noopener },
-108 páginas. Los grafos van dibujados: el de diez vértices con los tres
+106 páginas. Los grafos van dibujados: el de diez vértices con los tres
 puentes en rojo, el mismo con $d/low$ debajo de cada vértice, el mismo con
 cada componente encerrado en una caja, el árbol de puentes que sale de
 contraerlo, la ciudad de siete intersecciones antes y después de orientarla,
@@ -934,18 +934,9 @@ Cuesta una profundidad por caso, $\Theta(n+m)$, más $O(n \log n)$ por el
 ordenamiento de la salida. Las estaciones tienen grado a lo sumo $10$, de modo
 que $m = O(n)$.
 
-## Interplanetary
-
-El enunciado y la solución los trae el profesor titular, y el problema se
-trabaja en la sesión con el material que él publica.
-
-Se ataca con el árbol de puentes: Tarjan para marcarlos, el etiquetado que no
-los cruza para darle a cada vértice su componente, y un recorrido del árbol
-que queda.
-
 ## Cómo atacar estos problemas
 
-Los tres comparten el mismo camino, y son cinco pasos:
+Los dos comparten el mismo camino, y son cinco pasos:
 
 1. **Leer el grafo.** Quiénes son los vértices y quiénes las aristas, y si
    viene dirigido o no. Intersecciones y calles; estaciones y vías.
