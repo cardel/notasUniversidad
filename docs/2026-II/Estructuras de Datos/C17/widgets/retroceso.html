@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>retroceso — el recorrido de UVa 732 estado por estado</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El recorrido con retroceso</h1>
+  <p class="intro">UVa 732 — Anagrams by Stack pide todas las secuencias de
+  <code>i</code> y <code>o</code> que convierten una palabra en la otra, en
+  orden alfabético: la <code>i</code> mete a la pila la siguiente letra de la
+  entrada y la <code>o</code> saca la del tope y la escribe. El enunciado está
+  en <a href="https://onlinejudge.org/external/7/732.pdf">https://onlinejudge.org/external/7/732.pdf</a>.
+  El caso es <code>sala</code> contra <code>alas</code>.</p>
+
+  <div class="carta">
+    <h2>1. Estado por estado</h2>
+    <div class="codigo" id="codigo-buscar"></div>
+    <p style="margin-top:0.7rem">La línea resaltada es la llamada que trajo el
+    recorrido hasta este estado. Cada avance muestra con qué jugadas se llegó,
+    qué hay en la pila, qué lleva escrito y cuál de las dos jugadas sigue
+    abierta.</p>
+    <div class="estado">
+      <div class="chips" id="chips-paso"></div>
+      <div class="secuencia" id="secuencia-paso"></div>
+      <div class="secuencia" id="pila-paso"></div>
+      <div class="progreso" id="progreso-paso"></div>
+    </div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente estado</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">La jugada <code>o</code> solo está abierta cuando el tope
+    coincide con la letra que la salida necesita. Sacar otra escribiría una
+    letra equivocada, y lo escrito no se borra.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Las dos secuencias</h2>
+    <p style="margin-top:0">El recorrido imprime dos. Escríbalas en el orden en
+    que el programa las imprime; los espacios entre letras son opcionales.</p>
+    <div class="prediccion">
+      <span>primera:</span>
+      <input type="text" id="pred-sec1" placeholder="i o i o i o i o" style="width:10rem">
+      <span>segunda:</span>
+      <input type="text" id="pred-sec2" placeholder="i o i o i o i o" style="width:10rem">
+      <button id="btn-secuencias" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-secuencias" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">El recorrido visitó <b id="dato-estados"></b> estados
+    para imprimir dos secuencias, y <b id="dato-callejones"></b> de ellos no
+    llegó a nada: se metieron las cuatro letras y el tope no era la letra que
+    tocaba escribir. Hacer y deshacer una jugada cuesta Θ(1) sobre la pila
+    enlazada, que es lo que hace viable probarlas todas; imprimir una secuencia
+    cuesta Θ(m) y el espacio es Θ(m), con 2m marcos de recursión abiertos en el
+    punto más profundo. Deshacer una <code>o</code> exige devolver la letra con
+    <code>apilar</code>, leída con <code>tope()</code> antes de sacarla: después
+    del <code>desapilar</code> no hay de dónde leerla.
+    Envío en <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673">https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673</a>.</div>
+  </div>
+</div>
+<script src="retroceso.js"></script>
+</body>
+</html>

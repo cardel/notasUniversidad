@@ -40,3 +40,23 @@ escrituras de puntero cuesta cada operación.
 
 Tres programas con restricciones distintas y qué pila conviene a cada uno, con
 la razón de por qué las otras salen caras; y hasta dónde aguanta cada una.
+
+## Para el juez
+
+### [retroceso](widgets/retroceso.html){ target=_blank rel=noopener }
+
+Los dieciséis estados que la búsqueda de UVa 732 recorre sobre `sala` y `alas`,
+con la pila, lo escrito y la jugada que queda abierta en cada uno, hasta el
+estado donde ninguna de las dos se puede.
+
+### [jugadas](widgets/jugadas.html){ target=_blank rel=noopener }
+
+Cuál de cuatro secuencias de `i` y `o` convierte una palabra en la otra, dónde
+se rompe una candidata y cuál de cuatro casos imprime el bloque vacío; cada
+opción equivocada dice qué pasa si se toma.
+
+### [cuantas](widgets/cuantas.html){ target=_blank rel=noopener }
+
+Cuántas secuencias imprime un caso, dicho antes de verlo, con letras repetidas
+y con un anagrama que no admite ninguna. La más exigente de este grupo: la
+cuenta sale a mano y crece más rápido de lo que se ve venir.

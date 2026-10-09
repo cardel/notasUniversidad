@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jugadas — qué jugadas se pueden en UVa 732</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La jugada que no se puede</h1>
+  <p class="intro">En UVa 732 — Anagrams by Stack la <code>i</code> mete a la
+  pila la siguiente letra de la entrada y la <code>o</code> saca la del tope y
+  la escribe. La <code>i</code> exige que queden letras por meter; la
+  <code>o</code>, que la pila no esté vacía y que su tope sea justo la letra que
+  la salida necesita. El enunciado está en
+  <a href="https://onlinejudge.org/external/7/732.pdf">https://onlinejudge.org/external/7/732.pdf</a>.</p>
+
+  <div class="carta">
+    <h2>1. La que convierte nido en odin</h2>
+    <p style="margin-top:0">Cuatro candidatas, una sola sirve.</p>
+    <div class="opciones" id="opciones-secuencia">
+      <button data-op="completa"><code>i i i i o o o o</code></button>
+      <button data-op="vacia"><code>o i i i i o o o</code></button>
+      <button data-op="tope"><code>i i i o o o i o</code></button>
+      <button data-op="corta"><code>i i i i o o o</code></button>
+    </div>
+    <div id="veredicto-secuencia" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Dónde se rompe la candidata</h2>
+    <p style="margin-top:0">Sobre <code>tela</code> y <code>elat</code> se
+    propone esta secuencia, numerada por jugada. El programa la descarta antes
+    de terminarla.</p>
+    <div class="secuencia" id="fichas-candidata"></div>
+    <div class="opciones" id="opciones-motivo">
+      <button data-op="tope">En la jugada 4 el tope es <code>l</code> y la salida necesita <code>e</code></button>
+      <button data-op="vacia">En alguna jugada la <code>o</code> saca de una pila vacía</button>
+      <button data-op="sinletras">En alguna jugada la <code>i</code> mete una letra que ya no existe</button>
+      <button data-op="sobra">Llega al final y le sobra una letra en la pila</button>
+    </div>
+    <div id="veredicto-motivo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El caso que no imprime nada</h2>
+    <p style="margin-top:0">Las dos palabras de los cuatro casos tienen las
+    mismas letras. Uno de ellos imprime los corchetes y nada en medio.</p>
+    <div class="opciones" id="opciones-vacio">
+      <button data-op="cosa"><code>cosa</code> y <code>saco</code></button>
+      <button data-op="dado"><code>dado</code> y <code>odad</code></button>
+      <button data-op="lata"><code>lata</code> y <code>atal</code></button>
+      <button data-op="tela"><code>tela</code> y <code>elat</code></button>
+    </div>
+    <div id="veredicto-vacio" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Las dos jugadas del programa son los dos <code>if</code>
+    de <code>buscar</code>, y cada uno es una precondición de la pila escrita
+    como condición: <code>metidas &lt; largo</code> para meter,
+    <code>!p.vacia() &amp;&amp; p.tope() == salida[escritas]</code> para sacar.
+    Una secuencia falla de una de cuatro formas: saca de una pila vacía, saca
+    una letra distinta de la que toca escribir, mete una letra que ya no existe,
+    o se queda sin escribir la salida completa. Comprobar una jugada cuesta
+    Θ(1) con <code>vacia()</code> y <code>tope()</code>, hacerla y deshacerla
+    también, y por eso el recorrido puede probarlas todas; escribir una
+    secuencia completa cuesta Θ(m) y el espacio es Θ(m).
+    Que las dos palabras tengan las mismas letras no alcanza: el orden en que
+    la entrada las mete decide cuál queda encima de cuál, y la pila entrega
+    primero la de arriba.
+    Envío en <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673">https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673</a>.</div>
+  </div>
+</div>
+<script src="jugadas.js"></script>
+</body>
+</html>

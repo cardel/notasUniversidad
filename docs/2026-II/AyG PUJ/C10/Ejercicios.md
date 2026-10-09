@@ -87,9 +87,9 @@ diapositivas.
    sobre la raíz de $C$.
 
 5. Sea $H$ el grafo no dirigido con $V = \{0,1,\ldots,9\}$ y aristas
-   $0\text{--}1$, $0\text{--}2$, $1\text{--}2$, $1\text{--}3$, $3\text{--}4$,
-   $3\text{--}5$, $4\text{--}5$, $4\text{--}6$, $6\text{--}7$, $6\text{--}8$,
-   $7\text{--}8$, $8\text{--}9$. Corra la profundidad desde $0$ con las
+   $0\text{–}1$, $0\text{–}2$, $1\text{–}2$, $1\text{–}3$, $3\text{–}4$,
+   $3\text{–}5$, $4\text{–}5$, $4\text{–}6$, $6\text{–}7$, $6\text{–}8$,
+   $7\text{–}8$, $8\text{–}9$. Corra la profundidad desde $0$ con las
    listas en orden creciente, escriba $d$ y $low$ de cada vértice y llene la
    tabla de aristas de árbol. Hay cinco puntos de articulación y tres
    puentes.

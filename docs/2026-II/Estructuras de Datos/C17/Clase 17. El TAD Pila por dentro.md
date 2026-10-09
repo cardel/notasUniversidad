@@ -854,13 +854,16 @@ para `bahama` y `bahama`, y diga de dónde sale cada bifurcación.
 
 ## Ejercicios interactivos
 
-Cinco actividades que se trabajan en el navegador, una por tema de la sesión, en
-la [página de ejercicios interactivos](./Ejercicios.md): siete operaciones sobre
-la pila de arreglo hasta la que ya no entra; los elementos que se mueven al
-apilar y desapilar cincuenta veces en las cuatro combinaciones; la cadena y el
-puntero a la cima paso a paso; qué queda si `desapilar` libera el nodo antes de
-mover `cima`; y qué pila conviene a tres programas con restricciones distintas.
-Los programas no son los de la sesión: mismo tema, valores nuevos.
+Ocho actividades que se trabajan en el navegador, en la [página de ejercicios
+interactivos](./Ejercicios.md): siete operaciones sobre la pila de arreglo hasta
+la que ya no entra; los elementos que se mueven al apilar y desapilar cincuenta
+veces en las cuatro combinaciones; la cadena y el puntero a la cima paso a paso;
+qué queda si `desapilar` libera el nodo antes de mover `cima`; y qué pila
+conviene a tres programas con restricciones distintas. Las tres últimas son
+sobre el problema del juez: los estados que recorre la búsqueda uno por uno,
+cuál secuencia de `i` y `o` convierte una palabra en la otra, y cuántas
+secuencias imprime un caso dicho antes de verlo. Los programas no son los de la
+sesión: mismo tema, valores nuevos.
 
 ## Lo que sigue
 
