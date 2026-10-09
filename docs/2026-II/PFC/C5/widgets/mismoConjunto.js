@@ -5,7 +5,7 @@
    generados. El codigo sale de 06_conjent_clases.scala y
    08_conjent_sealed_case.scala del deck de la sesion. */
 (function () {
-  var HASH = "46f5f779";
+  var HASH = "67117f44";
 
   /* El arbol, una sola vez: las dos versiones guardan lo mismo. */
   function vacio() { return { forma: "Vacio" }; }
@@ -31,7 +31,7 @@
   /* El toString heredado: el nombre de la clase con los objetos que la
      encierran y una direccion en hexadecimal. No mira los campos. */
   function textoHeredado(c) {
-    return "Sonda$ConClase$" + c.forma + "@" + HASH;
+    return "ConjentClases$" + c.forma + "@" + HASH;
   }
 
   /* El toString que genera case class: recorre los campos. */
@@ -88,7 +88,7 @@
   ];
 
   var SALIDAS = [
-    "Sonda$ConClase$NoVacio@" + HASH,
+    "ConjentClases$NoVacio@" + HASH,
     "NoVacio(5,NoVacio(3,Vacio(),Vacio()),NoVacio(8,Vacio(),Vacio()))",
     "true",
     "false",
@@ -126,7 +126,7 @@
     },
     caso: {
       imprime: {
-        "Sonda$ConClase$NoVacio@46f5f779":
+        "ConjentClases$NoVacio@67117f44":
           "Ese es el toString heredado, el de la otra columna. case class genera uno que recorre " +
           "los campos: escribe el nombre de la forma y, entre paréntesis, el elemento y los dos " +
           "subárboles."
@@ -237,11 +237,11 @@
   ];
 
   var CODIGO_MAIN = [
-    "// en ConClase",
+    "// en ConjentClases",
     "val c         = Vacio.insertar(5).insertar(3).insertar(8)",
     "val otroIgual = Vacio.insertar(5).insertar(3).insertar(8)",
     " ",
-    "// en ConCase",
+    "// en ConjentSealedCase",
     "val c         = Vacio().insertar(5).insertar(3).insertar(8)",
     "val otroIgual = Vacio().insertar(5).insertar(3).insertar(8)"
   ];
