@@ -1,13 +1,10 @@
 // UVa 10935 - Throwing cards away I: el mazo es una cola. Theta(n) por caso.
-#include <iostream>
+#include <cstdio>
 #include "cola_nodos.h"
-
-using std::cin;
-using std::cout;
 
 int main() {
   int n;
-  cin >> n;
+  scanf("%d", &n);
   while (n != 0) {
     Cola mazo;
     int carta = 1;
@@ -16,22 +13,22 @@ int main() {
       carta = carta + 1;
     }
     // la primera carta botada no lleva coma antes
-    cout << "Discarded cards:";
+    printf("Discarded cards:");
     bool primera = true;
     while (mazo.tamano() >= 2) {
       if (primera) {
-        cout << " " << mazo.frente();
+        printf(" %d", mazo.frente());
         primera = false;
       } else {
-        cout << ", " << mazo.frente();
+        printf(", %d", mazo.frente());
       }
       mazo.desencolar();
       mazo.encolar(mazo.frente());
       mazo.desencolar();
     }
-    cout << "\n";
-    cout << "Remaining card: " << mazo.frente() << "\n";
-    cin >> n;
+    printf("\n");
+    printf("Remaining card: %d\n", mazo.frente());
+    scanf("%d", &n);
   }
   return 0;
 }

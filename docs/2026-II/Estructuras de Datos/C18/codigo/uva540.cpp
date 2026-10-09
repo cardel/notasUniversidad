@@ -1,12 +1,8 @@
 // UVa 540 - Team Queue: una cola de equipos y una cola por equipo.
 // Encolar y desencolar cuestan Theta(1).
-#include <iostream>
-#include <string>
+#include <cstdio>
+#include <cstring>
 #include "cola_nodos.h"
-
-using std::cin;
-using std::cout;
-using std::string;
 
 const int MAX_PERSONAS = 1000000;
 const int MAX_EQUIPOS = 1000;
@@ -49,42 +45,40 @@ void vaciar() {
 }
 
 int main() {
-  std::ios::sync_with_stdio(false);
-  cin.tie(NULL);
   int t;
   int escenario = 0;
-  cin >> t;
+  scanf("%d", &t);
   while (t != 0) {
     escenario = escenario + 1;
     int e = 0;
     while (e < t) {
       int m;
-      cin >> m;
+      scanf("%d", &m);
       int j = 0;
       while (j < m) {
         int x;
-        cin >> x;
+        scanf("%d", &x);
         equipo[x] = e;
         j = j + 1;
       }
       e = e + 1;
     }
-    cout << "Scenario #" << escenario << "\n";
-    string orden;
-    cin >> orden;
-    while (orden != "STOP") {
-      if (orden == "ENQUEUE") {
+    printf("Scenario #%d\n", escenario);
+    char orden[16];
+    scanf("%s", orden);
+    while (strcmp(orden, "STOP") != 0) {
+      if (strcmp(orden, "ENQUEUE") == 0) {
         int x;
-        cin >> x;
+        scanf("%d", &x);
         encolar(x);
       } else {
-        cout << desencolar() << "\n";
+        printf("%d\n", desencolar());
       }
-      cin >> orden;
+      scanf("%s", orden);
     }
-    cout << "\n";
+    printf("\n");
     vaciar();
-    cin >> t;
+    scanf("%d", &t);
   }
   return 0;
 }

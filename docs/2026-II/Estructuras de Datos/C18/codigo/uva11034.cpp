@@ -1,27 +1,23 @@
 // UVa 11034 - Ferry Loading IV: una cola por orilla. Theta(m) por caso.
-#include <iostream>
-#include <string>
+#include <cstdio>
+#include <cstring>
 #include "cola_nodos.h"
-
-using std::cin;
-using std::cout;
-using std::string;
 
 int main() {
   int c;
-  cin >> c;
+  scanf("%d", &c);
   while (c > 0) {
     int l;
     int m;
-    cin >> l >> m;
+    scanf("%d %d", &l, &m);
     int capacidad = 100 * l;  // la cubierta en centimetros
     Cola orilla[2];           // 0: izquierda, 1: derecha
     int i = 0;
     while (i < m) {
       int largo;
-      string lado;
-      cin >> largo >> lado;
-      if (lado == "left") {
+      char lado[8];
+      scanf("%d %s", &largo, lado);
+      if (strcmp(lado, "left") == 0) {
         orilla[0].encolar(largo);
       } else {
         orilla[1].encolar(largo);
@@ -41,7 +37,7 @@ int main() {
       cruces = cruces + 1;
       ferri = 1 - ferri;
     }
-    cout << cruces << "\n";
+    printf("%d\n", cruces);
     c = c - 1;
   }
   return 0;

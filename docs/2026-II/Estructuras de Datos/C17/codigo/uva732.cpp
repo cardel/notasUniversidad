@@ -1,29 +1,29 @@
 // UVa 732 - Anagrams by Stack: todas las secuencias de i y o que convierten
 // la palabra de entrada en la de salida, en orden alfabetico.
-#include <iostream>
-#include <string>
+#include <cstdio>
+#include <cstring>
 #include "pila_nodos.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
+const int MAXIMO = 100;  // letras que caben en cada palabra
 
-string entrada;
-string salida;
-int largo;        // las dos palabras miden lo mismo cuando se busca
-string jugadas;   // la secuencia en construccion: 2 * largo jugadas
+// + 1 para el '\0' que cierra cada cadena
+char entrada[MAXIMO + 1];
+char salida[MAXIMO + 1];
+// las dos palabras miden lo mismo cuando se busca
+int largo;
+// la secuencia en construccion: 2 * largo jugadas
+char jugadas[2 * MAXIMO];
 
 void imprimir() {
   int k = 0;
   while (k < 2 * largo) {
     if (k > 0) {
-      cout << " ";
+      printf(" ");
     }
-    cout << jugadas[k];
+    printf("%c", jugadas[k]);
     k = k + 1;
   }
-  cout << endl;
+  printf("\n");
 }
 
 // metidas: letras de la entrada que ya estan en la pila o salieron de ella.
@@ -50,15 +50,14 @@ void buscar(Pila &p, int metidas, int escritas) {
 }
 
 int main() {
-  while (cin >> entrada >> salida) {
-    cout << "[" << endl;
-    if (entrada.size() == salida.size()) {
-      largo = entrada.size();
-      jugadas = string(2 * largo, 'i');
+  while (scanf("%s %s", entrada, salida) == 2) {
+    printf("[\n");
+    if (strlen(entrada) == strlen(salida)) {
+      largo = strlen(entrada);
       Pila p;
       buscar(p, 0, 0);
     }
-    cout << "]" << endl;
+    printf("]\n");
   }
   return 0;
 }

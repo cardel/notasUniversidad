@@ -821,9 +821,8 @@ Merge sort ordena en $\Theta(n \log n)$: con dos millones de edades son unos
 $2 \cdot 10^6 \times 21 \approx 4{,}2 \cdot 10^7$ comparaciones, que entran en
 el tiempo. Hay tres trampas. El cuello de botella no es ordenar sino leer: el
 enunciado avisa que la entrada pesa unos 25 MB y pide usar entrada y salida
-rápidas, y dos millones de enteros con `cin` sin desacoplar de `stdio` se
-tardan más que el ordenamiento entero. Una lista enlazada de dos millones de
-nodos pide dos millones de `new`, y el tiempo de reservar y el puntero por nodo
+rápidas, así que los dos millones de enteros se leen con `scanf` y se escriben
+con `printf`. Una lista enlazada de dos millones de nodos pide dos millones de `new`, y el tiempo de reservar y el puntero por nodo
 pesan: aquí gana el arreglo. Y el rango 1 a 99 es una cota sobre los valores,
 no sobre la cantidad, y eso permite ordenar sin comparar y en $\Theta(n)$.
 Averiguar cómo es el ejercicio que deja planteado la sesión de tablas hash.
