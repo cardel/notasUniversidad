@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mismoTexto — dos árboles, un solo texto</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #arboles { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.8rem; }
+  @media (max-width: 720px) { #arboles { grid-template-columns: 1fr; } }
+  .arbol {
+    border: 1px solid var(--borde); border-radius: 10px;
+    padding: 0.7rem 0.8rem; background: var(--codigo-fondo);
+  }
+  .arbol.listo { border-color: var(--verde); background: var(--verde-suave); }
+  .arbol h3 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--azul); }
+  .arbol.listo h3 { color: var(--verde); }
+  .arbol .termino {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.78rem; color: var(--gris); overflow-wrap: anywhere;
+  }
+  .arbol svg { display: block; margin: 0.3rem 0; }
+  .arbol .salida {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.9rem; font-weight: 700; color: var(--tinta);
+    background: #fff; border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.3rem 0.55rem;
+  }
+  .arbol .pregunta { font-weight: 600; margin-top: 0.6rem; font-size: 0.92rem; }
+  .arbol .opciones button {
+    font-family: ui-monospace, monospace; font-size: 0.95rem;
+    min-width: 2.8rem;
+  }
+  .caso { padding: 0.7rem 0; border-top: 1px solid var(--borde); }
+  .caso:first-child { border-top: none; padding-top: 0.2rem; }
+  .caso .cadena {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 1.05rem; font-weight: 700; color: var(--tinta);
+  }
+  .caso.listo .cadena { color: var(--verde); }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>mismoTexto</code>: dos árboles, un solo texto</h1>
+  <p class="intro">Los dos árboles de abajo son valores distintos del tipo
+  <code>Expr</code>, y <code>mostrar</code> imprime de los dos la misma cadena:
+  <code>1 + 2 * 3</code>. <code>eval</code>, en cambio, no responde lo mismo.
+  Recorra cada árbol con los casos de <code>eval</code> y diga qué entero sale
+  de cada uno.</p>
+
+  <div class="carta">
+    <h2>1. Las dos funciones, y los dos árboles</h2>
+    <div id="codigo-eval"></div>
+    <div id="arboles"></div>
+    <p class="nota">Los círculos verdes son hojas, <code>Numero(n)</code>. Los
+    azules son nodos de operación, con sus dos hijos debajo.</p>
+    <div class="progreso" id="marcador-valores" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-dos">
+    <h2>2. La variante con paréntesis sí los separa</h2>
+    <p style="margin-top:0"><code>mostrarConParentesis</code> encierra lo que
+    arma el caso de la suma y deja el producto sin encerrar. De los dos árboles
+    salen entonces dos cadenas distintas. Diga de cuál viene cada una.</p>
+    <div id="codigo-parentesis"></div>
+    <div id="textos" style="margin-top:0.8rem"></div>
+    <div class="progreso" id="marcador-textos" style="margin-top:0.6rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. ¿Por qué <code>mostrar</code> no alcanza para distinguirlos?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Porque <code>mostrar</code> pega los dos lados con el operador y no escribe paréntesis: la cadena no dice dónde empieza y dónde termina cada nodo, y las dos estructuras caen en el mismo texto.</button>
+      <button data-razon="precedencia" data-msg="eval nunca consulta la precedencia: entra por la forma del nodo y multiplica o suma lo que sus hijos devuelven. La precedencia es la regla que el lector aplica al leer la cadena plana, y en el dato no está escrita en ninguna parte.">Porque <code>*</code> tiene más precedencia que <code>+</code>, y <code>eval</code> aplica esa precedencia al evaluar.</button>
+      <button data-razon="recorrido" data-msg="El recorrido es el mismo en los dos y visita las hojas de izquierda a derecha, por eso los números salen en el orden 1, 2, 3. Lo que falta no es el orden: son las marcas que digan qué par de números pertenece al mismo nodo.">Porque <code>mostrar</code> recorre los dos árboles en órdenes distintos y los números salen revueltos.</button>
+      <button data-razon="igualdad" data-msg="Son dos valores distintos. Las case class comparan por contenido, y Prod(Suma(Numero(1), Numero(2)), Numero(3)) == Suma(Numero(1), Prod(Numero(2), Numero(3))) responde false. Los dos árboles existen por separado; lo que coincide es nada más la cadena que mostrar produce.">Porque los dos árboles son en realidad el mismo valor escrito de dos maneras.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El árbol tiene la estructura y el texto la pierde.
+    <code>eval</code> trabaja sobre la estructura: entra por la forma del nodo,
+    y en <code>Prod(Suma(Numero(1), Numero(2)), Numero(3))</code> el producto
+    está arriba, mientras en <code>Suma(Numero(1), Prod(Numero(2), Numero(3)))</code>
+    la suma está arriba. De ahí salen 9 y 7. <code>mostrar</code> escribe los
+    dos lados con el operador en medio y nada más, así que de los dos árboles
+    sale <code>1 + 2 * 3</code>.</p>
+    <p>La precedencia que el lector supone al ver esa cadena es suya, no del
+    dato. Nadie escribió en <code>Expr</code> que el producto se agrupa antes
+    que la suma: lo que agrupa es quién es hijo de quién. Por eso la cadena no
+    permite volver al árbol, y dos estructuras con valores distintos comparten
+    la misma salida. En el otro sentido no hay pérdida: del árbol siempre sale
+    su texto.</p>
+    <p><code>mostrarConParentesis</code> devuelve parte de lo perdido porque el
+    caso de la suma marca dónde abre y dónde cierra:
+    <code>(1 + 2) * 3</code> frente a <code>(1 + 2 * 3)</code>. Alcanza para
+    estos dos, no para todos. El caso del producto y el de la división siguen
+    sin marcar nada, y con divisiones el problema vuelve:
+    <code>Div(Div(Numero(8), Numero(4)), Numero(2))</code> y
+    <code>Div(Numero(8), Div(Numero(4), Numero(2)))</code> dan los dos
+    <code>8 / 4 / 2</code>, y valen 1 y 4.</p>
+  </div>
+</div>
+<script src="mismoTexto.js"></script>
+</body>
+</html>

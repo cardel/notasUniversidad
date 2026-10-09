@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>recorrido — en qué orden cierra cada nodo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .arbol { width: 100%; max-width: 620px; height: auto; display: block; margin: 0 auto; }
+  .arbol .nodo { fill: #fff; stroke: var(--borde); stroke-width: 2; }
+  .arbol .nodo.visitado { fill: var(--azul-suave); stroke: var(--azul); }
+  .arbol .nodo.cerrado { fill: var(--verde-suave); stroke: var(--verde); }
+  .arbol .nodo.actual { stroke: var(--ambar); stroke-width: 4; }
+  .arbol .hueco { fill: #e2e6eb; stroke: var(--borde); stroke-width: 1; }
+  .arbol .hueco.actual { stroke: var(--ambar); stroke-width: 3; }
+  .arbol .rama { stroke: var(--borde); stroke-width: 1.5; fill: none; }
+  .arbol text { font-family: ui-monospace, monospace; font-size: 15px; fill: var(--tinta); text-anchor: middle; }
+  .arbol text.orden { font-size: 11px; fill: var(--verde); font-weight: 700; }
+  td.expr { font-family: ui-monospace, monospace; text-align: left; }
+  select {
+    font: inherit; font-size: 0.9rem;
+    border: 1px solid var(--borde); border-radius: 6px; padding: 0.25rem 0.4rem;
+    background: #fff; color: var(--tinta);
+  }
+  select.bien-celda { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); }
+  select.mal-celda { border-color: var(--rojo); background: var(--rojo-suave); color: var(--rojo); }
+  input.lista {
+    font-family: ui-monospace, monospace; font-size: 0.95rem;
+    padding: 0.4rem 0.55rem; border: 1px solid var(--borde); border-radius: 8px;
+    width: 22rem; max-width: 100%;
+  }
+  .avisos { margin-top: 0.7rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .aviso-celda {
+    border-left: 4px solid var(--rojo); background: var(--rojo-suave);
+    border-radius: 6px; padding: 0.4rem 0.65rem; font-size: 0.88rem; color: var(--tinta);
+  }
+  .aviso-celda b { font-family: ui-monospace, monospace; color: var(--rojo); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  .acumulada {
+    font-family: ui-monospace, monospace; font-size: 0.9rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.4rem 0.6rem; margin-top: 0.6rem;
+  }
+  .acumulada b { color: var(--azul); }
+  .leyenda { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--gris); margin-top: 0.4rem; }
+  .leyenda span b { font-weight: 700; }
+  .leyenda .m1 { color: var(--azul); }
+  .leyenda .m2 { color: #a86a12; }
+  .leyenda .m3 { color: var(--verde); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>recorrido: en qué orden cierra cada nodo</h1>
+  <p class="intro"><code>listaEnteros</code> descompone el conjunto con
+  <code>match</code> y arma la lista con tres partes:
+  <code>listaEnteros(izq)</code>, <code>List(elm)</code> y
+  <code>listaEnteros(der)</code>. Un nodo <em>cierra</em> cuando construye su
+  <code>List(elm)</code>, es decir cuando aporta su elemento a la lista.
+  Diga en qué lugar cierra cada uno de los siete nodos y qué lista sale al
+  final.</p>
+
+  <div class="carta">
+    <h2>1. La función y el conjunto</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones bloqueado" id="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="acumulada">lista acumulada: <b id="acumulada">List()</b></div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span class="m1"><b>■</b> línea 6: el subárbol izquierdo</span>
+      <span class="m2"><b>■</b> línea 7: el elemento del nodo</span>
+      <span class="m3"><b>■</b> línea 8: el subárbol derecho</span>
+    </div>
+    <svg class="arbol" id="arbol" viewBox="0 0 600 262" role="img"
+         aria-label="árbol binario ordenado con raíz 10, el 8 y el 15 debajo"></svg>
+    <p class="nota">Los cuadros grises son los conjuntos vacíos: cada nodo
+    lleva dos hijos y los que no apuntan a otro nodo apuntan a
+    <code>Vacio()</code>. Las líneas numeradas del código llevan contador con
+    las veces que se evaluaron. Los botones quedan disponibles cuando la tabla
+    y la predicción estén resueltas.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. El orden de cierre</h2>
+    <p style="margin-top:0">Los nodos están en el orden en que aparecen
+    escritos en <code>conjA</code>. Asigne a cada uno el lugar en que aporta su
+    elemento, de 1 a 7.</p>
+    <div class="envoltura-tabla">
+      <table id="tabla-orden"></table>
+    </div>
+    <p style="margin-top:0.9rem">Y la lista que imprime
+    <code>println(listaEnteros(conjA))</code>:</p>
+    <div class="prediccion">
+      <input class="lista" id="prediccion-lista" type="text" placeholder="List(…)"
+             autocomplete="off" spellcheck="false">
+      <button class="primario" id="btn-comprobar">Comprobar</button>
+    </div>
+    <div class="progreso" id="contador" style="margin-top:0.6rem"></div>
+    <div class="avisos" id="avisos"></div>
+    <div class="veredicto" id="veredicto-lista"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El caso <code>NoVacio(elm, izq, der)</code> liga de
+    una sola vez las tres partes del nodo, y el cuerpo las vuelve a juntar en
+    el orden en que están escritas: primero la lista del subárbol izquierdo,
+    después el elemento, después la del derecho. Esa escritura es todo el
+    recorrido. La llamada de la línea 6 tiene que devolver antes de que se
+    construya <code>List(elm)</code>, así que todos los nodos del subárbol
+    izquierdo aportan antes que el nodo que los contiene, y los del derecho
+    después.</p>
+    <p>Sobre un árbol binario ordenado eso basta para que la lista salga
+    ordenada: en cada nodo, lo que está a la izquierda es menor que el elemento
+    y lo que está a la derecha es mayor, y el recorrido los pide en ese mismo
+    orden. Mover <code>List(elm)</code> al principio del cuerpo cambiaría el
+    recorrido y la lista dejaría de estar ordenada, sin tocar ni un dato del
+    árbol.</p>
+    <p>Los contadores dicen lo demás. <code>listaEnteros</code> se llamó una
+    vez por cada nodo y una vez por cada conjunto vacío: siete nodos, ocho
+    vacíos, quince llamadas en total para una lista de siete elementos. La
+    función está escrita por fuera de la jerarquía, sin agregar un método a
+    <code>Vacio</code> ni a <code>NoVacio</code>: <code>match</code> es lo que
+    le deja ver por dentro las dos formas del conjunto.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="recorrido.js"></script>
+</body>
+</html>

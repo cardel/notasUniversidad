@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>despacho — qué pertenece corre en cada nodo</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .recorrido { border-top: 1px solid var(--borde); padding-top: 0.9rem; margin-top: 1rem; }
+  .recorrido:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .recorrido h3 {
+    font-size: 0.98rem; margin: 0 0 0.5rem; color: var(--tinta);
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  .dibujo { margin: 0.2rem 0 0.8rem; }
+  svg.arbol { width: 100%; height: auto; max-height: 300px; display: block; }
+  svg.arbol .arista { stroke: var(--borde); stroke-width: 2; }
+  svg.arbol .arista.recorrida { stroke: var(--ambar); stroke-width: 3.5; }
+  svg.arbol .nodo circle { fill: #fff; stroke: var(--gris); stroke-width: 2; }
+  svg.arbol .nodo rect { fill: var(--codigo-fondo); stroke: var(--gris); stroke-width: 1.5; }
+  svg.arbol .nodo text {
+    font-family: ui-monospace, monospace; font-size: 15px; font-weight: 700; fill: var(--tinta);
+  }
+  svg.arbol .nodo.visitado circle { fill: var(--ambar-suave); stroke: var(--ambar); stroke-width: 3; }
+  svg.arbol .nodo.visitado text { fill: #a86a12; }
+  svg.arbol .nodo.visitado.cierra rect { fill: var(--rojo-suave); stroke: var(--rojo); stroke-width: 3; }
+  table select {
+    font: inherit; font-size: 0.82rem; padding: 0.2rem 0.25rem;
+    border: 1px solid var(--borde); border-radius: 6px; background: #fff;
+    max-width: 14rem;
+  }
+  table select.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  table select:disabled { background: var(--verde-suave); color: var(--verde); opacity: 1; }
+  table td { text-align: left; vertical-align: middle; }
+  table th:first-child, table td:first-child { text-align: center; width: 2rem; }
+  table button { padding: 0.25rem 0.6rem; font-size: 0.82rem; }
+  tr.listo td:first-child { color: var(--verde); font-weight: 700; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>despacho: qué <code>pertenece</code> corre en cada nodo</h1>
+  <p class="intro">La clase abstracta declara <code>pertenece</code> y no le
+  escribe cuerpo. Los cuerpos están en <code>Vacio</code> y en
+  <code>NoVacio</code>, y la llamada <code>izq pertenece x</code> está escrita
+  una sola vez. Llene una fila por cada nodo que recibe una llamada: la última
+  columna pide cuál de los dos cuerpos corre ahí.</p>
+
+  <div class="carta">
+    <h2>1. La jerarquía</h2>
+    <div class="codigo"><div class="linea"><span class="num">1</span><span class="txt">abstract class ConjEnt {</span></div><div class="linea"><span class="num">2</span><span class="txt">  def insertar(x: Int): ConjEnt</span></div><div class="linea"><span class="num">3</span><span class="txt">  def pertenece(x: Int): Boolean</span></div><div class="linea"><span class="num">4</span><span class="txt">}</span></div><div class="linea"><span class="num">5</span><span class="txt"> </span></div><div class="linea"><span class="num">6</span><span class="txt">object Vacio extends ConjEnt {</span></div><div class="linea"><span class="num">7</span><span class="txt">  def pertenece(x: Int): Boolean = false</span></div><div class="linea"><span class="num">8</span><span class="txt">  def insertar(x: Int): ConjEnt =</span></div><div class="linea"><span class="num">9</span><span class="txt">    new NoVacio(x, Vacio, Vacio)</span></div><div class="linea"><span class="num">10</span><span class="txt">}</span></div><div class="linea"><span class="num">11</span><span class="txt"> </span></div><div class="linea"><span class="num">12</span><span class="txt">class NoVacio(elem: Int, izq: ConjEnt, der: ConjEnt)</span></div><div class="linea"><span class="num">13</span><span class="txt">    extends ConjEnt {</span></div><div class="linea"><span class="num">14</span><span class="txt"> </span></div><div class="linea"><span class="num">15</span><span class="txt">  def pertenece(x: Int): Boolean =</span></div><div class="linea"><span class="num">16</span><span class="txt">    if (x &lt; elem) izq pertenece x</span></div><div class="linea"><span class="num">17</span><span class="txt">    else if (x &gt; elem) der pertenece x</span></div><div class="linea"><span class="num">18</span><span class="txt">    else true</span></div><div class="linea"><span class="num">19</span><span class="txt"> </span></div><div class="linea"><span class="num">20</span><span class="txt">  def insertar(x: Int): ConjEnt =</span></div><div class="linea"><span class="num">21</span><span class="txt">    if (x &lt; elem)</span></div><div class="linea"><span class="num">22</span><span class="txt">      new NoVacio(elem, izq insertar x, der)</span></div><div class="linea"><span class="num">23</span><span class="txt">    else if (x &gt; elem)</span></div><div class="linea"><span class="num">24</span><span class="txt">      new NoVacio(elem, izq, der insertar x)</span></div><div class="linea"><span class="num">25</span><span class="txt">    else this</span></div><div class="linea"><span class="num">26</span><span class="txt">}</span></div></div>
+    <p class="nota">El árbol de los dos recorridos se construye así, y los
+    cuadrados grises del dibujo son el <code>object Vacio</code>:</p>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">val c = Vacio.insertar(10).insertar(8).insertar(15)</span></div><div class="linea"><span class="num"></span><span class="txt">             .insertar(6).insertar(9).insertar(13)</span></div><div class="linea"><span class="num"></span><span class="txt">             .insertar(16)</span></div></div>
+    <p class="nota">Recorrido en orden: <code>List(6, 8, 9, 10, 13, 15, 16)</code>.
+    En <code>izq pertenece x</code> el tipo que el compilador conoce para
+    <code>izq</code> es <code>ConjEnt</code>, y <code>ConjEnt</code> no tiene
+    cuerpo para <code>pertenece</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llene la tabla de los dos recorridos</h2>
+    <p class="nota" style="margin-top:0">Una fila por nodo que recibe una
+    llamada. La fila se cierra cuando las cuatro casillas coinciden, y entonces
+    aparece la siguiente; cuántas filas hay es parte de lo que hay que
+    averiguar. La columna <em>qué <code>pertenece</code> corre</em> se responde
+    mirando qué objeto recibió la llamada, no cómo está escrita.</p>
+    <div id="recorridos"></div>
+    <div class="progreso" id="contador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. En <code>izq pertenece x</code>, ¿qué decide cuál de los dos cuerpos corre?</h2>
+    <div class="opciones">
+      <button data-razon="ok">El objeto que está en <code>izq</code> cuando se hace la llamada: si es un <code>NoVacio</code>, corre la cadena de comparaciones; si es <code>Vacio</code>, corre el <code>false</code>.</button>
+      <button data-razon="declarado" data-msg="El tipo declarado de izq es ConjEnt, y ConjEnt declara pertenece sin cuerpo. Si ese tipo decidiera, la llamada no tendría nada que ejecutar.">El tipo declarado de <code>izq</code>, que es <code>ConjEnt</code>: ahí está escrita la firma que se usa.</button>
+      <button data-razon="unica" data-msg="Las dos tienen cuerpo: Vacio.pertenece devuelve false y es justo la que cierra la búsqueda de un elemento que no está. En pertenece(7) corrió una vez.">La de <code>NoVacio</code>, porque es la única con un cuerpo de verdad.</button>
+      <button data-razon="orden" data-msg="El orden del archivo no entra en esto: Vacio y NoVacio se pueden escribir al revés y los dos recorridos de arriba visitan los mismos nodos con los mismos cuerpos.">El orden en que <code>Vacio</code> y <code>NoVacio</code> aparecen en el archivo.</button>
+      <button data-razon="argumento" data-msg="El x viaja igual en las dos llamadas y no elige el cuerpo: en pertenece(7) el mismo 7 corrió tres veces el cuerpo de NoVacio y una vez el de Vacio.">El valor de <code>x</code>: según el número se entra a un cuerpo o al otro.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>ConjEnt</code> declara
+    <code>pertenece</code> y no lo implementa, así que la expresión
+    <code>izq pertenece x</code> no queda resuelta al escribirla. Lo que corre
+    sale del objeto que recibe la llamada: los nodos con elemento son
+    <code>NoVacio</code> y entran a la cadena de comparaciones; el subárbol
+    vacío es el <code>object Vacio</code> y su cuerpo es <code>false</code>.
+    En <code>c.pertenece(7)</code> el mismo texto de una línea corrió cuatro
+    veces y sirvió dos cuerpos distintos.</p>
+    <p>Los dos recorridos terminan de formas distintas, y esa es la diferencia
+    entre las dos respuestas. <code>pertenece(9)</code> se detiene en la
+    tercera rama del <code>if/else</code>, con <code>9 == 9</code>, y devuelve
+    <code>true</code> sin bajar más. <code>pertenece(7)</code> no encuentra con
+    qué comparar: baja hasta un subárbol vacío, y ahí el <code>false</code> de
+    <code>Vacio</code> es el que cierra la búsqueda. Un conjunto sin el
+    <code>object Vacio</code> necesitaría preguntar en cada nodo si el
+    subárbol existe antes de bajar.</p>
+    <p>El dibujo marca los nodos visitados: tres en cada recorrido sobre un
+    árbol de siete. La altura del árbol es lo que acota ese número, no la
+    cantidad de elementos, y de ahí sale el interés de mantener los menores a
+    la izquierda y los mayores a la derecha.</p>
+  </div>
+</div>
+<script src="despacho.js"></script>
+</body>
+</html>

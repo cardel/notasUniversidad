@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>orden — el primer caso que casa gana</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  td.izquierda { text-align: left; }
+  td.expr {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    text-align: left; white-space: nowrap;
+  }
+  select {
+    font: inherit; font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.85rem; width: 100%;
+    border: 1px solid var(--borde); border-radius: 6px; padding: 0.3rem 0.35rem;
+    background: #fff; color: var(--tinta);
+  }
+  select.bien-celda { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); }
+  select.mal-celda { border-color: var(--rojo); background: var(--rojo-suave); color: var(--rojo); }
+  td.salida-real {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    text-align: left; color: var(--gris);
+  }
+  td.salida-real.cambia { color: var(--rojo); font-weight: 700; }
+  td.patron-real { font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--azul); }
+  input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--azul); }
+  .avisos { margin-top: 0.7rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .aviso-celda {
+    border-left: 4px solid var(--rojo); background: var(--rojo-suave);
+    border-radius: 6px; padding: 0.4rem 0.65rem; font-size: 0.88rem; color: var(--tinta);
+  }
+  .aviso-celda b { font-family: ui-monospace, monospace; color: var(--rojo); }
+  .tras { display: none; margin-top: 0.8rem; }
+  .tras.visible { display: block; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-cuatro .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-cuatro .opciones button { text-align: left; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>orden: el primer caso que casa gana</h1>
+  <p class="intro"><code>describir</code> recibe cualquier valor y lo clasifica
+  con seis casos: una constante, dos tipos, una tupla, una lista y el comodín.
+  Prediga la salida de seis llamadas. Tres de ellas no responden lo que el
+  nombre del caso sugiere.</p>
+
+  <div class="carta">
+    <h2>1. La función</h2>
+    <div class="codigo" id="codigo-describir"></div>
+    <p class="nota">El <code>match</code> prueba los casos en el orden en que
+    están escritos y se detiene en el primero que casa con el valor. Los demás
+    no se evalúan.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Prediga las seis salidas</h2>
+    <div class="envoltura-tabla">
+      <table id="tabla-predicciones"></table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button class="primario" id="btn-comprobar">Comprobar las seis</button>
+    </div>
+    <div class="progreso" id="contador" style="margin-top:0.6rem"></div>
+    <div class="avisos" id="avisos"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Ahora <code>case n: Int</code> sube por encima de <code>case 0</code></h2>
+    <p style="margin-top:0">El cuerpo de los seis casos no cambia: solo se
+    intercambian las dos primeras líneas del <code>match</code>.</p>
+    <div class="codigo" id="codigo-reordenado"></div>
+    <p>Marque las llamadas cuya salida cambia con el nuevo orden.</p>
+    <div class="envoltura-tabla">
+      <table id="tabla-cambios"></table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button class="primario" id="btn-cambios">Comprobar las marcas</button>
+    </div>
+    <div class="veredicto" id="veredicto-cambios"></div>
+    <div class="tras" id="tras">
+      <div class="envoltura-tabla">
+        <table id="tabla-comparacion"></table>
+      </div>
+      <p class="nota">La columna de la derecha dice qué caso atrapó el valor en
+      cada orden. El archivo con las dos líneas intercambiadas compila sin que
+      el compilador escriba nada: ningún mensaje señala que <code>case 0</code>
+      quedó tapado.</p>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cuatro">
+    <h2>4. ¿Dónde habría que escribir un caso para <code>Double</code>?</h2>
+    <div class="opciones">
+      <button data-razon="ok">En cualquier línea antes del comodín, porque ningún otro patrón casa con un <code>Double</code>.</button>
+      <button data-razon="primero" data-msg="También sirve de primero, pero no hace falta: case 0 solo casa con el entero 0 y case n: Int solo con enteros, así que ninguno de los dos le quita un Double. Lo único que lo taparía es el comodín.">Tiene que ir de primero, antes de <code>case 0</code>, o los casos de arriba se lo quitan.</button>
+      <button data-razon="ultimo" data-msg="Después del comodín ninguna línea se alcanza: case _ casa con todo lo que llegó hasta ahí, así que el Double se iría por el comodín y el caso nuevo quedaría sin uso.">Después de <code>case _</code>, que es donde caen hoy los valores sin caso propio.</button>
+      <button data-razon="imposible" data-msg="Un patrón de tipo funciona con cualquier tipo: case d: Double casa con 2.5 igual que case s: String casa con una cadena. El Double llega al comodín porque nadie escribió ese caso, no porque no se pueda escribir.">En ninguna: <code>match</code> solo distingue tipos con <code>case class</code>, y <code>Double</code> no lo es.</button>
+    </div>
+    <div id="veredicto-cuatro" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>5. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El <code>match</code> recorre los casos de arriba
+    abajo y se queda con el primero que casa. Eso vuelve al orden parte del
+    significado del código: un patrón general escrito antes tapa a uno
+    específico escrito después, y el específico deja de alcanzarse. Con
+    <code>case 0</code> arriba, el cero tiene nombre propio; con
+    <code>case n: Int</code> arriba, el cero es un entero como cualquier otro
+    y la línea de la constante nunca se prueba.</p>
+    <p>Las otras dos salidas sorprendentes no tienen que ver con el orden sino
+    con qué casa cada patrón. <code>2.5</code> es un <code>Double</code>, y
+    <code>case n: Int</code> casa con enteros, así que el valor baja hasta el
+    comodín. <code>List()</code> es <code>Nil</code>, y
+    <code>head :: tail</code> pide una lista con al menos un elemento para
+    poder separarla en cabeza y resto: la lista vacía tampoco casa y termina en
+    el comodín. Una función que distinga la lista vacía necesita su propio
+    <code>case Nil</code> antes del de la cabeza.</p>
+    <p>De ahí sale la forma práctica de escribir un <code>match</code>: los
+    casos específicos primero, el comodín al final, y cuando dos patrones se
+    solapan, el más estrecho arriba. El cambio de orden de este ejemplo compiló
+    sin un solo mensaje, así que el orden se revisa leyendo el
+    <code>match</code>.</p>
+  </div>
+</div>
+<script src="orden.js"></script>
+</body>
+</html>

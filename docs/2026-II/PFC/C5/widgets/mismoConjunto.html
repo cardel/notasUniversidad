@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mismoConjunto — el mismo árbol con class y con case class</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .doble { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; align-items: start; }
+  @media (max-width: 820px) { .doble { grid-template-columns: 1fr; } }
+  .rotulo-col {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-weight: 700; color: var(--azul); margin-bottom: 0.3rem; font-size: 0.92rem;
+  }
+  td.izquierda { text-align: left; }
+  td.expr {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    text-align: left; white-space: nowrap;
+  }
+  select {
+    font: inherit; font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.8rem; max-width: 100%;
+    border: 1px solid var(--borde); border-radius: 6px; padding: 0.25rem 0.3rem;
+    background: #fff; color: var(--tinta);
+  }
+  select.bien-celda { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); }
+  select.mal-celda { border-color: var(--rojo); background: var(--rojo-suave); color: var(--rojo); }
+  .avisos { margin-top: 0.7rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .aviso-celda {
+    border-left: 4px solid var(--rojo); background: var(--rojo-suave);
+    border-radius: 6px; padding: 0.4rem 0.65rem; font-size: 0.88rem; color: var(--tinta);
+  }
+  .aviso-celda b { font-family: ui-monospace, monospace; color: var(--rojo); }
+  pre.salida {
+    margin: 0.5rem 0 0; background: var(--codigo-fondo);
+    border: 1px solid var(--borde); border-left: 4px solid var(--verde);
+    border-radius: 8px; padding: 0.5rem 0.7rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.8rem;
+  }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>mismoConjunto: el mismo árbol con <code>class</code> y con <code>case class</code></h1>
+  <p class="intro">Dos versiones de <code>ConjEnt</code> con el mismo árbol
+  binario ordenado adentro: las dos insertan y buscan con el mismo código, y
+  en las dos se construye <code>insertar(5).insertar(3).insertar(8)</code>.
+  Cuatro líneas se imprimen sobre cada conjunto. Elija la salida de las ocho
+  celdas antes de ver ninguna.</p>
+
+  <div class="carta">
+    <h2>1. Las dos versiones, lado a lado</h2>
+    <div class="doble">
+      <div>
+        <div class="rotulo-col">object ConClase</div>
+        <div class="codigo" id="codigo-clase"></div>
+      </div>
+      <div>
+        <div class="rotulo-col">object ConCase</div>
+        <div class="codigo" id="codigo-case"></div>
+      </div>
+    </div>
+    <p class="nota">Los cuerpos de <code>insertar</code> y de
+    <code>pertenece</code> son los mismos en las dos columnas. Lo que cambia
+    está en las tres primeras líneas de cada una.</p>
+    <div class="codigo" id="codigo-main"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Llene las ocho celdas</h2>
+    <div class="envoltura-tabla">
+      <table id="tabla-salidas"></table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button class="primario" id="btn-comprobar">Comprobar las ocho celdas</button>
+    </div>
+    <div class="progreso" id="contador" style="margin-top:0.6rem"></div>
+    <div class="avisos" id="avisos"></div>
+    <pre class="salida" id="salida-real" style="display:none"></pre>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. <code>listaEnteros</code> se escribe por fuera de la clase y se prueba comparando con la lista esperada. ¿Qué le da la columna de la derecha que no le da la de la izquierda?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Construir conjuntos de prueba sin <code>new</code>, un <code>==</code> que responde por el contenido del árbol y un <code>toString</code> que muestra ese contenido cuando la comparación falla.</button>
+      <button data-razon="metodos" data-msg="insertar y pertenece están escritos a mano en las dos columnas, con el mismo cuerpo. case class escribe toString, equals, hashCode y el constructor sin new; las operaciones del conjunto siguen siendo trabajo del programador.">Que <code>case class</code> le agrega <code>insertar</code> y <code>pertenece</code> a cada forma del conjunto, y la función externa las llama.</button>
+      <button data-razon="sealed" data-msg="sealed cierra la jerarquía y de ahí sale el aviso de exhaustividad del compilador. Recorrer un conjunto desde fuera no lo impide una jerarquía abierta: lo que estorba es que el resultado no se pueda comparar ni leer.">Que <code>sealed</code> mantiene las dos formas en el mismo archivo, y sin eso una función escrita por fuera no podría recorrer el conjunto.</button>
+      <button data-razon="nocompila" data-msg="Compila. La columna de la izquierda responde false al comparar dos árboles con el mismo contenido, y ese false es el problema: la prueba falla aunque la función haya construido lo correcto.">Que en la columna de la izquierda los conjuntos no se pueden comparar y <code>c == otroIgual</code> no llega a compilar.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las dos columnas guardan el mismo árbol y
+    responden lo mismo a <code>pertenece</code>: el 3 está, el 7 no.
+    <code>insertar</code> tampoco cambia, y en las dos devuelve un árbol nuevo
+    en vez de modificar el que recibió. La diferencia está en los métodos que
+    nadie escribió.</p>
+    <p>Con <code>class</code>, el <code>toString</code> que responde es el
+    heredado: imprime el nombre de la clase con los objetos que la encierran y
+    un número en hexadecimal que cambia de una corrida a la siguiente. Y
+    <code>==</code> compara direcciones, así que dos árboles con los mismos
+    siete nodos responden <code>false</code>. Para arreglarlo hay que escribir
+    <code>toString</code>, <code>equals</code> y <code>hashCode</code> a mano,
+    y mantenerlos al día cada vez que la clase cambie de campos.</p>
+    <p>Con <code>case class</code> esos tres llegan generados y
+    <code>NoVacio(5, Vacio(), Vacio())</code> se construye sin
+    <code>new</code>. Eso es lo que vuelve cómodo escribir el resto de las
+    operaciones por fuera de la clase: una función como
+    <code>listaEnteros</code> construye sus propios conjuntos de prueba,
+    compara el resultado con <code>==</code> y, cuando algo no cuadra, lee en
+    la salida qué árbol tenía entre manos. La cuarta ventaja, la que viene a
+    continuación, es que <code>case class</code> habilita descomponer el
+    conjunto con <code>match</code>.</p>
+  </div>
+</div>
+<script src="mismoConjunto.js"></script>
+</body>
+</html>
