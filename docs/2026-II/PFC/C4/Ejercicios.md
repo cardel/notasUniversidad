@@ -54,7 +54,7 @@ una: ¿la puede escribir el cliente? `r.numer` responde 11. `r.mcd(66, 42)` y
 `r.m` no compilan, aunque `suma` los use sin problema desde adentro. Y
 `new Racional(1, 0)` compila sin que nadie reclame y revienta al correr con
 `IllegalArgumentException`, porque `require` es una condición de ejecución y no
-del compilador. Distinguir «no compila» de «compila y falla» es la mitad del
+del compilador. Distinguir *no compila* de *compila y falla* es la mitad del
 ejercicio.
 
 ### [mcdEnMemoria](widgets/mcdEnMemoria.html){ target=_blank rel=noopener }

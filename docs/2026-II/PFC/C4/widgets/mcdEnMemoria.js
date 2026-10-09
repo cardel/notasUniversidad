@@ -2,8 +2,8 @@
    El estudiante llena la tabla de memoria y después corre
    val r = new Racional(66, 42); r.numer; r.numer; r.denom
    sobre las cuatro variantes, con los contadores por línea.
-   El código es el de los frames «Variantes de diseño: def vs val»,
-   «Racionales con simplificación automática» y «¿Qué es un método?». */
+   El código es el de los frames "Variantes de diseño: def vs val",
+   "Racionales con simplificación automática" y "¿Qué es un método?". */
 (function () {
   var X = 66, Y = 42;
 

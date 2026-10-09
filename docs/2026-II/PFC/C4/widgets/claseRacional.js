@@ -2,8 +2,8 @@
    El estudiante predice la respuesta de cada una antes de verla. El modelo
    guarda aparte los parámetros del constructor y los miembros declarados con
    def, que es lo que separa x.numer de x.x. El código y el hash 2faf6e4a
-   salen de FuncionesDatos.tex, frames «Definición de una clase en Scala» y
-   «Creación de objetos». */
+   salen de FuncionesDatos.tex, frames "Definición de una clase en Scala" y
+   "Creación de objetos". */
 (function () {
   var HASH = "2faf6e4a";
 

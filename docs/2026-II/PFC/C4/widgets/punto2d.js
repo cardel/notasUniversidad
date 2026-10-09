@@ -1,8 +1,8 @@
 /* punto2d: seis expresiones sobre class Punto(val x: Double, val y: Double).
    El estudiante escribe el tipo y el valor de cada una antes de ver la
    corrida, y después sigue paso a paso qué cuerpo se ejecuta. El código y los
-   valores salen de 05_punto2d.scala y del frame «Otro ejemplo: Clase Punto
-   en 2D» de FuncionesDatos.tex. */
+   valores salen de 05_punto2d.scala y del frame "Otro ejemplo: Clase Punto
+   en 2D" de FuncionesDatos.tex. */
 (function () {
   var CODIGO = [
     { txt: "class Punto(val x: Double, val y: Double) {", num: 1, bloque: 1 },
