@@ -28,12 +28,13 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase11-problemas-cortes.pdf](./clase11-problemas-cortes.pdf){ target=_blank rel=noopener },
-118 páginas. Los grafos van dibujados: el de diez vértices con los tres
+126 páginas. Los grafos van dibujados: el de diez vértices con los tres
 puentes en rojo, el mismo con $d/low$ debajo de cada vértice, el mismo con
 cada componente encerrado en una caja, el árbol de puentes que sale de
 contraerlo, la ciudad de siete intersecciones en sus tres versiones (sin
 orientar, orientada por el número de la intersección y orientada con la
-profundidad) y la red de ocho estaciones.
+profundidad) y la red de ocho estaciones. Capital e Interplanetary van sin
+dibujo: la muestra trabajada a mano y el código.
 
 ## Recuento
 
@@ -457,9 +458,11 @@ Con esos tres datos las preguntas del enunciado se contestan en un recorrido:
 - ¿Qué arista separa más parejas de vértices? Un puente, y se mide con los
   tamaños de los dos lados en el árbol.
 
-## UVa 610 — Street Directions
+## Ejercicios resueltos
 
-### El problema
+### UVa 610 — Street Directions
+
+#### El problema
 
 Enunciado: <https://onlinejudge.org/external/6/610.pdf>.
 Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=551>.
@@ -479,7 +482,7 @@ El dato del enunciado que decide todo es este: con todas las calles de doble
 vía se puede ir de cualquier intersección a cualquier otra. El grafo es
 conexo.
 
-### El ejemplo del enunciado
+#### El ejemplo del enunciado
 
 En una frase: un solo sentido para el mayor número de calles, sin que ninguna
 intersección quede incomunicada de otra.
@@ -501,7 +504,7 @@ dos sentidos.
 ¿Por qué el segundo caso gasta diez líneas en nueve calles, y el primero diez en
 diez? La calle repetida es la $4$–$5$. ¿Qué tiene de distinta?
 
-### Qué es el grafo
+#### Qué es el grafo
 
 El segundo caso de ejemplo tiene siete intersecciones y nueve calles: $1$–$2$,
 $1$–$3$, $1$–$4$, $2$–$4$, $3$–$4$, $4$–$5$, $5$–$6$, $5$–$7$, $7$–$6$.
@@ -514,7 +517,7 @@ sea fuertemente conexo.
 Antes del algoritmo conviene mirar el dibujo y preguntarse qué calle no se
 puede orientar, y por qué las otras ocho sí.
 
-### Un puente no se puede orientar
+#### Un puente no se puede orientar
 
 **Teorema.** Si $(u,v)$ es puente de $G$, ninguna orientación que le dé un
 solo sentido a $(u,v)$ deja el grafo dirigido fuertemente conexo.
@@ -528,7 +531,7 @@ no hay forma de llegar a $v$. Por lo tanto, se puede concluir que un puente
 tiene que quedar en doble vía, y las calles que el enunciado llama no
 convertibles son exactamente los puentes. $\blacksquare$
 
-### Orientar por el número de la intersección
+#### Orientar por el número de la intersección
 
 El puente $4$–$5$ queda en doble vía, que es lo único que ya se sabe. Las otras
 ocho calles reciben un sentido cualquiera, y el más fácil de escribir es de la
@@ -549,7 +552,7 @@ de partida. El sentido de una calle no se decide mirándola sola, y el orden de
 los números no sabe nada de la ciudad. El recorrido que sí sabe por dónde se
 llegó a cada intersección es la profundidad.
 
-### Las demás sí, y la profundidad las orienta
+#### Las demás sí, y la profundidad las orienta
 
 **Teorema.** Sea $G$ conexo y sea $r$ un vértice. Oriéntense las aristas de
 árbol de la profundidad desde $r$ del padre al hijo, las de retroceso del
@@ -587,7 +590,7 @@ convierte el máximo número de calles. $\blacksquare$
 El resultado es de Robbins, 1939: un grafo conexo admite una orientación
 fuertemente conexa si y solo si no tiene puentes.
 
-### El algoritmo
+#### El algoritmo
 
 **$Orientar(G)$**
 
@@ -612,7 +615,7 @@ Es una profundidad por caso, $\Theta(n+m)$ en tiempo y $\Theta(n+m)$ de
 memoria. Con $n \leq 1000$ cada caso es inmediato; lo que suma es la cantidad
 de casos, así que la salida se arma en una lista y se imprime de un golpe.
 
-### El código, versión recursiva
+#### El código, versión recursiva
 
 ```python
 def orientar_aux(G, u, entrada, reloj, d, low, salida):
@@ -647,7 +650,7 @@ Hay tres emisiones y cada una ocurre en un momento distinto. La de árbol, al
 bajar. La de retroceso, en el `elif`. Y la vuelta del puente, al subir, cuando
 `low[v] > d[u]`.
 
-### El código, con pila explícita
+#### El código, con pila explícita
 
 ```python
 def orientar_desde(G, s, reloj, d, low, salida):
@@ -692,7 +695,7 @@ Esta es la que se envía. El límite de recursión de Python es de $1000$ marcos
 y una ciudad de $1000$ intersecciones en línea tiene una rama de profundidad
 $1000$: la versión recursiva se cae antes de imprimir nada.
 
-### La lectura y la salida
+#### La lectura y la salida
 
 ```python
 def leer_pareja(datos, pos):
@@ -726,7 +729,7 @@ línea en blanco, cada caso cierra con una línea que trae solo `#`, y las
 intersecciones van de $1$ a $n$, así que el diccionario se arma con
 `range(1, n + 1)` y no con `range(n)`.
 
-### El segundo caso, orientado
+#### El segundo caso, orientado
 
 | Paso | Qué emite | Por qué |
 |---|---|---|
@@ -746,9 +749,9 @@ al $4$ por el puente y de ahí al $1$; desde el $1$ se vuelve al $5$ por
 $1 \to 2 \to 4 \to 5$. El triángulo $5$–$6$–$7$ gira en un sentido y el
 $1$–$2$–$4$ en el otro.
 
-## UVa 10765 — Doves and Bombs
+### UVa 10765 — Doves and Bombs
 
-### El problema
+#### El problema
 
 Enunciado: <https://onlinejudge.org/external/107/10765.pdf>.
 Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1706>.
@@ -769,7 +772,7 @@ El valor es el número de pedazos porque una paloma entra a un pedazo y de ahí
 el mensaje sigue en tren. Cada pedazo necesita la suya, y una sola no alcanza
 para dos pedazos: la paloma no vuelve a volar.
 
-### El ejemplo del enunciado
+#### El ejemplo del enunciado
 
 Para cada estación hay que contar en cuántos pedazos queda la red si esa
 estación cae, y listar las $m$ que dejan más pedazos.
@@ -789,7 +792,7 @@ el $4$ vale $2$. ¿Por qué los dos extremos de una misma vía no valen lo mismo
 Y de las cinco estaciones que valen $1$ se imprime una sola: ¿por qué la cuarta
 línea es `0 1` y no `1 1`?
 
-### Qué es el grafo
+#### Qué es el grafo
 
 El caso de ejemplo tiene ocho estaciones y ocho vías: $0$–$4$, $1$–$2$,
 $2$–$3$, $2$–$4$, $3$–$5$, $3$–$6$, $3$–$7$, $6$–$7$. Las cinco primeras son
@@ -803,7 +806,7 @@ $G - v$.
 Antes del algoritmo, sobre el dibujo: ¿cuánto vale el $3$? ¿Y el $2$? ¿Y el
 $6$? Una de las tres respuestas es $1$, y conviene ver por qué.
 
-### La red sin el $3$
+#### La red sin el $3$
 
 Se borra el $3$ y con él las cuatro vías que lo tocan: $2$–$3$, $3$–$5$, $3$–$6$
 y $3$–$7$. Quedan siete estaciones y cuatro vías. Hay dos números a mano que
@@ -825,7 +828,7 @@ El triángulo no salva al $6$ ni al $7$. El $3$, el $6$ y el $7$ lo forman, y el
 par $6$–$7$ se desprende igual: las dos vías que lo unían al resto iban al $3$.
 Un ciclo aguanta la caída de una vía, no la del vértice que lo cierra.
 
-### De contar componentes a contar hijos
+#### De contar componentes a contar hijos
 
 **Teorema.** Sea $G$ conexo y sea $T$ un árbol de la profundidad con raíz $r$.
 El número de componentes de $G - v$ es
@@ -871,7 +874,7 @@ queda el resto con el $2$. El $2$ vale $3$: se desprenden el $1$ y todo lo que
 cuelga del $3$, y queda el lado del $4$. El $6$ vale $1$: está en el triángulo
 con el $3$ y el $7$, y al quitarlo nada se parte.
 
-### El código, versión recursiva
+#### El código, versión recursiva
 
 ```python
 def paloma_aux(G, u, entrada, raiz, reloj, d, low, valor):
@@ -908,7 +911,7 @@ se suma un hijo por cada `low[v] >= d[u]`. La raíz no tiene padre, así que se
 pone en $0$ al descubrirla y suma todos sus hijos, que es lo que dice la otra
 rama del teorema.
 
-### El código, con pila explícita
+#### El código, con pila explícita
 
 ```python
 def paloma_desde(G, s, reloj, d, low, valor):
@@ -953,7 +956,7 @@ Esta es la que se envía. Con $n = 10000$ en línea, la rama tiene profundidad
 $10000$ y la recursiva levanta `RecursionError` contra el límite de $1000$
 marcos. La de pila entrega la respuesta en centésimas de segundo.
 
-### El orden de la salida
+#### El orden de la salida
 
 ```python
 def mejores(valor, m):
@@ -992,7 +995,7 @@ decreciente por valor y creciente por número; las parejas se arman como
 $(-valor, v)$ y se ordenan de forma corriente, de modo que el signo invierte
 el primer campo y deja el segundo como está.
 
-### Paso a paso, arrancando en $0$
+#### Paso a paso, arrancando en $0$
 
 La rama es $0 \to 4 \to 2$, y de $2$ salen el $1$ y el $3$; de $3$ salen el
 $5$ y el $6$, y de $6$ el $7$. El único retroceso es $7$–$3$, con $3.d = 5$:
@@ -1028,9 +1031,114 @@ Cuesta una profundidad por caso, $\Theta(n+m)$, más $O(n \log n)$ por el
 ordenamiento de la salida. Las estaciones tienen grado a lo sumo $10$, de modo
 que $m = O(n)$.
 
+### Capital
+
+#### El problema
+
+Hay $N$ ciudades y $M$ carreteras de una sola vía, con $N \leq 10^5$ y
+$M \leq 2 \cdot 10^5$. La capital tiene que ser alcanzable *desde todas* las
+demás ciudades. Se piden todas las candidatas, en orden creciente.
+
+Entra un grafo dirigido. Sale cuántas ciudades cumplen y cuáles, ordenadas.
+
+#### El ejemplo del enunciado
+
+Con $4$ ciudades y las carreteras $1 \to 2$, $3 \to 2$, $4 \to 3$ y
+$2 \to 1$, la salida es $2$ y la lista $1\ 2$.
+
+A mano: desde el $4$ se llega al $3$, al $2$ y al $1$. Desde el $3$, al $2$ y
+al $1$. Entre el $1$ y el $2$ se va y se vuelve. Al $3$ no llega nadie salvo el
+$4$, y al $4$ no llega nadie, de modo que ninguno de los dos puede ser capital.
+Quedan el $1$ y el $2$.
+
+¿Por qué la respuesta trae dos y no una? Porque $1$ y $2$ se alcanzan entre
+sí: cualquiera de los dos sirve, y el enunciado pide todas las candidatas.
+
+#### Qué es el grafo
+
+Es el de componentes, otra vez. Los vértices son las ciudades y las aristas las
+carreteras, dirigidas. Se contraen los componentes fuertemente conexos y queda
+$G^{SCC}$, que es un DAG.
+
+Una ciudad es candidata exactamente cuando su componente es el *sumidero* de
+$G^{SCC}$, el que no tiene aristas de salida. Si del componente sale una
+arista, de allá no se vuelve, y las ciudades del otro lado se quedan sin
+camino a la capital.
+
+Con más de un sumidero no hay capital: dos sumideros no se alcanzan entre
+sí, así que ninguna ciudad sirve. En un DAG con un solo sumidero, ese
+sumidero se alcanza desde todos.
+
+#### El algoritmo
+
+1. Calcular los componentes fuertemente conexos.
+2. Marcar los componentes con alguna arista que salga hacia otro.
+3. Si queda exactamente un componente sin marcar, imprimir sus vértices
+   ordenados; si no, no hay candidatas.
+
+Los componentes cuestan $\Theta(V+E)$, el barrido de aristas $\Theta(E)$ y el
+orden final $O(V \log V)$.
+
+La solución de referencia calcula los componentes con *Gabow*, que lleva dos
+pilas en vez del arreglo $low$: una con los vértices abiertos y otra con los
+posibles representantes. Devuelve lo mismo que Tarjan.
+
+### Interplanetary
+
+#### El problema
+
+El grafo es no dirigido, con un valor de influencia en cada vértice y un
+vértice de arranque. El recorrido arranca ahí y cruza un puente solo hacia un
+componente de más influencia.
+
+#### El algoritmo
+
+1. Tarjan marca los puentes.
+2. El etiquetado que no los cruza da los componentes 2-arista-conexos, y de
+   paso suma la influencia de cada uno.
+3. El recorrido desde el inicio cruza una arista cuando no es puente, o cuando
+   lo es y lleva a un componente de influencia mayor.
+
+#### Los componentes y su influencia
+
+```python
+def getCCAux(u, ind):
+  ans = infl[u]
+  comps[ind].append(u)
+  ccInd[u] = ind
+  for v in G[u]:
+    if ccInd[v] == -1 and (u, v) not in bridges:
+      ans += getCCAux(v, ind)
+  return ans
+```
+
+Devuelve la influencia total del componente de $u$. De paso, `ccInd` queda
+diciendo a qué componente pertenece cada vértice.
+
+#### El recorrido que respeta los puentes
+
+```python
+def dfs(u):
+  vis[u] = 1
+  reach.append(u)
+  for w in G[u]:
+    if vis[w] == -1 and ((u, w) not in bridges
+        or inflComps[ccInd[u]] < inflComps[ccInd[w]]):
+      dfs(w)
+```
+
+Dentro de un componente se anda libre. El puente se cruza solo hacia arriba,
+hacia un componente de más influencia, y por eso el recorrido nunca se
+devuelve.
+
+#### El orden de la salida
+
+Se imprimen los vértices alcanzados, ordenados primero por la influencia de
+su componente, después por la propia y al final por número.
+
 ## Cómo atacar estos problemas
 
-Los dos comparten el mismo camino, y son cinco pasos:
+Los dos de UVa comparten el mismo camino, y son cinco pasos:
 
 1. **Leer el grafo.** Quiénes son los vértices y quiénes las aristas, y si
    viene dirigido o no. Intersecciones y calles; estaciones y vías.
@@ -1109,6 +1217,14 @@ puentes. Resolver el otro da una respuesta razonable que el juez rechaza.
   `paloma_aux`, `valores_paloma`, `paloma_desde`, `valores_paloma_con_pila`,
   `mejores`, `leer_pareja` y `main`. Lee por `stdin` e imprime las $m$
   estaciones de mayor valor paloma por caso.
+- [capital.cpp](./codigo/capital.cpp): `gabow`, `gabowAux` y `main`, en
+  C++. Calcula los componentes fuertemente conexos con Gabow, cuenta las
+  aristas que salen de cada uno y, si hay un solo sumidero, imprime
+  cuántas candidatas son y la lista ordenada; si hay más, imprime `0`.
+- [interplanetary.py](./codigo/interplanetary.py): `bridgesAux`,
+  `bridgesTarjan`, `getCCAux`, `getCC`, `dfs`, `solve` y `main`. Lee por
+  `stdin`, arma los componentes 2-arista-conexos con su influencia y
+  imprime los vértices alcanzados desde el vértice de arranque.
 
 ## Ejercicios
 
