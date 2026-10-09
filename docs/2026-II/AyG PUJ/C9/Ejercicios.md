@@ -122,8 +122,8 @@ diapositivas.
    Debe salir $\texttt{[0, 5, 6, 1, 3, 2, 4]}$.
 
 2. Sea $H$ el grafo no dirigido con $V = \{0,1,\ldots,9\}$ y aristas
-   $0\text{--}7$, $7\text{--}3$, $3\text{--}0$, $1\text{--}8$, $8\text{--}5$,
-   $2\text{--}6$, $6\text{--}9$, $9\text{--}4$, $4\text{--}2$. Liste sus
+   $0\text{–}7$, $7\text{–}3$, $3\text{–}0$, $1\text{–}8$, $8\text{–}5$,
+   $2\text{–}6$, $6\text{–}9$, $9\text{–}4$, $4\text{–}2$. Liste sus
    componentes conexos y diga en qué orden los encuentra
    $ComponentesConexosDFS$ recorriendo los vértices de $0$ a $9$. Después
    escriba el orden de visita dentro del componente del $2$ con la versión
@@ -131,8 +131,8 @@ diapositivas.
    reparto cambie.
 
 3. Sea $J$ el grafo no dirigido con $V = \{0,1,\ldots,7\}$ y aristas
-   $0\text{--}1$, $1\text{--}2$, $2\text{--}0$, $2\text{--}3$, $3\text{--}4$,
-   $4\text{--}5$, $5\text{--}6$, $6\text{--}3$, $6\text{--}7$. Liste los puntos
+   $0\text{–}1$, $1\text{–}2$, $2\text{–}0$, $2\text{–}3$, $3\text{–}4$,
+   $4\text{–}5$, $5\text{–}6$, $6\text{–}3$, $6\text{–}7$. Liste los puntos
    de articulación y los puentes. Para cada pieza de la lista diga cuántos
    componentes quedan al quitarla y cuáles son; para cada una que no esté, dé
    el camino o el ciclo que la salva. Hay tres puntos de articulación y dos

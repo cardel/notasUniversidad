@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cuantas — cuántas secuencias imprime UVa 732</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Cuántas secuencias</h1>
+  <p class="intro">UVa 732 — Anagrams by Stack imprime todas las secuencias de
+  <code>i</code> y <code>o</code> que convierten la primera palabra en la
+  segunda, una por línea y entre corchetes. El enunciado está en
+  <a href="https://onlinejudge.org/external/7/732.pdf">https://onlinejudge.org/external/7/732.pdf</a>.
+  Tres casos, y la cuenta de cada uno antes de verla.</p>
+
+  <div class="carta">
+    <h2>1. banana contra ananab</h2>
+    <p style="margin-top:0">Seis letras, tres <code>a</code> y dos
+    <code>n</code>. ¿Cuántas líneas imprime el bloque?</p>
+    <div class="prediccion">
+      <span>secuencias:</span>
+      <input type="number" id="pred-banana" placeholder="?">
+      <button id="btn-banana" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-banana" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Dos letras alternadas</h2>
+    <p style="margin-top:0"><code>nana</code> contra <code>nana</code> imprime
+    tres secuencias. Con la misma alternancia y dos letras más, y con cuatro
+    más, ¿cuántas imprime?</p>
+    <div class="prediccion">
+      <span>nanana:</span>
+      <input type="number" id="pred-seis" placeholder="?">
+      <span>nananana:</span>
+      <input type="number" id="pred-ocho" placeholder="?">
+      <button id="btn-familia" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-familia" class="veredicto"></div>
+    <div class="envoltura-tabla" id="tabla-familia"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. piano contra opina</h2>
+    <p style="margin-top:0">Las dos palabras tienen las mismas cinco letras.
+    ¿Cuántas secuencias imprime el bloque?</p>
+    <div class="prediccion">
+      <span>secuencias:</span>
+      <input type="number" id="pred-piano" placeholder="?">
+      <button id="btn-piano" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-piano" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Las letras repetidas son lo que hace crecer la cuenta:
+    cuando la salida pide una letra que aparece varias veces en la entrada,
+    sirve la copia que ya está en el tope o una de las que faltan por meter, y
+    cada elección abre una rama. Con letras todas distintas pasa lo contrario y
+    sobrevive a lo sumo una secuencia. El recorrido visita O(4<sup>m</sup>) estados en
+    el peor caso, con a lo sumo dos jugadas por estado y profundidad 2m, y cada
+    jugada y su deshacer cuestan Θ(1) sobre la pila enlazada; imprimir una
+    secuencia cuesta Θ(m). El espacio es Θ(m) y no depende de cuántas
+    secuencias se impriman: 2m marcos de recursión, m nodos en la pila y 2m
+    letras anotadas.
+    Envío en <a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673">https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=25&amp;page=submit_problem&amp;problemid=673</a>.</div>
+  </div>
+</div>
+<script src="cuantas.js"></script>
+</body>
+</html>
