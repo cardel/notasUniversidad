@@ -1,11 +1,12 @@
 # Ejercicios · AyG C11
 
-Seis ejercicios para el navegador, organizados por los temas de la sesión y en
+Ocho ejercicios para el navegador, organizados por los temas de la sesión y en
 el mismo orden. Ninguno usa los grafos de las diapositivas: ni los tres
 triángulos de diez vértices donde se construye el árbol, ni la ciudad de siete
-intersecciones de UVa 610, ni la red de ocho estaciones de UVa 10765, ni el
-grafo $H$ de los ocho ejercicios propuestos. Los temas y las técnicas son los
-mismos; los grafos, los vértices y los números son otros.
+intersecciones de UVa 610, ni la red de ocho estaciones de UVa 10765, ni los dos
+grafos dirigidos de siete vértices del recuento, ni el mapa de siete planetas de
+Interplanetary, ni el grafo $H$ de los ocho ejercicios propuestos. Los temas y
+las técnicas son los mismos; los grafos, los vértices y los números son otros.
 
 ## Recuento
 
@@ -38,13 +39,14 @@ cuántos puentes hay que cruzar entre dos vértices dados. Tres grafos de nueve,
 once y doce vértices, con árboles de tres nodos en camino, cuatro en estrella y
 cinco en camino.
 
-## UVa 610 — Street Directions
+## Ejercicios resueltos
 
 ### [orientar](./widgets/orientar.html){ target=_blank rel=noopener }
 
-Se predice cuántas líneas tiene la salida y después se orienta la ciudad paso a
-paso, en las dos formas del recorrido. Las calles ya orientadas aparecen con
-punta de flecha, y las que salen en los dos sentidos quedan en rojo y curvadas.
+UVa 610, Street Directions. Se predice cuántas líneas tiene la salida y después
+se orienta la ciudad paso a paso, en las dos formas del recorrido. Las calles ya
+orientadas aparecen con punta de flecha, y las que salen en los dos sentidos
+quedan en rojo y curvadas.
 Una tabla recoge calle por calle los sentidos emitidos y los cruza con la lista
 de puentes, de modo que se ve que las de doble vía son exactamente esas y
 ninguna más. Al final se elige una intersección y se mira a cuáles se llega por
@@ -52,13 +54,12 @@ la ciudad orientada. Tres ciudades de seis, ocho y siete intersecciones, con
 ocho, once y nueve líneas de salida; la tercera no tiene ningún puente y queda
 entera de una vía.
 
-## UVa 10765 — Doves and Bombs
-
 ### [paloma](./widgets/paloma.html){ target=_blank rel=noopener }
 
-La red con el `d/low` de cada estación a la vista. Se predice el valor más alto
-y después se escribe el valor de cada una. La comprobación lista, por vértice,
-la comparación de cada hijo y cuáles suman, y señala aparte la raíz, que arranca
+UVa 10765, Doves and Bombs. La red con el `d/low` de cada estación a la vista.
+Se predice el valor más alto y después se escribe el valor de cada una. La
+comprobación lista, por vértice, la comparación de cada hijo y cuáles suman, y
+señala aparte la raíz, que arranca
 en 0 y cuenta hijos del árbol. Los diagnósticos separan los dos errores que más
 aparecen: contar vecinos en lugar de hijos y usar la desigualdad estricta. Un
 botón por estación la bombardea y recolorea los pedazos que quedan, para
@@ -66,6 +67,43 @@ contrastar la fórmula con la definición. Al final se arma la salida que pide e
 juez, con el orden por valor decreciente y número creciente. Tres redes de
 siete, nueve y once estaciones; los valores más altos son 2, 4 y 3, y la raíz
 vale 2, 1 y 3.
+
+### [capital](./widgets/capital.html){ target=_blank rel=noopener }
+
+Capital, el único de los cuatro sobre un grafo dirigido. Tres países de ocho,
+siete y nueve ciudades con carreteras de una sola vía. Se predice cuántas
+candidatas hay y después se escribe, ciudad por ciudad, la menor de su
+componente fuertemente conexo. La comprobación sostiene cada grupo con los dos
+caminos que lo forman, y el diagnóstico separa las tres maneras de errarle:
+agrupar bien y numerar por otro vértice, tomar una sola dirección por las dos, y
+juntar ciudades sin camino entre ellas. Con los componentes puestos aparece la
+condensación, que dice cuántas carreteras salen de cada nodo; se clasifica
+componente por componente si sale alguna, y los que no tienen salida quedan
+marcados. El segundo país tiene dos sumideros y la respuesta es `0`. Ahí es
+donde más se pierde la gente, porque la tentación es juntar las ciudades de los
+dos. Un botón por ciudad recorre las carreteras al revés y dice desde cuántas se
+llega a ella, que es la definición del enunciado sin pasar por los componentes.
+Las salidas son `2` con `7 8`, `0` y `1` con `9`.
+
+### [interplanetary](./widgets/interplanetary.html){ target=_blank rel=noopener }
+
+Interplanetary, el que trae influencia en los vértices. Tres mapas no dirigidos
+de diez, nueve y once planetas, cada uno con su planeta de arranque. Se predice
+cuántos alcanza el recorrido y después van los tres pasos: clasificar cada ruta
+en puente o no, sumar la influencia de cada grupo que los puentes no separan, y
+decidir puente por puente entre tres situaciones. Esas tres son que el recorrido
+lo cruce, que lo mire y la condición falle, o que no llegue a mirarlo. Van en el
+orden en que el recorrido se los encuentra, porque la decisión sobre uno depende
+de haber cruzado el anterior. El primer mapa trae un puente donde los dos grupos
+valen lo mismo, y la desigualdad estricta no lo deja pasar: detrás queda el
+planeta de más influencia de todo el mapa, con 30, al que nunca se llega. En el
+de nueve el recorrido no sale del anillo de arranque, y detrás del puente que
+rechaza hay un planeta que vale 100. El tercero arranca en la mitad de la
+cadena, cruza hacia el grupo de más influencia y rechaza los dos extremos. La
+lista final se ordena por influencia del grupo, después por influencia propia y
+por último
+por número, y el veredicto separa el caso de acertar el conjunto y equivocar el
+orden. Los alcanzados son ocho, cuatro y siete planetas.
 
 ## Cómo atacar estos problemas
 
@@ -104,12 +142,12 @@ diapositivas.
 
 Sean $K$ y $L$ los grafos no dirigidos siguientes:
 
-- $K$, con $V = \{0, 1, \ldots, 9\}$ y aristas $0\text{--}1$, $0\text{--}2$,
-  $1\text{--}2$, $2\text{--}3$, $3\text{--}4$, $3\text{--}5$, $4\text{--}5$,
-  $5\text{--}6$, $6\text{--}7$, $6\text{--}9$, $7\text{--}8$, $8\text{--}9$.
-- $L$, con $V = \{0, 1, \ldots, 6\}$ y aristas $0\text{--}1$, $0\text{--}3$,
-  $1\text{--}2$, $2\text{--}3$, $3\text{--}4$, $3\text{--}6$, $4\text{--}5$,
-  $5\text{--}6$.
+- $K$, con $V = \{0, 1, \ldots, 9\}$ y aristas $0\text{–}1$, $0\text{–}2$,
+  $1\text{–}2$, $2\text{–}3$, $3\text{–}4$, $3\text{–}5$, $4\text{–}5$,
+  $5\text{–}6$, $6\text{–}7$, $6\text{–}9$, $7\text{–}8$, $8\text{–}9$.
+- $L$, con $V = \{0, 1, \ldots, 6\}$ y aristas $0\text{–}1$, $0\text{–}3$,
+  $1\text{–}2$, $2\text{–}3$, $3\text{–}4$, $3\text{–}6$, $4\text{–}5$,
+  $5\text{–}6$.
 
 1. Corra la profundidad de $K$ desde el $0$ con las listas en orden creciente,
    escriba $d$ y $low$ de cada vértice y llene la tabla de aristas de árbol con
@@ -123,7 +161,7 @@ Sean $K$ y $L$ los grafos no dirigidos siguientes:
    qué lo es, y diga por qué el árbol de puentes no lo delata. Nombre la
    partición que sí lo señala y sobre qué reparte sus piezas.
 
-3. A $K$ se le agrega la arista $2\text{--}5$. Diga qué puentes sobreviven,
+3. A $K$ se le agrega la arista $2\text{–}5$. Diga qué puentes sobreviven,
    cuántos nodos pierde el árbol, cuál punto de articulación se pierde y por
    qué la arista nueva no es puente. Exhiba el ciclo que lo explica.
 
@@ -137,7 +175,7 @@ Sean $K$ y $L$ los grafos no dirigidos siguientes:
    Explique por qué, teniendo en cuenta que la fórmula tiene dos ramas
    distintas y que el vértice que era raíz pasa a usar la otra.
 
-6. A $K$ se le agrega una segunda arista $5\text{--}6$, paralela a la que ya
+6. A $K$ se le agrega una segunda arista $5\text{–}6$, paralela a la que ya
    estaba. Diga qué queda de la lista de puentes, cuántos nodos tiene el árbol,
    cuántas líneas tiene la salida de UVa 610 y qué devolvería un programa que
    excluye la arista de entrada preguntando `v != padre` en lugar de comparar

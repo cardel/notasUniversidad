@@ -28,7 +28,7 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase11-problemas-cortes.pdf](./clase11-problemas-cortes.pdf){ target=_blank rel=noopener },
-126 páginas. Los grafos van dibujados: el de diez vértices con los tres
+137 páginas. Los grafos van dibujados: el de diez vértices con los tres
 puentes en rojo, el mismo con $d/low$ debajo de cada vértice, el mismo con
 cada componente encerrado en una caja, el árbol de puentes que sale de
 contraerlo, la ciudad de siete intersecciones en sus tres versiones (sin
