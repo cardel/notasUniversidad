@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>evaluar — elija el paso que sigue en eval</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #historia { margin: 0.2rem 0 0.9rem; }
+  .termino {
+    display: flex; gap: 0.5rem; align-items: flex-start;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86rem; color: var(--gris);
+    padding: 0.18rem 0.4rem; border-radius: 6px;
+    overflow-wrap: anywhere;
+  }
+  .termino .flecha-paso { flex: none; color: var(--borde); width: 1rem; }
+  .termino.vigente {
+    color: var(--tinta); font-weight: 700;
+    background: var(--azul-suave);
+  }
+  .termino.vigente .flecha-paso { color: var(--azul); }
+  #rotulo-opciones { font-weight: 600; margin: 0.6rem 0 0; }
+  #opciones { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem; }
+  #opciones button {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.84rem; text-align: left; white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+  .arranque {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86rem; overflow-wrap: anywhere;
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>evaluar</code>: elija el paso que sigue en <code>eval</code></h1>
+  <p class="intro">La expresión de abajo tiene tres niveles: una suma arriba,
+  un producto y una resta en el medio, cuatro números en las hojas. Cada paso
+  reemplaza la llamada <code>eval</code> que quedó más a la izquierda por el
+  cuerpo del caso con que coincide, y toda operación cuyos dos lados ya son
+  números se calcula en ese mismo paso. Abajo hay tres expresiones y una sola
+  es la que sigue.</p>
+
+  <div class="carta">
+    <h2>1. La función y la expresión</h2>
+    <div class="codigo" id="panel-codigo"></div>
+    <p class="nota">El contador de la derecha dice cuántas veces corrió cada
+    caso. Empieza en cero y sube con cada paso acertado.</p>
+    <p class="arranque"><b>eval(Suma(Prod(Numero(2), Numero(3)),
+    Resta(Numero(10), Numero(4))))</b></p>
+  </div>
+
+  <div class="carta">
+    <h2>2. La reducción, paso por paso</h2>
+    <div id="historia"></div>
+    <p id="rotulo-opciones"></p>
+    <div id="opciones"></div>
+    <div id="veredicto" class="veredicto"></div>
+    <div class="progreso" id="marcador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. ¿Qué decide cuántas veces corre <code>case Numero(n) =&gt; n</code>?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Una vez por cada hoja del árbol, porque toda rama termina en un <code>Numero</code> y ahí la recursión se detiene.</button>
+      <button data-razon="casos" data-msg="Los casos escritos son cinco y el de Numero es uno solo; eso cuenta cuántos hay en el texto de la función, no cuántas veces corre. Lo que lo hace correr es cada Numero que aparece en la expresión.">Una vez por cada caso escrito en el <code>match</code>, que son cinco.</button>
+      <button data-razon="niveles" data-msg="El árbol tiene tres niveles y el caso de Numero corrió más veces que eso. El nivel no cuenta nodos: en el tercero hay cuatro hojas, y cada una pide su propia llamada.">Una vez por cada nivel del árbol, contando desde la raíz.</button>
+      <button data-razon="operaciones" data-msg="Los nodos de operación son tres y disparan sus propios casos: Suma, Prod y Resta corrieron una vez cada uno. El de Numero corre en las hojas, que son las que no tienen operación debajo.">Una vez por cada operación de la expresión, porque cada operación trae números.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>eval</code> tiene un caso por cada forma del
+    tipo: uno para <code>Numero</code>, uno para <code>Suma</code>, uno para
+    <code>Resta</code>, uno para <code>Prod</code> y uno para <code>Div</code>.
+    El <code>match</code> no busca entre todos: entra por la forma del valor que
+    recibe y ejecuta ese cuerpo. El caso de <code>Div</code> quedó en
+    <code>× 0</code> porque en esta expresión no hay ninguna división, y el de
+    <code>Numero</code> llegó a <code>× 4</code> porque hay cuatro hojas.</p>
+    <p>El cuerpo de cada operación vuelve a llamar <code>eval</code> sobre sus
+    dos hijos, y esas llamadas son las que recorren el árbol. La recursión no
+    lleva un contador ni decide cuándo parar: sigue la forma del dato y se
+    detiene donde la forma se acaba, en las hojas. Un árbol más profundo no pide
+    código nuevo, solo más llamadas.</p>
+    <p>El orden también lo fija el dato. En
+    <code>eval(e1) + eval(e2)</code> el operando izquierdo se evalúa completo
+    antes de que el derecho empiece, así que el producto cerró en 6 mientras la
+    resta seguía intacta. Resolverla primero llega al mismo 12, pero no es lo
+    que corre.</p>
+  </div>
+</div>
+<script src="evaluar.js"></script>
+</body>
+</html>

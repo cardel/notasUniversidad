@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exhaustividad — qué cambia sealed cuando falta un caso</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 0.7rem; }
+  @media (max-width: 760px) { .diff { grid-template-columns: 1fr; } }
+  .rotulo-col {
+    font-weight: 700; color: var(--azul); margin-bottom: 0.3rem; font-size: 0.92rem;
+  }
+  td.izquierda { text-align: left; }
+  select {
+    font: inherit; font-size: 0.85rem; width: 100%;
+    border: 1px solid var(--borde); border-radius: 6px; padding: 0.3rem 0.35rem;
+    background: #fff; color: var(--tinta);
+  }
+  select.bien-celda { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); }
+  select.mal-celda { border-color: var(--rojo); background: var(--rojo-suave); color: var(--rojo); }
+  .avisos { margin-top: 0.7rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .aviso-celda {
+    border-left: 4px solid var(--rojo); background: var(--rojo-suave);
+    border-radius: 6px; padding: 0.4rem 0.65rem; font-size: 0.88rem; color: var(--tinta);
+  }
+  .aviso-celda b { color: var(--rojo); }
+  .salidas { display: none; margin-top: 0.8rem; }
+  .salidas.visible { display: block; }
+  .salidas h3 { font-size: 0.9rem; margin: 0.8rem 0 0.25rem; color: var(--azul); }
+  pre.consola {
+    margin: 0; background: #1f2430; color: #e6e9ef;
+    border-radius: 8px; padding: 0.55rem 0.75rem; overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.78rem;
+    line-height: 1.4;
+  }
+  pre.consola .w { color: #e8a13d; }
+  pre.consola .e { color: #ff8f80; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>exhaustividad: qué cambia <code>sealed</code> cuando falta un caso</h1>
+  <p class="intro">Un archivo con las cinco formas de <code>Expr</code> y un
+  <code>eval</code> que solo cubre cuatro: falta <code>case Div</code>. El
+  mismo archivo se compila y se corre dos veces, con <code>sealed</code> en la
+  línea 3 y sin él. Decida las cuatro casillas: qué dice el compilador y qué
+  pasa en la corrida, en cada versión.</p>
+
+  <div class="carta">
+    <h2>1. El archivo</h2>
+    <div class="codigo" id="codigo-archivo"></div>
+    <div class="diff">
+      <div>
+        <div class="rotulo-col">versión con sealed · línea 3</div>
+        <div class="codigo" id="codigo-sellada"></div>
+      </div>
+      <div>
+        <div class="rotulo-col">versión sin sealed · línea 3</div>
+        <div class="codigo" id="codigo-abierta"></div>
+      </div>
+    </div>
+    <p class="nota">Las otras veinte líneas son idénticas en las dos versiones.
+    <code>Numero</code>, <code>Suma</code>, <code>Resta</code>,
+    <code>Prod</code> y <code>Div</code> siguen siendo <code>case class</code>
+    en las dos, y en las dos el <code>match</code> de la línea 10 tiene cuatro
+    casos.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Las cuatro casillas</h2>
+    <div class="envoltura-tabla">
+      <table id="tabla-casos"></table>
+    </div>
+    <div class="botones" style="margin-top:0.7rem">
+      <button class="primario" id="btn-comprobar">Comprobar las cuatro</button>
+    </div>
+    <div class="progreso" id="contador" style="margin-top:0.6rem"></div>
+    <div class="avisos" id="avisos"></div>
+    <div class="salidas" id="salidas"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>3. Entonces, ¿qué hace <code>sealed</code> por este programa?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Mueve el momento en que aparece el caso faltante: con la jerarquía cerrada el compilador cuenta las formas de <code>Expr</code> y avisa mientras compila; sin ella el hueco se descubre cuando llega un <code>Div</code>.</button>
+      <button data-razon="defecto" data-msg="No agrega ningún caso al match. Las dos versiones caen con el mismo scala.MatchError sobre la misma entrada; lo único que sealed aporta es el aviso previo.">Evita el <code>MatchError</code>: con la jerarquía cerrada el <code>match</code> cubre el caso que falta con un valor por defecto.</button>
+      <button data-razon="rechaza" data-msg="El aviso llega como advertencia y el archivo compila: el programa queda armado y la primera línea del main imprime su resultado antes de la caída.">Hace que el compilador rechace el archivo hasta que el <code>match</code> cubra las cinco formas.</button>
+      <button data-razon="privadas" data-msg="sealed restringe dónde se pueden declarar subclases nuevas, no quién construye las que ya existen. Div(Numero(10), Numero(2)) se escribe igual en las dos versiones, y es la expresión que provoca la caída.">Vuelve privadas las subclases, así que <code>Div</code> no se puede construir desde fuera del archivo.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El <code>match</code> es el mismo en las dos
+    versiones y falla igual: cuando ningún patrón casa con el valor que llega,
+    la evaluación termina con <code>scala.MatchError</code>, y el mensaje trae
+    el valor que no encontró dónde entrar. Lo que separa las dos corridas es
+    cuánto antes se sabe.</p>
+    <p>Con <code>trait Expr</code> a secas, cualquier archivo del proyecto
+    puede declarar una forma nueva de <code>Expr</code>. El compilador no
+    tiene cómo saber cuántas hay, así que tampoco puede medir si el
+    <code>match</code> las cubre, y compila sin decir nada.
+    <code>sealed</code> exige que las subclases se declaren en el mismo
+    archivo: con eso el compilador las cuenta, compara la lista con los
+    patrones del <code>match</code> y nombra la entrada que quedaría sin
+    cubrir, <code>Div(_, _)</code>.</p>
+    <p>El cambio práctico es de quién descubre el hueco. Sin
+    <code>sealed</code>, lo descubre quien corra el programa con una división.
+    Con <code>sealed</code>, lo descubre quien compile, con la línea y la
+    columna del <code>match</code> incompleto y el nombre del caso que falta.
+    Y el aviso vuelve a salir cada vez que se agregue una forma nueva al tipo:
+    el compilador señala todos los <code>match</code> que quedaron cortos.</p>
+  </div>
+</div>
+<script src="exhaustividad.js"></script>
+</body>
+</html>

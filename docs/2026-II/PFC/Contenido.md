@@ -94,6 +94,7 @@ reuniones docentes y jornada de reflexión.
 | 2 | Funciones y los procesos que generan | [nueve ejercicios, tres por tema](C2/Ejercicios.md) |
 | 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](C3/Ejercicios.md) |
 | 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](C4/Ejercicios.md) |
+| 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](C5/Ejercicios.md) |
 
 ## Ejercicios de clase
 

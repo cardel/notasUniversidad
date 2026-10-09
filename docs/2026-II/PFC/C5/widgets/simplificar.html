@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>simplificar — qué devuelve cada llamada</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .reglas { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.2rem 0 0.8rem; }
+  .reglas span {
+    background: var(--azul-suave); color: var(--azul);
+    border-radius: 8px; padding: 0.2rem 0.55rem;
+    font-family: ui-monospace, monospace; font-size: 0.9rem; font-weight: 700;
+  }
+  .fila { padding: 0.75rem 0; border-top: 1px solid var(--borde); }
+  .fila:first-child { border-top: none; padding-top: 0.2rem; }
+  .fila .llamada {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.88rem; font-weight: 700; color: var(--tinta);
+    overflow-wrap: anywhere;
+  }
+  .fila.listo .llamada { color: var(--verde); }
+  .fila .devuelve {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86rem; color: var(--gris); margin-top: 0.15rem;
+    overflow-wrap: anywhere;
+  }
+  .fila.listo .devuelve { color: var(--verde); font-weight: 700; }
+  .fila .opciones { flex-direction: column; align-items: stretch; }
+  .fila .opciones button {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.84rem; text-align: left; white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+  .expr-raiz {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.88rem; font-weight: 700; overflow-wrap: anywhere;
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>simplificar</code>: qué devuelve cada llamada</h1>
+  <p class="intro">Seis reglas algebraicas escritas como casos de un
+  <code>match</code>, aplicadas recursivamente. La tabla de abajo lista las
+  cuatro llamadas que ocurren sobre una expresión, en el orden en que devuelven:
+  primero la hoja, de último la raíz. Diga qué entrega cada una antes de pasar a
+  la siguiente.</p>
+
+  <div class="carta">
+    <h2>1. Las reglas y la función</h2>
+    <div class="reglas">
+      <span>e + 0 = e</span><span>0 + e = e</span>
+      <span>e * 1 = e</span><span>1 * e = e</span>
+      <span>e * 0 = 0</span><span>0 * e = 0</span>
+    </div>
+    <div id="codigo"></div>
+    <p class="nota">El <code>match</code> entra por el primer caso que coincide.
+    Los dos últimos son los que bajan a los hijos cuando ninguna regla aplica.</p>
+    <p class="expr-raiz">simplificar(Suma(Prod(Numero(1), Numero(5)),
+    Prod(Numero(0), Numero(7))))</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. La tabla, de las hojas hacia la raíz</h2>
+    <div id="tabla"></div>
+    <div class="progreso" id="marcador" style="margin-top:0.7rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <div id="resumen"></div>
+    <h2>3. ¿Por qué una sola pasada de las reglas no basta, y qué hay que hacer para que sí?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Porque las reglas se comparan contra los hijos como llegaron, y el cero del lado derecho aparece después. Simplificar primero los dos hijos y aplicar las reglas a lo que ellos devuelven deja el árbol listo en una pasada; repetir la función hasta que el resultado no cambie llega al mismo sitio por otro camino.</button>
+      <button data-razon="reglas" data-msg="Cada forma compuesta pediría su propia regla y la lista no se cierra: con Suma(e, Prod(Prod(Numero(0), x), y)) vuelve el mismo hueco. Las seis reglas están completas; lo que falla es el momento en que se comparan.">Porque faltan reglas para las formas compuestas: con <code>case Suma(e, Prod(Numero(0), f)) =&gt; e</code> quedaría resuelto.</button>
+      <button data-razon="orden" data-msg="Mover los casos no cambia nada aquí: ninguno de los dos casos de la suma coincide con el hijo derecho sin simplificar, así que da igual en qué posición estén escritos. Lo que hay que mover es cuándo se simplifican los hijos.">Porque el <code>match</code> prueba los casos en el orden escrito, y basta mover los dos casos de la suma al final.</button>
+      <button data-razon="cola" data-msg="La forma de la recursión no interviene: el mismo resultado a medias sale con cualquier esquema de llamadas, de cola o no. Lo que decide es contra qué se comparan los patrones.">Porque la recursión no es de cola y la última llamada se queda sin aplicar su regla.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Las seis reglas están todas escritas, y aun así el
+    resultado sale a medias. Lo que decide no es cuántas reglas hay sino contra
+    qué se comparan: los patrones de la raíz miran a
+    <code>Prod(Numero(0), Numero(7))</code>, que no es <code>Numero(0)</code>,
+    y la regla <code>e + 0 = e</code> queda descartada antes de que el cero
+    exista. Para cuando los hijos devuelven <code>Numero(5)</code> y
+    <code>Numero(0)</code>, el <code>match</code> de la raíz ya terminó.</p>
+    <p>La versión que simplifica los hijos primero compara los patrones contra
+    lo que ellos devolvieron, y con eso una pasada alcanza:</p>
+    <div id="codigo-hojas"></div>
+    <p>Sobre la misma expresión, <code>simplificar</code> devuelve
+    <code>Suma(Numero(5),Numero(0))</code> y
+    <code>simplificarDesdeLasHojas</code> devuelve <code>Numero(5)</code>.
+    Aplicar la primera dos veces, <code>simplificar(simplificar(e))</code>,
+    también da <code>Numero(5)</code>: el segundo recorrido encuentra la suma
+    con el cero ya formada y entonces sí entra por su regla. El ejemplo que el
+    enunciado propone tiene la misma forma:
+    <code>Suma(Prod(Numero(0), Numero(99)), Numero(5))</code> sale como
+    <code>Suma(Numero(0),Numero(5))</code> en la primera pasada y como
+    <code>Numero(5)</code> en la segunda.</p>
+    <p>Dos detalles del recorrido. El <code>Numero(7)</code> nunca se visita:
+    la regla <code>0 * e = 0</code> devuelve el cero sin llamar
+    <code>simplificar</code> sobre el otro lado, y una rama entera se descarta
+    de un golpe. Y el valor no se mueve: <code>eval</code> de la expresión
+    original y de cualquiera de sus versiones simplificadas responde 5. Lo que
+    cambia es el árbol, no lo que vale.</p>
+  </div>
+</div>
+<script src="simplificar.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mezclar — qué le exige un trait a la clase</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .declaracion { border-top: 1px solid var(--borde); padding-top: 0.9rem; margin-top: 1rem; }
+  .declaracion:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .declaracion h3 { font-size: 0.95rem; margin: 0 0 0.45rem; color: var(--tinta); }
+  .declaracion.listo h3 { color: var(--verde); }
+  .opciones button { min-width: 7.5rem; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  pre.salida {
+    display: none; margin: 0.6rem 0 0;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-left: 4px solid var(--rojo); border-radius: 8px;
+    padding: 0.5rem 0.7rem; overflow-x: auto; white-space: pre;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.8rem;
+    color: var(--tinta);
+  }
+  pre.salida.visible { display: block; }
+  #opciones-cierre { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-top: 0.6rem; }
+  #opciones-cierre button { font-family: ui-monospace, monospace; font-size: 0.9rem; text-align: left; }
+  .expr {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 1rem; font-weight: 700; color: var(--azul);
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.35rem 0.6rem; display: inline-block;
+  }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>mezclar: qué le exige un trait a la clase</h1>
+  <p class="intro">Una clase hereda de una sola clase y mezcla todos los traits
+  que quiera. Cada trait trae dos cosas distintas: miembros sin cuerpo, que
+  pasan a ser deuda de la clase, y miembros con cuerpo, que llegan hechos.
+  Abajo hay cinco declaraciones; decida de cada una si el compilador la acepta.</p>
+
+  <div class="carta">
+    <h2>1. Los dos traits</h2>
+    <div id="traits"></div>
+    <p class="nota"><code>Plano</code> declara <code>alto</code> y
+    <code>ancho</code> sin cuerpo, y con esos dos nombres escribe el cuerpo de
+    <code>area</code>. <code>Movible</code> declara <code>mover</code> y nada
+    más.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. ¿Cuáles de las cinco compilan?</h2>
+    <p class="nota" style="margin-top:0">Las cinco se compilaron con Scala
+    2.13.18. Al acertar una que falla aparece el mensaje con que el compilador
+    la rechazó.</p>
+    <div id="declaraciones"></div>
+    <div class="progreso" id="contador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Una última predicción</h2>
+    <p id="cuantas" style="margin-top:0"></p>
+    <p>Sobre el <code>Rectangulo</code> que compila, con
+    <code>val r = new Rectangulo(0, 0, 3, 4)</code>, ¿qué responde esta
+    expresión?</p>
+    <div class="expr">r.mover(10, 5).area</div>
+    <div id="opciones-cierre"></div>
+    <div class="veredicto" id="veredicto-cierre"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-final">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Cada miembro que un trait deja sin cuerpo pasa a
+    ser deuda de la clase que lo mezcla. Mientras falte uno, el compilador no
+    la acepta como clase concreta: <code>Cuadrado</code> debía dos,
+    <code>alto</code> y <code>ancho</code>, y traía un <code>val lado</code>
+    que ningún miembro de <code>Plano</code> nombra; <code>Ficha</code> tenía
+    resuelta la parte de <code>Plano</code> y debía <code>mover</code>. Los
+    parámetros declarados <code>val</code> son los que pagan esas deudas:
+    <code>val alto: Int</code> en la cabecera implementa el
+    <code>def alto: Int</code> del trait.</p>
+    <p>A cambio, lo que el trait trae con cuerpo llega hecho. Ninguna de las
+    clases que compilan escribe <code>area</code>, y las dos la tienen:
+    <code>Plano</code> la definió como <code>alto * ancho</code> sobre dos
+    nombres que todavía no existían, y cada clase los llena a su manera. Dar
+    cuerpo a un miembro que no lo tenía se escribe sin nada delante; reemplazar
+    uno que ya lo tenía exige <code>override</code>. El <code>Marco</code> de
+    3 por 4 responde 10 con su propio <code>area</code>, donde el heredado
+    habría respondido 12. Sin esa palabra, el compilador no distingue el
+    reemplazo deliberado de haber reusado el nombre por accidente.</p>
+    <p>El tipo de retorno de <code>mover</code> decide qué se puede pedir
+    después del punto. <code>Movible</code> lo declara devolviendo
+    <code>Movible</code>, y <code>Movible</code> no tiene <code>area</code>;
+    la clase lo declara devolviendo <code>Rectangulo</code>, que es un tipo
+    más preciso, y por eso <code>r.mover(10, 5).area</code> se puede escribir
+    y responde 12. Con el tipo del trait copiado en la clase, la misma
+    expresión no compila.</p>
+  </div>
+</div>
+<script src="mezclar.js"></script>
+</body>
+</html>

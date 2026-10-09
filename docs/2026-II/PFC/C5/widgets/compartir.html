@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>compartir — qué construye una inserción</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .dibujo { margin: 0.4rem 0 0.2rem; }
+  svg.arbol { width: 100%; height: auto; max-height: 330px; display: block; }
+  svg.arbol .arista { stroke: var(--borde); stroke-width: 2; }
+  svg.arbol .arista.nueva { stroke: var(--azul); stroke-width: 3; }
+  svg.arbol .nodo circle { fill: #fff; stroke: var(--gris); stroke-width: 2; }
+  svg.arbol .nodo rect { fill: var(--codigo-fondo); stroke: var(--borde); stroke-width: 1.5; }
+  svg.arbol .nodo text {
+    font-family: ui-monospace, monospace; font-size: 14px; font-weight: 700; fill: var(--tinta);
+  }
+  svg.arbol .nodo.construido circle { fill: var(--azul-suave); stroke: var(--azul); stroke-width: 3; }
+  svg.arbol .nodo.construido text { fill: var(--azul); }
+  svg.arbol .nodo.compartido circle { fill: var(--verde-suave); stroke: var(--verde); stroke-width: 2.5; }
+  svg.arbol .nodo.compartido text { fill: var(--verde); }
+  .leyenda { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.85rem; margin-top: 0.3rem; }
+  .leyenda span { display: flex; align-items: center; gap: 0.4rem; }
+  .muestra { width: 16px; height: 16px; border-radius: 50%; flex: none; }
+  .muestra.azul { background: var(--azul-suave); border: 3px solid var(--azul); }
+  .muestra.verde { background: var(--verde-suave); border: 2.5px solid var(--verde); }
+  ol.traza { font-size: 0.86rem; margin: 0.5rem 0 0; padding-left: 1.4rem; color: var(--tinta); }
+  ol.traza li { margin-bottom: 0.25rem; }
+  #listas {
+    font-family: ui-monospace, monospace; font-size: 0.82rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.45rem 0.7rem; margin-top: 0.7rem;
+  }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #carta-vieja .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-vieja .opciones button { text-align: left; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>compartir: qué construye una inserción</h1>
+  <p class="intro">Los tres campos de un <code>NoVacio</code> se fijan al
+  construirlo y después nadie los cambia, así que <code>insertar</code>
+  entrega un árbol distinto en lugar de modificar el que recibe. Prediga
+  cuántos nodos cuesta eso y cuántos quedan como estaban, y después mire el
+  árbol resultante.</p>
+
+  <div class="carta">
+    <h2>1. El árbol y el <code>insertar</code> que se le aplica</h2>
+    <div class="codigo"><div class="linea"><span class="num"></span><span class="txt">val c = Vacio.insertar(10).insertar(8).insertar(15)</span></div><div class="linea"><span class="num"></span><span class="txt">             .insertar(6).insertar(9).insertar(13)</span></div><div class="linea"><span class="num"></span><span class="txt">             .insertar(16)</span></div></div>
+    <div class="dibujo" id="dibujo-original"></div>
+    <p class="nota">Siete nodos <code>NoVacio</code>, en orden
+    <code>List(6, 8, 9, 10, 13, 15, 16)</code>. Los cuadrados son el
+    <code>object Vacio</code>, uno solo para todos los subárboles vacíos.</p>
+    <div class="codigo"><div class="linea"><span class="num">1</span><span class="txt">object Vacio extends ConjEnt {</span></div><div class="linea"><span class="num">2</span><span class="txt">  def insertar(x: Int): ConjEnt =</span></div><div class="linea"><span class="num">3</span><span class="txt">    new NoVacio(x, Vacio, Vacio)</span></div><div class="linea"><span class="num">4</span><span class="txt">}</span></div><div class="linea"><span class="num">5</span><span class="txt"> </span></div><div class="linea"><span class="num">6</span><span class="txt">class NoVacio(elem: Int, izq: ConjEnt, der: ConjEnt)</span></div><div class="linea"><span class="num">7</span><span class="txt">    extends ConjEnt {</span></div><div class="linea"><span class="num">8</span><span class="txt"> </span></div><div class="linea"><span class="num">9</span><span class="txt">  def insertar(x: Int): ConjEnt =</span></div><div class="linea"><span class="num">10</span><span class="txt">    if (x &lt; elem)</span></div><div class="linea"><span class="num">11</span><span class="txt">      new NoVacio(elem, izq insertar x, der)</span></div><div class="linea"><span class="num">12</span><span class="txt">    else if (x &gt; elem)</span></div><div class="linea"><span class="num">13</span><span class="txt">      new NoVacio(elem, izq, der insertar x)</span></div><div class="linea"><span class="num">14</span><span class="txt">    else this</span></div><div class="linea"><span class="num">15</span><span class="txt">}</span></div></div>
+    <p class="nota">En la línea 11 el tercer argumento es <code>der</code>:
+    el subárbol derecho entra al nodo nuevo tal como está. En la línea 13 pasa
+    lo mismo con <code>izq</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Prediga las dos cantidades para <code>val d = c insertar 7</code></h2>
+    <div class="prediccion">
+      <label for="pred-construidas">¿Cuántos <code>new NoVacio</code> se
+      evalúan?</label>
+      <input type="number" id="pred-construidas" min="0" max="20">
+      <button id="btn-construidas" class="primario">Comprobar</button>
+    </div>
+    <div class="veredicto" id="ver-construidas"></div>
+    <div class="prediccion" style="margin-top:1rem">
+      <label for="pred-compartidas">De los nodos <code>NoVacio</code> del
+      árbol <code>d</code>, ¿cuántos son los mismos objetos que ya estaban en
+      <code>c</code>?</label>
+      <input type="number" id="pred-compartidas" min="0" max="20">
+      <button id="btn-compartidas" class="primario">Comprobar</button>
+    </div>
+    <div class="veredicto" id="ver-compartidas"></div>
+    <p class="nota">El 7 no está en <code>c</code>, y el sitio donde entra sale
+    de las mismas comparaciones de <code>pertenece</code>.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-dibujo">
+    <h2>3. El árbol <code>d</code>, nodo por nodo</h2>
+    <div class="dibujo" id="dibujo-nuevo"></div>
+    <div class="leyenda">
+      <span><i class="muestra azul"></i> construido por esta inserción</span>
+      <span><i class="muestra verde"></i> el mismo objeto que ya estaba en <code>c</code></span>
+    </div>
+    <p class="nota" style="margin-bottom:0.2rem">Las construcciones, en el
+    orden en que ocurren:</p>
+    <ol class="traza" id="traza"></ol>
+    <div id="listas"></div>
+    <p class="nota">Los nodos azules son exactamente el camino de la raíz al
+    sitio del 7, más el 7. Los verdes cuelgan de ese camino y entraron sin
+    tocarse: el subárbol con el 9, y el subárbol con 15, 13 y 16 completo.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-nueve">
+    <h2>4. Ahora con un elemento que ya está</h2>
+    <p style="margin-top:0">La tercera rama de <code>insertar</code> dice
+    <code>else this</code>: cuando el elemento coincide, devuelve el mismo
+    nodo. ¿Cuántos <code>new NoVacio</code> se evalúan al calcular
+    <code>c insertar 9</code>, con el 9 ya en el árbol?</p>
+    <div class="prediccion">
+      <input type="number" id="pred-nueve" min="0" max="20">
+      <button id="btn-nueve" class="primario">Comprobar</button>
+    </div>
+    <div class="veredicto" id="ver-nueve"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-vieja">
+    <h2>5. Después de <code>val d = c insertar 7</code>, ¿qué responde <code>c.pertenece(7)</code>?</h2>
+    <div class="opciones">
+      <button data-vieja="ok"><code>false</code>, y el recorrido en orden de <code>c</code> sigue siendo el de siete elementos.</button>
+      <button data-vieja="true" data-msg="Para que c respondiera true alguien tendría que haber escrito en uno de sus nodos. Los campos elem, izq y der se fijan al construir el NoVacio, y el 7 quedó colgado de nodos nuevos: la raíz de d no es la raíz de c.">
+        <code>true</code>: el 7 ya quedó insertado y <code>c</code> es el árbol donde se insertó.</button>
+      <button data-vieja="tres" data-msg="La raíz de c no cambió. Los tres nodos del camino se rehicieron para d, y los originales siguen enlazados entre sí: c conserva sus siete nodos y su recorrido en orden.">
+        <code>false</code>, pero <code>c</code> perdió los tres nodos que se rehicieron y quedó incompleto.</button>
+      <button data-vieja="error" data-msg="No hay error de compilación ni de corrida: c es un val perfectamente usable después de la inserción, y responder sobre él es lo que hace que los dos árboles puedan convivir.">
+        Falla al correr: <code>c</code> quedó apuntando a nodos que ya se reemplazaron.</button>
+    </div>
+    <div id="veredicto-vieja" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>6. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Una inserción no recorre el árbol para copiarlo:
+    construye un nodo por cada paso del camino de la raíz al sitio donde entra
+    el elemento. El subárbol que no cambia entra al nodo nuevo por donde está.
+    En el árbol de siete nodos, insertar el 7 cuesta cuatro construcciones y
+    deja cuatro nodos compartidos. En un árbol con mil
+    elementos y las comparaciones repartidas, el camino tiene alrededor de
+    diez nodos, y es eso lo que cuesta la inserción.</p>
+    <p>Compartir nodos entre dos árboles es seguro porque nadie los escribe.
+    Si <code>NoVacio</code> permitiera cambiar <code>der</code> después de
+    construido, el subárbol con 15, 13 y 16 estaría en los dos árboles y un
+    cambio hecho desde <code>d</code> le aparecería a <code>c</code> sin que
+    nadie lo pidiera. Con los campos fijos, <code>c</code> y <code>d</code>
+    conviven: el primero responde sobre siete elementos, el segundo sobre
+    ocho, y el que tenga el nombre viejo sigue sirviendo para lo que ya se
+    había calculado con él.</p>
+    <p>El caso del elemento repetido muestra hasta dónde llega el
+    <code>else this</code>: ahorra el nodo que coincide y nada más, porque las
+    llamadas de arriba ya habían entrado a una rama con un
+    <code>new NoVacio</code> en el cuerpo. El resultado tiene los mismos siete
+    elementos que <code>c</code> y comparte con él cinco nodos, pero su raíz
+    es otro objeto.</p>
+  </div>
+</div>
+<script src="compartir.js"></script>
+</body>
+</html>
