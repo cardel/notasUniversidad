@@ -28,13 +28,14 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase11-problemas-cortes.pdf](./clase11-problemas-cortes.pdf){ target=_blank rel=noopener },
-137 páginas. Los grafos van dibujados: el de diez vértices con los tres
+162 páginas. Los grafos van dibujados: el de diez vértices con los tres
 puentes en rojo, el mismo con $d/low$ debajo de cada vértice, el mismo con
 cada componente encerrado en una caja, el árbol de puentes que sale de
 contraerlo, la ciudad de siete intersecciones en sus tres versiones (sin
 orientar, orientada por el número de la intersección y orientada con la
-profundidad) y la red de ocho estaciones. Capital e Interplanetary van sin
-dibujo: la muestra trabajada a mano y el código.
+profundidad) y la red de ocho estaciones. Capital trae su muestra y el caso
+de dos sumideros, cada uno con su condensación, e Interplanetary el mapa de
+planetas, suelto y con los componentes encajonados.
 
 ## Recuento
 
@@ -1076,16 +1077,257 @@ sumidero se alcanza desde todos.
 3. Si queda exactamente un componente sin marcar, imprimir sus vértices
    ordenados; si no, no hay candidatas.
 
-Los componentes cuestan $\Theta(V+E)$ y el barrido de aristas $\Theta(E)$. La
-lista sale ordenada sin ordenarla: el último barrido recorre las ciudades de
-$1$ a $N$ y guarda las del sumidero, en $\Theta(V)$. Si se juntan los
-vértices del sumidero en el orden en que salen de la pila, hay que ordenarlos,
-$O(V \log V)$, y el peor caso es que todas sean candidatas, con el grafo
-entero en un solo componente.
+Los componentes cuestan $\Theta(V+E)$, el barrido de aristas $\Theta(E)$ y el
+orden final $O(V \log V)$. El peor caso del orden es que todas las ciudades
+sean candidatas, con el grafo entero en un solo componente.
 
-La solución de referencia calcula los componentes con *Gabow*, que lleva dos
-pilas en vez del arreglo $low$: una con los vértices abiertos y otra con los
-posibles representantes. Devuelve lo mismo que Tarjan.
+Quien calcula los componentes es Tarjan, con el mismo $low$ de los puentes. Lo
+que cambia es que el grafo va dirigido: el recorrido lleva una pila con los
+vértices abiertos, una arista baja el $low$ solo si apunta a un vértice que
+sigue en esa pila, y el vértice que termina con $low[u] = d[u]$ cierra su
+componente.
+
+#### El grafo y la pila
+
+```python
+def construir(vertices, aristas):
+    # G[u] guarda los vecinos de u; cada carretera entra en un solo sentido.
+    G = {}
+    for u in vertices:
+        G[u] = []
+    for a, b in aristas:
+        G[a].append(b)
+    return G
+```
+
+La carretera $a \to b$ entra una vez, en la lista de $a$. Por eso el vecino va
+solo, sin el identificador de arista que pedían los puentes: aquí nadie tiene
+que excluir la arista por la que bajó. `descubrir` es la misma de la primera
+parte de la sesión.
+
+```python
+def cerrar(u, pila, en_pila, comp, total):
+    # u quedo como raiz de su componente: lo que esta encima de u en la pila,
+    # y u mismo, son un componente.
+    ultimo = None
+    while ultimo != u:
+        ultimo = pila.pop()
+        en_pila[ultimo] = False
+        comp[ultimo] = total[0]
+    total[0] = total[0] + 1
+```
+
+De la pila sale lo que entró después de $u$ y todavía no tiene componente, más
+$u$ mismo. Esos vértices se alcanzan entre sí, así que reciben el mismo número.
+
+#### Los componentes, versión recursiva
+
+```python
+def scc_aux(G, u, reloj, d, low, pila, en_pila, comp, total):
+    # La pila guarda los vertices abiertos cuyo componente aun no se cierra.
+    descubrir(u, reloj, d, low)
+    pila.append(u)
+    en_pila[u] = True
+    for v in G[u]:
+        if d[v] == 0:
+            scc_aux(G, v, reloj, d, low, pila, en_pila, comp, total)
+            low[u] = min(low[u], low[v])
+        elif en_pila[v]:
+            low[u] = min(low[u], d[v])
+    if low[u] == d[u]:
+        cerrar(u, pila, en_pila, comp, total)
+
+
+def componentes(G):
+    # comp[v]: el componente de v, y cuantos componentes hay.
+    d = {}
+    low = {}
+    en_pila = {}
+    comp = {}
+    for u in G:
+        d[u] = 0
+        low[u] = 0
+        en_pila[u] = False
+        comp[u] = -1
+    reloj = [0]
+    total = [0]
+    pila = []
+    for s in G:
+        if d[s] == 0:
+            scc_aux(G, s, reloj, d, low, pila, en_pila, comp, total)
+    return comp, total[0]
+```
+
+El `elif` es lo que separa este Tarjan del de los puentes. Una arista hacia un
+vértice ya visitado baja el $low$ solo cuando ese vértice sigue en la pila; si
+su componente ya se cerró, de allá no se vuelve y la arista no dice nada de
+$u$. Al terminar queda `comp`, con el componente de cada ciudad, y cuántos
+componentes hay.
+
+#### Los componentes, con pila explícita
+
+```python
+def scc_desde(G, s, reloj, d, low, pila, en_pila, comp, total):
+    # Parejas [u, k]: por cual vecino de u va el recorrido.
+    descubrir(s, reloj, d, low)
+    pila.append(s)
+    en_pila[s] = True
+    llamadas = [[s, 0]]
+    while len(llamadas) > 0:
+        u, k = llamadas[-1]
+        if k < len(G[u]):
+            llamadas[-1][1] = k + 1
+            v = G[u][k]
+            if d[v] == 0:
+                descubrir(v, reloj, d, low)
+                pila.append(v)
+                en_pila[v] = True
+                llamadas.append([v, 0])
+            elif en_pila[v]:
+                low[u] = min(low[u], d[v])
+        else:
+            llamadas.pop()
+            if low[u] == d[u]:
+                cerrar(u, pila, en_pila, comp, total)
+            if len(llamadas) > 0:
+                p = llamadas[-1][0]
+                low[p] = min(low[p], low[u])
+
+
+def componentes_con_pila(G):
+    # Lo mismo que componentes, con la profundidad en una lista.
+    d = {}
+    low = {}
+    en_pila = {}
+    comp = {}
+    for u in G:
+        d[u] = 0
+        low[u] = 0
+        en_pila[u] = False
+        comp[u] = -1
+    reloj = [0]
+    total = [0]
+    pila = []
+    for s in G:
+        if d[s] == 0:
+            scc_desde(G, s, reloj, d, low, pila, en_pila, comp, total)
+    return comp, total[0]
+```
+
+Esta es la que se envía. Con $N = 10^5$ y las carreteras en línea, la rama de
+la profundidad se pasa del límite de recursión de Python.
+
+#### El sumidero
+
+```python
+def salidas(G, comp, total):
+    # Cuantas carreteras salen de cada componente hacia otro componente.
+    salen = {}
+    for c in range(total):
+        salen[c] = 0
+    for u in G:
+        for v in G[u]:
+            if comp[u] != comp[v]:
+                salen[comp[u]] = salen[comp[u]] + 1
+    return salen
+
+
+def capitales(G):
+    # Los vertices del unico componente sumidero, en orden creciente. La lista
+    # queda vacia cuando hay mas de un sumidero.
+    comp, total = componentes_con_pila(G)
+    salen = salidas(G, comp, total)
+    sumideros = []
+    for c in range(total):
+        if salen[c] == 0:
+            sumideros.append(c)
+    elegidas = []
+    if len(sumideros) == 1:
+        for u in G:
+            if comp[u] == sumideros[0]:
+                elegidas.append(u)
+    elegidas.sort()
+    return elegidas
+```
+
+El DAG no se construye. Basta contar, para cada componente, las carreteras que
+terminan en otro componente; el que queda en cero es un sumidero. Con un solo
+sumidero salen sus ciudades en orden creciente. Con dos o más la lista queda
+vacía, y de ahí sale el `0` del enunciado.
+
+El barrido que recoge las ciudades del sumidero las encuentra ya crecientes,
+porque el diccionario se armó de $1$ a $N$. El `sort` final deja el orden
+asegurado sin depender de eso.
+
+#### La lectura y la salida
+
+```python
+def main():
+    datos = stdin.read().split()
+    lineas = []
+    pos = 0
+    while pos + 1 < len(datos):
+        n, m, pos = leer_pareja(datos, pos)
+        aristas = []
+        for _ in range(m):
+            a, b, pos = leer_pareja(datos, pos)
+            aristas.append((a, b))
+        elegidas = capitales(construir(range(1, n + 1), aristas))
+        lineas.append(str(len(elegidas)))
+        if len(elegidas) > 0:
+            numeros = []
+            for u in elegidas:
+                numeros.append(str(u))
+            lineas.append(" ".join(numeros))
+    print("\n".join(lineas))
+```
+
+`leer_pareja` es el mismo de UVa 610. La entrada trae casos hasta que se agotan
+los números, y las líneas se acumulan para imprimirlas de un golpe: un `print`
+por ciudad con $N = 10^5$ se paga en tiempo.
+
+#### La otra forma de resolverlo
+
+El titular calcula los componentes con *Gabow*. Donde Tarjan guarda un número
+por vértice, Gabow lleva dos pilas: `pilaS` con los vértices abiertos, que es
+la misma de Tarjan, y `pilaP` con los candidatos a representante del
+componente.
+
+```cpp
+for(int i = 0; i < adj[v].size(); i++){
+  w = adj[v][i];
+  if(visitado[w] == -1)
+    gabowAux(w);
+  else if(sccInd[w] == -1){
+    while(visitado[pilaP.top()] > visitado[w])
+      pilaP.pop();
+  }
+}
+```
+
+Al bajar, una arista hacia un vértice abierto saca de `pilaP` todo lo que se
+descubrió después de él. Ese es el efecto de bajar el $low$: lo que queda en
+`pilaS` por encima de la cima de `pilaP` va a parar al mismo componente que
+esa cima.
+
+```cpp
+if(v == pilaP.top()){
+  numSCC++;
+  while(pilaS.top() != v){
+    sccInd[pilaS.top()] = numSCC - 1;
+    pilaS.pop();
+  }
+  sccInd[pilaS.top()] = numSCC - 1;
+  pilaS.pop();
+  pilaP.pop();
+}
+```
+
+El vértice que sobrevive en la cima de `pilaP` cierra el componente, y la
+pregunta `v == pilaP.top()` es la condición `low[u] == d[u]`. Lo que se vacía
+de `pilaS` hasta $v$ es lo que saca `cerrar` en la versión con $low$. La
+partición es la misma y el conteo de carreteras entre componentes no cambia. El
+archivo completo, en C++, es [capital.cpp](./codigo/capital.cpp).
 
 ### Interplanetary
 
@@ -1103,7 +1345,164 @@ componente de más influencia.
 3. El recorrido desde el inicio cruza una arista cuando no es puente, o cuando
    lo es y lleva a un componente de influencia mayor.
 
+Las tres pasadas son profundidades sobre el mismo grafo, $\Theta(V+E)$ cada
+una. El orden final de la salida, $O(V \log V)$.
+
 #### Los componentes y su influencia
+
+```python
+def sumar_aux(G, u, numero, es_puente, influencia, comp, suma):
+    # No cruza puentes: lo que alcanza es un componente, y de paso acumula la
+    # influencia de cada vertice que etiqueta.
+    comp[u] = numero
+    suma[numero] = suma[numero] + influencia[u]
+    for v, i in G[u]:
+        if comp[v] == -1 and i not in es_puente:
+            sumar_aux(G, v, numero, es_puente, influencia, comp, suma)
+
+
+def componentes(G, es_puente, influencia):
+    # comp[v]: el componente de v; suma[c]: la influencia de todo c.
+    comp = {}
+    for u in G:
+        comp[u] = -1
+    suma = []
+    total = 0
+    for u in G:
+        if comp[u] == -1:
+            suma.append(0)
+            sumar_aux(G, u, total, es_puente, influencia, comp, suma)
+            total = total + 1
+    return comp, suma
+```
+
+Es el etiquetado que no cruza puentes, con una suma encima: cada vértice que se
+etiqueta aporta su influencia al componente. Salen dos cosas, el componente de
+cada vértice en `comp` y la influencia de todo el componente en `suma`. Los
+puentes llegan ya calculados por `puentes`, y `construir` es la de la primera
+parte, con las parejas de vecino e identificador de arista.
+
+```python
+def sumar_desde(G, s, numero, es_puente, influencia, comp, suma):
+    comp[s] = numero
+    suma[numero] = suma[numero] + influencia[s]
+    pila = [s]
+    while len(pila) > 0:
+        u = pila.pop()
+        for v, i in G[u]:
+            if comp[v] == -1 and i not in es_puente:
+                comp[v] = numero
+                suma[numero] = suma[numero] + influencia[v]
+                pila.append(v)
+
+
+def componentes_con_pila(G, es_puente, influencia):
+    comp = {}
+    for u in G:
+        comp[u] = -1
+    suma = []
+    total = 0
+    for u in G:
+        if comp[u] == -1:
+            suma.append(0)
+            sumar_desde(G, u, total, es_puente, influencia, comp, suma)
+            total = total + 1
+    return comp, suma
+```
+
+La misma pasada, con lo pendiente en una lista en vez de en la pila de llamadas.
+
+#### El recorrido que respeta los puentes
+
+```python
+def se_puede(u, v, i, es_puente, comp, suma):
+    # Una arista que no es puente se cruza en los dos sentidos; un puente,
+    # solo hacia el componente de influencia estrictamente mayor.
+    return i not in es_puente or suma[comp[u]] < suma[comp[v]]
+
+
+def alcance_aux(G, u, es_puente, comp, suma, visto, llegan):
+    visto[u] = True
+    llegan.append(u)
+    for v, i in G[u]:
+        if not visto[v] and se_puede(u, v, i, es_puente, comp, suma):
+            alcance_aux(G, v, es_puente, comp, suma, visto, llegan)
+
+
+def alcance(G, inicio, es_puente, comp, suma):
+    # Los vertices a los que se llega desde inicio.
+    visto = {}
+    for u in G:
+        visto[u] = False
+    llegan = []
+    alcance_aux(G, inicio, es_puente, comp, suma, visto, llegan)
+    return llegan
+```
+
+La condición va aparte porque es lo único que separa esto de una profundidad
+corriente. Dentro de un componente se anda libre: ninguna de esas aristas es
+puente. El puente se cruza solo hacia más influencia, y la desigualdad es
+estricta, así que un empate lo deja cerrado en los dos sentidos. Lo que
+devuelve `alcance` son los vértices en el orden en que el recorrido los
+encontró, y ese no es el orden de la salida.
+
+```python
+def alcance_con_pila(G, inicio, es_puente, comp, suma):
+    visto = {}
+    for u in G:
+        visto[u] = False
+    visto[inicio] = True
+    llegan = [inicio]
+    pila = [inicio]
+    while len(pila) > 0:
+        u = pila.pop()
+        for v, i in G[u]:
+            if not visto[v] and se_puede(u, v, i, es_puente, comp, suma):
+                visto[v] = True
+                llegan.append(v)
+                pila.append(v)
+    return llegan
+```
+
+El mismo recorrido con lo pendiente en una lista, y `se_puede` consultada igual.
+
+#### El orden de la salida
+
+```python
+def ordenar(llegan, influencia, comp, suma):
+    # Creciente por la influencia del componente, luego por la propia y al
+    # final por el numero del vertice.
+    claves = []
+    for u in llegan:
+        claves.append((suma[comp[u]], influencia[u], u))
+    claves.sort()
+    salida = []
+    for total, propia, u in claves:
+        salida.append(u)
+    return salida
+
+
+def resolver(vertices, aristas, influencia, inicio):
+    # Las tres pasadas seguidas. Theta(V+E) en total, mas el orden final.
+    G = construir(vertices, aristas)
+    es_puente = puentes_con_pila(G)
+    comp, suma = componentes_con_pila(G, es_puente, influencia)
+    llegan = alcance_con_pila(G, inicio, es_puente, comp, suma)
+    return ordenar(llegan, influencia, comp, suma)
+```
+
+Tres claves: la influencia del componente, la del vértice y el número. El
+número desempata siempre, así que la línea que sale es única. `resolver` entra
+por las versiones de pila, que son las que se envían cuando la profundidad
+puede pasarse del límite de recursión de Python; `resolver_recursivo` hace las
+mismas tres pasadas con `puentes`, `componentes` y `alcance`.
+
+#### La otra forma de resolverlo
+
+La del titular hace las tres pasadas iguales. Lo que cambia es dónde vive el
+estado: el grafo, los puentes, las etiquetas y las influencias son arreglos
+globales de tamaño fijo, y la influencia del componente sube como valor de
+retorno de la recursión en vez de acumularse en una lista.
 
 ```python
 def getCCAux(u, ind):
@@ -1116,10 +1515,8 @@ def getCCAux(u, ind):
   return ans
 ```
 
-Devuelve la influencia total del componente de $u$. De paso, `ccInd` queda
-diciendo a qué componente pertenece cada vértice.
-
-#### El recorrido que respeta los puentes
+Cada llamada devuelve la influencia de lo que etiquetó y el padre la agrega a
+la suya. `getCC` recoge el total de cada componente en `inflComps`.
 
 ```python
 def dfs(u):
@@ -1131,14 +1528,13 @@ def dfs(u):
       dfs(w)
 ```
 
-Dentro de un componente se anda libre. El puente se cruza solo hacia arriba,
-hacia un componente de más influencia, y por eso el recorrido nunca se
-devuelve.
-
-#### El orden de la salida
-
-Se imprimen los vértices alcanzados, ordenados primero por la influencia de
-su componente, después por la propia y al final por número.
+La diferencia está en cómo se reconoce un puente. `bridges` guarda las parejas
+$(u,v)$ y $(v,u)$ en lugar del identificador de la arista, y el padre se
+excluye por vértice con `w != p[v]`. Con una sola arista entre cada
+par de vértices las dos formas coinciden. Con una ruta doble no: la pareja no
+distingue las dos copias, la exclusión por vértice tapa las dos, el $low$ del
+hijo nunca baja hasta el padre y la ruta sale marcada como puente. El archivo
+completo es [interplanetary.py](./codigo/interplanetary.py).
 
 ## Cómo atacar estos problemas
 
@@ -1221,10 +1617,27 @@ puentes. Resolver el otro da una respuesta razonable que el juez rechaza.
   `paloma_aux`, `valores_paloma`, `paloma_desde`, `valores_paloma_con_pila`,
   `mejores`, `leer_pareja` y `main`. Lee por `stdin` e imprime las $m$
   estaciones de mayor valor paloma por caso.
+- [capital.py](./codigo/capital.py): `construir`, `descubrir`, `cerrar`,
+  `scc_aux`, `componentes`, `scc_desde`, `componentes_con_pila`, `salidas`,
+  `capitales`, `leer_pareja` y `main`, más `invertir`, `alcanzados`,
+  `capitales_bruto` y `grafo_aleatorio`. Lee por `stdin` e imprime, por caso,
+  cuántas candidatas hay y la lista ordenada. Al correrlo da las candidatas de
+  la muestra y las del caso con dos sumideros, y compara las dos versiones de
+  Tarjan contra probar cada ciudad una por una sobre 400 grafos aleatorios.
 - [capital.cpp](./codigo/capital.cpp): `gabow`, `gabowAux` y `main`, en
   C++. Calcula los componentes fuertemente conexos con Gabow, cuenta las
   aristas que salen de cada uno y, si hay un solo sumidero, imprime
   cuántas candidatas son y la lista ordenada; si hay más, imprime `0`.
+- [interplanetary_cortes.py](./codigo/interplanetary_cortes.py):
+  `construir`, `descubrir`, `puentes_aux`, `puentes`, `puentes_desde`,
+  `puentes_con_pila`, `sumar_aux`, `componentes`, `sumar_desde`,
+  `componentes_con_pila`, `se_puede`, `alcance_aux`, `alcance`,
+  `alcance_con_pila`, `ordenar`, `resolver`, `resolver_recursivo`,
+  `leer_pareja` y `main`, más `contar_componentes`, `puentes_bruto` y
+  `grafo_aleatorio`. Lee por `stdin` e imprime los vértices alcanzados desde
+  el vértice de arranque. Al correrlo da la salida del grafo de siete vértices y
+  la del caso de empate, y contrasta las dos versiones de cada pasada sobre
+  300 grafos aleatorios.
 - [interplanetary.py](./codigo/interplanetary.py): `bridgesAux`,
   `bridgesTarjan`, `getCCAux`, `getCC`, `dfs`, `solve` y `main`. Lee por
   `stdin`, arma los componentes 2-arista-conexos con su influencia y
@@ -1384,14 +1797,15 @@ arranque en $1$. Los puentes son $3$–$4$, $4$–$5$ y $5$–$6$:
 | Influencia | $6$ | $10$ | $4$ | $5$ |
 
 Desde $\{1,2,3\}$ se cruza $3$–$4$, porque $6 < 10$, y no $4$–$5$, porque
-$10 > 4$. Llegan $1, 2, 3, 4$, y la clave `(inflComps[ccInd[x]], infl[x], x)`
+$10 > 4$. Llegan $1, 2, 3, 4$, y la clave `(suma[comp[x]], influencia[x], x)`
 los ordena como $2\ 3\ 1\ 4$: las tuplas se comparan componente a componente.
 
-`getCCAux` devuelve $infl(u)$ más lo que devuelve cada vecino que etiqueta.
-En el triángulo, `getCCAux(1, 0)` llama a `getCCAux(2, 0)`, que llama a
-`getCCAux(3, 0)`. Ahí el $2$ y el $1$ ya tienen etiqueta y $(3,4)$ es puente,
-así que devuelve $2$; el $2$ devuelve $1 + 2 = 3$, y el $1$, $3 + 3 = 6$. La
-condición `ccInd[v] == -1` evita sumar dos veces un vértice del ciclo.
+En la versión del titular la suma sube por el retorno. `getCCAux(1, 0)` llama a
+`getCCAux(2, 0)`, que llama a `getCCAux(3, 0)`: ahí el $2$ y el $1$ ya tienen
+etiqueta y $(3,4)$ es puente, así que devuelve $2$; el $2$ devuelve
+$1 + 2 = 3$, y el $1$, $3 + 3 = 6$. La condición `ccInd[v] == -1` evita sumar
+dos veces un vértice del ciclo. `sumar_aux` llega a los mismos $6$ sin
+retorno: cada vértice etiquetado agrega su influencia a `suma[numero]`.
 
 En el grafo de siete vértices de las diapositivas los triángulos $\{1,2,3\}$ y
 $\{4,5,6\}$ suman $6$ y $12$, y el $7$ cuelga solo del $1$ con influencia $1$.
