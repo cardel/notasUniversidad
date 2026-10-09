@@ -1,11 +1,7 @@
 // UVa 10901 - Ferry Loading III: una cola por orilla; el caso cuesta Theta(m).
-#include <iostream>
-#include <string>
+#include <cstdio>
+#include <cstring>
 #include "cola_nodos.h"
-
-using std::cin;
-using std::cout;
-using std::string;
 
 const int MAX_CARROS = 10000;
 
@@ -53,20 +49,18 @@ void simular(Cola orilla[], int n, int t) {
 }
 
 int main() {
-  std::ios::sync_with_stdio(false);
-  cin.tie(NULL);
   int c;
-  cin >> c;
+  scanf("%d", &c);
   int caso = 0;
   while (caso < c) {
     int n, t, m;
-    cin >> n >> t >> m;
+    scanf("%d %d %d", &n, &t, &m);
     Cola orilla[2];
     int i = 0;
     while (i < m) {
-      string lado;
-      cin >> llegada[i] >> lado;
-      if (lado == "left") {
+      char lado[8];
+      scanf("%d %s", &llegada[i], lado);
+      if (strcmp(lado, "left") == 0) {
         orilla[0].encolar(i);
       } else {
         orilla[1].encolar(i);
@@ -75,11 +69,11 @@ int main() {
     }
     simular(orilla, n, t);
     if (caso > 0) {
-      cout << "\n";
+      printf("\n");
     }
     i = 0;
     while (i < m) {
-      cout << salida[i] << "\n";
+      printf("%d\n", salida[i]);
       i = i + 1;
     }
     caso = caso + 1;

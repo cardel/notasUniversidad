@@ -1,9 +1,6 @@
 // UVa 12100 - Printer Queue: cola de indices y nueve contadores. O(n^2) por caso.
-#include <iostream>
+#include <cstdio>
 #include "cola_nodos.h"
-
-using std::cin;
-using std::cout;
 
 const int MAX_TRABAJOS = 100;
 
@@ -22,16 +19,16 @@ bool hayMayor(int cuantos[], int p) {
 
 int main() {
   int casos;
-  cin >> casos;
+  scanf("%d", &casos);
   while (casos > 0) {
     int n;
     int m;
-    cin >> n >> m;
+    scanf("%d %d", &n, &m);
     int cuantos[10] = {0};  // cuantos[p]: trabajos de prioridad p en la cola
     Cola trabajos;          // guarda la posicion original de cada trabajo
     int i = 0;
     while (i < n) {
-      cin >> prioridad[i];
+      scanf("%d", &prioridad[i]);
       cuantos[prioridad[i]] = cuantos[prioridad[i]] + 1;
       trabajos.encolar(i);
       i = i + 1;
@@ -49,7 +46,7 @@ int main() {
         impreso = j == m;
       }
     }
-    cout << minutos << "\n";
+    printf("%d\n", minutos);
     casos = casos - 1;
   }
   return 0;

@@ -606,30 +606,30 @@ prueba jugadas y se devuelve cuando la rama no lleva a ninguna parte.
 ```cpp
 // UVa 732 - Anagrams by Stack: todas las secuencias de i y o que convierten
 // la palabra de entrada en la de salida, en orden alfabetico.
-#include <iostream>
-#include <string>
+#include <cstdio>
+#include <cstring>
 #include "pila_nodos.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
+const int MAXIMO = 100;  // letras que caben en cada palabra
 
-string entrada;
-string salida;
-int largo;        // las dos palabras miden lo mismo cuando se busca
-string jugadas;   // la secuencia en construccion: 2 * largo jugadas
+// + 1 para el '\0' que cierra cada cadena
+char entrada[MAXIMO + 1];
+char salida[MAXIMO + 1];
+// las dos palabras miden lo mismo cuando se busca
+int largo;
+// la secuencia en construccion: 2 * largo jugadas
+char jugadas[2 * MAXIMO];
 
 void imprimir() {
   int k = 0;
   while (k < 2 * largo) {
     if (k > 0) {
-      cout << " ";
+      printf(" ");
     }
-    cout << jugadas[k];
+    printf("%c", jugadas[k]);
     k = k + 1;
   }
-  cout << endl;
+  printf("\n");
 }
 
 // metidas: letras de la entrada que ya estan en la pila o salieron de ella.
@@ -656,15 +656,14 @@ void buscar(Pila &p, int metidas, int escritas) {
 }
 
 int main() {
-  while (cin >> entrada >> salida) {
-    cout << "[" << endl;
-    if (entrada.size() == salida.size()) {
-      largo = entrada.size();
-      jugadas = string(2 * largo, 'i');
+  while (scanf("%s %s", entrada, salida) == 2) {
+    printf("[\n");
+    if (strlen(entrada) == strlen(salida)) {
+      largo = strlen(entrada);
       Pila p;
       buscar(p, 0, 0);
     }
-    cout << "]" << endl;
+    printf("]\n");
   }
   return 0;
 }
@@ -692,8 +691,10 @@ misma casilla.
 así que una pareja sin solución deja el bloque vacío. Si los dos largos no
 coinciden no se busca nada, porque cada letra de la entrada se mete una vez y
 cada letra de la salida se saca una vez; `long` y `short` caen en ese caso.
-El `while (cin >> entrada >> salida)` se vuelve falso cuando ya no hay nada por
-leer.
+Las dos palabras se leen con `scanf("%s %s", entrada, salida)` en arreglos de
+`char` con lugar para `MAXIMO` letras y el `'\0'` que cierra cada una, y
+`strlen` da su largo. El `while` termina cuando `scanf` ya no devuelve 2,
+porque no quedan dos palabras por leer.
 
 ### Por qué se intenta `i` antes que `o`
 

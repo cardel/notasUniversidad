@@ -2,12 +2,9 @@
 // simuladas a la vez. Meter cuesta Theta(1) en las tres; sacar cuesta Theta(1)
 // en la pila y la cola y Theta(n) en la cola de prioridad, que busca el maximo
 // en un arreglo: el caso cuesta O(n^2), con n <= 1000.
-#include <iostream>
+#include <cstdio>
 #include "cola_nodos.h"
 #include "pila_nodos.h"
-
-using std::cin;
-using std::cout;
 
 const int MAX_ORDENES = 1000;
 
@@ -33,7 +30,7 @@ int sacarMayor() {
 
 int main() {
   int n;
-  while (cin >> n) {
+  while (scanf("%d", &n) == 1) {
     Pila pila;
     Cola cola;
     tam = 0;
@@ -43,7 +40,7 @@ int main() {
     int i = 0;
     while (i < n) {
       int orden, x;
-      cin >> orden >> x;
+      scanf("%d %d", &orden, &x);
       if (orden == 1) {
         pila.apilar(x);
         cola.encolar(x);
@@ -77,15 +74,15 @@ int main() {
       posibles = posibles + 1;
     }
     if (posibles == 0) {
-      cout << "impossible\n";
+      printf("impossible\n");
     } else if (posibles > 1) {
-      cout << "not sure\n";
+      printf("not sure\n");
     } else if (esPila) {
-      cout << "stack\n";
+      printf("stack\n");
     } else if (esCola) {
-      cout << "queue\n";
+      printf("queue\n");
     } else {
-      cout << "priority queue\n";
+      printf("priority queue\n");
     }
   }
   return 0;
