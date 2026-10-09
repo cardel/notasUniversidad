@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>interplanetary — el recorrido que sube de influencia · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  #entradas-infl { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; margin-bottom: 0.7rem; }
+  label.campo-valor { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem 0.5rem; }
+  label.campo-valor .mono { font-family: ui-monospace, monospace; white-space: nowrap; font-size: 0.85rem; }
+  label.campo-valor input { width: 3.8rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 6px; }
+  #ver-datos { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--gris); }
+  #salida { font-family: ui-monospace, monospace; padding: 0.4rem 0.6rem; border: 1px solid var(--borde); border-radius: 6px; min-width: 16rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El recorrido que sube de influencia</h1>
+  <p class="intro">Un mapa de planetas con rutas en los dos sentidos, un valor
+  de influencia en cada planeta y uno de arranque. Dentro de un grupo que ningún
+  puente separa se anda libre. El puente se cruza solo hacia un grupo de más
+  influencia, y por eso el recorrido nunca se devuelve. Se piden los planetas
+  alcanzados, ordenados por la influencia de su grupo, después por la propia y
+  al final por número.</p>
+
+  <div class="carta">
+    <h2>1. El mapa y la predicción</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Mapa:</span>
+      <button data-preset="0" class="primario">Diez planetas</button>
+      <button data-preset="1">Nueve planetas</button>
+      <button data-preset="2">Once planetas</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p style="margin-top:0"><b>Entrada:</b> los planetas de 1 a n, su
+    influencia, las rutas como parejas sin dirección y el planeta de arranque.
+    &nbsp;<b>Salida:</b> los planetas alcanzados, en una línea.</p>
+    <p class="nota" id="ver-datos"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span>sobre cada planeta, su influencia</span>
+      <span><b style="color:#b3261e">○</b> planeta de arranque</span>
+      <span><b style="color:#b3261e">┅</b> puente</span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántos planetas alcanza el recorrido?</span>
+      <input type="number" id="prediccion" min="1" placeholder="su número">
+      <button id="btn-prediccion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-prediccion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Los puentes</h2>
+    <p class="nota" style="margin-top:0">Clasifique cada ruta. Es puente cuando
+    al quitarla sus dos extremos quedan sin camino entre ellos, y el recorrido
+    en profundidad lo detecta con <code>low[w] &gt; vis[v]</code>: nada del
+    subárbol de <code>w</code> vuelve a <code>v</code> ni más arriba. El número
+    sobre cada ruta es su identificador en la lista.</p>
+    <div id="lista-puentes"></div>
+    <div class="prediccion">
+      <button id="btn-puentes" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-puentes" class="veredicto"></div>
+    <div id="detalle-puentes"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La influencia de cada grupo</h2>
+    <p style="margin-top:0">Sin los puentes, el mapa queda repartido en
+    grupos, cada uno conexo por las rutas que quedan. Escriba la influencia
+    total de cada grupo: la suma de la influencia de sus planetas.</p>
+    <div id="entradas-infl"></div>
+    <div class="prediccion">
+      <button id="btn-infl" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-infl" class="veredicto"></div>
+    <div id="detalle-infl"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Puente por puente</h2>
+    <p style="margin-top:0">La condición es
+    <code>influencia[grupo de u] &lt; influencia[grupo de w]</code>, con
+    desigualdad estricta. Los puentes van en el orden en que el recorrido se
+    los encuentra: uno queda fuera de alcance cuando el camino hacia él pasa
+    por otro que no se cruzó.</p>
+    <p class="nota" style="margin-top:0"><code>la cruza</code>: la influencia
+    sube y el recorrido pasa al otro lado. &nbsp;<code>la mira y no la
+    cruza</code>: el recorrido llega a uno de sus extremos y la condición
+    falla. &nbsp;<code>no llega a mirarla</code>: ninguno de sus dos extremos
+    se alcanza.</p>
+    <div id="decisiones"></div>
+    <div class="prediccion">
+      <button id="btn-decisiones" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-decisiones" class="veredicto"></div>
+    <div id="detalle-decisiones"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La lista en orden</h2>
+    <p style="margin-top:0">Escriba los planetas alcanzados separados por
+    espacios, ordenados por influencia del grupo, después por influencia propia
+    y al final por número. Las tres claves se comparan en ese orden y la
+    siguiente solo entra a decidir cuando la anterior empata.</p>
+    <div class="prediccion">
+      <input type="text" id="salida" placeholder="por ejemplo 4 2 7 1">
+      <button id="btn-salida" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-salida" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el mapa de diez planetas, el
+    planeta más rico de todos no se alcanza. Diga qué puente lo deja afuera, por
+    qué el empate de influencias no basta para cruzarlo y cuánta influencia le
+    falta al grupo intermedio para que entre; después, qué cambiaría con la
+    comparación escrita <code>&le;</code>. En el de nueve, cambie el arranque al
+    planeta 5 y diga cuántos alcanza, y pruebe también desde el 8: desde ahí
+    llega a más, y conviene explicar por qué. En el de once el recorrido cruza
+    un puente y rechaza dos; de esos dos, uno se cruzaría arrancando en el
+    planeta 2 y el otro no, y hay que decir cuál es cuál. Y por último:
+    construya dos mapas con los mismos cuatro grupos y los mismos tres puentes,
+    uno donde el recorrido alcance todos los planetas y otro donde no salga del
+    grupo del arranque.</p>
+  </div>
+
+</div>
+<script src="interplanetary.js"></script>
+</body>
+</html>

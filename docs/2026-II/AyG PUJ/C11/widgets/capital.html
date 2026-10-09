@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>capital — las candidatas a capital · AyG C11</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo, #panel-condensacion { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .leyenda span { white-space: nowrap; margin-right: 0.8rem; }
+  #entradas { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.5rem; margin-bottom: 0.7rem; }
+  label.campo-valor { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem 0.5rem; }
+  label.campo-valor .mono { font-family: ui-monospace, monospace; white-space: nowrap; }
+  label.campo-valor input { width: 3.6rem; padding: 0.3rem; border: 1px solid var(--borde); border-radius: 6px; }
+  .piezas { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0 0.7rem; }
+  button.pieza { font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.25rem 0.55rem; }
+  #ver-datos { font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--gris); }
+  #salida { font-family: ui-monospace, monospace; padding: 0.4rem 0.6rem; border: 1px solid var(--borde); border-radius: 6px; min-width: 14rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Las candidatas a capital</h1>
+  <p class="intro">Un país tiene ciudades y carreteras de una sola vía. La
+  capital tiene que ser alcanzable desde todas las demás, y se piden las
+  candidatas en orden creciente. Son los vértices del componente fuertemente
+  conexo sumidero de la condensación: el componente del que no sale ninguna
+  carretera hacia otro. Con dos sumideros no hay capital. Las ciudades de uno
+  no se alcanzan desde las del otro, ni al revés.</p>
+
+  <div class="carta">
+    <h2>1. El país y la predicción</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">País:</span>
+      <button data-preset="0" class="primario">Ocho ciudades</button>
+      <button data-preset="1">Siete ciudades</button>
+      <button data-preset="2">Nueve ciudades</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p style="margin-top:0"><b>Entrada:</b> las ciudades de 1 a n y las
+    carreteras como parejas <code>u v</code>, que se recorren solo de
+    <code>u</code> a <code>v</code>. &nbsp;<b>Salida:</b> cuántas candidatas hay
+    y la lista en orden creciente; si no hay ninguna, un <code>0</code> solo.</p>
+    <p class="nota" id="ver-datos"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">
+      <span>las carreteras entre dos ciudades del mismo componente se colorean al agrupar</span>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas ciudades pueden ser capital?</span>
+      <input type="number" id="prediccion" min="0" placeholder="su número">
+      <button id="btn-prediccion" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-prediccion" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Marque los componentes fuertemente conexos</h2>
+    <p class="nota" style="margin-top:0">Para cada ciudad, escriba el número
+    menor de su componente. Dos ciudades van juntas cuando hay camino de la
+    primera a la segunda <em>y</em> de la segunda a la primera; una sola
+    dirección no alcanza. Una ciudad sin nadie con quien ir y venir queda sola y
+    se representa a sí misma.</p>
+    <div id="entradas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <div id="explicaciones"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Contraiga y busque el sumidero</h2>
+    <p style="margin-top:0">Cada componente se vuelve un nodo y las carreteras
+    entre componentes distintos, las aristas. Lo que queda no tiene ciclos: si
+    hubiera uno, los componentes del ciclo serían uno solo. Diga, componente por
+    componente, si de él sale alguna carretera hacia otro.</p>
+    <div id="marcas"></div>
+    <div id="veredicto-marcas" class="veredicto"></div>
+    <div id="detalle-marcas"></div>
+    <div id="panel-condensacion"></div>
+    <div class="leyenda">
+      <span><b style="color:#b3261e">○</b> componente sin carreteras de salida</span>
+      <span>bajo cada nodo, cuántas carreteras salen hacia otros</span>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La salida que pide el juez</h2>
+    <p style="margin-top:0">Escriba la lista de candidatas en orden creciente,
+    separadas por espacios, o un <code>0</code> si no hay ninguna.</p>
+    <div class="prediccion">
+      <input type="text" id="salida" placeholder="por ejemplo 3 5 6">
+      <button id="btn-salida" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-salida" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Compruebe por la definición</h2>
+    <p style="margin-top:0">Sin componentes ni condensación: se elige una ciudad
+    y se recorren las carreteras al revés para ver desde cuántas se llega a
+    ella. Las que cumplen con todas son las mismas de la lista.</p>
+    <div class="piezas" id="botones-mirar"></div>
+    <div id="veredicto-mirar" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>6. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el país de siete ciudades,
+    agregue una sola carretera que haga aparecer una capital y diga cuántas
+    candidatas quedan. Después agregue otra distinta que devuelva la respuesta a
+    cero. En el de ocho, quite la carretera que entra al par del final y cuente
+    los sumideros que quedan. Y por último: construya un país donde todas las
+    ciudades sean candidatas, y otro donde haya una sola candidata pero tres
+    componentes; diga en cada caso cómo se ve la condensación.</p>
+  </div>
+
+</div>
+<script src="capital.js"></script>
+</body>
+</html>
