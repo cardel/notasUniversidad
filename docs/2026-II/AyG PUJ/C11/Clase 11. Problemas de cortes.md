@@ -22,7 +22,7 @@ es una pasada más.
     es un árbol, las tres pasadas lineales que lo construyen, el teorema de
     Robbins con la orientación que sale de la profundidad, la cuenta de
     pedazos por los hijos con $w.low \geq v.d$, y los cinco pasos para
-    decidir, leyendo un enunciado, si el corte es por vértice o por arista.
+    decidir, leyendo un enunciado, si el corte es por vértice o por arista. Al final, lo que se trabajó en clase: las preguntas que salieron, las muestras de Capital e Interplanetary recorridas a mano y las seis páginas de tablero.
 
     [:octicons-arrow-right-24: Entrar](./Problemas%20de%20cortes.md)
 
