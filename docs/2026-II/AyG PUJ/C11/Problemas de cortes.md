@@ -1076,8 +1076,12 @@ sumidero se alcanza desde todos.
 3. Si queda exactamente un componente sin marcar, imprimir sus vértices
    ordenados; si no, no hay candidatas.
 
-Los componentes cuestan $\Theta(V+E)$, el barrido de aristas $\Theta(E)$ y el
-orden final $O(V \log V)$.
+Los componentes cuestan $\Theta(V+E)$ y el barrido de aristas $\Theta(E)$. La
+lista sale ordenada sin ordenarla: el último barrido recorre las ciudades de
+$1$ a $N$ y guarda las del sumidero, en $\Theta(V)$. Si se juntan los
+vértices del sumidero en el orden en que salen de la pila, hay que ordenarlos,
+$O(V \log V)$, y el peor caso es que todas sean candidatas, con el grafo
+entero en un solo componente.
 
 La solución de referencia calcula los componentes con *Gabow*, que lleva dos
 pilas en vez del arreglo $low$: una con los vértices abiertos y otra con los
@@ -1292,3 +1296,132 @@ sacar un componente al cerrar un punto de articulación.
   <https://onlinejudge.org/external/6/610.pdf>.
 - UVa 10765 — Doves and Bombs.
   <https://onlinejudge.org/external/107/10765.pdf>.
+
+## Lo que se trabajó en clase
+
+### La prueba de $w.low > v.d$
+
+En el tablero quedaron dos componentes 2-arista-conexos, $C_i$ con $v$ y $C_j$
+con $w$, unidos por la arista de árbol $(v,w)$. En un grafo no dirigido toda
+arista que no es de árbol une un vértice con un ancestro suyo, así que todo
+depende de hasta dónde sube un retroceso que salga del subárbol de $w$.
+
+Si $w.low \leq v.d$, hay un retroceso $(x,y)$ con $x$ en el subárbol de $w$ y
+$y.d = w.low \leq v.d$. Como $y$ es ancestro de $x$ y no se descubrió después
+de $v$, es $v$ o un ancestro de $v$. El camino de árbol de $y$ a $v$, la arista
+$(v,w)$, el camino de árbol de $w$ a $x$ y el retroceso $(x,y)$ cierran un
+ciclo que contiene a $(v,w)$, y la arista no es puente. Si $w.low > v.d$,
+ningún retroceso del subárbol de $w$ llega a $v$ ni más arriba: la única arista
+entre ese subárbol y el resto es $(v,w)$, y quitarla deja a $C_j$ del otro lado.
+
+La igualdad $w.low = v.d$ es el caso $y = v$. El ciclo existe y pasa por $v$.
+Contra el puente sirve, porque al quitar la arista $v$ se queda. Contra la
+articulación no, porque al quitar $v$ el subárbol de $w$ pierde el único
+vértice por el que tocaba el resto. La raíz $r$ se trata aparte por la misma
+cuenta: ningún vértice tiene $d$ menor que $r.d$, así que $w.low \geq r.d$ se
+cumple en todos sus hijos y el criterio la marcaría siempre.
+
+En el grafo de diez vértices los que terminan con $low = d$ son $0$, $3$, $4$ y
+$7$, uno por componente: el primero que la profundidad descubre en cada uno.
+Fuera de la raíz, la arista que llega a cada uno desde su padre es puente,
+porque $w.low = w.d > v.d$.
+
+### Preguntas que salieron
+
+- *¿Y si hubiera otra arista entre dos componentes?* Cierra un ciclo con el
+  camino que los une en el árbol. Los puentes de ese camino dejan de serlo y
+  sus componentes se funden en uno.
+- *¿El árbol de puentes es siempre un camino?* En el ejemplo sí, por cómo está
+  dibujado. Un componente del que salen tres puentes da un nodo de grado tres.
+  Lo que no cambia es que sea conexo y acíclico.
+- *¿Para qué guardar el número de arista junto al vecino?* Al volver de la
+  recursión por $(v,w)$ con $w.low > v.d$ se guarda ese número en `es_puente`,
+  y el etiquetado pregunta `i not in es_puente` sin buscar la arista en la
+  lista.
+- *¿Por qué el reloj arranca en $1$?* Porque $d = 0$ marca *no descubierto*. El
+  origen es arbitrario; si se toma $0$ como tiempo válido, la marca pasa a ser
+  $-1$.
+- *¿Subir el límite de recursión o pasar a la pila?* Antes de subirlo conviene
+  revisar si la recursión baja más de lo necesario o si cada marco carga
+  demasiadas variables. Para el parcial basta la versión recursiva.
+- *¿Y si se piden distancias entre puntos críticos?* Los puentes salen con
+  Tarjan y las distancias con un algoritmo de caminos, tema de la semana que
+  viene: amplitud sin pesos, Dijkstra con pesos no negativos, Floyd–Warshall
+  si puede haber negativos.
+- *¿Qué arista separa más parejas?* Un puente que deja $s$ vértices de un lado
+  separa $s\,(n-s)$ parejas. En el grafo de diez vértices, $2$–$3$ separa
+  $3 \cdot 7 = 21$, $3$–$4$ separa $4 \cdot 6 = 24$ y $5$–$7$ separa
+  $7 \cdot 3 = 21$. Gana el que deja los pedazos más parejos.
+
+Un error más, que apareció al explicar el criterio: comparar al revés. Lo que
+se compara es el $low$ del hijo con el $d$ del padre, $w.low > v.d$; $v.low$
+frente a $w.d$ no dice nada sobre la arista.
+
+### Capital, la muestra a mano
+
+Con $1 \to 2$, $3 \to 2$, $4 \to 3$ y $2 \to 1$ salen tres componentes
+fuertemente conexos: $\{1,2\}$, $\{3\}$ y $\{4\}$. Un vértice solo es un
+componente: la definición pide camino de $u$ a $v$ y de $v$ a $u$, y con
+$u = v$ basta el camino vacío. Las aristas entre componentes son $4 \to 3$ y
+$3 \to 2$; de $\{1,2\}$ no sale ninguna, y es el único sumidero. En el tablero
+quedaron marcados el $1$ y el $2$, tachados el $3$ y el $4$.
+
+Gabow, arrancando en $1$, lleva en la pila $S$ los vértices abiertos y en $P$
+los posibles representantes. Descubre $1$ y $2$ y los pone en las dos. La
+arista $2 \to 1$ llega a un vértice ya descubierto y sin componente, y saca de
+$P$ todo lo descubierto después de $1$: queda $P = [1]$. Al cerrar $2$, el
+tope de $P$ no es $2$ y no pasa nada; al cerrar $1$, sí es $1$, y de $S$ sale
+$\{2,1\}$. El representante es el que en Tarjan tendría $low = d$.
+
+### Interplanetary, las muestras a mano
+
+La primera muestra trae seis colonias con influencias $3, 1, 2, 10, 4, 5$,
+las aristas $1$–$2$, $2$–$3$, $3$–$1$, $3$–$4$, $4$–$5$, $5$–$6$ y el
+arranque en $1$. Los puentes son $3$–$4$, $4$–$5$ y $5$–$6$:
+
+| Componente | $\{1,2,3\}$ | $\{4\}$ | $\{5\}$ | $\{6\}$ |
+|---|:-:|:-:|:-:|:-:|
+| Influencia | $6$ | $10$ | $4$ | $5$ |
+
+Desde $\{1,2,3\}$ se cruza $3$–$4$, porque $6 < 10$, y no $4$–$5$, porque
+$10 > 4$. Llegan $1, 2, 3, 4$, y la clave `(inflComps[ccInd[x]], infl[x], x)`
+los ordena como $2\ 3\ 1\ 4$: las tuplas se comparan componente a componente.
+
+`getCCAux` devuelve $infl(u)$ más lo que devuelve cada vecino que etiqueta.
+En el triángulo, `getCCAux(1, 0)` llama a `getCCAux(2, 0)`, que llama a
+`getCCAux(3, 0)`. Ahí el $2$ y el $1$ ya tienen etiqueta y $(3,4)$ es puente,
+así que devuelve $2$; el $2$ devuelve $1 + 2 = 3$, y el $1$, $3 + 3 = 6$. La
+condición `ccInd[v] == -1` evita sumar dos veces un vértice del ciclo.
+
+En el grafo de siete vértices de las diapositivas los triángulos $\{1,2,3\}$ y
+$\{4,5,6\}$ suman $6$ y $12$, y el $7$ cuelga solo del $1$ con influencia $1$.
+Desde el $1$ se sube por $3$–$4$ y no se baja por $1$–$7$; la salida es
+$2\ 1\ 3\ 5\ 4\ 6$. La segunda muestra del enunciado tiene componentes
+$\{1,2,3\}$, $\{4,5,9\}$, $\{6\}$, $\{7\}$ y $\{8\}$ con sumas $8$, $11$, $6$,
+$1$ y $13$. El recorrido sube de $8$ a $11$ y de $11$ a $13$, no baja al $6$,
+y sale $2\ 3\ 1\ 5\ 9\ 4\ 8$: el $5$, con influencia $-3$, abre su componente.
+
+Dos preguntas sobre el código. `bridges` guarda $(v,w)$ y $(w,v)$ porque el
+grafo es no dirigido y la consulta llega en el sentido en que se recorre. La
+influencia propia no ordena solo dentro de un componente: es la segunda clave,
+y también decide entre vértices de dos componentes alcanzables con la misma
+suma. Guardar la influencia junto a la lista del componente, como un par, o en
+los nodos del árbol de puentes, es lo mismo con otra estructura.
+`interplanetary.py` excluye la arista de entrada con `w != p[v]`: con rutas
+repetidas marcaría como puente una ruta doble.
+
+### Las páginas del tablero
+
+Las primeras traen las dos partes de la prueba de que $T$ es un árbol,
+el árbol de puentes del grafo de diez vértices, la prueba de $w.low > v.d$ con
+los dos componentes, la muestra de Capital y `getCCAux` con su suma
+(tres páginas):
+
+![](attachments/2026-10-09-Note-08-48.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+Las segundas traen los cuatro componentes encerrados en el grafo de diez
+vértices, las comparaciones de los tres puentes con sus $d/low$, la muestra de
+Capital y las de Interplanetary con la influencia de cada componente
+(tres páginas):
+
+![](attachments/2026-10-09-Note-10-56.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
