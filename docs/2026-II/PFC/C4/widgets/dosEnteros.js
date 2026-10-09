@@ -1,6 +1,6 @@
 /* dosEnteros: cuatro candidatas para numR, todas de tipo Int y todas
    compilables. El código de las dos columnas es el del frame
-   «Ejemplo motivacional: Números racionales» de FuncionesDatos.tex. */
+   "Ejemplo motivacional: Números racionales" de FuncionesDatos.tex. */
 (function () {
   /* Cada candidata arma numerador y denominador del resultado a partir de
      los cuatro enteros sueltos de a/b + c/d. */

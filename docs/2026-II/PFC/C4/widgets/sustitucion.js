@@ -4,7 +4,7 @@
    expresión con los selectores expandidos, los enteros, la aritmética y el
    Boolean. Cierra con r1 max r2, que elige entre r y this sin construir nada.
    El código y la traza de seis pasos salen de FuncionesDatos.tex, frames
-   «Extendiendo el modelo de sustitución» y «Ejemplo: Evaluación paso a paso»,
+   "Extendiendo el modelo de sustitución" y "Ejemplo: Evaluación paso a paso",
    con los métodos de 03_racional_simplificacion.scala. */
 (function () {
   function mcd(a, b) {
