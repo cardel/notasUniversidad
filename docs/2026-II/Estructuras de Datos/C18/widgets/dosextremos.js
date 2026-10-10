@@ -1,7 +1,7 @@
 /* Ejercicio interactivo: la cola necesita los dos extremos (clase 18). */
 var EJERCICIO = (function () {
-  var N = 40;
-  var TAMANOS = [5, 10, 20, 40];
+  var N = 30;
+  var TAMANOS = [5, 10, 15, 30];
   var LINEAS = [
     "void insertarArreglo(ListaArreglo &l, int p, Elemento e) {",
     "  int i = l.n;",
@@ -207,23 +207,23 @@ if (typeof module !== "undefined") {
       if (iguales(dada, ESPERADO)) {
         ver.className = "veredicto bien";
         ver.textContent = "Correcto: " + ESPERADO.join(", ") +
-          ". Las dos primeras son 0 + 1 + ... + 39 = 39·40/2 = 780, porque el corrimiento recorre todo lo que hay. La enlazada simple camina hasta el último nodo al agregar, y con m nodos da m - 1 pasos: 0 + 1 + ... + 38 = 741. La última no recorre nada en ninguno de los dos extremos.";
+          ". Las dos primeras son 0 + 1 + ... + 29 = 29·30/2 = 435, porque el corrimiento recorre todo lo que hay. La enlazada simple camina hasta el último nodo al agregar, y con m nodos da m - 1 pasos: 0 + 1 + ... + 28 = 28·29/2 = 406. La última no recorre nada en ninguno de los dos extremos.";
         logradas.cuatro = true; revisar();
       } else if (dada.length === 4 && dada[3] !== 0) {
         ver.className = "veredicto mal";
         ver.textContent = "La cuarta columna no toca ningún elemento: agregarConUltimo escribe l.ultimo->siguiente sin buscar a nadie, y quitar del frente solo mueve l.cabeza.";
-      } else if (dada.length === 4 && dada[2] === 780) {
+      } else if (dada.length === 4 && dada[2] === 435) {
         ver.className = "veredicto mal";
-        ver.textContent = "La enlazada simple no da lo mismo que el arreglo: el primer agregar no camina nada porque la lista está vacía, así que los sumandos van de 0 a 38 y no de 0 a 39.";
-      } else if (dada.length === 4 && (dada[0] === 1600 || dada[0] === 40)) {
+        ver.textContent = "La enlazada simple no da lo mismo que el arreglo: el primer agregar no camina nada porque la lista está vacía, así que los sumandos van de 0 a 28 y no de 0 a 29.";
+      } else if (dada.length === 4 && (dada[0] === 900 || dada[0] === 30)) {
         ver.className = "veredicto mal";
-        ver.textContent = "No es n por n ni n: el corrimiento depende de cuántos elementos hay en ese momento, y eso va cambiando. Sume 0 + 1 + ... + 39.";
+        ver.textContent = "No es n por n ni n: el corrimiento depende de cuántos elementos hay en ese momento, y eso va cambiando. Sume 0 + 1 + ... + 29.";
       } else if (dada.length !== 4) {
         ver.className = "veredicto mal";
         ver.textContent = "Cuatro números, uno por columna.";
       } else {
         ver.className = "veredicto mal";
-        ver.textContent = "Cuente cuántos elementos corre o visita cada operación cuando la estructura tiene m elementos, y sume sobre las 40 llamadas. La tabla de abajo muestra los totales.";
+        ver.textContent = "Cuente cuántos elementos corre o visita cada operación cuando la estructura tiene m elementos, y sume sobre las 30 llamadas. La tabla de abajo muestra los totales.";
       }
     });
 
@@ -289,7 +289,7 @@ if (typeof module !== "undefined") {
     });
 
     conectar("opciones-arreglo", "arreglo", "reparto", {
-      bien: "Correcto. Entrando por el final, insertar en la posición l.n no corre nada y eliminar del frente corre todo lo demás. Entrando por el frente es al revés. Las dos versiones suman 0 + 1 + ... + 39, solo cambia cuál de las dos operaciones lo paga.",
+      bien: "Correcto. Entrando por el final, insertar en la posición l.n no corre nada y eliminar del frente corre todo lo demás. Entrando por el frente es al revés. Las dos versiones suman 0 + 1 + ... + 29, solo cambia cuál de las dos operaciones lo paga.",
       coincidencia: "La tabla da el mismo número en las cuatro filas de n. No es coincidencia: las dos versiones suman los mismos sumandos.",
       mitad: "Ninguna de las dos reparte el trabajo: en cada versión una de las operaciones corre todo y la otra no corre nada. Mire el while de insertarArreglo con p = l.n, que no da ni una vuelta."
     });
