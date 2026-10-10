@@ -16,7 +16,7 @@ En qué casilla cae cada `encolar` sobre un arreglo de cinco, cómo quedan
 
 ### [dosextremos](widgets/dosextremos.html){ target=_blank rel=noopener }
 
-Los elementos que se mueven al encolar y desencolar cuarenta veces en las
+Los elementos que se mueven al encolar y desencolar treinta veces en las
 cuatro combinaciones, y por qué solo una de ellas llega a cero.
 
 ## La cola sobre la lista enlazada
