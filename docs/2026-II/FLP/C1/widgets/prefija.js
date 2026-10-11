@@ -51,8 +51,8 @@ var RETOS = (function () {
         "<code>celsius-&gt;fahrenheit</code>. El nombre incluye una flecha " +
         "porque en Racket un identificador admite signos que en otros " +
         "lenguajes son operadores: <code>-&gt;</code>, <code>?</code> y " +
-        "<code>!</code> son letras más, y la convención los usa para decir " +
-        "qué hace el procedimiento.",
+        "<code>!</code> son letras más, y se usan para decir qué hace el " +
+        "procedimiento.",
       gramatica: null,
       esqueleto:
         "(define (celsius->fahrenheit c)\n" +
@@ -88,8 +88,8 @@ var RETOS = (function () {
         "entre <code>a</code> y <code>b</code>, incluyendo los extremos. " +
         "Las comparaciones se escriben igual que la aritmética, con el " +
         "operador adelante, y <code>and</code> junta las dos condiciones. " +
-        "El signo de interrogación al final del nombre es la convención " +
-        "para los procedimientos que devuelven un booleano.",
+        "El signo de interrogación al final del nombre marca los " +
+        "procedimientos que devuelven un booleano.",
       gramatica: null,
       esqueleto:
         "(define (entre? x a b)\n" +

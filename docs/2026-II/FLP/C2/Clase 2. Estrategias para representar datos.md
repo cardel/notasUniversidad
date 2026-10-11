@@ -253,10 +253,10 @@ Dada la gramática de un tipo de dato, la interfaz sale sola (EOPL §2.2):
 3. Un **extractor** por cada pieza de información que recibe un constructor.
    Saca esa pieza.
 
-Predicados y extractores son los **observadores**. Y los nombres siguen una
-convención que se lee sin abrir la implementación: el constructor lleva el
-nombre de la variante, el predicado agrega `?` al final, y el extractor une el
-nombre de la variante con `->` y el nombre de la pieza.
+Predicados y extractores son los **observadores**. Y los nombres se forman
+siempre igual, de modo que se leen sin abrir la implementación: el constructor
+lleva el nombre de la variante, el predicado agrega `?` al final, y el
+extractor une el nombre de la variante con `->` y el nombre de la pieza.
 
 En el taller, la gramática del polinomio trae el nombre de cada variante en
 un recuadro y esos son los que hay que respetar: `poli` es el constructor,

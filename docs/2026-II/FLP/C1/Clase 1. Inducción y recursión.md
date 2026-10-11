@@ -81,12 +81,12 @@ La regla suma dos, así que el reconocedor resta dos. Al evaluar `(in-P? 8)`:
 ni es 2 ni es menor que 2, entonces `(in-P? 6)`, luego `(in-P? 4)`, luego
 `(in-P? 2)`, que responde verdadero. Ese último caso ya no se evalúa más.
 
-La cláusula `(< n 2)` no es un adorno. Sin ella, `(in-P? 3)` resta dos
-indefinidamente y nunca alcanza el caso base: el procedimiento no termina. La
-condición de terminación es parte del reconocedor, no un detalle que se pueda
-omitir.
+La cláusula `(< n 2)` es lo que hace terminar al procedimiento. Sin ella,
+`(in-P? 3)` resta dos indefinidamente y nunca alcanza el caso base. La
+condición de terminación es parte del reconocedor.
 
-Con el mismo molde salen `in-T?` para los múltiplos de tres, `in-Tu?` para las
+Con el mismo `cond` —caso base, condición de terminación y el paso que
+deshace la regla— salen `in-T?` para los múltiplos de tres, `in-Tu?` para las
 tuplas —una lista no vacía cuyo primer elemento es par y cuyo segundo es
 múltiplo de tres— y `in-L?` para las listas de tuplas, donde el caso vacío
 responde verdadero y el otro pregunta si el `car` es una tupla y si el `cdr`
