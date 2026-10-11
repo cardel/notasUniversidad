@@ -611,6 +611,31 @@ Las tres aparecen juntas en cada ejemplo del curso de aquí en adelante.
 Cuando lleguen las listas enlazadas, serán el esqueleto de `crear` y
 `destruir`.
 
+## Lo que se vio
+
+- La memoria es una hilera de celdas de un byte, cada una con su
+  dirección. En la máquina del curso `int` ocupa 4 bytes, `double` 8 y
+  todo puntero 8: el tamaño del puntero lo fija el espacio de direcciones,
+  no el tipo apuntado.
+- La dirección de `A[i]` es la base más `sizeof(int)` $\cdot\, i$. Con
+  $i = 0$ cae en la base, y llegar a cualquier casilla cuesta $O(1)$: una
+  multiplicación y una suma.
+- Un proceso reparte su memoria en código, datos globales, pila y
+  montículo. Las locales nacen con el marco de su función y mueren al
+  retornar; lo que deba sobrevivir a la función va al montículo.
+- `&v` es la dirección de `v`, `int *p` guarda una dirección y `*p` lee o
+  escribe la celda apuntada; qué celda toca `*p` lo decide el valor de `p`
+  en ese momento.
+- Un puntero sin inicializar guarda basura: escribir a través de él
+  termina en `Segmentation fault` o corrompe un dato en silencio, y
+  `-Wall -Wextra` lo anuncia con `-Wuninitialized`.
+- `malloc(n * sizeof(int))` reserva en ejecución y devuelve `NULL` si no
+  hay memoria; `calloc` además deja el bloque en ceros. `datos[i]` es
+  `*(datos + i)`, así que el bloque se indexa como un arreglo.
+- Perder la dirección de un bloque sin `free` es una fuga, y usarlo
+  después de `free` es un puntero colgante. Las tres reglas: preguntar por
+  `NULL`, todo `malloc` con su `free`, y `p = NULL` después de liberar.
+
 ## Ejercicios de la sesión
 
 ### Copiar valores no es copiar direcciones

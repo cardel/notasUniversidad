@@ -704,6 +704,32 @@ la sesión.
 - UVa 10905 — Children's Game: [uva10905.cpp](./codigo/uva10905.cpp),
   [entrada](./codigo/uva10905.in), [salida](./codigo/uva10905.out)
 
+## Lo que se vio
+
+- La cola doble necesita la lista doblemente enlazada con `ultimo`: con la
+  simple, `eliminarFinal` cuesta $\Theta(n)$ porque hay que llegar al
+  penúltimo, y con la doble las cuatro operaciones de los extremos son
+  $\Theta(1)$.
+- Sin el contador, `vacia()` sigue en $\Theta(1)$ y `tamano()` pasa a
+  $\Theta(n)$. Un ciclo que pregunte `tamano()` en cada vuelta sube de
+  $\Theta(n)$ a $\Theta(n^2)$.
+- Invertir una cola con una pila auxiliar cuesta $\Theta(n)$ en tiempo y
+  $\Theta(n)$ de espacio aparte.
+- `particionar` toma $x = a[\mathit{fin}]$ y sostiene
+  $\forall k,\ \mathit{ini} \leq k \leq i:\ a[k] \leq x$ y
+  $\forall k,\ i + 1 \leq k \leq j - 1:\ a[k] > x$. Hace $n - 1$
+  comparaciones, $\Theta(n)$ en tiempo y $\Theta(1)$ de espacio aparte.
+- Quicksort paga al partir y no combina nada. Con particiones balanceadas,
+  $T(n) = 2\,T(n/2) + \Theta(n) = \Theta(n \log n)$.
+- Con el pivote en el último lugar, la entrada ya ordenada es el peor caso:
+  $C(n) = n(n-1)/2 \in \Theta(n^2)$, con testigos $c = 1/2$, $k = 1$ para la
+  cota superior y $c = 1/4$, $k = 2$ para la inferior.
+- El espacio aparte es la pila de llamadas: $\Theta(\log n)$ balanceado y
+  $\Theta(n)$ con la entrada ordenada, que desborda la pila de 8 MB con
+  300 000 elementos. El pivote del medio o al azar evita esa entrada.
+- Con 4096 elementos mezclados, quicksort hizo 54 266 comparaciones, merge sort
+  43 220 e insertion sort 4 162 689.
+
 ## Ejercicios
 
 ### Todos iguales

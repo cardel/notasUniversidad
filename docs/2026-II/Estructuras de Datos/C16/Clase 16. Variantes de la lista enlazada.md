@@ -760,6 +760,31 @@ completa, y esa cuenta se hace con la tabla a la vista antes de escribir el
 código. Para el [proyecto del curso](../Proyecto/Proyecto%20del%20curso.md),
 el enunciado publicado es el documento que manda.
 
+## Lo que se vio
+
+- En la lista doble cada nodo guarda también `anterior`, y desenlazar un nodo
+  que ya se tiene cuesta $\Theta(1)$ en vez de $\Theta(n)$. El precio es un
+  puntero más por nodo y cuatro casos en `insertar`.
+- Su invariante añade $I_5$:
+  $v_i\texttt{->siguiente} = v_{i+1} \wedge v_{i+1}\texttt{->anterior} = v_i$.
+  En el empalme se escriben primero los dos enlaces del nodo nuevo y después
+  los de los vecinos; al revés, media lista queda inalcanzable.
+- La circular doble cierra la cadena: `cabeza->anterior` es el último e
+  `insertar` se queda con dos casos. Sin `NULL`, un recorrido con
+  `actual != NULL` no termina, y lo único que lo detiene es contar $n$ pasos.
+- Con el contador, `nodoEn(p)` camina por el lado corto y da a lo sumo
+  $\lceil n/2 \rceil$ pasos. El peor caso se reduce a la mitad y la cota sigue
+  en $\Theta(n)$, porque $\Theta(n/2) = \Theta(n)$.
+- `partir` encuentra la mitad con un puntero lento y uno rápido: $\Theta(n)$
+  en tiempo, $\Theta(1)$ en espacio. `mezclar` solo reescribe `siguiente` y
+  ocupa $\Theta(1)$ aparte.
+- Merge sort cumple $T(n) = 2\,T(n/2) + \Theta(n)$, así que
+  $T(n) = \Theta(n \log n)$ para cualquier entrada, con $\Theta(\log n)$ de
+  pila de llamadas.
+- Sobre el arreglo la mezcla pide un auxiliar de $\Theta(n)$; sobre la
+  enlazada no. Con $n = 4096$, merge sort hizo 37 214 comparaciones e
+  insertion sort 4 088 802.
+
 ## Ejercicios
 
 ### Rotar la circular

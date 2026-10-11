@@ -753,6 +753,31 @@ otros nombres:
 `pop` en la STL tampoco devuelve el valor. La decisión de contrato es la
 misma.
 
+## Lo que se vio
+
+- En la Lista, `insertar` es la única operación que admite $p = n$
+  ($0 \leq p \leq n$); `eliminar`, `obtener` y `asignar` exigen
+  $0 \leq p < n$.
+- Sobre arreglo y contador, `obtener`, `asignar` y `agregar` cuestan $O(1)$;
+  `insertar` y `eliminar` cuestan $O(n - p)$, con peor caso $O(n)$ en la
+  posición 0. El espacio es $\Theta(\texttt{CAPACIDAD})$.
+- `insertar` corre las casillas desde la última hacia $p$ y `eliminar` desde
+  $p$ hacia el final; en el orden contrario se pisa un valor antes de moverlo.
+- Revertir con `insertar(0, ·)` cuesta $\Theta(n^2)$ y con `agregar` desde el
+  final, $\Theta(n)$. Mezclar dos listas ordenadas con `agregar` cuesta
+  $\Theta(n)$ en tiempo y en espacio.
+- La Pila (LIFO) y la Cola (FIFO) no reciben posiciones. `desapilar`, `tope`,
+  `desencolar` y `frente` exigen $n > 0$, y en las implementaciones de la
+  sesión todas sus operaciones cuestan $O(1)$.
+- Imprimir una pila sin destruirla pide una pila auxiliar y dos pasadas:
+  $\Theta(n)$ en tiempo y $\Theta(n)$ de espacio aparte.
+- La cola sobre arreglo circular guarda `inicio` y `n`: el final está en
+  `(inicio + n) % CAPACIDAD` y `desencolar` avanza `inicio` con el mismo
+  módulo, sin correr nada. Con `eliminar(0)`, vaciar la cola costaría $O(n^2)$.
+- Recorrer una cola es dar la vuelta $n$ veces, con el tamaño leído antes de
+  empezar. Con `!c.vacia()` como condición, los elementos que vuelven a entrar
+  se procesan otra vez y el ciclo no termina.
+
 ## Ejercicios de la sesión
 
 El último tramo de la sesión se fue en las actividades interactivas de la

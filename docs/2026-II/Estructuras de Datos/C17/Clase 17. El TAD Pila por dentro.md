@@ -761,6 +761,32 @@ diff salida.txt uva732.out
 
 El `diff` no imprime nada cuando los cuatro bloques salen como en el enunciado.
 
+## Lo que se vio
+
+- El costo de `apilar` depende de la lista de abajo y del extremo que haga de
+  tope. Con $n = 1000$, el arreglo con tope al frente corre 999 000 elementos
+  y la enlazada con tope al final visita 997 002 nodos; las otras dos
+  combinaciones no tocan ninguno.
+- Sobre la lista enlazada el tope va en la posición 0, y la pila queda en seis
+  llamadas sin un `new` ni un `delete`: el destructor de la lista libera los
+  nodos.
+- El orden de la pila es $K_3$:
+  $\forall i, j,\ 0 \leq i < j < n:\ \tau(P[i]) > \tau(P[j])$, donde $\tau(x)$
+  es el número de la llamada a `apilar` que metió $x$.
+- `desapilar()` y `tope()` exigen $n > 0$, y el `assert` va en la pila: si
+  saltara el de la lista, el mensaje hablaría de una posición que quien llamó
+  nunca escribió.
+- En la pila sobre nodos, `desapilar` guarda el nodo, mueve `cima` y solo
+  entonces libera. Con `delete cima;` adelante, leer `cima->siguiente` es leer
+  un puntero colgante.
+- Las cinco operaciones del contrato son $\Theta(1)$ en las tres
+  implementaciones. Lo que decide es el espacio: el arreglo reserva
+  `CAPACIDAD` y pone techo; la enlazada paga 16 bytes por nodo, 4 de ellos de
+  relleno.
+- UVa 732 se resuelve probando `i` antes que `o` y deshaciendo cada jugada en
+  $\Theta(1)$, con $O(4^m)$ estados y $\Theta(m)$ de espacio. Así las
+  secuencias salen en orden alfabético sin ordenar nada al final.
+
 ## Ejercicios
 
 ### El tope al final

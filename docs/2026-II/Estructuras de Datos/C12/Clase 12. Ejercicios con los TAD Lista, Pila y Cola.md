@@ -563,6 +563,29 @@ cada una vale $O(1)$. En la lista hay que mirar cuál operación: `obtener` y
 auxiliar, una lista nueva. Devolver una lista cuesta $\Theta$ de su tamaño
 aunque el tiempo sea el mismo.
 
+## Lo que se vio
+
+- Los paréntesis balanceados se deciden con una pila en $\Theta(n)$ de tiempo
+  y $O(n)$ de espacio. La cadena se rechaza si un cierre llega con la pila
+  vacía o si al final quedan aperturas sin cerrar.
+- En la postfija, el primer valor que se desapila es el segundo operando $b$:
+  con el orden cambiado, `5 3 -` responde $-2$ sin violar ninguna
+  precondición. `s[i] - '0'` convierte el carácter en el dígito que representa.
+- Una cola se imprime sin destruirla dando la vuelta, en una pasada y sin
+  auxiliar. Invertirla pide una pila, $\Theta(n)$ en tiempo y espacio, porque
+  desencolar y encolar conservan el orden relativo.
+- La papa caliente pasa $k - 1$ personas del frente al final y desencola una
+  por ronda: $\Theta(nk)$ en tiempo y $\Theta(n)$ de espacio.
+- Quitar repetidos en sitio no avanza $p$ cuando elimina. Con `eliminar` de
+  $O(n)$ cuesta $\Theta(n^2)$ en el peor caso y $\Theta(1)$ de espacio aparte;
+  construir una lista nueva cuesta $\Theta(n)$ en tiempo y en espacio.
+- La intersección de dos listas ordenadas avanza dos posiciones con tres casos
+  por comparación: $\Theta(n_a + n_b)$ en tiempo y $O(\min(n_a, n_b))$ de
+  espacio.
+- La cola con dos pilas trasvasa de `entrada` a `salida` solo cuando `salida`
+  está vacía. Cada elemento se trasvasa una vez, así que cada operación cuesta
+  $O(1)$ amortizado.
+
 ## Para el juez
 
 Tres problemas de UVa que son estos mismos ejercicios con formato de entrada

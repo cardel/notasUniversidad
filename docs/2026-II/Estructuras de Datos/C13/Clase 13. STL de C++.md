@@ -468,6 +468,31 @@ hasta el doble. Un `insert` en la mitad de seis elementos corre cuatro;
 `binary_search` sobre un millón de elementos da unos veinte pasos, porque
 $\log_2 10^6 \approx 20$.
 
+## Lo que se vio
+
+- La STL provee contenedores, algoritmos e iteradores dentro del espacio de
+  nombres `std`. Sin el `#include` el nombre no existe y sin `std` no se
+  alcanza; cada nombre se trae con su línea `using std::nombre`.
+- `v.at(p)` comprueba $0 \leq p < \texttt{size}()$ y detiene el programa;
+  `v[p]` no comprueba, y fuera de rango lee memoria ajena sin avisar.
+- `push_back` cuesta $O(1)$ amortizado porque el vector reserva de más, hasta
+  el doble de su tamaño. `insert` y `erase` en la posición $p$ cuestan
+  $O(n - p)$; `insert` admite $p = \texttt{size}()$ y `erase` no.
+- Los contenedores se pasan con `&`. Sin él la función recibe una copia
+  completa, que cuesta tantos pasos como elementos tenga y pierde los cambios
+  al volver.
+- En `stack` y `queue` todas las operaciones cuestan $O(1)$ y `pop` no
+  devuelve el valor. `top`, `front` y `pop` sobre un contenedor vacío no
+  avisan: la precondición $n > 0$ se vigila con `empty()`.
+- En UVa 673, `scanf("%d")` deja el salto de línea sin consumir y
+  `scanf("%s")` se salta las líneas vacías, que valen `Yes`; las cadenas se
+  leen con `fgets`.
+- `find` cuesta $\Theta(n)$ y no exige nada. `binary_search` cuesta
+  $O(\log n)$ pero exige el vector ordenado, y sin orden responde mal sin
+  avisar. `sort` cuesta $O(n \log n)$.
+- El criterio que recibe `sort` resuelve los empates con $<$ estricto: si
+  `antes(a, b)` y `antes(b, a)` son verdaderos a la vez, `sort` se rompe.
+
 ## Para practicar en casa
 
 ### Propuesto 1

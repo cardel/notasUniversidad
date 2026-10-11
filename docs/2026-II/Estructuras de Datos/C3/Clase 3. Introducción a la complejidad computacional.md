@@ -579,6 +579,28 @@ ejecuta cerca de la mitad de las instrucciones porque no visita las
 posiciones que de todos modos iba a descartar. La diferencia está en la
 constante que acompaña al término lineal.
 
+## Lo que se vio
+
+- El tiempo que mide `time` cambia entre corridas idénticas y con
+  `gcc -O2` sin tocar el código: depende de la máquina, la caché y el
+  sistema operativo, y por eso no mide el algoritmo.
+- El costo $T(n)$ cuenta instrucciones en función del tamaño de la
+  entrada, y cada instrucción simple (asignación, comparación, operación
+  aritmética) vale una unidad (CLRS, sección 2.2).
+- La condición de un ciclo se evalúa una vez más que su cuerpo, porque la
+  evaluación que falla también cuenta: `suma_hasta` da $T(m) = 3m + 4$.
+- `&&` y `||` cortan apenas el resultado queda decidido: en
+  `i < n && datos[i] != v`, la lectura de `datos[i]` no ocurre cuando `i`
+  llega a `n`; con `&` sí ocurre y lee memoria fuera del arreglo.
+- Un `if` dentro de un ciclo obliga a separar casos: `buscar_corte` cuesta
+  8 instrucciones en el mejor caso, constante, y $3n + 4$ en el peor,
+  lineal. Si no se dice otra cosa, se reporta el peor caso.
+- Dos ciclos independientes de $n$ vueltas dan $T(n) = 3n^{2} + 4n + 4$;
+  la condición interna se evalúa $n(n + 1)$ veces.
+- `contar_v1` y `contar_v2` son lineales, $3n + k + 4$ contra
+  $\tfrac{3}{2}n + k + 4$: la segunda ejecuta cerca de la mitad de las
+  instrucciones, y la diferencia queda en la constante.
+
 ## Ejercicios
 
 ### Ejercicio 1

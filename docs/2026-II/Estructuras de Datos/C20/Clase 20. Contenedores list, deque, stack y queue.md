@@ -615,6 +615,31 @@ Cada una lee la entrada de ejemplo del enunciado y reproduce su salida:
 - UVa 12207 — That is Your Queue: [uva12207.cpp](./codigo/uva12207.cpp),
   [entrada](./codigo/uva12207.in), [salida](./codigo/uva12207.out)
 
+## Lo que se vio
+
+- `list<T>` es la lista doblemente enlazada: `push_front`, `push_back`,
+  `insert(it, e)` y `erase(it)` cuestan $\Theta(1)$, y llegar a la posición
+  $p$ cuesta $\Theta(p)$, sin `l[i]` ni `it + k`.
+- `insert` no invalida ningún iterador de `list`, y `erase(it)` solo invalida
+  los del nodo borrado. `splice(it, b)` con `b` entera reescribe cuatro
+  punteros: $\Theta(1)$.
+- `sort(l.begin(), l.end())` no compila sobre una `list`; `l.sort()` es merge
+  sort empalmando nodos, $\Theta(n \log n)$.
+- `deque` guarda bloques de tamaño fijo y un mapa de punteros: el elemento $i$
+  está en el bloque $(\mathit{ini} + i) / B$, casilla
+  $(\mathit{ini} + i) \bmod B$. `d[i]` y los cuatro extremos cuestan $O(1)$ e
+  `insert` en $p$, $O(\min(p, n - p))$.
+- En un `deque`, `push_front` y `push_back` invalidan los iteradores, porque
+  el mapa pudo mudarse, pero no los punteros a los elementos.
+- `stack` y `queue` son adaptadores sobre `deque` por defecto, con todas sus
+  operaciones en $O(1)$. `queue<int, vector<int> >` no compila porque `vector`
+  no trae `pop_front`.
+- Se escoge por la operación que más se repite y, si dos sirven, por el
+  contrato más estrecho.
+- Con $n = 200\,000$ inserciones al frente, el `vector` tardó 1,2893 s, la
+  `list` 0,0199 s y el `deque` 0,0016 s. Sumar una `list` por posición
+  cuadruplica el tiempo al duplicar $n$; con un iterador es $\Theta(n)$.
+
 ## Ejercicios
 
 ### Los dos extremos

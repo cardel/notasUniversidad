@@ -318,6 +318,28 @@ no se resuelve. El diseño de algoritmos como tema propio queda para
 implementación va a ser por qué una estructura de datos es la
 apropiada.
 
+## Lo que se vio
+
+- $T(n) \in O(g(n))$ si existen $c > 0$ y $k > 0$ con
+  $T(n) \leq c \cdot g(n)$ para todo $n \geq k$; $c$ y $k$ son los
+  testigos, y CLRS (sección 3.1) escribe $n_0$ donde aquí va $k$.
+- $3n + 4 \in O(n)$ con $c = 7$ y $k = 1$, inflando $4 \leq 4n$. Con
+  $c = 4$ el arranque pasa a $k = 4$, y con $c = 3$ no hay $k$, porque
+  quedaría $4 \leq 0$.
+- Los testigos se hallan fijando $c$ y despejando $k$, o fijando $k$ y
+  despejando $c$; un $c$ más holgado permite un $k$ más temprano.
+- Un polinomio de grado $d$ con coeficientes no negativos y $a_d > 0$
+  está en $O(n^{d})$, con $c$ igual a la suma de los coeficientes y
+  $k = 1$: para `prefijos`, $c = 11$.
+- $3\lfloor\log_2 n\rfloor + 7 \in O(\log n)$ con $c = 10$ y $k = 2$;
+  con $k = 1$ falla, porque $\log_2 1 = 0$. La base no se escribe: el
+  cambio de base es una constante que absorbe $c$.
+- $n^{2} \notin O(n)$ sale por contradicción: dividir entre $n$ deja
+  $n \leq c$ para todo $n \geq k$, y $n = k + c$ lo rompe.
+- $O(1) \subset O(\log n) \subset O(n) \subset O(n^{2}) \subset O(n^{3})$.
+  Con $10^{6}$ datos y $10^{9}$ operaciones por segundo, $O(n^{2})$ tarda
+  cerca de 17 minutos y $O(n^{3})$ más de 30 años.
+
 ## Ejercicios de cierre
 
 Tres pertenencias trabajadas en vivo al final de la sesión.
