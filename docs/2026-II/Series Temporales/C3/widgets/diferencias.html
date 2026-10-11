@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diferenciar y mirar la ACF</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Diferenciar y mirar la ACF</h1>
+  <p class="intro">Dos casillas: d = 1 resta a cada mes el anterior y D = 1 le resta el mismo mes del año anterior. Con cada combinación cambian la serie, su ACF y el número de datos que quedan. La banda sombreada es ±1,96/√n, con el n de la serie que se ve.</p>
+
+  <div id="antes"></div>
+
+  <div class="carta">
+    <h2>2. Marque y desmarque</h2>
+    <div class="controles">
+      <label><input type="checkbox" id="d"> d = 1 (regular)</label>
+      <label><input type="checkbox" id="D"> D = 1 (estacional)</label>
+    </div>
+    <p class="lectura" id="lectura"></p>
+    <div class="figura" id="figura-serie"></div>
+    <div class="figura" id="figura-acf"></div>
+    <p class="nota">Los valores p de la prueba ADF no se calculan en esta página: son los que dio <code>adfuller</code> de statsmodels en la sesión 3, con <code>regression="c"</code> y <code>autolag="AIC"</code>, sobre esta misma serie. Las barras en rojo son las que salen de la banda.</p>
+  </div>
+
+  <div id="despues"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Las cuatro combinaciones</h2>
+    <div id="cierre-tabla" class="envoltura-tabla"></div>
+    <div class="nota">Cada diferencia quita algo distinto. La regular quita el nivel y la tendencia, y deja a la vista el patrón de cada año en k = 12, 24 y 36. La estacional quita ese patrón, pero sola deja una serie que todavía se arrastra mes a mes. Con las dos quedan pocas barras fuera de la banda y ADF rechaza la raíz unitaria al 5 %. El costo se cuenta en datos: cada diferencia regular cuesta un mes y cada estacional, doce.</div>
+  </div>
+</div>
+<script src="../../widgets/serie.js"></script>
+<script src="../../widgets/series.js"></script>
+<script src="../../widgets/grafica.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="diferencias.js"></script>
+</body>
+</html>
