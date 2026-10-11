@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>particionar — pagar al partir</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Pagar al partir: <code>particionar</code> paso a paso</h1>
+  <p class="intro">El arreglo es <code>a = ⟨3, 8, 1, 6, 9, 2, 5⟩</code> y se
+  llama <code>particionar(a, 0, 6)</code>. El pivote es el último,
+  <code>x = a[6] = 5</code>.</p>
+
+  <div class="carta">
+    <h2>1. Antes de correrlo: dónde queda el pivote</h2>
+    <p style="margin-top:0">Sin seguir el ciclo, ¿qué valor de <code>q</code>
+    devuelve la función?</p>
+    <div class="prediccion">
+      <span><code>q</code> =</span>
+      <input type="number" id="pred-q" placeholder="?">
+      <button id="btn-q" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-q" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Vuelta por vuelta</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="codigo-particionar"></div>
+      <div class="estado">
+        <div class="chips" id="chips-particionar"></div>
+        <div class="leyenda">
+          <span class="l-menor">menor o igual que x</span>
+          <span class="l-mayor">mayor que x</span>
+          <span class="l-sin">sin revisar</span>
+          <span class="l-pivote">pivote</span>
+        </div>
+      </div>
+    </div>
+    <div class="arreglo fila-arreglo con-marcas" id="arreglo-particionar"></div>
+    <div class="progreso" id="progreso-particionar"></div>
+    <div class="botones">
+      <button id="btn-paso" class="primario">Siguiente paso</button>
+      <button id="btn-reinicio">Volver al principio</button>
+    </div>
+    <div class="nota">Cada paso muestra el estado en el momento de evaluar la
+    condición del <code>while</code>, y el texto dice qué hace la vuelta que
+    sigue. La casilla con borde grueso es <code>a[j]</code>, la que se va a
+    comparar.</div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El arreglo al terminar</h2>
+    <p style="margin-top:0">¿Cómo queda <code>a[0..6]</code> después del último
+    intercambio?</p>
+    <div class="prediccion">
+      <span>arreglo:</span>
+      <input type="text" id="pred-final" placeholder="3 8 1 ..." style="width:12rem">
+      <button id="btn-final" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-final" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Las llamadas a <code>intercambiar</code></h2>
+    <p style="margin-top:0">Contando todas, también las que cambian una casilla
+    consigo misma, ¿cuántas veces se llama a <code>intercambiar</code>?</p>
+    <div class="prediccion">
+      <span>intercambios:</span>
+      <input type="number" id="pred-intercambios" placeholder="?">
+      <button id="btn-intercambios" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-intercambios" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Con siete elementos el ciclo da seis vueltas y hace seis
+    comparaciones, una por vuelta. Intercambia solo cuando encuentra un valor
+    menor o igual que el pivote, y una vez más al final: a lo sumo
+    <code>n</code> intercambios, así que <code>particionar</code> cuesta Θ(n)
+    en tiempo. En espacio aparte usa <code>x</code>, <code>i</code>,
+    <code>j</code> y el temporal de <code>intercambiar</code>: Θ(1).</div>
+  </div>
+</div>
+<script src="particionar.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>invariantes — lo que sostiene el ciclo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Lo que sostiene el ciclo de <code>particionar</code></h1>
+  <p class="intro">El arreglo de entrada es <code>⟨6, 1, 7, 3, 8, 2, 4⟩</code>
+  con <code>ini = 0</code> y <code>fin = 6</code>, así que <code>x = 4</code> y
+  <code>M₀ = {{1, 2, 3, 4, 6, 7, 8}}</code>. Abajo hay seis estados anotados al
+  evaluar la condición del <code>while</code>. En cada uno falla a lo sumo un
+  invariante.</p>
+
+  <div class="carta">
+    <h2>Los cinco invariantes</h2>
+    <div class="codigo">
+      <div class="linea"><span class="num">I1</span><span class="txt">ini − 1 ≤ i &lt; j ≤ fin</span></div>
+      <div class="linea"><span class="num">I2</span><span class="txt">∀k, ini ≤ k ≤ i: a[k] ≤ x</span></div>
+      <div class="linea"><span class="num">I3</span><span class="txt">∀k, i + 1 ≤ k ≤ j − 1: a[k] &gt; x</span></div>
+      <div class="linea"><span class="num">I4</span><span class="txt">a[fin] = x</span></div>
+      <div class="linea"><span class="num">I5</span><span class="txt">{{ a[k] : ini ≤ k ≤ fin }} = M₀</span></div>
+    </div>
+    <div class="nota">Un rango vacío, como <code>ini ≤ k ≤ i</code> con
+    <code>i = ini − 1</code>, hace que la fórmula se cumpla sin casos que
+    revisar.</div>
+  </div>
+
+  <div id="estados"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">Cada invariante cuida una pieza distinta del estado:
+    I1 los índices, I2 e I3 las dos zonas ya revisadas, I4 el pivote y I5 los
+    valores. Un error en el código rompe una pieza concreta: avanzar
+    <code>i</code> sin intercambiar rompe I2, dejar pasar un valor pequeño
+    rompe I3, tocar <code>fin</code> dentro del ciclo rompe I4 y un intercambio
+    sin temporal rompe I5. Por eso la demostración revisa los cinco en cada
+    vuelta.</div>
+  </div>
+</div>
+<script src="invariantes.js"></script>
+</body>
+</html>
