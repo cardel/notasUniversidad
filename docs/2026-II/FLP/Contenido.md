@@ -128,6 +128,17 @@ quedan disponibles después para volver sobre el tema.
    programa bajo alcance estático y dinámico, con las dos trazas lado a
    lado.
 
+7. [Ejercicios de la clase 6: procedimientos recursivos y letrec](C6/Ejercicios.md)
+   — nueve actividades, una por tema de la sesión: los cinco intentos de
+   recursión con `let` y `proc`, la producción nueva trabajada en los dos
+   sentidos —de la gramática a los programas y del árbol que no se genera a
+   la producción que falta—, qué guarda el marco recursivo y por qué la
+   clausura captura el marco y no lo que el marco extiende, el momento en que
+   nace cada clausura, cuatro trazas completas, la cadena dibujada con dos
+   marcos recursivos a la vez, la recursión mutua en un solo marco, el TAD
+   del ambiente escrito con listas etiquetadas, y el conteo de clausuras más
+   la extensión del lenguaje con una forma nueva.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
