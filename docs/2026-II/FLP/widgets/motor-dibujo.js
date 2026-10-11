@@ -8,6 +8,10 @@
 var MotorDibujo = (function () {
   "use strict";
 
+  /* El interpretador que la página inyecta al montar: el de clausuras en
+     las sesiones de procedimientos, el de recursión en las de letrec. */
+  var INT = typeof InterpreteClausuras !== "undefined" ? InterpreteClausuras : null;
+
   function elemento(html) {
     var d = document.createElement("div");
     d.innerHTML = html;
@@ -32,11 +36,16 @@ var MotorDibujo = (function () {
   }
 
   /* Dos ligaduras son la misma si coinciden el nombre y el valor escrito.
-     Para una clausura basta con decir que lo es. */
+     Para una clausura basta con decir que lo es, y lo mismo para una
+     declaración de un marco recursivo, que no guarda un valor sino los
+     parámetros y el cuerpo del procedimiento. */
   function mismoValor(escrito, real) {
     var e = String(escrito).toLowerCase().replace(/\s+/g, "");
     var r = String(real).toLowerCase().replace(/\s+/g, "");
     if (e === r) { return true; }
+    if (/procedimientorecursivo/.test(r)) {
+      return /(recursiv|closure|proc|clausura|cuerpo)/.test(e);
+    }
     if (/^\(closure/.test(r)) { return /^(closure|proc|procedimiento|clausura)/.test(e); }
     return false;
   }
@@ -56,9 +65,9 @@ var MotorDibujo = (function () {
         if (mio[k][0] !== suyo[k][0]) {
           return cual + "liga «" + mio[k][0] + "» donde va «" + suyo[k][0] + "».";
         }
-        if (!mismoValor(mio[k][1], InterpreteClausuras.escribir(suyo[k][1]))) {
+        if (!mismoValor(mio[k][1], INT.escribir(suyo[k][1]))) {
           return cual + "le da a «" + suyo[k][0] + "» el valor " + (mio[k][1] || "nada") +
-            " y debía valer " + InterpreteClausuras.escribir(suyo[k][1]) + ".";
+            " y debía valer " + INT.escribir(suyo[k][1]) + ".";
         }
       }
     }
@@ -81,14 +90,14 @@ var MotorDibujo = (function () {
   function dibujarReal(reales, inicial) {
     return dibujar(reales.map(function (e) {
       return e.ligaduras.map(function (l) {
-        return [l[0], InterpreteClausuras.escribir(l[1])];
+        return [l[0], INT.escribir(l[1])];
       });
     }), inicial, true);
   }
 
   function pintar(ej) {
-    var salida = InterpreteClausuras.ejecutar(ej.programa);
-    var cadena = InterpreteClausuras.cadenaEn(salida, ej.momento);
+    var salida = INT.ejecutar(ej.programa);
+    var cadena = INT.cadenaEn(salida, ej.momento);
     /* Los dos últimos eslabones son el ambiente inicial del interpretador y
        no se piden: el estudiante escribe lo que el programa construye. */
     var inicial = cadena.slice(cadena.length - 2);
@@ -158,6 +167,7 @@ var MotorDibujo = (function () {
   }
 
   function montar(opciones) {
+    if (opciones.interprete) { INT = opciones.interprete; }
     var destino = document.getElementById(opciones.destino);
     if (!destino) { return; }
     opciones.ejercicios.forEach(function (ej) { destino.appendChild(pintar(ej)); });
