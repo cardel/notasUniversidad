@@ -39,6 +39,7 @@ mismas estructuras ya empacadas.
 17. [Clase 17. El TAD Pila por dentro — 7 de octubre](C17/Clase%2017.%20El%20TAD%20Pila%20por%20dentro.md)
 18. [Clase 18. El TAD Cola por dentro — 9 de octubre](C18/Clase%2018.%20El%20TAD%20Cola%20por%20dentro.md)
 19. [Clase 19. Ejercicios sobre las implementaciones y quicksort — 14 de octubre](C19/Clase%2019.%20Ejercicios%20sobre%20las%20implementaciones%20y%20quicksort.md)
+20. [Clase 20. Contenedores list, deque, stack y queue — 16 de octubre](C20/Clase%2020.%20Contenedores%20list,%20deque,%20stack%20y%20queue.md)
 
 ## Apéndices
 
