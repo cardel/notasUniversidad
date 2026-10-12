@@ -13,6 +13,8 @@
   <h1>El mes contra el de k meses atrás</h1>
   <p class="intro">Cada punto es un mes de la serie del curso: en el eje horizontal, los pasajeros de k meses antes; en el vertical, los de ese mes. La correlación de esa nube es la autocorrelación en el rezago k. Los meses de 2020 y 2021 van en rojo.</p>
 
+  <div id="contexto"></div>
+
   <div id="antes"></div>
 
   <div class="carta">
@@ -43,6 +45,8 @@
 <script src="../../widgets/series.js"></script>
 <script src="../../widgets/grafica.js"></script>
 <script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["nivel", "estacional", "pandemia", "cambio"] });</script>
 <script src="rezago.js"></script>
 </body>
 </html>

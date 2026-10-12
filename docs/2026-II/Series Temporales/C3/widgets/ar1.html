@@ -13,6 +13,8 @@
   <h1>El φ de un AR(1)</h1>
   <p class="intro">Una serie simulada de 110 datos, y(t) = φ·y(t−1) + e(t), con el ruido e(t) fijo por una semilla: al mover φ cambia solo el coeficiente, no el azar. Debajo van su ACF y su PACF hasta k = 20, con la banda ±1,96/√110.</p>
 
+  <div id="contexto"></div>
+
   <div id="antes"></div>
 
   <div class="carta">
@@ -46,9 +48,12 @@
     <div class="nota">En un AR(1) cada valor depende del anterior, y por eso la ACF decae de forma geométrica, como φ<sup>k</sup>: despacio si φ está cerca de 1, con signos alternos si φ es negativo. La PACF mide lo que agrega cada rezago cuando ya se conocen los anteriores, y en un AR(1) el rezago 2 no agrega nada que el 1 no diga: se corta después de k = 1. Una ACF que decae y una PACF que se corta en p es la pista para proponer un AR(p) en la identificación por correlogramas.</div>
   </div>
 </div>
+<script src="../../widgets/serie.js"></script>
 <script src="../../widgets/series.js"></script>
 <script src="../../widgets/grafica.js"></script>
 <script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["simulada", "nivel"], texto: "La serie del curso, pasajeros aéreos por mes en Colombia, como referencia: esta actividad trabaja sobre una serie simulada del mismo largo." });</script>
 <script src="ar1.js"></script>
 </body>
 </html>

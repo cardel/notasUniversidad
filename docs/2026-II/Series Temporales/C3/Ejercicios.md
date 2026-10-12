@@ -4,7 +4,10 @@ Semana del 16 y 17 de octubre, sesiones 3 y 4: estacionariedad,
 diferenciación, ACF y PACF. Cada enlace abre una actividad que se trabaja
 en el navegador, sin instalar nada.
 
-Cada actividad abre con una pregunta para responder antes de tocar nada,
+Cada actividad empieza con la serie de análisis: su gráfica, un resumen
+con los atípicos, el promedio de cada mes, la tabla completa de datos y
+unas claves de análisis que sirven para el ejercicio de esa página. Después
+viene una pregunta para responder antes de tocar nada,
 sigue con un control que se mueve y cierra con la explicación, que aparece
 cuando las preguntas quedan resueltas. Cada respuesta muestra su razón, se
 acierte o no. Las gráficas y los números salen del cálculo en la página

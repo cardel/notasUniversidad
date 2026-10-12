@@ -13,6 +13,8 @@
   <h1>¿De cuál serie es este correlograma?</h1>
   <p class="intro">Tres ACF de la serie del curso, hasta k = 36: una de la serie original, una de <code>diff()</code> y una de <code>diff(12)</code>, en desorden. Cada una lleva su banda ±1,96/√n con su propio n. Prediga cuál es cuál antes de diferenciar usted mismo.</p>
 
+  <div id="contexto"></div>
+
   <div class="carta">
     <h2>Los tres correlogramas</h2>
     <div class="candidatos-st" id="candidatos"></div>
@@ -31,6 +33,8 @@
 <script src="../../widgets/series.js"></script>
 <script src="../../widgets/grafica.js"></script>
 <script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["nivel", "estacional", "transformaciones", "cambio"] });</script>
 <script src="correlogramas.js"></script>
 </body>
 </html>

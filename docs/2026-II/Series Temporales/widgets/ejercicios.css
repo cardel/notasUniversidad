@@ -94,3 +94,10 @@
 @media (max-width: 760px) { .candidatos-st { grid-template-columns: 1fr; } }
 .candidatos-st figure { margin: 0; border: 1px solid var(--borde); border-radius: 8px; background: #fff; padding: 0.3rem; }
 .candidatos-st figcaption { text-align: center; font-weight: 700; color: var(--azul); }
+/* La serie de análisis, al principio de cada actividad. */
+.contexto h3 { font-size: 1rem; margin: 0.9rem 0 0.3rem; }
+.contexto ul { margin: 0.2rem 0 0.6rem; padding-left: 1.2rem; }
+.contexto li { margin: 0.35rem 0; }
+.contexto table { margin: 0.5rem 0; }
+.contexto details { margin-top: 0.6rem; }
+.contexto summary { cursor: pointer; font-weight: 600; color: var(--azul); }

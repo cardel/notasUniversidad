@@ -13,6 +13,8 @@
   <h1>Diferenciar y mirar la ACF</h1>
   <p class="intro">Dos casillas: d = 1 resta a cada mes el anterior y D = 1 le resta el mismo mes del año anterior. Con cada combinación cambian la serie, su ACF y el número de datos que quedan. La banda sombreada es ±1,96/√n, con el n de la serie que se ve.</p>
 
+  <div id="contexto"></div>
+
   <div id="antes"></div>
 
   <div class="carta">
@@ -39,6 +41,8 @@
 <script src="../../widgets/series.js"></script>
 <script src="../../widgets/grafica.js"></script>
 <script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["nivel", "estacional", "transformaciones", "muestra"] });</script>
 <script src="diferencias.js"></script>
 </body>
 </html>
