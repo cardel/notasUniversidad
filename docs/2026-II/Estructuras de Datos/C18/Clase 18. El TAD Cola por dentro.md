@@ -794,6 +794,30 @@ Cada una lee la entrada de ejemplo del enunciado y reproduce su salida: `./sol <
 - UVa 10901 — Ferry Loading III: [uva10901.cpp](codigo/uva10901.cpp), [entrada](codigo/uva10901.in), [salida](codigo/uva10901.out)
 - UVa 11995 — I Can Guess the Data Structure!: [uva11995.cpp](codigo/uva11995.cpp), [entrada](codigo/uva11995.in), [salida](codigo/uva11995.out)
 
+## Lo que se vio
+
+- El arreglo circular escribe en $(\texttt{inicio} + n) \bmod C$ y desencola
+  adelantando `inicio` con el residuo: $\Theta(1)$ en las dos operaciones, sin
+  mover un elemento, con techo fijo en `CAPACIDAD`.
+- Su invariante $A_3$,
+  $\forall i,\ 0 \leq i < n:\ Q[i] = \texttt{datos}[(\texttt{inicio} + i) \bmod C]$,
+  junto con $n < C$, garantiza que `encolar` no pisa una casilla ocupada.
+- La cola usa los dos extremos. Encolar y desencolar $n = 100$ veces corre
+  4950 elementos en las dos versiones sobre arreglo y visita 4851 nodos en la
+  enlazada simple; solo la enlazada con puntero al último queda en 0.
+- La cola sobre esa lista son cinco llamadas: `agregar`, `eliminar(0)` y
+  `obtener(0)`, todas $\Theta(1)$. Al revés no funciona, porque quitar el
+  último exige llegar al penúltimo y eso cuesta $\Theta(n)$.
+- El contrato es $\forall i, j,\ 0 \leq i < j < n:\ \tau(Q[i]) < \tau(Q[j])$,
+  con la desigualdad en el sentido opuesto al de la pila.
+- En la cola sobre nodos, al sacar el único elemento `ultimo` vuelve a `NULL`
+  en el mismo paso. Si no, el `encolar` siguiente escribe sobre un nodo
+  liberado y el error aparece lejos de la línea que lo causó.
+- Con el máximo conocido de antemano conviene el arreglo circular, que guarda
+  solo el dato; sin él, la enlazada con último, a 16 bytes por elemento.
+- UVa 540 se resuelve con una cola de equipos y una cola por equipo, $t + 1$
+  colas, y un arreglo indexado por persona para saber su equipo sin recorrer.
+
 ## Ejercicios
 
 ### La cola circular de nodos

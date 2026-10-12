@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El ambiente extendido recursivo</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El ambiente extendido recursivo</h1>
+  <p class="intro">La variante nueva del tipo <code>ambiente</code> (EOPL §3.4): qué guarda, qué deliberadamente no guarda, y la línea donde se decide todo —el tercer campo de la clausura que <code>apply-env</code> fabrica—. El tercer bloque mide una consecuencia que sorprende: la cadena de ambientes no se alarga con la recursión.</p>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Los tres bloques, resueltos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Campo</th><th>Qué tiene</th><th>Quién lo usa</th></tr></thead>
+        <tbody>
+          <tr><td><code>nombre-procedimientos</code></td><td>una lista de símbolos</td><td><code>apply-env</code>, para hallar la posición del nombre</td></tr>
+          <tr><td><code>argumentos-proc</code></td><td>una lista de listas de símbolos</td><td>el primer campo de la clausura</td></tr>
+          <tr><td><code>cuerpos-proc</code></td><td>una lista de árboles sin evaluar</td><td>el segundo campo de la clausura</td></tr>
+          <tr><td><code>old-env</code></td><td>el ambiente que el marco extiende</td><td><code>apply-env</code>, cuando el nombre no está en el marco</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nota">El tercer campo de la clausura no sale de ninguno de los
+    cuatro: es <code>env</code>, el marco mismo. Ahí está la recursión, y es
+    la única diferencia con lo que haría <code>let</code> y
+    <code>proc</code>.</div>
+  </div>
+
+</div>
+<script src="../../widgets/motor-decisiones.js"></script>
+
+<script src="marco.js"></script>
+</body>
+</html>

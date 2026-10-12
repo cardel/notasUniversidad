@@ -405,6 +405,32 @@ $\lfloor \log_3 n \rfloor + 1$, con $T(n) = 3\lfloor\log_3 n\rfloor + 7$.
 La base del logaritmo es el factor del salto, igual que en los pasos
 aditivos el divisor era el tamaño del paso.
 
+## Lo que se vio
+
+- Multiplicar las vueltas de dos ciclos anidados solo vale si el interno
+  da las mismas vueltas en cada pasada: `triangulo(4)` devuelve 6, no los
+  16 que predice $n \cdot n$.
+- Un ciclo dependiente se cuenta congelando el índice externo $i$,
+  contando el interno como función de $i$ y sumando sobre las vueltas del
+  externo.
+- $\sum_{i=a}^{b} k = k(b - a + 1)$, y $\sum_{i=0}^{n-1} n = n^{2}$: dentro
+  de la suma, $n$ es una constante.
+- Suma de Gauss: $\sum_{i=1}^{m} i = \frac{m(m+1)}{2}$; con el índice de
+  0 a $n - 1$ queda $\sum_{i=0}^{n-1} i = \frac{(n-1)\,n}{2}$ (CLRS,
+  apéndice A, sección A.1).
+- `triangulo` cuesta $\frac{3n^{2} + 5n}{2} + 4$, cerca de la mitad de
+  $3n^{2} + 4n + 4$ del anidado completo; los dos son cuadráticos y la
+  dependencia rebaja la constante, no el ritmo.
+- Con `j <= i`, o con el interno arrancando en $i$, el cuerpo corre
+  $\frac{n(n+1)}{2}$ veces; `suma_parejas` cuesta
+  $\frac{3n^{2} + 11n}{2} + 4$.
+- Un índice que se duplica da $\lfloor \log_2 n \rfloor + 1$ vueltas y
+  $T(n) = 3\lfloor \log_2 n \rfloor + 7$, crecimiento logarítmico. Ese
+  índice no puede arrancar en 0, porque $2 \cdot 0 = 0$ y el ciclo no
+  termina.
+- Toda fórmula se contrasta con un caso pequeño contado a mano:
+  `triangulo` con $n = 2$ da 15 por los dos caminos.
+
 ## Ejercicios
 
 ### Ejercicio 1

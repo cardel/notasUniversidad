@@ -298,6 +298,18 @@ var MiniScheme = (function () {
       if (!esLista(a[0])) { fallar("length esperaba una lista y recibió " + escribir(a[0]) + "."); }
       return aArreglo(a[0]).length;
     });
+    prim("list-ref", 2, 2, function (a) {
+      if (!esLista(a[0])) { fallar("list-ref esperaba una lista y recibió " + escribir(a[0]) + "."); }
+      if (typeof a[1] !== "number" || a[1] < 0 || a[1] % 1 !== 0) {
+        fallar("list-ref esperaba una posición entera desde 0 y recibió " + escribir(a[1]) + ".");
+      }
+      var xs = aArreglo(a[0]);
+      if (a[1] >= xs.length) {
+        fallar("list-ref pidió la posición " + a[1] + " de una lista de " + xs.length +
+               " elemento" + (xs.length === 1 ? "" : "s") + ".");
+      }
+      return xs[a[1]];
+    });
     prim("append", 0, Infinity, function (a) {
       if (a.length === 0) { return NULO; }
       var r = a[a.length - 1];

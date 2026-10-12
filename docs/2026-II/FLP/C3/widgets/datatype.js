@@ -25,7 +25,7 @@ var BLOQUES = (function () {
         { valor: "<code>(define-datatype cmd cmd?<br>&nbsp;&nbsp;(avanza-cmd (n)))</code>", correcta: 1,
           razon: "El campo n no tiene predicado. Cada campo va como (nombre predicado), y DrRacket lo dice con esas palabras: expected a field name followed by a predicate expression." },
         { valor: "<code>(define-datatype cmd cmd<br>&nbsp;&nbsp;(avanza-cmd (n number?)))</code>", correcta: 1,
-          razon: "El predicado se llama igual que el tipo. No es solo una convención rota: los dos nombres se definen y DrRacket responde identifier already defined. El signo de interrogación no es adorno." },
+          razon: "El predicado se llama igual que el tipo. Los dos nombres se definen, y DrRacket responde identifier already defined: el signo de interrogación es lo que los separa." },
         { valor: "<code>(define-datatype cmd cmd?<br>&nbsp;&nbsp;(avanza-cmd (n number?) (n number?)))</code>", correcta: 1,
           razon: "Dos campos con el mismo nombre. El constructor es una lambda con esos nombres como parámetros, y una lambda no admite dos iguales: duplicate argument name." },
         { valor: "<code>(define-datatype cmd cmd?<br>&nbsp;&nbsp;(avanza-cmd n number?))</code>", correcta: 1,

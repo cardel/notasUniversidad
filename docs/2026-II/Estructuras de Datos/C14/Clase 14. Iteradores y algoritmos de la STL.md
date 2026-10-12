@@ -694,6 +694,35 @@ distintos, y que escoger es parte de programar: borrar uno a uno o compactar,
 `find` por consulta u ordenar una vez y preguntar con `lower_bound`, recorrer
 los dos vectores a la vez o buscar el corto dentro del largo.
 
+## Lo que se vio
+
+- Un iterador señala un elemento y sabe pasar al siguiente: se lee con `*it`,
+  avanza con `++it` y se compara con `!=`. En un `vector<int>` sumarle 1 avanza
+  `sizeof(int)` bytes, y `v.end()` señala justo después del último, sin leerse
+  nunca.
+- `begin`, `end`, `*it`, `++it`, `it + k` e `it - v.begin()` cuestan $O(1)$ en
+  `vector` y `string`; un recorrido completo cuesta $\Theta(n)$ en tiempo y
+  $\Theta(1)$ de espacio aparte.
+- Tras `insert` o `erase` el iterador guardado deja de valer y se toma el que
+  devuelven: `insert` señala el elemento insertado y `erase`, el que quedó
+  inmediatamente después del borrado.
+- Borrar $k$ elementos con `it = v.erase(it)` cuesta $O(kn)$. Compactar hacia
+  el frente y recortar con un `erase` que termina en `end()` cuesta
+  $\Theta(n)$ en tiempo y $\Theta(1)$ de espacio.
+- Sobre un rango ordenado, `lower_bound` devuelve en $O(\log n)$ la primera
+  posición cuyo valor no es menor que $x$, y antes de leer `*it` se comprueba
+  `it != v.end()`. Con muchas consultas, ordenar una vez en $O(n \log n)$ y
+  preguntar con `lower_bound` le gana a `find`, que cuesta $\Theta(n)$.
+- `unique` solo junta repetidos consecutivos y no borra: devuelve dónde termina
+  lo válido, y el `erase` hasta `end()` completa la operación. Con el `sort`
+  previo, el total es $O(n \log n)$.
+- El tipo del valor inicial de `accumulate` fija el tipo de la suma: con `0`,
+  una suma de $3 \cdot 10^9$ da la vuelta en `int`; con `0LL` cabe.
+- La intersección de dos vectores ordenados con dos iteradores cuesta
+  $\Theta(n_a + n_b)$. Buscar cada elemento del corto en el largo con
+  `lower_bound` cuesta $O(n_{\min} \log n_{\max})$ y gana cuando los tamaños
+  son muy distintos.
+
 ## Para practicar en casa
 
 ### Propuesto 1

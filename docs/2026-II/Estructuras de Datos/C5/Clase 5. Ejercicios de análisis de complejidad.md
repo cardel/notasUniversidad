@@ -574,6 +574,32 @@ $T(n) \in O(n^2)$.
     cada uno con su herramienta, y el bloque más costoso decide el $O$
     de toda la función.
 
+## Lo que se vio
+
+- Un programa de juez lee con `while (scanf(...) == 2)` hasta que se
+  acaba la entrada. En UVa 100 los términos de la secuencia pueden pasar de
+  32 bits, por eso `long`, y los extremos del intervalo pueden llegar al
+  revés.
+- Un condicional no siempre crea mejor y peor caso: en `diferencia` la $k$
+  se cancela y $T(n) = 5n + 5$; en `todos_positivos` el corte da $T = 8$
+  en el mejor caso y $3n + 4$ en el peor.
+- Cambiar el paso aditivo no cambia el ritmo: de dos en dos son
+  $\lceil n/2 \rceil$ vueltas, y bajar de $n$ a 1 cuesta $3n + 4$, lo
+  mismo que subir.
+- Con paso $n/5$ el costo es constante, $T(n) \leq 28$ para $n \geq 10$;
+  con $n < 5$ el paso vale 0 y el ciclo no termina.
+- Partir por la mitad da $\lfloor \log_2 n \rfloor + 1$ vueltas, las
+  mismas que duplicar: duplicar $n$ añade una sola vuelta.
+- Tres ciclos dependientes, con $k < j < i$, ejecutan el cuerpo
+  $\frac{n(n-1)(n-2)}{6}$ veces: costo cúbico, cerrado con la fila de los
+  cuadrados del formulario.
+- $T(n) \in O(n^{2})$ se lee *crece a lo sumo como $n^{2}$*: se quitan
+  constantes y términos menores, y un producto como $n(n+1)$ se expande
+  antes de clasificar.
+- Bloques en secuencia suman sus costos y el más costoso decide:
+  `combinado` cuesta $2n^{2} + 6n + 3\lfloor\log_2 n\rfloor + 9$ en el
+  peor caso, que está en $O(n^{2})$.
+
 ## Ejercicio de cierre
 
 La condición frena al índice antes de llegar a $n$. Trace con $n = 10$,

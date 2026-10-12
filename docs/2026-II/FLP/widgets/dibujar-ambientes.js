@@ -1,7 +1,6 @@
-/* Dibuja en SVG una cadena de ambientes con la convención del curso: el
-   ambiente vacío siempre aparece, en gris, al final de la cadena, y la
-   flecha va del ambiente que extiende hacia el que extendió, es decir del
-   más nuevo al más viejo.
+/* Dibuja en SVG una cadena de ambientes: el ambiente vacío siempre aparece,
+   en gris, al final de la cadena, y la flecha va del ambiente que extiende
+   hacia el que extendió, es decir del más nuevo al más viejo.
 
    Recibe una lista de eslabones, del más nuevo al más viejo, cada uno
    { nombre, ligaduras: [[id, valor], …] }, y dibuja uno más por el vacío.

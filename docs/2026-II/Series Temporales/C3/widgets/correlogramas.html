@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿De cuál serie es este correlograma?</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>¿De cuál serie es este correlograma?</h1>
+  <p class="intro">Tres ACF de la serie del curso, hasta k = 36: una de la serie original, una de <code>diff()</code> y una de <code>diff(12)</code>, en desorden. Cada una lleva su banda ±1,96/√n con su propio n. Prediga cuál es cuál antes de diferenciar usted mismo.</p>
+
+  <div id="contexto"></div>
+
+  <div class="carta">
+    <h2>Los tres correlogramas</h2>
+    <div class="candidatos-st" id="candidatos"></div>
+    <p class="nota">Pase el puntero sobre una barra para ver su valor.</p>
+  </div>
+
+  <div id="bloques"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Cómo se reconoce cada uno</h2>
+    <div id="cierre-tabla" class="envoltura-tabla"></div>
+    <div class="nota">La serie original se delata por la caída lenta desde casi 1: es la huella de una tendencia, que deja correlaciones altas en todos los rezagos cortos. <code>diff()</code> quita esa tendencia y deja a la vista los picos en 12, 24 y 36. <code>diff(12)</code> quita el año pero conserva la caída lenta, porque el crecimiento interanual cambia despacio, y deja negativa la barra de k = 12. Las tres preguntas se responden mirando dos sitios: la barra de k = 1 y la de k = 12.</div>
+  </div>
+</div>
+<script src="../../widgets/serie.js"></script>
+<script src="../../widgets/series.js"></script>
+<script src="../../widgets/grafica.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["nivel", "estacional", "transformaciones", "cambio"] });</script>
+<script src="correlogramas.js"></script>
+</body>
+</html>

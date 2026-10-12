@@ -828,6 +828,32 @@ Ahí está el pago de la abstracción, y es el mismo que hace que el entero de
 Python no se desborde. La eficiencia es otra historia: contar de uno en uno
 para multiplicar es lentísimo, y esa cuenta se hace más adelante.
 
+## Lo que se vio
+
+- La factorización de la arena prueba divisores solo hasta $\sqrt{n}$, porque
+  si $n = a \cdot b$ con $a \leq b$, entonces $a \leq \sqrt{n}$; probar hasta
+  $n$ cuesta $O(n)$ por caso y se pasa del tiempo límite.
+- Un TAD es un conjunto de valores con sus operaciones y las propiedades de
+  esas operaciones, especificado sin depender de la implementación. La
+  interfaz dice qué se ofrece; la implementación, cómo se guarda.
+- Dos racionales son iguales si y solo si $a \cdot d = b \cdot c$. Comparar
+  campo a campo declara distintos a $9/18$ y $1/2$, que son el mismo número.
+- El invariante de representación del racional es $I_1: \mathit{den} > 0$ e
+  $I_2: \operatorname{mcd}(|\mathit{num}|, \mathit{den}) = 1$. Lo establece el
+  constructor con `simplificar()`, que usa el algoritmo de Euclides, y lo
+  preservan las operaciones porque construyen sus resultados con el constructor.
+- Dentro de un método, `this` es un puntero al objeto sobre el que corre, y los
+  atributos se escriben con `this->`.
+- La precondición es obligación de quien llama, y `assert` la vigila deteniendo
+  el programa en la línea donde se viola. Exigir $q \neq 0$ o $q > 0$ son dos
+  contratos distintos; el elegido se escribe en la especificación.
+- Una segunda implementación de la misma `racional.h`, sin simplificar, da las
+  mismas respuestas con el mismo `main`; solo cambia lo que muestra `imprimir`.
+- El TAD Natural guarda dígitos en base 10 con
+  $\forall i,\ 0 \leq i < \texttt{TAM}: 0 \leq \mathit{digitos}[i] \leq 9$. La
+  suma se construye con `sucesor` y `predecesor`, y con `TAM = 3` el tipo da la
+  vuelta en 999 sin aviso.
+
 ## Ejercicios de la sesión
 
 ### Predecir la igualdad

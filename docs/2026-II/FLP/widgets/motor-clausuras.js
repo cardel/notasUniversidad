@@ -9,6 +9,10 @@
 var MotorClausuras = (function () {
   "use strict";
 
+  /* El interpretador que la página inyecta al montar: el de clausuras en
+     las sesiones de procedimientos, el de recursión en las de letrec. */
+  var INT = typeof InterpreteClausuras !== "undefined" ? InterpreteClausuras : null;
+
   var CAMPOS = {
     valor:     { etiqueta: "El valor del programa", leer: function (r) { return r.texto; } },
     valueOf:   { etiqueta: "Llamadas a value-of", leer: function (r) { return r.cuenta.valueOf; } },
@@ -27,7 +31,7 @@ var MotorClausuras = (function () {
 
   function cadena(env, destacado, titulo) {
     if (typeof DibujarAmbientes === "undefined") { return ""; }
-    var eslabones = DibujarAmbientes.desdeAmbiente(env, destacado, InterpreteClausuras.escribir);
+    var eslabones = DibujarAmbientes.desdeAmbiente(env, destacado, INT.escribir);
     return '<div class="envoltura-ambientes">' +
       DibujarAmbientes.svg(eslabones, { titulo: titulo }) + "</div>";
   }
@@ -43,11 +47,13 @@ var MotorClausuras = (function () {
         f.ambiente + (f.consulta ? ' <span class="marca-ambiente">busca aquí</span>' : "") +
         "</td><td><code>" + escapar(f.valor) + "</code></td></tr>";
     }).join("");
-    return "<h3>La traza, una fila por llamada a <code>value-of</code></h3>" +
+    return "<h3>La traza" + (r.error ? " hasta donde alcanzó a llegar" : "") +
+      ", una fila por llamada a <code>value-of</code></h3>" +
       '<div class="envoltura-tabla"><table class="tabla-traza"><thead><tr><th>#</th>' +
       "<th>Expresión</th><th>Ambiente</th><th>Valor</th></tr></thead><tbody>" + filas +
       "</tbody></table></div>" +
-      '<p class="conteos"><strong>Valor: ' + escapar(r.texto) + "</strong> · " +
+      '<p class="conteos"><strong>' +
+      (r.error ? "Se detuvo sin dar valor" : "Valor: " + escapar(r.texto)) + "</strong> · " +
       r.cuenta.valueOf + " llamadas a <code>value-of</code> · " +
       r.cuenta.applyProc + " procedimientos aplicados · " +
       r.cuenta.variables + " variables evaluadas · " +
@@ -81,21 +87,39 @@ var MotorClausuras = (function () {
     return DICE_ERROR.test(dado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
   }
 
+  /* El valor de un programa puede ser una clausura. Nadie va a teclear su
+     texto completo, así que se acepta nombrarla. */
+  var DICE_CLAUSURA = /clausura|closure|procedimiento|funcion/;
+
+  function diceClausura(dado) {
+    return DICE_CLAUSURA.test(dado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+  }
+
+  function esTextoDeClausura(t) { return /^\(closure /.test(String(t)); }
+
   var AVISO_ERROR =
     '<p class="aviso-campos">Si cree que el programa se detiene en vez de dar ' +
-    'un valor, escriba <code>error</code>.</p>';
+    'un valor, escriba <code>error</code>. Si cree que el valor es una ' +
+    'clausura, escriba <code>clausura</code>.</p>';
 
   function proceso(r) {
     if (r.error) {
-      var donde = { lectura: "al leer el programa", parser: "en el parser", evaluador: "al evaluar" };
-      return '<div class="veredicto mal">Se detuvo ' + (donde[r.etapa] || "") + ": " +
+      var donde = { scanner: "al leer el programa", parser: "en el parser",
+                    evaluador: "al evaluar" };
+      var aviso = '<div class="veredicto mal">Se detuvo ' + (donde[r.etapa] || "") + ": " +
         escapar(r.error) + "</div>";
+      /* Si se detuvo evaluando, lo que alcanzó a hacer explica por qué: la
+         traza llega hasta la expresión que falló. */
+      if (r.traza && r.traza.length && r.cuenta) {
+        return aviso + panelTraza(r) + panelAmbientes(r);
+      }
+      return aviso;
     }
     return panelTraza(r) + panelAmbientes(r);
   }
 
   function pintarPrediccion(p) {
-    var r = InterpreteClausuras.ejecutar(p.programa);
+    var r = INT.ejecutar(p.programa);
     var carta = elemento(
       '<div class="carta">' +
         "<h2>" + p.titulo + "</h2>" +
@@ -128,11 +152,14 @@ var MotorClausuras = (function () {
         var dado = entrada.value.trim();
         var bien = dado !== "" && (r.error
           ? diceError(dado)
-          : String(esperado) === dado || String(esperado) === dado.replace(/\s+/g, ""));
+          : String(esperado) === dado || String(esperado) === dado.replace(/\s+/g, "") ||
+            (esTextoDeClausura(esperado) && diceClausura(dado)));
         if (!bien) { todo = false; }
         entrada.className = bien ? "bien" : "mal";
         lineas.push((bien ? "✓ " : "✗ ") + CAMPOS[c].etiqueta + ": " +
-          (r.error ? "el programa se detiene antes de dar un valor" : escapar(esperado)));
+          (r.error ? "el programa se detiene antes de dar un valor"
+                   : escapar(esperado) +
+                     (esTextoDeClausura(esperado) ? " — una clausura" : "")));
       });
       veredicto.innerHTML = lineas.join("<br>") + (todo ? "" : "<br>" + (p.pista || ""));
       veredicto.className = "veredicto " + (todo ? "bien" : "mal");
@@ -150,8 +177,8 @@ var MotorClausuras = (function () {
 
   /* --- Los dos alcances, lado a lado -------------------------------- */
   function pintarAlcance(p) {
-    var estatico = InterpreteClausuras.ejecutar(p.programa);
-    var dinamico = InterpreteClausuras.ejecutar(p.programa, { dinamico: true });
+    var estatico = INT.ejecutar(p.programa);
+    var dinamico = INT.ejecutar(p.programa, { dinamico: true });
     var carta = elemento(
       '<div class="carta">' +
         "<h2>" + p.titulo + "</h2>" +
@@ -217,7 +244,7 @@ var MotorClausuras = (function () {
     var marca = caja.querySelector('input[type="checkbox"]');
 
     function correr() {
-      var r = InterpreteClausuras.ejecutar(entrada.value.trim(),
+      var r = INT.ejecutar(entrada.value.trim(),
                                            { dinamico: marca && marca.checked });
       salida.innerHTML = proceso(r);
       salida.style.display = "block";
@@ -236,6 +263,7 @@ var MotorClausuras = (function () {
   }
 
   function montar(opciones) {
+    if (opciones.interprete) { INT = opciones.interprete; }
     var destino = document.getElementById(opciones.destino);
     if (destino) {
       (opciones.predicciones || []).forEach(function (p) {

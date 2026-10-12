@@ -678,6 +678,32 @@ atrás, de `a[i]` a `a[i - 1]`, y un nodo sabe cuál es el siguiente y no cuál
 es el anterior: ese recorrido no existe y hay que buscar desde el principio.
 Bajar de $\Theta(n^2)$ pide otra idea, y no es acomodar un elemento a la vez.
 
+## Lo que se vio
+
+- Una lista enlazada es una cadena de nodos con un dato y la dirección del
+  siguiente; arranca en `cabeza`, termina en `NULL` y ocupa $\Theta(n)$, con un
+  puntero por elemento.
+- Acceder cuesta caminar: `obtener(p)` es $\Theta(p)$, y por eso la búsqueda
+  binaria pierde su ventaja sobre la enlazada aunque la lista esté ordenada.
+- `insertar(0, e)` escribe dos punteros, $\Theta(1)$, contra $\Theta(n)$ en el
+  arreglo. En el medio, `insertar(p, e)` y `eliminar(p)` cuestan $\Theta(p)$:
+  hay que llegar al anterior.
+- El invariante de representación: $m = n$ nodos alcanzables desde `cabeza`,
+  $v_i \neq v_j$ para $i \neq j$, y $v_{n-1}\texttt{->siguiente} = \texttt{NULL}$
+  cuando $n > 0$.
+- Al eliminar, `delete` antes de desenlazar deja un puntero colgante y
+  desenlazar sin `delete` deja una fuga. El destructor devuelve los $n$ nodos
+  en $\Theta(n)$.
+- Con el puntero `ultimo`, `agregar(e)` baja de $\Theta(n)$ a $\Theta(1)$ por
+  un campo más en la lista. `eliminar(n - 1)` se queda en $\Theta(n)$, porque
+  un nodo no sabe quién lo apunta.
+- Insertar al frente $n$ veces: $\frac{n(n-1)}{2}$ corrimientos en el arreglo
+  y $2n$ escrituras en la enlazada; con $n = 1000$, 499 500 contra 2000.
+- Insertion sort sostiene $\forall a, b,\ 0 \leq a < b < j:\ A[a] \leq A[b]$.
+  Cuesta $\Theta(n)$ con la entrada ordenada, $\Theta(n^2)$ con la entrada al
+  revés y $\Theta(1)$ de espacio aparte; sobre la enlazada el peor caso sigue
+  en $\Theta(n^2)$.
+
 ## Ejercicios
 
 ### Contar los mayores

@@ -55,4 +55,14 @@ Cursos del segundo semestre de 2026.
 
     [:octicons-arrow-right-24: Entrar](PFC/Contenido.md)
 
+-   :material-chart-line:{ .lg .middle } **Pronóstico de Series Temporales con IA**
+
+    ---
+
+    Componentes, métricas y validación temporal, modelos ARIMA y SARIMA,
+    aprendizaje automático y redes en PyTorch, sobre el tráfico aéreo
+    mensual de Colombia. Universidad Autónoma de Occidente.
+
+    [:octicons-arrow-right-24: Entrar](./Series%20Temporales/Contenido.md)
+
 </div>

@@ -1034,6 +1034,32 @@ Que indexar cueste $O(1)$ depende de que las casillas sean del mismo tamaño
 y estén pegadas. Las estructuras que vienen se construyen sobre el bloque de
 bytes, que es donde esa cuenta se puede hacer.
 
+## Lo que se vio
+
+- La matriz de $n \times m$ se arma de dos formas: un bloque único, con un
+  solo `malloc`, un solo `free` y la casilla en `arr + i * m + j`, o un arreglo
+  de punteros a filas, que admite filas de tamaño distinto pero puede quedar
+  armado a medias.
+- Si la reserva de una fila falla, la función libera lo que alcanzó a pedir y
+  devuelve `NULL`; un `return` inmediato deja las filas anteriores reservadas
+  sin que nadie las libere.
+- En el paso por valor la función trabaja con copias en su propio marco de
+  pila, y los cambios mueren al retornar. En el paso por referencia con
+  punteros recibe la dirección (`&` en la llamada, `*` adentro) y escribe la
+  celda del llamador.
+- Con parámetros de salida una función entrega más de un resultado, como el
+  menor y el mayor de un arreglo en una sola pasada. `scanf` lleva `&` por la
+  misma razón, y un arreglo viaja sin `&` porque su nombre ya vale `&A[0]`.
+- La referencia de C++ (`int &a`) es un alias de la variable. La llamada
+  `f(x)` no muestra si `x` puede cambiar: eso se lee en la firma.
+- Una clase reúne atributos y métodos; con los atributos en `private` solo los
+  métodos los modifican. Un objeto pasado por valor se copia entero, y por eso
+  los objetos viajan por referencia.
+- Un entero con signo de $b$ bits va de $-2^{b-1}$ a $2^{b-1} - 1$, y el rango
+  es circular: pasarse del tope da la vuelta al menor sin ningún aviso.
+- $0.1$ no tiene representación exacta en base 2, así que dos `double` no se
+  comparan con `==` sino con $|a - b| < \varepsilon$.
+
 ## Ejercicios de la sesión
 
 ### Cociente y residuo en una sola llamada

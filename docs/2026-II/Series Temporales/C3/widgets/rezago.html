@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El mes contra el de k meses atrás</title>
+<link rel="stylesheet" href="../../widgets/estilo.css">
+<link rel="stylesheet" href="../../widgets/ejercicios.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>El mes contra el de k meses atrás</h1>
+  <p class="intro">Cada punto es un mes de la serie del curso: en el eje horizontal, los pasajeros de k meses antes; en el vertical, los de ese mes. La correlación de esa nube es la autocorrelación en el rezago k. Los meses de 2020 y 2021 van en rojo.</p>
+
+  <div id="contexto"></div>
+
+  <div id="antes"></div>
+
+  <div class="carta">
+    <h2>2. Mueva el rezago</h2>
+    <div class="controles">
+      <label for="k">rezago k</label>
+      <input type="range" id="k" min="1" max="24" value="1">
+      <span class="valor-n" id="k-valor">1</span>
+      <span class="selector" id="version">
+        <button data-version="original" class="elegido">original</button>
+        <button data-version="diferenciada">diferenciada</button>
+      </span>
+    </div>
+    <p class="lectura" id="lectura"></p>
+    <div class="figura" id="figura"></div>
+    <p class="nota">La serie diferenciada es y(t) − y(t−1): el cambio de un mes al siguiente, con un dato menos.</p>
+  </div>
+
+  <div id="despues"></div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que muestra la nube</h2>
+    <div id="cierre-tabla" class="envoltura-tabla"></div>
+    <div class="nota">En la serie original casi cualquier mes se parece al de unos meses antes, porque la tendencia y los dos años de pandemia mueven toda la nube junta: la correlación alta habla del nivel, no de una relación que sirva para pronosticar. Al diferenciar se quita el nivel y queda el cambio mensual. Ahí la correlación en k = 1 cae casi a cero y lo que sobrevive está en k = 12: el cambio de este mes se parece al del mismo mes del año anterior. Esa es la estacionalidad, y es lo que la ACF resume en un solo gráfico, un rezago por barra.</div>
+  </div>
+</div>
+<script src="../../widgets/serie.js"></script>
+<script src="../../widgets/series.js"></script>
+<script src="../../widgets/grafica.js"></script>
+<script src="../../widgets/motor-decisiones.js"></script>
+<script src="../../widgets/contexto.js"></script>
+<script>Contexto.mostrar("contexto", { claves: ["nivel", "estacional", "pandemia", "cambio"] });</script>
+<script src="rezago.js"></script>
+</body>
+</html>

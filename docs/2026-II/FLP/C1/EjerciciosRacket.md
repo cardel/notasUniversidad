@@ -19,9 +19,9 @@ tres. Después aparecen `and` para juntar dos comparaciones, `cond` para tres
 casos que se excluyen y `let*` para nombrar los resultados intermedios de una
 cuenta que reparte segundos en horas y minutos.
 
-En el camino salen dos convenciones de nombres que el curso usa todo el
-semestre: el signo de interrogación al final de lo que devuelve un booleano y
-la flecha en medio de lo que convierte. Y sale la comilla, que es lo que
+En el camino salen dos marcas de nombre que se repiten todo el semestre: el
+signo de interrogación al final de lo que devuelve un booleano y la flecha en
+medio de lo que convierte. Y sale la comilla, que es lo que
 separa un símbolo del nombre de una variable.
 
 ## [condicionales: if y cond](widgets/condicionales.html){ target=_blank rel=noopener }

@@ -1,0 +1,103 @@
+/* Añadidos para las páginas que tienen preguntas y gráficas. Se cargan después de
+   estilo.css, que es común a todos los ejercicios. */
+.editor {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--codigo-fondo);
+  color: var(--tinta);
+  resize: vertical;
+  tab-size: 2;
+}
+.editor:focus { outline: 2px solid var(--azul); outline-offset: 1px; }
+.codigo.gramatica {
+  white-space: pre;
+  padding: 0.6rem 0.8rem;
+  margin: 0.6rem 0;
+  font-size: 0.85rem;
+  border-left: 3px solid var(--ambar);
+}
+.casos { font-size: 0.9rem; margin: 0.6rem 0 0.5rem; }
+.casos-lista { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+.casos-lista li { margin: 0.15rem 0; }
+.casos-lista code {
+  background: var(--codigo-fondo);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+.consola-salida {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  background: var(--codigo-fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  margin-top: 0.6rem;
+  min-height: 2.4rem;
+  color: var(--tinta);
+}
+.consola-salida.con-error { background: var(--rojo-suave); color: var(--rojo); }
+.atajo { font-size: 0.8rem; color: var(--gris); margin-left: auto; align-self: center; }
+
+/* Filas de pertenencia: un valor y dos botones de decisión. */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--borde);
+}
+.item:first-of-type { border-top: none; }
+.item .valor {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--codigo-fondo);
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+  min-width: 11rem;
+  font-size: 0.9rem;
+}
+.item .opciones { display: flex; gap: 0.4rem; }
+.item button.elegido { background: var(--azul); color: #fff; border-color: var(--azul); }
+.item .marca { font-weight: 700; width: 1.2rem; text-align: center; }
+.item .marca.bien { color: var(--verde); }
+.item .marca.mal { color: var(--rojo); }
+.razon {
+  flex-basis: 100%;
+  font-size: 0.86rem;
+  color: var(--gris);
+  padding-left: 0.2rem;
+}
+.razon.mal { color: var(--rojo); }
+.razon.bien { color: var(--verde); }
+
+/* --- Gráficas y controles de las actividades de series ------------- */
+.grafica { display: block; max-width: 100%; height: auto; margin: 0.4rem 0; }
+.figura { background: #fff; border: 1px solid var(--borde); border-radius: 8px; padding: 0.3rem; margin: 0.5rem 0; }
+.dos-columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+@media (max-width: 760px) { .dos-columnas { grid-template-columns: 1fr; } }
+.controles { display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center; margin: 0.4rem 0 0.6rem; }
+.controles label { font-weight: 600; display: flex; align-items: center; gap: 0.4rem; }
+.controles input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--azul); }
+.selector button.elegido { background: var(--azul); border-color: var(--azul); color: #fff; }
+.lectura { font-size: 0.95rem; margin: 0.3rem 0; }
+.lectura b { color: var(--azul); }
+.pregunta { border-left: 4px solid var(--ambar); background: var(--ambar-suave); padding: 0.5rem 0.8rem; border-radius: 0 8px 8px 0; margin: 0.4rem 0 0.8rem; }
+.paso-cerrado { display: none; }
+.candidatos-st { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+@media (max-width: 760px) { .candidatos-st { grid-template-columns: 1fr; } }
+.candidatos-st figure { margin: 0; border: 1px solid var(--borde); border-radius: 8px; background: #fff; padding: 0.3rem; }
+.candidatos-st figcaption { text-align: center; font-weight: 700; color: var(--azul); }
+/* La serie de análisis, al principio de cada actividad. */
+.contexto h3 { font-size: 1rem; margin: 0.9rem 0 0.3rem; }
+.contexto ul { margin: 0.2rem 0 0.6rem; padding-left: 1.2rem; }
+.contexto li { margin: 0.35rem 0; }
+.contexto table { margin: 0.5rem 0; }
+.contexto details { margin-top: 0.6rem; }
+.contexto summary { cursor: pointer; font-weight: 600; color: var(--azul); }

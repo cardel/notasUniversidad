@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rotar — ejercicios sobre las implementaciones</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Ejercicios sobre las implementaciones: rotar la cola</h1>
+  <p class="intro">Una operación nueva para la cola sobre nodos, la que guarda
+  <code>cabeza</code>, <code>ultimo</code> y <code>n</code>:
+  <code>rotar()</code> pasa el frente al final sin reservar ni liberar nodos,
+  solo cambiando punteros. La cola de prueba es <code>⟨8, 3, 6, 1⟩</code>, del
+  frente al final.</p>
+
+  <div class="carta">
+    <h2>1. Tres rotaciones</h2>
+<pre class="fragmento">// exige !vacia()
+void rotar() {
+  assert(!vacia());
+  if (cabeza != ultimo) {
+    Nodo *primero = cabeza;
+    cabeza = cabeza-&gt;siguiente;
+    primero-&gt;siguiente = NULL;
+    ultimo-&gt;siguiente = primero;
+    ultimo = primero;
+  }
+}</pre>
+    <p>Después de llamar tres veces a <code>rotar()</code>, ¿cómo queda la cola
+    del frente al final?</p>
+    <div class="prediccion">
+      <span>cola:</span>
+      <input type="text" id="pred-tres" placeholder="8 3 6 1" style="width:9rem">
+      <button id="btn-tres" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La lista que hace falta debajo</h2>
+    <p style="margin-top:0">¿Con cuál de estas cadenas queda <code>rotar</code>
+    en Θ(1) sin gastar memoria de más?</p>
+    <div class="opciones columna" id="opciones-lista">
+      <button data-op="sinultimo">La simple, solo con <code>cabeza</code></button>
+      <button data-op="conultimo">La simple, con <code>cabeza</code> y <code>ultimo</code></button>
+      <button data-op="doble">La doblemente enlazada, con <code>cabeza</code> y <code>ultimo</code></button>
+    </div>
+    <div id="veredicto-lista" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El orden de las asignaciones</h2>
+    <p style="margin-top:0">Tres cuerpos para el <code>if</code>, sobre una
+    cola de dos elementos o más. ¿Cuál pierde la cadena?</p>
+    <div class="opciones columna" id="opciones-orden">
+      <button data-op="uno"><pre class="fragmento">// versión 1
+Nodo *primero = cabeza;
+cabeza = cabeza-&gt;siguiente;
+primero-&gt;siguiente = NULL;
+ultimo-&gt;siguiente = primero;
+ultimo = primero;</pre></button>
+      <button data-op="dos"><pre class="fragmento">// versión 2
+Nodo *primero = cabeza;
+primero-&gt;siguiente = NULL;
+cabeza = cabeza-&gt;siguiente;
+ultimo-&gt;siguiente = primero;
+ultimo = primero;</pre></button>
+      <button data-op="tres"><pre class="fragmento">// versión 3
+ultimo-&gt;siguiente = cabeza;
+ultimo = cabeza;
+cabeza = cabeza-&gt;siguiente;
+ultimo-&gt;siguiente = NULL;</pre></button>
+    </div>
+    <div id="veredicto-orden" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Sin el <code>if</code></h2>
+    <p style="margin-top:0">Se quita el <code>if (cabeza != ultimo)</code> de la
+    versión 1 y se llama <code>rotar()</code> sobre la cola
+    <code>⟨5⟩</code>. ¿Cómo queda?</p>
+    <div class="opciones columna" id="opciones-unico">
+      <button data-op="nada">Igual: un solo elemento rotado sigue siendo el mismo</button>
+      <button data-op="roto">Con <code>cabeza</code> en NULL, <code>n</code> en 1 y el nodo apuntándose a sí mismo</button>
+      <button data-op="libera">Vacía, porque el nodo se libera</button>
+      <button data-op="ultimo">Con <code>ultimo</code> en NULL y <code>cabeza</code> en el nodo</button>
+    </div>
+    <div id="veredicto-unico" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Lo que cuesta</h2>
+    <p style="margin-top:0">En las tres rotaciones del punto 1, ¿cuántas
+    escrituras de puntero se hacen en total? Cuentan las asignaciones a
+    <code>cabeza</code>, a <code>ultimo</code> y a los campos
+    <code>siguiente</code>.</p>
+    <div class="prediccion">
+      <span>escrituras:</span>
+      <input type="number" id="pred-escrituras" placeholder="?">
+      <button id="btn-escrituras" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto-escrituras" class="veredicto"></div>
+  </div>
+
+  <div class="carta" id="carta-cierre" style="display:none">
+    <h2>Lo que quedó</h2>
+    <div class="nota">rotar mueve un nodo de un extremo al otro con cuatro
+    escrituras de puntero: Θ(1) en tiempo y Θ(1) en espacio aparte, sin
+    reservar ni liberar memoria. Escrita con el contrato,
+    <code>encolar(frente())</code> seguido de <code>desencolar()</code>,
+    también es Θ(1), pero reserva un nodo y libera otro en cada llamada. Con
+    punteros, el orden de las asignaciones decide: un enlace se lee antes de cortarlo, y el caso
+    de un solo elemento, donde <code>cabeza</code> y <code>ultimo</code> son el
+    mismo nodo, se revisa aparte.</div>
+  </div>
+</div>
+<script src="rotar.js"></script>
+</body>
+</html>

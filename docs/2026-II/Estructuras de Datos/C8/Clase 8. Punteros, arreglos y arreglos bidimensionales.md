@@ -629,6 +629,32 @@ diferencia entre `ptr = NULL` y `arr[i] = NULL`, y es exactamente el puntero
 colgante del manejo de memoria. La versión que aterriza `arr[i]` es la que
 está arriba.
 
+## Lo que se vio
+
+- `p + k` avanza $k$ casillas del tipo apuntado: un `int *` en 2000 da
+  `p + 1` en 2004. Entre dos punteros al mismo arreglo, `q - p` cuenta
+  casillas, no bytes.
+- El nombre del arreglo vale `&A[0]` y `A[i]` equivale a `*(A + i)`.
+  Acceder a una casilla cuesta $O(1)$, y recorrer el arreglo $O(n)$, con
+  índice o caminando el puntero mientras `p < A + n`.
+- El arreglo llega a una función como dirección, así que la función
+  necesita también `n`; copiarlo costaría $O(n)$ en cada llamada.
+- C no revisa límites: en un arreglo de cuatro casillas, `A[4]` lee la
+  celda vecina sin aviso del compilador, y escribir ahí corrompe otra
+  variable.
+- `int M[n][m]` guarda las filas una tras otra (*row-major*), y `M[i][j]`
+  vive en $b + (i \cdot m + j) \cdot$ `sizeof(int)`, donde $m$ es el
+  número de columnas, no de filas.
+- Llegar a `M[i][j]` cuesta $O(1)$ y recorrer la matriz $O(n \cdot m)$.
+  Por columnas la complejidad es la misma, pero el recorrido salta en
+  memoria y desaprovecha la caché.
+- Una matriz cuyo tamaño se conoce en ejecución se reserva en un bloque
+  con `malloc(n * m * sizeof(int))` y se indexa con `M[i * m + j]`: un
+  `NULL` que revisar y un `free`.
+- El arreglo de punteros pide $n + 1$ reservas con sus $n + 1$
+  verificaciones, y se libera de adentro hacia afuera: primero las filas,
+  después `arr`.
+
 ## Ejercicios de la sesión
 
 ### El mayor de la planilla, y dónde está

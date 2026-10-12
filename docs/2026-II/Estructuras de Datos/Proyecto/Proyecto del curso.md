@@ -89,6 +89,14 @@ Las dos entregas se califican sobre 100 puntos y la nota sale de
 cuatro niveles de cada uno, que es lo que se mira al asignar el
 puntaje.
 
+Quien no se presenta a la sustentación tiene 0,0 en la entrega final,
+aunque el resto del grupo sustente. Cuando la sustentación queda por
+debajo de 10 de sus 15 puntos, los puntos de los demás criterios le
+cuentan a esa persona en proporción a lo que sustentó: se multiplican
+por $S/15$, donde $S$ es su puntaje de sustentación. Con 6 puntos de
+sustentación y 80 del grupo, por ejemplo, la persona queda con
+$0{,}4 \times 80 + 6 = 38$ puntos y una nota de 1,9.
+
 ## Reglas del repositorio
 
 Las mismas del curso de Fundamentos de Lenguajes de Programación, y se
