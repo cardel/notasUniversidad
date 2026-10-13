@@ -28,11 +28,25 @@ var MotorDibujo = (function () {
                   .trim();
     }).filter(function (l) { return l !== ""; }).map(function (linea) {
       var dentro = linea.replace(/^\[|\]$/g, "");
-      return dentro.split(",").map(function (par) {
+      return partirLigaduras(dentro).map(function (par) {
         var t = par.split("=");
         return [(t[0] || "").trim(), (t.slice(1).join("=") || "").trim()];
       }).filter(function (p) { return p[0] !== ""; });
     });
+  }
+
+  /* Corta por las comas que separan una ligadura de la siguiente, y deja
+     quietas las de adentro de un cuerpo: +(k, 1) es un valor, no dos. */
+  function partirLigaduras(texto) {
+    var partes = [], hondo = 0, actual = "";
+    for (var i = 0; i < texto.length; i++) {
+      var c = texto.charAt(i);
+      if (c === "(" || c === "[") { hondo++; }
+      if (c === ")" || c === "]") { hondo--; }
+      if (c === "," && hondo <= 0) { partes.push(actual); actual = ""; } else { actual += c; }
+    }
+    partes.push(actual);
+    return partes;
   }
 
   /* Dos ligaduras son la misma si coinciden el nombre y el valor escrito.
