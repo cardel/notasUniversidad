@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los contadores del procesador</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Los contadores del procesador</h1>
+  <p class="intro">Dos programas, <code>./bueno</code> y <code>./malo</code>, suman la misma
+  matriz de 10.000 × 10.000 enteros y se diferencian solo en el orden de los índices.
+  Las cifras son lo que respondió <code>perf stat --repeat 10</code> en la máquina del
+  curso. Cada cuenta se predice antes de destaparla.</p>
+
+  <div class="carta">
+    <h2>1. Instrucciones por ciclo</h2>
+    <p style="margin-top:0">Primera tanda de eventos, con
+    <code>perf stat --repeat 10 -e instructions:u,l1-dcache-loads:u,l1-dcache-load-misses:u,cycles:u</code>:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Evento</th><th>./bueno</th><th>./malo</th></tr></thead>
+        <tbody id="cuerpo-tanda1"></tbody>
+      </table>
+    </div>
+    <p style="margin:0.8rem 0 0">El IPC sale de dos filas de esa tabla: instrucciones
+    retiradas sobre ciclos consumidos.</p>
+    <div class="prediccion">
+      <span>IPC de <code>./bueno</code>. Dos decimales.</span>
+      <input type="number" id="pred-ipc-bueno" min="0" step="0.01" placeholder="IPC">
+      <button id="btn-ipc-bueno" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-ipc-bueno" class="veredicto"></div>
+    <div class="prediccion">
+      <span>IPC de <code>./malo</code>. Dos decimales.</span>
+      <input type="number" id="pred-ipc-malo" min="0" step="0.01" placeholder="IPC">
+      <button id="btn-ipc-malo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-ipc-malo" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-destapar-tanda1">Destapar las cuentas de la tabla</button>
+    </div>
+    <div class="chips" id="chips-tanda1" style="margin-top:0.7rem"></div>
+    <div class="nota">El sufijo <code>:u</code> pide los eventos del espacio de usuario, sin
+    contar lo que el núcleo hace por el programa. Los porcentajes entre paréntesis que
+    <code>perf</code> imprime al lado de cada evento son el tiempo que ese contador estuvo
+    activo mientras se repartía entre los pocos registros del procesador, no una tasa de
+    acierto.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Mismas instrucciones, el doble de ciclos</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Las dos cuentas de instrucciones coinciden
+    hasta el sexto dígito y los ciclos pasan de 1.177.787.894 a 2.796.626.915. ¿Qué dice
+    esa pareja de cifras?</p>
+    <div class="opciones" id="op-ciclos">
+      <button data-op="compilador">El compilador optimizó uno de los dos y el otro no</button>
+      <button data-op="correcta">Cada instrucción tarda más porque espera datos de memoria: lo que cambió es el patrón de acceso, no el algoritmo</button>
+      <button data-op="trabajo">./malo ejecuta más trabajo que ./bueno</button>
+      <button data-op="frecuencia">La frecuencia del procesador bajó durante la corrida de ./malo</button>
+    </div>
+    <div id="ver-ciclos" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Del otro lado de la caché</h2>
+    <p style="margin-top:0">Segunda tanda, con otros eventos y en otra corrida, así que los
+    valores absolutos no coinciden con los de arriba:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Evento</th><th>./bueno</th><th>./malo</th></tr></thead>
+        <tbody id="cuerpo-tanda2"></tbody>
+      </table>
+    </div>
+    <div class="prediccion">
+      <span>¿Cuántas veces más <code>cache-misses</code> tiene <code>./malo</code>?</span>
+      <input type="number" id="pred-fallos" min="0" step="1" placeholder="veces">
+      <button id="btn-fallos" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-fallos" class="veredicto"></div>
+    <div class="prediccion">
+      <span>¿Y cuántas veces más tiempo transcurrido? Dos decimales.</span>
+      <input type="number" id="pred-tiempo" min="0" step="0.01" placeholder="veces">
+      <button id="btn-tiempo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-tiempo" class="veredicto"></div>
+    <div class="chips" id="chips-tanda2" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-brecha" hidden>Las dos cifras salen de la misma corrida y no
+    se parecen: cientos de veces más fallos, una vez y media más reloj. El contador mide una
+    pieza del camino; el cronómetro mide el programa completo.</div>
+    <p style="margin:0.9rem 0 0.3rem">¿Por qué la diferencia de tiempo es tan pequeña al lado
+    de la diferencia de fallos?</p>
+    <div class="opciones" id="op-brecha">
+      <button data-op="multiplexado">Porque perf reparte los contadores y el conteo de fallos queda inflado</button>
+      <button data-op="correcta">Porque el tiempo de reloj incluye todo lo demás y el procesador alcanza a tapar parte de la espera: cuanto más abajo se mide, más grande se ve la diferencia</button>
+      <button data-op="barato">Porque un fallo de caché cuesta tan poco que 415 veces más no alcanza a verse</button>
+      <button data-op="promedio">Porque <code>--repeat 10</code> promedia y aplana la diferencia</button>
+    </div>
+    <div id="ver-brecha" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Un IPC de 0,9 en el programa paralelo</h2>
+    <p style="margin-top:0">El programa con hilos, medido con <code>perf stat -p</code> sobre
+    el proceso vivo, solo suma: ni divisiones, ni raíces, ni llamadas a biblioteca.</p>
+    <div class="chips" id="chips-paralelo"></div>
+    <p style="margin:0.8rem 0 0.3rem">¿Qué hay que hacer con ese 0,9?</p>
+    <div class="opciones" id="op-ipc-paralelo">
+      <button data-op="normal">Nada: por debajo de 1 es lo normal en un programa paralelo</button>
+      <button data-op="correcta">Por debajo de 1 el procesador está esperando datos; optimizar la aritmética no sirve y hay que arreglar el acceso a memoria</button>
+      <button data-op="hilos">Levantar más hilos, porque con los que hay no alcanza a llenar el procesador</button>
+      <button data-op="compilado">Recompilar: un IPC así delata un binario sin optimizar</button>
+    </div>
+    <div id="ver-ipc-paralelo" class="veredicto"></div>
+    <div class="nota">El IPC es alto cuando el procesador tiene con qué trabajar en cada
+    ciclo, y bajo cuando le falta el dato. En un programa que solo suma, la aritmética ya es
+    mínima y lo que queda por mirar es de dónde vienen los números.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Cuando perf responde &lt;not supported&gt;</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">La misma orden que cuenta
+    <code>cache-misses</code> de <code>./bueno</code> devuelve
+    <code>&lt;not supported&gt;</code> en todos los eventos al pedirle la máquina completa con
+    <code>perf stat -a</code>. ¿Qué pasó?</p>
+    <div class="opciones" id="op-no-soporta">
+      <button data-op="procesador">El procesador no tiene ese contador</button>
+      <button data-op="instalar">Falta instalar <code>perf</code> para el núcleo que corre</button>
+      <button data-op="correcta">Es <code>kernel.perf_event_paranoid</code> en 2, que no deja medir la máquina entera; se baja a 1 con <code>sudo sysctl</code></button>
+      <button data-op="programa">El programa no usa ese contador, así que no hay nada que contar</button>
+    </div>
+    <div id="ver-no-soporta" class="veredicto"></div>
+    <div class="nota">El valor 2 limita las mediciones al proceso propio, el 1 abre los
+    contadores de todo el sistema y el 0 agrega los del núcleo. Es la configuración que más
+    veces hace creer que el procesador no tiene un evento que sí tiene.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="contadores.js"></script>
+</body>
+</html>

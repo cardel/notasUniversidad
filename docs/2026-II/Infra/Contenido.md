@@ -46,6 +46,12 @@ Se publican después de cada sesión.
    reducción, visibilidad de variables y reparto de iteraciones, con lo que
    cuesta cada mecanismo y cómo comprobar que el binario usó los hilos.
 
+6. [Clase 6. Herramientas de profiling en Linux — 13 y 15 de octubre](C6/Clase%206.%20Herramientas%20de%20profiling%20en%20Linux.md)
+   — medir el programa desde afuera: el proceso con `top`, `htop` y `ps`, las
+   llamadas al sistema con `strace`, la caché simulada con Valgrind y los
+   contadores del procesador con `perf`, y por qué cada capa ve la misma
+   diferencia de otro tamaño.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dos programas que hacen la misma cuenta</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .par { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 760px) { .par { grid-template-columns: 1fr; } }
+  .par .codigo { margin-top: 0.4rem; }
+  .rotulo { font-weight: 600; color: var(--gris); font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Dos programas que hacen la misma cuenta</h1>
+  <p class="intro">Dos versiones suman la misma matriz de 10.000 × 10.000 enteros y
+  escriben el mismo resultado. Una tarda casi el doble que la otra. Prediga la
+  diferencia y las instrucciones por ciclo antes de destapar los contadores, y
+  decida qué la explica.</p>
+
+  <div class="carta">
+    <h2>1. Lo único que cambia</h2>
+    <div class="par">
+      <div>
+        <span class="rotulo">Por filas (<code>./bueno</code>)</span>
+        <div class="codigo">
+          <div class="linea"><span class="num">1</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+          <div class="linea"><span class="num">2</span><span class="txt">  for (int j = 0; j &lt; n; j++)</span></div>
+          <div class="linea bloque-1"><span class="num">3</span><span class="txt">    suma += matriz[i][j];</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="rotulo">Por columnas (<code>./malo</code>)</span>
+        <div class="codigo">
+          <div class="linea"><span class="num">1</span><span class="txt">for (int i = 0; i &lt; n; i++)</span></div>
+          <div class="linea"><span class="num">2</span><span class="txt">  for (int j = 0; j &lt; n; j++)</span></div>
+          <div class="linea bloque-1"><span class="num">3</span><span class="txt">    suma += matriz[j][i];</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-bottom:0.2rem">Los dos imprimen <code>999900000000</code>. La matriz se
+    reserva igual, se llena igual y se recorre el mismo número de veces.</p>
+    <div class="prediccion">
+      <span>El de filas tarda 0,43538 s y el de columnas 0,79385 s.
+      ¿Cuántas veces más tarda el de columnas? Dos decimales.</span>
+      <input type="number" id="pred-tiempo" min="0" step="0.01" placeholder="veces">
+      <button id="btn-tiempo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-tiempo" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Instrucciones por ciclo</h2>
+    <p style="margin-top:0">El procesador ejecutó 3.504.983.954 instrucciones en
+    1.177.787.894 ciclos para el de filas, y 3.504.984.293 en 2.796.626.915 para el de
+    columnas. El cociente dice cuánto trabajo sale de cada ciclo de reloj.</p>
+    <div class="prediccion">
+      <span>Por filas:</span>
+      <input type="number" id="pred-ipc-bueno" min="0" step="0.01" placeholder="IPC">
+      <button id="btn-ipc-bueno" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-ipc-bueno" class="veredicto"></div>
+    <div class="prediccion">
+      <span>Por columnas:</span>
+      <input type="number" id="pred-ipc-malo" min="0" step="0.01" placeholder="IPC">
+      <button id="btn-ipc-malo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-ipc-malo" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-destapar">Destapar los contadores</button>
+    </div>
+    <div class="envoltura-tabla" id="tabla-medidas" hidden style="margin-top:0.7rem">
+      <table>
+        <thead><tr><th>Medición</th><th>Por filas</th><th>Por columnas</th><th>Razón</th></tr></thead>
+        <tbody id="cuerpo-medidas"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-instrucciones" style="margin-top:0.7rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Mismas instrucciones, el doble de ciclos</h2>
+    <p style="margin-top:0">Las dos cuentas de instrucciones se diferencian en 339 de tres mil
+    quinientos millones. Los ciclos, en cambio, se duplican. ¿Qué lo explica?</p>
+    <div class="opciones" id="op-causa">
+      <button data-op="algoritmo">El de columnas usa un algoritmo distinto y hace más trabajo</button>
+      <button data-op="correcta">Cada instrucción tarda más porque espera datos que no están en la caché</button>
+      <button data-op="compilador">El compilador optimizó uno de los dos y el otro no</button>
+      <button data-op="frecuencia">El procesador bajó la frecuencia durante la segunda corrida</button>
+    </div>
+    <div id="ver-causa" class="veredicto"></div>
+    <div class="nota">Una línea de caché trae 64 bytes, que son dieciséis enteros seguidos.
+    Por filas, esos dieciséis se usan uno tras otro; por columnas se usa uno y el siguiente
+    acceso cae 40.000 bytes más allá, en otra línea.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Por qué no basta con leer el código</h2>
+    <p style="margin-top:0">Las dos versiones se diferencian en el orden de dos índices.
+    Puestas una al lado de la otra, nada señala cuál cuesta el doble.</p>
+    <div class="opciones" id="op-medir">
+      <button data-op="leer">Leyendo con cuidado el código de las dos versiones</button>
+      <button data-op="contar">Contando las operaciones que ejecuta cada ciclo</button>
+      <button data-op="correcta">Midiendo las dos corridas con una herramienta que observe el programa por fuera</button>
+      <button data-op="probar">Probando las dos con una matriz pequeña y comparando</button>
+    </div>
+    <div id="ver-medir" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Qué herramienta responde «dónde»</h2>
+    <p style="margin-top:0">Las herramientas de la sesión se reparten en cuatro familias.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Familia</th><th>En Python</th><th>En C++ y Linux</th><th>Cómo trabaja</th></tr></thead>
+        <tbody>
+          <tr><td>Temporizadores</td><td><code>time</code>, <code>timeit</code></td><td><code>chrono</code></td><td>miden tiempo transcurrido</td></tr>
+          <tr><td>Deterministas</td><td><code>cProfile</code></td><td><code>callgrind</code></td><td>instrumentan y registran cada evento</td></tr>
+          <tr><td>Estadísticos</td><td><code>pyinstrument</code></td><td><code>perf</code></td><td>muestrean cada tantos milisegundos</td></tr>
+          <tr><td>Monitores del sistema</td><td>—</td><td><code>top</code>, <code>htop</code>, <code>ps</code></td><td>observan el proceso desde afuera</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-bottom:0.3rem">Para saber en qué función y en qué línea se va el tiempo,
+    ¿a cuál familia se acude?</p>
+    <div class="opciones" id="op-tipo">
+      <button data-op="temporizador">A un temporizador</button>
+      <button data-op="correcta">A un perfilador determinista</button>
+      <button data-op="estadistico">A un perfilador estadístico</button>
+      <button data-op="monitor">A un monitor del sistema operativo</button>
+    </div>
+    <div id="ver-tipo" class="veredicto"></div>
+    <div class="nota">El resto de la sesión recorre las cuatro familias sobre estos mismos dos
+    programas: primero el proceso visto desde afuera, después la caché simulada con Valgrind y
+    al final los contadores del procesador con <code>perf</code>.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="dosprogramas.js"></script>
+</body>
+</html>

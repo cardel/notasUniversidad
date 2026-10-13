@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contar llamadas al sistema</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Contar llamadas al sistema</h1>
+  <p class="intro">Tres programas trazados con <code>strace -c</code>: dos que escriben las
+  mismas 200.000 líneas de maneras distintas y el de la matriz. Prediga las relaciones antes
+  de destapar las trazas y después decida qué concluye de cada una.</p>
+
+  <div class="carta">
+    <h2>1. La misma salida, dos caminos</h2>
+    <p style="margin-top:0"><code>./lento</code> escribe 200.000 líneas con una llamada
+    <code>write</code> por línea. <code>./rapido</code> escribe las mismas líneas con
+    <code>fprintf</code>, que las acumula en un búfer de 4 kB y baja al sistema cuando el
+    búfer se llena. El contenido que sale es idéntico.</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">$</span><span class="txt">strace -c ./lento</span></div>
+      <div class="linea bloque-2"><span class="num">$</span><span class="txt">strace -c ./rapido</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">En la traza de <code>./lento</code>, <code>write</code>
+    concentra el 99,94 % del tiempo medido, a 4 microsegundos por llamada.</p>
+    <div class="prediccion">
+      <span>¿Cuántas veces más llamadas a <code>write</code> hace <code>./lento</code> que
+      <code>./rapido</code>?</span>
+      <input type="number" id="pred-llamadas" min="0" step="1" placeholder="veces">
+      <button id="btn-llamadas" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-llamadas" class="veredicto"></div>
+    <div class="prediccion">
+      <span>¿Y cuántas veces más tiempo dentro del núcleo?</span>
+      <input type="number" id="pred-tiempo" min="0" step="1" placeholder="veces">
+      <button id="btn-tiempo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-tiempo" class="veredicto"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Dato de la traza</th><th>./lento</th><th>./rapido</th></tr></thead>
+        <tbody id="cuerpo-trazas"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-trazas" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-trazas" hidden>Las dos trazas se tomaron igual, y por eso se
+    comparan entre sí. Lo que no se compara es la columna de segundos con el reloj de una
+    corrida suelta: <code>strace</code> detiene el proceso a la entrada y a la salida de cada
+    llamada, así que ese tiempo incluye el costo del tracer. Para el reloj se corre el
+    programa sin <code>strace</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. El reloj cambia mucho menos</h2>
+    <p style="margin-top:0">Fuera de <code>strace</code>, <code>./lento</code> tarda 0,12 s y
+    <code>./rapido</code> 0,01 s.</p>
+    <div class="prediccion">
+      <span>¿Cuántas veces más tarda <code>./lento</code> en el reloj?</span>
+      <input type="number" id="pred-reloj" min="0" step="1" placeholder="veces">
+      <button id="btn-reloj" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-reloj" class="veredicto"></div>
+    <p style="margin-bottom:0.3rem;margin-top:1rem">El tiempo dentro del núcleo cambia 964
+    veces y el reloj apenas 12. ¿Por qué no coinciden?</p>
+    <div class="opciones" id="op-reloj">
+      <button data-op="miente">Las cifras de strace no son de fiar</button>
+      <button data-op="correcta">El reloj mide todo lo que hace el programa, y el núcleo es solo una parte</button>
+      <button data-op="disco">El disco es el límite y no deja bajar más el tiempo</button>
+      <button data-op="iguales">Las dos cifras miden lo mismo, así que una de las dos está mal leída</button>
+    </div>
+    <div id="ver-reloj-op" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Qué se cobra al cruzar al núcleo</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Un <code>write</code> de 32 bytes cuesta casi
+    lo mismo que uno de 8.192 bytes. ¿Qué dice eso del búfer de <code>./rapido</code>?</p>
+    <div class="opciones" id="op-cruce">
+      <button data-op="bytes">Que el ahorro está en escribir menos bytes</button>
+      <button data-op="correcta">Que el costo va por llamada, así que agrupar líneas reduce lo que se paga</button>
+      <button data-op="disco">Que el disco rinde más con bloques grandes</button>
+      <button data-op="comprime">Que fprintf comprime la salida antes de escribirla</button>
+    </div>
+    <div id="ver-cruce" class="veredicto"></div>
+    <div class="nota">Las dos cifras de microsegundos por llamada de la tabla anterior están
+    en la misma dirección: el <code>write</code> de una línea corta de <code>./lento</code> no
+    sale más barato que el de 4 kB de <code>./rapido</code>.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Cuando las llamadas no son el problema</h2>
+    <p style="margin-top:0">El programa de la matriz, <code>./bueno</code>, tarda 0,79 s de
+    reloj. Su traza completa:</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Llamada</th><th>Llamadas</th><th>Segundos</th><th>De las llamadas</th></tr></thead>
+        <tbody id="cuerpo-bueno"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-bueno" style="margin-top:0.7rem"></div>
+    <p style="margin-bottom:0.3rem;margin-top:1rem">¿Qué se hace con ese resultado?</p>
+    <div class="opciones" id="op-bueno">
+      <button data-op="brk">Reducir las 2.503 llamadas a brk, que son casi toda la traza</button>
+      <button data-op="correcta">Descartar las llamadas al sistema y seguir midiendo hacia la memoria</button>
+      <button data-op="optimizado">Dar el programa por optimizado: hace muy pocas llamadas</button>
+      <button data-op="bufer">Agrandar el búfer de salida, como en ./rapido</button>
+    </div>
+    <div id="ver-bueno" class="veredicto"></div>
+    <div class="nota"><code>brk</code> mueve el final del segmento de datos del proceso:
+    aparece cuando el programa le pide memoria al sistema. <code>strace -c</code> responde una
+    sola pregunta, cuántas llamadas y cuánto tiempo dentro de ellas, y con esa respuesta se
+    decide si vale la pena seguir mirando ahí o pasar a <code>perf</code>.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="llamadas.js"></script>
+</body>
+</html>

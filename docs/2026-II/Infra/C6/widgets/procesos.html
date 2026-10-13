@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un programa paralelo visto desde afuera</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Un programa paralelo visto desde afuera</h1>
+  <p class="intro">Una foto de <code>top</code>, dos listados de <code>ps</code> y un
+  <code>perf stat</code> tomados mientras <code>./paralelo 900</code> multiplica su matriz
+  con doce hilos. La máquina tiene seis núcleos físicos y doce lógicos. Cada pregunta pide
+  una predicción antes de destapar la columna.</p>
+
+  <div class="carta">
+    <h2>1. El techo de %CPU</h2>
+    <p style="margin-top:0">Con el programa corriendo, otra terminal pide una sola foto:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">$</span><span class="txt">top -b -n1</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num"></span><span class="txt">load average: 3,48, 3,41, 3,28</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">%Cpu(s): 91,9 us,  5,1 sy,  0,0 ni,  1,7 id</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem">En la misma captura, <code>dockerd</code> aparece con
+    51,8 % y <code>./paralelo 900</code> con una cifra de tres dígitos.</p>
+    <div class="prediccion">
+      <span>¿Cuál es el valor más alto que puede marcar la columna <code>%CPU</code> de un
+      solo proceso en esta máquina?</span>
+      <input type="number" id="pred-techo" min="0" step="1" placeholder="%CPU">
+      <button id="btn-techo" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-techo" class="veredicto"></div>
+    <div class="prediccion">
+      <span>El proceso marca <code>%CPU</code> 919,1. ¿A cuántos núcleos ocupados equivale?
+      Un decimal.</span>
+      <input type="number" id="pred-nucleos" min="0" step="0.1" placeholder="núcleos">
+      <button id="btn-nucleos" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-nucleos" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-destapar-top">Destapar la fila de top</button>
+    </div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Columna</th><th>./paralelo 900</th></tr></thead>
+        <tbody id="cuerpo-top"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-top" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-top" hidden>Las dos cifras del encabezado y la de la fila
+    están en escalas distintas. La línea <code>%Cpu(s)</code> reparte toda la máquina en 100,
+    de modo que 91,9 us significa que casi todos los núcleos estaban en código de usuario;
+    la columna <code>%CPU</code> de cada proceso se mide contra un núcleo y por eso llega a
+    1.200. La carga media es otra cosa más: un promedio móvil del último minuto, no un
+    conteo de hilos de este instante.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Por qué %CPU pasa de 100</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Un porcentaje de 919,1 no cabe en la lectura
+    habitual de un porcentaje. ¿De dónde sale?</p>
+    <div class="opciones" id="op-pasa100">
+      <button data-op="medido">El proceso está mal medido: ningún porcentaje pasa de 100</button>
+      <button data-op="correcta">%CPU se cuenta sobre un núcleo, y la máquina tiene doce</button>
+      <button data-op="memoria">El programa usa más memoria de la que tiene el equipo</button>
+      <button data-op="doble">El kernel cuenta dos veces los hilos lógicos del SMT</button>
+    </div>
+    <div id="ver-pasa100" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. %CPU contra %MEM</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">En la misma fila, el proceso marca
+    <code>%CPU</code> 919,1 y <code>%MEM</code> 1,2, con <code>RES</code> en 395.268 kB.
+    ¿Por qué una columna pasa de 100 y la otra se queda en 1,2?</p>
+    <div class="opciones" id="op-mem">
+      <button data-op="sube">%MEM debería subir con los hilos, y algo lo está frenando</button>
+      <button data-op="correcta">Miden cosas distintas: una es tiempo de CPU por núcleo, la otra memoria residente sobre la RAM física</button>
+      <button data-op="virtual">%MEM está calculado sobre la memoria virtual del proceso</button>
+      <button data-op="nousa">1,2 % indica que el programa no está tocando su matriz</button>
+    </div>
+    <div id="ver-mem" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Un hilo por fila y la columna PSR</h2>
+    <p style="margin-top:0">El mismo PID, visto como proceso y visto hilo por hilo:</p>
+    <div class="codigo">
+      <div class="linea bloque-1"><span class="num">$</span><span class="txt">ps -o user,pid,thcount,pcpu,pmem,cputime,cmd -p 102237</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.5rem">
+      <div class="linea"><span class="num"></span><span class="txt">USER      PID THCNT %CPU %MEM     TIME CMD</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">cardel 102237    12  981  1.2 00:01:21 ./paralelo 900</span></div>
+    </div>
+    <div class="codigo" style="margin-top:0.8rem">
+      <div class="linea bloque-2"><span class="num">$</span><span class="txt">ps -o pid,tid,psr,pcpu,comm -T -p 102237</span></div>
+    </div>
+    <p style="margin-bottom:0.3rem"><code>PSR</code> es el núcleo donde el kernel tenía cada
+    hilo en el momento de la consulta. Antes de destapar la tabla: con doce hilos y doce
+    núcleos lógicos, ¿espera ver los doce núcleos, uno por hilo?</p>
+    <div class="botones">
+      <button id="btn-destapar-hilos">Destapar los doce hilos</button>
+    </div>
+    <div class="envoltura-tabla" id="tabla-hilos" hidden style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>TID</th><th>PSR</th><th>%CPU</th></tr></thead>
+        <tbody id="cuerpo-hilos"></tbody>
+      </table>
+    </div>
+    <div class="chips" id="chips-hilos" style="margin-top:0.7rem"></div>
+    <div class="alerta" id="nota-hilos" hidden>Dos hilos quedaron en el núcleo 5 y dos en el
+    10, mientras el 7 y el 9 no aparecen en ninguna fila. La consulta devuelve el núcleo de
+    ese instante, y el planificador sigue moviendo los hilos durante el minuto y medio que
+    dura la corrida.</div>
+    <p style="margin-bottom:0.3rem;margin-top:1rem">¿Qué conclusión admite ese reparto?</p>
+    <div class="opciones" id="op-psr">
+      <button data-op="roto">El programa reparte mal el trabajo</button>
+      <button data-op="correcta">Es la foto de un instante: dos pares de hilos coincidieron de núcleo y otra consulta da otro reparto</button>
+      <button data-op="faltan">Faltan hilos: solo aparecen diez núcleos distintos</button>
+      <button data-op="afinidad">Hay que fijar la afinidad de cada hilo con taskset siempre</button>
+    </div>
+    <div id="ver-psr" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>5. La suma de las doce filas</h2>
+    <p style="margin-top:0">Los doce hilos traen un <code>%CPU</code> entre 79,6 y 86,4.</p>
+    <div class="prediccion">
+      <span>Sume las doce columnas de <code>%CPU</code> de la tabla. ¿Cuánto da?</span>
+      <input type="number" id="pred-suma" min="0" step="0.1" placeholder="suma de %CPU">
+      <button id="btn-suma" class="primario">Comprobar</button>
+    </div>
+    <div id="ver-suma" class="veredicto"></div>
+    <p style="margin:1rem 0 0.3rem">El mismo proceso, medido cinco segundos con
+    <code>perf stat -p 102237 sleep 5</code>:</p>
+    <div class="codigo">
+      <div class="linea"><span class="num"></span><span class="txt">     51.361,10 msec task-clock                #   10,2 CPUs utilized</span></div>
+      <div class="linea"><span class="num"></span><span class="txt">                                            #    0,90  insn per cycle</span></div>
+    </div>
+    <p style="margin:1rem 0 0.3rem">Suponga ahora el mismo programa, con la misma matriz y
+    el mismo tiempo de reloj, pero con <code>THCNT</code> en 1. ¿Qué pasó?</p>
+    <div class="opciones" id="op-unhilo">
+      <button data-op="termino">El programa ya terminó y ps alcanzó a ver el último hilo</button>
+      <button data-op="ciego">ps no ve los hilos que crea OpenMP, solo el principal</button>
+      <button data-op="correcta">No paraleliza nada: lo típico es un binario compilado sin -fopenmp</button>
+      <button data-op="ocupada">La máquina está ocupada y OpenMP solo alcanzó a crear un hilo</button>
+    </div>
+    <div id="ver-unhilo" class="veredicto"></div>
+    <div class="nota"><code>top</code> sirve para mirar un proceso vivo y compararlo con sus
+    vecinos; <code>ps</code> da una línea por hilo con el núcleo que ocupa, y
+    <code>perf stat</code> enganchado a un PID mide una ventana de tiempo sin reiniciar el
+    programa. <code>top</code> y <code>ps</code> leen lo que el núcleo publica en
+    <code>/proc</code>; <code>perf</code> pide los contadores del procesador, que es otra
+    fuente y por eso responde otras preguntas.</div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="procesos.js"></script>
+</body>
+</html>

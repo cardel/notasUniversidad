@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La misma diferencia, medida de cuatro formas</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .situacion { font-size: 1.05rem; padding: 0.8rem 1rem; border-left: 4px solid var(--azul);
+               background: var(--azul-suave); border-radius: 6px; margin: 0.6rem 0; min-height: 3.2rem; }
+  .opciones button.elegida { outline: 3px solid var(--azul); outline-offset: 1px; }
+  ol.pasos { margin: 0.4rem 0 0; padding-left: 1.3rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>La misma diferencia, medida de cuatro formas</h1>
+  <p class="intro">El par <code>./bueno</code> y <code>./malo</code> suma la misma matriz de
+  10.000 × 10.000 enteros con los índices al revés, y cuatro herramientas lo midieron. Cada
+  una devuelve una razón distinta entre los dos binarios.</p>
+
+  <div class="carta">
+    <h2>1. Cuatro razones para el mismo par</h2>
+    <p style="margin-top:0">Toque las herramientas en orden, de la razón más chica a la más
+    grande, antes de ver la columna de la derecha.</p>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Herramienta</th><th>Qué compara</th><th>Razón</th></tr></thead>
+        <tbody id="cuerpo-medidas"></tbody>
+      </table>
+    </div>
+    <div class="secuencia" id="secuencia-escala"></div>
+    <div class="progreso" id="progreso-escala"></div>
+    <div class="opciones" id="op-orden-escala">
+      <button data-clave="tiempo">/usr/bin/time -v</button>
+      <button data-clave="cachegrind">cachegrind</button>
+      <button data-clave="callgrind">callgrind</button>
+      <button data-clave="perf">perf</button>
+    </div>
+    <div id="ver-orden" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.6rem">
+      <button id="btn-reiniciar-escala">Empezar de nuevo</button>
+    </div>
+    <div class="alerta" id="nota-escala" hidden>El captador anticipado del procesador
+    (<i>prefetcher</i>) adivina el siguiente acceso cuando el recorrido es seguido, y así
+    esconde casi todos los fallos de <code>./bueno</code>; con los índices al revés no acierta
+    ninguno y los de <code>./malo</code> llegan todos a memoria. Valgrind simula una caché sin
+    captador, de modo que ve una diferencia intermedia, y el reloj es el que menos se mueve
+    porque mide el programa completo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Por qué la diferencia crece al bajar de nivel</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">De 1,4 veces en el cronómetro a 415 en los
+    contadores del procesador, con el mismo par de binarios.</p>
+    <div class="opciones" id="op-escala">
+      <button data-op="instrumento">Alguna de las cuatro está mal: cifras tan distintas no pueden describir lo mismo</button>
+      <button data-op="correcta">El tiempo incluye todo lo demás; la simulación de Valgrind no tiene captador anticipado, y los contadores reales muestran cuántos fallos llegaron de verdad a memoria en cada caso</button>
+      <button data-op="promediar">Hay que promediar las cuatro para tener la diferencia verdadera</button>
+      <button data-op="exagera">La de 415 veces exagera, porque un contador de hardware se dispara por cualquier cosa</button>
+    </div>
+    <div id="ver-escala" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Lo que mide cada familia</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>Característica</th><th>top / ps</th><th>Valgrind</th><th>perf</th></tr></thead>
+        <tbody id="cuerpo-comparacion"></tbody>
+      </table>
+    </div>
+    <div class="nota">Las tres columnas responden preguntas distintas, y el costo de la
+    segunda es la razón por la que no se usa en una máquina que está atendiendo tráfico.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Qué herramienta responde cada pregunta</h2>
+    <div class="chips" id="datos-herramientas"></div>
+    <div class="progreso" id="progreso-herramientas" style="margin-top:0.7rem"></div>
+    <div class="situacion" id="texto-situacion"></div>
+    <div class="opciones" id="op-herramientas">
+      <button data-clave="top" data-op="top">top o htop</button>
+      <button data-clave="callgrind" data-op="callgrind">callgrind con callgrind_annotate o KCachegrind</button>
+      <button data-clave="perf" data-op="perf">perf</button>
+      <button data-clave="ps" data-op="ps">ps con thcount</button>
+      <button data-clave="strace" data-op="strace">strace -c</button>
+    </div>
+    <div id="ver-herramientas" class="veredicto"></div>
+    <div class="botones" style="margin-top:0.8rem">
+      <button id="btn-siguiente" class="primario" hidden>Siguiente situación</button>
+      <button id="btn-otra" hidden>Otra vez, en otro orden</button>
+    </div>
+    <div class="chips" id="panel-marcador" style="margin-top:0.8rem"></div>
+    <div class="envoltura-tabla" style="margin-top:0.6rem">
+      <table>
+        <thead><tr><th>Situación</th><th>Primera respuesta</th><th>La que responde</th></tr></thead>
+        <tbody id="cuerpo-marcador"></tbody>
+      </table>
+    </div>
+    <p id="resumen" hidden style="font-weight:600"></p>
+  </div>
+
+  <div class="carta">
+    <h2>5. Por dónde empezar</h2>
+    <p style="margin-top:0;margin-bottom:0.3rem">Llega un programa lento que nadie del equipo
+    conoce y hay una tarde para averiguar qué le pasa. ¿Con qué se abre la sesión?</p>
+    <div class="opciones" id="op-arranque">
+      <button data-op="valgrind">Con <code>cachegrind</code>, que es la que da el detalle más fino</button>
+      <button data-op="correcta">Con la visión general de <code>top</code>, <code>htop</code> o <code>ps</code>, que no cuesta nada y descarta lo obvio</button>
+      <button data-op="perf">Con <code>perf stat</code>, que mide la corrida real sin frenarla</button>
+      <button data-op="codigo">Leyendo el código del programa de principio a fin</button>
+    </div>
+    <div id="ver-arranque" class="veredicto"></div>
+    <div class="alerta" id="nota-arranque" hidden>El orden de la sesión, de lo barato a lo
+    específico:
+      <ol class="pasos" id="lista-orden"></ol>
+    </div>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="herramientas.js"></script>
+</body>
+</html>
