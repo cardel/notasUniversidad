@@ -36,14 +36,14 @@ var MotorDibujo = (function () {
   }
 
   /* Dos ligaduras son la misma si coinciden el nombre y el valor escrito.
-     Para una clausura basta con decir que lo es, y lo mismo para una
-     declaración de un marco recursivo, que no guarda un valor sino los
-     parámetros y el cuerpo del procedimiento. */
+     Una declaración de un marco recursivo lleva los parámetros y el cuerpo
+     del procedimiento, y se da por buena también si se dice que lo es; para
+     una clausura basta con decir que lo es. */
   function mismoValor(escrito, real) {
     var e = String(escrito).toLowerCase().replace(/\s+/g, "");
     var r = String(real).toLowerCase().replace(/\s+/g, "");
     if (e === r) { return true; }
-    if (/procedimientorecursivo/.test(r)) {
+    if (/^proc\(/.test(r)) {
       return /(recursiv|closure|proc|clausura|cuerpo)/.test(e);
     }
     if (/^\(closure/.test(r)) { return /^(closure|proc|procedimiento|clausura)/.test(e); }

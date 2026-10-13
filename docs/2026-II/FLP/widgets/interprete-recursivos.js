@@ -191,6 +191,9 @@ var InterpreteRecursivos = (function () {
       case "let-exp": return "let " + n.campos[0].map(function (id, k) {
         return id + " = " + texto(n.campos[1][k]); }).join(" ") + " in " + texto(n.campos[2]);
       case "proc-exp": return "proc(" + n.campos[0].join(", ") + ") " + texto(n.campos[1]);
+      case "letrec-exp": return "letrec " + n.campos[0].map(function (nom, k) {
+        return nom + "(" + n.campos[1][k].join(", ") + ") = " + texto(n.campos[2][k]); }).join(" ") +
+        " in " + texto(n.campos[3]);
       case "app-exp": return "(" + texto(n.campos[0]) +
         (n.campos[1].length ? " " + n.campos[1].map(texto).join(" ") : "") + ")";
     }
@@ -200,6 +203,9 @@ var InterpreteRecursivos = (function () {
   function escribir(v) {
     if (v === true) { return "#t"; }
     if (v === false) { return "#f"; }
+    if (v && v.declaracion) {
+      return "proc(" + v.ids.join(", ") + ") " + texto(v.cuerpo);
+    }
     if (v && v.clausura) {
       return "(closure (" + v.ids.join(", ") + ") " + texto(v.cuerpo) + " " + v.env.nombre + ")";
     }
@@ -249,7 +255,9 @@ var InterpreteRecursivos = (function () {
       cuenta.ambientes++;
       var nuevo = { nombre: "amb" + creados, viejo: env, recursivo: true,
                     nombres: nombres, paramss: paramss, cuerpos: cuerpos,
-                    ligaduras: nombres.map(function (n) { return [n, "<procedimiento recursivo>"]; }) };
+                    ligaduras: nombres.map(function (n, k) {
+                      return [n, { declaracion: true, ids: paramss[k], cuerpo: cuerpos[k] }];
+                    }) };
       if (!masProfundo || hondura(nuevo) >= hondura(masProfundo)) { masProfundo = nuevo; }
       return nuevo;
     }

@@ -40,7 +40,7 @@ var CADENA =
   "(define marco-rec\n" +
   "  (list 'ambiente-extendido-recursivo\n" +
   "        '(salta recorta)\n" +
-  "        '((k) (k paso))\n" +
+  "        '((k) (k corte))\n" +
   "        '(cuerpo-salta cuerpo-recorta)\n" +
   "        base))\n";
 
@@ -157,7 +157,7 @@ var RETOS = (function () {
         { llamada: "(rec? base)", esperado: "#f" },
         { llamada: "(rec? 'salta)", esperado: "#f" },
         { llamada: "(rec->procnames marco-rec)", esperado: "(salta recorta)" },
-        { llamada: "(rec->idss marco-rec)", esperado: "((k) (k paso))" },
+        { llamada: "(rec->idss marco-rec)", esperado: "((k) (k corte))" },
         { llamada: "(rec->cuerpos marco-rec)", esperado: "(cuerpo-salta cuerpo-recorta)" },
         { llamada: "(equal? (rec->old-env marco-rec) base)", esperado: "#t" }
       ],
@@ -262,7 +262,7 @@ var RETOS = (function () {
         { llamada: "(length (ambiente-extendido-recursivo '(gira) '((g)) '(cuerpo-gira) base))", esperado: "5" },
         { llamada: "(rec? (ambiente-extendido-recursivo '(gira) '((g)) '(cuerpo-gira) base))", esperado: "#t" },
         { llamada: "(rec->idss (ambiente-extendido-recursivo '(gira) '((g)) '(cuerpo-gira) base))", esperado: "((g))" },
-        { llamada: "(closure->ids (rec->closure-en marco-rec 1))", esperado: "(k paso)" },
+        { llamada: "(closure->ids (rec->closure-en marco-rec 1))", esperado: "(k corte)" },
         { llamada: "(closure->cuerpo (rec->closure-en marco-rec 0))", esperado: "cuerpo-salta" },
         { llamada: "(rec? (closure->env (rec->closure-en marco-rec 0)))", esperado: "#t" },
         { llamada: "(equal? (closure->env (rec->closure-en marco-rec 0)) marco-rec)", esperado: "#t" },
@@ -332,7 +332,7 @@ var RETOS = (function () {
         { llamada: "(apply-env marco-rec 'n)", esperado: "3" },
         { llamada: "(apply-env marco-rec 'paso)", esperado: "2" },
         { llamada: "(apply-env marco-rec 'otra)", esperado: "variable-libre" },
-        { llamada: "(closure->ids (apply-env marco-rec 'recorta))", esperado: "(k paso)" },
+        { llamada: "(closure->ids (apply-env marco-rec 'recorta))", esperado: "(k corte)" },
         { llamada: "(closure->cuerpo (apply-env marco-rec 'salta))", esperado: "cuerpo-salta" },
         { llamada: "(rec? (closure->env (apply-env marco-rec 'salta)))", esperado: "#t" },
         { llamada: "(equal? (closure->env (apply-env marco-rec 'salta)) marco-rec)", esperado: "#t" },

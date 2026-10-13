@@ -9,8 +9,9 @@ var EJERCICIOS = [
     enunciado:
       "Un <code>let</code> por fuera y el <code>letrec</code> por dentro. El " +
       "momento que se pide es la primera aplicación, antes de que exista " +
-      "ningún eslabón de parámetro. Para una declaración del marco " +
-      "recursivo basta escribir <code>recursivo</code> como valor.",
+      "ningún eslabón de parámetro. Una declaración del marco recursivo se " +
+      "escribe como el procedimiento que declara, <code>proc(n) " +
+      "&lt;cuerpo&gt;</code>, y también vale escribir <code>recursivo</code>.",
     programa: "let b = 2 in letrec esc(n) = if ==(n,0) then 1 else *(b, (esc sub1(n))) in (esc 3)",
     momento: "(esc 3)",
     pista:
