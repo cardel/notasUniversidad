@@ -50,16 +50,14 @@ var MotorDibujo = (function () {
   }
 
   /* Dos ligaduras son la misma si coinciden el nombre y el valor escrito.
-     Una declaración de un marco recursivo lleva los parámetros y el cuerpo
-     del procedimiento, y se da por buena también si se dice que lo es; para
-     una clausura basta con decir que lo es. */
-  function mismoValor(escrito, real) {
+     Un marco recursivo se escribe con sus tres listas, y en la de cuerpos
+     basta con decir que son los cuerpos; para una clausura basta con decir
+     que lo es. */
+  function mismoValor(escrito, real, nombre) {
     var e = String(escrito).toLowerCase().replace(/\s+/g, "");
     var r = String(real).toLowerCase().replace(/\s+/g, "");
     if (e === r) { return true; }
-    if (/^proc\(/.test(r)) {
-      return /(recursiv|closure|proc|clausura|cuerpo)/.test(e);
-    }
+    if (nombre === "cuerpos") { return /cuerpo/.test(e); }
     if (/^\(closure/.test(r)) { return /^(closure|proc|procedimiento|clausura)/.test(e); }
     return false;
   }
@@ -79,7 +77,7 @@ var MotorDibujo = (function () {
         if (mio[k][0] !== suyo[k][0]) {
           return cual + "liga «" + mio[k][0] + "» donde va «" + suyo[k][0] + "».";
         }
-        if (!mismoValor(mio[k][1], INT.escribir(suyo[k][1]))) {
+        if (!mismoValor(mio[k][1], INT.escribir(suyo[k][1]), suyo[k][0])) {
           return cual + "le da a «" + suyo[k][0] + "» el valor " + (mio[k][1] || "nada") +
             " y debía valer " + INT.escribir(suyo[k][1]) + ".";
         }

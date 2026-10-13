@@ -9,15 +9,17 @@ var EJERCICIOS = [
     enunciado:
       "Un <code>let</code> por fuera y el <code>letrec</code> por dentro. El " +
       "momento que se pide es la primera aplicación, antes de que exista " +
-      "ningún eslabón de parámetro. Una declaración del marco recursivo se " +
-      "escribe como el procedimiento que declara, <code>proc(n) " +
-      "&lt;cuerpo&gt;</code>, y también vale escribir <code>recursivo</code>.",
+      "ningún eslabón de parámetro. El marco recursivo no liga un nombre a " +
+      "un valor: guarda las tres listas del <code>letrec</code>, " +
+      "<code>procnames</code>, <code>idss</code> y <code>cuerpos</code>, y con " +
+      "esos tres nombres se escribe. En <code>cuerpos</code> basta con decir " +
+      "que son los cuerpos.",
     programa: "let b = 2 in letrec esc(n) = if ==(n,0) then 1 else *(b, (esc sub1(n))) in (esc 3)",
     momento: "(esc 3)",
     pista:
       "Dos eslabones: el del letrec y el del let. El del letrec va primero " +
-      "porque es el más nuevo, y liga el nombre del procedimiento, no un " +
-      "número.",
+      "porque es el más nuevo, y lo que guarda son las tres listas de la " +
+      "declaración, no una ligadura con un número.",
     cierre:
       "El marco recursivo cuelga del eslabón del <code>let</code>, así que " +
       "<code>b</code> queda alcanzable desde el cuerpo del procedimiento: la " +

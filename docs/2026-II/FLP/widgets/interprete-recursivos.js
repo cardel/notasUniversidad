@@ -200,12 +200,13 @@ var InterpreteRecursivos = (function () {
     return "?";
   }
 
+  /* Las tres listas del marco recursivo se escriben como las lee el
+     intérprete: (esc), ((n)), (cuerpo). */
+  function lista(xs) { return "(" + xs.join(" ") + ")"; }
+
   function escribir(v) {
     if (v === true) { return "#t"; }
     if (v === false) { return "#f"; }
-    if (v && v.declaracion) {
-      return "proc(" + v.ids.join(", ") + ") " + texto(v.cuerpo);
-    }
     if (v && v.clausura) {
       return "(closure (" + v.ids.join(", ") + ") " + texto(v.cuerpo) + " " + v.env.nombre + ")";
     }
@@ -255,9 +256,10 @@ var InterpreteRecursivos = (function () {
       cuenta.ambientes++;
       var nuevo = { nombre: "amb" + creados, viejo: env, recursivo: true,
                     nombres: nombres, paramss: paramss, cuerpos: cuerpos,
-                    ligaduras: nombres.map(function (n, k) {
-                      return [n, { declaracion: true, ids: paramss[k], cuerpo: cuerpos[k] }];
-                    }) };
+                    ligaduras: [["procnames", lista(nombres)],
+                                ["idss", lista(paramss.map(lista))],
+                                ["cuerpos", lista(cuerpos.map(function (c) {
+                                  return "(" + texto(c) + ")"; }))]] };
       if (!masProfundo || hondura(nuevo) >= hondura(masProfundo)) { masProfundo = nuevo; }
       return nuevo;
     }
