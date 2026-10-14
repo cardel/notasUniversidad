@@ -14,9 +14,10 @@ peor caso.
 
 Al terminar, el objetivo es poder resolver problemas sobre la lista, la pila y
 la cola enlazadas dando el costo en tiempo y en espacio de cada solución;
-explicar cómo `particionar` deja el pivote en su lugar definitivo, siguiendo
-las zonas del arreglo; construir quicksort sobre `particionar` y justificar su costo
-en el caso balanceado y en el peor caso; y comparar insertion sort, merge sort y
+explicar cómo `particionar` deja el pivote en su lugar definitivo, con las dos
+colas que viven dentro del arreglo; construir quicksort sobre `particionar`, con
+recursión y con una pila de rangos, y justificar su costo en tiempo y en
+espacio; y comparar insertion sort, merge sort y
 quicksort con comparaciones contadas sobre la misma entrada.
 
 ## Diapositivas
@@ -195,42 +196,210 @@ El programa imprime `antes:   3 1 4 1 5` y `despues: 5 1 4 1 3`.
 
 ## Pagar al partir: quicksort
 
-### Merge sort paga al combinar
+### ¿En qué casilla queda el 5?
 
-Merge sort parte la lista por la mitad sin mirar los datos, y todo el trabajo
-queda para el final: mezclar dos mitades ordenadas recorre las dos. ¿Y si se
-paga al partir? Si al dividir se deja a la izquierda todo lo pequeño y a la
-derecha todo lo grande, después de ordenar cada lado no queda nada por hacer:
-cada elemento de la izquierda es menor o igual que cada elemento de la derecha,
-y el arreglo completo ya está ordenado.
+!!! question "Pregunta"
+
+    En $\langle 7, 2, 9, 4, 1, 5 \rangle$, ¿en qué casilla queda el 5 cuando
+    el arreglo esté ordenado? ¿Hace falta ordenarlo para saberlo?
+
+??? success "Respuesta"
+
+    Se cuentan los valores menores o iguales que 5, sin contarlo a él: son
+    tres, el 2, el 4 y el 1. Con el arreglo ordenado el 5 tiene tres valores a
+    su izquierda, así que queda en la casilla 3.
+
+    | 0 | 1 | 2 | 3 | 4 | 5 |
+    |:---:|:---:|:---:|:---:|:---:|:---:|
+    | 2 | 4 | 1 | **5** | 9 | 7 |
+
+    No hace falta ordenar. Basta separar: los menores o iguales a la
+    izquierda, en cualquier orden, después el 5 y al final los mayores. Con
+    eso el 5 ya está en la casilla que ocupará en el arreglo ordenado.
+
+### Pagar al partir
+
+Merge sort parte por la mitad sin mirar los datos y paga al final: mezclar dos
+mitades ordenadas las recorre enteras. Si al partir ya quedan a la izquierda
+los menores o iguales y a la derecha los mayores, ordenar cada lado deja todo
+el arreglo ordenado y combinar no cuesta nada.
 
 Quicksort sigue los tres pasos de dividir, conquistar y combinar sobre un
 arreglo $a[\mathit{ini}..\mathit{fin}]$ (CLRS, §7.1):
 
-- **Dividir**: escoger un pivote $x$ y reordenar de modo que queden primero los
+- **Dividir**: escoger un pivote $x$ y reordenar para que queden primero los
   menores o iguales que $x$, después $x$ y al final los mayores. El pivote
   queda en una posición $q$.
 - **Conquistar**: ordenar $a[\mathit{ini}..q-1]$ y $a[q+1..\mathit{fin}]$ con
   el mismo procedimiento.
 - **Combinar**: no hay nada que hacer.
 
-### Partir alrededor de un valor, sin auxiliar
+### ¿Entendimos el problema?
 
-Partir una cola alrededor de un valor pide una cola auxiliar. Sobre el arreglo
-se puede hacer en el sitio: el ciclo mantiene cuatro zonas y las hace crecer
-moviendo dos índices.
+Partir es el paso que hace todo el trabajo. Se llama `particionar`.
+
+- **Entradas**: el arreglo `a` y dos índices `ini` $\leq$ `fin`. El pivote es
+  el último del rango: $x = a[\mathit{fin}]$.
+- **Salida**: una posición $q$ y el arreglo reordenado: de `ini` a $q-1$ los
+  menores o iguales que $x$, en $q$ el pivote y de $q+1$ a `fin` los mayores.
+  Dentro de cada lado no se pide orden.
+
+!!! example "Ejemplo"
+
+    Con $\langle 7, 2, 9, 4, 1, 5 \rangle$, $\mathit{ini} = 0$ y
+    $\mathit{fin} = 5$: $x = 5$ y $q = 3$. Sirven $\langle 2, 4, 1, 5, 9, 7 \rangle$ y también
+    $\langle 1, 4, 2, 5, 7, 9 \rangle$. Lo único que no puede pasar es que un
+    mayor que 5 quede a la izquierda del pivote.
+
+### Primera idea: dos colas
+
+Con las colas de nodos ya construidas, partir es repartir:
+
+- Recorrer $a[\mathit{ini}..\mathit{fin}-1]$ y encolar cada valor en
+  `menores` si es $\leq x$, o en `mayores` si no.
+- Reescribir el arreglo desde `ini`: primero lo que sale de `menores`, después
+  $x$ y al final lo que sale de `mayores`. El pivote queda en
+  $q = \mathit{ini} + {}$`menores.tamano()`.
+
+Sobre $\langle 7, 2, 9, 4, 1, 5 \rangle$, con $x = 5$, el arreglo no cambia
+mientras se reparte; solo crecen las colas, con el frente a la izquierda:
+
+| Llega | Va a | `menores` | `mayores` |
+|:---:|---|---|---|
+| 7 | `mayores`, porque es mayor que 5 | vacía | 7 |
+| 2 | `menores` | 2 | 7 |
+| 9 | `mayores`, detrás del 7 | 2 | 7 9 |
+| 4 | `menores` | 2 4 | 7 9 |
+| 1 | `menores`; `j` llegó a `fin` | 2 4 1 | 7 9 |
+
+Después se reescribe desde `ini`: se vacía `menores`, va el pivote y se vacía
+`mayores`. El arreglo queda $\langle 2, 4, 1, \mathbf{5}, 7, 9 \rangle$, las
+dos colas vacías y $q = 3$.
+
+| | Costo con $n = \mathit{fin} - \mathit{ini} + 1$ | Por qué |
+|---|---|---|
+| tiempo | $\Theta(n)$ | cada valor se encola y se desencola una vez |
+| espacio aparte | $\Theta(n)$ | un nodo por valor, repartidos en las dos colas |
+
+El tiempo no se puede bajar: hay que mirar cada valor. El espacio sí molesta,
+porque los valores ya caben en el arreglo.
+
+!!! question "Pregunta"
+
+    ¿Se puede partir sin pedir memoria, moviendo los valores dentro del mismo
+    arreglo?
+
+??? success "Respuesta"
+
+    Sí. Las dos colas caben en el mismo arreglo, una al lado de la otra, y dos
+    índices marcan dónde termina cada una.
+
+### Las dos colas dentro del arreglo
 
 | $a[\mathit{ini}..i]$ | $a[i+1..j-1]$ | $a[j..\mathit{fin}-1]$ | $a[\mathit{fin}]$ |
 |:---:|:---:|:---:|:---:|
 | $\leq x$ | $> x$ | sin revisar | $x$ |
+| menores: crece por su final | cola de mayores: frente en `i+1`, final en `j-1` | | pivote |
 
-- El pivote es el último: $x = a[\mathit{fin}]$.
-- `j` recorre de izquierda a derecha y revisa un elemento por vuelta.
-- `i` marca el final de la zona de los menores o iguales.
-- Al terminar, el pivote se cambia con el primero de los mayores y queda entre
-  las dos zonas.
+- `j` recorre de izquierda a derecha y revisa un valor por vuelta.
+- Llega un mayor que $x$: ya está pegado al final de la cola de mayores. Entra
+  solo con avanzar `j`.
+- Llega un menor o igual: el frente de los mayores, $a[i+1]$, sale y pasa al
+  final, a la casilla `j`; el menor ocupa su puesto, que ahora es el final de
+  los menores. Ese movimiento es `intercambiar(a, i + 1, j)`.
 
-### `particionar` (CLRS, §7.1)
+Con $x = 5$ en $\langle 2, 1, 8, 6, 7, 3, 5 \rangle$, ya revisados el 2, el 1,
+el 8 y el 6. Entre corchetes los menores o iguales, en negrita la cola de
+mayores y después de la barra el pivote:
+
+| `i` | `j` | $a[0..6]$ | Qué pasa |
+|---:|---:|---|---|
+| 1 | 4 | [2 1] **8 6** 7 3 \| 5 | llega el 7, mayor: avanza `j` |
+| 1 | 5 | [2 1] **8 6 7** 3 \| 5 | llega el 3, menor: sale el 8 del frente y el 3 toma su puesto |
+| 2 | 6 | [2 1 3] **6 7 8** \| 5 | los mayores quedan 6, 7, 8 |
+
+Al terminar, el pivote entra como un menor más: `intercambiar(a, i + 1, fin)`
+lo pone en el puesto del frente de los mayores, y ese frente pasa a la última
+casilla.
+
+### El ejemplo más pequeño: $\langle 3, 1, 2 \rangle$
+
+$\mathit{ini} = 0$, $\mathit{fin} = 2$ y el pivote es $x = 2$.
+
+| `i` | `j` | $a[0..2]$ | Qué pasa |
+|---:|---:|---|---|
+| $-1$ | 0 | 3 1 \| 2 | al empezar las dos colas están vacías |
+| $-1$ | 1 | **3** 1 \| 2 | llega el 3, mayor que 2: entra a la cola de mayores y solo avanza `j` |
+| 0 | 2 | [1] **3** \| 2 | llega el 1: el 3 sale del frente y pasa al final; el 1 toma su puesto con `intercambiar(a, 0, 1)` |
+| | | [1] 2 **3** | `j` llegó a `fin`: el pivote entra como un menor con `intercambiar(a, 1, 2)` y $q = 1$ |
+
+### Paso a paso con $\langle 7, 2, 9, 4, 1, 5 \rangle$
+
+$\mathit{ini} = 0$, $\mathit{fin} = 5$, $x = 5$. Cada fila de la tabla es una
+vuelta del ciclo, y la última columna muestra el arreglo después de esa vuelta,
+con las mismas marcas: corchetes para los menores o iguales, negrita para la
+cola de mayores y la barra antes del pivote.
+
+| `i` | `j` | $a[j]$ | $\leq 5$ | Qué pasa | $a[0..5]$ después |
+|---:|---:|---:|:---:|---|---|
+| $-1$ | 0 | 7 | no | el 7 entra al final de los mayores | **7** 2 9 4 1 \| 5 |
+
+!!! question "Pregunta"
+
+    Llega el 2, menor o igual que 5. ¿Quién sale del frente de los mayores y a
+    qué casilla va?
+
+??? success "Respuesta"
+
+    Sale el 7, el único de la cola, y pasa a la casilla 1; el 2 queda en la 0,
+    al final de los menores.
+
+| `i` | `j` | $a[j]$ | $\leq 5$ | Qué pasa | $a[0..5]$ después |
+|---:|---:|---:|:---:|---|---|
+| $-1$ | 1 | 2 | sí | sale el 7: `intercambiar(a, 0, 1)` | [2] **7** 9 4 1 \| 5 |
+| 0 | 2 | 9 | no | el 9 entra al final de los mayores | [2] **7 9** 4 1 \| 5 |
+| 0 | 3 | 4 | sí | sale el 7: `intercambiar(a, 1, 3)` | [2 4] **9 7** 1 \| 5 |
+| 1 | 4 | 1 | sí | sale el 9: `intercambiar(a, 2, 4)` | [2 4 1] **7 9** \| 5 |
+
+En la fila de $j = 3$ la cola de mayores era 7, 9: el 7 salió del frente y
+quedó detrás del 9.
+
+!!! question "Pregunta"
+
+    `j` llegó a `fin` y no queda nada sin revisar. ¿En qué casilla va el pivote
+    y a dónde va el valor que estaba ahí?
+
+??? success "Respuesta"
+
+    En la casilla $i + 1 = 3$, el frente de los mayores. El 7 sale y pasa a la
+    casilla 5: el pivote entró como un menor más.
+
+    | `i` | `j` | $a[j]$ | $\leq 5$ | Qué pasa | $a[0..5]$ después |
+    |---:|---:|---:|:---:|---|---|
+    | 2 | 5 | | | $j = \mathit{fin}$: `intercambiar(a, 3, 5)`, $q = 3$ | [2 4 1] 5 **9 7** |
+
+Los dos lados no quedan ordenados, pero el 5 ya está en la casilla que ocupará
+al final. Es la salida de `quicksort.cpp`: `particionar: 2 4 1 5 9 7` y
+`el pivote quedo en 3`.
+
+### El diseño en pseudocódigo
+
+```text
+particionar(a, ini, fin):
+  x <- a[fin]
+  i <- ini - 1               // final de los menores
+  para j desde ini hasta fin - 1:
+    si a[j] <= x:
+      i <- i + 1
+      intercambiar a[i] y a[j]    // sale el frente
+  intercambiar a[i + 1] y a[fin]  // entra el pivote
+  devolver i + 1
+```
+
+Un mayor no se mueve: entra a su cola cuando avanza `j`. El pseudocódigo hace
+un intercambio por cada menor o igual, y uno más al final para el pivote.
+
+### `particionar` en C++ (CLRS, §7.1)
 
 De [quicksort.cpp](./codigo/quicksort.cpp):
 
@@ -241,6 +410,13 @@ void intercambiar(Elemento a[], int p, int q) {
   a[q] = temp;
 }
 ```
+
+`intercambiar` hace tres asignaciones y usa una variable: cuesta $\Theta(1)$ en
+tiempo y en espacio.
+
+`particionar` es el pseudocódigo línea por línea, con el `para` escrito como
+`while`. Las colas de la primera idea ya no aparecen como objetos: viven en el
+arreglo, entre `ini` e `i` y entre `i+1` y `j-1`.
 
 ```cpp
 // Parte a[ini..fin] alrededor de x = a[fin] y
@@ -261,72 +437,6 @@ int particionar(Elemento a[], int ini, int fin) {
 }
 ```
 
-Un elemento mayor que $x$ no se mueve: la zona de los mayores crece sola cuando
-avanza `j`. Un elemento menor o igual se cambia con el primero de los mayores,
-y las dos zonas avanzan una casilla.
-
-### La traza con $\langle 7, 2, 9, 4, 1, 5 \rangle$
-
-$\mathit{ini} = 0$, $\mathit{fin} = 5$, $x = 5$. Cada fila es el estado al
-evaluar la condición del `while`.
-
-| `i` | `j` | $a[0..5]$ | $a[j] \leq 5$ | Qué pasa |
-|---:|---:|---|---|---|
-| $-1$ | 0 | 7 2 9 4 1 5 | no | solo avanza `j` |
-| $-1$ | 1 | 7 2 9 4 1 5 | sí | `i` pasa a 0; cambia $a[0]$ y $a[1]$ |
-| 0 | 2 | 2 7 9 4 1 5 | no | solo avanza `j` |
-| 0 | 3 | 2 7 9 4 1 5 | sí | `i` pasa a 1; cambia $a[1]$ y $a[3]$ |
-| 1 | 4 | 2 4 9 7 1 5 | sí | `i` pasa a 2; cambia $a[2]$ y $a[4]$ |
-| 2 | 5 | 2 4 1 7 9 5 | | la condición falla: $j = \mathit{fin}$ |
-
-Al salir se cambia $a[3]$ con $a[5]$: queda
-$\langle 2, 4, 1, \mathbf{5}, 9, 7 \rangle$ y la función devuelve $q = 3$. Los
-dos lados no están ordenados, pero el 5 ya está en la casilla que ocupará al
-final. Es la salida de `quicksort.cpp`: `particionar: 2 4 1 5 9 7` y
-`el pivote quedo en 3`.
-
-### Lo que mantiene el ciclo
-
-Cada vez que se revisa la condición del `while`, el arreglo está repartido en
-las cuatro zonas de la tabla:
-
-- de `ini` a `i`, los menores o iguales que $x$;
-- de `i+1` a `j-1`, los mayores que $x$;
-- de `j` a `fin-1`, los que faltan por revisar;
-- en `fin`, el pivote, que no se mueve durante el ciclo.
-
-Una vuelta revisa $a[j]$. Si es mayor que $x$, ya está al final de la zona de
-los mayores y basta avanzar `j`. Si es menor o igual, `i` avanza y el cambio lo
-lleva al final de los menores; el primero de los mayores pasa al final de su
-zona.
-
-En la traza con $\langle 7, 2, 9, 4, 1, 5 \rangle$, en la fila $i = 1$, $j = 4$
-el arreglo es $2\ 4 \mid 9\ 7 \mid 1 \mid 5$: los menores o iguales, los
-mayores, lo que falta y el pivote.
-
-!!! note "Al salir"
-
-    Cuando `j` llega a `fin` ya no queda nada sin revisar. El cambio de
-    $a[i+1]$ con $a[\mathit{fin}]$ pone el pivote entre las dos zonas: a su
-    izquierda todo es menor o igual, a su derecha todo es mayor, y esa casilla
-    es la que ocupará en el arreglo ordenado.
-
-### Paso a paso sobre el arreglo
-
-La misma partición, con las zonas marcadas: entre corchetes los menores o
-iguales que $x = 5$, en negrita los mayores, sin marca lo que falta por revisar
-y al final el pivote, separado con una barra.
-
-| Momento | `i` | `j` | $a[0..5]$ | Qué pasa |
-|---|---:|---:|---|---|
-| al empezar | $-1$ | 0 | 7 2 9 4 1 \| 5 | todo sin revisar; $a[0] = 7 > 5$, solo avanza `j` |
-| tras 1 vuelta | $-1$ | 1 | **7** 2 9 4 1 \| 5 | el 7 forma la zona de mayores; $a[1] = 2 \leq 5$, `i` pasa a 0 y se cambian $a[0]$ y $a[1]$ |
-| tras 2 vueltas | 0 | 2 | [2] **7** 9 4 1 \| 5 | el 2 entró a los menores; $a[2] = 9 > 5$, solo avanza `j` |
-| tras 3 vueltas | 0 | 3 | [2] **7 9** 4 1 \| 5 | los mayores son 7 y 9; $a[3] = 4 \leq 5$, `i` pasa a 1 y se cambian $a[1]$ y $a[3]$ |
-| tras 4 vueltas | 1 | 4 | [2 4] **9 7** 1 \| 5 | el 4 se unió al 2 y el 7 pasó al final de los mayores; $a[4] = 1 \leq 5$, `i` pasa a 2 y se cambian $a[2]$ y $a[4]$ |
-| tras 5 vueltas | 2 | 5 | [2 4 1] **7 9** \| 5 | `j` llegó a `fin`: no queda nada sin revisar; se cambian $a[3]$ y $a[5]$ |
-| al salir | | | [2 4 1] 5 **9 7** | el pivote quedó en la casilla 3, entre las dos zonas, y `particionar` devuelve $q = 3$ |
-
 ### `quicksort`
 
 ```cpp
@@ -344,13 +454,144 @@ no entra al `if`: ya está ordenado. Sobre
 $\langle 6, 2, 9, 4, 1, 7, 3, 8 \rangle$, `quicksort.cpp` imprime
 `quicksort:   1 2 3 4 6 7 8 9`.
 
-!!! note "Por qué queda ordenado"
+### El árbol de llamadas sobre $\langle 7, 2, 9, 4, 1, 5 \rangle$
 
-    Cada llamada a `particionar` deja su pivote en la casilla que ocupará al
-    final. Las dos llamadas siguientes trabajan cada una de su lado y no lo
-    cruzan: nada de la izquierda tiene que pasar a la derecha. Cuando los
-    rangos llegan a cero o un elemento, todos los valores ya fueron pivote o
-    quedaron solos en su casilla.
+Cada nivel del árbol reúne las llamadas de la misma profundidad. La última
+columna es el arreglo al terminar el nivel; en negrita, los valores que ya
+quedaron fijos en su casilla.
+
+| Nivel | Llamadas | Qué queda fijo | Arreglo |
+|---:|---|---|---|
+| 0 | $[0..5]$ `7 2 9 4 1 5`, $q = 3$ | el 5, en la casilla 3 | 2 4 1 **5** 9 7 |
+| 1 | $[0..2]$ `2 4 1`, $q = 0$; $[4..5]$ `9 7`, $q = 4$ | el 1 y el 7 | **1** 4 2 **5 7** 9 |
+| 2 | $[0..-1]$ vacío; $[1..2]$ `4 2`, $q = 1$; $[4..3]$ vacío; $[5..5]$ `9`, un elemento | el 2; el 9 queda solo en su casilla | **1 2** 4 **5 7 9** |
+| 3 | $[1..0]$ vacío; $[2..2]$ `4`, un elemento | el 4, solo en su casilla | **1 2 4 5 7 9** |
+
+Los rangos vacíos y los de un elemento no entran al `if`. Al terminar el nivel 3
+todo el arreglo está ordenado.
+
+### Las llamadas pendientes forman una pila
+
+Mientras se ordena la izquierda, la derecha espera como un rango
+$[\mathit{ini}, \mathit{fin}]$, y el último que entra es el primero que se
+atiende: una pila. Cada fila saca un rango; si tiene dos o más elementos, lo
+parte y apila los dos lados, el izquierdo encima.
+
+| Saca | $q$ | Arreglo | Pila después (tope a la izquierda) |
+|---|---|---|---|
+| | | 7 2 9 4 1 5 | $[0,5]$ |
+| $[0,5]$ | 3 | 2 4 1 5 9 7 | $[0,2]\ [4,5]$ |
+| $[0,2]$ | 0 | 1 4 2 5 9 7 | $[0,-1]\ [1,2]\ [4,5]$ |
+| $[0,-1]$ | vacío | | $[1,2]\ [4,5]$ |
+| $[1,2]$ | 1 | 1 2 4 5 9 7 | $[1,0]\ [2,2]\ [4,5]$ |
+| $[1,0]$ | vacío | | $[2,2]\ [4,5]$ |
+| $[2,2]$ | uno | | $[4,5]$ |
+| $[4,5]$ | 4 | 1 2 4 5 7 9 | $[4,3]\ [5,5]$ |
+| $[4,3]$ | vacío | | $[5,5]$ |
+| $[5,5]$ | uno | | vacía |
+
+Los rangos salen en el orden de las llamadas de `quicksort`, y la pila nunca
+guarda más de tres.
+
+### `quicksortPila`: la misma pila, escrita a mano
+
+De [quicksort_pila.cpp](./codigo/quicksort_pila.cpp):
+
+```cpp
+// Cada rango pendiente [p, r] ocupa dos enteros en la pila:
+// se apila r y despues p, asi que p sale primero.
+void quicksortPila(Elemento a[], int ini, int fin) {
+  Pila pendientes;
+  pendientes.apilar(fin);
+  pendientes.apilar(ini);
+  while (!pendientes.vacia()) {
+    int p = pendientes.tope();
+    pendientes.desapilar();
+    int r = pendientes.tope();
+    pendientes.desapilar();
+    if (p < r) {
+      int q = particionar(a, p, r);
+      pendientes.apilar(r);
+      pendientes.apilar(q + 1);
+      pendientes.apilar(q - 1);
+      pendientes.apilar(p);
+    }
+  }
+}
+```
+
+Usa la pila de nodos de la sesión (`#include "pila_nodos.h"`) y guarda cada
+rango como dos enteros: se apila `fin` y después `ini`, así que `ini` sale
+primero. El `if` es el mismo de `quicksort`; las dos llamadas recursivas se
+cambiaron por dos rangos apilados. El lado derecho se apila primero para que el
+izquierdo quede encima y se atienda antes, como en la versión recursiva.
+
+Sobre los mismos arreglos, `quicksort_pila.cpp` imprime
+`quicksortPila: 1 2 4 5 7 9` y `quicksortPila: 1 2 3 4 6 7 8 9`.
+
+La diferencia está en dónde vive la pila: los nodos se piden con `new` y no
+ocupan registros en la pila de llamadas del programa.
+
+### Lo que cuesta cada pieza
+
+| Pieza | Tiempo | Espacio aparte | Por qué |
+|---|---|---|---|
+| `intercambiar` | $\Theta(1)$ | $\Theta(1)$ | tres asignaciones y `temp` |
+| partir con dos colas | $\Theta(n)$ | $\Theta(n)$ | cada valor entra y sale de una cola; un nodo por valor |
+| `particionar` | $\Theta(n)$ | $\Theta(1)$ | una vuelta por casilla; las colas viven en el arreglo |
+| `apilar`, `desapilar` | $\Theta(1)$ | un nodo | se trabaja solo en la cima |
+| `quicksort` | $\Theta(n \log n)$ a $\Theta(n^2)$ | $\Theta(\log n)$ a $\Theta(n)$ | depende de dónde caiga $q$; el espacio es la pila de llamadas |
+| `quicksortPila` | $\Theta(n \log n)$ a $\Theta(n^2)$ | $\Theta(\log n)$ a $\Theta(n)$ | las mismas particiones; el espacio son los rangos pendientes |
+
+Los dos extremos de `quicksort` salen de dónde cae el pivote, y la sección
+siguiente los calcula. La profundidad de la pila, de llamadas o de rangos, es
+la de [La pila de llamadas](#la-pila-de-llamadas).
+
+### Partir otros arreglos
+
+!!! question "Pregunta"
+
+    `particionar` sobre $\langle 6, 8, 2, 9, 3 \rangle$ con $\mathit{ini} = 0$
+    y $\mathit{fin} = 4$: ¿qué $q$ devuelve y cómo queda el arreglo?
+
+??? success "Respuesta"
+
+    Con $x = 3$, $q = 1$ y queda $\langle 2, 3, 6, 9, 8 \rangle$. Solo el 2 es
+    menor o igual que 3. La cola de mayores pasa por 6, 8; luego 8, 6; luego
+    8, 6, 9. Al final el pivote saca al 8 del frente.
+
+!!! question "Pregunta"
+
+    `particionar` sobre $\langle 1, 9, 6, 2, 7 \rangle$ con $\mathit{ini} = 0$
+    y $\mathit{fin} = 4$: ¿qué $q$ devuelve y cómo queda el arreglo?
+
+??? success "Respuesta"
+
+    Con $x = 7$, $q = 3$ y queda $\langle 1, 6, 2, 7, 9 \rangle$. El 1 llega
+    con la cola de mayores vacía y se intercambia consigo mismo. Después el 9
+    sale del frente dos veces: con el 6 y con el 2.
+
+!!! question "Pregunta"
+
+    `particionar` sobre $\langle 5, 3, 8, 1 \rangle$ con $\mathit{ini} = 0$ y
+    $\mathit{fin} = 3$: ¿qué $q$ devuelve y cómo queda el arreglo?
+
+??? success "Respuesta"
+
+    Con $x = 1$, $q = 0$ y queda $\langle 1, 3, 8, 5 \rangle$. Nadie es menor
+    o igual que 1: `i` se queda en $-1$ y el pivote toma la casilla 0. Los
+    mayores 5, 3, 8 quedan 3, 8, 5.
+
+### Por qué queda ordenado
+
+Cada llamada a `particionar` deja su pivote en la casilla que ocupará en el
+arreglo ordenado. Las dos llamadas que siguen trabajan cada una de su lado y
+nunca se cruzan: nada de la izquierda tiene que pasar a la derecha. Cuando los
+rangos llegan a cero o un elemento, cada valor ya fue pivote o quedó solo en su
+casilla.
+
+En el árbol de $\langle 7, 2, 9, 4, 1, 5 \rangle$ se ve igual: cada nivel fija
+sus pivotes, y ninguno se vuelve a mover.
 
 ## Lo que cuesta quicksort
 
@@ -453,6 +694,7 @@ es la profundidad máxima de la recursión.
 |---|---|---|
 | balanceado | $\Theta(\log n)$ | cada nivel parte el rango por la mitad |
 | ya ordenado | $\Theta(n)$ | cada nivel quita un elemento |
+| `quicksortPila` | la misma | los rangos van en nodos pedidos con `new` |
 
 !!! warning "Lo que se ve al correrlo"
 
@@ -614,6 +856,13 @@ la sesión.
   $\Theta(n)$ a $\Theta(n^2)$.
 - Invertir una cola con una pila auxiliar cuesta $\Theta(n)$ en tiempo y
   $\Theta(n)$ de espacio aparte.
+- Partir con dos colas de nodos funciona, pero pide $\Theta(n)$ de
+  memoria aparte. Las dos colas caben dentro del arreglo: cuando llega un
+  menor o igual al pivote, el frente de la cola de mayores, $a[i+1]$,
+  pasa al final con `intercambiar(a, i + 1, j)`.
+- Las llamadas pendientes de quicksort forman una pila de rangos.
+  `quicksortPila` la escribe con la pila de nodos y da el mismo
+  resultado; su altura es el espacio aparte del algoritmo.
 - `particionar` toma $x = a[\mathit{fin}]$ y reparte el arreglo en cuatro
   zonas: los menores o iguales que $x$, los mayores, lo que falta por revisar y
   el pivote. Al salir, el pivote queda entre las dos primeras. Hace $n - 1$
@@ -764,6 +1013,9 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
 - [quicksort.cpp](./codigo/quicksort.cpp) — `particionar` y `quicksort`.
   Imprime `particionar: 2 4 1 5 9 7`, `el pivote quedo en 3` y
   `quicksort:   1 2 3 4 6 7 8 9`.
+- [quicksort_pila.cpp](./codigo/quicksort_pila.cpp): `quicksortPila`, con los
+  rangos pendientes en la pila de nodos. Imprime `quicksortPila: 1 2 4 5 7 9`
+  y `quicksortPila: 1 2 3 4 6 7 8 9`.
 - [comparar.cpp](./codigo/comparar.cpp) — comparaciones de insertion sort,
   merge sort y quicksort sobre el mezclado, el ordenado y el al revés; imprime
   la tabla de la sección «Los tres algoritmos sobre la misma entrada».
