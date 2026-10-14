@@ -1,5 +1,6 @@
-// UVa 10905 - Children's Game: p va antes que q si p seguido de q
-// forma un numero mayor que q seguido de p. Se ordena con quicksort.
+// UVa 10905 - Children's Game: el numero p puede ir antes que q si
+// p pegado con q da un numero mayor o igual que q pegado con p.
+// Se ordenan los numeros con quicksort usando esa comparacion.
 #include <cstdio>
 #include <cstring>
 
@@ -21,13 +22,13 @@ int copiar(char destino[], int desde, const char origen[]) {
   return desde + k;
 }
 
-// Verdadero si el numero p va estrictamente antes que el numero q.
-bool vaAntes(int p, int q) {
+// Verdadero si el numero p puede ir antes que el numero q.
+bool puedeIrAntes(int p, int q) {
   char pq[2 * MAX_LARGO + 1];
   char qp[2 * MAX_LARGO + 1];
   copiar(pq, copiar(pq, 0, numero[p]), numero[q]);
   copiar(qp, copiar(qp, 0, numero[q]), numero[p]);
-  return strcmp(pq, qp) > 0;
+  return strcmp(pq, qp) >= 0;
 }
 
 void intercambiar(int a[], int p, int q) {
@@ -36,12 +37,14 @@ void intercambiar(int a[], int p, int q) {
   a[q] = temp;
 }
 
+// Igual que en clase, pero en lugar de a[j] <= x se pregunta
+// si el numero a[j] puede ir antes que el pivote x.
 int particionar(int a[], int ini, int fin) {
   int x = a[fin];
   int i = ini - 1;
   int j = ini;
   while (j < fin) {
-    if (!vaAntes(x, a[j])) {
+    if (puedeIrAntes(a[j], x)) {
       i = i + 1;
       intercambiar(a, i, j);
     }
@@ -66,10 +69,10 @@ int main() {
     int i = 0;
     while (i < n) {
       scanf("%s", numero[i]);
-      orden[i] = i;
+      orden[i] = i;               // al principio, en el orden de llegada
       i = i + 1;
     }
-    quicksort(orden, 0, n - 1);
+    quicksort(orden, 0, n - 1);   // se ordenan los indices, no los textos
     i = 0;
     while (i < n) {
       printf("%s", numero[orden[i]]);
