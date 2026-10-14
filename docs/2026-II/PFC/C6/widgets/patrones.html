@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>patrones: qué caso del match corresponde con la lista</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  pre.fuente {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86rem; margin: 0.4rem 0 0.8rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+  }
+  #rotulo-opciones { font-weight: 600; margin: 0.2rem 0 0; }
+  #opciones { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem; }
+  #opciones button {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.84rem; text-align: left; white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #historia { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.2rem 0 0.9rem; }
+  .resuelta {
+    display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: baseline;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.82rem; padding: 0.2rem 0.45rem;
+    border-left: 3px solid var(--verde); background: var(--verde-suave);
+    border-radius: 6px; overflow-wrap: anywhere;
+  }
+  .resuelta .llamada { color: var(--tinta); font-weight: 700; }
+  .resuelta .salida { color: var(--verde); }
+  #carta-tres .opciones { flex-direction: column; align-items: flex-start; }
+  #carta-tres .opciones button { text-align: left; }
+  #btn-seguir { margin-top: 0.7rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>patrones</code>: qué caso del <code>match</code> corresponde con la lista</h1>
+  <p class="intro">Un patrón de lista describe una forma, no un contenido:
+  <code>Nil</code> es la lista sin cabeza y <code>x :: xs</code> es la lista que
+  tiene una. A partir de esos dos se escriben patrones más estrictos, que fijan
+  cuántos elementos vienen antes del <code>Nil</code> final. Abajo hay cinco
+  listas, una por ronda. Para cada una diga cuál de los cuatro casos de
+  <code>describir</code> es el que corre.</p>
+
+  <div class="carta">
+    <h2>1. Los dos patrones básicos</h2>
+    <p style="margin-top:0"><code>Nil</code> corresponde con la lista vacía y es
+    el caso base; <code>x :: xs</code> corresponde con cualquier lista que tenga
+    cabeza, y liga la cabeza en <code>x</code> y la cola en <code>xs</code>. Con
+    esos dos alcanza para recorrer una lista completa:</p>
+    <pre class="fuente">def sumar(lst: List[Int]): Int = lst match {
+  case Nil     =&gt; 0
+  case x :: xs =&gt; x + sumar(xs)
+}
+
+sumar(List(1, 2, 3))  // 6</pre>
+    <h2>2. Cuatro casos sobre la misma lista</h2>
+    <p style="margin-top:0">Los dos del medio son más estrictos: piden que la
+    cola sea <code>Nil</code> después de uno o de dos elementos. El contador de
+    cada línea sube cuando esa línea queda asignada a una ronda.</p>
+    <div class="codigo" id="panel-codigo"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Una lista por ronda</h2>
+    <div id="historia"></div>
+    <p id="rotulo-opciones"></p>
+    <div id="opciones"></div>
+    <div id="veredicto" class="veredicto"></div>
+    <button class="primario" id="btn-seguir">Siguiente lista</button>
+    <div class="progreso" id="marcador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-tres">
+    <h2>4. ¿Qué pasa si <code>case x :: xs</code> se escribe de primero?</h2>
+    <div class="opciones">
+      <button data-razon="ok">Las cuatro listas no vacías caen en ese caso y los dos patrones de longitud fija quedan sin alcanzarse.</button>
+      <button data-razon="especifico" data-msg="El match no compara qué tan específico es cada patrón: baja por los casos en el orden en que están escritos y para en el primero que corresponde. Con x :: xs arriba, es el primero para toda lista con cabeza.">Nada cambia: el <code>match</code> se queda con el caso más específico de los que corresponden.</button>
+      <button data-razon="compila" data-msg="El match no exige que los casos sean disjuntos; x :: xs corresponde con lo mismo que x :: Nil y con más. Reordenarlos cambia qué cuerpo corre, no si el programa corre.">El <code>match</code> deja de funcionar porque hay dos casos que corresponden con la misma lista.</button>
+      <button data-razon="vacia" data-msg="List() no corresponde con x :: xs, y es justamente la única cuya respuesta no cambia: el match sigue bajando hasta case Nil. Las que cambian son List(42) y List(1, 2), que dejan de llegar a su caso de longitud fija.">Solo cambia la respuesta de <code>List()</code>, que es la única que no corresponde con <code>x :: xs</code>.</button>
+    </div>
+    <div id="veredicto-tres" class="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>5. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Los cuatro patrones no son cuatro preguntas que el
+    <code>match</code> evalúe para escoger la mejor. Son una lista ordenada: el
+    valor se compara con el primero, y si corresponde, ahí termina. De las cinco
+    listas de arriba, tres corresponden con dos o más casos a la vez, y en todas
+    el que corrió fue el de más arriba. Por eso los patrones de longitud fija van
+    antes que <code>x :: xs</code>, y por eso <code>Nil</code> suele ir de
+    primero: es el único que no compite con nadie.</p>
+    <p>Lo que cada patrón liga también viene de su forma.
+    <code>case x :: y :: Nil</code> da nombre a dos elementos y exige que no haya
+    un tercero; <code>case x :: xs</code> da nombre a la cabeza y agrupa todo lo
+    demás en una lista, sin decir cuántos elementos tiene. De ahí que el cuerpo
+    del último caso pueda llamar <code>xs.length</code> mientras los otros tres
+    ya saben la longitud sin consultarla.</p>
+    <p>El mismo nombre no puede aparecer dos veces en un patrón:
+    <code>case x :: x :: xs</code> no es válido. Comparar los dos primeros
+    elementos se escribe ligando nombres distintos y poniendo la comparación en
+    el cuerpo o en una guarda.</p>
+  </div>
+</div>
+<script src="patrones.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reversa: la concatenación que queda pendiente en cada marco</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #pila { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.8rem 0 0.2rem; min-height: 6rem; }
+  .marco {
+    display: flex; gap: 0.55rem; align-items: baseline; flex-wrap: wrap;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.84rem; padding: 0.3rem 0.55rem;
+    border: 1px solid var(--borde); border-left-width: 4px;
+    border-radius: 6px; background: #fff; overflow-wrap: anywhere;
+  }
+  .marco .prof {
+    flex: none; width: 1.3rem; text-align: center;
+    font-size: 0.72rem; font-weight: 700; color: var(--gris);
+    background: var(--codigo-fondo); border-radius: 4px;
+  }
+  .marco .llamada { font-weight: 700; }
+  .marco .cola-marco { color: var(--gris); }
+  .marco .cola-marco.resuelta { color: var(--verde); font-weight: 700; }
+  .marco.abierto { border-left-color: var(--borde); }
+  .marco.activo { border-left-color: var(--ambar); background: var(--ambar-suave); }
+  .marco.cerrado { border-left-color: var(--verde); background: var(--verde-suave); }
+  .acumulada {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.85rem; background: var(--codigo-fondo);
+    border: 1px solid var(--borde); border-radius: 8px;
+    padding: 0.4rem 0.6rem; margin-top: 0.5rem; overflow-wrap: anywhere;
+  }
+  .acumulada b { color: var(--azul); }
+  .leyenda { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--gris); margin-top: 0.4rem; }
+  .leyenda .m1 { color: var(--azul); }
+  .leyenda .m2 { color: #a86a12; }
+  .leyenda .m3 { color: var(--verde); }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>reversa</code>: la concatenación que queda pendiente en cada marco</h1>
+  <p class="intro">El caso recursivo escribe
+  <code>reversa(xs) ++ List(x)</code>, y el <code>++</code> no puede correr
+  hasta que la llamada de la izquierda devuelva. Así que cada marco anota su
+  <code>++ List(x)</code> y se queda esperando: la pila baja hasta
+  <code>Nil</code> con todas las concatenaciones sin resolver y las resuelve de
+  adentro hacia afuera al volver. Avance paso por paso y mire la pila: la
+  profundidad dice cuántos marcos están abiertos y la operación pendiente, qué
+  dejó cada uno sin hacer.</p>
+
+  <div class="carta">
+    <h2>1. La función y la pila</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="presets" id="presets"></div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span><b>■</b> marco abierto, esperando a la llamada de adentro</span>
+      <span class="m2"><b>■</b> marco que está corriendo</span>
+      <span class="m3"><b>■</b> marco que ya resolvió su concatenación</span>
+    </div>
+    <div id="pila"></div>
+    <div class="acumulada">última concatenación: <b id="concat">–</b></div>
+    <div class="acumulada">celdas que <code>++</code> ha recorrido:
+    <b id="celdas">0</b></div>
+    <div class="acumulada"><code>reversa(<span id="entrada">List()</span>)</code>
+    = <b id="salida">–</b></div>
+    <p class="nota">La línea 1 cuenta las llamadas, la 2 el caso base, la 3 los
+    marcos que salen con una concatenación pendiente y la 4 los que devuelven.
+    Con una lista de tres elementos hay cuatro llamadas, porque la última
+    recibe <code>Nil</code>.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La recursión es lineal: cada marco hace una sola
+    llamada y espera. Lo que la hace distinta de una suma recursiva es lo que
+    queda pendiente. En <code>x + sumar(xs)</code> la operación que espera es
+    una suma de enteros y cuesta lo mismo en cualquier marco. En
+    <code>reversa(xs) ++ List(x)</code> la operación que espera es una
+    concatenación, y <code>++</code> recorre la lista de su izquierda nodo por
+    nodo para copiarla. El marco más profundo concatena sobre
+    <code>List()</code> y no recorre nada; el más externo concatena sobre una
+    lista de <code>n - 1</code> elementos.</p>
+    <p>Sumar esos recorridos da <code>0 + 1 + ... + (n - 1)</code>, que es
+    <code>n(n - 1)/2</code>: el contador de celdas llega a 3 con tres
+    elementos y a 6 con cuatro. De ahí el <code>O(n²)</code> del deck, con una
+    lista que solo tiene <code>n</code> elementos. Cambie la lista con los
+    botones y compare el contador.</p>
+    <p>Las concatenaciones se resuelven en el orden inverso al que quedaron
+    anotadas, porque la pila se desarma por donde se armó. El primer elemento
+    de la lista original es el último que se concatena, y por eso termina de
+    último en el resultado. Bajar el costo pide que la operación pendiente no
+    recorra nada: un <code>::</code> en lugar de un <code>++</code>, con el
+    resultado parcial viajando hacia adentro en vez de armarse al volver.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reversa.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reduce y fold: elija el valor de cada expresión</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .expresion {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 1rem; font-weight: 700; color: var(--azul);
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.4rem 0.65rem; display: inline-block;
+    overflow-wrap: anywhere; max-width: 100%;
+  }
+  #enunciado { font-weight: 600; margin: 0.7rem 0 0; }
+  #opciones { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.6rem; }
+  #opciones button {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.9rem; min-width: 4.5rem;
+  }
+  #opciones button.larga {
+    font-family: inherit; font-size: 0.88rem; text-align: left;
+    white-space: normal; flex: 1 1 100%; min-width: 0;
+  }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  #resueltos { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.2rem; }
+  .resuelto {
+    display: flex; gap: 0.6rem; align-items: baseline; justify-content: space-between;
+    font-size: 0.82rem; color: var(--gris); border-bottom: 1px dotted var(--borde);
+    padding-bottom: 0.2rem;
+  }
+  .expr-chica { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+  .valor-chico { font-family: ui-monospace, monospace; color: var(--verde); font-weight: 700; flex: none; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  .codigo { max-height: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>reduce</code> y <code>fold</code>: elija el valor de cada expresión</h1>
+  <p class="intro">Las cuatro funciones combinan los elementos de una lista en
+  un solo valor con un operador binario. Se diferencian en dos cosas: hacia qué
+  lado asocian y si reciben un valor inicial. Abajo hay ocho expresiones, cada
+  una con cuatro valores posibles y uno solo correcto.</p>
+
+  <div class="carta">
+    <h2>1. Las cuatro definiciones</h2>
+    <div class="codigo" id="panel-codigo"></div>
+    <p class="nota">Las dos versiones <code>Left</code> pasan el acumulador
+    hacia adentro y devuelven el resultado de la llamada recursiva; las dos
+    versiones <code>Right</code> aplican el operador sobre lo que esa llamada
+    devuelve. Los dos <code>reduce</code> no tienen caso para
+    <code>Nil</code> que devuelva un valor.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Los ocho ítems</h2>
+    <div id="resueltos"></div>
+    <p style="margin:0.8rem 0 0"><span class="expresion" id="expresion"></span></p>
+    <p id="enunciado"></p>
+    <div id="opciones"></div>
+    <div class="veredicto" id="veredicto"></div>
+    <div class="progreso" id="marcador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La diferencia entre <code>reduce</code> y
+    <code>fold</code> está en de dónde sale el acumulador inicial.
+    <code>foldLeft</code> lo recibe como parámetro, y su primer caso,
+    <code>case Nil =&gt; z</code>, devuelve ese valor cuando no hay nada que
+    combinar: sobre la lista vacía responde <code>0</code> con la suma y
+    <code>1</code> con el producto, según lo que se haya escrito.
+    <code>reduceLeft</code> usa el primer elemento de la lista, como se ve en
+    <code>case x :: xs =&gt; (xs foldLeft x)(op)</code>, y por eso sobre
+    <code>Nil</code> no tiene con qué arrancar. El operador que recibe tampoco
+    se lo puede decir: <code>(T, T) =&gt; T</code> no trae el neutro de la
+    operación. La definición <code>(0 :: xs).reduceLeft(_ + _)</code> resuelve
+    eso metiendo el neutro como un elemento más.</p>
+    <p>La asociatividad es la otra diferencia, y se lee en qué lado del operador
+    queda el resultado de la llamada recursiva. En <code>foldLeft</code> el
+    acumulador viaja por el primer parámetro, <code>op(z, x)</code>, así que la
+    cadena se arma de izquierda a derecha y el valor inicial abre la expresión:
+    <code>((0 - 1) - 2) - 3</code>. En <code>foldRight</code> el operador se
+    aplica a <code>op(x, ...)</code>, con el resultado de la cola a la derecha,
+    así que el valor inicial cierra la expresión:
+    <code>1 - (2 - (3 - 0))</code>. Con la suma y el producto las dos formas
+    coinciden; con la resta y la división no, y la diferencia no es un detalle
+    de implementación sino el resultado.</p>
+    <p>De los tipos sale la última consecuencia. El operador de
+    <code>foldLeft</code> es <code>(U, T) =&gt; U</code>, con el acumulador a la
+    izquierda, y el de <code>foldRight</code> es <code>(T, U) =&gt; U</code>,
+    con el elemento a la izquierda. Un operador como <code>::</code>, cuyo tipo
+    es <code>(T, List[T]) =&gt; List[T]</code>, encaja con el segundo y no con
+    el primero. También cambia la forma de la recursión: el cuerpo de
+    <code>foldLeft</code> termina en la llamada recursiva, mientras el de
+    <code>foldRight</code> tiene que esperar a que la llamada devuelva para
+    aplicar el operador.</p>
+  </div>
+</div>
+<script src="reduceFold.js"></script>
+</body>
+</html>

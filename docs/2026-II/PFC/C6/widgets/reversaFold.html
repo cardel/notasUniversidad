@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reverse con foldLeft: el acumulador que crece por el frente</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .ficha.usada { background: var(--verde); }
+  .ficha.usada.reciente { outline: 3px solid var(--ambar); }
+  .ficha.pendiente { background: #e2e6eb; color: var(--gris); font-weight: 400; }
+  .ficha.acc { background: var(--azul); }
+  .ficha.acc.reciente { background: var(--ambar); color: var(--tinta); }
+  .rotulo-fila { font-size: 0.82rem; color: var(--gris); margin: 0.7rem 0 0; }
+  .devuelve {
+    font-family: ui-monospace, monospace; font-size: 0.9rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.4rem 0.6rem; margin-top: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+  td.expr { font-family: ui-monospace, monospace; text-align: left; }
+  #opciones { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.6rem; align-items: flex-start; }
+  #opciones button { text-align: left; white-space: normal; }
+  button.errada { border-color: var(--rojo); color: var(--rojo); background: var(--rojo-suave); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #presets { margin-top: 0.3rem; }
+  .chip { font-size: 0.82rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>reverse</code> con <code>foldLeft</code>: el acumulador que crece por el frente</h1>
+  <p class="intro">La función invierte una lista en una sola pasada y sin
+  recursión escrita a mano: toda la recursión está dentro de
+  <code>foldLeft</code>. Lo único propio es el valor inicial,
+  <code>List[T]()</code>, y el operador <code>(acc, x) =&gt; x :: acc</code>.
+  Avance paso por paso y mire qué le pasa al acumulador en cada vuelta.</p>
+
+  <div class="carta">
+    <h2>1. La función y la ejecución</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones" id="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="presets" id="presets"></div>
+      </div>
+    </div>
+    <p class="rotulo-fila">la lista que se recorre, de izquierda a derecha</p>
+    <div class="secuencia" id="fila-entrada"></div>
+    <p class="rotulo-fila">el acumulador, con el elemento recién agregado en ámbar</p>
+    <div class="secuencia" id="fila-acc"></div>
+    <div class="devuelve" id="devuelve">sin cerrar todavía</div>
+    <p class="nota">El elemento en ámbar de la fila de arriba es el que la
+    vuelta acaba de tomar; el de la fila de abajo es el mismo, ya puesto de
+    cabeza en el acumulador. La línea 5 corre una sola vez, al final, y es la
+    que devuelve el acumulador terminado.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. La traza, fila por fila</h2>
+    <p class="nota" style="margin-top:0">Cada fila aparece cuando la ejecución
+    llega a ese paso.</p>
+    <div class="envoltura-tabla">
+      <table id="tabla-traza"></table>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. El orden del operador</h2>
+    <p id="enunciado" style="margin-top:0"></p>
+    <div id="opciones"></div>
+    <div class="veredicto" id="veredicto"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">La inversión no está en ninguna línea que la
+    nombre. Sale de juntar dos hechos: <code>foldLeft</code> recorre la lista
+    del primer elemento al último, y <code>::</code> agrega por el inicio. Cada
+    vuelta pone el elemento que acaba de leer delante de todos los anteriores,
+    así que el primero termina al fondo y el último de cabeza. La tabla lo deja
+    ver en la columna del acumulador: <code>List()</code>,
+    <code>List(1)</code>, <code>List(2, 1)</code>,
+    <code>List(3, 2, 1)</code>.</p>
+    <p>El valor inicial decide qué devuelve la función cuando no hay elementos.
+    Con <code>List[T]()</code>, la lista vacía entra por
+    <code>case Nil =&gt; z</code> y sale como <code>List()</code>, que es lo que
+    <code>reverse(Nil)</code> tiene que responder. Ese caso también cierra las
+    otras ejecuciones: la línea 5 corre una sola vez, cuando ya no queda
+    elemento, y entrega el acumulador sin tocarlo.</p>
+    <p>El costo es una pasada. Cada vuelta hace una sola operación,
+    <code>x :: acc</code>, que no recorre el acumulador porque solo agrega una
+    celda al frente, y hay tantas vueltas como elementos. Reconstruir la lista
+    con concatenaciones al final del acumulador recorrería lo ya acumulado en
+    cada paso, y ahí es donde aparece el comportamiento cuadrático que esta
+    versión evita.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="reversaFold.js"></script>
+</body>
+</html>

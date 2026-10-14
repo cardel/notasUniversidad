@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>insercion: en qué posición queda el elemento que se inserta</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  pre.fuente {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.84rem; margin: 0.4rem 0 0;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.6rem 0.8rem; overflow-x: auto;
+  }
+  #arbol {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.82rem; white-space: pre; overflow-x: auto;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.6rem 0.8rem; margin: 0.4rem 0 0.9rem;
+  }
+  .rama-arbol { color: var(--gris); padding: 0.05rem 0.25rem; border-radius: 4px; }
+  .rama-arbol.vigente { color: var(--tinta); font-weight: 700; background: var(--ambar-suave); }
+  .rama-arbol.cerrada { color: var(--verde); }
+  #vista { display: flex; gap: 0.35rem; flex-wrap: wrap; margin: 0.8rem 0 0.2rem; min-height: 2.4rem; }
+  #vista .ficha {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.9rem; padding: 0.3rem 0.6rem;
+    border: 2px solid var(--borde); border-radius: 6px; background: #fff;
+  }
+  #vista .ficha.pasado { color: var(--gris); background: var(--codigo-fondo); }
+  #vista .ficha.actual { border-color: var(--ambar); background: var(--ambar-suave); font-weight: 700; }
+  #vista .ficha.insertado { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); font-weight: 700; }
+  #vista .ficha.vacia { color: var(--gris); border-style: dashed; }
+  .acumulada {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.85rem; background: var(--codigo-fondo);
+    border: 1px solid var(--borde); border-radius: 8px;
+    padding: 0.4rem 0.6rem; margin-top: 0.5rem; overflow-wrap: anywhere;
+  }
+  .acumulada b { color: var(--azul); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  .leyenda { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--gris); margin-top: 0.4rem; }
+  .leyenda .m2 { color: #a86a12; }
+  .leyenda .m3 { color: var(--verde); }
+  #btn-seguir { margin-top: 0.7rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>insercion</code>: en qué posición queda el elemento que se inserta</h1>
+  <p class="intro"><code>iSort</code> ordena la cola y después mete la cabeza en
+  su lugar, así que ordenar <code>List(8, 4, 11, 2)</code> son cuatro llamadas a
+  <code>insertar</code>, cada una sobre una lista que ya está ordenada. Las
+  cuatro corren de adentro hacia afuera: primero el <code>2</code> sobre la
+  lista vacía, de último el <code>8</code> sobre los tres que quedaron. En cada
+  ronda diga la posición en que va a quedar el elemento <strong>antes</strong>
+  de correr la ejecución, y después compruébela paso por paso.</p>
+
+  <div class="carta">
+    <h2>1. Las cuatro inserciones</h2>
+    <p style="margin-top:0">El árbol de llamadas de
+    <code>iSort(List(8, 4, 11, 2))</code>. La línea resaltada es la inserción de
+    esta ronda; los resultados aparecen cuando la predicción queda acertada.</p>
+    <div id="arbol"></div>
+    <pre class="fuente">def iSort(xs: List[Int]): List[Int] = xs match {
+  case Nil     =&gt; Nil
+  case y :: ys =&gt; insertar(y, iSort(ys))
+}</pre>
+  </div>
+
+  <div class="carta">
+    <h2>2. La predicción</h2>
+    <p style="margin-top:0">Ronda en curso:
+    <code id="llamada">insertar(2, List())</code>. La lista que recibe ya está
+    ordenada, así que el elemento tiene un solo lugar donde cabe. Las posiciones
+    van de <b id="rango">1 a 1</b>, contando desde la izquierda.</p>
+    <div class="prediccion">
+      <label for="prediccion">posición del elemento</label>
+      <input id="prediccion" type="number" min="1" step="1" inputmode="numeric">
+      <button class="primario" id="btn-comprobar">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+    <button class="primario" id="btn-seguir">Siguiente inserción</button>
+    <div class="progreso" id="marcador" style="margin-top:0.8rem"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. La ejecución de <code>insertar</code></h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones bloqueado" id="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span class="m2"><b>■</b> la cabeza <code>y</code> que se está comparando</span>
+      <span class="m3"><b>■</b> el elemento <code>x</code> ya colocado</span>
+      <span><b>■</b> las cabezas que la condición dejó atrás</span>
+    </div>
+    <div id="vista"></div>
+    <div class="acumulada">elemento que se inserta: <b id="objetivo">–</b></div>
+    <div class="acumulada">lo que devuelve la llamada: <b id="salida">–</b></div>
+    <p class="nota">Los botones quedan disponibles cuando la predicción de la
+    ronda esté acertada. El contador de cada línea dice cuántas veces se evaluó:
+    la línea 4 cuenta las cabezas que el elemento dejó atrás y la 3, las
+    comparaciones.</p>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>4. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0"><code>iSort(List(8, 4, 11, 2))</code> devuelve
+    <b id="final">–</b>. Ninguna de las cuatro llamadas a <code>insertar</code>
+    comparó nada con el resto de la lista original: cada una recibió una lista ya
+    ordenada y solo tuvo que encontrar el primer elemento que no fuera menor que
+    el suyo. Esa es la condición que hace funcionar al algoritmo, y
+    <code>iSort</code> la garantiza porque ordena la cola antes de insertar la
+    cabeza.</p>
+    <p>La predicción de cada ronda se puede dar sin correr nada: la posición es
+    el número de elementos menores que <code>x</code>, más uno. La ejecución
+    llega al mismo lugar bajando por la lista, y lo que cuesta es precisamente
+    esa bajada. El contador de la línea 4 dice cuántas cabezas se saltaron en la
+    ronda, y el peor caso es insertar el mayor de todos, que recorre la lista
+    completa.</p>
+    <p>El <code>x :: xs</code> del caso que coloca no copia la lista que
+    recibió: crea el nodo de <code>x</code> apuntando a ella y nada más. Lo que
+    sí se reconstruye son los nodos de las cabezas que se saltaron, uno por cada
+    <code>y :: insertar(x, ys)</code> que quedó pendiente.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="insercion.js"></script>
+</body>
+</html>

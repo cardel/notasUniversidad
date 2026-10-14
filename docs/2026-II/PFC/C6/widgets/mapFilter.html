@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>map y filter: prediga las dos listas de salida</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .ronda { border-top: 1px solid var(--borde); padding-top: 0.9rem; margin-top: 1rem; }
+  .ronda:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  .ronda h3 {
+    font-size: 0.92rem; margin: 0 0 0.5rem; color: var(--tinta);
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-weight: 700;
+  }
+  .ronda.listo h3 { color: var(--verde); }
+  .fila-pred { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.45rem; }
+  .llamada {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86rem; color: var(--azul);
+  }
+  input.lista {
+    font-family: ui-monospace, monospace; font-size: 0.92rem;
+    padding: 0.35rem 0.5rem; border: 1px solid var(--borde); border-radius: 8px;
+    width: 14rem; max-width: 100%;
+  }
+  input.lista.bien-celda { border-color: var(--verde); background: var(--verde-suave); color: var(--verde); }
+  .veredicto { font-size: 0.88rem; }
+  #rotulo-fase { font-size: 0.86rem; color: var(--gris); margin: 0.8rem 0 0.2rem; }
+  .salida-viva {
+    font-family: ui-monospace, monospace; font-size: 0.95rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.4rem 0.6rem; display: inline-block; margin-top: 0.3rem;
+  }
+  td.expr { font-family: ui-monospace, monospace; text-align: left; }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+  #presets { margin-top: 0.3rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1><code>map</code> y <code>filter</code>: prediga las dos listas de salida</h1>
+  <p class="intro">Las dos funciones reciben otra función y recorren la lista
+  una vez. <code>map</code> aplica la que recibe a cada elemento;
+  <code>filter</code> le pregunta a un predicado cuáles conserva. Abajo hay
+  cuatro listas y, para cada una, las dos llamadas sobre la misma entrada.
+  Escriba lo que devuelve cada una antes de ver la ejecución.</p>
+
+  <div class="carta">
+    <h2>1. Las dos implementaciones</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones bloqueado" id="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="presets bloqueado" id="presets"></div>
+      </div>
+    </div>
+    <p id="rotulo-fase"></p>
+    <div class="arreglo" id="fila-entrada"></div>
+    <div class="salida-viva" id="fila-salida">List()</div>
+    <p class="nota">La ejecución corre primero la pasada de <code>map</code> y
+    después la de <code>filter</code> sobre la misma lista. Los contadores de la
+    derecha dicen cuántas veces se evaluó cada línea; en la pasada de
+    <code>filter</code> los elementos quedan marcados en verde si pasaron y en
+    rojo si la rama <code>else</code> los descartó. Los botones y los cuatro
+    atajos quedan disponibles cuando las predicciones estén resueltas.</p>
+  </div>
+
+  <div class="carta">
+    <h2>2. Las cuatro predicciones</h2>
+    <p class="nota" style="margin-top:0">Escriba las listas con la forma
+    <code>List(2, 4, 6)</code>. Para la lista sin elementos sirve
+    <code>List()</code> o <code>Nil</code>.</p>
+    <div id="rondas"></div>
+    <div class="progreso" id="contador" style="margin-top:0.9rem"></div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">Los dos cuerpos se diferencian en una sola
+    decisión. El caso <code>x :: xs</code> de <code>map</code> construye
+    siempre <code>f(x) :: xs.map(f)</code>: pone un elemento por cada elemento
+    que recibe, y el contador de esa línea termina igual a la longitud de la
+    entrada. El de <code>filter</code> tiene dos ramas, y solo la primera pone
+    algo al frente: cuando <code>p(x)</code> responde <code>false</code>, el
+    cuerpo devuelve <code>xs.filter(p)</code> y la <code>x</code> no vuelve a
+    aparecer. Los contadores de las líneas 9 y 10 reparten los elementos de la
+    entrada entre los que pasaron y los que no, y su suma es la longitud de la
+    lista original.</p>
+    <div class="envoltura-tabla">
+      <table id="tabla-largos"></table>
+    </div>
+    <p>De ahí sale la otra diferencia. <code>map</code> no conserva los
+    elementos, los reemplaza por lo que devuelve <code>f</code>, y puede cambiar
+    el tipo de la lista: <code>List(1, 2, 3, 4).map(x => x % 2 == 0)</code>
+    devuelve <code>List[Boolean]</code> con cuatro valores.
+    <code>filter</code> usa el predicado para decidir y entrega los elementos
+    tal como entraron, así que el tipo de la lista nunca cambia y la longitud
+    casi nunca se conserva.</p>
+    <p>Con la lista sin elementos ninguna de las dos evalúa la función que
+    recibió. Las dos entran por <code>case Nil =&gt; Nil</code>, que es el único
+    caso que coincide, y devuelven <code>Nil</code>. Esa línea también es la que
+    cierra las otras tres ejecuciones: la recursión avanza sobre
+    <code>xs</code> hasta que la lista se acaba.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="mapFilter.js"></script>
+</body>
+</html>

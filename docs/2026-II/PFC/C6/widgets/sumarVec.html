@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sumarVec: la traza de la suma de vectores</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  td.expr { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; text-align: left; font-size: 0.82rem; }
+  tr.fila-falla td { background: var(--rojo-suave); color: var(--rojo); }
+  .acumulada {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.85rem;
+    background: var(--codigo-fondo); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 0.4rem 0.6rem; overflow-wrap: anywhere;
+  }
+  .acumulada b { color: var(--azul); }
+  #presets button { font-family: ui-monospace, monospace; font-size: 0.8rem; }
+  #aviso { display: none; }
+  .leyenda { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--gris); margin-top: 0.5rem; }
+  .leyenda .m1 { color: var(--azul); }
+  .bloqueado { opacity: 0.45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>sumarVec: la traza de la suma de vectores</h1>
+  <p class="intro">La primera versión de <code>sumarVec</code> abre un
+  <code>match</code> sobre <code>u</code> y otro sobre <code>v</code> adentro.
+  La versión de abajo arma la tupla <code>(u, v)</code> y mira las dos listas
+  en un solo <code>match</code>, con un caso por cada combinación. Siga la
+  evaluación paso a paso y vea cuál de los cuatro casos corre en cada vuelta.</p>
+
+  <div class="carta">
+    <h2>1. La función y la llamada</h2>
+    <div class="presets" id="presets"></div>
+    <div class="panel-doble" style="margin-top:0.8rem">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">paso <b id="ver-paso">0</b> de <b id="ver-total">0</b></div>
+        <div class="botones">
+          <button id="btn-paso">Paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="acumulada">resultado parcial:<br><b id="parcial">–</b></div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span class="m1"><b>■</b> el caso que hace el trabajo: liga x, y, xs e ys de una sola vez</span>
+    </div>
+    <p class="nota">El contador de cada línea dice cuántas veces se evaluó. La
+    línea 9 corre una vez por elemento; las líneas 5 y 7 solo corren cuando los
+    tamaños no coinciden, y las dos últimas llamadas de arriba están ahí para
+    verlo.</p>
+    <div class="alerta" id="aviso"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La traza, fila por fila</h2>
+    <p class="nota" style="margin-top:0">Una fila por cada vez que se aplica un
+    caso del <code>match</code>. La columna del resultado parcial muestra lo que
+    ya está cons-eado al frente y la llamada que falta por resolver.</p>
+    <div class="envoltura-tabla">
+      <table id="tabla-traza"></table>
+    </div>
+  </div>
+
+  <div class="carta bloqueado" id="carta-cierre">
+    <h2>3. Lo que se lleva de aquí</h2>
+    <p style="margin-top:0">El caso <code>(x :: xs, y :: ys)</code> liga cuatro
+    nombres en una sola línea: las dos cabezas y las dos colas. Con los
+    <code>match</code> anidados esos cuatro nombres salían de dos lugares
+    distintos, y había que leer el caso interno para saber en qué estado estaba
+    la lista externa. La tupla pone las dos listas al mismo nivel y el
+    <code>match</code> las descompone juntas.</p>
+    <p>El orden de los casos decide lo que pasa con parejas de distinto tamaño.
+    <code>(Nil, Nil)</code> va primero y es el único que devuelve
+    <code>Nil</code>; si estuviera después de <code>(Nil, _)</code>, el comodín
+    atraparía también el caso de las dos listas vacías y la función nunca
+    terminaría bien. Con los cuatro casos escritos en ese orden, cada
+    combinación tiene una salida y el compilador no reporta un
+    <code>match</code> incompleto.</p>
+    <p>La recursión avanza sobre las dos colas a la vez, así que las dos listas
+    se acortan en el mismo paso y llegan juntas a <code>Nil</code> cuando tienen
+    el mismo tamaño. El resultado se construye en el camino de vuelta: cada
+    vuelta deja su suma al frente con <code>::</code> y espera a que la llamada
+    de adentro devuelva una lista para pegarla detrás.</p>
+  </div>
+</div>
+<script src="motor.js"></script>
+<script src="sumarVec.js"></script>
+</body>
+</html>
