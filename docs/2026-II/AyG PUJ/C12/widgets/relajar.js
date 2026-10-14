@@ -1,5 +1,5 @@
 /* Ejercicio interactivo: relajar una arista (clase 12).
-   La simulacion reproduce relajar tal como esta en el codigo de la clase, linea por linea. */
+   La simulacion reproduce el pseudocodigo de RELAJAR del deck, linea por linea. */
 /* Dibujo de grafos en SVG, con nombres de vertice, pesos y anotaciones. */
 var DIB = (function () {
   var COL = {
@@ -115,36 +115,34 @@ var DIB = (function () {
 
 var EJERCICIO = (function () {
   var INF = Infinity;
+  /* El pseudocodigo de RELAJAR del deck, con sus nombres. */
   var CODIGO = [
-    { txt: "def relajar(u, v, w, d, pi):",   num: null },
-    { txt: "    cambio = False",              num: 1, bloque: 1 },
-    { txt: "    if d[u] + w < d[v]:",         num: 2, bloque: 1 },
-    { txt: "        d[v] = d[u] + w",         num: 3, bloque: 1 },
-    { txt: "        pi[v] = u",               num: 4, bloque: 1 },
-    { txt: "        cambio = True",           num: 5, bloque: 1 },
-    { txt: "    return cambio",               num: 6, bloque: 1 }
+    { txt: "RELAJAR(u, v, w):",             num: null },
+    { txt: "  si d[v] > d[u] + w(u, v):",   num: 1, bloque: 1 },
+    { txt: "    d[v] = d[u] + w(u, v)",     num: 2, bloque: 1 },
+    { txt: "    pred[v] = u",               num: 3, bloque: 1 }
   ];
 
   /* Escenarios ordenados por dificultad. tipo: lo que explica que no cambie nada. */
   var ESCENARIOS = [
     { u: 2, v: 4, w: 3,  du: 4,   dv: 11,  pv: -1, tipo: null,
-      ok: "Cambia: 4 + 3 = 7 es menor que 11, así que d[v] baja a 7 y pi[v] pasa a ser u = 2." },
+      ok: "Cambia: 4 + 3 = 7 es menor que 11, así que d[v] baja a 7 y pred[v] pasa a ser u = 2." },
     { u: 1, v: 3, w: 3,  du: 6,   dv: 8,   pv: 0,  tipo: "mayor",
-      ok: "No cambia: 6 + 3 = 9 no es menor que 8. Llegar a v por u cuesta más de lo que v ya tiene, y d[v] = 8 y pi[v] = 0 se quedan." },
+      ok: "No cambia: 6 + 3 = 9 no es menor que 8. Llegar a v por u cuesta más de lo que v ya tiene, y d[v] = 8 y pred[v] = 0 se quedan." },
     { u: 4, v: 1, w: 4,  du: INF, dv: INF, pv: -1, tipo: "inf",
       ok: "No cambia: con d[u] = ∞ la suma es ∞ + 4 = ∞, y ∞ no es menor que ∞. Relajar desde un vértice que todavía no se alcanzó nunca mejora nada." },
     { u: 1, v: 2, w: -4, du: 5,   dv: 3,   pv: 0,  tipo: null,
-      ok: "Cambia: 5 + (-4) = 1 es menor que 3. Un peso negativo no cambia la regla: se suma y se compara. Queda d[v] = 1 y pi[v] = 1." },
-    { u: 3, v: 5, w: 4,  du: 5,   dv: 9,   pv: 1,  tipo: "empate",
-      ok: "No cambia: 5 + 4 = 9 no es menor que 9, es igual. La comparación es estricta, así que el empate no reescribe nada y pi[v] sigue en 1." },
+      ok: "Cambia: 5 + (-4) = 1 es menor que 3. Un peso negativo no cambia la regla: se suma y se compara. Queda d[v] = 1 y pred[v] = 1." },
+    { u: 3, v: 5, w: 6,  du: 4,   dv: 10,  pv: 1,  tipo: "empate",
+      ok: "No cambia: 4 + 6 = 10 no es menor que 10, es igual. La comparación es estricta, así que el empate no reescribe nada y pred[v] sigue en 1." },
     { u: 2, v: 6, w: -5, du: INF, dv: 7,   pv: 3,  tipo: "inf",
-      ok: "No cambia: d[u] = ∞, y ∞ + (-5) sigue siendo ∞. Que el peso sea negativo no vuelve finito a un infinito. d[v] = 7 y pi[v] = 3 se quedan." },
+      ok: "No cambia: d[u] = ∞, y ∞ + (-5) sigue siendo ∞. Que el peso sea negativo no vuelve finito a un infinito. d[v] = 7 y pred[v] = 3 se quedan." },
     { u: 4, v: 1, w: 2,  du: 3,   dv: 8,   pv: 2,  tipo: null,
-      ok: "Cambia: 3 + 2 = 5 es menor que 8. d[v] pasa a 5 y pi[v] se reescribe: de 2 a u = 4. Cada vez que d[v] baja, el predecesor es el vértice desde el que se mejoró." },
+      ok: "Cambia: 3 + 2 = 5 es menor que 8. d[v] pasa a 5 y pred[v] se reescribe: de 2 a u = 4. Cada vez que d[v] baja, el predecesor es el vértice desde el que se mejoró." },
     { u: 5, v: 2, w: -2, du: 7,   dv: 5,   pv: 4,  tipo: "empate",
-      ok: "No cambia: 7 + (-2) = 5 no es menor que 5. Otro empate, ahora con un peso negativo de por medio; pi[v] sigue en 4." },
+      ok: "No cambia: 7 + (-2) = 5 no es menor que 5. Otro empate, ahora con un peso negativo de por medio; pred[v] sigue en 4." },
     { u: 1, v: 6, w: 9,  du: -4,  dv: INF, pv: -1, tipo: null,
-      ok: "Cambia: -4 + 9 = 5 es menor que ∞. Un d[u] negativo se trata igual que cualquier otro, y cualquier suma finita le gana a ∞: d[v] = 5 y pi[v] = 1." },
+      ok: "Cambia: -4 + 9 = 5 es menor que ∞. Un d[u] negativo se trata igual que cualquier otro, y cualquier suma finita le gana a ∞: d[v] = 5 y pred[v] = 1." },
     { u: 3, v: 0, w: -6, du: 4,   dv: 0,   pv: -1, tipo: null,
       ok: "Cambia: 4 + (-6) = -2 es menor que 0. Aquí v es la fuente y d[v] baja de 0. Si el 4 de d[u] salió de relajar caminos desde la fuente, el camino hasta u más esta arista cierra un ciclo de peso -2, un ciclo negativo. Sin ciclos negativos la fuente se queda en 0." }
   ];
@@ -152,26 +150,22 @@ var EJERCICIO = (function () {
   function fmt(x) { return x === INF ? "∞" : String(x); }
 
   function simular(params) {
-    var u = params.u, v = params.v, w = params.w, n = Math.max(u, v) + 1, d = [], pi = [], i = 0;
-    while (i < n) { d.push(INF); pi.push(-1); i = i + 1; }
-    d[u] = params.du; d[v] = params.dv; pi[v] = params.pv;
-    var cambio = null, pasos = [];
-    function snap(linea, extra) {
-      var q = { linea: linea, suma: fmt(d[u] + w), dv: fmt(d[v]), pv: String(pi[v]),
-                cambio: cambio === null ? "–" : (cambio ? "True" : "False"), hecho: false };
-      if (extra) { var y; for (y in extra) { q[y] = extra[y]; } }
-      pasos.push(q);
+    var u = params.u, v = params.v, w = params.w, n = Math.max(u, v) + 1, d = [], pred = [], i = 0;
+    while (i < n) { d.push(INF); pred.push(-1); i = i + 1; }
+    d[u] = params.du; d[v] = params.dv; pred[v] = params.pv;
+    var cambio = false, pasos = [];
+    function snap(linea) {
+      pasos.push({ linea: linea, suma: fmt(d[u] + w), dv: fmt(d[v]), pv: String(pred[v]), hecho: false });
     }
-    cambio = false; snap(1);
-    snap(2);
-    if (d[u] + w < d[v]) {
-      d[v] = d[u] + w; snap(3);
-      pi[v] = u; snap(4);
-      cambio = true; snap(5);
+    snap(1);
+    if (d[v] > d[u] + w) {
+      d[v] = d[u] + w; snap(2);
+      pred[v] = u; snap(3);
+      cambio = true;
     }
-    snap(6, { hecho: true });
     var ult = pasos[pasos.length - 1];
-    ult.resultado = { cambio: cambio, dv: d[v], pv: pi[v] };
+    ult.hecho = true;
+    ult.resultado = { cambio: cambio, dv: d[v], pv: pred[v] };
     return pasos;
   }
 
@@ -184,11 +178,11 @@ var EJERCICIO = (function () {
     var real = resultado(sc), suma = sc.du + sc.w, msg = [];
     if (r.cambia !== real.cambio) {
       if (real.cambio) {
-        msg.push("Sí cambia: d[u] + w = " + fmt(suma) + " es menor que d[v] = " + fmt(sc.dv) + ", y la condición del if se cumple.");
+        msg.push("Sí cambia: d[u] + w = " + fmt(suma) + " es menor que d[v] = " + fmt(sc.dv) + ", y la condición se cumple.");
       } else if (sc.tipo === "inf") {
         msg.push("No cambia. Con d[u] = ∞ la suma sigue siendo ∞, y ∞ no es menor que nada, ni siquiera que otro ∞. Un peso negativo no vuelve finito a un infinito.");
       } else if (sc.tipo === "empate") {
-        msg.push("No cambia. d[u] + w = " + fmt(suma) + " es igual a d[v], no menor: la comparación es estricta y un empate no reescribe d[v] ni pi[v].");
+        msg.push("No cambia. d[u] + w = " + fmt(suma) + " es igual a d[v], no menor: la comparación es estricta y un empate no reescribe d[v] ni pred[v].");
       } else {
         msg.push("No cambia. d[u] + w = " + fmt(suma) + " no es menor que d[v] = " + fmt(sc.dv) + ": llegar a v por u cuesta más de lo que ya se tenía.");
       }
@@ -208,11 +202,11 @@ var EJERCICIO = (function () {
     }
     if (r.pv !== real.pv) {
       if (real.cambio && r.pv === sc.pv) {
-        msg.push("pi[v] también se reescribe: cuando d[v] baja, pi[v] pasa a ser u = " + sc.u + ".");
+        msg.push("pred[v] también se reescribe: cuando d[v] baja, pred[v] pasa a ser u = " + sc.u + ".");
       } else if (real.cambio) {
-        msg.push("pi[v] debe quedar en u = " + sc.u + ", el vértice desde el que se mejoró d[v].");
+        msg.push("pred[v] debe quedar en u = " + sc.u + ", el vértice desde el que se mejoró d[v].");
       } else {
-        msg.push("pi[v] queda como estaba (" + sc.pv + "): si d[v] no baja, relajar no toca el predecesor.");
+        msg.push("pred[v] queda como estaba (" + sc.pv + "): si d[v] no baja, relajar no toca el predecesor.");
       }
     }
     return msg.join(" ");
@@ -248,7 +242,7 @@ if (typeof module !== "undefined") {
         nodo: function (i) {
           return i === 0
             ? { relleno: "#e3edf8", borde: "#1f5fa8", tinta: "#24292f", grueso: 2.2, nota: "d[" + p.u + "] = " + F(p.du) }
-            : { relleno: "#fdf1dc", borde: "#e8a13d", tinta: "#24292f", grueso: 2.2, nota: "d[" + p.v + "] = " + F(p.dv) + ", pi[" + p.v + "] = " + p.pv, notaColor: "#a86a12" };
+            : { relleno: "#fdf1dc", borde: "#e8a13d", tinta: "#24292f", grueso: 2.2, nota: "d[" + p.v + "] = " + F(p.dv) + ", pred[" + p.v + "] = " + p.pv, notaColor: "#a86a12" };
         },
         arista: function () { return { color: "gris", grueso: 2.2 }; }
       });
@@ -265,7 +259,7 @@ if (typeof module !== "undefined") {
       dibujar();
       document.getElementById("rot-escenario").textContent = (actual + 1) + " de " + ESC.length;
       document.getElementById("enunciado").innerHTML = "Se relaja la arista <code>(u, v, w)</code> = <code>(" + p.u + ", " + p.v + ", " + EJERCICIO.fmt(p.w) +
-        ")</code> con <code>d[" + p.u + "] = " + EJERCICIO.fmt(p.du) + "</code>, <code>d[" + p.v + "] = " + EJERCICIO.fmt(p.dv) + "</code> y <code>pi[" + p.v + "] = " + p.pv + "</code>.";
+        ")</code> con <code>d[" + p.u + "] = " + EJERCICIO.fmt(p.du) + "</code>, <code>d[" + p.v + "] = " + EJERCICIO.fmt(p.dv) + "</code> y <code>pred[" + p.v + "] = " + p.pv + "</code>.";
       Array.prototype.forEach.call(document.querySelectorAll("input[name=cambia]"), function (b) { b.checked = false; });
       document.getElementById("resp-dv").value = "";
       llenarPi();
@@ -282,7 +276,7 @@ if (typeof module !== "undefined") {
       var pvTxt = document.getElementById("resp-pv").value;
       if (marca === null || dv === null || pvTxt === "") {
         v.className = "veredicto mal";
-        v.textContent = "Responda las tres preguntas: si cambia algo, el nuevo d[v] (un entero o inf) y el nuevo pi[v].";
+        v.textContent = "Responda las tres preguntas: si cambia algo, el nuevo d[v] (un entero o inf) y el nuevo pred[v].";
         return;
       }
       var r = { cambia: marca.value === "si", dv: dv, pv: parseInt(pvTxt, 10) };
@@ -301,7 +295,7 @@ if (typeof module !== "undefined") {
         codigo: EJERCICIO.codigo, simular: EJERCICIO.simular,
         chips: [
           { campo: "suma", rotulo: "d[u] + w" }, { campo: "dv", rotulo: "d[v]" },
-          { campo: "pv", rotulo: "pi[v]" }, { campo: "cambio", rotulo: "cambio", clase: "cuenta" }
+          { campo: "pv", rotulo: "pred[v]" }
         ],
         paramsIniciales: sc()
       });

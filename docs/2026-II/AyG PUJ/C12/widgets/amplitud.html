@@ -20,17 +20,19 @@
   <p class="intro">Sin pesos, el camino más corto es el de menos aristas. La
   búsqueda en amplitud lo calcula con una cola: la fuente sale primero, sus
   vecinos entran con <code>d = 1</code>, los vecinos de estos con
-  <code>d = 2</code>, y cada vértice se descubre una sola vez. <code>pi[v]</code>
-  recuerda desde dónde se llegó, y <code>camino</code> sube por <code>pi</code>
-  para reconstruir la ruta. Aquí se ejecutan las dos funciones sobre cuatro
-  grafos, uno de ellos con dos componentes y otro con pesos donde la búsqueda
-  se equivoca.</p>
+  <code>d = 2</code>, y cada vértice se descubre una sola vez, porque su
+  <code>d</code> deja de ser infinito. <code>p[u]</code> recuerda desde dónde
+  se llegó, y <code>camino</code> sube por <code>p</code> para reconstruir la
+  ruta. El panel muestra <code>ssspBFS</code> tal como está en el archivo
+  <code>bfs.py</code> del curso, la versión que no usa arreglo de visitados,
+  seguida de <code>camino</code>. Se ejecutan sobre cuatro grafos, uno con dos
+  componentes y otro con pesos donde la búsqueda se equivoca.</p>
 
   <div class="carta">
     <h2>1. El grafo y la predicción</h2>
     <p style="margin-top:0"><b>Entrada:</b> un grafo no dirigido en listas de
     adyacencia y una fuente <code>s</code>. &nbsp;<b>Salida:</b> las listas
-    <code>d</code> y <code>pi</code>, y la ruta que devuelve <code>camino</code>
+    <code>d</code> y <code>p</code>, y la ruta que devuelve <code>camino</code>
     hasta un destino.</p>
     <div class="presets" id="presets-grafo">
       <span class="nota" style="margin-top:0">Grafo:</span>
@@ -41,27 +43,27 @@
     </div>
     <p class="nota" id="ver-texto"></p>
     <div id="panel-grafo"></div>
-    <div class="leyenda">Sobre cada vértice, <i>d</i>/<i>pi</i>, con ∞ para <code>d = -1</code> y un guion para <code>pi = -1</code>.
+    <div class="leyenda">Sobre cada vértice, <i>d</i>/<i>p</i>, con ∞ para <code>float("inf")</code> y un guion para <code>p = -1</code>.
     Blanco: sin descubrir. Azul: en la cola. Gris: ya salió de la cola.</div>
     <div class="prediccion">
       <span>Fuente <b id="ver-fuente">0</b>. Destino:</span>
       <select id="destino"></select>
-      <span>¿Cuánto vale <code>d[<span id="rot-destino">0</span>]</code> al terminar?</span>
-      <input type="number" id="prediccion" step="1" placeholder="d">
+      <span>¿Cuánto vale <code>d[<span id="rot-destino">0</span>]</code> al terminar? Escriba <code>inf</code> si no se alcanza.</span>
+      <input type="text" id="prediccion" size="6" placeholder="entero o inf">
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
     <div id="veredicto" class="veredicto"></div>
   </div>
 
   <div class="carta">
-    <h2>2. Ejecute la búsqueda y la reconstrucción</h2>
+    <h2>2. Ejecute <code>ssspBFS</code> y la reconstrucción</h2>
     <div class="panel-doble">
       <div class="codigo" id="panel-codigo"></div>
       <div class="estado">
         <div class="chips" id="chips"></div>
-        <div>cola: <span class="viva" id="ver-cola">sin crear</span></div>
+        <div>q: <span class="viva" id="ver-cola">sin crear</span></div>
         <div>d: <span class="viva" id="ver-d">sin crear</span></div>
-        <div>pi: <span class="viva" id="ver-pi">sin crear</span></div>
+        <div>p: <span class="viva" id="ver-p">sin crear</span></div>
         <div>ruta: <span class="viva" id="ver-ruta">sin crear</span></div>
         <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
         <div class="botones">
@@ -72,7 +74,7 @@
         </div>
         <div class="nota">La arista azul es la que se está mirando y se pone
         verde cuando el otro extremo estaba sin descubrir y entra a la cola.
-        Al terminar <code>bfs</code>, la función <code>camino</code> arranca en
+        Al terminar <code>ssspBFS</code>, la función <code>camino</code> arranca en
         el destino; la ruta, ya volteada, se marca en verde sobre el
         dibujo.</div>
       </div>
@@ -83,14 +85,14 @@
   <div class="carta">
     <h2>3. Con pesos</h2>
     <p style="margin-top:0">Cargue el grafo de cuatro vértices con pesos y
-    ejecútelo completo: <code>bfs</code> no recibe los pesos y entrega el camino
+    ejecútelo completo: <code>ssspBFS</code> no recibe los pesos y entrega el camino
     de menos aristas.
     <button id="btn-cargar-pesos">Cargar el grafo con pesos</button></p>
     <p><b>¿Por qué la búsqueda en amplitud no resuelve el problema cuando las
     aristas tienen peso?</b></p>
     <label class="opcion"><input type="radio" name="porque" value="vacia"> La cola se vacía antes de llegar a todos los vértices.</label>
     <label class="opcion"><input type="radio" name="porque" value="aristas"> Asigna a cada vértice el número de aristas desde la fuente, y un camino con menos aristas puede pesar más.</label>
-    <label class="opcion"><input type="radio" name="porque" value="pi"> pi[v] se sobrescribe cada vez que se vuelve a ver v.</label>
+    <label class="opcion"><input type="radio" name="porque" value="p"> p[u] se sobrescribe cada vez que se vuelve a ver u.</label>
     <label class="opcion"><input type="radio" name="porque" value="dirigido"> El grafo con pesos tiene que ser dirigido.</label>
     <div id="porque-veredicto" class="veredicto"></div>
   </div>
@@ -99,9 +101,9 @@
     <h2>4. Para llevarse</h2>
     <p style="margin-top:0">Sin solución aquí. En el anillo con cuerda, cambie
     el destino a cada uno de los siete vértices y anote <code>d</code> y
-    <code>pi</code>; después diga cuántas veces se escribe <code>d[v]</code> en
+    <code>p</code>; después diga cuántas veces se escribe <code>d[u]</code> en
     cada vértice y por qué la respuesta es siempre la misma. En el grafo con
-    pesos, cambie el peso de la arista 0 – 3 de 9 a 5 y a 7 sobre el papel:
+    pesos, cambie el peso de la arista entre 0 y 3 de 9 a 5 y a 7 sobre el papel:
     diga con cuál de los dos valores la búsqueda deja de equivocarse.</p>
   </div>
 

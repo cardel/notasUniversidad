@@ -23,7 +23,7 @@
   anota a <code>u</code> como predecesor; si no, no toca nada. Diez escenarios,
   de los directos a los que esconden un infinito, un empate o un peso negativo:
   hay que decir si algo cambia y con qué valores quedan <code>d[v]</code> y
-  <code>pi[v]</code>.</p>
+  <code>pred[v]</code>.</p>
 
   <div class="carta">
     <h2>1. El escenario y la respuesta</h2>
@@ -39,7 +39,7 @@
     <div class="pregunta-fila">
       <label for="resp-dv"><b>d[v] al terminar:</b></label>
       <input type="text" id="resp-dv" autocomplete="off">
-      <label for="resp-pv"><b>pi[v] al terminar:</b></label>
+      <label for="resp-pv"><b>pred[v] al terminar:</b></label>
       <select id="resp-pv"></select>
       <button id="btn-comprobar" class="primario">Comprobar</button>
     </div>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="carta">
-    <h2>2. Ejecute <code>relajar</code> con estos valores</h2>
+    <h2>2. Ejecute <code>RELAJAR</code> con estos valores</h2>
     <div class="panel-doble">
       <div class="codigo" id="panel-codigo"></div>
       <div class="estado">
@@ -59,7 +59,7 @@
           <button id="btn-fin">Al final</button>
           <button id="btn-reiniciar">Reiniciar</button>
         </div>
-        <div class="nota">Cuando el <code>if</code> es falso, las tres líneas de
+        <div class="nota">Cuando la condición es falsa, las dos líneas de
         adentro no se ejecutan y sus contadores quedan en cero. Cambie de
         escenario arriba y la ejecución se recarga con sus valores.</div>
       </div>
@@ -68,11 +68,11 @@
 
   <div class="carta">
     <h2>3. Para llevarse</h2>
-    <p style="margin-top:0">Sin solución aquí. Cambie la comparación del
-    <code>if</code> de <code>&lt;</code> a <code>&lt;=</code> y diga en cuáles
+    <p style="margin-top:0">Sin solución aquí. Cambie la comparación de
+    la condición de <code>&gt;</code> a <code>&gt;=</code> y diga en cuáles
     de los diez escenarios cambia el resultado y qué parte: <code>d[v]</code> o
-    <code>pi[v]</code>. Después explique por qué el cambio que produce en el escenario 3, con
-    <code>d[u] = ∞</code> es el más dañino para el árbol que forma <code>pi</code>.</p>
+    <code>pred[v]</code>. Después explique por qué el cambio que produce en el escenario 3, con
+    <code>d[u] = ∞</code> es el más dañino para el árbol que forma <code>pred</code>.</p>
   </div>
 
 </div>

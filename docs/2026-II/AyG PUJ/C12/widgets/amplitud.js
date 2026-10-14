@@ -1,5 +1,5 @@
 /* Ejercicio interactivo: caminos mas cortos sin pesos con la busqueda en amplitud (clase 12).
-   La simulacion reproduce bfs y camino tal como estan en el codigo de la clase, linea por linea. */
+   La simulacion reproduce ssspBFS del titular (bfs.py) y una funcion camino, linea por linea. */
 /* Dibujo de grafos en SVG, con nombres de vertice, pesos y anotaciones. */
 var DIB = (function () {
   var COL = {
@@ -114,33 +114,34 @@ var DIB = (function () {
 })();
 
 var EJERCICIO = (function () {
+  /* Las lineas 1 a 12 son la funcion ssspBFS del titular (bfs.py, la version sin
+     arreglo de visitados), con sus nombres. La reconstruccion no esta en ese archivo. */
   var CODIGO = [
-    { txt: "def bfs(G, s):",                          num: null },
-    { txt: "    n = len(G)",                           num: 1,  bloque: 1 },
-    { txt: "    d = [-1] * n",                         num: 2,  bloque: 1 },
-    { txt: "    pi = [-1] * n",                        num: 3,  bloque: 1 },
-    { txt: "    d[s] = 0",                             num: 4,  bloque: 1 },
-    { txt: "    cola = deque()",                       num: 5,  bloque: 1 },
-    { txt: "    cola.append(s)",                       num: 6,  bloque: 1 },
-    { txt: "    while len(cola) > 0:",                 num: 7,  bloque: 1 },
-    { txt: "        u = cola.popleft()",               num: 8,  bloque: 1 },
-    { txt: "        for v in G[u]:",                   num: 9,  bloque: 1 },
-    { txt: "            if d[v] == -1:",               num: 10, bloque: 1 },
-    { txt: "                d[v] = d[u] + 1",          num: 11, bloque: 1 },
-    { txt: "                pi[v] = u",                num: 12, bloque: 1 },
-    { txt: "                cola.append(v)",           num: 13, bloque: 1 },
-    { txt: "    return (d, pi)",                       num: 14, bloque: 1 },
-    { txt: "",                                         num: null },
-    { txt: "def camino(pi, s, v):",                    num: null },
-    { txt: "    ruta = []",                            num: 15, bloque: 2 },
-    { txt: "    x = v",                                num: 16, bloque: 2 },
-    { txt: "    while x != -1:",                       num: 17, bloque: 2 },
-    { txt: "        ruta.append(x)",                   num: 18, bloque: 2 },
-    { txt: "        x = pi[x]",                        num: 19, bloque: 2 },
-    { txt: "    ruta.reverse()",                       num: 20, bloque: 2 },
-    { txt: "    if ruta[0] != s:",                     num: 21, bloque: 2 },
-    { txt: "        ruta = []",                        num: 22, bloque: 2 },
-    { txt: "    return ruta",                          num: 23, bloque: 2 }
+    { txt: "def ssspBFS(G, s):",                                                   num: null },
+    { txt: "  q = deque()",                                                         num: 1,  bloque: 1 },
+    { txt: "  d, p = [float(\"inf\") for _ in range(len(G))], [-1 for _ in range(len(G))]", num: 2, bloque: 1 },
+    { txt: "  q.append(s)",                                                         num: 3,  bloque: 1 },
+    { txt: "  d[s] = 0",                                                            num: 4,  bloque: 1 },
+    { txt: "  while len(q) > 0:",                                                   num: 5,  bloque: 1 },
+    { txt: "    v = q.popleft()",                                                   num: 6,  bloque: 1 },
+    { txt: "    for u in G[v]:",                                                    num: 7,  bloque: 1 },
+    { txt: "      if d[u] == float(\"inf\"):",                                      num: 8,  bloque: 1 },
+    { txt: "        q.append(u)",                                                   num: 9,  bloque: 1 },
+    { txt: "        d[u] = d[v] + 1",                                               num: 10, bloque: 1 },
+    { txt: "        p[u] = v",                                                      num: 11, bloque: 1 },
+    { txt: "  return d, p",                                                         num: 12, bloque: 1 },
+    { txt: "",                                                                      num: null },
+    { txt: "# Reconstruccion: sube por p desde el destino t",                       num: null },
+    { txt: "def camino(p, s, t):",                                                  num: null },
+    { txt: "  ruta = []",                                                           num: 13, bloque: 2 },
+    { txt: "  x = t",                                                               num: 14, bloque: 2 },
+    { txt: "  while x != -1:",                                                      num: 15, bloque: 2 },
+    { txt: "    ruta.append(x)",                                                    num: 16, bloque: 2 },
+    { txt: "    x = p[x]",                                                          num: 17, bloque: 2 },
+    { txt: "  ruta.reverse()",                                                      num: 18, bloque: 2 },
+    { txt: "  if ruta[0] != s:",                                                    num: 19, bloque: 2 },
+    { txt: "    ruta = []",                                                         num: 20, bloque: 2 },
+    { txt: "  return ruta",                                                         num: 21, bloque: 2 }
   ];
 
   /* Listas de adyacencia de un grafo no dirigido, en el orden de la lista de aristas. */
@@ -155,76 +156,75 @@ var EJERCICIO = (function () {
     return G;
   }
 
-  /* params: {G, s, t}. Corre bfs(G, s) y despues camino(pi, s, t). */
+  /* params: {G, s, t}. Corre ssspBFS(G, s) y despues camino(p, s, t).
+     v es el vertice que sale de la cola y u el vecino que se mira, como en bfs.py.
+     d usa Infinity donde el codigo usa float("inf"). */
   function simular(params) {
     var G = params.G, s = params.s, t = params.t, n = G.length, pasos = [];
-    var d = null, pi = null, cola = [], salio = [], u = null, v = null, x = null;
+    var d = null, p = null, q = [], salio = [], u = null, v = null, x = null;
     var ruta = null, foco = null, i = 0;
     while (i < n) { salio.push(false); i = i + 1; }
 
     function N(k) { return k === null ? "–" : String(k); }
     function snap(linea, extra) {
-      var q = {
-        linea: linea, d: d === null ? null : d.slice(), pi: pi === null ? null : pi.slice(),
-        cola: cola.slice(), salio: salio.slice(), u: N(u), v: N(v), x: N(x),
+      var r = {
+        linea: linea, d: d === null ? null : d.slice(), p: p === null ? null : p.slice(),
+        q: q.slice(), salio: salio.slice(), u: N(u), v: N(v), x: N(x),
         ruta: ruta === null ? null : ruta.slice(), foco: foco, hecho: false
       };
-      if (extra) { var y; for (y in extra) { q[y] = extra[y]; } }
-      pasos.push(q);
+      if (extra) { var y; for (y in extra) { r[y] = extra[y]; } }
+      pasos.push(r);
     }
 
     snap(1);
-    d = []; i = 0; while (i < n) { d.push(-1); i = i + 1; }
+    d = []; p = []; i = 0;
+    while (i < n) { d.push(Infinity); p.push(-1); i = i + 1; }
     snap(2);
-    pi = []; i = 0; while (i < n) { pi.push(-1); i = i + 1; }
-    snap(3);
+    q.push(s); snap(3);
     d[s] = 0; snap(4);
     snap(5);
-    cola.push(s); snap(6);
-    snap(7);
-    while (cola.length > 0) {
-      u = cola.shift(); salio[u] = true; foco = u; v = null; snap(8);
+    while (q.length > 0) {
+      v = q.shift(); salio[v] = true; foco = v; u = null; snap(6);
       var j = 0;
-      while (j < G[u].length) {
-        v = G[u][j];
-        snap(9, { mira: [u, v] });
-        snap(10, { mira: [u, v] });
-        if (d[v] === -1) {
-          d[v] = d[u] + 1; snap(11, { baja: [u, v] });
-          pi[v] = u; snap(12, { baja: [u, v] });
-          cola.push(v); snap(13, { baja: [u, v] });
+      while (j < G[v].length) {
+        u = G[v][j];
+        snap(7, { mira: [v, u] });
+        snap(8, { mira: [v, u] });
+        if (d[u] === Infinity) {
+          q.push(u); snap(9, { baja: [v, u] });
+          d[u] = d[v] + 1; snap(10, { baja: [v, u] });
+          p[u] = v; snap(11, { baja: [v, u] });
         }
         j = j + 1;
       }
-      v = null;
-      snap(7);
+      u = null;
+      snap(5);
     }
-    foco = null; u = null;
-    snap(14, { finBfs: true });
+    foco = null; v = null;
+    snap(12, { finBfs: true });
 
-    v = t;
-    ruta = []; snap(15);
-    x = v; snap(16);
-    snap(17);
+    ruta = []; snap(13);
+    x = t; snap(14);
+    snap(15);
     while (x !== -1) {
-      ruta.push(x); snap(18);
-      x = pi[x]; snap(19);
-      snap(17);
+      ruta.push(x); snap(16);
+      x = p[x]; snap(17);
+      snap(15);
     }
-    ruta.reverse(); snap(20);
-    snap(21);
+    ruta.reverse(); snap(18);
+    snap(19);
     if (ruta[0] !== s) {
-      ruta = []; snap(22);
+      ruta = []; snap(20);
     }
-    snap(23, { hecho: true });
+    snap(21, { hecho: true });
     var ult = pasos[pasos.length - 1];
-    ult.resultadoD = d.slice(); ult.resultadoPi = pi.slice(); ult.resultadoRuta = ruta.slice();
+    ult.resultadoD = d.slice(); ult.resultadoP = p.slice(); ult.resultadoRuta = ruta.slice();
     return pasos;
   }
 
   function resumen(params) {
     var ult = simular(params).pop();
-    return { d: ult.resultadoD, pi: ult.resultadoPi, ruta: ult.resultadoRuta };
+    return { d: ult.resultadoD, p: ult.resultadoP, ruta: ult.resultadoRuta };
   }
 
   /* Peso del camino y menor peso entre todos los caminos simples de s a t. */
@@ -301,8 +301,9 @@ if (typeof module !== "undefined") {
     function g() { return GRAFOS[presetActual]; }
     function Gady() { return EJERCICIO.construir(g().n, g().aristas); }
     function paramsActuales() { return { G: Gady(), s: g().s, t: destino }; }
-    function par(p, a, b) { return p && ((p[0] === a && p[1] === b) || (p[0] === b && p[1] === a)); }
-    function lista(a) { return "[" + a.join(", ") + "]"; }
+    function par(r, a, b) { return r && ((r[0] === a && r[1] === b) || (r[0] === b && r[1] === a)); }
+    function f(x) { return x === Infinity ? "inf" : String(x); }
+    function lista(a) { return "[" + a.map(f).join(", ") + "]"; }
 
     function enRuta(r, a, b) {
       var k = 0, si = false;
@@ -311,16 +312,16 @@ if (typeof module !== "undefined") {
     }
 
     function dibujar(a) {
-      var p = g(), G = Gady();
+      var gr = g(), G = Gady();
       document.getElementById("panel-grafo").innerHTML = DIB.dibujar({
-        pos: p.pos, G: G, nombres: NOMBRES9.slice(0, p.n), dirigido: false,
-        peso: p.pesos ? function (u, v) { return EJERCICIO.pesoRuta(p.pesos, [u, v]); } : null,
+        pos: gr.pos, G: G, nombres: NOMBRES9.slice(0, gr.n), dirigido: false,
+        peso: gr.pesos ? function (u, v) { return EJERCICIO.pesoRuta(gr.pesos, [u, v]); } : null,
         nodo: function (i) {
           var s = { relleno: "#ffffff", borde: "#6b7280", tinta: "#24292f", grueso: 2.2, nota: "" };
           if (a && a.d !== null) {
             if (a.salio[i]) { s.relleno = "#b8bec7"; s.borde = "#4b5563"; }
-            else if (a.d[i] !== -1) { s.relleno = "#e3edf8"; s.borde = "#1f5fa8"; }
-            s.nota = (a.d[i] === -1 ? "∞" : a.d[i]) + "/" + (a.pi === null || a.pi[i] === -1 ? "–" : a.pi[i]);
+            else if (a.d[i] !== Infinity) { s.relleno = "#e3edf8"; s.borde = "#1f5fa8"; }
+            s.nota = (a.d[i] === Infinity ? "∞" : a.d[i]) + "/" + (a.p[i] === -1 ? "–" : a.p[i]);
             if (a.foco === i) { s.borde = "#e8a13d"; s.grueso = 4.2; }
           }
           if (a && a.ruta && a.ruta.indexOf(i) >= 0) { s.borde = "#2e7d32"; s.grueso = 4.2; }
@@ -337,22 +338,22 @@ if (typeof module !== "undefined") {
     }
 
     function alPintar(e) {
-      var a = e.actual, p = g();
+      var a = e.actual, gr = g();
       dibujar(a);
-      document.getElementById("ver-cola").textContent = a && a.d !== null ? "deque(" + lista(a.cola) + ")" : "sin crear";
+      document.getElementById("ver-cola").textContent = a && a.d !== null ? "deque(" + lista(a.q) + ")" : "sin crear";
       document.getElementById("ver-d").textContent = a && a.d !== null ? lista(a.d) : "sin crear";
-      document.getElementById("ver-pi").textContent = a && a.pi !== null ? lista(a.pi) : "sin crear";
+      document.getElementById("ver-p").textContent = a && a.p !== null ? lista(a.p) : "sin crear";
       document.getElementById("ver-ruta").textContent = a && a.ruta !== null ? lista(a.ruta) : "sin crear";
       var caja = document.getElementById("resultado-final"), cierre = "";
       if (a && a.hecho) {
         var r = a.resultadoRuta;
         if (r.length === 0) {
-          cierre = "<b>camino devuelve [ ]:</b> el vértice " + destino + " tiene d = -1, no se alcanzó desde " + p.s + ". " +
-                   "La subida por pi termina en " + destino + " mismo, que no es la fuente, y el <code>if</code> vacía la lista.";
+          cierre = "<b>camino devuelve [ ]:</b> el vértice " + destino + " quedó con d = inf, no se alcanzó desde " + gr.s + ". " +
+                   "La subida por p termina en " + destino + " mismo, que no es la fuente, y el <code>if</code> vacía la lista.";
         } else {
           cierre = "<b>camino devuelve " + lista(r) + ":</b> " + (r.length - 1) + (r.length === 2 ? " arista" : " aristas") + ", que es d[" + destino + "] = " + a.resultadoD[destino] + ".";
-          if (p.pesos) {
-            var m = EJERCICIO.mejorPeso(Gady(), p.pesos, p.s, destino), mio = EJERCICIO.pesoRuta(p.pesos, r);
+          if (gr.pesos) {
+            var m = EJERCICIO.mejorPeso(Gady(), gr.pesos, gr.s, destino), mio = EJERCICIO.pesoRuta(gr.pesos, r);
             cierre += " Con los pesos del dibujo ese camino cuesta " + mio + ", y el camino " + lista(m.ruta) + " cuesta " + m.peso + ". " +
                       "La búsqueda entregó el de menos aristas, no el más barato.";
           }
@@ -387,16 +388,17 @@ if (typeof module !== "undefined") {
       Motor.reiniciar(paramsActuales());
     }
 
+    /* valor: entero, o Infinity cuando se escribe inf. */
     function evaluar(valor, params) {
       var r = EJERCICIO.resumen(params), real = r.d[destino], res;
-      if (real === -1) {
-        res = valor === -1
-          ? { ok: true, msg: "Correcto: d[" + destino + "] = -1. Ninguna arista une la componente de " + params.s + " con " + destino + ", así que la búsqueda nunca lo descubre y d conserva el -1 del inicio, que hace de infinito." }
-          : { ok: false, msg: "No. Desde " + params.s + " no hay camino hasta " + destino + ": están en componentes distintas. Un vértice que la búsqueda no descubre queda con d = -1, que en el código hace de infinito, y no con un número de aristas." };
+      if (real === Infinity) {
+        res = valor === Infinity
+          ? { ok: true, msg: "Correcto: d[" + destino + "] = inf. Ninguna arista une la componente de " + params.s + " con " + destino + ", así que la búsqueda nunca lo descubre y d conserva el infinito del inicio." }
+          : { ok: false, msg: "No. Desde " + params.s + " no hay camino hasta " + destino + ": están en componentes distintas. Un vértice que la búsqueda no descubre se queda con d = inf, no con un número de aristas." };
       } else if (valor === real) {
         res = { ok: true, msg: "Correcto: d[" + destino + "] = " + real + ". Es el número de aristas del camino " + lista(r.ruta) + ", el más corto que la búsqueda por niveles encuentra." };
-      } else if (valor === -1) {
-        res = { ok: false, msg: "Sí hay camino de " + params.s + " a " + destino + ": ambos están en la misma componente. El -1 queda solo para los vértices que la búsqueda no descubre." };
+      } else if (valor === Infinity) {
+        res = { ok: false, msg: "Sí hay camino de " + params.s + " a " + destino + ": ambos están en la misma componente. El inf queda solo para los vértices que la búsqueda no descubre." };
       } else if (valor === real + 1) {
         res = { ok: false, msg: "Un número de más: d cuenta aristas, no vértices. El camino tiene " + (real + 1) + " vértices y " + real + " aristas." };
       } else if (valor > real) {
@@ -411,7 +413,7 @@ if (typeof module !== "undefined") {
       Motor.iniciar({
         codigo: EJERCICIO.codigo, simular: EJERCICIO.simular,
         chips: [
-          { campo: "u", rotulo: "u" }, { campo: "v", rotulo: "v" }, { campo: "x", rotulo: "x", clase: "cuenta" }
+          { campo: "v", rotulo: "v" }, { campo: "u", rotulo: "u" }, { campo: "x", rotulo: "x", clase: "cuenta" }
         ],
         paramsIniciales: paramsActuales(), alPintar: alPintar
       });
@@ -419,7 +421,17 @@ if (typeof module !== "undefined") {
 
     arrancar();
     llenarDestinos();
-    Motor.prediccionNumerica(function (valor, params) { return evaluar(valor, params); });
+    document.getElementById("btn-comprobar").addEventListener("click", function () {
+      var t = document.getElementById("prediccion").value.trim().toLowerCase().replace("∞", "inf");
+      var ver = document.getElementById("veredicto"), res, valor;
+      if (t === "inf") { valor = Infinity; }
+      else if (/^-?\d+$/.test(t)) { valor = parseInt(t, 10); }
+      else { valor = null; }
+      if (valor === null) { res = { ok: false, msg: "Escriba un entero o inf." }; }
+      else { res = evaluar(valor, paramsActuales()); }
+      ver.className = res.ok ? "veredicto bien" : "veredicto mal";
+      ver.textContent = res.msg;
+    });
     document.getElementById("destino").addEventListener("change", function () {
       destino = parseInt(this.value, 10);
       document.getElementById("rot-destino").textContent = String(destino);
@@ -441,9 +453,9 @@ if (typeof module !== "undefined") {
     });
 
     var RESPUESTAS = {
-      aristas: { ok: true, msg: "Correcto. La cola ordena los vértices por número de aristas desde la fuente y d[v] se escribe una sola vez, en el primer descubrimiento. Esa cuenta no sabe de pesos: en el grafo de la actividad el camino 0, 3 tiene una arista y cuesta 9, mientras que 0, 1, 2, 3 tiene tres aristas y cuesta 6." },
+      aristas: { ok: true, msg: "Correcto. La cola ordena los vértices por número de aristas desde la fuente y d[u] se escribe una sola vez, en el primer descubrimiento. Esa cuenta no sabe de pesos: en el grafo de la actividad el camino 0, 3 tiene una arista y cuesta 9, mientras que 0, 1, 2, 3 tiene tres aristas y cuesta 6." },
       vacia: { ok: false, msg: "La cola no se vacía antes de tiempo: la búsqueda llega a todos los vértices de la componente de la fuente, con o sin pesos. Lo que falla es lo que se les asigna: aristas, no costo." },
-      pi: { ok: false, msg: "pi[v] se escribe una sola vez, no varias: la condición d[v] == -1 solo deja pasar el primer descubrimiento. Ahí está el problema, pues con pesos un descubrimiento posterior podría ser más barato y el código ya no vuelve a mirarlo." },
+      p: { ok: false, msg: "p[u] se escribe una sola vez, no varias: la condición d[u] == float(\"inf\") solo deja pasar el primer descubrimiento. Ahí está el problema, pues con pesos un descubrimiento posterior podría ser más barato y el código ya no vuelve a mirarlo." },
       dirigido: { ok: false, msg: "La dirección no interviene. Con flechas el mismo grafo da el mismo resultado, y la búsqueda sigue entregando el camino de menos aristas aunque no sea el más barato." }
     };
     Array.prototype.forEach.call(document.querySelectorAll("input[name=porque]"), function (b) {

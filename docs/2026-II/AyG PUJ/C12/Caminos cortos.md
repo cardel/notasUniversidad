@@ -1,843 +1,485 @@
-# Caminos más cortos: BFS y Bellman-Ford-Moore · AyG C12
+# Caminos más cortos: generalidades, BFS y la idea de Bellman-Ford-Moore · AyG C12
 
-**Viernes 16 de octubre de 2026.**
+**Viernes 16 de octubre de 2026, grupo B.**
 
-La búsqueda en amplitud recorre un grafo por niveles y deja en cada vértice
-cuántas aristas lo separan de la fuente. Si cada arista tiene un costo, como el
-tiempo de un vuelo o el precio de un peaje, ¿sigue siendo cierto que el camino
-con menos aristas es el más barato? Y si algunos costos son negativos, ¿existe
-siempre un camino más barato? La sesión responde las dos preguntas con una sola
-operación, la relajación, y con el algoritmo que la repite por rondas,
-Bellman-Ford, hasta llegar a la variante de Moore, que solo relaja lo que puede
-cambiar algo.
+La búsqueda en amplitud ya entrega la distancia en aristas desde una fuente.
+Cuando las aristas pesan distinto, el camino de menos aristas puede salir caro,
+y la amplitud no corrige una distancia que ya asignó. La sesión plantea el
+problema en sus dos versiones, un origen y todos los pares, mira qué hacen los
+ciclos con un camino más corto y construye la idea de Bellman-Ford-Moore:
+calcular los caminos más cortos que usan a lo sumo $0, 1, 2, \ldots$ aristas,
+hasta $n-1$, y usar una fila más para detectar un ciclo negativo.
 
 Al terminar la sesión se espera poder:
 
-- Calcular con la búsqueda en amplitud la distancia en aristas desde una
-  fuente y reconstruir el camino con $\pi$.
-- Definir $w(p)$ y $\delta(u,v)$, y decidir cuándo $\delta(s,v)$ vale
-  $\infty$ o $-\infty$.
-- Aplicar la relajación y usar sus propiedades para justificar un algoritmo.
-- Ejecutar a mano e implementar Bellman-Ford, con parada temprana y con
-  detección de ciclos negativos, en $O(VE)$.
-- Construir la variante de Moore a partir de la versión por rondas y seguirla
-  en una tabla.
+- Distinguir el problema de un solo origen del de todos los pares y decir qué
+  algoritmo resuelve cada uno, y con qué costo.
+- Ejecutar la búsqueda en amplitud a mano, llenar los arreglos de distancias y
+  de predecesores y reconstruir un camino.
+- Explicar por qué un camino más corto no repite vértices y por qué un ciclo
+  negativo deja el problema sin solución.
+- Calcular los caminos más cortos de a lo sumo $0, 1, \ldots, n-1$ aristas y
+  usar la fila $n$ para detectar un ciclo negativo.
 
 ## Diapositivas
 
 [clase12-caminos-cortos.pdf](./clase12-caminos-cortos.pdf){ target=_blank rel=noopener },
-82 páginas. Los grafos van dibujados: el no dirigido de seis vértices de la
-amplitud con $d/\pi$ debajo de cada vértice, y el dirigido de cinco vértices
-de la sesión con sus pesos, el árbol de caminos más cortos resaltado en verde
-y, al final, la arista $4 \to 2$ cambiada a peso $-4$.
+52 páginas. Allí están dibujados los grafos de esta nota, con el árbol de
+caminos pintado en verde fila por fila.
 
-## Recuento: la búsqueda en amplitud
+## Las dos versiones del problema
 
-El recorrido completo está en la nota de
-[representaciones y recorridos](../C6/Representaciones%20y%20recorridos.md);
-aquí van las piezas que se usan para hablar de caminos más cortos.
+**Un origen, múltiples destinos (SSSP).**
+*Entrada:* un grafo dirigido $G=(V,E)$ con una función de peso
+$w: E \to \mathbb{R}$ y un nodo $s \in V$.
+*Salida:* un arreglo $A[0..|V|)$ tal que para cada $u \in [0..|V|)$, $A[u]$
+es el costo del camino más corto entre $s$ y $u$.
 
-### Lo que deja la amplitud en cada vértice
+**Múltiples orígenes, múltiples destinos (APSP).**
+*Entrada:* un grafo dirigido $G=(V,E)$ con una función de peso
+$w: E \to \mathbb{R}$.
+*Salida:* una matriz $M[0..|V|)[0..|V|)$ tal que para cada
+$u, v \in [0..|V|)$, $M[u][v]$ es el costo del camino más corto entre $u$ y
+$v$.
 
-$BFS(G,s)$, de la Sección 22.2 de CLRS, deja dos valores en cada vértice $v$:
+SSSP viene de *single source shortest paths*; APSP, de *all pairs shortest
+paths*.
 
-- $v.d$: el número de aristas con que se llegó a $v$ desde $s$; $\infty$ si
-  nunca se llegó.
-- $v.\pi$: el vértice desde el que se descubrió $v$; $NIL$ para $s$ y para los
-  que no se alcanzan.
-
-El grafo de ejemplo es no dirigido, con seis vértices y las aristas $0$–$1$,
-$0$–$2$, $1$–$3$, $2$–$3$, $2$–$4$, $3$–$5$ y $4$–$5$. Desde $0$, con las
-listas en orden creciente, la cola saca $0,1,2,3,4,5$, en ese orden: primero
-todo lo que está a una arista, luego lo que está a dos.
-
-| Vértice | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
-| $d/\pi$ | $0/-$ | $1/0$ | $1/0$ | $2/1$ | $2/2$ | $3/3$ |
-
-### El código
-
-```python
-def bfs(G, s):
-    # d[v]: aristas de s a v; pi[v]: el anterior en el camino.
-    n = len(G)
-    d = [-1] * n
-    pi = [-1] * n
-    d[s] = 0
-    cola = deque()
-    cola.append(s)
-    while len(cola) > 0:
-        u = cola.popleft()
-        for v in G[u]:
-            if d[v] == -1:
-                d[v] = d[u] + 1
-                pi[v] = u
-                cola.append(v)
-    return (d, pi)
-```
-
-`d[v] == -1` hace las veces de $\infty$ y de color blanco a la vez. Cada
-vértice entra a la cola una sola vez, así que el costo es $\Theta(V+E)$.
-
-### El teorema y la reconstrucción del camino
-
-**Teorema (Teorema 22.5 de CLRS).** Sea $G=(V,E)$ un grafo, dirigido o no, y
-$s \in V$. Al terminar $BFS(G,s)$, $v.d = \delta(s,v)$ para todo $v \in V$,
-donde $\delta(s,v)$ es el menor número de aristas de un camino de $s$ a $v$.
-Además, para todo $v \neq s$ alcanzable, uno de los caminos más cortos de $s$ a
-$v$ es un camino más corto de $s$ a $v.\pi$ seguido de la arista
-$(v.\pi, v)$.
-
-En el grafo anterior, $5.\pi = 3$, $3.\pi = 1$ y $1.\pi = 0$: el camino es
-$0,1,3,5$, con $5.d = 3$ aristas. No hay uno de dos, porque $5$ no es vecino
-de $1$ ni de $2$.
-
-```python
-def camino(pi, s, v):
-    # Sube por pi desde v y voltea la lista; [] si no se llega.
-    ruta = []
-    x = v
-    while x != -1:
-        ruta.append(x)
-        x = pi[x]
-    ruta.reverse()
-    if ruta[0] != s:
-        ruta = []
-    return ruta
-```
-
-Es $PRINT\text{-}PATH$ de CLRS sin recursión: sube por $\pi$ desde $v$ hasta
-$NIL$ y voltea la lista. Si lo que queda arriba no es $s$, $v$ no era
-alcanzable.
-
-### ¿Y si las aristas tienen peso?
-
-Un grafo dirigido de tres vértices: $0 \to 2$ con peso $10$, $0 \to 1$ con
-peso $1$ y $1 \to 2$ con peso $1$. Se ejecuta la amplitud desde $0$ con la
-lista de $0$ en el orden $2, 1$. ¿Qué camino a $2$ deja en $\pi$? ¿Es el más
-barato?
-
-La amplitud descubre $2$ desde $0$ en el primer nivel y ahí se queda:
-$2.\pi = 0$ y el camino cuesta $10$. El camino $0,1,2$ tiene una arista más y
-cuesta $2$. Con el otro orden de la lista pasa lo mismo.
-
-Lo que falla es que la amplitud fija la distancia de un vértice la primera vez
-que lo ve. Con pesos, un camino que se descubre después puede ser más barato:
-hace falta poder *corregir* una distancia ya asignada.
-
-## Caminos más cortos con pesos
-
-### Peso de un camino y distancia
+### El costo de un camino
 
 **Definición (CLRS, Capítulo 24).** Sea $G=(V,E)$ dirigido con una función de
 peso $w: E \to \mathbb{R}$. El peso de un camino
 $p = \langle v_0, v_1, \ldots, v_k \rangle$ es
 
 $$
-w(p) = \sum_{i=1}^{k} w(v_{i-1}, v_i).
+w(p) = \sum_{i=1}^{k} w(v_{i-1}, v_i),
 $$
 
-El peso del camino más corto de $u$ a $v$ es
+y el costo del camino más corto de $u$ a $v$, $\delta(u,v)$, es el menor
+$w(p)$ entre los caminos de $u$ a $v$; vale $\infty$ si no hay camino.
 
-$$
-\delta(u,v) =
-\begin{cases}
-  \min\{\, w(p) : u \overset{p}{\leadsto} v \,\} & \text{si hay camino de } u \text{ a } v,\\
-  \infty & \text{si no lo hay.}
-\end{cases}
-$$
+Por ejemplo, si $w(0,2) = 4$, $w(2,3) = 1$ y $w(0,3) = 7$, el camino
+$\langle 0,2,3 \rangle$ pesa $4+1 = 5$ y el camino $\langle 0,3 \rangle$ pesa
+$7$. El de más aristas es el más corto, y $\delta(0,3) = 5$ si no hay otros
+caminos.
 
-Un camino más corto de $u$ a $v$ es cualquier $p$ con $w(p) = \delta(u,v)$.
+### Los algoritmos de cada versión
 
-El grafo de toda la sesión es dirigido, con cinco vértices, fuente $0$ y siete
-aristas, en este orden de las listas:
+Con $n = |V|$ y $m = |E|$:
 
-| Arista | $(0,1)$ | $(0,2)$ | $(1,3)$ | $(2,1)$ | $(2,4)$ | $(3,4)$ | $(4,2)$ |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Peso | $4$ | $5$ | $3$ | $-2$ | $6$ | $2$ | $1$ |
+| Versión | Algoritmo | Tiempo |
+|---|---|---|
+| SSSP | Búsqueda en amplitud (BFS) | $O(n+m)$ |
+| SSSP | Algoritmo para grafos dirigidos acíclicos | $O(n+m)$ |
+| SSSP | Bellman-Ford-Moore | $O(n \cdot m)$ |
+| SSSP | Dijkstra | $O((n+m)\log n)$ |
+| APSP | Floyd-Warshall | $O(n^3)$ |
 
-De $0$ a $4$ hay tres caminos simples:
+¿Se puede resolver APSP con un algoritmo de SSSP? Sí: se invoca $n$ veces, una
+por cada origen, y cada invocación llena una fila de $M$. El problema aparece
+cuando el grafo es denso, porque ahí $m$ crece como $n^2$. Con
+Bellman-Ford-Moore, las $n$ invocaciones cuestan
+$O(n \cdot n \cdot m) = O(n^4)$; con Dijkstra,
+$O(n \cdot n^2 \log n) = O(n^3 \log n)$. Floyd-Warshall resuelve el mismo
+problema en $O(n^3)$, y en ese caso es el que conviene.
 
-- $\langle 0,1,3,4 \rangle$: $4+3+2 = 9$, con tres aristas.
-- $\langle 0,2,4 \rangle$: $5+6 = 11$, con dos aristas.
-- $\langle 0,2,1,3,4 \rangle$: $5-2+3+2 = 8$, con cuatro.
+## Repaso: la búsqueda en amplitud
 
-$\delta(0,4) = 8$, y lo da el camino con más aristas.
+La amplitud resuelve SSSP en grafos sin peso o en grafos en los que todas las
+aristas tienen el mismo peso, porque ahí el camino más corto es el de menos
+aristas (CLRS, Sección 22.2). Todos los algoritmos de caminos más cortos del
+curso dejan su respuesta en dos arreglos:
 
-### Pesos negativos y ciclos negativos
+- `dist[v]`: el costo del camino más corto de $s$ a $v$;
+- `pred[v]`: el vértice anterior a $v$ en ese camino, $-1$ para $s$ y para los
+  que no se alcanzan.
 
-Otro grafo dirigido, con fuente $0$ y las aristas $4 \to 0$ de peso $2$,
-$0 \to 1$ de peso $1$, $1 \to 2$ de peso $-3$, $2 \to 1$ de peso $1$ y
-$2 \to 3$ de peso $2$.
+### El código
 
-- El ciclo $\langle 1,2,1 \rangle$ pesa $-3+1 = -2$. Cada vuelta baja el costo
-  en $2$: no hay mínimo y $\delta(0,1) = \delta(0,2) = -\infty$.
-- $3$ cuelga del ciclo, así que también $\delta(0,3) = -\infty$.
-- A $4$ no se llega desde $0$: $\delta(0,4) = \infty$, aunque $4$ sí llegue a
-  $0$.
-
-CLRS lo dice en el Capítulo 24, en el apartado de pesos negativos: las aristas
-negativas no son el problema. El problema es un ciclo de peso negativo
-*alcanzable desde la fuente*. Si existe, cualquier vértice al que se llegue
-pasando por él tiene $\delta(s,v) = -\infty$. Un ciclo negativo al que no se
-llega desde $s$ no afecta ninguna distancia desde $s$.
-
-En el grafo de la sesión la única arista negativa es $2 \to 1$, de peso $-2$,
-y el único ciclo es $\langle 2,1,3,4,2 \rangle$, de peso $-2+3+2+1 = 4$. No
-hay ciclo negativo y todas las distancias desde $0$ son finitas.
-
-### Subestructura óptima
-
-**Lema (Lema 24.1 de CLRS).** Sea $p = \langle v_0, v_1, \ldots, v_k \rangle$
-un camino más corto de $v_0$ a $v_k$ y, para $0 \leq i \leq j \leq k$, sea
-$p_{ij} = \langle v_i, \ldots, v_j \rangle$ el subcamino de $p$ entre $v_i$ y
-$v_j$. Entonces $p_{ij}$ es un camino más corto de $v_i$ a $v_j$.
-
-En el grafo de la sesión, $\langle 0,2,1,3,4 \rangle$ es más corto de $0$ a
-$4$. Su tramo $\langle 2,1,3 \rangle$ pesa $1$, y no hay otro camino de $2$ a
-$3$: es más corto. Su tramo $\langle 0,2,1 \rangle$ pesa $3$, menos que la
-arista directa $0 \to 1$, de peso $4$.
-
-*Demostración.* Se procede por contradicción.
-
-*Desarrollo.* Se parte $p$ en tres tramos,
-$v_0 \overset{p_{0i}}{\leadsto} v_i \overset{p_{ij}}{\leadsto} v_j \overset{p_{jk}}{\leadsto} v_k$,
-así que $w(p) = w(p_{0i}) + w(p_{ij}) + w(p_{jk})$. Si existiera un camino
-$p'_{ij}$ de $v_i$ a $v_j$ con $w(p'_{ij}) < w(p_{ij})$, el camino
-$v_0 \overset{p_{0i}}{\leadsto} v_i \overset{p'_{ij}}{\leadsto} v_j \overset{p_{jk}}{\leadsto} v_k$
-pesaría $w(p_{0i}) + w(p'_{ij}) + w(p_{jk}) < w(p)$, y $p$ no sería más corto.
-
-*Conclusión.* Por lo tanto, se puede concluir que todo subcamino de un camino
-más corto es un camino más corto entre sus extremos. $\blacksquare$
-
-### Un camino más corto no tiene ciclos
-
-Si un camino más corto repitiera un vértice, ¿qué peso podría tener el ciclo
-entre las dos visitas? CLRS, en el Capítulo 24, separa tres casos:
-
-- **Negativo**: entonces $\delta(s,v) = -\infty$ y no hay camino más corto.
-- **Positivo**: quitarlo da un camino más barato, así que el camino no era más
-  corto.
-- **Cero**: quitarlo da otro camino con el mismo peso.
-
-Sin ciclos negativos alcanzables siempre hay un camino más corto *simple*, con
-a lo sumo $|V|-1$ aristas. En el grafo de la sesión,
-$\langle 0,2,1,3,4,2,1,3,4 \rangle$ pesa $12$: le sobra una vuelta de peso
-$4$.
-
-### La representación con $\pi$
-
-Como en la amplitud, cada vértice guarda su predecesor $v.\pi$. Al terminar,
-el subgrafo $G_\pi$ de las aristas $(v.\pi, v)$ es un *árbol de caminos más
-cortos* con raíz $s$: el camino del árbol de $s$ a $v$ es un camino más corto
-en $G$ (CLRS, Capítulo 24, representación de los caminos).
-
-¿Qué aristas forman el árbol en el grafo de la sesión? Cada vértice distinto
-de $0$ tiene exactamente una arista que entra en él desde su $\pi$:
-
-| Vértice | $0$ | $1$ | $2$ | $3$ | $4$ |
-|---|:-:|:-:|:-:|:-:|:-:|
-| $\delta/\pi$ | $0/-$ | $3/2$ | $5/0$ | $6/1$ | $8/3$ |
-
-El árbol son las aristas $0 \to 2$, $2 \to 1$, $1 \to 3$ y $3 \to 4$. Desde
-$4$ se sube a $3$, $1$, $2$ y $0$: el camino es $\langle 0,2,1,3,4 \rangle$, y
-la misma función `camino` lo reconstruye.
-
-## Relajación
-
-### Inicializar y relajar
-
-**CLRS, Capítulo 24, relajación.**
-
-$INITIALIZE\text{-}SINGLE\text{-}SOURCE(G,s)$
-
-1. para cada $v \in G.V$: $v.d = \infty$, $v.\pi = NIL$
-2. $s.d = 0$
-
-$RELAX(u,v,w)$
-
-1. si $v.d > u.d + w(u,v)$
-2. $\quad v.d = u.d + w(u,v)$
-3. $\quad v.\pi = u$
-
-$v.d$ es una *estimación*: el mejor camino de $s$ a $v$ conocido hasta ahora.
-Relajar $(u,v)$ es preguntar si pasar por $u$ la mejora; es la corrección que
-la amplitud no hacía.
+El código de la amplitud que se usa en el curso está en
+[bfs.py](./codigo/bfs.py). Ahí los dos arreglos se llaman `d` y `p`. La
+primera versión, con un único origen:
 
 ```python
-INF = float('inf')
+from collections import deque
 
+# Implementación con un único origen s
+def ssspBFS(G, s):
+  q = deque()
+  vis, d, p = [False for _ in range(len(G))], [float("inf") for _ in range(len(G))], [-1 for _ in range(len(G))]
+  q.append(s)
+  vis[s], d[s] = True, 0
 
-def inicializar(n, s):
-    # INITIALIZE-SINGLE-SOURCE: infinito salvo en la fuente.
-    d = [INF] * n
-    pi = [-1] * n
-    d[s] = 0
-    return (d, pi)
+  while len(q) > 0:
+    v = q.popleft()
+    for u in G[v]:
+      if not vis[u]:
+        q.append(u)
+        vis[u] = True
+        d[u] = d[v] + 1
+        p[u] = v
 
-
-def relajar(u, v, w, d, pi):
-    # RELAX; devuelve True si d[v] cambio.
-    cambio = False
-    if d[u] + w < d[v]:
-        d[v] = d[u] + w
-        pi[v] = u
-        cambio = True
-    return cambio
+  return d, p
 ```
 
-Hay una diferencia con CLRS: `relajar` devuelve si cambió `d[v]`. La parada
-temprana y la variante de Moore usan ese valor.
+El archivo trae dos variantes más. Una arranca con dos orígenes en la cola, y
+`d[u]` termina siendo la distancia al más cercano de los dos. La otra quita el
+arreglo `vis`: un vértice no descubierto tiene costo infinito, así que la
+pregunta `d[u] == float("inf")` hace el mismo trabajo.
+
+### Un ejemplo de ejecución
+
+El grafo es dirigido y sin pesos, con vértices $0$ a $5$, fuente $5$ y estas
+aristas: $0 \to 1$, $1 \to 0$, $0 \to 5$, $0 \to 3$, $5 \to 3$, $3 \to 0$,
+$3 \to 2$, $2 \to 4$, $3 \to 4$, $4 \to 3$ y $4 \to 1$. Con las listas en
+orden creciente, ¿en qué orden salen los vértices de la cola y qué queda en
+`dist` y en `pred`?
+
+| Sale | Descubre | Cola después |
+|---|---|---|
+| $5$ | $3$ | $[3]$ |
+| $3$ | $0, 2, 4$ | $[0, 2, 4]$ |
+| $0$ | $1$ ($3$ y $5$ ya se vieron) | $[2, 4, 1]$ |
+| $2$ | nada ($4$ ya se vio) | $[4, 1]$ |
+| $4$ | nada ($1$ y $3$ ya se vieron) | $[1]$ |
+| $1$ | nada ($0$ ya se vio) | $[\,]$ |
+
+| | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
+|---|---|---|---|---|---|---|
+| `dist` | $2$ | $3$ | $2$ | $1$ | $2$ | $0$ |
+| `pred` | $3$ | $0$ | $3$ | $5$ | $3$ | $-1$ |
+
+### Reconstruir el camino
+
+Para llegar al nodo $1$ se sube por `pred` desde $1$: $\texttt{pred}[1] = 0$,
+$\texttt{pred}[0] = 3$, $\texttt{pred}[3] = 5$ y $\texttt{pred}[5] = -1$.
+Leído al revés, el camino más corto es $5, 3, 0, 1$, con
+$\texttt{dist}[1] = 3$ aristas.
+
+Las aristas $(\texttt{pred}[v], v)$, que son $5 \to 3$, $3 \to 0$, $3 \to 2$,
+$3 \to 4$ y $0 \to 1$, forman un árbol con raíz en $5$. El camino del árbol
+hasta cada vértice es un camino más corto (CLRS, Teorema 22.5).
+
+### Cuando las aristas tienen pesos distintos
+
+Tres vértices, fuente $0$, y las aristas $0 \to 2$ de peso $10$, $0 \to 1$ de
+peso $1$ y $1 \to 2$ de peso $1$. La amplitud descubre $2$ desde $0$ en el
+primer nivel y ahí lo deja: $\texttt{dist}[2]$ queda con el camino $0, 2$, que
+cuesta $10$. El camino $0, 1, 2$ tiene una arista más y cuesta $2$. Con pesos
+distintos hace falta poder corregir una distancia ya asignada.
+
+## Ciclos en un camino más corto
+
+### Un ciclo positivo nunca ayuda
+
+El grafo tiene vértices $0$ a $5$, fuente $0$ y estas aristas con su peso:
+$0 \to 1$ ($5$), $1 \to 3$ ($2$), $3 \to 1$ ($-1$), $3 \to 0$ ($-2$),
+$0 \to 2$ ($4$), $2 \to 3$ ($1$), $2 \to 4$ ($6$), $3 \to 5$ ($8$),
+$3 \to 4$ ($2$) y $4 \to 5$ ($1$).
+
+El camino más corto de $0$ a $5$ es $0, 2, 3, 4, 5$, de costo $8$. Si antes de
+seguir a $4$ se da la vuelta $0, 2, 3, 0$, de peso $4+1-2 = 3$, el camino
+llega a $5$ con costo $11$.
+
+| | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
+|---|---|---|---|---|---|---|
+| `dist` | $0$ | $4$ | $4$ | $5$ | $7$ | $8$ |
+
+El argumento general: si un camino más corto pasara dos veces por el mismo
+vértice, el tramo entre las dos visitas sería un ciclo. Con peso positivo,
+quitarlo da un camino más barato, y el camino no era el más corto. Con peso
+cero, quitarlo da otro camino del mismo costo.
+
+Una arista negativa sola no causa problemas. Este grafo tiene dos y todas las
+distancias son finitas. A $1$ se llega por $0, 2, 3, 1$, con costo
+$4+1-1 = 4$, más barato que la arista directa de peso $5$. Los ciclos
+$0, 2, 3, 0$ y $1, 3, 1$ pesan $3$ y $1$.
+
+**Consecuencia.** Sin ciclos negativos siempre hay un camino más corto simple,
+y un camino simple en un grafo de $n$ vértices tiene a lo sumo $n-1$ aristas.
+
+### Un ciclo negativo
+
+Dos vértices, fuente $0$, con $0 \to 1$ de peso $2$ y $1 \to 0$ de peso $-4$.
+¿Cuál es el camino más corto de $0$ a $1$?
+
+No existe. El ciclo $0, 1, 0$ pesa $2-4 = -2$: el camino $0, 1$ cuesta $2$, el
+camino $0, 1, 0, 1$ cuesta $0$, el siguiente $-2$, y cada vuelta resta $2$
+más. Siempre hay uno más barato. Cuando hay un ciclo negativo que se alcanza
+desde el origen, el problema no está bien definido: no hay mínimo para los
+vértices a los que se llega pasando por el ciclo (CLRS, Capítulo 24, pesos
+negativos).
+
+### Un ciclo negativo dentro de un grafo
+
+Vértices $0$ a $5$, fuente $0$, con las aristas $0 \to 1$ ($5$), $0 \to 3$
+($2$), $1 \to 3$ ($1$), $3 \to 1$ ($-2$), $0 \to 2$ ($4$), $2 \to 3$ ($1$),
+$2 \to 4$ ($6$), $3 \to 5$ ($8$), $3 \to 4$ ($2$) y $4 \to 5$ ($1$).
+
+El ciclo $1, 3, 1$ pesa $1-2 = -1$ y se alcanza desde $0$. A $1$, $3$, $4$ y
+$5$ se llega pasando por él, y ninguno tiene camino más corto. El arreglo
+`dist` que pide la salida del problema no está definido.
+
+### Un ciclo negativo al que no se llega
+
+Vértices $1$ a $6$, con las aristas $1 \to 2$ ($-5$), $2 \to 4$ ($2$),
+$2 \to 3$ ($2$), $4 \to 3$ ($3$), $3 \to 1$ ($1$), $1 \to 5$ ($4$) y
+$5 \to 6$ ($8$). El ciclo $1, 2, 3, 1$ pesa $-5+2+1 = -2$. Con origen en $5$,
+¿está definido el problema?
+
+Sí. Desde $5$ solo se llega a $6$: $\texttt{dist}[5] = 0$,
+$\texttt{dist}[6] = 8$ y los demás quedan en $\infty$. Un ciclo negativo solo
+daña el problema si se alcanza desde el origen.
+
+## Caminos de a lo sumo $k$ aristas
+
+En lugar de buscar de una vez el camino más corto, se calculan los caminos más
+cortos que usan:
+
+- a lo sumo $0$ aristas: solo el origen, con costo $0$;
+- a lo sumo $1$ arista;
+- a lo sumo $2$ aristas, y así hasta a lo sumo $n-1$ aristas.
+
+**Por qué alcanza con $n-1$.** Sin ciclos negativos alcanzables, el camino más
+corto es simple y tiene a lo sumo $n-1$ aristas. Los caminos de a lo sumo
+$n-1$ aristas ya contienen la respuesta.
+
+**Cómo se pasa de $k-1$ a $k$.** Un camino más corto de a lo sumo $k$ aristas
+hasta $v$ es el que ya se tenía con $k-1$, o uno de a lo sumo $k-1$ aristas
+hasta algún $u$ seguido de la arista $(u, v)$. Se prueban todas las aristas y
+se queda el más barato.
+
+### El ejemplo
+
+Seis vértices, origen $3$, y estas aristas con su peso:
+
+| Arista | Peso | Arista | Peso | Arista | Peso |
+|---|---|---|---|---|---|
+| $0 \to 2$ | $3$ | $2 \to 1$ | $-2$ | $3 \to 4$ | $6$ |
+| $0 \to 5$ | $3$ | $2 \to 3$ | $-5$ | $4 \to 1$ | $3$ |
+| $1 \to 0$ | $2$ | $2 \to 4$ | $-3$ | $4 \to 5$ | $2$ |
+| $1 \to 2$ | $4$ | $3 \to 1$ | $1$ | $5 \to 1$ | $-2$ |
+
+Como hay seis vértices, los caminos más cortos tienen a lo sumo $5$ aristas.
+La fila $k$ de la tabla guarda el costo del camino más corto de a lo sumo $k$
+aristas hasta cada vértice; en negrilla, lo que cambió respecto a la fila
+anterior.
+
+| $k$ | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
+|---|---|---|---|---|---|---|
+| $0$ | $\infty$ | $\infty$ | $\infty$ | $0$ | $\infty$ | $\infty$ |
+| $1$ | $\infty$ | **$1$** | $\infty$ | $0$ | **$6$** | $\infty$ |
+| $2$ | **$3$** | $1$ | **$5$** | $0$ | $6$ | **$8$** |
+| $3$ | $3$ | $1$ | $5$ | $0$ | **$2$** | **$6$** |
+| $4$ | $3$ | $1$ | $5$ | $0$ | $2$ | **$4$** |
+| $5$ | $3$ | $1$ | $5$ | $0$ | $2$ | $4$ |
+
+Y el arreglo `pred` después de cada fila:
+
+| Después de $k$ | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
+|---|---|---|---|---|---|---|
+| $0$ | $-1$ | $-1$ | $-1$ | $-1$ | $-1$ | $-1$ |
+| $1$ | $-1$ | $3$ | $-1$ | $-1$ | $3$ | $-1$ |
+| $2$ | $1$ | $3$ | $1$ | $-1$ | $3$ | $4$ |
+| $3$ | $1$ | $3$ | $1$ | $-1$ | $2$ | $0$ |
+| $4$ y $5$ | $1$ | $3$ | $1$ | $-1$ | $2$ | $4$ |
+
+Fila por fila:
+
+- **$0$ aristas.** Solo se llega a $3$, con costo $0$.
+- **$1$ arista.** Las aristas que salen de $3$: a $1$ con costo $1$ y a $4$
+  con costo $6$.
+- **$2$ aristas.** Se extienden los caminos que llegan a $1$ y a $4$:
+  $1+2 = 3$ a $0$, $1+4 = 5$ a $2$ y $6+2 = 8$ a $5$. La arista $4 \to 1$
+  daría $6+3 = 9$, peor que $1$.
+- **$3$ aristas.** $2 \to 4$ da $5-3 = 2$, mejor que $6$, y $0 \to 5$ da
+  $3+3 = 6$, mejor que $8$. La arista $2 \to 3$ da $5-5 = 0$ y no mejora a
+  $3$.
+- **$4$ aristas.** $4 \to 5$ da $2+2 = 4$, mejor que $6$.
+- **$5$ aristas.** No mejora nada.
+
+La fila de $5 = n-1$ aristas tiene los costos de los caminos más cortos. Hasta
+$5$ se sube por `pred`: $4$, $2$, $1$, $3$. El camino es $3, 1, 2, 4, 5$, de
+costo $1+4-3+2 = 4$, y usa cuatro aristas.
+
+¿Qué pasaría si se calculara la fila de $6 = n$ aristas?
+
+### Con $n$ aristas aparece el ciclo negativo
+
+En el ejemplo no cambia nada. Un camino con $n$ aristas pasa por $n+1$
+vértices y repite alguno, es decir, tiene un ciclo. Si con $n$ aristas aparece
+un camino mejor, ese ciclo baja el costo, y es negativo.
+
+Cuatro vértices, origen $0$, con las aristas $0 \to 1$ ($1$), $1 \to 2$
+($3$), $2 \to 0$ ($-5$) y $2 \to 3$ ($2$):
+
+| $k$ | $0$ | $1$ | $2$ | $3$ |
+|---|---|---|---|---|
+| $0$ | $0$ | $\infty$ | $\infty$ | $\infty$ |
+| $1$ | $0$ | **$1$** | $\infty$ | $\infty$ |
+| $2$ | $0$ | $1$ | **$4$** | $\infty$ |
+| $3$ | **$-1$** | $1$ | $4$ | **$6$** |
+| $4$ | $-1$ | **$0$** | $4$ | $6$ |
+
+Con $n-1 = 3$ aristas, $\texttt{dist}[1] = 1$. Con $4$ aristas baja a $0$, por
+el camino $0, 1, 2, 0, 1$: pasa dos veces por $1$, y en medio está el ciclo
+$1, 2, 0, 1$, de peso $3-5+1 = -1$.
+
+En resumen:
+
+- Sin ciclos negativos alcanzables, la fila $n-1$ es la respuesta y la fila
+  $n$ es igual.
+- Si la fila $n$ mejora algún costo, hay un ciclo negativo alcanzable y el
+  problema no está definido.
+
+## Los caminos más cortos se componen de caminos más cortos
+
+**Teorema (CLRS, Lema 24.1).** Sea $G = (V,E)$ un grafo dirigido con una
+función de peso $w: E \to \mathbb{R}$ y sea
+$p = \langle v_0, v_1, \ldots, v_k \rangle$ un camino más corto de $v_0$ a
+$v_k$. Entonces, para todo $0 \leq i \leq j \leq k$, el subcamino
+$p_{ij} = \langle v_i, v_{i+1}, \ldots, v_j \rangle$ es un camino más corto de
+$v_i$ a $v_j$.
+
+En el ejemplo de seis vértices, el camino más corto a $5$ es
+$3, 1, 2, 4, 5$. Su tramo $3, 1, 2$ cuesta $5 = \texttt{dist}[2]$ y su tramo
+$3, 1, 2, 4$ cuesta $2 = \texttt{dist}[4]$: los dos son caminos más cortos.
+
+Las tablas usan el teorema todo el tiempo. El paso de $k-1$ a $k$ aristas toma
+un camino más corto que ya se tenía y le agrega una arista, y cada `pred`
+apunta a un vértice cuyo camino ya estaba en la fila anterior.
+
+La demostración queda como ejercicio sugerido, en cuatro partes: teorema,
+estrategia, desarrollo y conclusión. Los ejercicios sugeridos del segundo
+corte pueden ser bonos en el parcial, y quien intente la demostración puede
+enviarla para recibir correcciones.
+
+## Relajación y la idea del algoritmo
 
 ### Relajar una arista
 
-La Figura 24.3 de CLRS muestra los dos casos sobre una arista $(u,v)$ de peso
-$2$, con $u.d = 5$.
+Relajar la arista $(u, v)$ es preguntar si llegar a $v$ pasando por $u$ es más
+barato que lo que se tiene: si $d[v] > d[u] + w(u,v)$, se cambia $d[v]$ por
+$d[u] + w(u,v)$ y $\texttt{pred}[v]$ por $u$ (CLRS, Capítulo 24).
 
-| | $u.d$ | $v.d$ antes | $u.d + w(u,v)$ | $v.d$ después | $v.\pi$ |
-|---|:-:|:-:|:-:|:-:|---|
-| Mejora | $5$ | $9$ | $7$ | $7$ | pasa a ser $u$ |
-| No cambia | $5$ | $6$ | $7$ | $6$ | se queda |
+Con $d[u] = 5$ y $w(u,v) = 4$:
 
-En el primer caso la arista mejora a $v$, porque $9 > 5+2$. En el segundo,
-$v$ ya tenía algo mejor, $6 \leq 5+2$, y nada cambia.
+- si $d[v] = 8$, $5 + 4 = 9 > 8$ y nada cambia;
+- si $d[v] = 11$, $5 + 4 = 9 < 11$ y $d[v]$ pasa a $9$.
 
-### Las propiedades de la relajación
+En las tablas del ejemplo, al pasar de $2$ a $3$ aristas, relajar $2 \to 4$
+con $d[2] = 5$ bajó $d[4]$ de $6$ a $5-3 = 2$. Esa es la corrección que la
+amplitud no hacía.
 
-Todas las de la Sección 24.5 de CLRS suponen que $d$ y $\pi$ se inicializaron
-con $INITIALIZE\text{-}SINGLE\text{-}SOURCE(G,s)$ y que después solo cambian
-con $RELAX$, en cualquier orden y cualquier número de veces.
+### Bellman-Ford-Moore (CLRS, Sección 24.1)
 
-**Desigualdad triangular (Lema 24.10).** Para toda arista $(u,v)$:
-$\delta(s,v) \leq \delta(s,u) + w(u,v)$.
+1. Al comienzo $d[s] = 0$ y $d[v] = \infty$ para los demás; `pred` queda en
+   $-1$.
+2. Se hacen $n-1$ rondas. En cada ronda se relajan todas las aristas del
+   grafo.
+3. Se hace una ronda más, la $n$, solo para revisar: si al relajar alguna
+   arista $d$ cambia, el grafo tiene un ciclo negativo alcanzable desde $s$.
 
-En el grafo de la sesión, $\delta(0,4) = 8 \leq \delta(0,2) + w(2,4) = 5 + 6 = 11$.
-La igualdad se da en las aristas del árbol:
-$\delta(0,4) = \delta(0,3) + w(3,4) = 6 + 2$.
+Después de la ronda $k$, $d[v]$ es a lo sumo el costo del camino más corto de
+a lo sumo $k$ aristas hasta $v$. Puede ser menor, porque dentro de una misma
+ronda una arista ya usa los valores que otra acaba de mejorar.
 
-**Cota superior (Lema 24.11).** Siempre $v.d \geq \delta(s,v)$, y cuando $v.d$
-alcanza $\delta(s,v)$ ya no cambia.
-
-En la traza de Bellman-Ford, $3.d$ pasa por $\infty$, luego $7$, luego
-$6 = \delta(0,3)$, y ahí se queda. Nunca baja de $6$.
-
-**Ausencia de camino (Corolario 24.12).** Si no hay camino de $s$ a $v$,
-siempre $v.d = \infty$.
-
-En el grafo del ciclo negativo, $4.d$ se queda en $\infty$: ninguna arista
-entra a $4$, y $RELAX$ solo baja $v.d$ a partir de un $u.d$ finito.
-
-**Convergencia (Lema 24.14).** Si $s \leadsto u \to v$ es un camino más corto
-y $u.d = \delta(s,u)$ antes de relajar $(u,v)$, después $v.d = \delta(s,v)$.
-
-Cuando $1.d$ ya vale $3 = \delta(0,1)$, relajar $(1,3)$ deja
-$3.d = 3 + 3 = 6 = \delta(0,3)$.
-
-**Relajación de caminos (Lema 24.15).** Si
-$p = \langle v_0, v_1, \ldots, v_k \rangle$ es un camino más corto de
-$s = v_0$ a $v_k$ y se relajan sus aristas en el orden
-$(v_0,v_1), (v_1,v_2), \ldots, (v_{k-1},v_k)$, aunque entre ellas se relajen
-otras, al final $v_k.d = \delta(s,v_k)$.
-
-Para $\langle 0,2,1,3,4 \rangle$ basta que $(0,2)$ se relaje antes que
-$(2,1)$, esta antes que $(1,3)$ y esta antes que $(3,4)$. Las demás aristas
-pueden relajarse en medio, cuantas veces sea.
-
-Queda una pregunta: si no se conoce el camino más corto, ¿cómo garantizar que
-sus aristas se relajen en orden? Ahí empieza Bellman-Ford.
-
-## Bellman-Ford
-
-### La idea: rondas completas
-
-El camino más corto a $4$ tiene cuatro aristas. Si en cada ronda se relajan
-*todas* las aristas del grafo, en la primera se relaja $(0,2)$, en la segunda
-$(2,1)$, en la tercera $(1,3)$ y en la cuarta $(3,4)$: el orden del camino
-queda garantizado sin conocerlo.
-
-¿Cuántas rondas? Tantas como aristas tenga el camino más corto más largo. Sin
-ciclos negativos hay uno simple, con a lo sumo $|V|-1$ aristas, así que
-$|V|-1$ rondas alcanzan.
-
-**$BELLMAN\text{-}FORD(G,w,s)$, CLRS Sección 24.1**
-
-1. $INITIALIZE\text{-}SINGLE\text{-}SOURCE(G,s)$
-2. para $i = 1$ hasta $|G.V| - 1$
-3. $\quad$ para cada arista $(u,v) \in G.E$
-4. $\quad\quad RELAX(u,v,w)$
-5. para cada arista $(u,v) \in G.E$
-6. $\quad$ si $v.d > u.d + w(u,v)$
-7. $\quad\quad$ devolver $FALSE$
-8. devolver $TRUE$
-
-Las líneas 2 a 4 calculan las distancias; las líneas 5 a 7 buscan una arista
-que todavía se pueda relajar.
-
-### La versión ingenua
-
-```python
-def hay_arista_tensa(G, d):
-    # Una arista tensa despues de las rondas delata un ciclo
-    # negativo alcanzable desde la fuente.
-    tensa = False
-    for u in range(len(G)):
-        for (v, w) in G[u]:
-            if d[u] + w < d[v]:
-                tensa = True
-    return tensa
-```
-
-Una *arista tensa* es una arista $(u,v)$ con $v.d > u.d + w(u,v)$: relajarla
-todavía cambia algo. La revisión se escribe aparte porque las tres versiones
-la usan.
-
-```python
-def bellman_ford_ingenuo(G, s):
-    # |V|-1 rondas completas, pase lo que pase.
-    n = len(G)
-    d, pi = inicializar(n, s)
-    ronda = 1
-    while ronda <= n - 1:
-        for u in range(n):
-            for (v, w) in G[u]:
-                relajar(u, v, w, d, pi)
-        ronda = ronda + 1
-    sin_ciclo = not hay_arista_tensa(G, d)
-    return (d, pi, sin_ciclo)
-```
-
-Inicializar cuesta $\Theta(V)$. Cada ronda recorre las listas completas,
-$\Theta(V+E)$, y hay $|V|-1$ rondas. La revisión final es una ronda más. Total:
-$\Theta(VE)$ cuando $E \geq V$, sin importar el grafo.
-
-### Traza: ronda 1
-
-Las aristas se relajan en el orden de las listas: $u = 0, 1, \ldots, 4$ y,
-dentro de cada lista, en el orden en que aparecen. En negrilla, lo que cambia.
-
-| Arista, peso | $0$ | $1$ | $2$ | $3$ | $4$ | ¿Cambia? |
-|---|:-:|:-:|:-:|:-:|:-:|---|
-| inicio | $0$ | $\infty$ | $\infty$ | $\infty$ | $\infty$ | |
-| $(0,1)$, $4$ | $0$ | $\mathbf{4}$ | $\infty$ | $\infty$ | $\infty$ | sí, $1.\pi = 0$ |
-| $(0,2)$, $5$ | $0$ | $4$ | $\mathbf{5}$ | $\infty$ | $\infty$ | sí, $2.\pi = 0$ |
-| $(1,3)$, $3$ | $0$ | $4$ | $5$ | $\mathbf{7}$ | $\infty$ | sí, $3.\pi = 1$ |
-| $(2,1)$, $-2$ | $0$ | $\mathbf{3}$ | $5$ | $7$ | $\infty$ | sí, $1.\pi = 2$ |
-| $(2,4)$, $6$ | $0$ | $3$ | $5$ | $7$ | $\mathbf{11}$ | sí, $4.\pi = 2$ |
-| $(3,4)$, $2$ | $0$ | $3$ | $5$ | $7$ | $\mathbf{9}$ | sí, $4.\pi = 3$ |
-| $(4,2)$, $1$ | $0$ | $3$ | $5$ | $7$ | $9$ | no: $5 \leq 9+1$ |
-
-### Traza: rondas 2 a 4
-
-En la ronda 1, $3.d$ quedó en $7$ porque $(1,3)$ se relajó cuando $1.d$
-todavía valía $4$. ¿Qué arista lo arregla en la ronda 2, y qué arrastra ese
-cambio?
-
-| Ronda 2 | $0$ | $1$ | $2$ | $3$ | $4$ | ¿Cambia? |
-|---|:-:|:-:|:-:|:-:|:-:|---|
-| $(0,1)$, $4$ | $0$ | $3$ | $5$ | $7$ | $9$ | no |
-| $(0,2)$, $5$ | $0$ | $3$ | $5$ | $7$ | $9$ | no |
-| $(1,3)$, $3$ | $0$ | $3$ | $5$ | $\mathbf{6}$ | $9$ | sí: $7 > 3+3$ |
-| $(2,1)$, $-2$ | $0$ | $3$ | $5$ | $6$ | $9$ | no |
-| $(2,4)$, $6$ | $0$ | $3$ | $5$ | $6$ | $9$ | no |
-| $(3,4)$, $2$ | $0$ | $3$ | $5$ | $6$ | $\mathbf{8}$ | sí: $9 > 6+2$ |
-| $(4,2)$, $1$ | $0$ | $3$ | $5$ | $6$ | $8$ | no |
-
-En las rondas 3 y 4 ninguna arista cambia nada: $d = (0,3,5,6,8)$ y
-$\pi = (NIL, 2, 0, 1, 3)$, que son las $\delta$ y el árbol de la sección
-anterior. La revisión final no encuentra aristas tensas y la función devuelve
-`True`.
-
-La versión ingenua examinó $4 \times 7 = 28$ aristas en las rondas, más $7$ en
-la revisión. Las rondas 3 y 4 no cambiaron nada: $14$ exámenes perdidos.
-
-Las propiedades se ven en la traza. $1.d = 3$ se fijó en la ronda 1, por
-convergencia desde $2$. $(1,3)$ se relajó con ese valor en la ronda 2 y
-$(3,4)$ después, en la misma ronda: el camino $\langle 0,2,1,3,4 \rangle$ se
-relajó en orden y $4.d = 8$. Dos rondas bastaron porque el orden de las listas
-ayudó en la primera.
-
-### Por qué $|V|-1$ rondas bastan
-
-**Lema (Lema 24.2 de CLRS).** Sea $G=(V,E)$ dirigido con pesos $w$ y fuente
-$s$, sin ciclos de peso negativo alcanzables desde $s$. Después de las $|V|-1$
-rondas de las líneas 2 a 4, $v.d = \delta(s,v)$ para todo $v$ alcanzable
-desde $s$.
-
-*Demostración.* Se procede de forma directa, con la propiedad de relajación de
-caminos.
-
-*Desarrollo.* Sea $v$ alcanzable. Como no hay ciclos negativos alcanzables,
-existe un camino más corto simple $p = \langle v_0, v_1, \ldots, v_k \rangle$
-con $v_0 = s$, $v_k = v$ y $k \leq |V|-1$. Cada ronda relaja todas las aristas,
-así que la ronda $i$ relaja $(v_{i-1}, v_i)$ para $i = 1, \ldots, k$. Las
-aristas de $p$ quedan relajadas en el orden del camino, con otras relajaciones
-en medio.
-
-*Conclusión.* Por lo tanto, por la propiedad de relajación de caminos, después
-de la ronda $k \leq |V|-1$ se tiene $v.d = \delta(s,v)$, y por la cota
-superior ya no cambia en las rondas que siguen. $\blacksquare$
-
-### Correctitud de Bellman-Ford
-
-**Teorema (Teorema 24.4 de CLRS).** Sea $BELLMAN\text{-}FORD$ ejecutado sobre
-$G$ con pesos $w$ y fuente $s$. Si $G$ no tiene ciclos negativos alcanzables
-desde $s$, devuelve $TRUE$, $v.d = \delta(s,v)$ para todo $v \in V$ y $G_\pi$
-es un árbol de caminos más cortos con raíz $s$. Si $G$ tiene un ciclo negativo
-alcanzable desde $s$, devuelve $FALSE$.
-
-La primera parte cabe en una línea. Por el Lema 24.2 y la ausencia de camino,
-al terminar las rondas $v.d = \delta(s,v)$ para todo $v$. Entonces, por la
-desigualdad triangular,
-$v.d = \delta(s,v) \leq \delta(s,u) + w(u,v) = u.d + w(u,v)$ en cada arista,
-ninguna está tensa y se devuelve $TRUE$.
-
-*Demostración de la segunda parte.* Se procede por contradicción: se supone
-que hay un ciclo negativo $c = \langle v_0, v_1, \ldots, v_k \rangle$, con
-$v_0 = v_k$, alcanzable desde $s$, y que el algoritmo devuelve $TRUE$.
-
-*Desarrollo.* Si devuelve $TRUE$, ninguna arista de $c$ está tensa:
-$v_i.d \leq v_{i-1}.d + w(v_{i-1}, v_i)$ para $i = 1, \ldots, k$. Sumando las
-$k$ desigualdades,
-
-$$
-\sum_{i=1}^{k} v_i.d \leq \sum_{i=1}^{k} v_{i-1}.d + \sum_{i=1}^{k} w(v_{i-1}, v_i).
-$$
-
-Como $v_0 = v_k$, las dos sumas de $d$ recorren los mismos vértices y son
-iguales; son finitas porque cada $v_i$ es alcanzable. Restando,
-$0 \leq w(c)$.
-
-*Conclusión.* Eso contradice $w(c) < 0$. Por lo tanto, se puede concluir que
-con un ciclo negativo alcanzable alguna arista queda tensa y el algoritmo
-devuelve $FALSE$. $\blacksquare$
-
-### Parada temprana
-
-En la traza, las rondas 3 y 4 no cambiaron nada. Si una ronda completa no
-cambia ningún $d$, ¿puede cambiar algo la siguiente?
-
-No. La ronda siguiente relaja las mismas aristas con los mismos $d$, y ninguna
-estaba tensa. Lo mismo vale para todas las que vienen después, así que se
-puede parar en ese momento.
-
-```python
-def bellman_ford(G, s):
-    # Si una ronda no cambia nada, las siguientes tampoco.
-    n = len(G)
-    d, pi = inicializar(n, s)
-    ronda = 1
-    hubo_cambio = True
-    while ronda <= n - 1 and hubo_cambio:
-        hubo_cambio = False
-        for u in range(n):
-            for (v, w) in G[u]:
-                if relajar(u, v, w, d, pi):
-                    hubo_cambio = True
-        ronda = ronda + 1
-    sin_ciclo = not hay_arista_tensa(G, d)
-    return (d, pi, sin_ciclo)
-```
-
-Lo que cambió es la bandera `hubo_cambio`, que entra en la condición del
-`while`. En el grafo de la sesión se hacen tres rondas, la tercera sin
-cambios: $21$ exámenes de arista en lugar de $28$. El peor caso sigue siendo
-$|V|-1$ rondas y $\Theta(VE)$.
-
-## La variante de Moore
-
-### ¿Qué aristas valía la pena relajar?
-
-En la ronda 2 cambiaron $3.d$ y $4.d$. ¿Qué tenían en común las aristas que
-produjeron esos cambios?
-
-$(1,3)$ salió de $1$, cuyo $d$ había cambiado después de la última vez que se
-relajó $(1,3)$. $(3,4)$ salió de $3$, que acababa de cambiar. Las aristas de
-$0$ y de $2$ se relajaron con los mismos $d$ que ya habían usado: no podían
-dar nada nuevo.
-
-De ahí sale la observación de Moore. Relajar $(u,v)$ solo puede cambiar $v.d$
-si $u.d$ cambió desde la última vez que se relajó $(u,v)$. Basta con llevar la
-cuenta de los vértices cuyo $d$ cambió y relajar solo las aristas que salen de
-ellos.
-
-### De las rondas a la cola, paso a paso
-
-**Paso 1: una cola de pendientes.** En lugar de recorrer todos los $u$ en cada
-ronda, se guardan en una cola los vértices cuyo $d$ cambió. Al principio solo
-está $s$. Las rondas desaparecen: se saca un $u$ y se relajan sus aristas.
-
-```python
-cola = deque()
-cola.append(s)
-while len(cola) > 0:
-    u = cola.popleft()
-    for (v, w) in G[u]:
-        if relajar(u, v, w, d, pi):
-            cola.append(v)
-```
-
-**Paso 2: nada repetido en la cola.** Si $v$ ya está esperando, cuando salga
-usará su $d$ más reciente: meterlo otra vez no aporta nada. Un arreglo
-`en_cola` lo evita.
-
-```python
-        if relajar(u, v, w, d, pi) and not en_cola[v]:
-            cola.append(v)
-            en_cola[v] = True
-```
-
-**Paso 3: el ciclo negativo.** Sin el contador de rondas, un ciclo negativo
-alcanzable hace que la cola nunca se vacíe: las distancias bajan sin fin. Se
-cuenta en `veces[v]` cuántas veces entra cada vértice; si alguno llega a
-$|V|$, hay ciclo negativo y se para.
-
-```python
-            veces[v] = veces[v] + 1
-            if veces[v] >= n:
-                sin_ciclo = False
-```
-
-### Bellman-Ford-Moore
-
-```python
-def bellman_ford_moore(G, s):
-    # Solo se relajan las aristas de los vertices cuya d cambio.
-    # veces[v]: cuantas veces ha entrado v a la cola.
-    n = len(G)
-    d, pi = inicializar(n, s)
-    en_cola = [False] * n
-    veces = [0] * n
-    cola = deque()
-    cola.append(s)
-    en_cola[s] = True
-    veces[s] = 1
-    sin_ciclo = True
-    while len(cola) > 0 and sin_ciclo:
-        u = cola.popleft()
-        en_cola[u] = False
-        for (v, w) in G[u]:
-            if relajar(u, v, w, d, pi) and not en_cola[v]:
-                cola.append(v)
-                en_cola[v] = True
-                veces[v] = veces[v] + 1
-                if veces[v] >= n:
-                    sin_ciclo = False
-    return (d, pi, sin_ciclo)
-```
-
-¿Por qué basta contar hasta $|V|$? Como la cola es FIFO, los vértices salen
-por tandas: la tanda $0$ es $\{s\}$ y la tanda $k$ son los que entraron
-mientras salía la tanda $k-1$. Lo que la tanda $k$ consigue es lo que
-conseguía la ronda $k$ de Bellman-Ford, o algo mejor, y por `en_cola` un
-vértice entra a lo sumo una vez por tanda. Sin ciclos negativos alcanzables, a
-partir de la tanda $|V|-1$ ya no cambia nada, así que ningún vértice entra
-$|V|$ veces. Con un ciclo negativo la cola no se vacía y alguno llega a $|V|$.
-
-Cada vez que $u$ sale de la cola se recorre su lista, en
-$O(1 + \text{grado}(u))$. Si cada vértice sale a lo sumo $|V|-1$ veces, el
-total es $O(VE)$ en el peor caso, como Bellman-Ford. La ganancia está en que
-solo se examinan las aristas que pueden cambiar algo.
-
-### Traza de Moore
-
-Cada fila es una salida de la cola. *Cambian* son los vértices cuyo $d$ bajó
-al relajar las aristas del que salió; en negrilla, el valor nuevo.
-
-| Sale | Cambian | $d_0$ | $d_1$ | $d_2$ | $d_3$ | $d_4$ | Cola | `veces` |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| | | $0$ | $\infty$ | $\infty$ | $\infty$ | $\infty$ | $0$ | $1,0,0,0,0$ |
-| $0$ | $1, 2$ | $0$ | $\mathbf{4}$ | $\mathbf{5}$ | $\infty$ | $\infty$ | $1, 2$ | $1,1,1,0,0$ |
-| $1$ | $3$ | $0$ | $4$ | $5$ | $\mathbf{7}$ | $\infty$ | $2, 3$ | $1,1,1,1,0$ |
-| $2$ | $1, 4$ | $0$ | $\mathbf{3}$ | $5$ | $7$ | $\mathbf{11}$ | $3, 1, 4$ | $1,2,1,1,1$ |
-| $3$ | $4$ | $0$ | $3$ | $5$ | $7$ | $\mathbf{9}$ | $1, 4$ | $1,2,1,1,1$ |
-| $1$ | $3$ | $0$ | $3$ | $5$ | $\mathbf{6}$ | $9$ | $4, 3$ | $1,2,1,2,1$ |
-| $4$ | | $0$ | $3$ | $5$ | $6$ | $9$ | $3$ | $1,2,1,2,1$ |
-| $3$ | $4$ | $0$ | $3$ | $5$ | $6$ | $\mathbf{8}$ | $4$ | $1,2,1,2,2$ |
-| $4$ | | $0$ | $3$ | $5$ | $6$ | $8$ | vacía | $1,2,1,2,2$ |
-
-Cuando sale $3$ en la cuarta fila, $4.d$ baja de $11$ a $9$, pero $4$ no se
-agrega a la cola. ¿Por qué?
-
-Porque $4$ ya estaba esperando: entró cuando salió $2$. Cuando le toque salir
-usará $4.d = 9$, el valor más reciente, así que no hace falta otra copia. Eso
-es lo que evita `en_cola`.
-
-Hubo ocho salidas de la cola y $2+1+2+1+1+1+1+1 = 10$ aristas examinadas. En
-el mismo grafo, la versión ingenua examinó $28$ en las rondas y la de parada
-temprana $21$. El resultado es el mismo: $d = (0,3,5,6,8)$ y
-$\pi = (NIL,2,0,1,3)$. Son las cifras de este grafo; en el peor caso las tres
-versiones cuestan $O(VE)$.
-
-## Cuando hay un ciclo negativo
-
-### Una sola arista cambiada
-
-Se toma el mismo grafo con $w(4,2) = -4$. El ciclo
-$\langle 2,1,3,4,2 \rangle$ pasa a pesar $-2+3+2-4 = -1$ y es alcanzable
-desde $0$. Entonces
-$\delta(0,1) = \delta(0,2) = \delta(0,3) = \delta(0,4) = -\infty$.
-
-Las cuatro rondas de Bellman-Ford van a terminar igual, con números finitos en
-$d$. ¿Cómo se entera el algoritmo de que esos números no sirven?
-
-### Bellman-Ford con el ciclo
-
-| Al final de | $d_0$ | $d_1$ | $d_2$ | $d_3$ | $d_4$ | $\pi_0$ | $\pi_1$ | $\pi_2$ | $\pi_3$ | $\pi_4$ |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| inicio | $0$ | $\infty$ | $\infty$ | $\infty$ | $\infty$ | $-$ | $-$ | $-$ | $-$ | $-$ |
-| ronda 1 | $0$ | $3$ | $5$ | $7$ | $9$ | $-$ | $2$ | $0$ | $1$ | $3$ |
-| ronda 2 | $0$ | $3$ | $\mathbf{4}$ | $\mathbf{6}$ | $\mathbf{8}$ | $-$ | $2$ | $\mathbf{4}$ | $1$ | $3$ |
-| ronda 3 | $0$ | $\mathbf{2}$ | $4$ | $6$ | $8$ | $-$ | $2$ | $4$ | $1$ | $3$ |
-| ronda 4 | $0$ | $2$ | $\mathbf{3}$ | $\mathbf{5}$ | $\mathbf{7}$ | $-$ | $2$ | $4$ | $1$ | $3$ |
-
-La respuesta está en la revisión final. Con $d = (0,2,3,5,7)$, la arista
-$(2,1)$ está tensa: $1.d = 2 > 2.d + w(2,1) = 3 - 2 = 1$. La función devuelve
-`False`. Una quinta ronda bajaría algo más, porque cada vuelta al ciclo mejora
-un poco.
-
-El ciclo está en $\pi$. Desde $1$: $1.\pi = 2$, $2.\pi = 4$, $4.\pi = 3$,
-$3.\pi = 1$. Subir por $\pi$ desde la arista tensa termina dando vueltas en el
-ciclo.
-
-### Moore con el ciclo
-
-Las siete primeras salidas son las de la traza sin ciclo. Desde la octava,
-cuando sale $4$ con $4.d = 8$, la arista $(4,2)$ ya baja a $2$.
-
-| Sale | Cambia | $d_0$ | $d_1$ | $d_2$ | $d_3$ | $d_4$ | Cola | `veces` |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| $4$ | $2$ | $0$ | $3$ | $\mathbf{4}$ | $6$ | $8$ | $2$ | $1,2,2,2,2$ |
-| $2$ | $1$ | $0$ | $\mathbf{2}$ | $4$ | $6$ | $8$ | $1$ | $1,3,2,2,2$ |
-| $1$ | $3$ | $0$ | $2$ | $4$ | $\mathbf{5}$ | $8$ | $3$ | $1,3,2,3,2$ |
-| $3$ | $4$ | $0$ | $2$ | $4$ | $5$ | $\mathbf{7}$ | $4$ | $1,3,2,3,3$ |
-| $4$ | $2$ | $0$ | $2$ | $\mathbf{3}$ | $5$ | $7$ | $2$ | $1,3,3,3,3$ |
-| $2$ | $1$ | $0$ | $\mathbf{1}$ | $3$ | $5$ | $7$ | $1$ | $1,4,3,3,3$ |
-| $1$ | $3$ | $0$ | $1$ | $3$ | $\mathbf{4}$ | $7$ | $3$ | $1,4,3,4,3$ |
-| $3$ | $4$ | $0$ | $1$ | $3$ | $4$ | $\mathbf{6}$ | $4$ | $1,4,3,4,4$ |
-| $4$ | $2$ | $0$ | $1$ | $\mathbf{2}$ | $4$ | $6$ | $2$ | $1,4,4,4,4$ |
-| $2$ | $1$ | $0$ | $\mathbf{0}$ | $2$ | $4$ | $6$ | $1$ | $1,\mathbf{5},4,4,4$ |
-
-La cola nunca se vacía: cada vuelta al ciclo baja $1$ en los cuatro vértices y
-los vuelve a meter. En la salida $17$, $1$ entra por quinta vez;
-`veces[1]` $= 5 = |V|$ y la función devuelve `False` sin esperar más. Sin
-`veces`, el `while` con un ciclo negativo alcanzable no termina.
-
-## Problemas de juez
-
-- **UVa 336, A Node Too Far.**
-  Enunciado: <https://onlinejudge.org/external/3/336.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=272>.
-  Una red no dirigida de a lo sumo $30$ nodos con identificadores
-  arbitrarios. Para cada consulta, un nodo inicial y un $TTL$: cuántos nodos
-  *no* recibe un mensaje que avanza a lo sumo $TTL$ saltos. Es un camino más
-  corto sin pesos: una amplitud desde el nodo inicial, y se cuentan los nodos
-  con $d = -1$ o $d > TTL$. Los identificadores no son $0..n-1$, así que un
-  diccionario les asigna un índice. La trampa: la numeración de los casos
-  sigue de una red a la siguiente. Conviene prever también una consulta cuyo
-  nodo no aparezca en ninguna conexión.
-- **UVa 558, Wormholes.**
-  Enunciado: <https://onlinejudge.org/external/5/558.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=499>.
-  Hasta $1000$ sistemas y $2000$ agujeros de gusano dirigidos, cada uno con un
-  salto en el tiempo $t$, con $-1000 \leq t \leq 1000$. Desde el sistema $0$
-  se llega a todos. ¿Hay un ciclo que lleve indefinidamente al pasado? Un
-  ciclo al pasado es un ciclo de peso negativo, y todos son alcanzables desde
-  $0$. Se corre Bellman-Ford desde $0$ y la respuesta sale de la revisión
-  final: si queda una arista tensa, se imprime `possible`. Con
-  $V \cdot E = 2 \times 10^6$ alcanza la versión por rondas; la de Moore
-  también sirve, con el contador `veces`. La trampa: no confundir *hay aristas
-  negativas* con *hay ciclo negativo*.
-- **UVa 11280, Flying to Fredericton.**
-  Enunciado: <https://onlinejudge.org/external/112/11280.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2255>.
-  Hasta $100$ ciudades y $1000$ vuelos con costo; puede haber varios entre
-  las mismas dos ciudades. Para cada consulta, un máximo de escalas: el vuelo
-  más barato de Calgary a Fredericton con a lo sumo esas escalas. $k$ escalas
-  son a lo sumo $k+1$ vuelos, y la ronda $i$ de Bellman-Ford es la que alcanza
-  los caminos de $i$ aristas: se hacen $k+1$ rondas y se lee $d$ de
-  Fredericton. La trampa: dentro de una ronda, relajar con los $d$ que la
-  misma ronda acaba de cambiar encadena dos vuelos en una sola ronda. Cada
-  ronda tiene que leer de una copia de $d$ tomada al empezar. Los nombres de
-  las ciudades se pasan a índices con un diccionario.
+Cada ronda revisa las $m$ aristas y hay $n$ rondas: $O(n \cdot m)$, la cifra de
+la tabla de algoritmos.
 
 ## Errores comunes
 
-- **Usar la amplitud con pesos.** La amplitud minimiza el número de aristas,
-  no el peso. Solo sirve cuando todas las aristas pesan lo mismo.
-- **Una ronda de menos.** Con `ronda = 1` y `while ronda < n - 1` se hacen
-  $|V|-2$ rondas. Un camino más corto de $|V|-1$ aristas que el orden de las
-  listas recorre al revés queda sin terminar, y la revisión lo toma por un
-  ciclo negativo.
-- **Relajar desde un $\infty$.** En lenguajes con enteros, $\infty$ suele ser
-  un número grande, y $\infty + w$ con $w < 0$ da un valor menor que $\infty$:
-  un vértice no alcanzado termina con una distancia. Se relaja solo si $u.d$
-  es finito. En Python, `float('inf')` ya cumple $\infty + w = \infty$.
-- **Leer $d$ cuando hay un ciclo negativo.** Si la función devuelve `False`,
-  los números de $d$ no son distancias. Hay que mirar primero el resultado de
-  la revisión.
-- **Moore sin `en_cola` o sin `veces`.** Sin `en_cola` la cola se llena de
-  copias. Sin `veces`, un ciclo negativo deja el `while` corriendo para
-  siempre.
-- **Creer que un ciclo negativo lejano da $FALSE$.** Un ciclo negativo al que
-  no se llega desde $s$ no cambia ninguna distancia desde $s$, y Bellman-Ford
-  devuelve $TRUE$. Para detectar cualquier ciclo negativo del grafo se agrega
-  un vértice nuevo con aristas de peso $0$ hacia todos y se corre desde él.
+- Hacer $n-2$ rondas: un camino más corto de $n-1$ aristas puede quedar sin
+  terminar, y la revisión lo toma por un ciclo negativo.
+- Leer `dist` cuando la ronda $n$ cambió algo: esos números no son costos de
+  caminos más cortos.
+- Usar la amplitud con pesos distintos: minimiza el número de aristas, no el
+  costo.
 
-## El código de la clase
+## Avisos
 
-- [bfs_caminos.py](./codigo/bfs_caminos.py): `construir`, `bfs` y `camino`.
-  Al correrlo imprime $d$ y $\pi$ del grafo de seis vértices y el camino de
-  $0$ a $5$, y compara `bfs` contra las distancias por fuerza bruta sobre 300
-  grafos aleatorios.
-- [bellman_ford.py](./codigo/bellman_ford.py): `construir`, `inicializar`,
-  `relajar`, `hay_arista_tensa`, `bellman_ford_ingenuo`, `bellman_ford`,
-  `bellman_ford_moore`, `camino` y `contar_relajaciones`. Al correrlo imprime
-  $d$ y $\pi$ del grafo de la sesión con las tres versiones, el camino de $0$
-  a $4$, los exámenes de arista de cada versión ($28$ la ingenua, $21$ la de
-  parada temprana en tres rondas y $10$ la de Moore), el `False` de las tres
-  sobre el grafo con el ciclo, y la comparación de las tres contra los ciclos
-  negativos y las distancias por fuerza bruta sobre 300 grafos aleatorios, 97
-  de ellos con ciclo negativo.
+- El parcial pasa al **sábado 31 de octubre**.
+- Los ejercicios sugeridos del segundo corte pueden ser bonos en el parcial,
+  como la demostración del teorema de esta sesión. Quien intente uno puede
+  enviarlo para recibir correcciones.
 
 ## Ejercicios
 
-Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los ocho de las diapositivas pueden
-aparecer en el parcial: la amplitud a mano sobre un grafo no dirigido de siete
-vértices, con los caminos a $6$ y a $2$; la reducción de pesos enteros a la
-amplitud con su costo en función de $V$, $E$ y $W$; Bellman-Ford a mano sobre
-un grafo de cinco vértices cuyo camino más corto va contra el orden de las
-listas; un orden de las aristas con el que una sola ronda basta; Moore a mano
-sobre ese mismo grafo; un ciclo negativo recuperado subiendo por $\pi$; la
-demostración en cuatro partes de que la parada temprana es correcta, y los
-caminos más baratos con a lo sumo $k$ aristas, que es UVa 11280 en pequeño.
+Los interactivos están en la [página de ejercicios](./Ejercicios.md). Estos
+son los de las diapositivas:
+
+1. **La amplitud a mano.** Sea $A$ el grafo no dirigido con
+   $V = \{0,\ldots,6\}$ y aristas $\{0,3\}$, $\{0,4\}$, $\{3,1\}$, $\{4,1\}$,
+   $\{4,5\}$, $\{1,6\}$, $\{5,6\}$, $\{5,2\}$, con las listas en orden
+   creciente. Ejecute la amplitud desde $0$: escriba el orden en que salen de
+   la cola, `dist` y `pred` de cada vértice, y reconstruya el camino a $6$ y el
+   camino a $2$.
+2. **Pesos enteros con la amplitud.** En un grafo dirigido con pesos enteros
+   positivos, cada arista $(u,v)$ de peso $w$ se cambia por un camino de $w$
+   aristas sin peso a través de $w-1$ vértices nuevos. Muestre que la amplitud
+   sobre el grafo nuevo da los costos del grafo original y diga cuánto cuesta
+   en función de $n$, $m$ y el peso máximo $W$. ¿Cuándo no conviene?
+3. **Un ciclo de peso cero.** En el grafo del ejemplo de los caminos de a lo
+   sumo $k$ aristas, con origen $3$, encuentre un ciclo de peso $0$ que pase
+   por $3$. Escriba un camino de $3$ a $2$ que use ese ciclo y otro que no lo
+   use, con el mismo costo. ¿Por qué basta buscar entre los caminos simples?
+4. **A lo sumo $k$ aristas a mano.** Sea $B$ el grafo dirigido con
+   $V = \{0,\ldots,4\}$, origen $0$ y aristas $(0,4)$ de peso $6$, $(0,3)$ de
+   peso $4$, $(0,2)$ de peso $7$, $(1,4)$ de peso $5$, $(2,1)$ de peso $-1$,
+   $(3,2)$ de peso $2$ y $(4,3)$ de peso $-3$. Llene la tabla de los costos de
+   los caminos más cortos de a lo sumo $k$ aristas, para $k = 0, \ldots, 5$,
+   con el arreglo `pred` de cada fila, y dibuje el árbol de cada fila.
+5. **Detectar el ciclo negativo.** Sea $C$ el grafo dirigido con
+   $V = \{0,\ldots,5\}$, origen $0$ y aristas $(0,1)$ de peso $2$, $(1,2)$ de
+   peso $1$, $(2,3)$ de peso $-4$, $(3,1)$ de peso $2$, $(3,4)$ de peso $3$ y
+   $(5,4)$ de peso $1$. Llene la tabla de los caminos de a lo sumo $k$ aristas
+   para $k = 0, \ldots, 6$. Diga qué costo mejora en la fila $6$, recupere el
+   ciclo negativo subiendo por `pred` y diga qué pasa con el vértice $5$.
+6. **Ejercicio sugerido: el teorema.** Demuestre que los caminos más cortos se
+   componen de caminos más cortos (CLRS, Lema 24.1), en cuatro partes:
+   teorema, estrategia, desarrollo y conclusión.
+7. **Una ronda contra una fila.** En el grafo $B$, parta de
+   $d = (0, \infty, \infty, \infty, \infty)$ y relaje todas las aristas una
+   sola vez, en el orden en que aparecen en el ejercicio 4, usando cada vez los
+   valores que ya cambiaron. Compare el resultado con la fila de a lo sumo $1$
+   arista. ¿Con qué fila coincide, y por qué una ronda puede ir más adelante
+   que la fila del mismo número?
+
+### Pistas
+
+1. Salen $0, 3, 4, 1, 5, 6, 2$. El vértice $2$ queda a tres aristas de $0$.
+2. El grafo nuevo tiene hasta $n + m(W-1)$ vértices. Compare ese tamaño con
+   $n \cdot m$.
+3. Mire las aristas $1 \to 2$, $2 \to 3$ y $3 \to 1$.
+4. La fila de $5$ aristas es $(0, 4, 5, 3, 6)$. El camino más corto a $1$ es
+   $0, 4, 3, 2, 1$ y necesita las cuatro aristas.
+5. En la fila $6$, $\texttt{dist}[3]$ baja de $-1$ a $-2$. Al vértice $5$ no
+   se llega desde $0$.
+6. Por contradicción: si un tramo tuviera un camino más barato, se cambia ese
+   tramo y el camino completo baja.
+7. Una ronda deja $(0, 6, 6, 3, 6)$.
 
 ## Lo que sigue
 
-Bellman-Ford hace rondas porque no sabe en qué orden relajar. En un grafo
-dirigido acíclico ese orden existe y ya se sabe calcular: es el
-[orden topológico](../C10/Orden%20topologico%20y%20Tarjan.md).
+Las implementaciones de Bellman-Ford-Moore, de la que más gasta a la que menos:
 
-Para investigar:
+- una matriz con una fila por cada $k$;
+- un solo arreglo de distancias;
+- la que se detiene cuando una ronda no cambia nada;
+- la que usa una cola, que es la variante de Moore.
 
-- CLRS, Sección 24.2: si las aristas se relajan una sola vez, vértice por
-  vértice en orden topológico, ¿por qué basta una pasada? ¿Qué propiedad de la
-  Sección 24.5 lo garantiza, y cuánto cuesta?
-- CLRS, Sección 24.3, el algoritmo de Dijkstra: si ningún peso es negativo,
-  ¿qué vértice conviene sacar primero, y por qué una cola de prioridad
-  reemplaza a la cola de Moore?
+Para investigar en CLRS, Sección 24.1: ¿cuánto espacio pide la matriz y cómo
+se baja a un solo arreglo?
+
+Después vienen los grafos de estado: problemas en los que el grafo que se
+recorre no es el del enunciado, sino uno cuyos vértices son estados. Las dos
+cosas están en [Bellman-Ford-Moore](../C13/Bellman-Ford-Moore.md).
 
 ## Referencias
 
 - Cormen, Leiserson, Rivest, Stein. *Introduction to Algorithms*, 3.ª ed. MIT
-  Press, 2009. Sección 22.2, Teorema 22.5 (amplitud y caminos más cortos sin
-  pesos); Capítulo 24, introducción, Lema 24.1 y relajación; Sección 24.1,
-  Lema 24.2 y Teorema 24.4 (Bellman-Ford); Sección 24.5, Lemas 24.10, 24.11,
-  24.14 y 24.15 y Corolario 24.12 (propiedades de la relajación).
-- Moore, E. F. The shortest path through a maze. En *Proceedings of the
-  International Symposium on the Theory of Switching*, Harvard University
-  Press, 1959, pp. 285–292.
-- Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
-  caminos más cortos desde una fuente, Bellman-Ford y su variante con cola.
-- Erickson, J. *Algorithms*. 2019. Capítulo 8, caminos más cortos: relajación
-  y Bellman-Ford.
+  Press, 2009. Sección 22.2 y Teorema 22.5 (amplitud y caminos más cortos sin
+  pesos); Capítulo 24, introducción: variantes del problema, Lema 24.1, pesos
+  negativos, ciclos y relajación; Sección 24.1 (Bellman-Ford).
+- Erickson, J. *Algorithms*. 2019. Capítulo 8, caminos más cortos: relajación y
+  Bellman-Ford.

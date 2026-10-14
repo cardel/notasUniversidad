@@ -1,15 +1,14 @@
-# Clase 12. Caminos más cortos: BFS y Bellman-Ford-Moore
+# Clase 12. Caminos más cortos: generalidades y la idea de Bellman-Ford-Moore
 
-**Viernes 16 de octubre de 2026.**
+**Viernes 16 de octubre de 2026, grupo B.**
 
-La búsqueda en amplitud ya da la distancia en aristas desde una fuente, pero
-con pesos el camino de menos aristas puede salir caro, y la amplitud no
-corrige una distancia que ya fijó. La relajación sí la corrige. Bellman-Ford
-relaja todas las aristas $|V|-1$ veces, lo que basta para que cada camino más
-corto quede relajado en orden, y una última pasada delata un ciclo negativo
-alcanzable. La variante de Moore guarda en una cola solo los vértices cuya
-distancia cambió: en el grafo de la sesión examina $10$ aristas donde la
-versión por rondas examina $28$, con el mismo $O(VE)$ en el peor caso.
+La búsqueda en amplitud da la distancia en aristas desde una fuente, pero con
+pesos el camino de menos aristas puede salir caro, y la amplitud no corrige una
+distancia que ya asignó. Un camino más corto no necesita repetir vértices,
+salvo que haya un ciclo negativo alcanzable, y entonces el problema se queda
+sin solución. De ahí sale la idea de Bellman-Ford-Moore: calcular los caminos
+más cortos de a lo sumo $0, 1, \ldots, n-1$ aristas, cada fila a partir de la
+anterior, y mirar si la fila $n$ todavía mejora algo.
 
 <div class="grid cards" markdown>
 
@@ -17,10 +16,10 @@ versión por rondas examina $28$, con el mismo $O(VE)$ en el peor caso.
 
     ---
 
-    La amplitud con $\pi$ y su límite con pesos, $\delta(u,v)$ con los ciclos
-    negativos, las cinco propiedades de la relajación, Bellman-Ford con sus
-    dos demostraciones y la traza ronda por ronda, la parada temprana, la
-    construcción de Moore paso a paso y las dos trazas con el ciclo negativo.
+    Las versiones SSSP y APSP con sus algoritmos, la amplitud con `dist` y
+    `pred`, los ciclos positivos y negativos, la tabla de los caminos de a lo
+    sumo $k$ aristas sobre un grafo de seis vértices, el Lema 24.1 de CLRS y
+    la relajación.
 
     [:octicons-arrow-right-24: Entrar](./Caminos%20cortos.md)
 
@@ -28,8 +27,8 @@ versión por rondas examina $28$, con el mismo $O(VE)$ en el peor caso.
 
     ---
 
-    El deck de la sesión, con el grafo de cinco vértices dibujado con sus
-    pesos y el código de las tres versiones de Bellman-Ford.
+    El deck de la sesión, con cada grafo dibujado y el árbol de caminos
+    pintado fila por fila.
 
     [:octicons-arrow-right-24: Abrir](./clase12-caminos-cortos.pdf)
 
@@ -37,15 +36,12 @@ versión por rondas examina $28$, con el mismo $O(VE)$ en el peor caso.
 
 ## Ejercicios
 
-Nueve interactivos, por los temas de la sesión y en su mismo orden, y ocho más
-para resolver en papel. Todos están en la
-[página de ejercicios](./Ejercicios.md).
+Los interactivos y los de papel están en la
+[página de ejercicios](./Ejercicios.md). Los siete de las diapositivas, con
+sus pistas, están al final de la [nota](./Caminos%20cortos.md#ejercicios).
 
 ## Antes de entrar
 
 Conviene repasar la
 [búsqueda en amplitud](../C6/Representaciones%20y%20recorridos.md): la cola,
-$d$ y $\pi$, y por qué cada vértice entra una sola vez. También el
-[orden topológico](../C10/Orden%20topologico%20y%20Tarjan.md) por tiempos de
-finalización, que es el que permite relajar cada arista una sola vez en un
-grafo sin ciclos, el tema que sigue.
+las distancias, los predecesores y por qué cada vértice entra una sola vez.

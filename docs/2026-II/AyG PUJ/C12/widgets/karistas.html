@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A lo sumo k aristas · AyG C12</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  td.mejor { background: var(--verde-suave); font-weight: 700; }
+  input.celda-in { width: 3.4rem; padding: 0.25rem 0.3rem; font-size: 0.95rem; text-align: center; border: 1px solid var(--borde); border-radius: 6px; }
+  #explicacion p { margin: 0.45rem 0; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>A lo sumo k aristas · AyG C12</h1>
+  <p class="intro">La fila k de la tabla guarda, para cada vértice, el costo del
+  camino más corto desde el origen que usa a lo sumo k aristas. La fila 0 solo
+  conoce al origen, y cada fila nueva se calcula a partir de la anterior: para
+  cada arista (u, v) de peso w se compara lo que ya tenía v con
+  <code>dist[u] + w</code>, usando el <code>dist[u]</code> de la fila de arriba. Se
+  llena la tabla fila por fila de k = 0 a n − 1 en tres grafos, y la comprobación de
+  cada fila dice qué camino mejoró y por qué hizo falta una arista más. En el
+  último grafo hay un ciclo negativo y hay que seguir hasta la fila n.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div class="presets" id="presets-grafo"></div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">El origen va en verde y sobre cada vértice está el
+    <i>dist</i> de la última fila comprobada. Las aristas verdes son las que
+    mejoraron en esa fila; en la fila n del último grafo, las rojas forman el ciclo negativo.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. La tabla, fila por fila</h2>
+    <p style="margin-top:0">Fila que se llena ahora: <b id="rot-fila"></b>. Escriba
+    un entero o <code>inf</code> en cada casilla.</p>
+    <div class="envoltura-tabla"><table id="tabla"></table></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar la fila</button>
+      <button id="btn-ver">Ver la fila</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Qué mejoró en cada fila</h2>
+    <div id="explicacion"><p class="nota">Aquí aparece la explicación de cada fila que se comprueba.</p></div>
+  </div>
+
+  <div class="carta">
+    <h2>4. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En el segundo grafo, diga en qué
+    fila deja de cambiar la tabla y por qué no hace falta mirar la fila 6. En el
+    tercero, explique por qué la fila 4 parece una respuesta y la fila 5 la
+    desmiente, y qué pasaría en la fila 6.</p>
+  </div>
+
+</div>
+<script src="karistas.js"></script>
+</body>
+</html>
