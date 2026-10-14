@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relajación · AyG C12</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .opcion { margin-right: 1rem; cursor: pointer; }
+  .pregunta-fila { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-top: 0.6rem; }
+  .pregunta-fila input[type="text"], .pregunta-fila select { padding: 0.4rem 0.5rem; font-size: 1rem; border: 1px solid var(--borde); border-radius: 8px; }
+  .pregunta-fila input[type="text"] { width: 6rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Relajación · AyG C12</h1>
+  <p class="intro">Relajar una arista <code>(u, v, w)</code> pregunta si pasar por
+  <code>u</code> mejora lo que se tiene para llegar a <code>v</code>. Si
+  <code>d[u] + w</code> es menor que <code>d[v]</code>, baja <code>d[v]</code> y
+  anota a <code>u</code> como predecesor; si no, no toca nada. Diez escenarios,
+  de los directos a los que esconden un infinito, un empate o un peso negativo:
+  hay que decir si algo cambia y con qué valores quedan <code>d[v]</code> y
+  <code>pi[v]</code>.</p>
+
+  <div class="carta">
+    <h2>1. El escenario y la respuesta</h2>
+    <div class="presets" id="presets-esc"></div>
+    <p class="nota">Escenario <span id="rot-escenario"></span>. El infinito se escribe <code>inf</code> o ∞.</p>
+    <div id="panel-grafo"></div>
+    <p id="enunciado" style="margin:0.2rem 0"></p>
+    <div class="pregunta-fila">
+      <span><b>¿Cambia algo?</b></span>
+      <label class="opcion"><input type="radio" name="cambia" value="si"> Sí</label>
+      <label class="opcion"><input type="radio" name="cambia" value="no"> No</label>
+    </div>
+    <div class="pregunta-fila">
+      <label for="resp-dv"><b>d[v] al terminar:</b></label>
+      <input type="text" id="resp-dv" autocomplete="off">
+      <label for="resp-pv"><b>pi[v] al terminar:</b></label>
+      <select id="resp-pv"></select>
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute <code>relajar</code> con estos valores</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">Cuando el <code>if</code> es falso, las tres líneas de
+        adentro no se ejecutan y sus contadores quedan en cero. Cambie de
+        escenario arriba y la ejecución se recarga con sus valores.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. Cambie la comparación del
+    <code>if</code> de <code>&lt;</code> a <code>&lt;=</code> y diga en cuáles
+    de los diez escenarios cambia el resultado y qué parte: <code>d[v]</code> o
+    <code>pi[v]</code>. Después explique por qué el cambio que produce en el escenario 3, con
+    <code>d[u] = ∞</code> es el más dañino para el árbol que forma <code>pi</code>.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="relajar.js"></script>
+</body>
+</html>

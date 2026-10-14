@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distancias · AyG C12</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  #respuesta-cierre { display: none; margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Distancias · AyG C12</h1>
+  <p class="intro">La distancia δ(s, v) es el peso mínimo de un camino de s a v. Con
+  pesos puede ser un entero, ∞ cuando no hay camino, o −∞ cuando algún camino
+  pasa por un ciclo de peso negativo y se puede abaratar sin límite. Cada grafo
+  trae una fuente s y varios vértices; hay que escribir la distancia de cada
+  uno (un entero, <code>inf</code> o <code>-inf</code>) y después leer, vértice
+  por vértice, el camino o el ciclo que la justifica.</p>
+
+  <div class="carta">
+    <h2>1. El grafo</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Grafo:</span>
+      <button data-preset="0" class="primario">Siete vértices</button>
+      <button data-preset="1">Ocho, ciclo alcanzable</button>
+      <button data-preset="2">Ocho, ciclo fuera de alcance</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">La fuente s va en verde. Los números sobre las flechas son los pesos.</div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Escriba δ(s, v) para cada vértice</h2>
+    <div id="respuestas"></div>
+    <div class="prediccion">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="resumen" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Para llevarse</h2>
+    <p style="margin-top:0">Si el grafo no tiene ciclos negativos, ¿por qué un
+    camino más corto no necesita repetir vértices?</p>
+    <button id="btn-respuesta">Ver la respuesta</button>
+    <div id="respuesta-cierre">
+      <p>Suponga un camino más corto de s a v que pasa dos veces por el mismo
+      vértice x. El tramo entre las dos visitas es un ciclo C. Sin ciclos
+      negativos, el peso de C es mayor o igual que cero. Si pesa cero, quitarlo
+      deja un camino de s a v con el mismo costo y menos aristas. Si pesa más
+      que cero, quitarlo deja un camino más barato, y entonces el original no
+      era el más corto. En los dos casos hay un camino más corto sin vértices
+      repetidos, y por eso tiene a lo sumo |V| − 1 aristas: es la razón de que
+      |V| − 1 rondas de Bellman-Ford alcancen.</p>
+    </div>
+  </div>
+
+</div>
+<script src="distancias.js"></script>
+</body>
+</html>
