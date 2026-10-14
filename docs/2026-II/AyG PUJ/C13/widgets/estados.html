@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grafo de estados · AyG C13</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  #panel-grafo { text-align: center; margin: 0.4rem 0; }
+  .viva, tr.viva td { background: var(--ambar-suave); }
+  span.viva { font-family: ui-monospace, monospace; border-radius: 8px; padding: 0.3rem 0.6rem; display: inline-block; word-break: break-all; }
+  .leyenda { font-size: 0.85rem; color: var(--gris); text-align: center; }
+  .sucs { font-family: ui-monospace, monospace; font-size: 0.8rem; background: var(--codigo-fondo); border-radius: 8px; padding: 0.4rem 0.6rem; min-height: 2rem; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
+  <h1>Grafo de estados · AyG C13</h1>
+  <p class="intro">En UVa 321 <i>The New Villa</i> no hay un grafo dado: los vértices
+  se construyen. Un estado es el par (habitación, luces), y de cada estado salen
+  aristas de peso 1: moverse a una habitación vecina cuya luz esté prendida,
+  prender una luz con un interruptor de la habitación actual, o apagarla. Aquí se
+  ejecuta <code>new_villa.py</code> sobre una villa pequeña, línea por línea,
+  hasta ver cómo la búsqueda en amplitud descubre los estados y cómo se
+  reconstruye la secuencia de pasos. Se empieza en la habitación 1 con solo su luz
+  prendida y se quiere terminar en la última habitación con solo su luz
+  prendida.</p>
+
+  <div class="carta">
+    <h2>1. La villa y la predicción</h2>
+    <div class="presets" id="presets-grafo">
+      <span class="nota" style="margin-top:0">Villa:</span>
+      <button data-preset="0" class="primario">Dos puertas desde la 1</button>
+      <button data-preset="1">En fila, sin solución</button>
+      <button data-preset="2">En fila, con solución</button>
+    </div>
+    <p class="nota" id="ver-texto"></p>
+    <p class="nota" style="margin-top:0">Interruptores: <span id="ver-inter"></span> Nunca se apaga la luz de la habitación donde se está.</p>
+    <div id="panel-grafo"></div>
+    <div class="leyenda">Las habitaciones son los vértices y las puertas las aristas. Se dibuja el estado que la búsqueda está expandiendo: contorno azul en la habitación actual y relleno amarillo en las que tienen la luz prendida.</div>
+    <div class="prediccion">
+      <span>¿Cuántos estados distintos descubre la búsqueda?</span>
+      <input type="number" id="prediccion" step="1" placeholder="estados">
+      <button id="btn-comprobar" class="primario">Comprobar</button>
+    </div>
+    <div id="veredicto" class="veredicto"></div>
+  </div>
+
+  <div class="carta">
+    <h2>2. Ejecute new_villa.py</h2>
+    <div class="panel-doble">
+      <div class="codigo" id="panel-codigo"></div>
+      <div class="estado">
+        <div class="chips" id="chips"></div>
+        <div>cola de la búsqueda (números de estado): <span class="viva" id="ver-cola">[ ]</span></div>
+        <div>Sucesores del estado actual:</div>
+        <div class="sucs" id="ver-sucs">–</div>
+        <div class="progreso">Paso <span id="ver-paso">0</span> de <span id="ver-total">0</span></div>
+        <div class="botones">
+          <button id="btn-paso" class="primario">Un paso</button>
+          <button id="btn-auto">Auto</button>
+          <button id="btn-fin">Al final</button>
+          <button id="btn-reiniciar">Reiniciar</button>
+        </div>
+        <div class="nota">El número de cada línea es el de <code>new_villa.py</code>.
+        Un estado se escribe (habitación, {luces prendidas}). La línea 41 se ejecuta
+        una vez por cada estado que sale de la cola, y la 42 una vez por cada
+        sucesor que revisa.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carta">
+    <h2>3. Los estados descubiertos</h2>
+    <div class="envoltura-tabla">
+      <table>
+        <thead><tr><th>N.º</th><th>Estado</th><th><code>d</code></th><th>Viene del estado</th><th>Paso (<code>p</code>)</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="nota">Los números de estado siguen el orden de descubrimiento, que es el orden en que salen de la cola.</div>
+  </div>
+
+  <div class="carta">
+    <h2>4. La secuencia</h2>
+    <div id="secuencia" class="veredicto"></div>
+    <div class="nota">La reconstrucción parte de la meta, sigue <code>p</code> hasta el estado inicial y al final invierte la lista.</div>
+  </div>
+
+  <div class="carta">
+    <h2>5. Para llevarse</h2>
+    <p style="margin-top:0">Sin solución aquí. En la segunda villa, diga qué
+    estado es el último que descubre la búsqueda y por qué no hay forma de
+    llegar a la meta. Después diga cuántos estados habría si todas las
+    habitaciones tuvieran puerta con todas y un interruptor para cada luz, y
+    qué cambia si la regla de no apagar la luz de la habitación actual
+    desaparece.</p>
+  </div>
+
+</div>
+<script src="motor.js"></script>
+<script src="bfm-lib.js"></script>
+<script src="estados.js"></script>
+</body>
+</html>

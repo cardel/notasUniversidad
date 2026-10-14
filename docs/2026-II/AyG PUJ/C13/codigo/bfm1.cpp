@@ -37,7 +37,7 @@ bool bellmanFord(int s){
       for(j = 0; j < G[u].size(); ++j){
 	v = G[u][j].first;
 	peso = G[u][j].second;
-	if(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i - 1][v]){
+	if(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i][v]){
 	  d[i][v] = d[i - 1][u] + peso;
 	  p[v] = u;
 	}

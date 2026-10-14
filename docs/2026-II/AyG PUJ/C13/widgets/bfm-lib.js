@@ -141,7 +141,7 @@ var BFM = (function () {
    "      for(j = 0; j < G[u].size(); ++j){",
    "\tv = G[u][j].first;",
    "\tpeso = G[u][j].second;",
-   "\tif(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i - 1][v]){",
+   "\tif(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i][v]){",
    "\t  d[i][v] = d[i - 1][u] + peso;",
    "\t  p[v] = u;",
    "\t}",
@@ -441,7 +441,7 @@ var BFM = (function () {
   var LIMITE = 60000;
 
   /* bfm1.cpp: una fila de la matriz por ronda.
-     opc.cmp: "ant" compara contra d[i - 1][v] (el archivo); "act" contra d[i][v].
+     opc.copia: "inf" escribe INT_MAX en la linea 35 en lugar de copiar la fila anterior.
      opc.rondas: cuantas rondas hace el ciclo de la linea 33 (n - 1 por omision). */
   function simBFM1(G, s, opc) {
     opc = opc || {};
@@ -461,7 +461,7 @@ var BFM = (function () {
     E.d[0][s] = 0; snap(32);
     for (i = 1; i <= rondas; i++) {
       E.i = i; snap(33);
-      for (j = 0; j < n; j++) { E.j = j; snap(34); E.d[i][j] = E.d[i - 1][j]; snap(35); }
+      for (j = 0; j < n; j++) { E.j = j; snap(34); E.d[i][j] = opc.copia === "inf" ? INT_MAX : E.d[i - 1][j]; snap(35); }
       E.j = n;
       for (u = 0; u < n; u++) {
         E.u = u; snap(36);
@@ -470,7 +470,7 @@ var BFM = (function () {
           v = G[u][j][0]; E.v = v; snap(38);
           peso = G[u][j][1]; E.peso = peso; snap(39);
           mira = [u, v];
-          cond = menor(E.d[i - 1][u], opc.cmp === "act" ? E.d[i][v] : E.d[i - 1][v]);
+          cond = menor(E.d[i - 1][u], E.d[i][v]);
           snap(40, { mira: mira });
           if (cond) {
             E.d[i][v] = E.d[i - 1][u] + peso; snap(41, { mira: mira, cambia: mira });
@@ -620,7 +620,7 @@ var BFM = (function () {
     var n = G.length, pasos = [], i, j, u, v, peso, cond, mira;
     var E = { d: ceros(n), p: ceros(n), ans: null, i: null, j: null, u: null, v: null, peso: null, t: null,
               mira: null, cambia: null, salida: [], hechas: 0 };
-    var snap = fabricar(E, pasos);
+    var snap = fabricar(E, pasos), cambioPorRonda = [];
     E.ans = true; snap(24);
     for (i = 0; i < n; i++) { E.i = i; snap(26); E.p[i] = -1; snap(27); E.d[i] = INT_MAX; snap(28); }
     E.d[s] = 0; snap(31);
@@ -648,6 +648,7 @@ var BFM = (function () {
       }
       E.v = n;
       E.hechas = i;
+      cambioPorRonda.push(E.t !== -1);
       i = i + 1;
     }
     E.i = i;
@@ -674,7 +675,7 @@ var BFM = (function () {
     }
     var antes = E.salida.slice();
     E.salida = antes.concat(salidaMain(E.ans, E.d, E.p, n));
-    return cerrar(pasos, snap, 65, E, { ans: E.ans, d: E.d.slice(), p: E.p.slice(), iteraciones: antes.length ? parseInt(antes[0].split(": ")[1], 10) : 0,
+    return cerrar(pasos, snap, 65, E, { ans: E.ans, d: E.d.slice(), p: E.p.slice(), iteraciones: antes.length ? parseInt(antes[0].split(": ")[1], 10) : 0, cambioPorRonda: cambioPorRonda,
       salida: E.salida.join("\n") });
   }
 

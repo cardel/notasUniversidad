@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Red · AyG C12</title>
+<title>La red · AyG C13</title>
 <link rel="stylesheet" href="estilo.css">
 <style>
   #panel-grafo { text-align: center; margin: 0.4rem 0; }
@@ -17,11 +17,10 @@
 <body>
 <div class="contenedor">
   <a class="volver" href="../Ejercicios/">← Volver a los ejercicios</a>
-  <h1>La red · AyG C12</h1>
-  <p class="intro">El último y el más exigente, para cuando los anteriores ya
-  salen solos. Dos redes de trece y catorce nodos: demasiado para seguir la cola
-  de memoria, que es el tamaño en que Moore se usa de verdad. En las dos se
-  predice primero si hay un ciclo negativo, después se ejecuta Moore con el
+  <h1>La red · AyG C13</h1>
+  <p class="intro">Dos redes de trece y catorce nodos: demasiado para seguir la cola
+  de memoria, que es el tamaño en que la cola de Moore se usa de verdad. En las dos se
+  predice primero si hay un ciclo negativo, después se ejecuta bfm5.cpp con el
   código de la clase y al final se contesta una pregunta concreta sobre la
   red.</p>
 
@@ -36,7 +35,7 @@
     <p style="margin:0.3rem 0"><b>Entrada:</b> una red dirigida de <span id="ver-n">13</span> nodos y
     <span id="ver-m">26</span> flechas con pesos, y la fuente <span id="ver-fuente">USD</span>.</p>
     <div id="panel-grafo"></div>
-    <div class="leyenda">Sobre cada nodo, <i>d</i>/<i>π</i>. Azul: la flecha llega al
+    <div class="leyenda">Sobre cada nodo, <i>d</i>/<i>p</i>. Azul: la flecha llega al
     nodo desde su predecesor actual. Amarillo: el nodo está en la cola. Flecha
     ámbar: la que se examina; verde: la que baja una distancia.</div>
     <details>
@@ -52,7 +51,7 @@
   </div>
 
   <div class="carta">
-    <h2>2. Ejecute Moore</h2>
+    <h2>2. Ejecute bfm5.cpp</h2>
     <div class="panel-doble">
       <div class="codigo" id="panel-codigo"></div>
       <div class="estado">
@@ -76,7 +75,7 @@
     <h2>3. Los arreglos, nodo por nodo</h2>
     <div class="envoltura-tabla">
       <table>
-        <thead><tr><th>Nodo</th><th><code>d</code></th><th><code>pi</code></th><th><code>en_cola</code></th><th><code>veces</code></th></tr></thead>
+        <thead><tr><th>Nodo</th><th><code>d</code></th><th><code>p</code></th><th><code>enCola</code></th><th><code>conteo</code></th><th>Salidas de la cola</th></tr></thead>
         <tbody id="cuerpo-tabla"></tbody>
       </table>
     </div>
@@ -86,9 +85,9 @@
   <div class="carta">
     <h2>4. La pregunta sobre la red</h2>
     <div id="preg-ciclo">
-      <p style="margin-top:0">Moore se detuvo porque un vértice entró a la cola
-      |V| veces. Marque las monedas que forman el arbitraje: el ciclo que sale de
-      subir por <code>pi</code> desde ese vértice.</p>
+      <p style="margin-top:0">bfm5.cpp se detuvo porque el <code>conteo</code> de un
+      vértice pasó de <code>n</code>. Marque las monedas que forman el arbitraje: el ciclo que sale de
+      subir por <code>p</code> desde ese vértice.</p>
       <div id="monedas"></div>
       <div class="prediccion"><button id="btn-ciclo" class="primario">Comprobar</button></div>
       <div id="veredicto-ciclo" class="veredicto"></div>
@@ -110,11 +109,12 @@
     desaparece la ganancia, si la diferencia entre comprar y vender se reparte por
     igual entre los dos sentidos. En el reparto, cambie mentalmente el bono de
     Terminal → Mercado para que ese ciclo pese −1 y diga qué distancias dejan de
-    existir y cuál de las dos versiones de la clase lo detecta antes.</p>
+    existir y qué hace bfm5.cpp con ese ciclo y cuántas salidas de la cola necesita para notarlo.</p>
   </div>
 
 </div>
 <script src="motor.js"></script>
+<script src="bfm-lib.js"></script>
 <script src="red.js"></script>
 </body>
 </html>

@@ -196,7 +196,7 @@ bool bellmanFord(int s){
       for(j = 0; j < G[u].size(); ++j){
         v = G[u][j].first;
         peso = G[u][j].second;
-        if(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i - 1][v]){
+        if(d[i - 1][u] != INT_MAX && d[i - 1][u] + peso < d[i][v]){
           d[i][v] = d[i - 1][u] + peso;
           p[v] = u;
         }
@@ -228,6 +228,11 @@ La fila $i$ es $d_i$:
   *leyendo* la fila $i-1$ y *escribiendo* en la fila $i$. Un valor que cambió
   en esta ronda no se usa en la misma ronda.
 - Después de la ronda $n-1$, la respuesta está en la fila $n-1$.
+
+El candidato sale de la fila anterior, `d[i - 1][u] + peso`, pero se compara
+contra `d[i][v]`: ahí ya está el menor de lo que llevan las aristas que
+llegaron a $v$ en esta ronda. Así la fila $i$ guarda el mínimo entre su
+valor anterior y todos los candidatos de la ronda.
 
 Los dos `while` del final recorren todas las aristas sobre la fila $n-1$. La
 primera que se pueda relajar pone `ans` en `false` y detiene los dos ciclos.
@@ -896,8 +901,7 @@ bfm2 no sirve: los vuelos van de la ciudad más cercana a la más lejana, y en
 una sola ronda encadena varios.
 
 La trampa: con dos vuelos a la misma ciudad, la fila $i$ tiene que quedarse
-con el menor. Antes de escribir `d[i][v]` se compara contra el valor que ya
-tiene `d[i][v]`.
+con el menor. Por eso bfm1 compara contra el valor que ya tiene `d[i][v]`.
 
 ## Errores comunes
 
