@@ -14,8 +14,8 @@ peor caso.
 
 Al terminar, el objetivo es poder resolver problemas sobre la lista, la pila y
 la cola enlazadas dando el costo en tiempo y en espacio de cada solución;
-explicar cómo `particionar` deja el pivote en su lugar definitivo y demostrarlo
-con un invariante; construir quicksort sobre `particionar` y justificar su costo
+explicar cómo `particionar` deja el pivote en su lugar definitivo, siguiendo
+las zonas del arreglo; construir quicksort sobre `particionar` y justificar su costo
 en el caso balanceado y en el peor caso; y comparar insertion sort, merge sort y
 quicksort con comparaciones contadas sobre la misma entrada.
 
@@ -285,126 +285,47 @@ dos lados no están ordenados, pero el 5 ya está en la casilla que ocupará al
 final. Es la salida de `quicksort.cpp`: `particionar: 2 4 1 5 9 7` y
 `el pivote quedo en 3`.
 
-### Lo que sostiene el ciclo
+### Lo que mantiene el ciclo
 
-Sea $M_0$ el multiconjunto $\{\!\{ a[k] : \mathit{ini} \leq k \leq \mathit{fin}
-\}\!\}$ al entrar a `particionar`, y $x$ el valor de $a[\mathit{fin}]$ en ese
-momento. Cada vez que se evalúa la condición del `while` se cumplen:
+Cada vez que se revisa la condición del `while`, el arreglo está repartido en
+las cuatro zonas de la tabla:
 
-!!! note "Invariantes de `particionar`"
+- de `ini` a `i`, los menores o iguales que $x$;
+- de `i+1` a `j-1`, los mayores que $x$;
+- de `j` a `fin-1`, los que faltan por revisar;
+- en `fin`, el pivote, que no se mueve durante el ciclo.
 
-    $$
-    \begin{aligned}
-      I_1:&\quad \mathit{ini} - 1 \leq i < j \leq \mathit{fin}\\
-      I_2:&\quad \forall k,\ \mathit{ini} \leq k \leq i:\ a[k] \leq x\\
-      I_3:&\quad \forall k,\ i + 1 \leq k \leq j - 1:\ a[k] > x\\
-      I_4:&\quad a[\mathit{fin}] = x\\
-      I_5:&\quad \{\!\{ a[k] : \mathit{ini} \leq k \leq \mathit{fin} \}\!\} = M_0
-    \end{aligned}
-    $$
+Una vuelta revisa $a[j]$. Si es mayor que $x$, ya está al final de la zona de
+los mayores y basta avanzar `j`. Si es menor o igual, `i` avanza y el cambio lo
+lleva al final de los menores; el primero de los mayores pasa al final de su
+zona.
 
-$I_2$ e $I_3$ son las dos primeras zonas de la tabla; $I_4$ dice que el pivote
-no se ha movido, e $I_5$ que el ciclo solo reordena.
+En la traza con $\langle 7, 2, 9, 4, 1, 5 \rangle$, en la fila $i = 1$, $j = 4$
+el arreglo es $2\ 4 \mid 9\ 7 \mid 1 \mid 5$: los menores o iguales, los
+mayores, lo que falta y el pivote.
 
-!!! note "Teorema"
+!!! note "Al salir"
 
-    Si $\mathit{ini} \leq \mathit{fin}$, `particionar` devuelve un $q$ con
-    $\mathit{ini} \leq q \leq \mathit{fin}$ y deja
+    Cuando `j` llega a `fin` ya no queda nada sin revisar. El cambio de
+    $a[i+1]$ con $a[\mathit{fin}]$ pone el pivote entre las dos zonas: a su
+    izquierda todo es menor o igual, a su derecha todo es mayor, y esa casilla
+    es la que ocupará en el arreglo ordenado.
 
-    $$
-    \forall k,\ \mathit{ini} \leq k < q:\ a[k] \leq a[q]
-    \qquad
-    \forall k,\ q < k \leq \mathit{fin}:\ a[k] > a[q]
-    $$
+### Paso a paso sobre el arreglo
 
-    con $a[q] = x$ y $\{\!\{ a[k] : \mathit{ini} \leq k \leq \mathit{fin}
-    \}\!\} = M_0$.
+La misma partición, con las zonas marcadas: entre corchetes los menores o
+iguales que $x = 5$, en negrita los mayores, sin marca lo que falta por revisar
+y al final el pivote, separado con una barra.
 
-**Demostración.** Se procede de forma directa con los invariantes $I_1$ a
-$I_5$: se prueba que valen antes de la primera evaluación de la condición, que
-una vuelta los conserva, y qué dicen cuando la condición falla.
-
-**Inicialización.** Antes de la primera evaluación, $i = \mathit{ini} - 1$,
-$j = \mathit{ini}$ y el arreglo no ha cambiado.
-
-- $I_1$ exige $\mathit{ini} - 1 \leq \mathit{ini} - 1 < \mathit{ini} \leq
-  \mathit{fin}$. Las dos primeras desigualdades son inmediatas y la tercera es
-  la condición de entrada $\mathit{ini} \leq \mathit{fin}$.
-- $I_2$ exige $a[k] \leq x$ para $\mathit{ini} \leq k \leq \mathit{ini} - 1$.
-  Ningún $k$ cumple ese rango, así que la afirmación se cumple sin casos que
-  revisar.
-- $I_3$ exige $a[k] > x$ para $\mathit{ini} \leq k \leq \mathit{ini} - 1$: el
-  mismo rango vacío.
-- $I_4$ exige $a[\mathit{fin}] = x$, y $x$ se acaba de leer de
-  $a[\mathit{fin}]$.
-- $I_5$ exige que el multiconjunto sea $M_0$, y ninguna casilla se ha escrito.
-
-**Estabilidad, cuando el elemento es mayor que $x$.** Se supone que $I_1$ a
-$I_5$ valen para $i$ y $j$, y que la condición se cumple: $j < \mathit{fin}$.
-En este caso $i$ no cambia, ninguna casilla se escribe y $j$ pasa a $j + 1$.
-
-- $I_1$ en $j + 1$ exige $\mathit{ini} - 1 \leq i < j + 1 \leq \mathit{fin}$.
-  La primera viene de $I_1$; $i < j < j + 1$ da la segunda, y
-  $j < \mathit{fin}$ da $j + 1 \leq \mathit{fin}$.
-- $I_2$ no depende de $j$ y ninguna casilla cambió.
-- $I_3$ en $j + 1$ exige $a[k] > x$ para $i + 1 \leq k \leq j$. Para
-  $k \leq j - 1$ lo da $I_3$ en $j$; para $k = j$ lo da el caso, $a[j] > x$.
-- $I_4$ e $I_5$ se conservan porque nada se escribió.
-
-**Estabilidad, cuando el elemento es menor o igual que $x$.** Ahora $i$ pasa a
-$i' = i + 1$, se cambian $a[i']$ y $a[j]$, y $j$ pasa a $j + 1$. Por $I_1$,
-$i < j$, así que $i' \leq j$: el cambio toca las casillas $i'$ y $j$, las dos
-menores que $\mathit{fin}$.
-
-- $I_1$ exige $\mathit{ini} - 1 \leq i' < j + 1 \leq \mathit{fin}$:
-  $i' = i + 1 > i \geq \mathit{ini} - 1$, $i' \leq j < j + 1$, y
-  $j < \mathit{fin}$ da $j + 1 \leq \mathit{fin}$.
-- $I_2$ en $i'$ exige $a[k] \leq x$ para $\mathit{ini} \leq k \leq i'$. Si
-  $k \leq i$, la casilla no la tocó el cambio, porque $k < i' \leq j$, y lo da
-  $I_2$. Si $k = i'$, ahí quedó el antiguo $a[j]$, que cumple $a[j] \leq x$ por
-  el caso.
-- $I_3$ en $i'$ y $j + 1$ exige $a[k] > x$ para $i + 2 \leq k \leq j$.
-    - Si $i' = j$, el rango es $j + 1 \leq k \leq j$, vacío, y no hay nada que
-      probar.
-    - Si $i' < j$: para $i + 2 \leq k \leq j - 1$ la casilla no cambió y está
-      dentro del rango de $I_3$ en $j$, que empieza en $i + 1$. Para $k = j$,
-      ahí quedó el antiguo $a[i + 1]$, y como $i + 1 \leq j - 1$, $I_3$ en $j$
-      dice que era mayor que $x$.
-- $I_4$ se conserva: el cambio tocó $i'$ y $j$, y $j < \mathit{fin}$.
-- $I_5$ se conserva: intercambiar dos casillas no cambia el multiconjunto.
-
-**Terminación.** Cada vuelta suma 1 a $j$, e $I_1$ dice que
-$j \leq \mathit{fin}$: el ciclo da a lo sumo $\mathit{fin} - \mathit{ini}$
-vueltas y termina. Cuando la condición falla se tiene $j \geq \mathit{fin}$.
-Con $j \leq \mathit{fin}$ de $I_1$, la única posibilidad es $j = \mathit{fin}$.
-Los invariantes, evaluados en $j = \mathit{fin}$, dicen
-
-$$
-\begin{gathered}
-  \forall k,\ \mathit{ini} \leq k \leq i:\ a[k] \leq x \\
-  \forall k,\ i + 1 \leq k \leq \mathit{fin} - 1:\ a[k] > x \\
-  a[\mathit{fin}] = x
-\end{gathered}
-$$
-
-y por $I_1$, $\mathit{ini} - 1 \leq i < \mathit{fin}$, de donde $q = i + 1$
-cumple $\mathit{ini} \leq q \leq \mathit{fin}$.
-
-Falta el último intercambio, entre $a[q]$ y $a[\mathit{fin}]$.
-
-- Si $q = \mathit{fin}$, no cambia nada: la zona de los mayores está vacía y
-  $a[q] = x$.
-- Si $q < \mathit{fin}$, $a[q]$ era el primero de los mayores. Tras el cambio,
-  $a[q] = x$ y $a[\mathit{fin}]$ recibe un valor mayor que $x$. Las casillas
-  $q + 1..\mathit{fin} - 1$ no se tocaron y siguen siendo mayores que $x$.
-
-Las casillas $\mathit{ini}..q - 1$ son las de $I_2$ y no se tocaron. El
-intercambio conserva el multiconjunto.
-
-**Conclusión.** Por lo tanto, se puede concluir que `particionar` devuelve $q$
-con $\mathit{ini} \leq q \leq \mathit{fin}$, $a[q] = x$, todo lo que queda a la
-izquierda de $q$ es menor o igual que $x$ y todo lo que queda a la derecha es
-mayor, con los mismos elementos del principio.
+| Momento | `i` | `j` | $a[0..5]$ | Qué pasa |
+|---|---:|---:|---|---|
+| al empezar | $-1$ | 0 | 7 2 9 4 1 \| 5 | todo sin revisar; $a[0] = 7 > 5$, solo avanza `j` |
+| tras 1 vuelta | $-1$ | 1 | **7** 2 9 4 1 \| 5 | el 7 forma la zona de mayores; $a[1] = 2 \leq 5$, `i` pasa a 0 y se cambian $a[0]$ y $a[1]$ |
+| tras 2 vueltas | 0 | 2 | [2] **7** 9 4 1 \| 5 | el 2 entró a los menores; $a[2] = 9 > 5$, solo avanza `j` |
+| tras 3 vueltas | 0 | 3 | [2] **7 9** 4 1 \| 5 | los mayores son 7 y 9; $a[3] = 4 \leq 5$, `i` pasa a 1 y se cambian $a[1]$ y $a[3]$ |
+| tras 4 vueltas | 1 | 4 | [2 4] **9 7** 1 \| 5 | el 4 se unió al 2 y el 7 pasó al final de los mayores; $a[4] = 1 \leq 5$, `i` pasa a 2 y se cambian $a[2]$ y $a[4]$ |
+| tras 5 vueltas | 2 | 5 | [2 4 1] **7 9** \| 5 | `j` llegó a `fin`: no queda nada sin revisar; se cambian $a[3]$ y $a[5]$ |
+| al salir | | | [2 4 1] 5 **9 7** | el pivote quedó en la casilla 3, entre las dos zonas, y `particionar` devuelve $q = 3$ |
 
 ### `quicksort`
 
@@ -423,35 +344,13 @@ no entra al `if`: ya está ordenado. Sobre
 $\langle 6, 2, 9, 4, 1, 7, 3, 8 \rangle$, `quicksort.cpp` imprime
 `quicksort:   1 2 3 4 6 7 8 9`.
 
-!!! note "Teorema"
+!!! note "Por qué queda ordenado"
 
-    Para todo $n = \mathit{fin} - \mathit{ini} + 1 \geq 0$,
-    `quicksort(a, ini, fin)` deja
-    $\forall u, v,\ \mathit{ini} \leq u < v \leq \mathit{fin}:\ a[u] \leq a[v]$,
-    con el mismo multiconjunto en $a[\mathit{ini}..\mathit{fin}]$ y sin tocar
-    fuera de ese rango.
-
-**Demostración.** Se procede por inducción fuerte sobre $n$.
-
-**Desarrollo.**
-
-- **Base**, $n \leq 1$: no se entra al `if`. Con cero o un elemento no hay
-  $u < v$ dentro del rango.
-- **Paso**, $n \geq 2$: `particionar` da $q$ con
-  $\mathit{ini} \leq q \leq \mathit{fin}$. Los rangos $\mathit{ini}..q - 1$ y
-  $q + 1..\mathit{fin}$ tienen $q - \mathit{ini}$ y $\mathit{fin} - q$
-  elementos, ambos menores que $n$, así que la hipótesis los deja ordenados.
-- Ninguna llamada toca fuera de su rango, así que la de la izquierda no mueve
-  $a[q]$ ni la derecha, y cada lado conserva su multiconjunto: lo que era menor
-  o igual que $x$ sigue a la izquierda y lo mayor sigue a la derecha.
-- Sean $u < v$ en el rango. Si los dos caen del mismo lado, la hipótesis da
-  $a[u] \leq a[v]$. Si no, $u \leq q \leq v$ con al menos una desigualdad
-  estricta, y $a[u] \leq x < a[v]$, o $a[u] = x < a[v]$, o
-  $a[u] \leq x = a[v]$.
-
-**Conclusión.** Por lo tanto, se puede concluir que `quicksort` ordena
-$a[\mathit{ini}..\mathit{fin}]$ para todo $n$, y que lo hace en el sitio: solo
-intercambia casillas del rango.
+    Cada llamada a `particionar` deja su pivote en la casilla que ocupará al
+    final. Las dos llamadas siguientes trabajan cada una de su lado y no lo
+    cruzan: nada de la izquierda tiene que pasar a la derecha. Cuando los
+    rangos llegan a cero o un elemento, todos los valores ya fueron pivote o
+    quedaron solos en su casilla.
 
 ## Lo que cuesta quicksort
 
@@ -715,9 +614,9 @@ la sesión.
   $\Theta(n)$ a $\Theta(n^2)$.
 - Invertir una cola con una pila auxiliar cuesta $\Theta(n)$ en tiempo y
   $\Theta(n)$ de espacio aparte.
-- `particionar` toma $x = a[\mathit{fin}]$ y sostiene
-  $\forall k,\ \mathit{ini} \leq k \leq i:\ a[k] \leq x$ y
-  $\forall k,\ i + 1 \leq k \leq j - 1:\ a[k] > x$. Hace $n - 1$
+- `particionar` toma $x = a[\mathit{fin}]$ y reparte el arreglo en cuatro
+  zonas: los menores o iguales que $x$, los mayores, lo que falta por revisar y
+  el pivote. Al salir, el pivote queda entre las dos primeras. Hace $n - 1$
   comparaciones, $\Theta(n)$ en tiempo y $\Theta(1)$ de espacio aparte.
 - Quicksort paga al partir y no combina nada. Con particiones balanceadas,
   $T(n) = 2\,T(n/2) + \Theta(n) = \Theta(n \log n)$.
@@ -774,11 +673,10 @@ espacio aparte es $\Theta(1)$, porque no hay recursión.
 ### Propuesto 1: de mayor a menor
 
 ¿Qué línea de `particionar` se cambia para que quicksort ordene de mayor a
-menor? Demuestre que el invariante ajustado sigue valiendo.
+menor? ¿Cómo quedan las zonas?
 
-Pista: solo cambia la comparación, $a[j] \geq x$. En los invariantes, $\leq$ y
-$>$ se cambian por $\geq$ y $<$, y cada paso de la demostración se repite con
-la desigualdad volteada.
+Pista: solo cambia la comparación, $a[j] \geq x$. Las zonas se voltean: a la
+izquierda quedan los mayores o iguales y a la derecha los menores.
 
 ### Propuesto 2: la traza al revés
 
@@ -812,8 +710,8 @@ enlaces.
 
 Escriba un `particionar` que deje los menores, después los iguales al pivote y
 al final los mayores, y que devuelva dónde empiezan y terminan los iguales.
-Este queda abierto: cuatro zonas en vez de tres, con un índice más, y un
-invariante para cada una.
+Este queda abierto: cuatro zonas en vez de tres, con un índice más para marcar
+dónde empieza cada una.
 
 ## Ejercicios interactivos
 
@@ -821,8 +719,8 @@ Ocho actividades que se trabajan en el navegador, ordenadas por los temas de la
 sesión, en la [página de ejercicios interactivos](./Ejercicios.md): cuánto
 camina cada TAD al sumar sus elementos con el contrato; rotar una cola y
 concatenar dos cambiando punteros, con su costo y sus casos límite;
-`particionar` paso a paso con las zonas de cada casilla; qué invariante falla
-en cada uno de seis estados; un arreglo propio partido y ordenado llamada por
+`particionar` paso a paso con las zonas de cada casilla; qué quedó mal en cada
+uno de seis estados anotados; un arreglo propio partido y ordenado llamada por
 llamada; las comparaciones y la profundidad de quicksort en entradas pequeñas;
 y cuál de cuatro órdenes de los mismos valores es el peor caso. Los programas
 no son los de la sesión: mismo tema, valores nuevos.

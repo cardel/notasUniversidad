@@ -35,10 +35,11 @@ razón para dejar vacía la segunda.
 de cada casilla: dónde queda el pivote antes de correrlo, cómo queda el arreglo
 y cuántas veces se llama a `intercambiar`.
 
-### [invariantes](./widgets/invariantes.html){ target=_blank rel=noopener }
+### [zonas](./widgets/zonas.html){ target=_blank rel=noopener }
 
-Seis estados anotados durante una partición; en cada uno, cuál de los
-invariantes I1 a I5 deja de cumplirse, si alguno.
+Seis estados anotados durante una partición, con el color de la zona de cada
+casilla; en cada uno, qué quedó mal: un valor en la zona que no le toca, `i`
+delante de `j`, el pivote movido antes de tiempo o un valor perdido, si algo.
 
 ### [libre](./widgets/libre.html){ target=_blank rel=noopener }
 

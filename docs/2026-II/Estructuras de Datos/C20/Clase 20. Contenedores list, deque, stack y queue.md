@@ -738,18 +738,28 @@ void maximosDeque(int a[], int n, int k) {
 }
 ```
 
-!!! note "Lo que sostiene el `deque`"
+!!! note "Lo que guarda el `deque`"
 
-    Sea $d = \langle i_1, \ldots, i_m \rangle$ el contenido al terminar la
-    vuelta $j$, con $j \geq k - 1$.
+    Índices de la ventana actual, de izquierda a derecha, con valores que
+    bajan: el del frente es el máximo de la ventana.
 
-    $$
-    \begin{aligned}
-      V_1:&\quad \forall t,\ 1 \leq t \leq m:\ j - k < i_t \leq j\\
-      V_2:&\quad \forall t,\ 1 \leq t < m:\ i_t < i_{t+1} \ \wedge\ a[i_t] > a[i_{t+1}]\\
-      V_3:&\quad a[i_1] = \max\{a[r] : j - k < r \leq j\}
-    \end{aligned}
-    $$
+Paso a paso con $a = \langle 4, 2, 12, 3, 8, 7, 1, 5 \rangle$ y $k = 3$. La
+columna `d` muestra cada índice con su valor, como `índice:valor`.
+
+| `j` | $a[j]$ | Sale por el final | Sale por el frente | `d` al terminar | Imprime |
+|---:|---:|---|---|---|---:|
+| 0 | 4 | | | 0:4 | |
+| 1 | 2 | | | 0:4, 1:2 | |
+| 2 | 12 | 1:2, 0:4 | | 2:12 | 12 |
+| 3 | 3 | | | 2:12, 3:3 | 12 |
+| 4 | 8 | 3:3 | | 2:12, 4:8 | 12 |
+| 5 | 7 | | 2:12 | 4:8, 5:7 | 8 |
+| 6 | 1 | | | 4:8, 5:7, 6:1 | 8 |
+| 7 | 5 | 6:1 | 4:8 | 5:7, 7:5 | 7 |
+
+- En $j = 2$ el 12 bota al 2 y al 4: ninguno de los dos vuelve a ser máximo
+  mientras el 12 siga en la ventana.
+- En $j = 5$ el índice 2 ya quedó fuera de $a[3..5]$ y sale por el frente.
 
 - La respuesta a la pregunta 3 es no: $a[j]$ le gana a $a[i]$ y se queda más
   tiempo en la ventana. Por eso el `while` bota del final a los que no superan
@@ -796,11 +806,11 @@ frente, y duplique el número de visitas para ver cómo crece.
 
 ### Propuesto 5: ventana mínima
 
-Cambie `maximosDeque` para que imprima el mínimo de cada ventana, y escriba los
-tres invariantes que lo sostienen.
+Cambie `maximosDeque` para que imprima el mínimo de cada ventana, y haga su
+tabla paso a paso con el mismo arreglo.
 
-Pista: solo cambia la comparación del `while`; en los invariantes, $>$ pasa a
-$<$ y el máximo a mínimo.
+Pista: solo cambia la comparación del `while`: ahora los valores del `deque`
+suben, y el del frente es el mínimo.
 
 ## Ejercicios interactivos
 
