@@ -60,12 +60,11 @@ Se publican después de cada sesión.
    están publicados.
 6. Clase 6. Listas I: diseño, uso y recursión sobre listas — 15 de octubre.
    Las notas están pendientes; los
-   [ejercicios](../../actividades/pfc/listas-y-ordenamiento/index.md) ya están
-   publicados.
+   [ejercicios](../../actividades/pfc/listas/index.md) ya están publicados.
 7. Clase 7. Listas II: tuplas, ordenamiento por mezcla y alto orden —
    22 de octubre. Los
-   [ejercicios](../../actividades/pfc/listas-y-ordenamiento/index.md) ya están
-   publicados.
+   [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) ya
+   están publicados.
 8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
 9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
 
@@ -117,8 +116,8 @@ reuniones docentes y jornada de reflexión.
 | 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](../../actividades/pfc/funciones-de-alto-orden/index.md) |
 | 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](../../actividades/pfc/clases-y-abstraccion-de-datos/index.md) |
 | 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md) |
-| 6 | Listas I: diseño, uso y recursión sobre listas | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
-| 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
+| 6 | Listas I: diseño, uso y recursión sobre listas | [cuatro ejercicios: de los dos constructores a la inserción](../../actividades/pfc/listas/index.md) |
+| 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [ocho ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
 
 ## Ejercicios de clase
 
