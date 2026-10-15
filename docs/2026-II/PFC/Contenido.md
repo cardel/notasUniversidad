@@ -50,10 +50,14 @@ Se publican después de cada sesión.
    `require` y el modelo de sustitución con clases. Incluye el código escrito
    en clase.
 
-5. Clase 5. Reconocimiento de patrones — 8 de octubre. Las notas están
-   pendientes; los
+5. [Clase 5. Reconocimiento de patrones — 8 de octubre](C5/Clase%205.%20Reconocimiento%20de%20patrones.md)
+   — el conjunto de enteros como árbol binario, clases abstractas y despacho
+   dinámico, el objeto único, traits y por qué no hay herencia múltiple, el
+   `match` sobre la forma del dato frente al `isInstanceOf`, listas con `head`
+   y `tail`, tipos sellados con `case class` y el aviso del compilador cuando
+   falta un caso. Sus
    [ejercicios](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md)
-   ya están publicados.
+   están publicados.
 6. Clase 6. Listas I: diseño, uso y recursión sobre listas — 15 de octubre.
    Las notas están pendientes; los
    [ejercicios](../../actividades/pfc/listas-y-ordenamiento/index.md) ya están
