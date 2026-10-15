@@ -60,6 +60,13 @@ Se publican después de cada sesión.
    estático, con los ejercicios de cadenas de ambientes que se trabajaron en
    el tablero. Incluye los apuntes de la sesión.
 
+6. [Clase 6. Procedimientos recursivos y letrec, 13 de octubre](C6/Clase%206.%20Procedimientos%20recursivos%20y%20letrec.md)
+   El factorial que no se deja escribir con `let`, la dependencia circular
+   entre el ambiente y la clausura, el ambiente extendido recursivo con sus
+   tres listas, la clausura que nace al buscar el nombre, las tres
+   condiciones que crean un ambiente y la recursión mutua en un solo marco.
+   Incluye los apuntes del tablero.
+
 ### Corte 2
 
 *Aún no hay clases publicadas.*
