@@ -50,11 +50,18 @@ Se publican después de cada sesión.
    `require` y el modelo de sustitución con clases. Incluye el código escrito
    en clase.
 
-5. Clase 5. Reconocimiento de patrones — 8 de octubre. *Pendiente de publicar.*
+5. Clase 5. Reconocimiento de patrones — 8 de octubre. Las notas están
+   pendientes; los
+   [ejercicios](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md)
+   ya están publicados.
 6. Clase 6. Listas I: diseño, uso y recursión sobre listas — 15 de octubre.
-   *Pendiente de publicar.*
+   Las notas están pendientes; los
+   [ejercicios](../../actividades/pfc/listas-y-ordenamiento/index.md) ya están
+   publicados.
 7. Clase 7. Listas II: tuplas, ordenamiento por mezcla y alto orden —
-   22 de octubre.
+   22 de octubre. Los
+   [ejercicios](../../actividades/pfc/listas-y-ordenamiento/index.md) ya están
+   publicados.
 8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
 9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
 
