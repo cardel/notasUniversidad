@@ -4,8 +4,8 @@ Miércoles 14 de octubre de 2026, de 17:00 a 19:00.
 
 La lista, la pila y la cola ya están construidas sobre nodos, y la sesión
 arranca resolviendo problemas con ellas: una cola que entra y sale por los dos
-extremos, una cola que no guarda su contador y una cola que se invierte con una
-pila. Después cambia de tema. Merge sort parte el arreglo sin mirar los datos y
+extremos, una cola que no guarda su contador, una cola que se invierte con una
+pila y una cola armada con dos pilas. Después cambia de tema. Merge sort parte el arreglo sin mirar los datos y
 paga todo al mezclar; quicksort hace lo contrario: paga al partir, dejando a la
 izquierda lo pequeño y a la derecha lo grande, y al final no hay nada que
 combinar. El costo de esa decisión es que el tamaño de las partes depende de
@@ -45,7 +45,7 @@ salir. A cambio, llegar a una posición del medio exige caminar.
 
 ## Ejercicios sobre las implementaciones
 
-Los tres se escriben sobre los TAD que ya están construidos, la cola y la pila
+Los cuatro se escriben sobre los TAD que ya están construidos, la cola y la pila
 sobre nodos.
 
 ### La cola doble
@@ -105,17 +105,47 @@ cuarta, porque el penúltimo es `ultimo->anterior`
 Las otras dos son el espejo de estas: se cambia `cabeza` por `ultimo` y
 `siguiente` por `anterior`.
 
-Una corrida, la de [cola_doble_uso.cpp](./codigo/cola_doble_uso.cpp):
-`insertarFinal(4)`, `insertarFinal(7)` e `insertarFrente(1)` dejan
-`frente 1, final 7, tamano 3`. `eliminarFinal()` deja `frente 1, final 4`.
-`eliminarFrente()` y `eliminarFinal()` vacían la cola, e `insertarFrente(9)`
-deja `frente 9, final 9`.
+Una corrida, la de [cola_doble_uso.cpp](./codigo/cola_doble_uso.cpp), con la
+cola de la cabeza a `ultimo` después de cada operación:
+
+| Operación | Cola | Qué imprime o qué cambia |
+|---|---|---|
+| `insertarFinal(4)` | 4 | `cabeza` y `ultimo` apuntan al mismo nodo |
+| `insertarFinal(7)` | 4 7 | el 7 se cuelga de `ultimo` |
+| `insertarFrente(1)` | 1 4 7 | `frente 1, final 7, tamano 3` |
+| `eliminarFinal()` | 1 4 | el penúltimo era `ultimo->anterior`: `frente 1, final 4` |
+| `eliminarFrente()` | 4 | la cabeza pasa al 4 |
+| `eliminarFinal()` | vacía | era el único nodo: `cabeza` y `ultimo` quedan en `NULL` |
+| `insertarFrente(9)` | 9 | `frente 9, final 9` |
 
 | Operación | Doble con `ultimo` | Por qué |
 |---|---|---|
 | las cuatro de los extremos | $\Theta(1)$ | a lo sumo cuatro punteros |
 | `frente`, `final` | $\Theta(1)$ | se lee `cabeza` o `ultimo` |
 | espacio | $\Theta(n)$ | dato y dos punteros por nodo |
+
+¿Cuánto cuesta el puntero de más? Con `Elemento` igual a `int` y sumando los
+campos, el nodo simple guarda un entero de 4 bytes (32 bits) y un puntero de 8
+bytes (64 bits): 12 bytes. El doble agrega `anterior`: $8 + 4 + 8 = 20$ bytes.
+Con $n$ elementos son $12n$ y $20n$ bytes, y los dos están en $\Theta(n)$: la
+lista doble cambia la constante, no el orden.
+
+`sizeof` mide otra cosa. Compilados con `g++` en una máquina de 64 bits, los
+nodos de la sesión dan:
+
+| Nodo | Suma de los campos | `sizeof` | Relleno |
+|---|---:|---:|---:|
+| `Nodo`, lista simple | 12 bytes | 16 bytes | 4 bytes |
+| `NodoDoble` | 20 bytes | 24 bytes | 4 bytes |
+
+El compilador pone cada puntero en una dirección múltiplo de 8, porque así el
+procesador lo lee de una vez. El entero ocupa los bytes 0 a 3, y el puntero
+siguiente no puede empezar en el 4: empieza en el 8, y del 4 al 7 queda un
+hueco. En `NodoDoble`, `anterior` va en el byte 8 y `siguiente` en el 16, y el
+nodo mide 24. Son los mismos 16 bytes que mide el nodo de
+[la pila sobre nodos](../C17/Clase%2017.%20El%20TAD%20Pila%20por%20dentro.md).
+Con el relleno, los totales pasan a $16n$ y $24n$ bytes, y siguen en
+$\Theta(n)$.
 
 !!! warning "El caso que rompe la cola doble"
 
@@ -179,7 +209,25 @@ void invertir(Cola &c) {
 }
 ```
 
-Con $\langle 3, 1, 4, 1, 5 \rangle$:
+Paso a paso con $\langle 2, 3, 4, 5 \rangle$, una operación de cada TAD por
+fila:
+
+| Paso | Cola, del frente al final | Pila, del tope al fondo | Qué pasa |
+|---:|---|---|---|
+| 1 | 2 3 4 5 | vacía | al empezar |
+| 2 | 3 4 5 | 2 | el 2 sale del frente y se apila |
+| 3 | 4 5 | 3 2 | el 3 queda encima del 2 |
+| 4 | 5 | 4 3 2 | |
+| 5 | vacía | 5 4 3 2 | termina el primer ciclo |
+| 6 | 5 | 4 3 2 | el tope, 5, se encola |
+| 7 | 5 4 | 3 2 | |
+| 8 | 5 4 3 | 2 | |
+| 9 | 5 4 3 2 | vacía | termina el segundo ciclo: la cola quedó invertida |
+
+Cuatro elementos piden ocho movimientos: cada uno pasa una vez a la pila y una
+vez de vuelta.
+
+Con $\langle 3, 1, 4, 1, 5 \rangle$, la entrada de `invertir.cpp`:
 
 | Momento | Cola, del frente al final | Pila, del tope al fondo |
 |---|---|---|
@@ -193,6 +241,96 @@ El programa imprime `antes:   3 1 4 1 5` y `despues: 5 1 4 1 3`.
 |---|---|---|
 | tiempo | $\Theta(n)$ | cada elemento sale y entra una vez en cada TAD, a $\Theta(1)$ |
 | espacio aparte | $\Theta(n)$ | la pila guarda los $n$ elementos a la vez |
+
+### Una cola con dos pilas
+
+La pila invierte el orden. ¿Se puede armar una cola con dos pilas y nada más?
+Se encolan 3, 4, 5, 6 y 7, y `frente()` tiene que devolver el 3.
+
+Con una sola pila, el 3 queda en el fondo, debajo de los otros cuatro. Para
+verlo hay que desapilar todo y volver a apilar: $\Theta(n)$ en cada consulta.
+
+Con dos, cada una tiene un oficio. `entrada` recibe lo que se encola y
+`salida` entrega el frente. Cuando se pide el frente y `salida` está vacía, se
+vuelca `entrada` completa en `salida`; el volcado invierte el orden, y el
+primero que llegó queda en el tope. Si `salida` todavía tiene elementos, no se
+vuelca: lo que llega espera en `entrada` hasta que `salida` se vacíe.
+
+```cpp
+class ColaDosPilas {
+private:
+  Pila entrada;
+  Pila salida;
+
+  // vuelca la entrada en la salida solo si la salida esta vacia
+  void volcar() {
+    if (salida.vacia()) {
+      while (!entrada.vacia()) {
+        salida.apilar(entrada.tope());
+        entrada.desapilar();
+      }
+    }
+  }
+
+public:
+  void encolar(Elemento e) {
+    entrada.apilar(e);
+  }
+
+  // exige !vacia()
+  Elemento frente() {
+    volcar();
+    return salida.tope();
+  }
+
+  // exige !vacia()
+  void desencolar() {
+    volcar();
+    salida.desapilar();
+  }
+
+  bool vacia() {
+    return entrada.vacia() && salida.vacia();
+  }
+};
+```
+
+Se encolan 3, 4, 5, 6 y 7, se pide el frente, llegan 6, 7 y 8, y después se
+desencola hasta vaciar:
+
+| Operación | `entrada`, del tope al fondo | `salida`, del tope al fondo | Qué pasa |
+|---|---|---|---|
+| `encolar` 3, 4, 5, 6, 7 | 7 6 5 4 3 | vacía | cinco `apilar` en `entrada` |
+| `frente()` | vacía | 3 4 5 6 7 | `salida` estaba vacía: se vuelcan los cinco y devuelve el 3 |
+| `encolar` 6, 7, 8 | 8 7 6 | 3 4 5 6 7 | `salida` tiene elementos: no se vuelca |
+| cinco `desencolar()` | 8 7 6 | vacía | salen 3, 4, 5, 6 y 7 por el tope de `salida` |
+| `frente()` | vacía | 6 7 8 | `salida` estaba vacía: se vuelcan los tres y devuelve el 6 |
+| tres `desencolar()` | vacía | vacía | salen 6, 7 y 8 |
+
+Los valores salen en el orden en que entraron: 3 4 5 6 7 6 7 8.
+
+!!! warning "El caso que rompe la cola con dos pilas"
+
+    Volcar con `salida` no vacía pone lo nuevo encima de lo viejo. Si tras
+    encolar 6, 7 y 8 se volcara de inmediato, `salida` quedaría
+    6 7 8 3 4 5 6 7, del tope al fondo, y el frente sería un 6 que llegó
+    después del 3.
+
+Un `frente()` puede mover todos los elementos de `entrada`, pero cada elemento
+se vuelca una sola vez: entra a `entrada` con un `apilar`, pasa a `salida` con
+un `desapilar` y un `apilar`, y sale con un `desapilar`. Son cuatro operaciones
+de $\Theta(1)$ por elemento. En la corrida, los ocho valores piden 16 `apilar`
+y 16 `desapilar`. Una sucesión de $m$ operaciones sobre la cola cuesta
+entonces $O(m)$ en total, aunque una de ellas sola cueste $\Theta(n)$. Repartir
+ese total entre las operaciones da el costo amortizado: $\Theta(1)$ por
+operación (CLRS, cap. 16).
+
+| Operación | Una llamada, peor caso | Amortizado | Por qué |
+|---|---|---|---|
+| `encolar` | $\Theta(1)$ | $\Theta(1)$ | un `apilar` en `entrada` |
+| `frente`, `desencolar` | $\Theta(n)$ | $\Theta(1)$ | el volcado mueve hasta $n$, pero cada elemento se vuelca una vez |
+| `vacia` | $\Theta(1)$ | $\Theta(1)$ | pregunta a las dos pilas |
+| espacio | $\Theta(n)$ | | un nodo por elemento, en una de las dos pilas |
 
 ## Pagar al partir: quicksort
 
@@ -216,6 +354,10 @@ El programa imprime `antes:   3 1 4 1 5` y `despues: 5 1 4 1 3`.
     No hace falta ordenar. Basta separar: los menores o iguales a la
     izquierda, en cualquier orden, después el 5 y al final los mayores. Con
     eso el 5 ya está en la casilla que ocupará en el arreglo ordenado.
+
+    Con personas pasa igual. Si un grupo se ordena por edad y alguien se para
+    con todos los menores o de su misma edad delante y todos los mayores
+    detrás, ese puesto ya es el suyo, aunque el resto siga desordenado.
 
 ### Pagar al partir
 
@@ -320,7 +462,14 @@ mayores y después de la barra el pivote:
 
 Al terminar, el pivote entra como un menor más: `intercambiar(a, i + 1, fin)`
 lo pone en el puesto del frente de los mayores, y ese frente pasa a la última
-casilla.
+casilla. Con $i = 2$, `intercambiar(a, 3, 6)` cambia el 6 por el 5:
+
+| `i` | `j` | $a[0..6]$ | Qué pasa |
+|---:|---:|---|---|
+| 2 | 6 | [2 1 3] 5 **7 8 6** | entra el pivote y $q = 3$ |
+
+A la izquierda quedan 2, 1, 3 y a la derecha 7, 8, 6, sin orden dentro de
+cada lado.
 
 ### El ejemplo más pequeño: $\langle 3, 1, 2 \rangle$
 
@@ -720,6 +869,10 @@ igual.
   §7.4). El peor caso sigue siendo $\Theta(n^2)$, pero depende de la suerte y
   no de los datos.
 
+Un ejemplo de biblioteca: `Arrays.sort` de Java ordena los
+arreglos de tipos primitivos con un quicksort de dos pivotes, de Yaroslavskiy,
+Bentley y Bloch, según su documentación.
+
 ### Los tres algoritmos sobre la misma entrada
 
 [comparar.cpp](./codigo/comparar.cpp) cuenta las comparaciones con un mismo
@@ -851,11 +1004,17 @@ la sesión.
   simple, `eliminarFinal` cuesta $\Theta(n)$ porque hay que llegar al
   penúltimo, y con la doble las cuatro operaciones de los extremos son
   $\Theta(1)$.
+- Con enteros, los campos suman 12 bytes por nodo en la lista simple y 20 en
+  la doble; `sizeof` da 16 y 24 por el relleno que alinea los punteros. En los
+  dos casos el espacio es $\Theta(n)$ y cambia solo la constante.
 - Sin el contador, `vacia()` sigue en $\Theta(1)$ y `tamano()` pasa a
   $\Theta(n)$. Un ciclo que pregunte `tamano()` en cada vuelta sube de
   $\Theta(n)$ a $\Theta(n^2)$.
 - Invertir una cola con una pila auxiliar cuesta $\Theta(n)$ en tiempo y
   $\Theta(n)$ de espacio aparte.
+- Una cola con dos pilas encola en `entrada` y atiende desde `salida`, y solo
+  vuelca cuando `salida` queda vacía. Un volcado cuesta $\Theta(n)$, pero cada
+  elemento se vuelca una vez: $\Theta(1)$ amortizado por operación.
 - Partir con dos colas de nodos funciona, pero pide $\Theta(n)$ de
   memoria aparte. Las dos colas caben dentro del arreglo: cuando llega un
   menor o igual al pivote, el frente de la cola de mayores, $a[i+1]$,
@@ -1001,6 +1160,8 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
   [cola_doble_uso.cpp](./codigo/cola_doble_uso.cpp) — la cola doble sobre la
   lista doblemente enlazada. Imprime `frente 1, final 7, tamano 3`,
   `sin el final: frente 1, final 4`, `vacia: 1` y `de nuevo: frente 9, final 9`.
+- [cola_dos_pilas.cpp](./codigo/cola_dos_pilas.cpp) — la cola con dos pilas
+  sobre `pila_nodos.h`. Imprime `frente 3` y `sale: 3 4 5 6 7 6 7 8`.
 - [cola_sin_n.h](./codigo/cola_sin_n.h) y
   [cola_sin_n_uso.cpp](./codigo/cola_sin_n_uso.cpp) — la cola sin contador.
   Imprime `vacia 1, tamano 0`, `vacia 0, tamano 3, frente 3` y
@@ -1027,7 +1188,8 @@ su entrada y su salida.
 
 - T. H. Cormen, C. E. Leiserson, R. L. Rivest y C. Stein. *Introduction to
   Algorithms*, 4.ª ed. MIT Press, 2022. Capítulo 7, quicksort: §7.1 descripción
-  y `PARTITION`, §7.2 desempeño, §7.3 versión aleatoria, §7.4 análisis.
+  y `PARTITION`, §7.2 desempeño, §7.3 versión aleatoria, §7.4 análisis;
+  capítulo 16, análisis amortizado.
 - R. Thareja. *Data Structures Using C*. Oxford University Press, 2018.
   Capítulo 14, búsqueda y ordenamiento.
 - N. Kalicharan. *Data Structures in C*, 2008. Capítulo 4, pilas y colas.
