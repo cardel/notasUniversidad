@@ -55,6 +55,9 @@ mano durante todo el semestre.
 - [Proyecto del curso](Proyecto/Proyecto%20del%20curso.md)
   — los cuatro escenarios, qué se entrega en el avance y en la final, cómo se
   califica y dónde vive el repositorio.
+- **HackerRank, estructuras de datos**:
+  <https://www.hackerrank.com/domains/data-structures>. Problemas para
+  practicar los temas del curso, con un juez que califica cada envío en línea.
 
 ## Clases en video
 
