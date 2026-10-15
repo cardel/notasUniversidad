@@ -414,8 +414,8 @@ conserva con `cons` y deja la cuenta como venía.
 ## Para practicar
 
 Las actividades de esta sesión están en
-[Ejercicios interactivos](./Ejercicios.md), y el repaso del lenguaje en
-[Ejercicios de Racket](./EjerciciosRacket.md). Corren en el navegador, sin
+[Ejercicios interactivos](../../../actividades/flp/induccion-y-recursion/index.md), y el repaso del lenguaje en
+[Ejercicios de Racket](../../../actividades/flp/induccion-y-recursion/racket.md). Corren en el navegador, sin
 instalar nada.
 
 El evaluador de esas páginas es pequeño y no reemplaza a DrRacket: no tiene

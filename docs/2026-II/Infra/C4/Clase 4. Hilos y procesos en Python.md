@@ -35,7 +35,7 @@ pasan los datos.
     contra procesos medidos con `perf`, la memoria que no se hereda, la cola
     que bloquea y lo que cuesta serializar.
 
-    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](../../../actividades/infra/hilos-y-procesos-python/index.md)
 
 -   :material-console:{ .lg .middle } **Código**
 
@@ -67,7 +67,7 @@ una lista de tareas, la actualización perdida con su cerrojo, la memoria
 compartida entre procesos y el grupo de procesos con una cola. Está en la
 pestaña de ejercicios prácticos del Campus Virtual y no lleva nota.
 
-Las nueve actividades del navegador de [Ejercicios](./Ejercicios.md) siguen el
+Las nueve actividades del navegador de [Ejercicios](../../../actividades/infra/hilos-y-procesos-python/index.md) siguen el
 orden de la sesión. Las dos que más conviene tocar primero son la del turno
 del GIL, que deja ver por qué dos hilos de cálculo no avanzan a la vez, y la
 de la actualización perdida, que arma la traza de los tres pasos de un abono.

@@ -408,7 +408,7 @@ funciona y justifique con la desigualdad, no solo con la tabla.
 Dos actividades de esta sesión se pueden trabajar en el navegador: la
 caza de parejas de testigos para $3n + 4$ y $5n + 5$, y la
 clasificación de costos en la escalera de clases:
-[página de ejercicios interactivos](./Ejercicios.md).
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/notacion-o/index.md).
 
 ## Referencias
 

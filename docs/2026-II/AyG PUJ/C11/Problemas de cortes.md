@@ -1646,7 +1646,7 @@ puentes. Resolver el otro da una respuesta razonable que el juez rechaza.
 ## Ejercicios
 
 Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los ocho de las diapositivas pueden
+[página de ejercicios](../../../actividades/ayg-puj/puentes-y-articulaciones/index.md). Los ocho de las diapositivas pueden
 aparecer en el parcial, y van sobre el mismo grafo $H$, con
 $V = \{0, \ldots, 8\}$ y aristas $0$–$1$, $1$–$2$, $2$–$0$, $2$–$3$, $3$–$4$,
 $4$–$2$, $4$–$5$, $5$–$6$, $6$–$7$, $7$–$5$, $7$–$8$: el árbol de puentes de

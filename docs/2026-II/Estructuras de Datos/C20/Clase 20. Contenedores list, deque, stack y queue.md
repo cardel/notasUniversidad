@@ -815,7 +815,7 @@ suben, y el del frente es el mínimo.
 ## Ejercicios interactivos
 
 Diez actividades que se trabajan en el navegador, ordenadas por los temas de la
-sesión, en la [página de ejercicios interactivos](./Ejercicios.md): un programa
+sesión, en la [página de ejercicios interactivos](../../../actividades/estructuras-de-datos/contenedores-list-deque-stack-queue/index.md): un programa
 con los TAD construidos a mano pasado a `deque`, `stack` y `queue`; un iterador
 de `list` a través de `insert`, `erase`, `splice` y `sort`; dónde cae cada
 elemento de un `deque` de bloques y cuándo crece el mapa; cuántos elementos

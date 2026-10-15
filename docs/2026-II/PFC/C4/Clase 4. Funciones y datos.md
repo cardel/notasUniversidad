@@ -12,7 +12,7 @@ Las diapositivas están en el Campus Virtual. Aquí quedan las notas de lo que s
 dijo en el salón y el código que se escribió en vivo, en
 [`codigo/`](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/PFC/C4/codigo).
 Los ocho ejercicios interactivos de la sesión están en
-[Ejercicios](./Ejercicios.md).
+[Ejercicios](../../../actividades/pfc/clases-y-abstraccion-de-datos/index.md).
 
 Referencia: Odersky, Spoon y Venners, *Programming in Scala*, 3.ª edición,
 capítulos 4, 6 y 10.

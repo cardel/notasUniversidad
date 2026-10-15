@@ -1124,7 +1124,7 @@ dónde empieza cada una.
 ## Ejercicios interactivos
 
 Ocho actividades que se trabajan en el navegador, ordenadas por los temas de la
-sesión, en la [página de ejercicios interactivos](./Ejercicios.md): cuánto
+sesión, en la [página de ejercicios interactivos](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/index.md): cuánto
 camina cada TAD al sumar sus elementos con el contrato; rotar una cola y
 concatenar dos cambiando punteros, con su costo y sus casos límite;
 `particionar` paso a paso con las zonas de cada casilla; qué quedó mal en cada

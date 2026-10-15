@@ -41,7 +41,7 @@ de quitar las piezas una por una.
 
 Ocho interactivos, por los temas de la sesión y en su mismo orden, y ocho más
 para resolver en papel. Todos están en la
-[página de ejercicios](./Ejercicios.md).
+[página de ejercicios](../../../actividades/ayg-puj/orden-topologico-dfs-low/index.md).
 
 ## Antes de entrar
 

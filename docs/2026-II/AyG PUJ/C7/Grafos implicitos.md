@@ -466,7 +466,7 @@ con `input()`.
 ## Ejercicios
 
 Seis interactivos, siete en papel y cinco para programar: están en la
-[página de ejercicios](./Ejercicios.md).
+[página de ejercicios](../../../actividades/ayg-puj/grafos-implicitos/index.md).
 
 ## Referencias
 

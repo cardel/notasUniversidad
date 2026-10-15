@@ -405,7 +405,7 @@ la tabla de algoritmos.
 
 ## Ejercicios
 
-Los interactivos están en la [página de ejercicios](./Ejercicios.md). Estos
+Los interactivos están en la [página de ejercicios](../../../actividades/ayg-puj/caminos-minimos-generalidades/index.md). Estos
 son los de las diapositivas:
 
 1. **La amplitud a mano.** Sea $A$ el grafo no dirigido con

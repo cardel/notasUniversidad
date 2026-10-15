@@ -34,7 +34,7 @@ veces según con qué se mida, y entender por qué es parte del trabajo.
     de Valgrind, los contadores del procesador y la misma diferencia medida de
     cuatro formas.
 
-    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](../../../actividades/infra/profiling-linux/index.md)
 
 -   :material-console:{ .lg .middle } **Código**
 

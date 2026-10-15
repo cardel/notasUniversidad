@@ -526,7 +526,7 @@ Cinco actividades, una por tema de la sesión: el estado final de un `vector`
 tras una secuencia de operaciones, cuatro expresiones con `string`, un `stack`
 con un `pop` en la mitad, `sort` con un criterio que desempata por nombre al
 revés junto a `binary_search` sobre un vector sin ordenar, y las cuentas de
-costo: [página de ejercicios interactivos](./Ejercicios.md). Los programas
+costo: [página de ejercicios interactivos](../../../actividades/estructuras-de-datos/stl-contenedores/index.md). Los programas
 no son los de arriba: mismo tema, ronda nueva. Las de `vector`, `algoritmos`
 y `costos` se recorrieron en clase.
 

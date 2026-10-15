@@ -37,7 +37,7 @@ anterior, y mirar si la fila $n$ todavía mejora algo.
 ## Ejercicios
 
 Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los siete de las diapositivas, con
+[página de ejercicios](../../../actividades/ayg-puj/caminos-minimos-generalidades/index.md). Los siete de las diapositivas, con
 sus pistas, están al final de la [nota](./Caminos%20cortos.md#ejercicios).
 
 ## Antes de entrar

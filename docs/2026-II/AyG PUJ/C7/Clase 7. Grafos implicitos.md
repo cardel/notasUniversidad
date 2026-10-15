@@ -40,7 +40,7 @@ con predecesores en una red dirigida, los componentes pintados de colores,
 tres fallas para encontrar, y la cuadrícula donde marcar la celda falla y
 marcar el estado acierta. Después, siete en papel y cinco para programar.
 
-Todos están en la [página de ejercicios](./Ejercicios.md).
+Todos están en la [página de ejercicios](../../../actividades/ayg-puj/grafos-implicitos/index.md).
 
 ## Antes de entrar
 

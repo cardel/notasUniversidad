@@ -903,7 +903,7 @@ los dos contratos. ¿Cuánto cuesta en tiempo y en espacio?
 ## Ejercicios interactivos
 
 Cinco actividades que se trabajan en el navegador, una por tema de la sesión,
-en la [página de ejercicios interactivos](./Ejercicios.md): en qué casilla cae
+en la [página de ejercicios interactivos](../../../actividades/estructuras-de-datos/cola-implementacion/index.md): en qué casilla cae
 cada `encolar` sobre un arreglo de cinco y dónde da la vuelta; los elementos que
 se mueven en las cuatro combinaciones de lista y extremo; la cadena con `cabeza`
 y `ultimo` paso a paso hasta vaciarla y volver a usarla; qué pasa si

@@ -1005,7 +1005,7 @@ $G^{SCC}$ van siempre de mayor a menor $f$.
 ## Ejercicios
 
 Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los ocho que se propusieron en la
+[página de ejercicios](../../../actividades/ayg-puj/conectividad/index.md). Los ocho que se propusieron en la
 sesión pueden aparecer en el parcial: los componentes conexos a mano sobre un
 grafo de nueve vértices, profundidad contra amplitud dentro de un mismo
 componente, los puntos de articulación y los puentes de un grafo de siete

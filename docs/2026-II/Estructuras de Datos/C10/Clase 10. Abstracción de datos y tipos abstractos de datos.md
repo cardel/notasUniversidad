@@ -942,7 +942,7 @@ Dos actividades de esta sesión se trabajan en el navegador: un TAD Hora con dos
 implementaciones que hay que clasificar de qué lado de la barrera vive cada
 línea, y el mismo TAD con la precondición en juego —una hora 26 que despierta al
 `assert` y dos contratos que reparten distinto el desborde de los minutos:
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son los
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/abstraccion-tad/index.md). Los programas no son los
 de arriba: mismo tema, ronda nueva.
 
 ## Código de la clase

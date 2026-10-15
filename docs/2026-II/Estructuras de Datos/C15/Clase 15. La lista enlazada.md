@@ -794,7 +794,7 @@ paso a paso siguiendo `cabeza`, `anterior` y `nuevo`, con lo que queda si se
 invierten las dos líneas del empalme; cuántos nodos visita `agregar` con y sin
 puntero al último; qué implementación conviene a tres perfiles de uso
 distintos; y la traza de insertion sort vuelta por vuelta. Están en la
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son los
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/lista-enlazada/index.md). Los programas no son los
 de la sesión: mismo tema, ronda nueva.
 
 ## Lo que sigue

@@ -76,7 +76,7 @@ Se publican después de cada sesión.
 Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
 quedan disponibles después para volver sobre el tema.
 
-1. [Racket: notación prefija, recursión y listas simbólicas](C1/EjerciciosRacket.md)
+1. [Racket: notación prefija, recursión y listas simbólicas](../../actividades/flp/induccion-y-recursion/racket.md)
    — cinco actividades y veintiocho procedimientos por escribir, sobre el
    lenguaje mismo: el operador que va adelante, los condicionales con `if` y
    con `cond`, la recursión lineal frente a la de cola, las ligaduras locales
@@ -85,14 +85,14 @@ quedan disponibles después para volver sobre el tema.
    Acompañan el material de lectura y conviene resolverlas antes de la
    primera sesión de contenido.
 
-2. [Ejercicios de la clase 1: inducción y recursión](C1/Ejercicios.md)
+2. [Ejercicios de la clase 1: inducción y recursión](../../actividades/flp/induccion-y-recursion/index.md)
    — siete actividades, una por tema de la sesión: qué entra en un conjunto
    definido por reglas, los reconocedores que salen de esas reglas, las
    gramáticas BNF con sus cerraduras, recorrer listas, s-lists y árboles
    siguiendo la gramática, declaración, referencia y alcance, y las ligaduras
    locales que el recorrido necesita. El código corre en la misma página.
 
-3. [Ejercicios de la clase 2: estrategias para representar datos](C2/Ejercicios.md)
+3. [Ejercicios de la clase 2: estrategias para representar datos](../../actividades/flp/tad-y-ambientes/index.md)
    — ocho actividades, dos por tema de la sesión, una de analizar y una de
    escribir: qué clientes sobreviven a un cambio de representación y cómo se
    arreglan los que no, una cola con tres clientes contra dos
@@ -101,7 +101,7 @@ quedan disponibles después para volver sobre el tema.
    base 10 con acarreo y préstamo, y `apply-env` predicho sobre una cadena
    con nombres repetidos y cinco clientes del ambiente por la interfaz.
 
-4. [Ejercicios de la clase 3: datatypes y árboles de sintaxis abstracta](C3/Ejercicios.md)
+4. [Ejercicios de la clase 3: datatypes y árboles de sintaxis abstracta](../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/index.md)
    — once actividades, en el orden de los temas de la sesión: una expresión
    lambda leída como lista con `car` y `cdr` y lo que se rompe al cambiar la
    representación, declaraciones con `define-datatype` para juzgar y para
@@ -113,7 +113,7 @@ quedan disponibles después para volver sobre el tema.
    adelante y otro con el conectivo en medio, con el árbol esperado de cada
    prueba dibujado junto al que construye el código.
 
-5. [Ejercicios de la clase 4: del texto al resultado](C4/Ejercicios.md)
+5. [Ejercicios de la clase 4: del texto al resultado](../../actividades/flp/proceso-del-interpretador/index.md)
    — ocho actividades, una por tema de la sesión, casi todas de analizar y
    predecir: el reparto del trabajo entre scanner, parser e interpretador y
    en qué etapa se detiene cada programa, lo que se nota al usar un lenguaje
@@ -125,7 +125,7 @@ quedan disponibles después para volver sobre el tema.
    la página abre sus tres etapas sobre ese mismo programa, con los tokens,
    el árbol dibujado y la traza fila por fila.
 
-6. [Ejercicios de la clase 5: condicionales, procedimientos y alcance](C5/Ejercicios.md)
+6. [Ejercicios de la clase 5: condicionales, procedimientos y alcance](../../actividades/flp/procedimientos-y-alcance-estatico/index.md)
    — siete actividades, una por tema de la sesión: qué encargos no se podían
    escribir con el lenguaje anterior, el condicional y su verificación con
    `boolean?`, el `let` de varias ligaduras y sus casos al borde, la cadena
@@ -135,7 +135,7 @@ quedan disponibles después para volver sobre el tema.
    programa bajo alcance estático y dinámico, con las dos trazas lado a
    lado.
 
-7. [Ejercicios de la clase 6: procedimientos recursivos y letrec](C6/Ejercicios.md)
+7. [Ejercicios de la clase 6: procedimientos recursivos y letrec](../../actividades/flp/procedimientos-recursivos-letrec/index.md)
    — nueve actividades, una por tema de la sesión: los cinco intentos de
    recursión con `let` y `proc`, la producción nueva trabajada en los dos
    sentidos —de la gramática a los programas y del árbol que no se genera a

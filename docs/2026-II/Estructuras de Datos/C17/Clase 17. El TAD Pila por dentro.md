@@ -882,7 +882,7 @@ para `bahama` y `bahama`, y diga de dónde sale cada bifurcación.
 ## Ejercicios interactivos
 
 Ocho actividades que se trabajan en el navegador, en la [página de ejercicios
-interactivos](./Ejercicios.md): siete operaciones sobre la pila de arreglo hasta
+interactivos](../../../actividades/estructuras-de-datos/pila-implementacion/index.md): siete operaciones sobre la pila de arreglo hasta
 la que ya no entra; los elementos que se mueven al apilar y desapilar cincuenta
 veces en las cuatro combinaciones; la cadena y el puntero a la cima paso a paso;
 qué queda si `desapilar` libera el nodo antes de mover `cima`; y qué pila

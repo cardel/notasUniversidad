@@ -699,7 +699,7 @@ sesión.
 Cuatro ejercicios de esta sesión (`todos_positivos`, `paso_grande`,
 `mitades` y `combinado`) se pueden trabajar en el navegador, con
 predicción, ejecución paso a paso y el conteo de cada línea en vivo:
-[página de ejercicios interactivos](./Ejercicios.md).
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/ejercicios-complejidad/index.md).
 
 ## Código de la clase
 

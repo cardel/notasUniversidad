@@ -447,7 +447,7 @@ cola saca las fuentes en el orden en que aparecen.
 ## Ejercicios
 
 Los interactivos, los de papel y los de juez están en la
-[página de ejercicios](./Ejercicios.md). Tres de los de papel vienen de la
+[página de ejercicios](../../../actividades/ayg-puj/orden-topologico-kahn/index.md). Tres de los de papel vienen de la
 clase y pueden aparecer en el parcial: decidir si un grafo tiene ciclos con
 búsqueda en profundidad, Kahn con una pila en vez de la cola, y Kahn
 devolviendo el menor orden en orden lexicográfico.

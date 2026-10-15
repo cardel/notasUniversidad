@@ -927,7 +927,7 @@ $3 \cdot 10^{10}$ pasos a unos $3 \cdot 10^{5}$.
 ## Ejercicios
 
 Los interactivos y los de papel están en la
-[página de ejercicios](./Ejercicios.md). Los ocho de las diapositivas pueden
+[página de ejercicios](../../../actividades/ayg-puj/orden-topologico-dfs-low/index.md). Los ocho de las diapositivas pueden
 aparecer en el parcial: un orden topológico a mano sobre un grafo de siete
 vértices, comparado con el de Kahn; el ciclo que aparece al agregarle una
 arista y lo que devuelve `orden_topologico_dfs`; un grafo acíclico de tres

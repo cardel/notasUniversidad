@@ -40,7 +40,7 @@ estados y que se recorre con la búsqueda en amplitud.
 ## Ejercicios
 
 Seis interactivos, por los temas de la sesión y en su mismo orden, y cinco más
-para resolver en papel, en la [página de ejercicios](./Ejercicios.md).
+para resolver en papel, en la [página de ejercicios](../../../actividades/ayg-puj/bellman-ford-moore/index.md).
 Los siete de las diapositivas, con sus pistas, están al final de la
 [nota](./Bellman-Ford-Moore.md#ejercicios). Van desde llenar la matriz a mano
 hasta resolver otra villa de cuatro habitaciones.

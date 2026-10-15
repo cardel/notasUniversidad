@@ -446,7 +446,7 @@ ligada de una declaración, que es lo que pasa aquí tres veces.
 
 ## Ejercicios de la segunda mitad
 
-La segunda mitad fue sobre las [actividades interactivas](./Ejercicios.md) de
+La segunda mitad fue sobre las [actividades interactivas](../../../actividades/flp/proceso-del-interpretador/index.md) de
 la sesión, y varias se resolvieron en el tablero.
 
 En las de leer una especificación de SLLGEN, lo que se juzga es qué captura

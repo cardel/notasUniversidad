@@ -47,7 +47,7 @@ con sus dos pasadas línea por línea, y tres versiones con una línea cambiada
 para encontrar cuál falla. Cierra uno más largo, sobre una red de quince
 páginas y veintitrés enlaces. Después, ocho para resolver en papel.
 
-Todos están en la [página de ejercicios](./Ejercicios.md).
+Todos están en la [página de ejercicios](../../../actividades/ayg-puj/conectividad/index.md).
 
 ## Antes de entrar
 

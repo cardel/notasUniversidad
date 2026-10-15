@@ -549,7 +549,7 @@ copiar y pegar el área del programador, y los resultados son los mismos.
 ## Ejercicios de la segunda mitad
 
 La segunda mitad fue sobre las
-[actividades interactivas](./Ejercicios.md) de la sesión, y tres se
+[actividades interactivas](../../../actividades/flp/tad-y-ambientes/index.md) de la sesión, y tres se
 resolvieron en el tablero. En la cola con dos representaciones, los tres
 clientes se pegaron sobre la segunda sin cambiarlos, y la razón es la misma
 de toda la sesión: solo usan los procedimientos de la interfaz. Quien devuelve

@@ -543,7 +543,7 @@ sin darse cuenta.
 ## Ejercicios
 
 Siete interactivos, uno por tema, y diez en papel: están en la
-[página de ejercicios](./Ejercicios.md).
+[página de ejercicios](../../../actividades/ayg-puj/representaciones-y-recorridos/index.md).
 
 ## Referencias
 

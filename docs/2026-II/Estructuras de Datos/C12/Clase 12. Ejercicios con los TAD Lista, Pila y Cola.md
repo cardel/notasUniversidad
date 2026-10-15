@@ -713,7 +713,7 @@ Cinco actividades de esta sesión se trabajan en el navegador, una por tema:
 cadenas con llaves y una postfija más larga para la pila, las cartas al aire y
 la papa caliente para la cola, `quitarRepetidos` y la unión ordenada para la
 lista, la cola con dos pilas ante otra secuencia, y las cuentas de costo:
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/index.md). Los programas no son
 los de arriba: mismo tema, ronda nueva.
 
 ## Código de la clase

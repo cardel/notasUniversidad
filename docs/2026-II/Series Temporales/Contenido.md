@@ -13,7 +13,7 @@ Se trabajan en el navegador, sin instalar nada, y todos los números que
 muestran se calculan en la página sobre la serie del curso: los pasajeros
 mensuales de los vuelos de Colombia entre enero de 2017 y febrero de 2026.
 
-1. [Ejercicios de la semana del 16 y 17 de octubre: estacionariedad, ACF y PACF](./C3/Ejercicios.md)
+1. [Ejercicios de la semana del 16 y 17 de octubre: estacionariedad, ACF y PACF](../../actividades/series-temporales/autocorrelacion/index.md)
    — cinco actividades para las sesiones 3 y 4: la nube de cada mes contra
    el de k meses antes, tres correlogramas para reconocer antes de
    diferenciar, las casillas d y D con su ACF y su valor p de ADF, el ancho

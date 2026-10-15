@@ -37,7 +37,7 @@ partir de qué cuenta compensa llevar el cálculo a la GPU.
     de llamadas de `fib`, cuántas muestras hacen falta, cuál herramienta
     responde qué, los carriles de un registro AVX y cuándo compensa la GPU.
 
-    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](../../../actividades/infra/profiling-python-avx/index.md)
 
 -   :material-console:{ .lg .middle } **Código**
 
@@ -70,7 +70,7 @@ indexación a NumPy, y el mismo producto punto con instrucciones AVX escritas
 a mano en C++. Está en la pestaña de ejercicios prácticos del Campus Virtual
 y no lleva nota.
 
-Las ocho actividades del navegador de [Ejercicios](./Ejercicios.md) siguen el
+Las ocho actividades del navegador de [Ejercicios](../../../actividades/infra/profiling-python-avx/index.md) siguen el
 orden de la sesión. Las dos que más conviene tocar primero son la del techo
 de una optimización, que es la cuenta de Amdahl aplicada a un programa
 concreto, y la de los carriles de un registro, que deja ver cuántas

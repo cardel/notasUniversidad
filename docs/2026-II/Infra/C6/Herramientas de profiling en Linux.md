@@ -958,7 +958,7 @@ por porciones quedó nombrada en el mismo punto, con las macros a la vista y sin
 corrida. Grafana y Prometheus quedaron mencionados al pasar, como las
 herramientas con que se monitorea un clúster.
 
-Las [actividades del navegador](./Ejercicios.md) siguen el orden de los temas de
+Las [actividades del navegador](../../../actividades/infra/profiling-linux/index.md) siguen el orden de los temas de
 la sesión: los dos programas que hacen la misma cuenta, el programa paralelo
 visto desde afuera, las llamadas al sistema contadas una por una, los fallos de
 caché de Valgrind, los contadores del procesador y la misma diferencia medida de

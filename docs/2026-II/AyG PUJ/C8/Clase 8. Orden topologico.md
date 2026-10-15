@@ -45,7 +45,7 @@ largo, con catorce módulos y sus dependencias, para aplicar todo lo anterior
 sobre un grafo que ya no cabe en la cabeza. Después, siete en papel y tres
 para el juez.
 
-Todos están en la [página de ejercicios](./Ejercicios.md).
+Todos están en la [página de ejercicios](../../../actividades/ayg-puj/orden-topologico-kahn/index.md).
 
 ## Antes de entrar
 

@@ -33,7 +33,7 @@ se mide, y varias veces la versión secuencial gana.
     dos pasadas, el pipeline de tres etapas y ocho situaciones para elegir
     estrategia.
 
-    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](../../../actividades/infra/estrategias-de-paralelizacion/index.md)
 
 -   :material-console:{ .lg .middle } **Código**
 
@@ -64,7 +64,7 @@ Quien hizo el fork en clase tiene la versión de una sola parte; conviene
 borrar esa copia y volver a bifurcar. Está en la pestaña de ejercicios
 prácticos del Campus Virtual y no lleva nota.
 
-Las diez actividades del navegador de [Ejercicios](./Ejercicios.md) siguen el
+Las diez actividades del navegador de [Ejercicios](../../../actividades/infra/estrategias-de-paralelizacion/index.md) siguen el
 orden de la sesión. Las dos que más conviene tocar primero son la de las 64
 tareas desiguales, que deja ver hilo por hilo quién esperó a quién, y la de la
 suma de prefijos, que arma las dos pasadas paso a paso.

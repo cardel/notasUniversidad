@@ -368,7 +368,7 @@ Los ejercicios prácticos de OpenMP quedaron para la casa: reparto, `schedule`,
 histograma, carrera de datos y `sections`. Están en el Campus Virtual, traen
 `Makefile` y se compilan con `make`.
 
-Las [actividades del navegador](./Ejercicios.md) siguen el orden de la sesión.
+Las [actividades del navegador](../../../actividades/infra/openmp-cpp/index.md) siguen el orden de la sesión.
 En clase se alcanzaron las primeras: el orden del recorrido, cuántos hilos
 arrancan, la suma que se pierde y qué entra y qué sale de la región. Las que
 siguen —el reparto de iteraciones, las tres escrituras de la misma reducción, el

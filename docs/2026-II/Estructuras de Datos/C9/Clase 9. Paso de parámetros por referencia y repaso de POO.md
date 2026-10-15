@@ -1240,7 +1240,7 @@ int main(void) {
 Dos actividades de esta sesión se pueden trabajar en el navegador: las tres
 trazas de una misma función según el modo de paso de su segundo parámetro, y
 una clase `Cuenta` cuyas operaciones validan antes de escribir:
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/paso-por-referencia/index.md). Los programas no son
 los de arriba: mismo tema, ronda nueva.
 
 ## Código de la clase

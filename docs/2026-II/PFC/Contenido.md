@@ -90,12 +90,12 @@ reuniones docentes y jornada de reflexión.
 
 | Clase | Tema | Ejercicios |
 |---:|---|---|
-| 1 | Principios y elementos de programación | [sustituir y evaluación](C1/Ejercicios.md) |
-| 2 | Funciones y los procesos que generan | [nueve ejercicios, tres por tema](C2/Ejercicios.md) |
-| 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](C3/Ejercicios.md) |
-| 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](C4/Ejercicios.md) |
-| 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](C5/Ejercicios.md) |
-| 6 | Listas, tuplas y funciones de alto orden | [doce ejercicios: de los dos constructores a fold](C6/Ejercicios.md) |
+| 1 | Principios y elementos de programación | [sustituir y evaluación](../../actividades/pfc/evaluacion-y-sustitucion/index.md) |
+| 2 | Funciones y los procesos que generan | [nueve ejercicios, tres por tema](../../actividades/pfc/recursion-de-cola-y-procesos/index.md) |
+| 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](../../actividades/pfc/funciones-de-alto-orden/index.md) |
+| 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](../../actividades/pfc/clases-y-abstraccion-de-datos/index.md) |
+| 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md) |
+| 6 | Listas, tuplas y funciones de alto orden | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
 
 ## Ejercicios de clase
 

@@ -477,7 +477,7 @@ la lista es un tipo de datos del lenguaje anfitrión y se recorre con `null?`,
 
 ## Ejercicios de la segunda mitad
 
-La segunda mitad fue sobre las [actividades interactivas](./Ejercicios.md) de
+La segunda mitad fue sobre las [actividades interactivas](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/index.md) de
 la sesión, y varias se resolvieron en el tablero.
 
 En las declaraciones que hay que juzgar, los errores que aparecieron son los

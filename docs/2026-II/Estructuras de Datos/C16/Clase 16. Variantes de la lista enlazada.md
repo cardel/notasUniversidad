@@ -911,7 +911,7 @@ para $p = 0, \ldots, 6$ y compruebe que ninguno pasa de $\lceil 7/2 \rceil = 4$.
 ## Ejercicios interactivos
 
 Cinco actividades que se trabajan en el navegador, una por tema de la sesión,
-en la [página de ejercicios interactivos](./Ejercicios.md): qué punteros se
+en la [página de ejercicios interactivos](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/index.md): qué punteros se
 reescriben al sacar un nodo de la cadena doble; insertar al frente y al final
 sobre la circular prediciendo cada resultado; los pasos por los dos caminos con
 doce elementos; dónde corta `partir` y cuántas comparaciones hace cada mezcla;

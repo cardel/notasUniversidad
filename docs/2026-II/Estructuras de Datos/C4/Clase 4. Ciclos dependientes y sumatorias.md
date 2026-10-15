@@ -595,7 +595,7 @@ El formulario de la sesión tiene todo lo necesario.
 Cuatro ejercicios de esta clase (`triangulo`, `contar_incluida`,
 `suma_parejas` y `potencias`) se pueden trabajar en el navegador, con
 predicción, ejecución paso a paso y el conteo de cada línea en vivo:
-[página de ejercicios interactivos](./Ejercicios.md).
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/ciclos-dependientes-sumatorias/index.md).
 
 ## Código de la clase
 

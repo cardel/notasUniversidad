@@ -805,7 +805,7 @@ Dos actividades de esta sesión se pueden trabajar en el navegador: la cadena
 de preguntas sobre `p + 1`, sobre un puntero que arranca en mitad del arreglo
 y sobre la resta de punteros, y el cálculo de direcciones en una matriz de
 $3 \times 4$ con la calle aplanada al frente:
-[página de ejercicios interactivos](./Ejercicios.md).
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/punteros-arreglos/index.md).
 
 ## Código de la clase
 

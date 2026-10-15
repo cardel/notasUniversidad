@@ -257,7 +257,7 @@ declarado, y no uno del otro.
 ## Ejercicios de la segunda mitad
 
 Los ejercicios interactivos de esta sesión están en
-[Ejercicios · FLP C6](./Ejercicios.md){ target=_blank rel=noopener }: la
+[Ejercicios · FLP C6](../../../actividades/flp/procedimientos-recursivos-letrec/index.md){ target=_blank rel=noopener }: la
 gramática del `letrec`, qué guarda el marco, el TAD armado con listas
 etiquetadas, las trazas, la recursión mutua y el dibujo de la cadena.
 

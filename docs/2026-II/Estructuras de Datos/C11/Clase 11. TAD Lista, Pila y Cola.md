@@ -832,7 +832,7 @@ Cinco actividades de esta sesión se trabajan en el navegador, una por tema:
 las disciplinas de acceso, las operaciones de la lista y `intercalar`, la pila
 con `contar` sin destruirla, la cola con `rotar` y el `frente` vacío, y los
 tres contratos juntos con sus cuentas de costo:
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/index.md). Los programas no son
 los de arriba: mismo tema, ronda nueva.
 
 ## Código de la clase

@@ -226,7 +226,7 @@ de la máquina: es cuántos enteros caben en una línea.
 
 ## Las dos localidades por separado
 
-El [ejercicio de localidad](./Ejercicios.md) permite verlas actuar una sin la
+El [ejercicio de localidad](../../../actividades/infra/introduccion-programacion-paralela/index.md) permite verlas actuar una sin la
 otra, que es difícil de conseguir midiendo un programa real.
 
 Con una matriz de 8 × 8, líneas de ocho elementos y una caché de cuatro líneas,
@@ -336,7 +336,7 @@ y un detector de carreras no reporta nada.
 
 ### Compartir línea no basta
 
-El [ejercicio de false sharing](./Ejercicios.md) tiene dos perillas, el relleno y
+El [ejercicio de false sharing](../../../actividades/infra/introduccion-programacion-paralela/index.md) tiene dos perillas, el relleno y
 el orden de las escrituras, y las cuatro combinaciones importan. Con cuatro
 acumuladores pegados y las escrituras intercaladas, cinco rondas cuestan veinte
 viajes de línea. Las otras tres combinaciones cuestan cuatro.

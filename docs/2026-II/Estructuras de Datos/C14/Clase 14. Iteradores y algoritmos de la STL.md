@@ -758,7 +758,7 @@ Cinco actividades, una por tema de la sesión: posición e índice con
 cuatro consultas, `unique` con `erase` y el `accumulate` que desborda; la
 intersección con sus vueltas del `while`, las frecuencias y la mediana; y las
 cuentas de costo, incluidas las mitades de `lower_bound` sobre 4096:
-[página de ejercicios interactivos](./Ejercicios.md). Los programas no son los
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/stl-iteradores-algoritmos/index.md). Los programas no son los
 de arriba: mismo tema, ronda nueva.
 
 ## Lo que sigue

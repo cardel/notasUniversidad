@@ -38,7 +38,7 @@ sobre las tres, ver qué pasa sin la marca de visitados, los dos recorridos
 paso a paso, el costo con controles y los cuatro errores que más cuestan.
 Después, diez para resolver en papel, incluido un problema de juez.
 
-Todos están en la [página de ejercicios](./Ejercicios.md).
+Todos están en la [página de ejercicios](../../../actividades/ayg-puj/representaciones-y-recorridos/index.md).
 
 ## Antes de entrar
 

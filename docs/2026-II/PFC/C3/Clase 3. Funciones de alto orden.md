@@ -12,7 +12,7 @@ Las diapositivas están en el Campus Virtual. Aquí quedan las notas de lo que
 se dijo en el salón y el código que se escribió en vivo, en
 [`codigo/`](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/PFC/C3/codigo).
 Los doce ejercicios interactivos de la sesión están en
-[Ejercicios](./Ejercicios.md).
+[Ejercicios](../../../actividades/pfc/funciones-de-alto-orden/index.md).
 
 Referencia: Odersky, Spoon y Venners, *Programming in Scala*, 3.ª edición,
 capítulos 8 y 9; Abelson y Sussman, *Structure and Interpretation of Computer
@@ -328,7 +328,7 @@ específicas, fijando de a un grupo, sin escribir cada una desde cero.
 
 ## Lo que queda
 
-Los doce ejercicios de [Ejercicios](./Ejercicios.md) siguen los temas de la
+Los doce ejercicios de [Ejercicios](../../../actividades/pfc/funciones-de-alto-orden/index.md) siguen los temas de la
 sesión en este mismo orden. En clase se recorrieron varios: el que arma el
 par `f` / `prox` para tres sumas escritas en matemáticas, la tabla de traza
 que se llena antes de correr, la reducción paso a paso y la que pide

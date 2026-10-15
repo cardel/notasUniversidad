@@ -864,7 +864,7 @@ Tres actividades de esta sesión se pueden trabajar en el navegador, con
 predicción y ejecución paso a paso: la traza del puntero que se muda de
 una variable a otra, el ejercicio de `a`, `b`, `p` y `q`, y la caza de los
 dos errores de memoria:
-[página de ejercicios interactivos](./Ejercicios.md).
+[página de ejercicios interactivos](../../../actividades/estructuras-de-datos/memoria-en-c/index.md).
 
 ## Código de la clase
 

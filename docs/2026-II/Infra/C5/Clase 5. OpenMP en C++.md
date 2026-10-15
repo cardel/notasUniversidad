@@ -33,7 +33,7 @@ los hilos que uno pidió, y hasta dónde sube la aceleración antes de aplanarse
     misma reducción, el mismo ciclo en tres bibliotecas, el codo de la curva y
     cómo comprobar que hubo paralelismo.
 
-    [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+    [:octicons-arrow-right-24: Entrar](../../../actividades/infra/openmp-cpp/index.md)
 
 -   :material-console:{ .lg .middle } **Código**
 

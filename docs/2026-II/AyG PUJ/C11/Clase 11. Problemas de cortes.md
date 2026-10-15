@@ -46,7 +46,7 @@ $low$ y marcar cortes y puentes, construir el árbol de puentes paso a paso,
 orientar las calles de Street Directions, calcular el valor de cada estación
 en Doves and Bombs, decidir si el corte va por vértice o por arista en tres
 enunciados, y encontrar cuál de tres versiones del código falla. Después, los
-de papel y los de juez. Están en la [página de ejercicios](./Ejercicios.md).
+de papel y los de juez. Están en la [página de ejercicios](../../../actividades/ayg-puj/puentes-y-articulaciones/index.md).
 
 ## Antes de entrar
 

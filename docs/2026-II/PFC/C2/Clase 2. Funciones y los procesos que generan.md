@@ -11,7 +11,7 @@ nombres: recursión lineal, recursión de cola y recursión de árbol.
 Las diapositivas están en el Campus Virtual. Aquí quedan las notas de lo que se
 dijo en el salón y el código que se escribió en vivo, en
 [`codigo/`](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/PFC/C2/codigo). Los nueve ejercicios interactivos de la sesión están en
-[Ejercicios](./Ejercicios.md).
+[Ejercicios](../../../actividades/pfc/recursion-de-cola-y-procesos/index.md).
 
 Referencia: Abelson y Sussman, *Structure and Interpretation of Computer
 Programs*, sección 1.2, *Procedures and the Processes They Generate*; Odersky,
@@ -470,7 +470,7 @@ dos sumatorias que se escriben con `@tailrec` y un acumulador con valor por
 defecto. Se entrega como los demás, con fork, *actions* habilitadas y la
 dirección del fork con el hash del último commit en el campus.
 
-Los ejercicios interactivos de [Ejercicios](./Ejercicios.md) quedan
+Los ejercicios interactivos de [Ejercicios](../../../actividades/pfc/recursion-de-cola-y-procesos/index.md) quedan
 disponibles para volver sobre la mecánica: `pendientes`, `acumulador` y
 `cola` para contar marcos en las dos versiones del factorial, y `árbol` y
 `cuentas` para el producto por mitades.
