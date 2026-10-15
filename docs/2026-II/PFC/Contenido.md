@@ -50,9 +50,20 @@ Se publican después de cada sesión.
    `require` y el modelo de sustitución con clases. Incluye el código escrito
    en clase.
 
+5. Clase 5. Reconocimiento de patrones — 8 de octubre. *Pendiente de publicar.*
+6. Clase 6. Listas I: diseño, uso y recursión sobre listas — 15 de octubre.
+   *Pendiente de publicar.*
+7. Clase 7. Listas II: tuplas, ordenamiento por mezcla y alto orden —
+   22 de octubre.
+8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
+9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
+
 ### Corte 2
 
-*Aún no hay clases publicadas.*
+10. Clase 10. Principios de concurrencia y paralelismo — 12 de noviembre.
+11. Clase 11. Abstracciones para la concurrencia — 19 de noviembre.
+12. Clase 12. Complejidad de la concurrencia, paralelismo de tareas y de
+    datos — 26 de noviembre.
 
 ## Clases en video
 
@@ -95,7 +106,8 @@ reuniones docentes y jornada de reflexión.
 | 3 | Funciones de alto orden | [doce ejercicios: tablas, pasos y trazas por revisar](../../actividades/pfc/funciones-de-alto-orden/index.md) |
 | 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](../../actividades/pfc/clases-y-abstraccion-de-datos/index.md) |
 | 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md) |
-| 6 | Listas, tuplas y funciones de alto orden | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
+| 6 | Listas I: diseño, uso y recursión sobre listas | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
+| 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [doce ejercicios: de los dos constructores a fold](../../actividades/pfc/listas-y-ordenamiento/index.md) |
 
 ## Ejercicios de clase
 
@@ -111,12 +123,12 @@ reporta en el Campus Virtual antes de terminar la clase.
 | 4 | [Funciones y datos I: clases, invariantes y operadores](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-05-numeros-complejos) |
 | 5 | [Funciones y datos II: figuras, patrones y expresiones](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-06-reconocimiento-de-patrones) |
 | 6 | [Listas I: if/else, match, inserción, aplanar y corridas](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-07-operaciones-sobre-listas) |
-| 6 | [Listas II: tuplas, merge sort y alto orden](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-08-merge-sort) |
-| 7 | [Colecciones I: secuencias, flatMap, for y conjuntos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-09-expresiones-for) |
-| 8 | [Colecciones II: índice, frecuencias, flujos y criba](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-10-maps-y-evaluacion-perezosa) |
-| 9 | [Principios de concurrencia: intercalaciones, carrera y medida](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-11-condiciones-de-carrera) |
-| 10 | [Abstracciones: parallel, umbral, task y Monte Carlo](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-12-parallel-y-task) |
-| 11 | [Complejidad: reduce paralelo, Amdahl y ScalaMeter](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-13-benchmark-scalameter) |
+| 7 | [Listas II: tuplas, merge sort y alto orden](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-08-merge-sort) |
+| 8 | [Colecciones I: secuencias, flatMap, for y conjuntos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-09-expresiones-for) |
+| 9 | [Colecciones II: índice, frecuencias, flujos y criba](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-10-maps-y-evaluacion-perezosa) |
+| 10 | [Principios de concurrencia: intercalaciones, carrera y medida](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-11-condiciones-de-carrera) |
+| 11 | [Abstracciones: parallel, umbral, task y Monte Carlo](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-12-parallel-y-task) |
+| 12 | [Complejidad: reduce paralelo, Amdahl y ScalaMeter](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-13-benchmark-scalameter) |
 | 12 | [Paralelismo de tareas y de datos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-14-divide-y-venceras-paralelo) |
 
 ## Talleres
