@@ -49,8 +49,8 @@ Se publican después de cada sesión.
 6. [Clase 6. Herramientas de profiling en Linux — 13 y 15 de octubre](C6/Clase%206.%20Herramientas%20de%20profiling%20en%20Linux.md)
    — medir el programa desde afuera: el proceso con `top`, `htop` y `ps`, las
    llamadas al sistema con `strace`, la caché simulada con Valgrind y los
-   contadores del procesador con `perf`, y por qué cada capa ve la misma
-   diferencia de otro tamaño.
+   contadores del procesador con `perf`, con los apuntes de la sesión, los
+   siete programas que se perfilaron y seis ejercicios en el navegador.
 
 ### Corte 2
 

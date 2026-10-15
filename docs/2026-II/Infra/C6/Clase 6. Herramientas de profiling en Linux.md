@@ -11,6 +11,19 @@ veces según con qué se mida, y entender por qué es parte del trabajo.
 
 <div class="grid cards" markdown>
 
+-   :material-magnify:{ .lg .middle } **Herramientas de profiling en Linux**
+
+    ---
+
+    Las cuatro familias de perfiladores, el proceso visto con `top`, `htop` y
+    `ps` con sus doce hilos y su columna de núcleo, lo que cuenta
+    `/usr/bin/time -v`, las llamadas al sistema con `strace -c`, los
+    contadores de fallos de Valgrind con la función culpable señalada, los
+    contadores del procesador con `perf` y el visor del perfil en el
+    navegador.
+
+    [:octicons-arrow-right-24: Entrar](./Herramientas%20de%20profiling%20en%20Linux.md)
+
 -   :material-format-list-checks:{ .lg .middle } **Ejercicios**
 
     ---
@@ -22,6 +35,17 @@ veces según con qué se mida, y entender por qué es parte del trabajo.
     cuatro formas.
 
     [:octicons-arrow-right-24: Entrar](./Ejercicios.md)
+
+-   :material-console:{ .lg .middle } **Código**
+
+    ---
+
+    Los siete programas de la sesión: las dos versiones que recorren la matriz
+    por filas y por columnas, la que se perfila por porciones, la paralela que
+    dura lo suficiente para verla en `top`, y las dos que escriben las mismas
+    doscientas mil líneas con una llamada al sistema por línea o con un búfer.
+
+    [:octicons-arrow-right-24: Entrar](./codigo/README.md)
 
 </div>
 
