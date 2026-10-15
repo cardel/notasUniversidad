@@ -10,7 +10,7 @@ las técnicas son los mismos; los grafos, los vértices y los números son otros
 
 ## Recuento
 
-### [recuento](./widgets/recuento.html){ target=_blank rel=noopener }
+### [recuento](../../../actividades/ayg-puj/puentes-y-articulaciones/recuento.html){ target=_blank rel=noopener }
 
 Un grafo no dirigido con la profundidad ya corrida: el árbol en azul, las
 aristas de retroceso punteadas en verde, el identificador de cada arista
@@ -25,7 +25,7 @@ ningún puente, y el tercero tiene tres puentes y cinco puntos de articulación.
 
 ## El árbol de puentes
 
-### [arbolpuentes](./widgets/arbolpuentes.html){ target=_blank rel=noopener }
+### [arbolpuentes](../../../actividades/ayg-puj/puentes-y-articulaciones/arbolpuentes.html){ target=_blank rel=noopener }
 
 Las tres pasadas, una por una. Antes de empezar se predice cuántos nodos va a
 tener el árbol. Después se marcan a mano los puentes, con la comparación
@@ -41,7 +41,7 @@ cinco en camino.
 
 ## Ejercicios resueltos
 
-### [orientar](./widgets/orientar.html){ target=_blank rel=noopener }
+### [orientar](../../../actividades/ayg-puj/puentes-y-articulaciones/orientar.html){ target=_blank rel=noopener }
 
 UVa 610, Street Directions. Se predice cuántas líneas tiene la salida y después
 se orienta la ciudad paso a paso, en las dos formas del recorrido. Las calles ya
@@ -54,7 +54,7 @@ la ciudad orientada. Tres ciudades de seis, ocho y siete intersecciones, con
 ocho, once y nueve líneas de salida; la tercera no tiene ningún puente y queda
 entera de una vía.
 
-### [paloma](./widgets/paloma.html){ target=_blank rel=noopener }
+### [paloma](../../../actividades/ayg-puj/puentes-y-articulaciones/paloma.html){ target=_blank rel=noopener }
 
 UVa 10765, Doves and Bombs. La red con el `d/low` de cada estación a la vista.
 Se predice el valor más alto y después se escribe el valor de cada una. La
@@ -68,7 +68,7 @@ juez, con el orden por valor decreciente y número creciente. Tres redes de
 siete, nueve y once estaciones; los valores más altos son 2, 4 y 3, y la raíz
 vale 2, 1 y 3.
 
-### [capital](./widgets/capital.html){ target=_blank rel=noopener }
+### [capital](../../../actividades/ayg-puj/puentes-y-articulaciones/capital.html){ target=_blank rel=noopener }
 
 Capital, el único de los cuatro sobre un grafo dirigido. Tres países de ocho,
 siete y nueve ciudades con carreteras de una sola vía. Se predice cuántas
@@ -85,7 +85,7 @@ dos. Un botón por ciudad recorre las carreteras al revés y dice desde cuántas
 llega a ella, que es la definición del enunciado sin pasar por los componentes.
 Las salidas son `2` con `7 8`, `0` y `1` con `9`.
 
-### [interplanetary](./widgets/interplanetary.html){ target=_blank rel=noopener }
+### [interplanetary](../../../actividades/ayg-puj/puentes-y-articulaciones/interplanetary.html){ target=_blank rel=noopener }
 
 Interplanetary, el que trae influencia en los vértices. Tres mapas no dirigidos
 de diez, nueve y once planetas, cada uno con su planeta de arranque. Se predice
@@ -107,7 +107,7 @@ orden. Los alcanzados son ocho, cuatro y siete planetas.
 
 ## Cómo atacar estos problemas
 
-### [atacar](./widgets/atacar.html){ target=_blank rel=noopener }
+### [atacar](../../../actividades/ayg-puj/puentes-y-articulaciones/atacar.html){ target=_blank rel=noopener }
 
 Tres enunciados cortos y, en cada uno, cuatro decisiones: quiénes son los
 vértices y quiénes las aristas, si lo que se quita es un vértice o una arista,
@@ -122,7 +122,7 @@ otros dos no.
 
 ## Errores comunes
 
-### [errores](./widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/puentes-y-articulaciones/errores.html){ target=_blank rel=noopener }
 
 Tres versiones con una línea distinta de la correcta: `paloma_aux` con
 `low[v] > d[u]` donde va `>=`, la misma función con el valor de la raíz

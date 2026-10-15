@@ -7,7 +7,7 @@ tema, ronda nueva.
 
 ## vector
 
-### [vector](widgets/vector.html){ target=_blank rel=noopener }
+### [vector](../../../actividades/estructuras-de-datos/stl-contenedores/vector.html){ target=_blank rel=noopener }
 
 Una secuencia de `push_back`, `insert`, `erase` y asignación para
 predecir el estado final; `at` y `[]` fuera de rango; y una función que
@@ -15,21 +15,21 @@ recibe el vector sin `&`.
 
 ## string
 
-### [cadena](widgets/cadena.html){ target=_blank rel=noopener }
+### [cadena](../../../actividades/estructuras-de-datos/stl-contenedores/cadena.html){ target=_blank rel=noopener }
 
 Cuatro expresiones: una palabra al revés, dos comparaciones con `<`
 (letra a letra y con prefijo) y el tamaño de una concatenación.
 
 ## stack y queue
 
-### [contenedores](widgets/contenedores.html){ target=_blank rel=noopener }
+### [contenedores](../../../actividades/estructuras-de-datos/stl-contenedores/contenedores.html){ target=_blank rel=noopener }
 
 Un `stack` pequeño con un `pop` en la mitad, y la correspondencia entre
 las operaciones del curso y los nombres de la biblioteca.
 
 ## Los primeros algoritmos
 
-### [algoritmos](widgets/algoritmos.html){ target=_blank rel=noopener }
+### [algoritmos](../../../actividades/estructuras-de-datos/stl-contenedores/algoritmos.html){ target=_blank rel=noopener }
 
 `sort` con un criterio que ordena por edad y desempata por nombre al
 revés; `binary_search` sobre un vector sin ordenar, que pierde un valor
@@ -37,7 +37,7 @@ y encuentra otro; y `find` con su posición y su `end`.
 
 ## Lo que cobra cada operación
 
-### [costos](widgets/costos.html){ target=_blank rel=noopener }
+### [costos](../../../actividades/estructuras-de-datos/stl-contenedores/costos.html){ target=_blank rel=noopener }
 
 Cuántos elementos corre un `insert` en la mitad, cuántos corre en total
 `revertir` cuando inserta siempre al frente, cuántos pasos da

@@ -15,7 +15,7 @@ descompone el valor.
 
 ## Herencia y clases abstractas
 
-### [despacho](./widgets/despacho.html){ target=_blank rel=noopener }
+### [despacho](../../../actividades/pfc/arboles-algebraicos-y-patrones/despacho.html){ target=_blank rel=noopener }
 
 `pertenece` está declarado en la clase abstracta y escrito dos veces, una en
 `Vacio` y otra en `NoVacio`. La tabla pide, por cada nodo que visita la
@@ -23,7 +23,7 @@ búsqueda, cuál de las dos corre. No se decide al escribir el código sino al
 ejecutarlo, según el objeto que recibe la llamada, y la búsqueda de algo que
 no está termina siempre en la misma: la de `Vacio`.
 
-### [compartir](./widgets/compartir.html){ target=_blank rel=noopener }
+### [compartir](../../../actividades/pfc/arboles-algebraicos-y-patrones/compartir.html){ target=_blank rel=noopener }
 
 `insertar` no modifica el árbol: devuelve otro. La predicción es cuántos nodos
 se construyen de verdad y cuántos quedan compartidos con el original. Se
@@ -32,7 +32,7 @@ hace barato tener los dos árboles a la vez.
 
 ## Traits
 
-### [mezclar](./widgets/mezclar.html){ target=_blank rel=noopener }
+### [mezclar](../../../actividades/pfc/arboles-algebraicos-y-patrones/mezclar.html){ target=_blank rel=noopener }
 
 Cinco declaraciones de clase sobre `Plano` y `Movible`: cuáles compilan y
 cuáles no. Un trait puede traer miembros sin implementar, que la clase debe
@@ -42,14 +42,14 @@ copiado tal cual en la retroalimentación.
 
 ## Sealed y case classes
 
-### [mismoConjunto](./widgets/mismoConjunto.html){ target=_blank rel=noopener }
+### [mismoConjunto](../../../actividades/pfc/arboles-algebraicos-y-patrones/mismoConjunto.html){ target=_blank rel=noopener }
 
 El mismo conjunto escrito con `class` y con `case class`, lado a lado, y
 cuatro líneas que predecir en cada versión. Dos salidas cambian y son las que
 importan: qué imprime el objeto y qué contesta `==` entre dos conjuntos
 construidos igual.
 
-### [exhaustividad](./widgets/exhaustividad.html){ target=_blank rel=noopener }
+### [exhaustividad](../../../actividades/pfc/arboles-algebraicos-y-patrones/exhaustividad.html){ target=_blank rel=noopener }
 
 Un `match` al que le falta un caso, con la jerarquía `sealed` y sin ella.
 Cuatro combinaciones entre lo que dice el compilador y lo que pasa al
@@ -58,14 +58,14 @@ tiene el tipo, y con eso avisar antes en vez de fallar después.
 
 ## Reconocimiento de patrones
 
-### [orden](./widgets/orden.html){ target=_blank rel=noopener }
+### [orden](../../../actividades/pfc/arboles-algebraicos-y-patrones/orden.html){ target=_blank rel=noopener }
 
 Seis entradas para `describir`, con tres trampas: el cero, un decimal y la
 lista vacía. Después se intercambian dos casos de sitio y hay que decir qué
 cambia. Los patrones se prueban de arriba abajo y gana el primero que casa,
 así que uno general escrito antes tapa a uno específico.
 
-### [recorrido](./widgets/recorrido.html){ target=_blank rel=noopener }
+### [recorrido](../../../actividades/pfc/arboles-algebraicos-y-patrones/recorrido.html){ target=_blank rel=noopener }
 
 `listaEnteros` sobre el árbol de siete nodos de la sesión: llenar el orden en
 que cada nodo aporta su elemento y predecir la lista antes de verla. El orden
@@ -74,14 +74,14 @@ del resultado sale del orden en que se escriben las tres partes del caso
 
 ## Expresiones aritméticas
 
-### [evaluar](./widgets/evaluar.html){ target=_blank rel=noopener }
+### [evaluar](../../../actividades/pfc/arboles-algebraicos-y-patrones/evaluar.html){ target=_blank rel=noopener }
 
 La reducción de `eval` sobre una expresión de tres niveles, eligiendo en cada
 paso entre tres expresiones. Los distractores son los errores que se cometen
 de verdad: resolver la rama derecha antes que la izquierda, o aplicar al caso
 la operación del vecino.
 
-### [mismoTexto](./widgets/mismoTexto.html){ target=_blank rel=noopener }
+### [mismoTexto](../../../actividades/pfc/arboles-algebraicos-y-patrones/mismoTexto.html){ target=_blank rel=noopener }
 
 El más exigente de la sesión. Dos árboles distintos que `mostrar` imprime
 exactamente igual, `1 + 2 * 3`, y que valen 9 y 7. Hay que descubrir cuál da
@@ -89,7 +89,7 @@ cuál, y después ver que `mostrarConParentesis` sí los separa. Un texto sin
 paréntesis no alcanza para recuperar el árbol: la precedencia que el lector
 supone no está escrita en ninguna parte.
 
-### [simplificar](./widgets/simplificar.html){ target=_blank rel=noopener }
+### [simplificar](../../../actividades/pfc/arboles-algebraicos-y-patrones/simplificar.html){ target=_blank rel=noopener }
 
 El ejercicio de cierre de la sesión, como tabla que se llena de las hojas
 hacia la raíz. La pregunta final es por qué una sola pasada de las reglas no

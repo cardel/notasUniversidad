@@ -17,7 +17,7 @@ booleanas, que se escriben con el conectivo en medio, `(p and q)`.
 
 ## Un programa visto como dato
 
-### [Leer el programa como lista](widgets/lista.html){ target=_blank rel=noopener }
+### [Leer el programa como lista](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/lista.html){ target=_blank rel=noopener }
 
 Una expresión lambda guardada como lista de Scheme y tres bloques sobre ella.
 Primero qué devuelve cada acceso con `car` y `cdr`, hasta un `(caadr (cadr
@@ -30,7 +30,7 @@ avisar, que son los peores. La consola trae la expresión cargada.
 
 ## La forma `define-datatype`
 
-### [¿Compila este datatype?](widgets/datatype.html){ target=_blank rel=noopener }
+### [¿Compila este datatype?](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/datatype.html){ target=_blank rel=noopener }
 
 Nueve declaraciones con `define-datatype`, unas bien y otras con el error que
 aparece cada semestre: el tipo con el mismo nombre que su predicado, dos
@@ -40,7 +40,7 @@ constructor y qué rechaza: el número de campos, el predicado de cada uno y
 la lista que `list-of` revisa elemento por elemento. Lo que se juzga es lo
 que DrRacket responde, con sus mensajes.
 
-### [Escribir el datatype](widgets/declarar.html){ target=_blank rel=noopener }
+### [Escribir el datatype](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/declarar.html){ target=_blank rel=noopener }
 
 Tres gramáticas y, para cada una, la declaración que le corresponde: las
 expresiones booleanas, con dos variantes sin campos y tres recursivas; un
@@ -51,7 +51,7 @@ pruebas construyen valores y preguntan por los predicados.
 
 ## Análisis por casos con `cases`
 
-### [Recorrer con cases](widgets/cases.html){ target=_blank rel=noopener }
+### [Recorrer con cases](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/cases.html){ target=_blank rel=noopener }
 
 Un datatype nuevo, los comandos de un robot que avanza, gira y repite un
 bloque de comandos, y cuatro procedimientos que lo analizan por casos:
@@ -60,7 +60,7 @@ cuánto avanza en total, cuántas veces gira, qué tan hondo se anidan los
 así que la única forma de abrirlos es `cases`, y la variante con `list-of`
 obliga a recorrer la lista de comandos con un procedimiento aparte.
 
-### [Evaluar y reescribir](widgets/evaluar.html){ target=_blank rel=noopener }
+### [Evaluar y reescribir](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/evaluar.html){ target=_blank rel=noopener }
 
 Cuatro procedimientos con `cases` sobre las expresiones booleanas. Los dos
 primeros devuelven un valor de Scheme: `evalua`, con una lista de los
@@ -72,7 +72,7 @@ anidado, y el árbol que se espera va dibujado bajo cada prueba.
 
 ## De la gramática al tipo de dato
 
-### [¿Cuál datatype le corresponde?](widgets/gramatica.html){ target=_blank rel=noopener }
+### [¿Cuál datatype le corresponde?](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/gramatica.html){ target=_blank rel=noopener }
 
 Producciones de varios lenguajes pequeños, `print`, `set`, `while`, `call`,
 `lambda` con varios parámetros, un condicional con signos en medio, y para
@@ -82,7 +82,7 @@ guardan una palabra clave como campo, pierden un no terminal o ponen un
 al final el predicado que lleva cada campo: `number?`, `symbol?`, el del
 propio tipo o `list-of` de alguno de ellos.
 
-### [Del árbol a la gramática](widgets/desde-arbol.html){ target=_blank rel=noopener }
+### [Del árbol a la gramática](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/desde-arbol.html){ target=_blank rel=noopener }
 
 La receta al revés, que es lo que se hace al extender un lenguaje: los
 árboles están dibujados y lo que falta es la gramática. Primero una
@@ -96,7 +96,7 @@ gramática no genera y la producción que hay que agregarle.
 
 ## Árboles de sintaxis abstracta
 
-### [¿Cuál árbol es?](widgets/arboles.html){ target=_blank rel=noopener }
+### [¿Cuál árbol es?](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/arboles.html){ target=_blank rel=noopener }
 
 Programas del lenguaje de la sesión y tres árboles candidatos para cada uno,
 dibujados; después al revés, un árbol dibujado y tres programas. Los dos
@@ -104,7 +104,7 @@ errores que acompañan a cada respuesta correcta son los que aparecen cada
 semestre: hojas sin envolver en su variante, palabras clave que sobreviven en
 el árbol, campos en otro orden.
 
-### [Construir el árbol a mano](widgets/construir.html){ target=_blank rel=noopener }
+### [Construir el árbol a mano](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/construir.html){ target=_blank rel=noopener }
 
 Tres programas del lenguaje del curso y, para cada uno, la expresión con los
 constructores que arma su árbol: una resta dentro de otra, un `if` con una
@@ -118,7 +118,7 @@ recorrido que devuelve las hojas del árbol de izquierda a derecha.
 
 ## El parser, el unparser y la ida y vuelta
 
-### [Parser y unparser de comandos](widgets/parser.html){ target=_blank rel=noopener }
+### [Parser y unparser de comandos](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/parser.html){ target=_blank rel=noopener }
 
 De la sintaxis concreta del robot al datatype y de vuelta. Cada prueba de
 `parse-cmd` muestra dibujado el árbol que se espera según la gramática; si el
@@ -127,7 +127,7 @@ contra forma. Primero `avanza` y `gira`, después el `repite` con su lista de
 comandos, y al cierre `unparse-cmd`, con la prueba de que parsear y
 desparsear devuelve el programa con el que se empezó.
 
-### [Parser y unparser con sintaxis infija](widgets/parsear.html){ target=_blank rel=noopener }
+### [Parser y unparser con sintaxis infija](../../../actividades/flp/datatypes-y-arboles-sintaxis-abstracta/parsear.html){ target=_blank rel=noopener }
 
 Las expresiones booleanas se escriben con el conectivo en medio, y el parser
 tiene que mirar `(cadr d)` en lugar de `(car d)`. Primero las hojas y el

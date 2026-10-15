@@ -5,7 +5,7 @@ septiembre). Cada enlace abre una actividad que se trabaja directo en el
 navegador. Los programas no son los de la sesión: mismo tema, ronda
 nueva.
 
-## [trazas](widgets/trazas.html){ target=_blank rel=noopener }
+## [trazas](../../../actividades/estructuras-de-datos/paso-por-referencia/trazas.html){ target=_blank rel=noopener }
 
 Una función y su `main`, tres veces; solo cambia la firma del segundo
 parámetro: `int b`, `int *b`, `int &b`. En cada versión se predice la
@@ -16,7 +16,7 @@ Cada distractor tiene su pista: confundir la copia con la celda
 original, correr la resta antes de tiempo o perder el valor retornado.
 Al acertar las tres versiones se abre la tabla que las compara.
 
-## [objetos](widgets/objetos.html){ target=_blank rel=noopener }
+## [objetos](../../../actividades/estructuras-de-datos/paso-por-referencia/objetos.html){ target=_blank rel=noopener }
 
 Una clase `Cuenta` cuyas operaciones validan antes de escribir: el saldo
 tras una consignación rechazada, un cobro que viaja por copia y otro por

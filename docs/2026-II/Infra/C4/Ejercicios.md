@@ -7,7 +7,7 @@ número hay que escribirlo, y cada respuesta equivocada dice por qué no.
 
 ## Conceptos fundamentales
 
-### [Quién tiene el GIL](widgets/gil.html){ target=_blank rel=noopener }
+### [Quién tiene el GIL](../../../actividades/infra/hilos-y-procesos-python/gil.html){ target=_blank rel=noopener }
 
 Ocho tareas repartidas entre hilos, y un solo permiso para ejecutar. Escriba
 cuánto tarda el programa de esperas con cuatro hilos, que sale de la tabla, y
@@ -19,7 +19,7 @@ dónde solo estorban.
 
 ## Threading en Python
 
-### [Dónde va el join](widgets/unir.html){ target=_blank rel=noopener }
+### [Dónde va el join](../../../actividades/infra/hilos-y-procesos-python/unir.html){ target=_blank rel=noopener }
 
 Los mismos dos hilos con los `join` en dos lugares distintos. Prediga el total
 de cada versión y después recorra las cuatro operaciones una por una, con la
@@ -27,7 +27,7 @@ línea de código resaltada y el Gantt de los dos hilos y del principal. Un
 `join` pegado al `start` deja el programa secuencial sin que nada en el texto
 lo anuncie.
 
-### [El barrido de 2 a 16 hilos](widgets/barrido.html){ target=_blank rel=noopener }
+### [El barrido de 2 a 16 hilos](../../../actividades/infra/hilos-y-procesos-python/barrido.html){ target=_blank rel=noopener }
 
 Sumar cien millones de números, primero con una lista de Python y después con
 NumPy. Escriba los dos tiempos antes de verlos: con cuatro hilos el programa
@@ -35,7 +35,7 @@ tarda más que con uno, y el cambio a NumPy divide el tiempo secuencial por
 ciento doce sin usar un solo hilo. Las dos últimas preguntas son por qué NumPy
 sí escala y por qué se detiene en 24 milisegundos.
 
-### [La actualización perdida](widgets/carrera.html){ target=_blank rel=noopener }
+### [La actualización perdida](../../../actividades/infra/hilos-y-procesos-python/carrera.html){ target=_blank rel=noopener }
 
 Dos hilos abonando sobre el mismo saldo. El abono son tres pasos, y entre el
 primero y el tercero cabe el otro hilo: la traza lo muestra fila por fila, con
@@ -43,7 +43,7 @@ el registro de cada uno y el saldo. Después, cinco corridas del mismo programa
 que dan cinco resultados distintos y ninguno correcto, contra la tabla que se
 midió en clase.
 
-### [Cinco herramientas de sincronización](widgets/sincronizacion.html){ target=_blank rel=noopener }
+### [Cinco herramientas de sincronización](../../../actividades/infra/hilos-y-procesos-python/sincronizacion.html){ target=_blank rel=noopener }
 
 Ocho situaciones y `Lock`, `RLock`, `Semaphore`, `Event` y `Condition` como
 respuesta, con retroalimentación por cada una y marcador de aciertos a la
@@ -52,14 +52,14 @@ ocho hilos corriendo como si fuera uno.
 
 ## Multiprocessing en Python
 
-### [Hilos contra procesos](widgets/procesos.html){ target=_blank rel=noopener }
+### [Hilos contra procesos](../../../actividades/infra/hilos-y-procesos-python/procesos.html){ target=_blank rel=noopener }
 
 Lo que midió `perf`: cuatro hilos ocupando un núcleo y cuatro procesos
 ocupando tres. Prediga los núcleos a partir del tiempo de CPU y del reloj, y
 después mueva el costo de arrancar un proceso y el trabajo por elemento para
 ver dónde queda el punto en que repartir empieza a pagar.
 
-### [Memoria que no se comparte](widgets/memoria.html){ target=_blank rel=noopener }
+### [Memoria que no se comparte](../../../actividades/infra/hilos-y-procesos-python/memoria.html){ target=_blank rel=noopener }
 
 El hijo imprime la lista llena y el padre la imprime vacía. Qué ve cada
 proceso con una variable global, con un argumento, con un `Array` y con un
@@ -69,14 +69,14 @@ falla en Windows.
 
 ## Comunicación entre procesos
 
-### [La cola que bloquea](widgets/cola.html){ target=_blank rel=noopener }
+### [La cola que bloquea](../../../actividades/infra/hilos-y-procesos-python/cola.html){ target=_blank rel=noopener }
 
 `put` y `get` sobre una `Queue` con capacidad. Prediga cuántos `put` alcanzan
 a completarse antes de que el productor se frene, y siga la cola paso a paso
 con los dos procesos y sus bloqueos. Que `get` bloquee en vez de devolver
 `None` es lo que sincroniza al consumidor sin escribir una sola espera.
 
-### [Lo que cuesta serializar](widgets/traspaso.html){ target=_blank rel=noopener }
+### [Lo que cuesta serializar](../../../actividades/infra/hilos-y-procesos-python/traspaso.html){ target=_blank rel=noopener }
 
 Los mismos datos por memoria compartida, por `Pipe` y por `Queue`: 0,10 s
 contra 1,38 y 1,68. Prediga el factor, siga el viaje de un dato empaquetado

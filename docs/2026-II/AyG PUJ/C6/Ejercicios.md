@@ -13,7 +13,7 @@ explica por qué lo es.
 
 ## Las cuatro representaciones
 
-### [construir](widgets/construir.html){ target=_blank rel=noopener }
+### [construir](../../../actividades/ayg-puj/representaciones-y-recorridos/construir.html){ target=_blank rel=noopener }
 
 Las cuatro representaciones del mismo grafo, escritas a mano y comprobadas
 por separado: la matriz de adyacencia a clic sobre las celdas, la lista de
@@ -39,7 +39,7 @@ sobre ella.
 
 ## Cuál conviene
 
-### [consultas](widgets/consultas.html){ target=_blank rel=noopener }
+### [consultas](../../../actividades/ayg-puj/representaciones-y-recorridos/consultas.html){ target=_blank rel=noopener }
 
 Una sola pregunta —la secuencia de grados de $H_1$— contestada sobre las
 cuatro representaciones, con el contador de ejecuciones al lado de cada línea.
@@ -52,7 +52,7 @@ no hay una representación mejor sino una mejor para cada pregunta.
 
 ## Recorrer un grafo
 
-### [marcar](widgets/marcar.html){ target=_blank rel=noopener }
+### [marcar](../../../actividades/ayg-puj/representaciones-y-recorridos/marcar.html){ target=_blank rel=noopener }
 
 El mismo recorrido con la marca de visitados y sin ella. Sin marca se detiene
 a las cuarenta vueltas porque llegó al tope del ejercicio, habiendo anotado
@@ -64,7 +64,7 @@ arranque se llega a seis de siete vértices, y hace falta el ciclo externo.
 
 ## Búsqueda en profundidad
 
-### [profundidad](widgets/profundidad.html){ target=_blank rel=noopener }
+### [profundidad](../../../actividades/ayg-puj/representaciones-y-recorridos/profundidad.html){ target=_blank rel=noopener }
 
 El programa no devuelve el orden de visita sino el nivel en que quedó cada
 vértice dentro del árbol de la búsqueda. La pila de llamadas se ve crecer y
@@ -76,7 +76,7 @@ nivel $4$ y está a dos aristas.
 
 ## Búsqueda en amplitud
 
-### [amplitud](widgets/amplitud.html){ target=_blank rel=noopener }
+### [amplitud](../../../actividades/ayg-puj/representaciones-y-recorridos/amplitud.html){ target=_blank rel=noopener }
 
 Encontrar el vértice más lejano del arranque, que es la excentricidad y el
 primer paso hacia el radio y el diámetro. Un color por capa, y la cola visible
@@ -88,7 +88,7 @@ de la cola: nunca más de dos capas consecutivas.
 
 ## El costo
 
-### [costo](widgets/costo.html){ target=_blank rel=noopener }
+### [costo](../../../actividades/ayg-puj/representaciones-y-recorridos/costo.html){ target=_blank rel=noopener }
 
 Dos controles, número de vértices y grado medio, y tres barras que se separan
 o se juntan. Con $V = 10^5$ y grado $4$ el recorrido sobre listas hace medio
@@ -101,7 +101,7 @@ siempre es un desperdicio.
 
 ## Errores comunes
 
-### [errores](widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/representaciones-y-recorridos/errores.html){ target=_blank rel=noopener }
 
 Cuatro programas que corren sin fallar y contestan mal, con una sola línea
 equivocada cada uno. Al señalarla aparece la salida de las dos versiones.

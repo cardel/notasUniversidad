@@ -10,7 +10,7 @@ completa: inicialización, estabilidad y terminación.
 
 ## Invariantes de ciclo
 
-### [sumar](widgets/sumar.html){ target=_blank rel=noopener }
+### [sumar](../../../actividades/ayg-puj/recursion/sumar.html){ target=_blank rel=noopener }
 
 El primer ciclo de la clase: sumar un arreglo. Mire la traza por estados:
 todo cambia de chequeo en chequeo, menos dos propiedades que se conservan
@@ -20,7 +20,7 @@ Cuando las encuentre —I₀ e I₁—, el ejercicio abre la demostración del
 Teorema 1 y usted la arma respondiendo una pregunta por movimiento, hasta
 el Teorema 2.
 
-### [factorial](widgets/factorial.html){ target=_blank rel=noopener }
+### [factorial](../../../actividades/ayg-puj/recursion/factorial.html){ target=_blank rel=noopener }
 
 El mismo recorrido, con menos ayuda y una condición distinta: aquí el while
 usa `i <= N`, así que las cotas de I₀ cambian. Proponga los dos invariantes
@@ -31,7 +31,7 @@ no— la especificación cuando la entrada no cumple la precondición.
 
 ## Divide y vencerás
 
-### [mezclar](widgets/mezclar.html){ target=_blank rel=noopener }
+### [mezclar](../../../actividades/ayg-puj/recursion/mezclar.html){ target=_blank rel=noopener }
 
 Dos tramos ordenados del mismo arreglo entran, y la mezcla escribe el tramo
 completo, ordenado, sobre ese arreglo. Ejecute escritura por escritura y
@@ -44,7 +44,7 @@ funcionar todo el ordenamiento por mezcla.
 Pruebe los tres arreglos: uno deja «sobras» cuando la copia izquierda se
 agota y otro tiene empates que el `<=` resuelve.
 
-### [ordenar](widgets/ordenar.html){ target=_blank rel=noopener }
+### [ordenar](../../../actividades/ayg-puj/recursion/ordenar.html){ target=_blank rel=noopener }
 
 El ordenamiento por mezcla dibujado completo: baje partiendo la lista nivel
 por nivel hasta el caso base y súbala mezclando con el ejercicio anterior.

@@ -426,11 +426,11 @@ primera iteración de este tipo de material, así que la realimentación es
 bienvenida. Están en la
 [página de ejercicios interactivos](./Ejercicios.md#invariantes-de-ciclo):
 
-- [sumar](widgets/sumar.html){ target=_blank rel=noopener } — el mismo
+- [sumar](../../../actividades/ayg-puj/recursion/sumar.html){ target=_blank rel=noopener } — el mismo
   ejemplo de la clase, con el mismo arreglo: descubra qué se conserva en la
   traza, nombre $I_0$ e $I_1$ y complete la demostración del Teorema 1 hasta
   el Teorema 2.
-- [factorial](widgets/factorial.html){ target=_blank rel=noopener } — el
+- [factorial](../../../actividades/ayg-puj/recursion/factorial.html){ target=_blank rel=noopener } — el
   mismo recorrido con menos ayuda y la condición `i <= N`, que cambia las
   cotas. Cierra con el experimento de `fact(-1)`: fuera de la precondición no
   hay promesa.

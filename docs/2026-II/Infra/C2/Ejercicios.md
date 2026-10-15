@@ -8,7 +8,7 @@ tarea por tarea, y antes de ver un número toca escribirlo.
 
 ## La pregunta antes del código
 
-### [Qué cambió entre las dos filas](widgets/pregunta.html){ target=_blank rel=noopener }
+### [Qué cambió entre las dos filas](../../../actividades/infra/estrategias-de-paralelizacion/pregunta.html){ target=_blank rel=noopener }
 
 La misma tabla con que abrió la clase: el mismo programa, los mismos cuatro
 hilos, y en una fila repartir deja la ejecución dieciséis veces más lenta
@@ -21,7 +21,7 @@ tarda lo mismo, y la conclusión apresurada que suele salir de ahí.
 
 ## Descomposición de datos
 
-### [Cortar el vector en trozos](widgets/reparto.html){ target=_blank rel=noopener }
+### [Cortar el vector en trozos](../../../actividades/infra/estrategias-de-paralelizacion/reparto.html){ target=_blank rel=noopener }
 
 El reparto exacto de `con_hilos`: `paso = n / k`, cada hilo recibe
 `[i·paso, (i+1)·paso)` y el último se lleva además el residuo. Antes de ver la
@@ -35,7 +35,7 @@ equivocadas son las que más se oyen.
 
 ## Descomposición de tareas
 
-### [Tres recorridos, tres hilos](widgets/tareas.html){ target=_blank rel=noopener }
+### [Tres recorridos, tres hilos](../../../actividades/infra/estrategias-de-paralelizacion/tareas.html){ target=_blank rel=noopener }
 
 El máximo, la suma y los pares de un vector de 50 millones, cada uno en su
 hilo. Antes de ver la medida, decida cuánto acelera: la respuesta no es tres, y
@@ -43,7 +43,7 @@ las dos razones por las que no llega están en la retroalimentación. Después,
 qué hace un cuarto hilo cuando solo hay tres trabajos, y cuándo esta forma de
 repartir le gana a partir los datos.
 
-### [El árbol del mergesort](widgets/mergesort.html){ target=_blank rel=noopener }
+### [El árbol del mergesort](../../../actividades/infra/estrategias-de-paralelizacion/mergesort.html){ target=_blank rel=noopener }
 
 La recursión de `ordenar_par` sobre 20 millones de enteros, dibujada por
 niveles. Antes de mover la profundidad de corte, prediga cuántos hilos se crean
@@ -58,7 +58,7 @@ hilos todavía ganan sobre cuatro, si núcleos hay los mismos.
 
 ## Granularidad
 
-### [El costo fijo de repartir](widgets/granularidad.html){ target=_blank rel=noopener }
+### [El costo fijo de repartir](../../../actividades/infra/estrategias-de-paralelizacion/granularidad.html){ target=_blank rel=noopener }
 
 Las 400 tareas en tandas de cuatro hilos, con la columna de la relación
 tapada. Escriba en qué fila cruza el uno y después destápela: al lado aparece
@@ -69,7 +69,7 @@ algoritmo; es de la máquina donde se midió, y en otra se mide otra vez.
 
 ## Balanceo de carga
 
-### [Sesenta y cuatro tareas que no cuestan lo mismo](widgets/balanceo.html){ target=_blank rel=noopener }
+### [Sesenta y cuatro tareas que no cuestan lo mismo](../../../actividades/infra/estrategias-de-paralelizacion/balanceo.html){ target=_blank rel=noopener }
 
 Las 64 tareas de `balanceo.cpp`, donde la tarea `i` cuesta `i²`, y los cuatro
 hilos. Antes de correr nada, escriba qué porcentaje del trabajo carga el hilo
@@ -85,7 +85,7 @@ costos.
 
 ## Delegar el reparto
 
-### [Lo que parte blocked_range](widgets/rango.html){ target=_blank rel=noopener }
+### [Lo que parte blocked_range](../../../actividades/infra/estrategias-de-paralelizacion/rango.html){ target=_blank rel=noopener }
 
 `tbb::blocked_range<int>(0, n, grano)` se parte en dos mientras el tamaño
 supere el grano. Prediga en cuántos subrangos queda un rango de mil con grano
@@ -97,7 +97,7 @@ secuencia. Cuál de los dos está bien, y qué se hace antes de mirar el reloj.
 
 ## Dependencias
 
-### [La suma de prefijos en dos pasadas](widgets/prefijos.html){ target=_blank rel=noopener }
+### [La suma de prefijos en dos pasadas](../../../actividades/infra/estrategias-de-paralelizacion/prefijos.html){ target=_blank rel=noopener }
 
 Doce valores en tres bloques y las dos pasadas de `scan.cpp`. La primera
 pasada reporta el total de cada bloque; los tres desplazamientos los escribe
@@ -112,7 +112,7 @@ pregunta: qué pasa si la operación por elemento fuera una suma pelada.
 
 ## Pipeline
 
-### [Tres etapas y una cola entre cada par](widgets/pipeline.html){ target=_blank rel=noopener }
+### [Tres etapas y una cola entre cada par](../../../actividades/infra/estrategias-de-paralelizacion/pipeline.html){ target=_blank rel=noopener }
 
 Leer 10 ms, calcular 20, escribir 10, y 24 lotes. Escriba en cuántos
 milisegundos terminan antes de verlo; la tabla de quién trabaja en cada
@@ -123,7 +123,7 @@ final es cuál etapa manda después de replicar.
 
 ## Cómo elegir
 
-### [Ocho situaciones](widgets/elegir.html){ target=_blank rel=noopener }
+### [Ocho situaciones](../../../actividades/infra/estrategias-de-paralelizacion/elegir.html){ target=_blank rel=noopener }
 
 Ocho problemas de tres líneas y las mismas siete opciones para todos: las seis
 estrategias de la tabla de la clase y dejarlo secuencial. Cada respuesta

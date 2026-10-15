@@ -9,17 +9,17 @@ mismos; los grafos, los vértices y los números son otros.
 
 ## Orden topológico con la profundidad
 
-### [topodfs](widgets/topodfs.html){ target=_blank rel=noopener }
+### [topodfs](../../../actividades/ayg-puj/orden-topologico-dfs-low/topodfs.html){ target=_blank rel=noopener }
 
 La búsqueda en profundidad que entrega el orden topológico, en sus dos formas: la recursiva, que muestra la pila de llamadas, y la de pila explícita, que muestra la lista de pares. Cada vértice pasa de blanco a gris y a negro, con `d/f` escrito encima, mientras la lista `orden` crece y al final se invierte. Antes de ejecutar se predice cuál vértice queda primero. Cuatro grafos: una receta, las tareas de un proyecto y la compilación de unos paquetes, todos sin ciclos, y una red de señales con un ciclo, donde se ve el momento en que la búsqueda llega a un vértice gris y `ciclo[0]` pasa a True.
 
-### [ordenes](widgets/ordenes.html){ target=_blank rel=noopener }
+### [ordenes](../../../actividades/ayg-puj/orden-topologico-dfs-low/ordenes.html){ target=_blank rel=noopener }
 
 Un grafo sin ciclos con la tabla de `d` y `f` de una búsqueda ya hecha, y seis listas candidatas: por `f` decreciente, por `f` creciente, por `d` creciente, por `d` decreciente, un orden de Kahn distinto del de la profundidad y el de `f` decreciente con dos vecinos intercambiados. Hay que marcar cuáles son órdenes topológicos. Cada candidata trae su explicación: la flecha concreta que queda al revés, o la razón por la que vale aunque no sea el de la búsqueda. Tres grafos; en el último el orden por `d` creciente sirve por una coincidencia que la explicación desarma.
 
 ## El valor low
 
-### [low](widgets/low.html){ target=_blank rel=noopener }
+### [low](../../../actividades/ayg-puj/orden-topologico-dfs-low/low.html){ target=_blank rel=noopener }
 
 Un grafo dirigido con la búsqueda ya corrida: el árbol dibujado y el `d` de cada vértice. Se escribe el `low` de cada uno, y la comprobación dice por vértice qué hijo o qué flecha lo bajó, por qué una flecha hacia un vértice que ya salió de la pila no cuenta y por qué en una flecha que no es de árbol se usa `d` y no `low`. Tres grafos ordenados por dificultad; el segundo trae una flecha cruzada hacia un componente ya cerrado.
 
@@ -29,29 +29,29 @@ Una página con un grafo de cinco vértices y los catorce pasos de Tarjan sobre 
 
 ## El algoritmo de Tarjan
 
-### [tarjan](widgets/tarjan.html){ target=_blank rel=noopener }
+### [tarjan](../../../actividades/ayg-puj/orden-topologico-dfs-low/tarjan.html){ target=_blank rel=noopener }
 
 Tarjan paso a paso, en la versión recursiva y en la que lleva su propia lista `llamadas` de pares `[u, i]`. Se ven la pila de vértices, `en_pila` y `d/low` sobre cada vértice, y cada componente estrena color cuando `low[u] == d[u]` lo saca de la pila. Antes de ejecutar se predice el número de componentes. Una tabla registra los componentes en el orden en que se cierran y, al terminar, se muestra que ese orden leído al revés es un orden topológico del grafo de componentes. Tres grafos: páginas web, calles de una ciudad y una red de seguidores.
 
 ## Puntos de articulación y puentes
 
-### [cortesdfs](widgets/cortesdfs.html){ target=_blank rel=noopener }
+### [cortesdfs](../../../actividades/ayg-puj/orden-topologico-dfs-low/cortesdfs.html){ target=_blank rel=noopener }
 
 `cortes` paso a paso en sus dos formas: la recursiva, con la pila de llamadas a la vista, y la de pila explícita, con la lista `llamadas` de ternas `[u, padre, i]`. Cada vértice lleva encima su `d/low` mientras corre, las aristas del árbol se pintan en azul, las de retroceso que bajan un low quedan punteadas en verde, y los puntos de articulación y los puentes se marcan en rojo en el momento en que el código los detecta, con una línea que explica la comparación con los números reales. Antes de ejecutar se predice cuántos puntos de articulación hay. Tres grafos de ocho a diez vértices: uno donde la raíz tiene dos hijos y es punto de articulación, uno donde la raíz tiene dos vecinos pero un solo hijo, y uno con un punto de articulación sin ningún puente al lado. La tarjeta final pregunta qué decide que la raíz lo sea.
 
-### [criterio](widgets/criterio.html){ target=_blank rel=noopener }
+### [criterio](../../../actividades/ayg-puj/orden-topologico-dfs-low/criterio.html){ target=_blank rel=noopener }
 
 Nueve escenarios, cada uno con el dibujo del grafo y su árbol de la profundidad, un vértice `u`, su hijo `v` y los números que el código tiene al volver de `v`: `d[u]`, `low[v]`, `low[u]` y si `u` es la raíz. Hay que decidir si el hijo hace de `u` un punto de articulación y si la arista `u–v` es puente. Cada respuesta equivocada explica la comparación que se hizo mal: `≥` donde iba `>` y al revés, la condición del hijo aplicada a la raíz, la raíz con un solo hijo aunque tenga varios vecinos, y `low[u]` leído en lugar de `low[v]`. Un escenario trae un vértice que sí es punto de articulación, pero por otro hijo.
 
 ## Errores comunes
 
-### [errores](widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/orden-topologico-dfs-low/errores.html){ target=_blank rel=noopener }
 
 Tres versiones con una línea cambiada: `cortes_aux` sin la guarda `v != padre`, `revisar_hijo` con `>=` en la condición del puente y `tarjan` con `elif d[v] != 0` en lugar de `elif en_pila[v]`. Cada una corre sobre un grafo pequeño y devuelve algo con apariencia de respuesta. Se comparan sus puntos de articulación, sus puentes y sus `low` con los de la versión correcta, se señala la línea, y al acertar aparece lo que se rompe: la primera pierde todos los puentes, la segunda inventa puentes en cada ciclo que se cierra en `u` y en cada arista de la raíz, y la tercera deja que una flecha hacia un componente ya cerrado baje un low y funda dos componentes en uno.
 
 ## Para cerrar
 
-### [red](widgets/red.html){ target=_blank rel=noopener }
+### [red](../../../actividades/ayg-puj/orden-topologico-dfs-low/red.html){ target=_blank rel=noopener }
 
 La fibra de un campus: quince edificios y veinte enlaces. Primero se marcan a mano los puntos únicos de falla, edificios y enlaces, con un botón por pieza que la quita del dibujo y vuelve a colorear los componentes que quedan. Después se corre `cortes`, se comprueba que `cortes_con_pila` devuelve lo mismo y se compara con lo marcado: cada fila trae lo que pasa al quitar la pieza y los valores `d` y `low` que la hacen punto de articulación o puente. Al final se puede agregar un enlace de prueba entre dos edificios y volver a correr para ver cuántos puntos únicos de falla quita.
 

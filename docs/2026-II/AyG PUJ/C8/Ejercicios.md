@@ -7,7 +7,7 @@ entradas y los números son otros.
 
 ## Recuento
 
-### [grados](widgets/grados.html){ target=_blank rel=noopener }
+### [grados](../../../actividades/ayg-puj/orden-topologico-kahn/grados.html){ target=_blank rel=noopener }
 
 El grado de salida se lee de un vistazo, el de entrada hay que contarlo. Un
 grafo de siete vértices donde primero se llenan a mano los siete contadores
@@ -17,7 +17,7 @@ en el dibujo. Entre las dos cosas, cuántas veces corre la línea de la suma.
 
 ## Orden topológico
 
-### [ordenes](widgets/ordenes.html){ target=_blank rel=noopener }
+### [ordenes](../../../actividades/ayg-puj/orden-topologico-kahn/ordenes.html){ target=_blank rel=noopener }
 
 Antes de cualquier algoritmo. Un grafo de seis vértices y seis listas: hay
 que marcar cuáles son órdenes topológicos, y la comprobación dice, por cada
@@ -27,7 +27,7 @@ las $720$ permutaciones.
 
 ## El algoritmo de Kahn
 
-### [kahn](widgets/kahn.html){ target=_blank rel=noopener }
+### [kahn](../../../actividades/ayg-puj/orden-topologico-kahn/kahn.html){ target=_blank rel=noopener }
 
 El algoritmo paso a paso, con el contador de entrada de cada vértice dibujado
 encima: se ve bajar cuando sale un predecesor y ponerse en verde en el
@@ -38,7 +38,7 @@ fuentes hay, y la tabla registra cada salida con los contadores que bajó. Las
 dos preguntas del final son las que sostienen la demostración: cuándo entra
 un vértice a la cola y por qué eso basta para que el orden sea topológico.
 
-### [ciclo](widgets/ciclo.html){ target=_blank rel=noopener }
+### [ciclo](../../../actividades/ayg-puj/orden-topologico-kahn/ciclo.html){ target=_blank rel=noopener }
 
 El mismo algoritmo sobre grafos con ciclos. La cola se vacía antes de tiempo
 y hay que predecir cuántos vértices alcanzan a salir; el tercer grafo no
@@ -49,7 +49,7 @@ señal en las dos direcciones.
 
 ## Un problema de juez
 
-### [tareas](widgets/tareas.html){ target=_blank rel=noopener }
+### [tareas](../../../actividades/ayg-puj/orden-topologico-kahn/tareas.html){ target=_blank rel=noopener }
 
 Ordering Tasks con otra instancia. Primero la entrada y qué espera a qué,
 leído a mano; después, cuál de cuatro listas de adyacencia construye la
@@ -59,7 +59,7 @@ llenándose; y al final, cuál de tres líneas imprime el programa.
 
 ## Errores comunes
 
-### [errores](widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/orden-topologico-kahn/errores.html){ target=_blank rel=noopener }
 
 Tres versiones del algoritmo con una línea equivocada cada una, sobre un
 grafo con un vértice suelto y otro de dos predecesores. Ninguna falla al
@@ -71,7 +71,7 @@ que no existe.
 
 ## Ejercicios
 
-### [marcas](widgets/marcas.html){ target=_blank rel=noopener }
+### [marcas](../../../actividades/ayg-puj/orden-topologico-kahn/marcas.html){ target=_blank rel=noopener }
 
 Para el ejercicio 1. La búsqueda en profundidad con dos marcas más: el color
 de cada vértice, que pasa de blanco a gris al entrar y de gris a negro al
@@ -82,7 +82,7 @@ delata el ciclo. Tres grafos, del árbol al que tiene un ciclo, y las dos
 versiones del recorrido, la recursiva y la de pila explícita, que dejan las
 mismas marcas. Antes de ejecutar se predice en cuánto termina el reloj.
 
-### [variantes](widgets/variantes.html){ target=_blank rel=noopener }
+### [variantes](../../../actividades/ayg-puj/orden-topologico-kahn/variantes.html){ target=_blank rel=noopener }
 
 Para los ejercicios 2 y 3 de abajo. Un grafo de siete vértices y las tres
 versiones del algoritmo: con cola, con pila y con la fuente de número más
@@ -92,7 +92,7 @@ paso qué fuentes había para escoger.
 
 ## Todo junto, sobre un grafo grande
 
-### [grande](widgets/grande.html){ target=_blank rel=noopener }
+### [grande](../../../actividades/ayg-puj/orden-topologico-kahn/grande.html){ target=_blank rel=noopener }
 
 El último y el más exigente, para cuando los anteriores ya salen solos.
 Catorce módulos de un proyecto y diecinueve dependencias: demasiado para

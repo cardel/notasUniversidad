@@ -9,7 +9,7 @@ de ver un número hay que escribirlo, y cada respuesta equivocada dice por qué 
 
 ## Motivación: ¿por qué perfilar?
 
-### [Dos programas que hacen la misma cuenta](widgets/dosprogramas.html){ target=_blank rel=noopener }
+### [Dos programas que hacen la misma cuenta](../../../actividades/infra/profiling-linux/dosprogramas.html){ target=_blank rel=noopener }
 
 Mismo resultado, mismas instrucciones hasta el sexto dígito, el doble de ciclos.
 Prediga cuánto tarda cada uno y cuántas instrucciones retira por ciclo, destape
@@ -19,7 +19,7 @@ cuál responde en qué línea se va el tiempo.
 
 ## Monitoreo de procesos: `top`, `htop` y `ps`
 
-### [Un programa paralelo visto desde afuera](widgets/procesos.html){ target=_blank rel=noopener }
+### [Un programa paralelo visto desde afuera](../../../actividades/infra/profiling-linux/procesos.html){ target=_blank rel=noopener }
 
 Un proceso marca 919,1 % de CPU y 1,2 % de memoria. Calcule el techo de la
 máquina y a cuántos núcleos equivale esa cifra, destape los doce hilos con su
@@ -27,7 +27,7 @@ núcleo asignado y lea qué significa que dos compartan el mismo mientras otros
 dos quedan libres. Termina con el síntoma que delata un binario compilado sin
 la bandera de OpenMP.
 
-### [Contar llamadas al sistema](widgets/llamadas.html){ target=_blank rel=noopener }
+### [Contar llamadas al sistema](../../../actividades/infra/profiling-linux/llamadas.html){ target=_blank rel=noopener }
 
 Dos programas escriben las mismas 200.000 líneas: uno con una llamada por línea
 y otro con un búfer. Prediga la diferencia en llamadas y en tiempo dentro del
@@ -36,7 +36,7 @@ caso donde la herramienta no encuentra nada, y eso también es un resultado.
 
 ## Análisis de memoria caché con Valgrind
 
-### [Contar los fallos de caché](widgets/cache.html){ target=_blank rel=noopener }
+### [Contar los fallos de caché](../../../actividades/infra/profiling-linux/cache.html){ target=_blank rel=noopener }
 
 Cuántos enteros entran en una línea de caché y cuántas lecturas aprovechan cada
 una. Prediga la razón de fallos entre las dos versiones, averigüe por qué los
@@ -46,7 +46,7 @@ todos los fallos queda señalada sin leer una línea del programa.
 
 ## Profiling de hardware con `perf`
 
-### [Los contadores del procesador](widgets/contadores.html){ target=_blank rel=noopener }
+### [Los contadores del procesador](../../../actividades/infra/profiling-linux/contadores.html){ target=_blank rel=noopener }
 
 Instrucciones por ciclo calculadas a mano antes de destapar la tabla, la
 diferencia entre los fallos del primer nivel y los del último, y qué dice un IPC
@@ -55,7 +55,7 @@ aparece cuando el permiso del núcleo, y no el procesador, es lo que falta.
 
 ## Comparativa y flujo de trabajo
 
-### [La misma diferencia, medida de cuatro formas](widgets/herramientas.html){ target=_blank rel=noopener }
+### [La misma diferencia, medida de cuatro formas](../../../actividades/infra/profiling-linux/herramientas.html){ target=_blank rel=noopener }
 
 El mismo par de programas da 1,4, 9,4, 18,0 y 415 veces según con qué se mida.
 Ordene las cuatro razones, explique por qué crecen a medida que se baja de

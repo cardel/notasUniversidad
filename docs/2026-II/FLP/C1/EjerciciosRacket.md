@@ -10,7 +10,7 @@ en cualquier momento y conviene tenerlas resueltas antes de la sesión sobre
 [inducción y recursión](./Ejercicios.md){ target=_blank rel=noopener }, que
 supone resuelto lo que aquí se practica.
 
-## [notación prefija y definiciones](widgets/prefija.html){ target=_blank rel=noopener }
+## [notación prefija y definiciones](../../../actividades/flp/induccion-y-recursion/prefija.html){ target=_blank rel=noopener }
 
 Cinco procedimientos sin recursión, para que la mano se acostumbre a que el
 operador vaya adelante. El promedio de tres números obliga a decidir qué
@@ -24,7 +24,7 @@ signo de interrogación al final de lo que devuelve un booleano y la flecha en
 medio de lo que convierte. Y sale la comilla, que es lo que
 separa un símbolo del nombre de una variable.
 
-## [condicionales: if y cond](widgets/condicionales.html){ target=_blank rel=noopener }
+## [condicionales: if y cond](../../../actividades/flp/induccion-y-recursion/condicionales.html){ target=_blank rel=noopener }
 
 Cinco decisiones. Las dos primeras son el mismo problema, el mayor de tres
 números, escrito con `if` anidado y después con `cond`, que es la forma de ver
@@ -37,7 +37,7 @@ hereda lo que descartaron las anteriores; y una pregunta por la forma del
 dato, donde la lista vacía también responde que sí a `list?` y el orden
 decide si queda bien clasificada.
 
-## [recursión lineal y recursión de cola](widgets/recursion.html){ target=_blank rel=noopener }
+## [recursión lineal y recursión de cola](../../../actividades/flp/induccion-y-recursion/recursion.html){ target=_blank rel=noopener }
 
 Seis procedimientos donde la misma cuenta se escribe de las dos maneras. La
 suma hasta `n` primero deja la suma esperando a que la llamada vuelva, y
@@ -51,7 +51,7 @@ un número; invertir una lista, que sale volteada sola porque se construye
 mientras se baja; y Fibonacci con dos acumuladores, que es lo que convierte un
 cálculo impracticable en uno inmediato.
 
-## [ligaduras locales: let, let* y letrec](widgets/ligaduras.html){ target=_blank rel=noopener }
+## [ligaduras locales: let, let* y letrec](../../../actividades/flp/induccion-y-recursion/ligaduras.html){ target=_blank rel=noopener }
 
 Seis procedimientos con nombres que solo viven dentro de una expresión. Las
 tres formas se escriben casi igual y se diferencian en una sola cosa: en qué
@@ -69,7 +69,7 @@ que no aparezca en la interfaz; el último define dos procedimientos que se
 nombran mutuamente. Esa forma es la que reaparece al implementar `letrec` en
 el intérprete del curso.
 
-## [listas simbólicas y procedimientos como valores](widgets/simbolicas.html){ target=_blank rel=noopener }
+## [listas simbólicas y procedimientos como valores](../../../actividades/flp/induccion-y-recursion/simbolicas.html){ target=_blank rel=noopener }
 
 Seis procedimientos sobre listas de símbolos. Buscar uno, quedarse con los que
 son símbolos, quitar los repetidos usando el procedimiento de búsqueda ya

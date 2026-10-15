@@ -15,7 +15,7 @@ contra el interpretador en Racket de la sesión.
 
 ## Del texto al resultado
 
-### [Del texto al resultado](widgets/etapas.html){ target=_blank rel=noopener }
+### [Del texto al resultado](../../../actividades/flp/proceso-del-interpretador/etapas.html){ target=_blank rel=noopener }
 
 El reparto del trabajo entre las tres etapas: quién tira a la basura los
 espacios y el comentario, quién decide que `-(x, 3)` es una primitiva con
@@ -26,7 +26,7 @@ que nadie ligó, uno al que le sobra un token al final.
 
 ## Interpretación y compilación
 
-### [Interpretar o compilar](widgets/compilado.html){ target=_blank rel=noopener }
+### [Interpretar o compilar](../../../actividades/flp/proceso-del-interpretador/compilado.html){ target=_blank rel=noopener }
 
 Seis situaciones que se notan al usar un lenguaje —un error en la última
 línea que impide que corra la primera, un cambio que se prueba de inmediato,
@@ -36,7 +36,7 @@ dos y dónde se separan, y qué hace la máquina virtual en los casos híbridos.
 
 ## Scanner y parser
 
-### [Lo que ve el scanner](widgets/tokens.html){ target=_blank rel=noopener }
+### [Lo que ve el scanner](../../../actividades/flp/proceso-del-interpretador/tokens.html){ target=_blank rel=noopener }
 
 Cuántos tokens deja cada programa, contando los paréntesis y las comas y sin
 contar los espacios ni los comentarios. Después la clase de cada lexema,
@@ -47,7 +47,7 @@ largo: `x5` es un token y `5x` son dos, `-7` es uno y `- 7` son dos.
 
 ## SLLGEN: la especificación léxica y la gramática
 
-### [Leer una especificación de SLLGEN](widgets/sllgen.html){ target=_blank rel=noopener }
+### [Leer una especificación de SLLGEN](../../../actividades/flp/proceso-del-interpretador/sllgen.html){ target=_blank rel=noopener }
 
 Qué salida lleva cada regla léxica y qué significa cada una: `skip` para lo
 que se reconoce solo para descartarlo, `symbol` y `number` para lo que se
@@ -58,7 +58,7 @@ que no dejan campo.
 
 ## Un primer lenguaje interpretado
 
-### [Los valores del lenguaje y el punto de entrada](widgets/valores.html){ target=_blank rel=noopener }
+### [Los valores del lenguaje y el punto de entrada](../../../actividades/flp/proceso-del-interpretador/valores.html){ target=_blank rel=noopener }
 
 Los dos conjuntos que se deciden antes de escribir el evaluador: qué puede
 resultar de evaluar una expresión y qué puede quedar ligado a un nombre. En
@@ -69,7 +69,7 @@ procedimiento.
 
 ## Primitivas y evaluación
 
-### [El interpretador por dentro](widgets/simulador.html){ target=_blank rel=noopener }
+### [El interpretador por dentro](../../../actividades/flp/proceso-del-interpretador/simulador.html){ target=_blank rel=noopener }
 
 Cinco programas para predecir qué hará el interpretador antes de verlo:
 cuánto vale, cuántas veces se llama a `evaluar-expresion`, cuántas búsquedas
@@ -80,7 +80,7 @@ las llamadas que consultan el ambiente marcadas. Al final queda la máquina
 abierta para cualquier programa que se quiera escribir, incluidos los que
 fallan: se ve en qué etapa se detienen.
 
-### [El reparto del trabajo al evaluar](widgets/traza.html){ target=_blank rel=noopener }
+### [El reparto del trabajo al evaluar](../../../actividades/flp/proceso-del-interpretador/traza.html){ target=_blank rel=noopener }
 
 Quién hace qué entre `evaluar-expresion`, `map`, `evaluar-primitiva`,
 `operacion-prim` y `apply-env`, y por qué la primitiva no recibe el ambiente. Después el orden:
@@ -91,7 +91,7 @@ mensaje que habla de Racket.
 
 ## Ligadura local
 
-### [La ligadura local](widgets/ambientes.html){ target=_blank rel=noopener }
+### [La ligadura local](../../../actividades/flp/proceso-del-interpretador/ambientes.html){ target=_blank rel=noopener }
 
 En qué ambiente se evalúa cada parte de un `let`, que es toda la regla: la
 expresión ligada en el de afuera y el cuerpo en el nuevo. Después, qué pasa

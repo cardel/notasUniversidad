@@ -17,7 +17,7 @@ son la excepción: vienen de statsmodels y se calcularon en la sesión 3.
 
 ## La correlación con el pasado
 
-### [El mes contra el de k meses atrás](./widgets/rezago.html){ target=_blank rel=noopener }
+### [El mes contra el de k meses atrás](../../../actividades/series-temporales/autocorrelacion/rezago.html){ target=_blank rel=noopener }
 
 Cada mes frente al de k meses antes, con un deslizador para k entre 1 y 24
 y la correlación de la nube encima. En la serie original todo se parece a
@@ -26,7 +26,7 @@ correlación de k = 1 cae casi a cero y el pico que queda está en k = 12. Los
 meses de 2020 y 2021 van en otro color, para ver cuánto pesa la pandemia en
 la nube.
 
-### [¿De cuál serie es este correlograma?](./widgets/correlogramas.html){ target=_blank rel=noopener }
+### [¿De cuál serie es este correlograma?](../../../actividades/series-temporales/autocorrelacion/correlogramas.html){ target=_blank rel=noopener }
 
 Tres ACF en desorden, la de la serie original, la de `diff()` y la de
 `diff(12)`, y la tarea de emparejarlas antes de diferenciar a mano. Basta
@@ -36,14 +36,14 @@ y por qué ninguno llega.
 
 ## Diferenciar
 
-### [Diferenciar y mirar la ACF](./widgets/diferencias.html){ target=_blank rel=noopener }
+### [Diferenciar y mirar la ACF](../../../actividades/series-temporales/autocorrelacion/diferencias.html){ target=_blank rel=noopener }
 
 Una casilla para la diferencia regular y otra para la estacional, y con cada
 combinación la serie, su ACF hasta k = 36, los datos que quedan y el valor
 p de ADF. Se trata de ver qué quita cada diferencia, qué deja a la vista y
 cuál es la combinación más pequeña con la que ADF rechaza la raíz unitaria.
 
-### [¿Cuánto mide la banda?](./widgets/bandas.html){ target=_blank rel=noopener }
+### [¿Cuánto mide la banda?](../../../actividades/series-temporales/autocorrelacion/bandas.html){ target=_blank rel=noopener }
 
 La franja de un correlograma mide 1,96/√n. Primero hay que predecir su
 ancho con los 110 meses, qué le pasa cuando la diferenciación deja trece datos
@@ -54,7 +54,7 @@ Bartlett, que es la que dibuja statsmodels en el notebook.
 
 ## Autocorrelación parcial
 
-### [El φ de un AR(1)](./widgets/ar1.html){ target=_blank rel=noopener }
+### [El φ de un AR(1)](../../../actividades/series-temporales/autocorrelacion/ar1.html){ target=_blank rel=noopener }
 
 Un AR(1) simulado con el ruido fijo y un deslizador para φ entre −0,99 y
 0,99. La ACF decae despacio o alterna de signo según φ, y la

@@ -1,0 +1,3 @@
+[submodule "docs/actividades"]
+	path = docs/actividades
+	url = git@github.com:cardel/actividadesCursos.git

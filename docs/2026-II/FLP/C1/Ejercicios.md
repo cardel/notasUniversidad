@@ -9,7 +9,7 @@ Son siete, en el orden en que la sesión ve los temas. Las dos primeras se
 alcanzan en clase; las demás quedan para volver sobre el tema, y entre las
 seis que piden código suman veintinueve procedimientos por escribir.
 
-## [conjuntos](widgets/induccion.html){ target=_blank rel=noopener }
+## [conjuntos](../../../actividades/flp/induccion-y-recursion/induccion.html){ target=_blank rel=noopener }
 
 Tres bloques de decisiones. En los dos primeros hay que decir si un valor
 pertenece al conjunto que definen unas reglas: primero las listas de enteros,
@@ -22,7 +22,7 @@ recursiva queda justificada: la que baja por el `car` cuando ahí hay un entero,
 la que no cambia el argumento, la que salta de dos en dos. Cada decisión
 muestra la razón, se acierte o no, y la razón nombra la regla que decide.
 
-## [escribir y correr](widgets/repl.html){ target=_blank rel=noopener }
+## [escribir y correr](../../../actividades/flp/induccion-y-recursion/repl.html){ target=_blank rel=noopener }
 
 Cuatro procedimientos por escribir, con el código corriendo en la página.
 `suma-lista` recorre una lista, `duple` recorre un número, `elimina-primero`
@@ -41,7 +41,7 @@ El evaluador de la página entiende `define`, `lambda`, `if`, `cond`, `let`,
 `define-datatype` ni `cases`. Sirve para tantear una idea sin cambiar de
 ventana. Lo que se entrega se escribe y se corre en DrRacket.
 
-## [de las reglas al reconocedor](widgets/reconocedores.html){ target=_blank rel=noopener }
+## [de las reglas al reconocedor](../../../actividades/flp/induccion-y-recursion/reconocedores.html){ target=_blank rel=noopener }
 
 Cinco conjuntos definidos por reglas y, para cada uno, el procedimiento que
 decide la pertenencia. Empieza por las potencias de dos, donde la regla
@@ -56,7 +56,7 @@ expresiones lambda y la de los árboles binarios. Decidir si `(lambda x x)`
 pertenece es lo mismo que se hace a ojo mirando paréntesis, ahora escrito
 como procedimiento.
 
-## [gramáticas BNF](widgets/bnf.html){ target=_blank rel=noopener }
+## [gramáticas BNF](../../../actividades/flp/induccion-y-recursion/bnf.html){ target=_blank rel=noopener }
 
 Una sola gramática para los cinco retos, con las dos abreviaturas de la
 notación: la estrella, que significa cero o más, y la cruz, uno o más. Los
@@ -69,7 +69,7 @@ expresión, que ya es un intérprete de un lenguaje diminuto —sintaxis definid
 por una gramática, recorrido por casos, un valor por cada forma—, y contar
 operaciones, medir la profundidad y recoger los números que aparecen.
 
-## [recorrer siguiendo la gramática](widgets/recorridos.html){ target=_blank rel=noopener }
+## [recorrer siguiendo la gramática](../../../actividades/flp/induccion-y-recursion/recorridos.html){ target=_blank rel=noopener }
 
 Cinco procedimientos que ya no responden sí o no: buscan un elemento, arman
 una lista nueva, miden. `nth-element` baja dos argumentos al tiempo,
@@ -81,7 +81,7 @@ variable, que es la versión con números de lo que antes se respondía con
 booleanos, y encontrar el camino hasta un número en un árbol ordenado, donde la
 comparación descarta media estructura en cada nivel.
 
-## [declaración, referencia y alcance](widgets/alcance.html){ target=_blank rel=noopener }
+## [declaración, referencia y alcance](../../../actividades/flp/induccion-y-recursion/alcance.html){ target=_blank rel=noopener }
 
 Cinco procedimientos que vuelven código la pregunta de a cuál declaración
 pertenece cada aparición de un nombre. Los dos primeros separan los dos tipos
@@ -96,7 +96,7 @@ nombres declarados hasta ese punto. Y `renombra` cambia las referencias libres
 de un identificador sin tocar las que pertenecen a otra declaración, que es la
 regla del alcance escrita como procedimiento.
 
-## [ligaduras locales al recorrer la gramática](widgets/locales.html){ target=_blank rel=noopener }
+## [ligaduras locales al recorrer la gramática](../../../actividades/flp/induccion-y-recursion/locales.html){ target=_blank rel=noopener }
 
 Cinco recorridos donde el nombre local deja de ser una comodidad. En `rango` y
 en `quita-y-cuenta` el resultado de la llamada se necesita dos veces, y

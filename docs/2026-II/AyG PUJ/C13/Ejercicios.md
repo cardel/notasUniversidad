@@ -7,37 +7,37 @@ los grafos de las diapositivas ni los de sus ejercicios propuestos.
 
 ## Versión 1: una matriz de n filas
 
-### [Bellman-Ford](./widgets/bellman.html){ target=_blank rel=noopener }
+### [Bellman-Ford](../../../actividades/ayg-puj/bellman-ford-moore/bellman.html){ target=_blank rel=noopener }
 
 Se ejecuta el C++ de `bfm1.cpp` línea por línea, y también el de `bfm2.cpp` y el de `bfm4.cpp`, sobre tres grafos con pesos negativos y sin ciclos negativos. Antes de ejecutar se predice cuántas iteraciones imprime `bfm4.cpp`. En la matriz se ve llenarse una fila por ronda; en los vectores, lo que queda al terminar cada una. Al final una tabla compara las aristas que examina cada versión.
 
 ## Versión 3: recuperar el ciclo negativo
 
-### [Ciclo negativo](./widgets/negativo.html){ target=_blank rel=noopener }
+### [Ciclo negativo](../../../actividades/ayg-puj/bellman-ford-moore/negativo.html){ target=_blank rel=noopener }
 
 `bfm3.cpp` y `bfm5.cpp` sobre tres grafos con ciclos negativos. Antes de ejecutar se marcan los vértices del ciclo que imprime `bfm3.cpp`; en uno de los grafos hay dos ciclos negativos y el programa recupera solo uno. Con `bfm5.cpp` se sigue `conteo` hasta que algún vértice pasa de `n` y se sube por `p` para encontrar el ciclo.
 
 ## Versión 5: la cola de Moore
 
-### [Moore](./widgets/moore.html){ target=_blank rel=noopener }
+### [Moore](../../../actividades/ayg-puj/bellman-ford-moore/moore.html){ target=_blank rel=noopener }
 
 `bfm5.cpp` línea por línea sobre tres grafos sin ciclos negativos. Se ven la cola, `enCola` y `conteo`. Antes de ejecutar se predice cuántas veces sale de la cola cada vértice; en un grafo hay un vértice que nunca entra.
 
 ## Las cinco versiones juntas
 
-### [La red](./widgets/red.html){ target=_blank rel=noopener }
+### [La red](../../../actividades/ayg-puj/bellman-ford-moore/red.html){ target=_blank rel=noopener }
 
 Dos redes de trece y catorce nodos corridas con `bfm5.cpp`: una casa de cambio con un arbitraje escondido y un reparto con peajes y bonos sin ciclos negativos. Se predice si hay un ciclo negativo, se ejecuta el código y se contesta una pregunta sobre la red: qué monedas forman el ciclo, o cuál es el costo mínimo entre dos puntos.
 
 ## Grafos de estado
 
-### [Grafo de estados](./widgets/estados.html){ target=_blank rel=noopener }
+### [Grafo de estados](../../../actividades/ayg-puj/bellman-ford-moore/estados.html){ target=_blank rel=noopener }
 
 El grafo de estados de *The New Villa* sobre tres villas pequeñas distintas a la del enunciado. Se predice cuántos estados distintos descubre la búsqueda y luego se sigue `new_villa.py`: los sucesores de cada estado (moverse, prender o apagar), la cola, la tabla de distancias y predecesores y la reconstrucción de la secuencia de pasos. Una de las villas no tiene solución.
 
 ## Errores comunes
 
-### [Líneas cambiadas](./widgets/errores.html){ target=_blank rel=noopener }
+### [Líneas cambiadas](../../../actividades/ayg-puj/bellman-ford-moore/errores.html){ target=_blank rel=noopener }
 
 Cuatro versiones del C++ del titular con una línea cambiada: la copia de la fila anterior en `bfm1.cpp`, la comprobación de `enCola` en `bfm5.cpp` y una ronda menos en `bfm2.cpp` y en `bfm1.cpp`. Se corren contra la versión correcta sobre un grafo pequeño, se comparan las salidas y se señala la línea. Una de las versiones imprime lo mismo que la correcta, y la explicación dice por qué.
 

@@ -7,7 +7,7 @@ de ver un número toca escribirlo, y cada respuesta equivocada dice por qué no.
 
 ## Introducción al perfilado
 
-### [El techo de una optimización](widgets/techo.html){ target=_blank rel=noopener }
+### [El techo de una optimización](../../../actividades/infra/profiling-python-avx/techo.html){ target=_blank rel=noopener }
 
 Un programa de 20 segundos repartido en cuatro funciones. Antes de mover nada,
 escriba cuánto se gana si la función que pesa el 70 % queda al doble de
@@ -18,7 +18,7 @@ no optimizar ninguna.
 
 ## Librería time
 
-### [Reloj de pared y tiempo de CPU](widgets/relojes.html){ target=_blank rel=noopener }
+### [Reloj de pared y tiempo de CPU](../../../actividades/infra/profiling-python-avx/relojes.html){ target=_blank rel=noopener }
 
 Un programa por tramos: lee un archivo, calcula, consulta un servicio y
 procesa con cuatro hilos. Escriba qué va a marcar `perf_counter` y qué va a
@@ -29,7 +29,7 @@ CPU que reloj. Hay tres programas para escoger, entre ellos el `sleeper` y el
 
 ## Librería timeit
 
-### [Lo que devuelve timeit](widgets/repeticiones.html){ target=_blank rel=noopener }
+### [Lo que devuelve timeit](../../../actividades/infra/profiling-python-avx/repeticiones.html){ target=_blank rel=noopener }
 
 Tres cosas que se prestan a confusión, con números. El total de cien
 repeticiones no es el promedio; el `setup` que queda dentro del fragmento
@@ -39,7 +39,7 @@ Cada medición individual se saca con un botón y se ve dónde cae.
 
 ## Librería cProfile
 
-### [Cuántas veces se llama fib](widgets/llamadas.html){ target=_blank rel=noopener }
+### [Cuántas veces se llama fib](../../../actividades/infra/profiling-python-avx/llamadas.html){ target=_blank rel=noopener }
 
 El árbol de llamadas de `fib(n)`, nivel por nivel, con las repetidas
 marcadas. Prediga cuántas llamadas hace `fib(6)` y después cuántas ejecutan
@@ -50,7 +50,7 @@ decidir qué función se toca primero y qué número va en el informe.
 
 ## Librería Pyinstrument
 
-### [Cuántas muestras hacen falta](widgets/muestreo.html){ target=_blank rel=noopener }
+### [Cuántas muestras hacen falta](../../../actividades/infra/profiling-python-avx/muestreo.html){ target=_blank rel=noopener }
 
 Un perfilador estadístico solo ve lo que dura más que su intervalo. Prediga
 cuántas muestras toma en los 4,64 s de `fib(35)` y qué intervalo pide un
@@ -61,7 +61,7 @@ reporte; con muchas, el error baja de dos puntos.
 
 ## Comparativa y conclusiones
 
-### [Cuál herramienta responde qué](widgets/herramientas.html){ target=_blank rel=noopener }
+### [Cuál herramienta responde qué](../../../actividades/infra/profiling-python-avx/herramientas.html){ target=_blank rel=noopener }
 
 Ocho preguntas sobre `ruta.py`, el programa que la clase midió con las
 cuatro herramientas, y las cuatro herramientas como respuesta. Cuántas veces
@@ -72,7 +72,7 @@ espera, qué tiempo va en el informe, cuál se puede dejar en producción. La
 
 ## Instrucciones AVX y NumPy
 
-### [Carriles de un registro](widgets/carriles.html){ target=_blank rel=noopener }
+### [Carriles de un registro](../../../actividades/infra/profiling-python-avx/carriles.html){ target=_blank rel=noopener }
 
 Cuántas instrucciones recorren cinco millones de `float64` con un registro
 de 256 bits, y cuántas con 512. Después los cinco patrones que la clase
@@ -82,7 +82,7 @@ bucle de Python y la recurrencia cuestan casi lo mismo, ciento treinta veces
 lo contiguo, aunque solo uno de los dos se pueda vectorizar; por qué, es la
 pregunta final.
 
-### [Cuándo compensa la GPU](widgets/gpu.html){ target=_blank rel=noopener }
+### [Cuándo compensa la GPU](../../../actividades/infra/profiling-python-avx/gpu.html){ target=_blank rel=noopener }
 
 Operaciones divididas entre bytes que viajan. Prediga cuánto tarda el
 arreglo de cinco millones en ir y volver por PCIe y compárelo con los 11,8 ms

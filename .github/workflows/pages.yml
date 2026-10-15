@@ -24,7 +24,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Las actividades interactivas viven en el submodulo docs/actividades.
+      # Sin esto el checkout lo deja vacio y el sitio sale publicado con los
+      # enlaces a las actividades apuntando a nada, sin que falle ningun paso.
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/setup-python@v7
         with:

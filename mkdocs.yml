@@ -11,6 +11,7 @@ repo_name: cardel/notasUniversidad
 # Páginas que no aparecen en el menú de navegación (siguen accesibles por URL).
 not_in_nav: |
   /Prompts.md
+  /actividades/**
 
 theme:
   name: "material"

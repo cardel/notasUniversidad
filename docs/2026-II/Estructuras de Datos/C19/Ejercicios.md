@@ -7,7 +7,7 @@ de la sesión: mismo tema, ronda nueva.
 
 ## Las tres implementaciones enlazadas
 
-### [caminar](./widgets/caminar.html){ target=_blank rel=noopener }
+### [caminar](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/caminar.html){ target=_blank rel=noopener }
 
 Sumar los doce elementos de una lista, una cola y una pila sobre nodos usando
 solo el contrato: cuántos nodos recorre cada una, cuántos reserva y cuál de las
@@ -15,13 +15,13 @@ tres termina en Θ(n²).
 
 ## Ejercicios sobre las implementaciones
 
-### [rotar](./widgets/rotar.html){ target=_blank rel=noopener }
+### [rotar](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/rotar.html){ target=_blank rel=noopener }
 
 Pasar el frente de la cola al final cambiando punteros: qué lista hace falta
 debajo, cuál de tres órdenes de asignación pierde la cadena, qué pasa con un
 solo elemento y cuánto cuesta.
 
-### [concatenar](./widgets/concatenar.html){ target=_blank rel=noopener }
+### [concatenar](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/concatenar.html){ target=_blank rel=noopener }
 
 Colgar una cola detrás de otra en Θ(1) desde dentro de la clase, contra la
 versión con el contrato que cuesta Θ(m), con el caso de la cola vacía y la
@@ -29,19 +29,19 @@ razón para dejar vacía la segunda.
 
 ## Pagar al partir: quicksort
 
-### [particionar](./widgets/particionar.html){ target=_blank rel=noopener }
+### [particionar](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/particionar.html){ target=_blank rel=noopener }
 
 `particionar` sobre siete elementos, vuelta por vuelta, con `i`, `j` y la zona
 de cada casilla: dónde queda el pivote antes de correrlo, cómo queda el arreglo
 y cuántas veces se llama a `intercambiar`.
 
-### [zonas](./widgets/zonas.html){ target=_blank rel=noopener }
+### [zonas](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/zonas.html){ target=_blank rel=noopener }
 
 Seis estados anotados durante una partición, con el color de la zona de cada
 casilla; en cada uno, qué quedó mal: un valor en la zona que no le toca, `i`
 delante de `j`, el pivote movido antes de tiempo o un valor perdido, si algo.
 
-### [libre](./widgets/libre.html){ target=_blank rel=noopener }
+### [libre](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/libre.html){ target=_blank rel=noopener }
 
 Un arreglo propio, de hasta doce enteros: la partición paso a paso y la tabla
 de todas las llamadas de `quicksort` que lo ordenan, con las comparaciones y la
@@ -49,13 +49,13 @@ profundidad de la pila.
 
 ## Lo que cuesta quicksort
 
-### [comparaciones](./widgets/comparaciones.html){ target=_blank rel=noopener }
+### [comparaciones](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/comparaciones.html){ target=_blank rel=noopener }
 
 Predecir las comparaciones de quicksort sobre una entrada ordenada, la misma al
 revés y una balanceada, y cuántas llamadas llegan a estar abiertas a la vez.
 Después, las llamadas una por una.
 
-### [peorcaso](./widgets/peorcaso.html){ target=_blank rel=noopener }
+### [peorcaso](../../../actividades/estructuras-de-datos/implementaciones-y-quicksort/peorcaso.html){ target=_blank rel=noopener }
 
 Cuatro órdenes de los mismos siete valores: cuál es el peor caso aunque no lo
 parezca, qué lo hace caro, cuánto ahorra el pivote del medio y qué pivote

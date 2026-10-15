@@ -16,7 +16,7 @@ interpretador de `5.SemanticaProcedimientos`.
 
 ## Qué le falta al evaluador
 
-### [Qué le falta al evaluador](widgets/falta.html){ target=_blank rel=noopener }
+### [Qué le falta al evaluador](../../../actividades/flp/procedimientos-y-alcance-estatico/falta.html){ target=_blank rel=noopener }
 
 Seis encargos para decidir cuáles se escriben con lo que había (números,
 variables, primitivas y `let`) y cuáles piden algo que el lenguaje todavía
@@ -27,7 +27,7 @@ Procedimiento, y las dos tareas que eso trae consigo.
 
 ## Condicionales
 
-### [El condicional y su regla](widgets/condicional.html){ target=_blank rel=noopener }
+### [El condicional y su regla](../../../actividades/flp/procedimientos-y-alcance-estatico/condicional.html){ target=_blank rel=noopener }
 
 Hay que predecir qué da cada condicional. Dos de ellos solo se diferencian
 en la prueba, y uno da 9 mientras el otro se detiene: la rama que no se
@@ -38,7 +38,7 @@ enterrado.
 
 ## Ligaduras locales con let
 
-### [Varias ligaduras a la vez](widgets/ligaduras.html){ target=_blank rel=noopener }
+### [Varias ligaduras a la vez](../../../actividades/flp/procedimientos-y-alcance-estatico/ligaduras.html){ target=_blank rel=noopener }
 
 Cinco programas donde la respuesta depende de en qué ambiente se evalúa cada
 parte derecha: una variable que se redefine con su propio valor y no es
@@ -48,7 +48,7 @@ Después, qué separa un `let` de tres ligaduras de tres `let` anidados.
 
 ## Cadenas de ambientes: un ejemplo completo
 
-### [La cadena de ambientes](widgets/cadena.html){ target=_blank rel=noopener }
+### [La cadena de ambientes](../../../actividades/flp/procedimientos-y-alcance-estatico/cadena.html){ target=_blank rel=noopener }
 
 Se predice el valor, cuántos eslabones se crean y cuántas variables se
 evalúan. Al comprobar, la página abre la traza con el ambiente
@@ -56,7 +56,7 @@ de cada paso y dibuja la cadena en su punto más hondo, con el ambiente vacío
 al final y las flechas del más nuevo al más viejo. Al final queda la máquina
 abierta para cualquier programa que se quiera escribir.
 
-### [Dibujar la cadena de ambientes](widgets/dibujar.html){ target=_blank rel=noopener }
+### [Dibujar la cadena de ambientes](../../../actividades/flp/procedimientos-y-alcance-estatico/dibujar.html){ target=_blank rel=noopener }
 
 Lo mismo, pero al revés: en vez de leer la cadena hay que construirla. Para
 cada programa se señala un momento de la evaluación y se escriben los
@@ -68,7 +68,7 @@ decir, y en el otro sobrevive un eslabón de una aplicación que ya terminó.
 
 ## Procedimientos y clausuras
 
-### [Procedimientos y clausuras](widgets/clausuras.html){ target=_blank rel=noopener }
+### [Procedimientos y clausuras](../../../actividades/flp/procedimientos-y-alcance-estatico/clausuras.html){ target=_blank rel=noopener }
 
 Qué guarda una clausura: los parámetros, el cuerpo sin evaluar y el ambiente
 donde se creó. También qué no guarda. `let f = proc(u) (g u) in 7` vale 7 aunque
@@ -79,7 +79,7 @@ menos se detiene por la verificación de la cantidad.
 
 ## Alcance estático
 
-### [Alcance estático y alcance dinámico](widgets/alcance.html){ target=_blank rel=noopener }
+### [Alcance estático y alcance dinámico](../../../actividades/flp/procedimientos-y-alcance-estatico/alcance.html){ target=_blank rel=noopener }
 
 El mismo programa con las dos reglas, cuatro veces. Se predicen los dos
 resultados y la página abre las dos trazas, una debajo de la otra: dónde
@@ -90,7 +90,7 @@ el ambiente del parámetro cuelga del que la clausura capturó.
 
 ## Tres ejemplos con procedimientos
 
-### [Procedimientos en acción](widgets/procedimientos.html){ target=_blank rel=noopener }
+### [Procedimientos en acción](../../../actividades/flp/procedimientos-y-alcance-estatico/procedimientos.html){ target=_blank rel=noopener }
 
 Aquí los procedimientos hacen de todo: el primero se aplica dos veces sobre
 su propio resultado, el segundo recibe otro procedimiento como argumento, el

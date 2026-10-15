@@ -12,7 +12,7 @@ Los dos recorridos y su costo se practican en la
 
 ## Grafos implícitos: Jaimico y el café
 
-### [laberinto](widgets/laberinto.html){ target=_blank rel=noopener }
+### [laberinto](../../../actividades/ayg-puj/grafos-implicitos/laberinto.html){ target=_blank rel=noopener }
 
 Un laberinto nuevo y la amplitud paso a paso, con las capas creciendo sobre
 el dibujo y la cola a la vista. No hay lista de adyacencia: las líneas que
@@ -24,7 +24,7 @@ donde el café queda en $-1$.
 
 ## UVa 10977: el bosque encantado
 
-### [bosque](widgets/bosque.html){ target=_blank rel=noopener }
+### [bosque](../../../actividades/ayg-puj/grafos-implicitos/bosque.html){ target=_blank rel=noopener }
 
 La amplitud del bosque es la misma del laberinto de arriba; lo que cambia es
 armar el mundo a partir de los Jigglypuffs, y eso es lo que aquí se hace a
@@ -43,7 +43,7 @@ entrada.
 
 ## UVa 627: la ruta con menos saltos
 
-### [ruta](widgets/ruta.html){ target=_blank rel=noopener }
+### [ruta](../../../actividades/ayg-puj/grafos-implicitos/ruta.html){ target=_blank rel=noopener }
 
 Una red dirigida de siete enrutadores. La amplitud guarda el predecesor de
 cada uno —las flechas azules— y al final la ruta se reconstruye hacia atrás
@@ -53,7 +53,7 @@ trampa, y la pregunta del cierre es por qué.
 
 ## UVa 11749: el componente más grande
 
-### [componentes](widgets/componentes.html){ target=_blank rel=noopener }
+### [componentes](../../../actividades/ayg-puj/grafos-implicitos/componentes.html){ target=_blank rel=noopener }
 
 Cuántos grupos hay que no se alcanzan entre sí y de qué tamaño es cada uno.
 Cada componente se pinta de un color a medida que el ciclo externo lo
@@ -69,7 +69,7 @@ vértice de la cadena.
 
 ## Errores comunes
 
-### [errores](widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/grafos-implicitos/errores.html){ target=_blank rel=noopener }
 
 Tres programas sobre un laberinto de $4 \times 4$, cada uno con una línea
 equivocada, y ninguno da error al correr. La regla de vecinos sin
@@ -79,7 +79,7 @@ $-1$ no termina. La profundidad usada como distancia devuelve 12.
 
 ## Ejercicios propuestos
 
-### [estados](widgets/estados.html){ target=_blank rel=noopener }
+### [estados](../../../actividades/ayg-puj/grafos-implicitos/estados.html){ target=_blank rel=noopener }
 
 Para el problema del robot. Una cuadrícula de $4 \times 4$ con $k = 2$ y dos
 programas: uno marca la celda, el otro marca la celda junto con la racha. El

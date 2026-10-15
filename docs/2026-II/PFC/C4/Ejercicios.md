@@ -12,7 +12,7 @@ en los tres casos. Lo que cambia es dónde vive la regla que lo garantiza.
 
 ## Motivación: ¿por qué abstraer datos?
 
-### [dosEnteros](widgets/dosEnteros.html){ target=_blank rel=noopener }
+### [dosEnteros](../../../actividades/pfc/clases-y-abstraccion-de-datos/dosEnteros.html){ target=_blank rel=noopener }
 
 Sumar `1/2` más `2/3` con cuatro enteros sueltos. Hay que escoger la expresión
 del numerador entre cuatro candidatas, y las cuatro compilan y devuelven un
@@ -24,7 +24,7 @@ no hay cuatro enteros que emparejar a mano.
 
 ## Clases y objetos en Scala
 
-### [claseRacional](widgets/claseRacional.html){ target=_blank rel=noopener }
+### [claseRacional](../../../actividades/pfc/clases-y-abstraccion-de-datos/claseRacional.html){ target=_blank rel=noopener }
 
 Cuatro respuestas del REPL para predecir antes de verlas, sobre `val x = new
 Racional(1, 2)`. Dos son las esperadas; la tercera, escribir `x` solo, devuelve
@@ -35,7 +35,7 @@ nombre que se escribe en la cabecera de la clase del nombre que queda público.
 
 ## De funciones externas a métodos
 
-### [externasVsMetodos](widgets/externasVsMetodos.html){ target=_blank rel=noopener }
+### [externasVsMetodos](../../../actividades/pfc/clases-y-abstraccion-de-datos/externasVsMetodos.html){ target=_blank rel=noopener }
 
 Las dos versiones de la suma, lado a lado y con el mismo contador de línea:
 `sumaRacional(r, s)` recibe los dos operandos como parámetros, y `x.suma(y)`
@@ -47,7 +47,7 @@ incomodidad es la que abre la sección siguiente.
 
 ## Control de acceso y encapsulación
 
-### [privados](widgets/privados.html){ target=_blank rel=noopener }
+### [privados](../../../actividades/pfc/clases-y-abstraccion-de-datos/privados.html){ target=_blank rel=noopener }
 
 Cinco expresiones sobre `val r = new Racional(66, 42)` y una pregunta por cada
 una: ¿la puede escribir el cliente? `r.numer` responde 11. `r.mcd(66, 42)` y
@@ -57,7 +57,7 @@ una: ¿la puede escribir el cliente? `r.numer` responde 11. `r.mcd(66, 42)` y
 del compilador. Distinguir *no compila* de *compila y falla* es la mitad del
 ejercicio.
 
-### [mcdEnMemoria](widgets/mcdEnMemoria.html){ target=_blank rel=noopener }
+### [mcdEnMemoria](../../../actividades/pfc/clases-y-abstraccion-de-datos/mcdEnMemoria.html){ target=_blank rel=noopener }
 
 La tabla que se llena de memoria y se comprueba contra los contadores por
 línea. Para `new Racional(66, 42)` seguido de `r.numer`, `r.numer` y `r.denom`,
@@ -70,7 +70,7 @@ ejecutar y después seguir la cuenta paso a paso para ver dónde falló.
 
 ## Modelo de sustitución con clases
 
-### [sustitucion](widgets/sustitucion.html){ target=_blank rel=noopener }
+### [sustitucion](../../../actividades/pfc/clases-y-abstraccion-de-datos/sustitucion.html){ target=_blank rel=noopener }
 
 Tres sustituciones, en este orden: parámetros del método, parámetros de la
 clase y `this`. Cada reescritura se escribe antes de verla. El cierre es
@@ -80,7 +80,7 @@ siguiente, donde `+` sí fabrica un objeto nuevo.
 
 ## Operadores como métodos
 
-### [operadores](widgets/operadores.html){ target=_blank rel=noopener }
+### [operadores](../../../actividades/pfc/clases-y-abstraccion-de-datos/operadores.html){ target=_blank rel=noopener }
 
 Hay siete respuestas que predecir, y por el camino aparecen dos cosas: `r1 + r2` es
 `r1.+(r2)`, y después de la suma `r1` sigue valiendo `1/2`, porque el método
@@ -89,7 +89,7 @@ construye un racional nuevo en lugar de modificar el receptor; y
 en que se lee. Un chip muestra `numer` y `denom` de los dos operandos después
 de cada línea, siempre iguales.
 
-### [punto2d](widgets/punto2d.html){ target=_blank rel=noopener }
+### [punto2d](../../../actividades/pfc/clases-y-abstraccion-de-datos/punto2d.html){ target=_blank rel=noopener }
 
 Lo mismo en otro dominio, y ahí aparece una diferencia que en `Racional` pasaba
 inadvertida: en `Punto` los parámetros van declarados `val` en la cabecera, así

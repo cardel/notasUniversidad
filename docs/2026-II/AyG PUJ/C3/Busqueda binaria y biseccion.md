@@ -767,13 +767,13 @@ a los últimos escribas.
 Los tres se trabajan en el navegador, en la
 [página de ejercicios](./Ejercicios.md):
 
-- [buscar](widgets/buscar.html){ target=_blank rel=noopener } — la ventana
+- [buscar](../../../actividades/ayg-puj/busqueda-binaria/buscar.html){ target=_blank rel=noopener } — la ventana
   que se encoge, con la traza división por división, los dos invariantes y
   la demostración completa.
-- [bisección](widgets/biseccion.html){ target=_blank rel=noopener } — el
+- [bisección](../../../actividades/ayg-puj/busqueda-binaria/biseccion.html){ target=_blank rel=noopener } — el
   intervalo que encierra la respuesta, sobre tres funciones distintas, con
   la cuenta de vueltas y la cota del error.
-- [resolver un problema de juez](widgets/resolver.html){ target=_blank rel=noopener }
+- [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
   — el método completo aplicado a UVa 10341, un problema que no aparece en
   estas notas: entrada, función objetivo, monotonía demostrada término a
   término, rango, existencia, tolerancia y código.

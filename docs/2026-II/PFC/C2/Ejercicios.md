@@ -13,7 +13,7 @@ números.
 
 ## Funciones frente a procesos
 
-### [contar](widgets/contar.html){ target=_blank rel=noopener }
+### [contar](../../../actividades/pfc/recursion-de-cola-y-procesos/contar.html){ target=_blank rel=noopener }
 
 `factorial(n)` con la pila dibujada: una caja por multiplicación que espera.
 La predicción pide cuántas multiplicaciones hará; la respuesta es `n`, y el
@@ -21,7 +21,7 @@ contador del `else` la confirma en la bajada. Lo que hay que mirar es el paso
 en que la pila llega a su punto más alto, porque ahí también hay `n` cajas: en
 esta función tiempo y espacio coinciden, y por eso es fácil confundirlos.
 
-### [reducir](widgets/reducir.html){ target=_blank rel=noopener }
+### [reducir](../../../actividades/pfc/recursion-de-cola-y-procesos/reducir.html){ target=_blank rel=noopener }
 
 El modelo de sustitución sobre una función recursiva, un reemplazo por vuelta
 con el trozo que cambia resaltado. La expresión crece mientras baja y encoge
@@ -30,7 +30,7 @@ la única con dos valores. Compare `factorial(3)` con `factorialAlFinal(3)`: el
 `*` está en lados distintos y el proceso es el mismo. `sumaLineal(2, 5)` deja
 además ver los `pred` reduciéndose antes de entrar, por valor.
 
-### [agotar](widgets/agotar.html){ target=_blank rel=noopener }
+### [agotar](../../../actividades/pfc/recursion-de-cola-y-procesos/agotar.html){ target=_blank rel=noopener }
 
 Cuatro llamadas con `n = 100000`, y una sola pregunta para cada una: ¿qué se
 acaba, el tiempo, el espacio o nada? Dos revientan la pila, una gira sin fin y
@@ -41,7 +41,7 @@ problema.
 
 ## Recursión lineal e iteración
 
-### [pendientes](widgets/pendientes.html){ target=_blank rel=noopener }
+### [pendientes](../../../actividades/pfc/recursion-de-cola-y-procesos/pendientes.html){ target=_blank rel=noopener }
 
 `factorial` y `fact` corriendo lado a lado sobre la misma entrada, cada una
 con su pila de marcos dibujada debajo. Cada marco dice qué tiene adentro: a
@@ -53,7 +53,7 @@ con borde doble, y dice a quién reemplazó y qué calculó antes de llamar. El 
 preset hace lo mismo con `sumaLineal` y `sumaIter`, que es el ejercicio de la
 sesión.
 
-### [acumulador](widgets/acumulador.html){ target=_blank rel=noopener }
+### [acumulador](../../../actividades/pfc/recursion-de-cola-y-procesos/acumulador.html){ target=_blank rel=noopener }
 
 La traza de `factIter` como tabla, una fila por llamada. Se llena la columna
 `prod` de memoria y después se ve la ejecución llenarla. La regla que hay que
@@ -61,7 +61,7 @@ descubrir es que el `prod` de una fila es `cont × prod` de la fila de arriba:
 el resultado se arma antes de llamar y viaja como argumento, y por eso al
 volver no queda nada por hacer.
 
-### [cola](widgets/cola.html){ target=_blank rel=noopener }
+### [cola](../../../actividades/pfc/recursion-de-cola-y-procesos/cola.html){ target=_blank rel=noopener }
 
 Cinco versiones de `factIter`. Las cinco dan `720` para `n = 6`; para
 `n = 100000` solo dos terminan. Hay que marcar cuáles siguen siendo de cola.
@@ -71,7 +71,7 @@ de volver, envolver la llamada en `math.max`— y una parece romperla y no: un
 
 ## Recursión de árbol
 
-### [árbol](widgets/arbol.html){ target=_blank rel=noopener }
+### [árbol](../../../actividades/pfc/recursion-de-cola-y-procesos/arbol.html){ target=_blank rel=noopener }
 
 `producto(i, j)` parte el rango por la mitad y el proceso deja de ser una fila.
 El árbol se dibuja con sus ramas, y cada nodo lleva el número del orden en
@@ -84,14 +84,14 @@ al mismo tiempo como máximo, que son los niveles del árbol. Lo que hay que
 mirar es la pila bajando a uno cuando termina la rama izquierda, antes de
 subir por la derecha: siete llamadas y nunca más de tres abiertas.
 
-### [cuentas](widgets/cuentas.html){ target=_blank rel=noopener }
+### [cuentas](../../../actividades/pfc/recursion-de-cola-y-procesos/cuentas.html){ target=_blank rel=noopener }
 
 La tabla que cierra la sesión, vacía: para un `n` dado, llamadas y hondura de
 `factorial`, `fact` y `factArbol`. Seis casillas que se llenan de memoria y se
 comprueban contra la simulación. Las tres son funciones recursivas y solo una
 genera un proceso iterativo.
 
-### [caso base](widgets/casobase.html){ target=_blank rel=noopener }
+### [caso base](../../../actividades/pfc/recursion-de-cola-y-procesos/casobase.html){ target=_blank rel=noopener }
 
 Cuatro versiones de `producto` que difieren solo en los casos base. Una es la
 de la sesión; de las otras tres, una no termina, una termina con el valor

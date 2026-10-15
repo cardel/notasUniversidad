@@ -30,7 +30,7 @@ máquina.
 
 ## Recursos compartidos
 
-### [Localidad temporal y espacial](widgets/localidad.html){ target=_blank rel=noopener }
+### [Localidad temporal y espacial](../../../actividades/infra/introduccion-programacion-paralela/localidad.html){ target=_blank rel=noopener }
 
 La misma matriz recorrida por filas y por columnas. Los dos leen los mismos
 elementos y hacen el mismo número de accesos; lo único distinto es el orden.
@@ -72,7 +72,7 @@ Una matriz de $1000 \times 1000$ de `double`, guardada por filas. Un
 
 ## Dependencias
 
-### [Cuatro tareas y un orden que respetar](widgets/dependencias.html){ target=_blank rel=noopener }
+### [Cuatro tareas y un orden que respetar](../../../actividades/infra/introduccion-programacion-paralela/dependencias.html){ target=_blank rel=noopener }
 
 Cuatro tareas de distinto tamaño, y dos de ellas no pueden empezar hasta que
 otra termine. Se elige cuántos procesadores hay y la página arma el reparto,
@@ -102,7 +102,7 @@ total dividido entre ocho.
 
 ## Speedup, eficiencia y la ley de Amdahl
 
-### [Ley de Amdahl](widgets/amdahl.html){ target=_blank rel=noopener }
+### [Ley de Amdahl](../../../actividades/infra/introduccion-programacion-paralela/amdahl.html){ target=_blank rel=noopener }
 
 Dos perillas: qué fracción del programa se puede repartir y entre cuántos
 núcleos. La página calcula el tiempo, el speedup y la eficiencia, y dibuja en
@@ -132,7 +132,7 @@ Un programa se midió en una máquina de 16 núcleos y dio estos tiempos:
 5. Alguien reporta un speedup de 17 con 16 núcleos. Antes de creerlo o
    descartarlo, diga qué habría que revisar de la medición.
 
-### [False sharing](widgets/falso.html){ target=_blank rel=noopener }
+### [False sharing](../../../actividades/infra/introduccion-programacion-paralela/falso.html){ target=_blank rel=noopener }
 
 Cuatro hilos, cada uno escribiendo en su propia posición de un arreglo. El
 resultado siempre es correcto y el programa puede ser lento igual.
@@ -161,7 +161,7 @@ diferencia se explica sola.
 
 ## Contexto histórico
 
-### [Los muros](widgets/walls.html){ target=_blank rel=noopener }
+### [Los muros](../../../actividades/infra/introduccion-programacion-paralela/walls.html){ target=_blank rel=noopener }
 
 Dos números explican por qué la frecuencia dejó de subir. El primero es el
 consumo: como para subir la frecuencia hay que subir también el voltaje, el

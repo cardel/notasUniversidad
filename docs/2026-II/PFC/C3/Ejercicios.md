@@ -15,7 +15,7 @@ confundir cuál hace qué.
 
 ## Motivación: un esquema que se repite
 
-### [esqueleto](widgets/esqueleto.html){ target=_blank rel=noopener }
+### [esqueleto](../../../actividades/pfc/funciones-de-alto-orden/esqueleto.html){ target=_blank rel=noopener }
 
 Tres sumas escritas en matemáticas, no en código: $1^3 + 2^3 + 3^3 + 4^3$,
 $2 + 5 + 8 + 11 + 14$ y $1 + 2 + 4 + 8 + 16$. Para cada una hay que escoger
@@ -26,7 +26,7 @@ por qué sumar.
 
 ## Funciones como parámetro
 
-### [traza](widgets/traza.html){ target=_blank rel=noopener }
+### [traza](../../../actividades/pfc/funciones-de-alto-orden/traza.html){ target=_blank rel=noopener }
 
 `suma(x => x * x, x => x * 2, 1, 20)` como tabla, una fila por llamada, con
 las columnas `a`, `f(a)` y `prox(a)` vacías, incluido el `a` con el que se
@@ -35,7 +35,7 @@ detiene y el total. Se llena primero y se corre después. Los términos son 1,
 `suma(x => 10 - x, x => x + 4, 1, 13)`, tiene términos negativos al final:
 `f` puede devolver lo que quiera.
 
-### [siguiente](widgets/siguiente.html){ target=_blank rel=noopener }
+### [siguiente](../../../actividades/pfc/funciones-de-alto-orden/siguiente.html){ target=_blank rel=noopener }
 
 La reducción de `suma(cuadrado, suc, 1, 3)` por sustitución, pero no se
 muestra: se construye. En cada uno de los trece pasos hay tres expresiones y
@@ -46,7 +46,7 @@ la suma de afuera cuando la de adentro todavía no tiene dos valores). La
 reducción crece hacia abajo: cada paso resuelto queda con su regla debajo y
 la pregunta siempre al final, con el contador de equivocaciones.
 
-### [trazaRota](widgets/trazaRota.html){ target=_blank rel=noopener }
+### [trazaRota](../../../actividades/pfc/funciones-de-alto-orden/trazaRota.html){ target=_blank rel=noopener }
 
 Tres trazas escritas de `suma(x => x + 1, x => x + 2, 1, 7)`. Dos salieron
 de versiones que compilan y dan un número equivocado; una está bien. Cada
@@ -54,7 +54,7 @@ traza es consistente consigo misma después del error, así que el total no
 delata nada. Hay que marcar el primer paso equivocado, o decir que no hay
 ninguno, y nombrar la versión: `sumaSinProx` o `sumaBaseUno`.
 
-### [alReves](widgets/alReves.html){ target=_blank rel=noopener }
+### [alReves](../../../actividades/pfc/funciones-de-alto-orden/alReves.html){ target=_blank rel=noopener }
 
 Las tres versiones están a la vista —`suma`, `sumaSinProx` y `sumaBaseUno`—
 y lo que se arma es la llamada de prueba: se eligen `f`, `prox` y el rango, y
@@ -67,7 +67,7 @@ preguntando por qué ese `prox` vuelve invisible el error.
 
 ## Funciones anónimas
 
-### [literales](widgets/literales.html){ target=_blank rel=noopener }
+### [literales](../../../actividades/pfc/funciones-de-alto-orden/literales.html){ target=_blank rel=noopener }
 
 Cuatro preguntas donde el literal elegido tiene consecuencias sobre `suma`:
 cuál `f` la deja siempre en 0, con cuáles `prox` revienta la pila (dos, y
@@ -75,7 +75,7 @@ ninguno de los dos *gira para siempre*, porque `suma` no es de cola), cuál par
 da 9 con el rango `(1, 3)`, y cuánto da `suma(x => x + 2, x => x + 2, 1, 3)`,
 donde el mismo literal hace dos trabajos distintos según la posición.
 
-### [precedencia](widgets/precedencia.html){ target=_blank rel=noopener }
+### [precedencia](../../../actividades/pfc/funciones-de-alto-orden/precedencia.html){ target=_blank rel=noopener }
 
 `(x, y) => x + y / 2` compila, tiene el tipo correcto y no es un promedio.
 Siete llamadas para predecir y luego reducir operación por operación: los dos
@@ -84,7 +84,7 @@ resto, y tres literales con `*`, `+` y `-` mezclados sin paréntesis.
 
 ## Funciones que devuelven funciones
 
-### [sumador](widgets/sumador.html){ target=_blank rel=noopener }
+### [sumador](../../../actividades/pfc/funciones-de-alto-orden/sumador.html){ target=_blank rel=noopener }
 
 `sumador(n)` fabrica la función *sumar n*. Tres expresiones para predecir y
 seguir por sustitución: `sumador(5)(3)`; `val s = sumador(5); val t =
@@ -93,7 +93,7 @@ de aplicar la primera; y `aplicaDos(sumador(3), 4)`, donde la función se
 fabrica una vez y se usa dos. Un chip muestra qué `n` guarda cada función en
 cada paso.
 
-### [suma2](widgets/suma2.html){ target=_blank rel=noopener }
+### [suma2](../../../actividades/pfc/funciones-de-alto-orden/suma2.html){ target=_blank rel=noopener }
 
 `suma2(f, prox)` devuelve `sumaF` sin correrla. Tres predicciones sobre
 `val g = suma2(x => x, x => x + 1)` seguido de `g(1, 3) + g(4, 5)`: el valor,
@@ -101,7 +101,7 @@ cuántas veces se evalúa el `if` de `sumaF` en total (siete, no cinco: la
 llamada que cierra también lo evalúa) y cuántas de esas ocurren en la línea
 del `val` (cero). Los contadores por línea lo confirman.
 
-### [derivada](widgets/derivada.html){ target=_blank rel=noopener }
+### [derivada](../../../actividades/pfc/funciones-de-alto-orden/derivada.html){ target=_blank rel=noopener }
 
 `derivada(cube, dx)(2)` no da 12, y se puede calcular exactamente cuánto se
 aleja: $((2 + dx)^3 - 8) / dx = 12 + 6\,dx + dx^2$. Con esa expansión se
@@ -112,7 +112,7 @@ aplicar a su propio resultado, y el número que sale también se explica.
 
 ## Currificación
 
-### [tipos](widgets/tipos.html){ target=_blank rel=noopener }
+### [tipos](../../../actividades/pfc/funciones-de-alto-orden/tipos.html){ target=_blank rel=noopener }
 
 Cada grupo de paréntesis que se llena quita una flecha del tipo. Cinco
 expresiones con cuatro tipos cada una, todas verificadas con el compilador:
@@ -120,7 +120,7 @@ expresiones con cuatro tipos cada una, todas verificadas con el compilador:
 `derivada(cube, 0.1)` y `sumador` sin aplicar. Cierra con la trampa de
 `restaC(5)`: fija el minuendo, no el sustraendo, y `menosCinco(3)` da 2.
 
-### [reducirC](widgets/reducirC.html){ target=_blank rel=noopener }
+### [reducirC](../../../actividades/pfc/funciones-de-alto-orden/reducirC.html){ target=_blank rel=noopener }
 
 El ejercicio de consolidación de la sesión, como tabla que se llena de abajo
 hacia arriba: lo que devuelve cada llamada pendiente de

@@ -7,7 +7,7 @@ cuántas veces corre cada línea. Estos cuatro cubren las ideas nuevas de la
 sesión: el mejor y el peor caso, los pasos que no son de uno en uno y los
 bloques en secuencia.
 
-## [todos_positivos](widgets/todos_positivos.html){ target=_blank rel=noopener }
+## [todos_positivos](../../../actividades/estructuras-de-datos/ejercicios-complejidad/todos_positivos.html){ target=_blank rel=noopener }
 
 La función corta apenas encuentra un valor que no es positivo, así que el
 conteo depende de los datos: un mismo n puede costar poco o mucho.
@@ -15,7 +15,7 @@ conteo depende de los datos: un mismo n puede costar poco o mucho.
 Toque las casillas del arreglo para cambiar el signo de un valor, o use
 los presets, y mire dónde se frena la ejecución y cómo cambia el total.
 
-## [paso_grande](widgets/paso_grande.html){ target=_blank rel=noopener }
+## [paso_grande](../../../actividades/estructuras-de-datos/ejercicios-complejidad/paso_grande.html){ target=_blank rel=noopener }
 
 El índice avanza de n/5 en n/5. El paso crece con n, pero el camino
 también. ¿Qué le pasa al número de vueltas cuando n crece?
@@ -23,7 +23,7 @@ también. ¿Qué le pasa al número de vueltas cuando n crece?
 Pruebe n = 20, 65 y 1000 con los botones y compare el contador. La nota de
 alerta explica por qué el enunciado exige n ≥ 10.
 
-## [mitades](widgets/mitades.html){ target=_blank rel=noopener }
+## [mitades](../../../actividades/estructuras-de-datos/ejercicios-complejidad/mitades.html){ target=_blank rel=noopener }
 
 El índice arranca en n y se parte por la mitad en cada vuelta. Es el
 espejo de potencias, el ejercicio del miércoles: ¿bajar partiendo en dos
@@ -32,7 +32,7 @@ cuesta lo mismo que subir duplicando?
 Suba n hasta 1000 y mire la secuencia n, n/2, n/4, … La división es
 entera: el último valor visitado siempre es 1.
 
-## [combinado](widgets/combinado.html){ target=_blank rel=noopener }
+## [combinado](../../../actividades/estructuras-de-datos/ejercicios-complejidad/combinado.html){ target=_blank rel=noopener }
 
 Tres bloques en secuencia: buscar el mayor, contar las parejas que lo
 superan y duplicar hasta llegar a n. Los conteos se suman, y al crecer n

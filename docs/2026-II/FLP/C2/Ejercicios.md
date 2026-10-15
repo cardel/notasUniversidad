@@ -12,7 +12,7 @@ frecuentes traen su explicación.
 
 ## El cliente conoce la representación
 
-### [¿Sobrevive el cliente?](widgets/cliente.html){ target=_blank rel=noopener }
+### [¿Sobrevive el cliente?](../../../actividades/flp/tad-y-ambientes/cliente.html){ target=_blank rel=noopener }
 
 Quince fragmentos de código que usan un TAD, el natural y el ambiente, y una
 sola pregunta por fragmento: si la representación cambia, ¿sigue funcionando?
@@ -20,7 +20,7 @@ La respuesta no depende de qué hace el cliente sino de por dónde toca el dato.
 Hay uno que pasa con las tres representaciones de la sesión y aun así se
 rompe, porque apuesta a una propiedad que la especificación nunca prometió.
 
-### [Arreglar el cliente](widgets/arreglar.html){ target=_blank rel=noopener }
+### [Arreglar el cliente](../../../actividades/flp/tad-y-ambientes/arreglar.html){ target=_blank rel=noopener }
 
 Cuatro clientes que metían la mano en la representación —`es-uno?` comparaba
 contra `(#t)`, `doble` multiplicaba, `mayor?` medía longitudes—, para
@@ -31,7 +31,7 @@ mirar.
 
 ## Abstracción de datos
 
-### [El cliente una sola vez](widgets/cola.html){ target=_blank rel=noopener }
+### [El cliente una sola vez](../../../actividades/flp/tad-y-ambientes/cola.html){ target=_blank rel=noopener }
 
 Un TAD cola con cinco operaciones y tres clientes que solo pueden usarlas:
 contar los elementos, listarlos del frente al final y encontrar el último.
@@ -40,7 +40,7 @@ clientes se pegan tal cual. Con la primera representación devolver el dato
 pasa las pruebas; con la segunda ya no, y ahí queda claro quién había hecho
 trampa.
 
-### [¿Cumple el contrato?](widgets/contrato.html){ target=_blank rel=noopener }
+### [¿Cumple el contrato?](../../../actividades/flp/tad-y-ambientes/contrato.html){ target=_blank rel=noopener }
 
 Un TAD conjunto especificado con cinco ecuaciones y candidatas para
 implementar cada operación, primero con listas y después con procedimientos.
@@ -51,7 +51,7 @@ contrato habla de cómo se comportan entre sí.
 
 ## Tres representaciones del mismo TAD
 
-### [¿Cuánto vale este dato?](widgets/valor.html){ target=_blank rel=noopener }
+### [¿Cuánto vale este dato?](../../../actividades/flp/tad-y-ambientes/valor.html){ target=_blank rel=noopener }
 
 Un mismo valor de Racket leído bajo cinco representaciones del natural, tres
 de la sesión y dos que no aparecen en ella. Primero cuánto vale `(1 2)` en
@@ -59,7 +59,7 @@ cada una; después si se puede saber sin conocer la representación, y qué pasa
 con un dato que la definición nunca produce; por último el acarreo y el
 préstamo, que son lo que mantiene a `succ` y `pred` dentro del contrato.
 
-### [Bignum en base 10](widgets/bignum.html){ target=_blank rel=noopener }
+### [Bignum en base 10](../../../actividades/flp/tad-y-ambientes/bignum.html){ target=_blank rel=noopener }
 
 La representación bignum con el dígito menos significativo adelante. `succ`
 con acarreo, `pred` con préstamo y con el cuidado de no dejar un cero al
@@ -69,7 +69,7 @@ un solo `car`, porque todo el trabajo con dígitos lo hizo `succ`.
 
 ## El TAD ambiente: la interfaz
 
-### [Predecir apply-env](widgets/ambiente.html){ target=_blank rel=noopener }
+### [Predecir apply-env](../../../actividades/flp/tad-y-ambientes/ambiente.html){ target=_blank rel=noopener }
 
 Una cadena de cuatro ligaduras, dos del mismo nombre, y preguntas sobre qué
 devuelve la búsqueda: qué gana cuando un nombre está dos veces, qué pasa al
@@ -77,7 +77,7 @@ quitar el eslabón de afuera, y por qué extender no modifica el ambiente que
 ya existía. El segundo bloque pide escribir la misma cadena con `let` anidados,
 que es lo que un ambiente representa.
 
-### [Clientes del ambiente](widgets/env-clientes.html){ target=_blank rel=noopener }
+### [Clientes del ambiente](../../../actividades/flp/tad-y-ambientes/env-clientes.html){ target=_blank rel=noopener }
 
 La representación con listas y su interfaz vienen dadas, con un ambiente
 donde `m` está ligada tres veces. Cinco procedimientos que recorren la cadena

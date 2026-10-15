@@ -16,7 +16,7 @@ número de llamadas se midió corriéndolo contra el interpretador de
 
 ## El factorial que no se encuentra a sí mismo
 
-### [El procedimiento que no se encuentra a sí mismo](widgets/encuentra.html){ target=_blank rel=noopener }
+### [El procedimiento que no se encuentra a sí mismo](../../../actividades/flp/procedimientos-recursivos-letrec/encuentra.html){ target=_blank rel=noopener }
 
 Cinco intentos de recursión con `let` y `proc`. El primero vale 7 y crea una
 clausura sin aplicar nada; el segundo es el mismo procedimiento, ahora
@@ -27,7 +27,7 @@ funciona sin `letrec`: nombrar un procedimiento declarado antes.
 
 ## La expresión letrec
 
-### [La producción de letrec](widgets/gramatica.html){ target=_blank rel=noopener }
+### [La producción de letrec](../../../actividades/flp/procedimientos-recursivos-letrec/gramatica.html){ target=_blank rel=noopener }
 
 La producción nueva (EOPL §3.4) en los dos sentidos. Diez programas para
 decidir si la gramática los genera, y hay sorpresas en las dos direcciones:
@@ -40,7 +40,7 @@ extender un lenguaje, y la dirección en que casi nunca se practica.
 
 ## El ambiente extendido recursivo
 
-### [El ambiente extendido recursivo](widgets/marco.html){ target=_blank rel=noopener }
+### [El ambiente extendido recursivo](../../../actividades/flp/procedimientos-recursivos-letrec/marco.html){ target=_blank rel=noopener }
 
 Qué guarda la variante nueva del tipo `ambiente` y qué deliberadamente no
 guarda, y la línea donde se decide todo: el tercer campo de la clausura que
@@ -52,7 +52,7 @@ porque los marcos de llamada cuelgan del marco recursivo y no uno del otro.
 
 ## Generación diferida de clausuras
 
-### [Cuándo nace la clausura](widgets/diferida.html){ target=_blank rel=noopener }
+### [Cuándo nace la clausura](../../../actividades/flp/procedimientos-recursivos-letrec/diferida.html){ target=_blank rel=noopener }
 
 Tres cuentas se confunden todo el tiempo: cuántas declaraciones hay, cuántas
 clausuras fabrica `apply-env` y cuántos procedimientos se aplican. Cinco
@@ -63,7 +63,7 @@ después se abre la traza.
 
 ## Ejemplo trabajado
 
-### [La traza de una recursión](widgets/trazas.html){ target=_blank rel=noopener }
+### [La traza de una recursión](../../../actividades/flp/procedimientos-recursivos-letrec/trazas.html){ target=_blank rel=noopener }
 
 Una de las cuatro vale 2 y no 50: su cuerpo nombra una variable libre que se
 liga después de la declaración, en un `let` que la clausura nunca llega a ver.
@@ -75,7 +75,7 @@ capturó.
 
 ## Un letrec dentro de un let
 
-### [Dibujar la cadena con un marco recursivo](widgets/dibujar.html){ target=_blank rel=noopener }
+### [Dibujar la cadena con un marco recursivo](../../../actividades/flp/procedimientos-recursivos-letrec/dibujar.html){ target=_blank rel=noopener }
 
 Al revés que las anteriores: en vez de leer la cadena hay que construirla.
 Para cada programa se señala un momento de la evaluación y se escriben los
@@ -86,7 +86,7 @@ recursivos en la misma cadena, y otro tiene `t` ligado a 10 y a 99 a la vez.
 
 ## Recursión mutua
 
-### [Recursión mutua](widgets/mutua.html){ target=_blank rel=noopener }
+### [Recursión mutua](../../../actividades/flp/procedimientos-recursivos-letrec/mutua.html){ target=_blank rel=noopener }
 
 Varios procedimientos declarados en un mismo `letrec` que se nombran entre
 sí. El mismo programa vale 100 empezando por uno y 0 empezando por el otro,
@@ -96,7 +96,7 @@ declaraciones no son tres marcos, son tres listas paralelas dentro del mismo.
 
 ## Implementación con listas
 
-### [El ambiente recursivo con listas etiquetadas](widgets/listas.html){ target=_blank rel=noopener }
+### [El ambiente recursivo con listas etiquetadas](../../../actividades/flp/procedimientos-recursivos-letrec/listas.html){ target=_blank rel=noopener }
 
 Aquí se escribe código. Seis retos que construyen el TAD desde abajo: el
 predicado y los cuatro extractores, el auxiliar que va del nombre a la
@@ -107,7 +107,7 @@ una implementación que confunda los dos falla y lo dice.
 
 ## Práctica y cierre
 
-### [Contar consultas y extender el lenguaje](widgets/cierre.html){ target=_blank rel=noopener }
+### [Contar consultas y extender el lenguaje](../../../actividades/flp/procedimientos-recursivos-letrec/cierre.html){ target=_blank rel=noopener }
 
 La práctica final, también escribiendo código: el conteo de clausuras que
 fabrica `apply-env` durante una recursión completa, modelado como función

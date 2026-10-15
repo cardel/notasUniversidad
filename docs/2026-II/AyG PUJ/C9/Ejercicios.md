@@ -10,7 +10,7 @@ los números son otros.
 
 ## Recuento
 
-### [tiempos](widgets/tiempos.html){ target=_blank rel=noopener }
+### [tiempos](../../../actividades/ayg-puj/conectividad/tiempos.html){ target=_blank rel=noopener }
 
 Los dos relojes de la búsqueda en profundidad sobre un grafo dirigido, con
 `d/f` escrito encima de cada vértice mientras corre y el color pasando de
@@ -23,7 +23,7 @@ pregunta cuál vértice tiene el `f` más grande y por qué tiene que ser una ra
 
 ## Conectividad
 
-### [conexo](widgets/conexo.html){ target=_blank rel=noopener }
+### [conexo](../../../actividades/ayg-puj/conectividad/conexo.html){ target=_blank rel=noopener }
 
 Cinco grafos, dos sin dirección y tres con ella, y cinco opciones de
 clasificación de las que dos solo valen en el caso no dirigido y tres solo en
@@ -35,7 +35,7 @@ en un grafo donde se piden los fuertes.
 
 ## Componentes conexos con los recorridos
 
-### [componentes](widgets/componentes.html){ target=_blank rel=noopener }
+### [componentes](../../../actividades/ayg-puj/conectividad/componentes.html){ target=_blank rel=noopener }
 
 El mismo grafo con las tres versiones del recorrido: profundidad recursiva,
 profundidad con pila explícita y amplitud. Se ve la lista `actual` llenándose y
@@ -47,7 +47,7 @@ con los tres resultados a la vista para comprobarlo.
 
 ## Puntos de articulación y puentes
 
-### [cortes](widgets/cortes.html){ target=_blank rel=noopener }
+### [cortes](../../../actividades/ayg-puj/conectividad/cortes.html){ target=_blank rel=noopener }
 
 Cada vértice y cada arista traen un botón que la quita del dibujo y vuelve a
 colorear lo que queda, que es la definición ejecutada. Hay que marcar cuáles
@@ -60,7 +60,7 @@ puentes.
 
 ## Componentes fuertemente conexos
 
-### [transpuesto](widgets/transpuesto.html){ target=_blank rel=noopener }
+### [transpuesto](../../../actividades/ayg-puj/conectividad/transpuesto.html){ target=_blank rel=noopener }
 
 Un grafo de nueve vértices con un botón que voltea todas las flechas y otro que
 pinta los componentes: los colores no se mueven al voltear. El algoritmo se
@@ -72,7 +72,7 @@ arista de G sale cada una y qué es lo que le impide tener un ciclo.
 
 ## El algoritmo de Kosaraju
 
-### [kosaraju](widgets/kosaraju.html){ target=_blank rel=noopener }
+### [kosaraju](../../../actividades/ayg-puj/conectividad/kosaraju.html){ target=_blank rel=noopener }
 
 Las dos pasadas seguidas línea por línea, con el dibujo cambiando de G a Gᵀ
 cuando arranca la segunda. En la primera los vértices se ennegrecen al entrar a
@@ -85,7 +85,7 @@ donde ningún par se junta.
 
 ## Errores comunes
 
-### [errores](widgets/errores.html){ target=_blank rel=noopener }
+### [errores](../../../actividades/ayg-puj/conectividad/errores.html){ target=_blank rel=noopener }
 
 Tres versiones del algoritmo con una línea cambiada cada una, sobre un grafo de
 siete vértices y cuatro componentes. Ninguna revienta: las tres devuelven una
@@ -97,7 +97,7 @@ la segunda se predice cuántos grupos entrega.
 
 ## Todo junto, sobre un grafo grande
 
-### [red](widgets/red.html){ target=_blank rel=noopener }
+### [red](../../../actividades/ayg-puj/conectividad/red.html){ target=_blank rel=noopener }
 
 El último y el más exigente, para cuando los anteriores ya salen solos. Quince
 páginas de un sitio y veintitrés enlaces: demasiado para seguir la traza de

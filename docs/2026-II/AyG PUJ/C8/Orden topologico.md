@@ -462,7 +462,7 @@ ciclo, y el orden de finalización, leído al revés, es un orden topológico.
 Para investigar: CLRS, Sección 22.3, qué son $v.d$ y $v.f$, qué dice el
 teorema del paréntesis y cuáles son los cuatro tipos de arista. Los colores y
 los dos tiempos se pueden ver corriendo sobre un grafo en el ejercicio
-[marcas](widgets/marcas.html){ target=_blank rel=noopener }.
+[marcas](../../../actividades/ayg-puj/orden-topologico-kahn/marcas.html){ target=_blank rel=noopener }.
 
 ## Referencias
 

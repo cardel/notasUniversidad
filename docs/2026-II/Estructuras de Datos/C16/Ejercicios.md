@@ -7,7 +7,7 @@ tema, ronda nueva.
 
 ## El nodo que mira atrás
 
-### [desenlazar](widgets/desenlazar.html){ target=_blank rel=noopener }
+### [desenlazar](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/desenlazar.html){ target=_blank rel=noopener }
 
 Qué punteros se reescriben al sacar un nodo de la cadena doble, en el medio y
 en la cabeza, y cuántos nodos habría que visitar para hacer lo mismo sobre la
@@ -15,7 +15,7 @@ enlazada simple teniendo el nodo en la mano.
 
 ## La cadena que se cierra
 
-### [circular](widgets/circular.html){ target=_blank rel=noopener }
+### [circular](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/circular.html){ target=_blank rel=noopener }
 
 Insertar al final y al frente sobre una lista circular prediciendo cada
 resultado, y qué pasa con `cabeza` y con el contador cuando queda un solo nodo
@@ -23,7 +23,7 @@ y se borra.
 
 ## La mitad del camino
 
-### [ladocorto](widgets/ladocorto.html){ target=_blank rel=noopener }
+### [ladocorto](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/ladocorto.html){ target=_blank rel=noopener }
 
 Los pasos para llegar a cada posición por los dos caminos con doce elementos,
 los totales de un recorrido completo, y cuál es la cota cuando se camina por el
@@ -31,14 +31,14 @@ lado más corto.
 
 ## Ordenar partiendo y mezclando
 
-### [mezclar](widgets/mezclar.html){ target=_blank rel=noopener }
+### [mezclar](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/mezclar.html){ target=_blank rel=noopener }
 
 Dónde corta `partir` siguiendo el puntero lento y el rápido, el árbol completo
 de la recursión sobre seis elementos y cuántas comparaciones hace cada mezcla.
 
 ## Lo que cobra cada implementación
 
-### [variantes](widgets/variantes.html){ target=_blank rel=noopener }
+### [variantes](../../../actividades/estructuras-de-datos/lista-enlazada-variantes/variantes.html){ target=_blank rel=noopener }
 
 Cuatro programas con perfiles de uso distintos y qué variante conviene a cada
 uno, con la razón de por qué las otras salen caras; y las escrituras de puntero

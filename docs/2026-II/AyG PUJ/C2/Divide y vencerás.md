@@ -536,11 +536,11 @@ cambia la cuenta.
 Los dos de divide y vencerás se recorrieron en clase y están en la
 [página de ejercicios interactivos](./Ejercicios.md#divide-y-venceras):
 
-- [mezclar](widgets/mezclar.html){ target=_blank rel=noopener } — ejecute la
+- [mezclar](../../../actividades/ayg-puj/recursion/mezclar.html){ target=_blank rel=noopener } — ejecute la
   mezcla escritura por escritura sobre el arreglo, proponga la pareja de
   invariantes del primer `while` y arme la demostración completa, con la
   estabilidad por casos.
-- [ordenar](widgets/ordenar.html){ target=_blank rel=noopener } — el
+- [ordenar](../../../actividades/ayg-puj/recursion/ordenar.html){ target=_blank rel=noopener } — el
   ordenamiento por mezcla dibujado completo: baje partiendo la lista nivel
   por nivel hasta el caso base y súbala mezclando. La tabla acumula el
   trabajo por nivel y ahí aparece el patrón del $n \lg n$; con 16 elementos,

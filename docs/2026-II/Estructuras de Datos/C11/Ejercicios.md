@@ -9,14 +9,14 @@ quedan aquí mismo.
 
 ## Tres maneras de guardar muchos
 
-### [disciplinas](widgets/disciplinas.html){ target=_blank rel=noopener }
+### [disciplinas](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/disciplinas.html){ target=_blank rel=noopener }
 
 Seis situaciones de la vida diaria para decir cuál pide lista, cuál pila
 y cuál cola, con la razón en cada respuesta.
 
 ## TAD Lista
 
-### [lista](widgets/lista.html){ target=_blank rel=noopener }
+### [lista](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/lista.html){ target=_blank rel=noopener }
 
 Seis operaciones seguidas para predecir el estado; cuatro llamadas sobre
 ⟨2 9 5⟩ para decir si cumplen o violan su precondición; y `intercalar`,
@@ -24,21 +24,21 @@ una función escrita solo contra el contrato.
 
 ## TAD Pila
 
-### [pila](widgets/pila.html){ target=_blank rel=noopener }
+### [pila](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/pila.html){ target=_blank rel=noopener }
 
 Apilar, desapilar y tope en secuencia; `contar` con pila auxiliar sin
 destruir la pila; y qué queda si se olvida el ciclo que la restaura.
 
 ## TAD Cola
 
-### [cola](widgets/cola.html){ target=_blank rel=noopener }
+### [cola](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/cola.html){ target=_blank rel=noopener }
 
 Encolar, desencolar y frente en secuencia; `rotar` los primeros k al
 final; y el `frente` de una cola vacía frente al assert.
 
 ## Los tres contratos, juntos
 
-### [juntos](widgets/juntos.html){ target=_blank rel=noopener }
+### [juntos](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/juntos.html){ target=_blank rel=noopener }
 
 Cinco líneas con meter, quitar y ver que responden distinto como pila y
 como cola, cuatro tareas para escoger el contrato más pequeño que

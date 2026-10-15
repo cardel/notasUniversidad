@@ -9,7 +9,7 @@ expresión por otro que vale lo mismo, y por eso la reducción se puede leer al
 revés y sigue siendo cierta. Evaluar no es ejecutar instrucciones: es
 reemplazar hasta que no quede nada por reemplazar.
 
-## [sustituir](widgets/sustituir.html){ target=_blank rel=noopener }
+## [sustituir](../../../actividades/pfc/evaluacion-y-sustitucion/sustituir.html){ target=_blank rel=noopener }
 
 El modelo de sustitución sobre seis expresiones. Cada vuelta resalta el único
 trozo que cambia, y el pie dice por qué ese y no otro.
@@ -38,7 +38,7 @@ llamada con argumentos a medio evaluar. La respuesta es el nombre de la
 estrategia que Scala usa de manera predeterminada, y prepara el segundo
 ejercicio.
 
-## [evaluación](widgets/evaluacion.html){ target=_blank rel=noopener }
+## [evaluación](../../../actividades/pfc/evaluacion-y-sustitucion/evaluacion.html){ target=_blank rel=noopener }
 
 Las dos estrategias corriendo lado a lado sobre la misma expresión: por
 valor a la izquierda, por nombre a la derecha. Avanzan a la vez, y la que

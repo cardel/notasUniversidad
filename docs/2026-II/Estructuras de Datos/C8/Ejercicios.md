@@ -4,7 +4,7 @@ Clase 8 — punteros, arreglos y arreglos bidimensionales (2 de septiembre).
 Cada enlace abre una actividad que se trabaja directo en el navegador, con
 los dibujos de memoria de la clase al frente.
 
-## [aritmetica](widgets/aritmetica.html){ target=_blank rel=noopener }
+## [aritmetica](../../../actividades/estructuras-de-datos/punteros-arreglos/aritmetica.html){ target=_blank rel=noopener }
 
 Sumar a un puntero no suma bytes: avanza casillas del tipo apuntado. Tres
 preguntas en cadena: cuánto vale p + 1, qué imprime una expresión con un
@@ -14,7 +14,7 @@ punteros.
 Cada distractor tiene su explicación: si el número no coincide, la
 retroalimentación le dice en qué casilla quedó parado su razonamiento.
 
-## [rowmajor](widgets/rowmajor.html){ target=_blank rel=noopener }
+## [rowmajor](../../../actividades/estructuras-de-datos/punteros-arreglos/rowmajor.html){ target=_blank rel=noopener }
 
 Una matriz de 3 × 4 y la misma memoria vista de dos formas: como tabla y
 como una sola calle de casillas consecutivas. Tres casillas esperan que

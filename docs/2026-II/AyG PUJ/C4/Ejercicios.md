@@ -23,7 +23,7 @@ cae.
 
 ## Varias variables a la vez
 
-### [dos mayores](widgets/mayores.html){ target=_blank rel=noopener }
+### [dos mayores](../../../actividades/ayg-puj/invariantes/mayores.html){ target=_blank rel=noopener }
 
 Un solo recorrido que sostiene dos acumuladores: el mayor y el segundo mayor.
 Ninguno de los dos se demuestra por separado —el argumento de `segundo`
@@ -34,7 +34,7 @@ La estabilidad se parte en tres casos según dónde caiga el elemento nuevo, y
 hay un preset con todos los valores iguales que decide cómo hay que enunciar
 el segundo mayor para que los empates no rompan nada.
 
-### [comprimir](widgets/comprimir.html){ target=_blank rel=noopener }
+### [comprimir](../../../actividades/ayg-puj/invariantes/comprimir.html){ target=_blank rel=noopener }
 
 La salida es una lista que crece: $A$ sin repeticiones consecutivas. Un
 invariante sobre una lista tiene que fijar dos cosas, cuántos elementos tiene
@@ -47,7 +47,7 @@ ejercicio no avanza hasta que aparece.
 
 ## Ciclos anidados
 
-### [ordenamiento burbuja](widgets/burbuja.html){ target=_blank rel=noopener }
+### [ordenamiento burbuja](../../../actividades/ayg-puj/invariantes/burbuja.html){ target=_blank rel=noopener }
 
 El ciclo interno se demuestra solo y su conclusión se guarda con nombre
 propio: al terminar la pasada, la posición $N-1-i$ tiene el máximo de
@@ -66,7 +66,7 @@ Problema 2-2, p. 40.
 
 ## Variantes de la búsqueda binaria
 
-### [el mínimo de un arreglo rotado](widgets/rotado.html){ target=_blank rel=noopener }
+### [el mínimo de un arreglo rotado](../../../actividades/ayg-puj/invariantes/rotado.html){ target=_blank rel=noopener }
 
 Un arreglo ordenado que alguien rotó: ya no está ordenado, y aun así la
 búsqueda binaria funciona. El código es el mismo de la clase, línea por línea;

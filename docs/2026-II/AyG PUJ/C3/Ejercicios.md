@@ -9,7 +9,7 @@ completa: inicialización, estabilidad y terminación.
 Aquí el acumulador no existe. Lo que hay es una **ventana** que se encoge,
 y el invariante interesante dice que encogerla no cambia la respuesta.
 
-## [buscar](widgets/buscar.html){ target=_blank rel=noopener }
+## [buscar](../../../actividades/ayg-puj/busqueda-binaria/buscar.html){ target=_blank rel=noopener }
 
 La búsqueda binaria sobre un arreglo ordenado. Ejecute división por
 división y mire cómo las posiciones descartadas se van tachando: nadie
@@ -24,7 +24,7 @@ recurrencia $T(n) = T(n/2) + \Theta(1)$ detrás.
 Pruebe el preset donde $v = 5$ no está en el arreglo: el algoritmo recorre
 lo mismo y termina en una posición cualquiera, que resulta no ser $v$.
 
-## [bisección](widgets/biseccion.html){ target=_blank rel=noopener }
+## [bisección](../../../actividades/ayg-puj/busqueda-binaria/biseccion.html){ target=_blank rel=noopener }
 
 La misma jugada sin arreglo, sobre una función monótona. La barra muestra
 qué parte del intervalo original sigue viva, y el pie recuerda en cada
@@ -37,7 +37,7 @@ $\lceil \log_2((b-a)/\varepsilon) \rceil$. Al final, dos preguntas que
 suelen costar puntos en el juez: qué promete exactamente el valor devuelto
 y qué pasa cuando el objetivo queda fuera del rango de $f$.
 
-## [resolver un problema de juez](widgets/resolver.html){ target=_blank rel=noopener }
+## [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
 
 Un problema que no se vio en clase —**UVa 10341, Solve It**— atacado con el
 método

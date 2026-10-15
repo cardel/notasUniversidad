@@ -8,31 +8,31 @@ actividades están en la [página de ejercicios de la clase 13](../C13/Ejercicio
 
 ## Las dos versiones del problema
 
-### [problemas](./widgets/problemas.html){ target=_blank rel=noopener }
+### [problemas](../../../actividades/ayg-puj/caminos-minimos-generalidades/problemas.html){ target=_blank rel=noopener }
 
 Diez escenarios en palabras: una bodega con peajes negativos, 400 ciudades unidas casi todas con casi todas, un metro sin costos, etapas de producción sin ciclos, un mapa con 50 000 intersecciones, millas con promociones, 20 000 intersecciones de una ciudad, grados de separación en una red social, un robot en un almacén cuadriculado y 300 productos financieros. En cada uno se escoge la versión del problema, SSSP o APSP, y el algoritmo que conviene entre la amplitud, los caminos en un grafo acíclico, Dijkstra, Bellman-Ford-Moore, Floyd-Warshall y repetir n veces un algoritmo de SSSP. Cada respuesta equivocada explica qué supuesto no se cumple o qué costo sale peor, con las cuentas del orden de magnitud.
 
 ## Repaso: la búsqueda en amplitud
 
-### [amplitud](./widgets/amplitud.html){ target=_blank rel=noopener }
+### [amplitud](../../../actividades/ayg-puj/caminos-minimos-generalidades/amplitud.html){ target=_blank rel=noopener }
 
 La función `ssspBFS` del archivo `bfs.py` del curso, la versión sin arreglo de visitados, ejecutada línea por línea con sus nombres: `q`, `d`, `p`, `v` y `u`. Se ven la cola, `d` y `p` sobre cada vértice y, al terminar, la función `camino` sube por `p` y marca la ruta en verde. Antes de ejecutar se predice `d` para un destino, con `inf` cuando no se alcanza. Cuatro grafos: uno de ocho vértices, un anillo de siete con una cuerda, uno de nueve con dos componentes, donde `camino` devuelve la lista vacía, y uno de cuatro vértices con pesos, donde la búsqueda entrega el camino de menos aristas y no el más barato. La tarjeta final pregunta por qué la amplitud falla cuando las aristas pesan.
 
 ## Ciclos en un camino más corto
 
-### [distancias](./widgets/distancias.html){ target=_blank rel=noopener }
+### [distancias](../../../actividades/ayg-puj/caminos-minimos-generalidades/distancias.html){ target=_blank rel=noopener }
 
 La distancia δ(s, v) con pesos, que puede ser un entero, ∞ o −∞. Tres grafos dirigidos de siete u ocho vértices con una fuente marcada: uno con pesos de ambos signos y sin ciclos negativos, uno con un ciclo negativo alcanzable desde la fuente del que salen flechas hacia otros vértices, y uno con un ciclo negativo fuera de alcance y un vértice que la fuente no llega a tocar. Para cada vértice se escribe la distancia (un entero, `inf` o `-inf`) y la comprobación muestra el camino más corto, o el ciclo negativo que lo vuelve −∞ con la ruta que lo conecta con la fuente, o la razón de que no haya camino. La tarjeta final pregunta por qué un camino más corto no repite vértices cuando no hay ciclos negativos.
 
 ## Caminos de a lo sumo k aristas
 
-### [karistas](./widgets/karistas.html){ target=_blank rel=noopener }
+### [karistas](../../../actividades/ayg-puj/caminos-minimos-generalidades/karistas.html){ target=_blank rel=noopener }
 
 La tabla de los caminos más cortos de a lo sumo k aristas, llenada fila por fila de k = 0 a n − 1 sobre tres grafos dirigidos con pesos: uno de cinco vértices con pesos positivos, uno de seis con una arista negativa y un vértice que el origen no alcanza, y uno de cinco con un ciclo negativo, donde hay que seguir hasta la fila n. Cada fila se comprueba casilla por casilla: si se copia el valor de la fila anterior, si se usa un `dist[u]` ya bajado en la misma fila o si se escribe el costo de un camino con más aristas, el mensaje lo dice. Al acertar, la explicación nombra el camino que mejoró cada vértice y por qué hizo falta una arista más. En el último grafo la fila n todavía cambia y la explicación recupera el ciclo negativo subiendo por `pred`.
 
 ## Relajación y la idea del algoritmo
 
-### [relajar](./widgets/relajar.html){ target=_blank rel=noopener }
+### [relajar](../../../actividades/ayg-puj/caminos-minimos-generalidades/relajar.html){ target=_blank rel=noopener }
 
 Diez escenarios de una arista `(u, v, w)` con `d[u]`, `d[v]` y `pred[v]` dados. Hay que decir si la relajación cambia algo y con qué valores quedan `d[v]` y `pred[v]`. Entre los escenarios hay un `d[u]` infinito, pesos negativos, dos empates donde la comparación estricta no cambia nada, un predecesor que se reescribe y una arista que entra a la fuente. Cada respuesta equivocada explica lo que falló, y debajo se ejecuta el pseudocódigo de `RELAJAR` con los valores del escenario, línea por línea.
 

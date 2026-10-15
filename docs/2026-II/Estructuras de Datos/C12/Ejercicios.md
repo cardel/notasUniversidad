@@ -7,7 +7,7 @@ la sesión: mismo tema, ronda nueva.
 
 ## Con una pila
 
-### [pila](widgets/pila.html){ target=_blank rel=noopener }
+### [pila](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/pila.html){ target=_blank rel=noopener }
 
 Tres cadenas, ahora con llaves, para decir dónde falla `balanceado` o si
 pasa; y una postfija más larga donde hay que dar el valor y la
@@ -16,7 +16,7 @@ operandos.
 
 ## Con una cola
 
-### [cola](widgets/cola.html){ target=_blank rel=noopener }
+### [cola](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/cola.html){ target=_blank rel=noopener }
 
 Las cartas al aire con siete cartas, la papa caliente con seis personas y
 salida cada cuarta, y un `imprimir` escrito con `!c.vacia()` para decir
@@ -24,7 +24,7 @@ qué hace.
 
 ## Con una lista
 
-### [lista](widgets/lista.html){ target=_blank rel=noopener }
+### [lista](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/lista.html){ target=_blank rel=noopener }
 
 `quitarRepetidos` en la versión que avanza siempre y en la de la sesión,
 sobre ⟨2 2 2 5 5 9⟩; y la unión ordenada de dos listas, con el número de
@@ -32,7 +32,7 @@ comparaciones del ciclo principal.
 
 ## Un TAD sobre otro
 
-### [dospilas](widgets/dospilas.html){ target=_blank rel=noopener }
+### [dospilas](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/dospilas.html){ target=_blank rel=noopener }
 
 La cola con dos pilas frente a otra secuencia de operaciones: predecir
 los tres `frente` y contar los trasvases. El acierto destapa la traza de
@@ -40,7 +40,7 @@ las dos pilas paso a paso.
 
 ## Lo que costó cada solución
 
-### [costos](widgets/costos.html){ target=_blank rel=noopener }
+### [costos](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/costos.html){ target=_blank rel=noopener }
 
 Cuatro cuentas: los pases de la papa caliente con `ultimo(7, 5)`, las
 casillas que corre `quitarRepetidos` sobre ⟨4 4 4 4 9⟩, los trasvases
