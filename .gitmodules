@@ -1,3 +1,7 @@
 [submodule "docs/actividades"]
 	path = docs/actividades
 	url = git@github.com:cardel/actividadesCursos.git
+	# Con branch, 'git submodule update --remote' trae la punta de main en
+	# vez de quedarse en el commit fijado, y un checkout nuevo no cae en
+	# HEAD suelto, donde un commit se pierde sin avisar.
+	branch = main
