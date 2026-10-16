@@ -24,6 +24,17 @@ Cursos del segundo semestre de 2026.
 
     [:octicons-arrow-right-24: Entrar](Estructuras%20de%20Datos/Contenido.md)
 
+-   :material-weight-lifter:{ .lg .middle } **Refuerzo: algoritmia y lógica**
+
+    ---
+
+    Dieciséis horas en cuatro bloques para Árboles y Grafos y Estructuras de
+    Datos: arreglos y matrices, mezcla, pilas y colas, montículos y colas de
+    prioridad, búsqueda binaria y una entrada a grafos, con una hora de lógica
+    por bloque.
+
+    [:octicons-arrow-right-24: Entrar](./Refuerzo%20PUJ/Contenido.md)
+
 -   :material-file-tree-outline:{ .lg .middle } **Interpretación y Compilación de Lenguajes**
 
     ---

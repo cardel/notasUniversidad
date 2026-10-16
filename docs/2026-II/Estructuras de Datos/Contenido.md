@@ -12,6 +12,11 @@ de prioridad y conjuntos. En cada tema alternamos la definición formal con
 ejemplos y trazas paso a paso, y cerramos viendo cómo la STL de C++ ofrece esas
 mismas estructuras ya empacadas.
 
+Las [sesiones de refuerzo de algoritmia y lógica](../Refuerzo%20PUJ/Contenido.md)
+repasan en dieciséis horas los arreglos, las estructuras con su costo, la
+búsqueda binaria y la lógica que el curso da por vista, con problemas de juez
+y sus soluciones en Python y C++.
+
 ## Programa del curso
 
 [Programa y cronograma (PDF)](Contenido.pdf){ type=application/pdf style="min-height:70vh;width:100%" }

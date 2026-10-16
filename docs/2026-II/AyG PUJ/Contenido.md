@@ -15,6 +15,11 @@ sobre árboles y las estructuras que se construyen encima: diámetro, radio y
 centro, árboles de segmentos, Union-Find, árboles de cubrimiento mínimo, árboles
 de Fenwick y arreglos de sufijos. Se programa en Python y el texto guía es CLRS.
 
+Las [sesiones de refuerzo de algoritmia y lógica](../Refuerzo%20PUJ/Contenido.md)
+repasan en dieciséis horas los arreglos, las estructuras con su costo, la
+búsqueda binaria y la lógica que el curso da por vista, con problemas de juez
+y sus soluciones en Python y C++.
+
 ## Programa del curso
 
 [Programa y cronograma (PDF)](Contenido.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
