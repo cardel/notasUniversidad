@@ -29,7 +29,7 @@ Cursos del segundo semestre de 2026.
     ---
 
     Dieciséis horas en cuatro bloques para Árboles y Grafos y Estructuras de
-    Datos: arreglos y matrices, mezcla, pilas y colas, montículos y colas de
+    Datos: arreglos y matrices, recursión, pilas y colas, montículos y colas de
     prioridad, búsqueda binaria y una entrada a grafos, con una hora de lógica
     por bloque.
 
