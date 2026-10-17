@@ -55,6 +55,20 @@ correr a nadie, y moverse un paso en cualquier dirección. Eso lo hace la lista
 doblemente enlazada: con el nodo en la mano, insertar y desenlazar tocan cuatro
 punteros, y `anterior` permite retroceder.
 
+Para borrar la canción del cursor, sea `actual` su nodo. Desenlazarlo son dos
+asignaciones:
+
+1. `actual->anterior->siguiente = actual->siguiente`: el de antes salta al de
+   después.
+2. `actual->siguiente->anterior = actual->anterior`: el de después vuelve al de
+   antes.
+
+Después va el `delete actual`. Con la lista `1 9 4 7` y el cursor en el 4, el
+9 pasa a señalar al 7 y el 7 regresa al 9; queda `1 9 7` y nadie se corrió.
+Con el nodo en la mano son dos asignaciones, $\Theta(1)$. Llegar a él desde el
+comienzo cuesta $\Theta(p)$, y $\Theta(n)$ en el peor caso. El `vector`, para
+quitar la casilla $p$, corre los $n - p$ que siguen.
+
 ### `list<T>`: la lista doble con nombres nuevos
 
 | Lista doble del curso | `list<T>` |
@@ -105,8 +119,8 @@ void conIterador(list<int> &l) {
 
 Tras `l.insert(it, 9)`, ¿a quién señala `it`? En el `vector`, un iterador
 guardado antes de `insert` dejaba de valer. Aquí la salida es `1 4 7`, después
-`1 9 4 7`, y `*it = 4`: `it` sigue en el 4. Tras `erase`, `*it = 7`; tras
-`--it`, `*it = 9`. Con los dos `pop` queda `9` y `size: 1`.
+`1 9 4 7`, y `*it = 4`: `it` sigue en el 4. Tras `erase` la lista es `1 9 7`
+y `*it = 7`; tras `--it`, `*it = 9`. Con los dos `pop` queda `9` y `size: 1`.
 
 - El 4 sigue en su nodo: insertar creó un nodo nuevo y reescribió dos punteros
   de los vecinos, sin mover a nadie. Por eso `insert` no invalida ningún
@@ -145,7 +159,40 @@ int main() {
 La salida es `a: 8 5 3 1 6`, `b:` vacía y `*it = 1`. Después de `sort`,
 `a: 1 3 5 6 8` y `*it = 1`: el iterador sigue en el mismo nodo, que ahora está
 al frente. `splice(it, b)` con la lista entera cuesta $\Theta(1)$ y deja `b`
-vacía. Ningún nodo cambia de dirección, así que ningún iterador se invalida.
+vacía.
+
+¿Qué pasa con la dirección de `b` y con la de sus elementos? Nada: `splice`
+no copia ni muda nodos, solo los reengancha. El objeto `b` sigue donde estaba,
+ahora con cero elementos, y cada nodo que pasó a `a` conserva su dirección.
+Por eso un iterador a un elemento de `b` sigue valiendo después del `splice`:
+señala el mismo nodo, que ahora se recorre dentro de `a`.
+
+De [splice_direcciones.cpp](./codigo/splice_direcciones.cpp):
+
+```cpp
+int main() {
+  list<int> a = {1, 2, 3};
+  list<int> b = {4, 5};
+  list<int>::iterator it = a.begin();
+  ++it;                            // senala el 2
+  list<int>::iterator cuatro = b.begin();
+  printf("antes:   &b = %p, el 4 en %p\n", (void *) &b, (void *) &*cuatro);
+  a.splice(it, b);                 // b entra antes del 2
+  imprimir("a", a);                // 1 4 5 2 3
+  imprimir("b", b);                // vacia
+  printf("despues: &b = %p, el 4 en %p\n", (void *) &b, (void *) &*cuatro);
+  --it;                            // del 2 retrocede al 5
+  --it;                            // y al 4
+  printf("*cuatro = %d, it en el 4: %d\n", *cuatro, (int) (it == cuatro));
+  return 0;
+}
+```
+
+Las direcciones cambian de una corrida a otra, pero en cada corrida la línea
+de antes y la de después muestran la misma dirección de `b` y la misma del 4.
+La salida sigue con `a: 1 4 5 2 3`, `b:` vacía y `*cuatro = 4, it en el 4: 1`:
+desde el 2, dos `--it` llegan al nodo que antes estaba en `b`, y es el mismo
+que señala `cuatro`.
 
 ### Ordenar una `list`
 
@@ -181,14 +228,38 @@ no compila. g++ responde
 | `l.sort()` | $\Theta(n \log n)$ | merge sort que empalma nodos |
 
 La lista ocupa $\Theta(n)$: dato y dos punteros por nodo, más lo que pide cada
-`new`. Ninguna operación de la tabla pide memoria aparte que crezca con $n$;
+`new`. Con enteros, los campos suman $4 + 8 + 8 = 20$ bytes, y 40 nodos darían
+800. El compilador da otra cifra; de
+[tamano_nodo.cpp](./codigo/tamano_nodo.cpp), con g++ 16.2:
+
+| Nodo de `list<int>` | Bytes | 40 nodos |
+|---|---:|---:|
+| suma de los campos | 20 | 800 |
+| `sizeof(_List_node<int>)` | 24 | 960 |
+
+En la biblioteca de GCC el nodo guarda primero los dos punteros, en los bytes
+0 a 15, y el entero en los bytes 16 a 19. El tamaño del nodo se redondea a un
+múltiplo de 8, para que en cualquier nodo los punteros queden en una dirección
+múltiplo de 8, que es como el procesador los lee de una vez. Del byte 20 al 23
+queda un relleno. El `NodoDoble` de
+[la cola doble sobre nodos](../C19/Clase%2019.%20Ejercicios%20sobre%20las%20implementaciones%20y%20quicksort.md)
+mide lo mismo, 20 bytes de campos y 24 de `sizeof`; allí el entero va primero
+y el hueco queda entre él y el primer puntero. Sigue siendo $\Theta(n)$:
+cambia la constante.
+
+Ninguna operación de la tabla pide memoria aparte que crezca con $n$;
 `l.sort()` en la biblioteca de GCC usa 64 listas auxiliares vacías,
 $\Theta(1)$.
 
 !!! warning "Lo que `list` no tiene"
 
     - Ni `l[i]` ni `it + k`: el acceso por posición es $\Theta(p)$, y la
-      biblioteca no lo disfraza de operador.
+      biblioteca no lo disfraza de operador. En el `vector` los elementos son
+      vecinos de cuadra, y sumar $k$ a la dirección lleva a la casa $k$; en la
+      `list` cada nodo vive en otra parte de la ciudad, y la única forma de
+      llegar es seguir los punteros. Sumar a mano un número a la dirección de un
+      nodo lleva a
+      memoria ajena, y el programa puede terminar en un fallo de segmentación.
     - Ni `sort`, `binary_search` ni `lower_bound` de la biblioteca de
       algoritmos sirven como en el `vector`: los dos últimos compilan, pero
       cada salto a la mitad camina nodo a nodo.
@@ -231,6 +302,38 @@ casilla libre del mapa que está antes. Ningún elemento se corre.
 - Si el mapa se queda sin casillas libres, se copia a uno más grande, como el
   `vector`. Se copian punteros a bloques, $n / B$ de ellos, no los elementos.
 - En la biblioteca de GCC cada bloque ocupa 512 bytes: 128 enteros.
+
+Otro `deque`, con los valores 1 a 10, bloques de $B = 4$ y
+$\mathit{ini} = 3$. El mapa tiene seis casillas; las cuatro primeras señalan
+bloques y las otras dos quedan libres para los que vengan:
+
+| Mapa | Bloque | Casilla 0 | Casilla 1 | Casilla 2 | Casilla 3 |
+|---:|---:|---:|---:|---:|---:|
+| 0 | 0 | | | | 1 |
+| 1 | 1 | 2 | 3 | 4 | 5 |
+| 2 | 2 | 6 | 7 | 8 | 9 |
+| 3 | 3 | 10 | | | |
+| 4 | libre | | | | |
+| 5 | libre | | | | |
+
+¿Dónde está $d[3]$? $(3 + 3) / 4 = 6 / 4 = 1$: el bloque 1, el segundo.
+$(3 + 3) \bmod 4 = 2$: la casilla 2, la tercera. Ahí está el 4, que es $d[3]$
+porque los índices empiezan en 0. Se leyó la casilla 1 del mapa, que lleva al
+bloque, y la casilla 2 del bloque; nada se recorrió.
+
+Los dos extremos salen de la misma cuenta:
+
+- `push_front(0)` escribe en la posición $\mathit{ini} - 1 = 2$: la casilla 2
+  del bloque 0. Después $\mathit{ini} = 2$, y el 0 pasa a ser $d[0]$.
+- `push_back(11)`, sobre el `deque` de la tabla, escribe en la posición
+  $\mathit{ini} + n = 3 + 10 = 13$: bloque $13 / 4 = 3$, casilla
+  $13 \bmod 4 = 1$, justo detrás del 10.
+
+Tras `push_front(0)`, dos `push_front` más llenan el bloque 0 y dejan
+$\mathit{ini} = 0$. El siguiente pide un bloque nuevo antes del bloque 0, pero
+el bloque 0 está en la casilla 0 del mapa y antes no hay casilla. El mapa se
+copia a uno más grande: se copian los cuatro punteros a bloques, no los 13
+elementos, y cada elemento sigue en la dirección que tenía.
 
 ### `deque<T>`: la cola doble de la biblioteca
 
@@ -522,7 +625,12 @@ Tiempos en segundos:
 - `deque` y `list` lo multiplican por 2: $n$ operaciones de $O(1)$.
 - Las dos son $O(1)$ por operación, pero con $n = 200\,000$ la `list` tarda
   unas 12 veces más que el `deque`: hace un `new` por elemento, y el `deque`
-  uno cada 128 enteros.
+  uno cada 128 enteros. Además, los nodos de la `list` quedan repartidos por
+  la memoria, mientras que el `deque` escribe casillas vecinas de un mismo
+  bloque, y la caché del procesador trae casillas vecinas de una sola vez. Ir
+  a memoria cuesta más
+  que hacer la cuenta de bloque y casilla. En un juez, esa constante puede
+  separar un aceptado de un tiempo límite excedido.
 
 ### Sumar los $n$ elementos
 
@@ -622,7 +730,10 @@ Cada una lee la entrada de ejemplo del enunciado y reproduce su salida:
   $p$ cuesta $\Theta(p)$, sin `l[i]` ni `it + k`.
 - `insert` no invalida ningún iterador de `list`, y `erase(it)` solo invalida
   los del nodo borrado. `splice(it, b)` con `b` entera reescribe cuatro
-  punteros: $\Theta(1)$.
+  punteros: $\Theta(1)$. Ni `b` ni sus nodos cambian de dirección, y los
+  iteradores a esos nodos siguen valiendo, ahora dentro de `a`.
+- Con enteros, el nodo de `list` suma 20 bytes de campos y `sizeof` da 24 por
+  el relleno que alinea los punteros: 960 bytes para 40 nodos.
 - `sort(l.begin(), l.end())` no compila sobre una `list`; `l.sort()` es merge
   sort empalmando nodos, $\Theta(n \log n)$.
 - `deque` guarda bloques de tamaño fijo y un mapa de punteros: el elemento $i$
@@ -847,6 +958,13 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
 - [list_splice_sort.cpp](./codigo/list_splice_sort.cpp) — `splice` y
   `l.sort()`. Imprime `a: 8 5 3 1 6`, `b:`, `*it = 1`, `a: 1 3 5 6 8` y
   `*it = 1`.
+- [splice_direcciones.cpp](./codigo/splice_direcciones.cpp): la dirección de
+  `b` y la del 4 antes y después del `splice`, que salen iguales; después
+  `a: 1 4 5 2 3`, `b:` y `*cuatro = 4, it en el 4: 1`.
+- [tamano_nodo.cpp](./codigo/tamano_nodo.cpp): el nodo de `list<int>`.
+  Imprime `int 4, puntero 8`, `suma de los campos: 20`, `sizeof(Nodo): 24`,
+  `sizeof(_List_node<int>): 24` y `40 nodos: 800 bytes por campos, 960 por
+  sizeof`.
 
 **`deque` y adaptadores**
 
