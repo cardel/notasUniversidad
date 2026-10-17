@@ -24,8 +24,8 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase12-caminos-cortos.pdf](./clase12-caminos-cortos.pdf){ target=_blank rel=noopener },
-52 páginas. Allí están dibujados los grafos de esta nota, con el árbol de
-caminos pintado en verde fila por fila.
+50 páginas con las anotaciones de la sesión. Allí están dibujados los grafos de
+esta nota, con el árbol de caminos pintado en verde fila por fila.
 
 ## Las dos versiones del problema
 
@@ -82,6 +82,11 @@ Bellman-Ford-Moore, las $n$ invocaciones cuestan
 $O(n \cdot n \cdot m) = O(n^4)$; con Dijkstra,
 $O(n \cdot n^2 \log n) = O(n^3 \log n)$. Floyd-Warshall resuelve el mismo
 problema en $O(n^3)$, y en ese caso es el que conviene.
+
+El $\log n$ de Dijkstra sale de la cola de prioridad; con otra estructura el
+costo se dispara. Y cuando todas las aristas pesan lo mismo, la que se usa es
+la amplitud: Dijkstra, Bellman-Ford-Moore y Floyd-Warshall devuelven la misma
+respuesta, pero se paga en complejidad.
 
 ## Repaso: la búsqueda en amplitud
 
@@ -209,6 +214,11 @@ más. Siempre hay uno más barato. Cuando hay un ciclo negativo que se alcanza
 desde el origen, el problema no está bien definido: no hay mínimo para los
 vértices a los que se llega pasando por el ciclo (CLRS, Capítulo 24, pesos
 negativos).
+
+Puesto en otros términos: alguien va de un punto a otro gastando gasolina y en
+el camino hay una glorieta donde cada vuelta le regala un galón. Si lo que
+quiere es gastar lo menos posible, se queda dando vueltas y nunca llega. Un
+ciclo negativo es esa glorieta, y por eso el mínimo no existe.
 
 ### Un ciclo negativo dentro de un grafo
 
@@ -386,6 +396,17 @@ ronda una arista ya usa los valores que otra acaba de mejorar.
 
 Cada ronda revisa las $m$ aristas y hay $n$ rondas: $O(n \cdot m)$, la cifra de
 la tabla de algoritmos.
+
+### Una idea con variaciones
+
+La lista de algoritmos es más corta de lo que parece: todos relajan aristas, y
+lo que cambia entre uno y otro es en qué orden las relajan y cuántas veces.
+Bellman-Ford-Moore las recorre todas en cada ronda porque no sabe cuál
+conviene primero. Dijkstra, cuando ningún peso es negativo, decide con lo que
+ve en cada paso y no vuelve atrás, y de ahí que sea un algoritmo voraz. Esa
+diferencia entre decidir con lo local y explorar hasta el fondo es el asunto
+de Análisis de Algoritmos, con los algoritmos voraces y la programación
+dinámica.
 
 ## Errores comunes
 
