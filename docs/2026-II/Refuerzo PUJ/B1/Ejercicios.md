@@ -1,9 +1,11 @@
 # Ejercicios · Refuerzo PUJ B1
 
-Cinco actividades para trabajar en el navegador lo que se vio en el
+Siete actividades para trabajar en el navegador lo que se vio en el
 [bloque 1](./Bloque%201.%20Arreglos%20y%20matrices.md). Las tres primeras
-recorren paso a paso los problemas de clase; las dos últimas repasan cuánto
+recorren paso a paso los problemas de clase; las dos siguientes repasan cuánto
 cuesta cada operación sobre un arreglo y cómo se guarda una matriz en memoria.
+Las dos últimas son de lógica: pasar frases a fórmulas con cuantificadores y
+decidir equivalencias con la tabla de verdad.
 
 ## [maximo-acumulado](../../../actividades/estructuras-de-datos/recorridos-arreglos/maximo-acumulado.html){ target=_blank rel=noopener }
 
@@ -29,3 +31,13 @@ cuestan `binary_search` y `sort`.
 
 Ubicar en memoria las casillas de una matriz guardada fila tras fila, a partir
 de su dirección de inicio y del tamaño de cada entero.
+
+## [traducir](../../../actividades/ayg-puj/logica/traducir.html){ target=_blank rel=noopener }
+
+Doce frases sobre arreglos, estudiantes y la definición de $O$, cada una con
+cuatro fórmulas candidatas; una opción errada muestra un caso donde falla.
+
+## [equivalencias](../../../actividades/ayg-puj/logica/equivalencias.html){ target=_blank rel=noopener }
+
+Decidir si dos fórmulas son equivalentes, completar su tabla de verdad y
+marcar la fila que las separa; también genera la tabla de un par propio.
