@@ -58,9 +58,14 @@ Se publican después de cada sesión.
    falta un caso. Sus
    [ejercicios](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md)
    están publicados.
-6. Clase 6. Listas I: diseño, uso y recursión sobre listas — 15 de octubre.
-   Las notas están pendientes; los
-   [ejercicios](../../actividades/pfc/listas/index.md) ya están publicados.
+6. [Clase 6. Listas I, 15 de octubre](C6/Clase%206.%20Listas%20I.md): los dos
+   constructores `Nil` y `::`, la asociatividad por la derecha, `head`, `tail`
+   e `isEmpty`, por qué una lista no se indexa como un arreglo, los patrones
+   sobre listas y el orden de los casos, la suma genérica que no compila y de
+   dónde sale ese error, las funciones recursivas `ultimo`, `inicio`, `concat`
+   y `reversa` con sus costos, el ordenamiento por inserción, los métodos
+   predefinidos y `flatten`. Incluye el código escrito en clase. Sus
+   [ejercicios](../../actividades/pfc/listas/index.md) están publicados.
 7. Clase 7. Listas II: tuplas, ordenamiento por mezcla y alto orden —
    22 de octubre. Los
    [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) ya
