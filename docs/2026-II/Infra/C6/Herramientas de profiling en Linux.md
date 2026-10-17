@@ -386,6 +386,16 @@ escritura a disco. La respuesta es contar las llamadas al sistema.
 
 ## La caché simulada: Valgrind
 
+Antes de leer un contador de fallos conviene tener presente contra qué se
+mide. La caché no es una sola: L1 es la más pequeña y rápida y le pertenece a
+cada hilo de hardware, L2 es por núcleo y L3 la comparten todos los núcleos del
+procesador. Un fallo de L1 no llega a memoria si el dato está en L2 o en L3, y
+además el procesador trae por adelantado lo que supone que sigue, de modo que
+un recorrido ordenado encuentra en los niveles intermedios lo que todavía no
+pidió. Por eso los contadores se leen en pareja: los fallos del primer nivel
+dicen cuántas veces no estaba donde se buscó primero, y los del último, cuántas
+veces hubo que ir hasta la RAM.
+
 Valgrind es una herramienta de análisis dinámico para C y C++, y su componente
 `callgrind` analiza las llamadas a funciones y el comportamiento de la caché. El
 código instrumentado corre hasta diez veces más lento, así que no sirve para
@@ -797,6 +807,10 @@ perf record -g -e cycles:u -e instructions:u \
 
 Sobre `./malo` el mismo comando captura 397 muestras. A 99 Hz, más muestras es
 más tiempo vivo, y el tamaño del archivo ya contrasta antes de abrir el reporte.
+Subir la frecuencia da más resolución a cambio de un archivo mayor y de más
+sobrecosto; 1.000 Hz es lo que se usa cuando hace falta ver una función que dura
+milisegundos. El `perf.data` es binario: abrirlo con `cat` o con `head` muestra
+basura, y lo que lo lee es `perf report` o `perf script`.
 
 Sin `-g` se sabe qué función es costosa; con `-g` se sabe además por qué camino
 de llamadas se llegó a ella, lo que importa cuando una función de librería se
@@ -897,6 +911,13 @@ instrumentos:
 | `callgrind` | `D1mr` de `sumaMatriz` | 18,0 × |
 | `perf` | `cache-misses` reales | 415 × |
 
+Ninguna de las cuatro es la medida verdadera. El perfilador estadístico tiene
+el margen de su muestreo, y el determinista cuenta cada evento pero mete
+sobrecosto, que a su vez cambia lo que mide: un cocinero trabaja distinto con
+alguien anotándole cada movimiento. Dentro de una máquina virtual o de un
+contenedor, además, `perf` depende de que el anfitrión exponga los contadores
+del procesador, y lo corriente es que no lo haga.
+
 Las razones no coinciden porque no miden lo mismo. Valgrind simula un modelo de
 caché sin captador anticipado y cuenta accesos de primer nivel; `perf` lee el
 hardware, donde el captador ya escondió casi todos los fallos de `./bueno` y
@@ -946,7 +967,8 @@ reportar una mejora conviene decir con qué se midió.
 El ejercicio del Campus Virtual quedó para la casa: el campus no abrió al final
 de la sesión. Son cuatro pasos sobre el código de la sesión: habilitar la bandera
 de paralelismo, perfilar con `perf`, revisar la caché con `cachegrind` y escribir
-una versión rápida explicando por qué lo es. La documentación del ejercicio
+una versión rápida explicando por qué lo es. No hay que programar nada nuevo: se
+ejecuta, se observa lo que devuelve cada herramienta y se escribe la conclusión. La documentación del ejercicio
 cubre `ps`, `top`, `htop`, Valgrind y `perf`, y las herramientas están
 instaladas en los computadores de la sala.
 
