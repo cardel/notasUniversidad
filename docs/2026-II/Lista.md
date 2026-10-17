@@ -29,8 +29,8 @@ Cursos del segundo semestre de 2026.
     ---
 
     Dieciséis horas en cuatro bloques para Árboles y Grafos y Estructuras de
-    Datos: arreglos y matrices, recursión, pilas y colas, montículos y colas de
-    prioridad, búsqueda binaria y una entrada a grafos, con una hora de lógica
+    Datos: arreglos y matrices, conteo de operaciones, recursión, pilas y colas,
+    montículos y colas de prioridad, búsqueda binaria y una entrada a grafos, con una hora de lógica
     por bloque.
 
     [:octicons-arrow-right-24: Entrar](./Refuerzo%20PUJ/Contenido.md)

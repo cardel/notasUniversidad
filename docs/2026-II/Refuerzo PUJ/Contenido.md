@@ -26,12 +26,12 @@ puede trabajar el mismo ejercicio en C.
 1. [Bloque 1. Arreglos y matrices](./B1/Bloque%201.%20Arreglos%20y%20matrices.md):
    un recorrido contra dos, el mejor tramo de un arreglo, matrices con
    acumulados, y en lógica proposiciones y predicados.
-2. Bloque 2. Recursión, pilas y colas: casos base y recursivos con su árbol
-   de llamadas, recursión por índices y su costo, pilas y colas en
-   simulación, y en lógica la inducción y las recurrencias.
-3. Bloque 3. Diccionarios, montículos y colas de prioridad: diccionarios y
-   conjuntos, montículos, colas de prioridad en problemas, y en lógica los
-   tipos de demostración y las cotas con $O$.
+2. Bloque 2. Conteo y recursión: el conteo de operaciones línea a línea,
+   casos base y recursivos con su árbol de llamadas, recursión por índices
+   y su costo, y en lógica la inducción y las recurrencias.
+3. Bloque 3. Pilas, colas, diccionarios y montículos: pilas y colas en
+   simulación, diccionarios y conjuntos, montículos y colas de prioridad,
+   y en lógica los tipos de demostración y las cotas con $O$.
 4. Bloque 4. Búsqueda binaria, bisección y entrada a grafos: búsqueda sobre
    estructuras ordenadas, bisección sobre la respuesta, recorrido en amplitud,
    y en lógica los invariantes de ciclo.
