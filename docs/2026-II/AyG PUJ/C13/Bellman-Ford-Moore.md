@@ -26,9 +26,10 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase13-bellman-ford-moore.pdf](./clase13-bellman-ford-moore.pdf){ target=_blank rel=noopener },
-82 páginas. Los dos grafos de ejemplo van dibujados con la distancia escrita
-debajo de cada vértice, y la villa del enunciado de UVa 321 aparece completa
-como grafo de estados.
+127 páginas: las 126 láminas con las anotaciones de la sesión y una de tablero.
+Los dos grafos de ejemplo van dibujados con la distancia escrita debajo de cada
+vértice, y la villa del enunciado de UVa 321 aparece completa como grafo de
+estados.
 
 ## Caminos de a lo sumo $k$ aristas
 
@@ -109,7 +110,10 @@ if(d[u] != INT_MAX && d[u] + peso < d[v]){
 ```
 
 La condición `d[u] != INT_MAX` evita relajar desde un vértice al que todavía
-no se ha llegado.
+no se ha llegado, y va con `&&`: el operador no evalúa la segunda condición
+cuando la primera es falsa, que es justo lo que mantiene la suma
+`INT_MAX + peso` fuera del camino. Con `&` se evalúan las dos, la suma se
+desborda y el negativo que sale entra como distancia.
 
 ### $n-1$ rondas y una más
 
@@ -125,6 +129,11 @@ delata un ciclo negativo? Si no hubiera ciclo negativo alcanzable, $d$ ya
 sería $\delta$, y $\delta$ cumple la desigualdad triangular:
 $\delta(s,v) \leq \delta(s,u) + w(u,v)$ (CLRS, Lema 24.10). Ninguna arista se
 podría relajar.
+
+Esa desigualdad sale de dos casos. Si el camino más corto de $s$ a $v$ termina
+con la arista $(u,v)$, entonces $\delta(s,v) = \delta(s,u) + w(u,v)$. Si llega
+por otro lado, ese otro camino cuesta menos que pasar por $u$, y entonces
+$\delta(s,v) < \delta(s,u) + w(u,v)$. Los dos juntos dan el $\leq$.
 
 En el grafo del ejemplo, la fila $5$ es igual a la $4$: ninguna arista se
 puede relajar y no hay ciclo negativo. El ciclo $\langle 3,1,2,3 \rangle$ pesa
@@ -680,8 +689,12 @@ revisión aparte.
 
 Cuál usar:
 
-- Si el problema limita el número de aristas: las filas de bfm1.
-- Si hay que mostrar el ciclo: bfm3.
+- Si el problema limita el número de aristas: las filas de bfm1, que es la
+  única que responde cuánto cuesta el camino más corto de a lo sumo $k$
+  aristas. Las otras cuatro dan la distancia sin decir con cuántas aristas se
+  consigue.
+- Si hay que mostrar el ciclo: bfm3, y uno solo: si hay varios ciclos
+  negativos, devuelve el que encontró.
 - En lo demás, bfm4 o bfm5.
 
 ## Grafos de estado
