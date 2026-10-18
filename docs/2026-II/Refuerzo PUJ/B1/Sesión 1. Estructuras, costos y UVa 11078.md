@@ -38,6 +38,9 @@ las páginas 11 y 55: el borrado que corre elementos, las direcciones de un
 arreglo de 4 en 4 bytes, el índice dentro del `deque`, la tabla hash con su
 factor de carga y la traza del máximo de atrás.
 
+La grabación de la sesión, partida en videos cortos por tema, está en la
+[lista de reproducción del refuerzo](https://www.youtube.com/playlist?list=PLKsjj1jEesqU){ target=_blank rel=noopener }.
+
 ## Código de la sesión
 
 Los programas, limpios y probados, están en

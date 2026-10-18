@@ -22,6 +22,8 @@ arreglos y matrices, y una de lógica sobre proposiciones y predicados.
 - [programacion-anotada.pdf](./programacion-anotada.pdf){ target=_blank rel=noopener }:
   el deck de programación con lo escrito durante la sesión y tres hojas de
   tablero.
+- [Videos de la sesión](https://www.youtube.com/playlist?list=PLKsjj1jEesqU){ target=_blank rel=noopener },
+  en la lista de reproducción del refuerzo.
 
 ## Problemas en clase
 
