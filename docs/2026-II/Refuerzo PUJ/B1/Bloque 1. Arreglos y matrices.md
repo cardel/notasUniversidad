@@ -13,6 +13,16 @@ arreglos y matrices, y una de lógica sobre proposiciones y predicados.
 
 ![](./Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+## Sesiones
+
+- [Sesión 1. Estructuras, costos y UVa 11078](./Sesión%201.%20Estructuras,%20costos%20y%20UVa%2011078.md):
+  la lectura de la entrada, el costo de cada operación, cómo están hechas las
+  estructuras de la biblioteca estándar, el máximo que se arrastra y UVa 11078
+  en un recorrido.
+- [programacion-anotada.pdf](./programacion-anotada.pdf){ target=_blank rel=noopener }:
+  el deck de programación con lo escrito durante la sesión y tres hojas de
+  tablero.
+
 ## Problemas en clase
 
 ### Hora 1. UVa 11078, Open Credit System
