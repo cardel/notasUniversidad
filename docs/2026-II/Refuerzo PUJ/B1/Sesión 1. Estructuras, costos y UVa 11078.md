@@ -54,6 +54,7 @@ Los programas, limpios y probados, están en
 | `lista_por_indice.cpp` | sumar una lista enlazada por índice contra seguir los `next` |
 | `factorial.cpp` | la pila de llamadas, para mirarla en `gdb` |
 | `uva11078.cpp`, `uva11078.py` | UVa 11078 en un recorrido |
+| `uva11078_dos_ciclos.cpp` | UVa 11078 con dos ciclos, la forma directa que se escribió primero |
 | `uva11078.in` | la muestra del enunciado |
 
 Todos se compilan con
