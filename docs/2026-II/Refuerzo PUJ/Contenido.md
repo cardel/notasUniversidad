@@ -8,12 +8,11 @@ dan por vista, así que el material sirve a los dos cursos.
 Cada bloque tiene tres horas de programación y una de lógica. Una hora de
 programación abre con diez a quince minutos sobre el concepto y lo que cuesta
 cada operación, y el resto se va en resolver en el computador un problema de
-juez en línea que lo necesita; si el tema ya se repasó, ese tiempo también va
-al problema. La hora de lógica se trabaja en papel: primero proposiciones y
-cuantificadores, luego la inducción y las recurrencias, después los tipos de
-demostración, y al final las dos que Árboles y Grafos pide todo el tiempo, la
-cota con $O$ grande y el invariante de ciclo. Cada bloque deja tres problemas
-de tarea, que se revisan al comenzar el siguiente.
+juez en línea que lo necesita. La hora de lógica se trabaja en papel: primero
+proposiciones y cuantificadores, luego los tipos de demostración, y al final
+las dos que Árboles y Grafos pide todo el tiempo, la cota con $O$ grande y el
+invariante de ciclo. Cada bloque deja tres problemas de tarea, que se revisan
+al comenzar el siguiente.
 
 Las soluciones vienen en Python y en C++. Quien llega de Estructuras de Datos
 puede trabajar el mismo ejercicio en C.
@@ -27,10 +26,9 @@ puede trabajar el mismo ejercicio en C.
 1. [Bloque 1. Arreglos y matrices](./B1/Bloque%201.%20Arreglos%20y%20matrices.md):
    un recorrido contra dos, el mejor tramo de un arreglo, matrices con
    acumulados, y en lógica proposiciones y predicados.
-2. [Bloque 2. Conteo y recursión](./B2/Bloque%202.%20Conteo%20y%20recursi%C3%B3n.md):
-   el conteo de operaciones línea a línea, casos base y recursivos con su
-   árbol de llamadas, recursión por índices y su costo, y en lógica la
-   inducción y las recurrencias.
+2. Bloque 2. Conteo y recursión: el conteo de operaciones línea a línea,
+   casos base y recursivos con su árbol de llamadas, recursión por índices
+   y su costo, y en lógica la inducción y las recurrencias.
 3. Bloque 3. Pilas, colas, diccionarios y montículos: pilas y colas en
    simulación, diccionarios y conjuntos, montículos y colas de prioridad,
    y en lógica los tipos de demostración y las cotas con $O$.
