@@ -19,3 +19,12 @@ mensuales de los vuelos de Colombia entre enero de 2017 y febrero de 2026.
    diferenciar, las casillas d y D con su ACF y su valor p de ADF, el ancho
    de la banda de un correlograma y lo que le pasa al diferenciar, y el φ de
    un AR(1) moviendo su ACF y su PACF.
+2. Ejercicios de la semana del 23 y 24 de octubre: AR, MA, ARMA, ARIMA y SARIMA.
+   [Modelos ARMA](../../actividades/series-temporales/modelos-arma/index.md),
+   tres actividades: la firma de un AR, un MA y un ARMA en la ACF y la PACF,
+   cuatro pares de correlogramas para emparejar con su modelo y seis ARMA
+   sobre la serie diferenciada que no alcanzan la barra de k = 12.
+   [SARIMA](../../actividades/series-temporales/sarima/index.md), dos
+   actividades: el pronóstico de w integrado de vuelta a pasajeros, mes a mes,
+   y la rejilla de SARIMA por AIC con los residuos de cinco modelos y su
+   prueba de Ljung-Box.
