@@ -6,13 +6,16 @@ horas. Lo que se repasa es la base que Árboles y Grafos y Estructuras de Datos
 dan por vista, así que el material sirve a los dos cursos.
 
 Cada bloque tiene tres horas de programación y una de lógica. Una hora de
-programación abre con diez a quince minutos sobre el concepto y lo que cuesta
-cada operación, y el resto se va en resolver en el computador un problema de
-juez en línea que lo necesita. La hora de lógica se trabaja en papel: primero
-proposiciones y cuantificadores, luego los tipos de demostración, y al final
-las dos que Árboles y Grafos pide todo el tiempo, la cota con $O$ grande y el
-invariante de ciclo. Cada bloque deja tres problemas de tarea, que se revisan
-al comenzar el siguiente.
+programación gira alrededor de un problema de juez en línea del nivel de las
+tareas de Estructuras de Datos: diez minutos para leer el enunciado y buscar
+sus trampas, unos cuarenta para resolverlo en el computador y diez para su
+costo: de qué depende el tamaño de la entrada, cuántas veces corre
+cada ciclo y el total en $O$. La idea o la estructura que hace falta se
+recuerda cuando el problema la pide. La hora de lógica se trabaja en papel:
+predicados y cuantificadores, los tipos de demostración, la cota con $O$
+grande y, en dos horas, el invariante de ciclo, planteado sobre los ciclos de
+los problemas de clase. Los bloques 2, 3 y 4 dejan tres problemas de tarea,
+que se revisan al comenzar el siguiente.
 
 Las soluciones vienen en Python y en C++. Quien llega de Estructuras de Datos
 puede trabajar el mismo ejercicio en C.
@@ -24,17 +27,20 @@ puede trabajar el mismo ejercicio en C.
 ## Bloques
 
 1. [Bloque 1. Arreglos y matrices](./B1/Bloque%201.%20Arreglos%20y%20matrices.md):
-   un recorrido contra dos, el mejor tramo de un arreglo, matrices con
-   acumulados, y en lógica proposiciones y predicados.
-2. Bloque 2. Conteo y recursión: el conteo de operaciones línea a línea,
-   casos base y recursivos con su árbol de llamadas, recursión por índices
-   y su costo, y en lógica la inducción y las recurrencias.
-3. Bloque 3. Pilas, colas, diccionarios y montículos: pilas y colas en
-   simulación, diccionarios y conjuntos, montículos y colas de prioridad,
-   y en lógica los tipos de demostración y las cotas con $O$.
-4. Bloque 4. Búsqueda binaria, bisección y entrada a grafos: búsqueda sobre
-   estructuras ordenadas, bisección sobre la respuesta, recorrido en amplitud,
-   y en lógica los invariantes de ciclo.
+   las estructuras con lo que cuesta cada operación, un recorrido contra dos
+   con UVa 11078, y en lógica proposiciones y predicados.
+2. [Bloque 2. Tramos, matrices, recursión e invariantes](./B2/Bloque%202.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md):
+   el mejor tramo de un arreglo con UVa 507, matrices y acumulados con
+   UVa 108, recursión sobre un árbol con UVa 839, y en lógica predicados e
+   invariantes de ciclo.
+3. Bloque 3. Pilas, colas, diccionarios y colas de prioridad: pilas y colas
+   en simulación con UVa 12100, diccionarios y conjuntos con UVa 156, colas
+   de prioridad con UVa 1203, y en lógica los tipos de demostración y las
+   cotas con $O$.
+4. Bloque 4. Búsqueda binaria, bisección y entrada a grafos: búsqueda binaria
+   con UVa 10611, bisección sobre la respuesta con UVa 11413, recorrido en
+   amplitud con UVa 924, y en lógica invariantes de ciclo sobre la búsqueda
+   binaria y ciclos del nivel de los parciales.
 
 ## Clases en video
 

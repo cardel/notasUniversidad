@@ -94,7 +94,7 @@ int main() {
 }
 ```
 
-## Hora 2. UVa 507, Jill Rides Again
+## UVa 507, Jill Rides Again
 
 ### Idea
 
@@ -213,7 +213,7 @@ int main() {
 }
 ```
 
-## Hora 3. UVa 108, Maximum Sum
+## UVa 108, Maximum Sum
 
 ### Idea
 
