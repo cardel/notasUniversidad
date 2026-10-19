@@ -1,7 +1,7 @@
-# Ejercicios · Refuerzo PUJ B1
+# Ejercicios · Refuerzo PUJ 17 de octubre
 
-Siete actividades para trabajar en el navegador lo que se vio en el
-[bloque 1](./Bloque%201.%20Arreglos%20y%20matrices.md). Las tres primeras
+Siete actividades para trabajar en el navegador lo que se vio en la
+[sesión del 17 de octubre](./17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md). Las tres primeras
 recorren paso a paso los problemas de clase; las dos siguientes repasan cuánto
 cuesta cada operación sobre un arreglo y cómo se guarda una matriz en memoria.
 Las dos últimas son de lógica: pasar frases a fórmulas con cuantificadores y

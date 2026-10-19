@@ -1,4 +1,4 @@
-# Bloque 1 · Refuerzo PUJ
+# 17 de octubre · Refuerzo PUJ
 
 **Arreglos y matrices.** Tres horas de programación sobre recorridos de
 arreglos y matrices, y una de lógica sobre proposiciones y predicados.
@@ -15,7 +15,7 @@ arreglos y matrices, y una de lógica sobre proposiciones y predicados.
 
 ## Sesiones
 
-- [Sesión 1. Estructuras, costos y UVa 11078](./Sesión%201.%20Estructuras,%20costos%20y%20UVa%2011078.md):
+- [Sesión 1. Estructuras, costos y UVa 11078](./Notas.%20Estructuras,%20costos%20y%20UVa%2011078.md):
   la lectura de la entrada, el costo de cada operación, cómo están hechas las
   estructuras de la biblioteca estándar, el máximo que se arrastra y UVa 11078
   en un recorrido.
@@ -42,8 +42,8 @@ máximo arranca en la primera resta y no en 0.
 
 ## El mejor tramo y las matrices con acumulados
 
-El mejor tramo de un arreglo y las matrices con acumulados se resuelven en el
-[bloque 2](../B2/Bloque%202.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md), con el costo de cada solución. Aquí quedan los dos
+El mejor tramo de un arreglo y las matrices con acumulados se resuelven en la
+[sesión del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md), con el costo de cada solución. Aquí quedan los dos
 problemas con su consejo.
 
 ### UVa 507, Jill Rides Again
@@ -88,7 +88,7 @@ tales que $f(n) \leq c\,g(n)$ para todo $n \geq k$.
 
 ## Tarea
 
-La tarea de estos temas es la del [bloque 2](../B2/Bloque%202.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea): UVa 100, 10189
+La tarea de estos temas es la de la [sesión del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea): UVa 100, 10189
 y 620.
 
 ## Para seguir

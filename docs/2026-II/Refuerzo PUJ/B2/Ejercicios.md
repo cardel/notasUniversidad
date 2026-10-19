@@ -1,7 +1,7 @@
-# Ejercicios · Refuerzo PUJ B2
+# Ejercicios · Refuerzo PUJ 24 de octubre
 
-Ocho actividades para trabajar en el navegador lo que se vio en el
-[bloque 2](./Bloque%202.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md).
+Ocho actividades para trabajar en el navegador lo que se vio en la
+[sesión del 24 de octubre](./24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md).
 Las tres primeras recorren paso a paso los problemas de clase y la cuarta
 pregunta por el costo de las soluciones. Las cuatro últimas son de lógica:
 encontrar el invariante de un ciclo, escribirlo como fórmula y demostrarlo en

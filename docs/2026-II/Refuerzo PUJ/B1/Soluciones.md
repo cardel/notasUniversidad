@@ -1,6 +1,6 @@
-# Soluciones · Refuerzo PUJ B1
+# Soluciones · Refuerzo PUJ 17 de octubre
 
-Los seis problemas del [bloque 1](./Bloque%201.%20Arreglos%20y%20matrices.md),
+Los seis problemas de la [sesión del 17 de octubre](./17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`, listos para compilar y
 enviar al juez.

@@ -1,13 +1,13 @@
-# Soluciones · Refuerzo PUJ B2
+# Soluciones · Refuerzo PUJ 24 de octubre
 
-UVa 839 y los tres problemas de la tarea del
-[bloque 2](./Bloque%202.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md),
+UVa 839 y los tres problemas de la tarea de la
+[sesión del 24 de octubre](./24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`, listos para compilar y
 enviar al juez. Las soluciones de
 [UVa 507](../B1/Soluciones.md#uva-507-jill-rides-again) y
 [UVa 108](../B1/Soluciones.md#uva-108-maximum-sum) están con las del
-bloque 1.
+17 de octubre.
 
 ## Hora 3. UVa 839, Not so Mobile
 

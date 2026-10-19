@@ -1,4 +1,4 @@
-# Bloque 2 · Refuerzo PUJ
+# 24 de octubre · Refuerzo PUJ
 
 **Tramos, matrices, recursión e invariantes.** Tres horas de programación
 sobre el mejor tramo de un arreglo, los rectángulos de una matriz y la
@@ -30,7 +30,7 @@ El mejor tramo que termina en cada parada se obtiene del que terminaba en la
 anterior: se alarga, salvo cuando la suma ya es negativa y conviene empezar de
 nuevo. El consejo completo, con el desempate por longitud y por inicio y la
 numeración de las paradas, está en la
-[página del bloque 1](../B1/Bloque%201.%20Arreglos%20y%20matrices.md#uva-507-jill-rides-again).
+[página del 17 de octubre](../B1/17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md#uva-507-jill-rides-again).
 
 Costo: el tamaño es $s$, el número de paradas de una ruta, con
 $s \le 20\,000$. La lectura y el recorrido corren $s - 1$ veces cada uno, con
@@ -47,7 +47,7 @@ Con la fila de arriba y la de abajo fijas, la suma de cada columna entre las
 dos forma un arreglo de $N$ valores, y el mejor rectángulo con esas filas es
 el mejor tramo de ese arreglo: el problema de la hora anterior. El consejo
 completo está en la
-[página del bloque 1](../B1/Bloque%201.%20Arreglos%20y%20matrices.md#uva-108-maximum-sum).
+[página del 17 de octubre](../B1/17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md#uva-108-maximum-sum).
 
 Costo: el tamaño es el lado $N$ de la matriz, con $N \le 100$, y la entrada
 trae $N^2$ números. Hay menos de $N^2$ pares de filas, y por cada par $N$
@@ -106,8 +106,8 @@ pero no alcanza y cuál se cae con un contraejemplo.
 
 ## Tarea
 
-Se resuelve antes del bloque 3 y se envía al juez; la revisión abre ese
-bloque. Cada solución va con su costo.
+Se resuelve antes del 7 de noviembre y se envía al juez; la revisión abre
+esa sesión. Cada solución va con su costo.
 
 ### Base. UVa 100, The 3n + 1 problem
 
@@ -165,7 +165,7 @@ costaría $\Theta(n)$ por nivel y llevaría el total a $\Theta(n^2)$.
 
 - [Soluciones](./Soluciones.md) de UVa 839 y de los tres problemas de la tarea,
   con la idea, la complejidad y el código en Python y C++. Las de UVa 507 y
-  UVa 108 están en las [soluciones del bloque 1](../B1/Soluciones.md).
+  UVa 108 están en las [soluciones del 17 de octubre](../B1/Soluciones.md).
 - [Ejercicios interactivos](./Ejercicios.md) sobre el mejor tramo, los
   acumulados, el móvil, los invariantes de los problemas de clase y el costo de
   las soluciones.

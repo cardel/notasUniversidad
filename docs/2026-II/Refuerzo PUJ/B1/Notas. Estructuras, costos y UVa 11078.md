@@ -1,4 +1,4 @@
-# Estructuras, costos y UVa 11078 · Refuerzo PUJ B1
+# Estructuras, costos y UVa 11078 · Refuerzo PUJ 17 de octubre
 
 La sesión empezó por lo que trae un archivo de entrada y cómo se lee, y siguió
 con lo que cuesta cada operación sobre las estructuras de la biblioteca
@@ -798,10 +798,10 @@ recorre el problema paso a paso.
 
 ## Lo que sigue
 
-Del bloque quedan UVa 507, *Jill Rides Again*, con el mejor tramo de un
+De la sesión quedan UVa 507, *Jill Rides Again*, con el mejor tramo de un
 arreglo, y UVa 108, *Maximum Sum*, con las matrices y sus acumulados, además
 de la hora de lógica sobre proposiciones y predicados. Los enunciados, los
 enlaces de envío y las soluciones están en la
-[página del bloque](./Bloque%201.%20Arreglos%20y%20matrices.md) y en las
-[soluciones](./Soluciones.md). El bloque 2 abre con el conteo de operaciones
-línea a línea, que es lo que permite pasar de un programa a su costo en $O$.
+[página de la sesión](./17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md) y en las
+[soluciones](./Soluciones.md). Los tres pasan a la sesión del 24 de octubre, donde cada problema cierra con
+su costo en $O$.
