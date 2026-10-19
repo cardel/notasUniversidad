@@ -122,7 +122,7 @@ reuniones docentes y jornada de reflexión.
 | 4 | Funciones y datos | [ocho ejercicios: del racional a los operadores](../../actividades/pfc/clases-y-abstraccion-de-datos/index.md) |
 | 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md) |
 | 6 | Listas I: diseño, uso y recursión sobre listas | [cuatro ejercicios: de los dos constructores a la inserción](../../actividades/pfc/listas/index.md) |
-| 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [ocho ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
+| 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [once ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
 
 ## Ejercicios de clase
 
