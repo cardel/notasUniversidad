@@ -432,6 +432,7 @@ entrada y su salida.
   de direccionamiento directo; §11.2 tablas hash, encadenamiento y su análisis;
   §11.3 funciones hash, método de la división.
 - R. Thareja. *Data Structures Using C*. Oxford University Press, 2018.
-  Capítulo 15, hashing y colisiones.
+  Capítulo 15, *Hashing and Collision*: §15.2 tablas hash; §15.4.1 método
+  de la división; §15.5.2 resolución de colisiones por encadenamiento.
 - UVa Online Judge. Problema 484, *The Department of Redundancy Department*:
   <https://onlinejudge.org/external/4/484.pdf>.

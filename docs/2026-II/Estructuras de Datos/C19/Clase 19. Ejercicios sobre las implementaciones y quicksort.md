@@ -184,8 +184,9 @@ cuando no hay cabeza. Contarlos exige recorrerla
 
 !!! warning "Lo que cuesta ahorrar un entero"
 
-    Un ciclo que pregunte `tamano()` en cada vuelta, como el que imprime la
-    cola dándole la vuelta, pasa de $\Theta(n)$ a $\Theta(n^2)$. Con el
+    Un ciclo que pregunte `tamano()` en cada vuelta, como el que recorre la
+    cola sacando el frente, imprimiéndolo y volviéndolo a encolar, pasa de
+    $\Theta(n)$ a $\Theta(n^2)$. Con el
     contador, la cola gasta un entero y responde en $\Theta(1)$.
 
 ### Invertir una cola con una pila

@@ -3,8 +3,8 @@
 Curso de Estructuras de Datos (300CIP009) de la Pontificia Universidad
 Javeriana Cali, sección B, semestre 2026-II. Docente: Carlos A. Delgado.
 
-El curso arranca con las herramientas para razonar sobre eficiencia —análisis
-de complejidad y notación asintótica— y con el manejo de memoria, punteros y
+El curso arranca con las herramientas para razonar sobre eficiencia, que son
+el análisis de complejidad y la notación asintótica, y con el manejo de memoria, punteros y
 arreglos en C y C++. Sobre esa base construimos desde cero los tipos abstractos
 de datos que aparecen una y otra vez en la práctica: listas, pilas y colas;
 tablas de direccionamiento directo y tablas hash; árboles y montículos; colas
@@ -25,26 +25,26 @@ y sus soluciones en Python y C++.
 
 ### Corte 1
 
-1. [Clase 1. Repaso de programación básica — 29 de julio](C1/Clase%201.%20Repaso%20de%20programación%20básica.md)
-2. [Clase 2. Lenguajes de programación y paradigmas — 31 de julio](C2/Clase%202.%20Lenguajes%20de%20programación%20y%20paradigmas.md)
-3. [Clase 3. Introducción a la complejidad computacional — 5 de agosto](C3/Clase%203.%20Introducción%20a%20la%20complejidad%20computacional.md)
-4. [Clase 4. Ciclos dependientes y sumatorias — 19 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
-5. [Clase 5. Ejercicios de análisis de complejidad — 21 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
-6. [Clase 6. La notación O — 26 de agosto](C6/Clase%206.%20La%20notación%20O.md)
-7. [Clase 7. Manejo de memoria en C — 28 de agosto](C7/Clase%207.%20Manejo%20de%20memoria%20en%20C.md)
-8. [Clase 8. Punteros, arreglos y arreglos bidimensionales — 2 de septiembre](C8/Clase%208.%20Punteros,%20arreglos%20y%20arreglos%20bidimensionales.md)
-9. [Clase 9. Paso de parámetros por referencia y repaso de POO — 4 de septiembre](C9/Clase%209.%20Paso%20de%20parámetros%20por%20referencia%20y%20repaso%20de%20POO.md)
-10. [Clase 10. Abstracción de datos y tipos abstractos de datos — 9 de septiembre](C10/Clase%2010.%20Abstracción%20de%20datos%20y%20tipos%20abstractos%20de%20datos.md)
-11. [Clase 11. TAD Lista, Pila y Cola — 16 de septiembre](C11/Clase%2011.%20TAD%20Lista,%20Pila%20y%20Cola.md)
-12. [Clase 12. Ejercicios con los TAD Lista, Pila y Cola — 18 de septiembre](C12/Clase%2012.%20Ejercicios%20con%20los%20TAD%20Lista,%20Pila%20y%20Cola.md)
-13. [Clase 13. STL de C++ — 19 de septiembre](C13/Clase%2013.%20STL%20de%20C++.md)
-14. [Clase 14. Iteradores y algoritmos de la STL — 23 de septiembre](C14/Clase%2014.%20Iteradores%20y%20algoritmos%20de%20la%20STL.md)
-15. [Clase 15. La lista enlazada — 30 de septiembre](C15/Clase%2015.%20La%20lista%20enlazada.md)
-16. [Clase 16. Variantes de la lista enlazada — 2 de octubre](C16/Clase%2016.%20Variantes%20de%20la%20lista%20enlazada.md)
-17. [Clase 17. El TAD Pila por dentro — 7 de octubre](C17/Clase%2017.%20El%20TAD%20Pila%20por%20dentro.md)
-18. [Clase 18. El TAD Cola por dentro — 9 de octubre](C18/Clase%2018.%20El%20TAD%20Cola%20por%20dentro.md)
-19. [Clase 19. Ejercicios sobre las implementaciones y quicksort — 14 de octubre](C19/Clase%2019.%20Ejercicios%20sobre%20las%20implementaciones%20y%20quicksort.md)
-20. [Clase 20. Contenedores list, deque, stack y queue — 16 de octubre](C20/Clase%2020.%20Contenedores%20list,%20deque,%20stack%20y%20queue.md)
+1. [Clase 1. Repaso de programación básica, 29 de julio](C1/Clase%201.%20Repaso%20de%20programación%20básica.md)
+2. [Clase 2. Lenguajes de programación y paradigmas, 31 de julio](C2/Clase%202.%20Lenguajes%20de%20programación%20y%20paradigmas.md)
+3. [Clase 3. Introducción a la complejidad computacional, 5 de agosto](C3/Clase%203.%20Introducción%20a%20la%20complejidad%20computacional.md)
+4. [Clase 4. Ciclos dependientes y sumatorias, 19 de agosto](C4/Clase%204.%20Ciclos%20dependientes%20y%20sumatorias.md)
+5. [Clase 5. Ejercicios de análisis de complejidad, 21 de agosto](C5/Clase%205.%20Ejercicios%20de%20análisis%20de%20complejidad.md)
+6. [Clase 6. La notación O, 26 de agosto](C6/Clase%206.%20La%20notación%20O.md)
+7. [Clase 7. Manejo de memoria en C, 28 de agosto](C7/Clase%207.%20Manejo%20de%20memoria%20en%20C.md)
+8. [Clase 8. Punteros, arreglos y arreglos bidimensionales, 2 de septiembre](C8/Clase%208.%20Punteros,%20arreglos%20y%20arreglos%20bidimensionales.md)
+9. [Clase 9. Paso de parámetros por referencia y repaso de POO, 4 de septiembre](C9/Clase%209.%20Paso%20de%20parámetros%20por%20referencia%20y%20repaso%20de%20POO.md)
+10. [Clase 10. Abstracción de datos y tipos abstractos de datos, 9 de septiembre](C10/Clase%2010.%20Abstracción%20de%20datos%20y%20tipos%20abstractos%20de%20datos.md)
+11. [Clase 11. TAD Lista, Pila y Cola, 16 de septiembre](C11/Clase%2011.%20TAD%20Lista,%20Pila%20y%20Cola.md)
+12. [Clase 12. Ejercicios con los TAD Lista, Pila y Cola, 18 de septiembre](C12/Clase%2012.%20Ejercicios%20con%20los%20TAD%20Lista,%20Pila%20y%20Cola.md)
+13. [Clase 13. STL de C++, 19 de septiembre](C13/Clase%2013.%20STL%20de%20C++.md)
+14. [Clase 14. Iteradores y algoritmos de la STL, 23 de septiembre](C14/Clase%2014.%20Iteradores%20y%20algoritmos%20de%20la%20STL.md)
+15. [Clase 15. La lista enlazada, 30 de septiembre](C15/Clase%2015.%20La%20lista%20enlazada.md)
+16. [Clase 16. Variantes de la lista enlazada, 2 de octubre](C16/Clase%2016.%20Variantes%20de%20la%20lista%20enlazada.md)
+17. [Clase 17. El TAD Pila por dentro, 7 de octubre](C17/Clase%2017.%20El%20TAD%20Pila%20por%20dentro.md)
+18. [Clase 18. El TAD Cola por dentro, 9 de octubre](C18/Clase%2018.%20El%20TAD%20Cola%20por%20dentro.md)
+19. [Clase 19. Ejercicios sobre las implementaciones y quicksort, 14 de octubre](C19/Clase%2019.%20Ejercicios%20sobre%20las%20implementaciones%20y%20quicksort.md)
+20. [Clase 20. Contenedores list, deque, stack y queue, 16 de octubre](C20/Clase%2020.%20Contenedores%20list,%20deque,%20stack%20y%20queue.md)
 21. [Clase 21. Contenedores y tabla de direccionamiento directo, 21 de octubre](C21/Clase%2021.%20Contenedores%20y%20tabla%20de%20direccionamiento%20directo.md)
 22. [Clase 22. Tablas hash con encadenamiento, 23 de octubre](C22/Clase%2022.%20Tablas%20hash%20con%20encadenamiento.md)
 
@@ -53,14 +53,14 @@ y sus soluciones en Python y C++.
 Material de apoyo que no corresponde a una sesión concreta y conviene tener a la
 mano durante todo el semestre.
 
-- [Apéndice A. El juez automático](A1/Apéndice%20A.%20El%20juez%20automático.md)
-  — cómo entrar a la arena, enviar una solución, leer los veredictos y qué hace el
+- [Apéndice A. El juez automático](A1/Apéndice%20A.%20El%20juez%20automático.md):
+  cómo entrar a la arena, enviar una solución, leer los veredictos y qué hace el
   servidor con cada envío.
-- [Apéndice B. Solución del parcial 1](A2/Ap%C3%A9ndice%20B.%20Soluci%C3%B3n%20del%20parcial%201.md)
-  — las dos preguntas abiertas del 25 de septiembre, con la demostración en
+- [Apéndice B. Solución del parcial 1](A2/Ap%C3%A9ndice%20B.%20Soluci%C3%B3n%20del%20parcial%201.md):
+  las dos preguntas abiertas del 25 de septiembre, con la demostración en
   cuatro partes y la función contra el contrato de Cola.
-- [Proyecto del curso](Proyecto/Proyecto%20del%20curso.md)
-  — los cuatro escenarios, qué se entrega en el avance y en la final, cómo se
+- [Proyecto del curso](Proyecto/Proyecto%20del%20curso.md):
+  los cuatro escenarios, qué se entrega en el avance y en la final, cómo se
   califica y dónde vive el repositorio.
 - **HackerRank, estructuras de datos**:
   <https://www.hackerrank.com/domains/data-structures>. Problemas para
