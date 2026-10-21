@@ -1,55 +1,44 @@
 # Ejercicios · Estructuras C22
 
-Tablas hash con encadenamiento. Cada enlace abre una actividad que se trabaja
-directo en el navegador, en el mismo orden de los temas de la
-[sesión](./Clase%2022.%20Tablas%20hash%20con%20encadenamiento.md). Las claves y
-las tablas no son las de la sesión: mismo tema, ronda nueva.
+El contenedor `map`. Cada enlace abre una actividad que se trabaja directo en
+el navegador, en el mismo orden de los temas de la
+[sesión](./Clase%2022.%20El%20contenedor%20map%20y%20ejercicios.md). Las claves y
+los programas no son los de la sesión: mismo tema, ronda nueva.
 
-## Pocas claves, universo enorme
+## Un problema donde importa el orden
 
-### [universo](../../../actividades/estructuras-de-datos/tabla-hash/universo.html){ target=_blank rel=noopener }
+### [orden](../../../actividades/estructuras-de-datos/contenedor-map/orden.html){ target=_blank rel=noopener }
 
-Cuánto ocupa una tabla de direccionamiento directo para teléfonos de 7 dígitos,
-qué parte de ella se usa y cuánto cuesta buscar en una lista enlazada.
+Las claves 23, 9, 41, 16 y 30 en una tabla hash de cinco casillas y en un
+`map`: en qué orden sale cada recorrido y qué cuesta ordenar al final.
 
-## La función hash
+## El contenedor map
 
-### [casilla](../../../actividades/estructuras-de-datos/tabla-hash/casilla.html){ target=_blank rel=noopener }
+### [corchetes](../../../actividades/estructuras-de-datos/contenedor-map/corchetes.html){ target=_blank rel=noopener }
 
-El método de la división con m = 17: la casilla de cada clave, los pares que
-chocan y lo que pasa con una tabla de 1000 casillas.
+Un `map` línea por línea, con lo que inserta `m[k]` también cuando solo se
+quería preguntar.
 
-### [cadenas](../../../actividades/estructuras-de-datos/tabla-hash/cadenas.html){ target=_blank rel=noopener }
+### [consultar](../../../actividades/estructuras-de-datos/contenedor-map/consultar.html){ target=_blank rel=noopener }
 
-La suma de los códigos y el polinomio en base 31 sobre `mar` y `ram`, paso a
-paso.
+Lo que devuelven `count`, `find` y `erase`, qué es `end()` y qué se puede
+cambiar por el iterador.
 
-## Encadenamiento
+### [palabras](../../../actividades/estructuras-de-datos/contenedor-map/palabras.html){ target=_blank rel=noopener }
 
-### [encadenar](../../../actividades/estructuras-de-datos/tabla-hash/encadenar.html){ target=_blank rel=noopener }
-
-Seis claves que entran a una tabla de cinco casillas, colgando al frente de
-cada lista, y el factor de carga que queda.
-
-### [buscar](../../../actividades/estructuras-de-datos/tabla-hash/buscar.html){ target=_blank rel=noopener }
-
-Cuántas comparaciones hace cada búsqueda y qué puntero cambia al eliminar.
+Un `map<string, int>` fila por fila, su recorrido en orden alfabético y lo que
+pasa con una clave `char *`.
 
 ## Lo que cuesta
 
-### [carga](../../../actividades/estructuras-de-datos/tabla-hash/carga.html){ target=_blank rel=noopener }
+### [elegir](../../../actividades/estructuras-de-datos/contenedor-map/elegir.html){ target=_blank rel=noopener }
 
-El promedio de las listas frente a la más larga, la búsqueda en el peor caso y
-la cota de 1 + α.
-
-### [escoger](../../../actividades/estructuras-de-datos/tabla-hash/escoger.html){ target=_blank rel=noopener }
-
-Las mismas claves con m = 100, 128 y 97: cuántas casillas se usan y cuánto
-mide la lista más larga.
+Cuántas comparaciones hace el `map` con mil y con mil millones de claves, y qué
+estructura conviene en cuatro situaciones.
 
 ## Para el juez
 
-### [negativos](../../../actividades/estructuras-de-datos/tabla-hash/negativos.html){ target=_blank rel=noopener }
+### [combinacion](../../../actividades/estructuras-de-datos/contenedor-map/combinacion.html){ target=_blank rel=noopener }
 
-El residuo de C++ con claves negativas y la corrección que deja la casilla
-entre 0 y m − 1.
+Tres cursos ordenados y pegados en una clave entera, y cuántos estudiantes
+ganan cuando dos combinaciones empatan.
