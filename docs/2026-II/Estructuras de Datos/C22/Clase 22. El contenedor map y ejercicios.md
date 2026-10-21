@@ -177,7 +177,7 @@ claves hechas a la medida de $m$, la tabla llega a $\Theta(n)$.
 
 ## Para el juez
 
-### UVa 11286: Conformity
+### UVa 11286, Conformity
 
 *UVa 11286, Conformity*: <https://onlinejudge.org/external/112/11286.pdf>.
 Envío en
@@ -202,7 +202,7 @@ estudiantes de las combinaciones que la alcanzan. $O(n \log n)$ por caso.
     - La clave no cabe en `int`: 499 499 499 499 499 pide `long long`, con
       `%lld`.
 
-### UVa 10295: Hay Points
+### UVa 10295, Hay Points
 
 *UVa 10295, Hay Points*: <https://onlinejudge.org/external/102/10295.pdf>.
 Envío en
