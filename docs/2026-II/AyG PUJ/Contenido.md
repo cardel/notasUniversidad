@@ -48,6 +48,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 11. [Clase 11. Problemas de cortes — 9 de octubre](C11/Clase%2011.%20Problemas%20de%20cortes.md)
 12. [Clase 12. Caminos más cortos: generalidades y la idea de Bellman-Ford-Moore — 16 de octubre](C12/Clase%2012.%20Caminos%20cortos.md)
 13. [Clase 13. Implementaciones de Bellman-Ford-Moore y grafos de estado — 16 de octubre](C13/Clase%2013.%20Bellman-Ford-Moore.md)
+14. [Clase 14. Grafos de estado, 23 de octubre](C14/Clase%2014.%20Grafos%20de%20estado.md)
 
 ## Clases en video
 

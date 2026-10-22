@@ -29,7 +29,8 @@ Al terminar la sesión se espera poder:
 127 páginas: las 126 láminas con las anotaciones de la sesión y una de tablero.
 Los dos grafos de ejemplo van dibujados con la distancia escrita debajo de cada
 vértice, y la villa del enunciado de UVa 321 aparece completa como grafo de
-estados.
+estados. La implementación con máscaras de bits que se usa desde la sesión de
+grafos de estado está en la [nota de esa clase](../C14/Grafos%20de%20estado.md).
 
 ## Caminos de a lo sumo $k$ aristas
 
@@ -701,9 +702,8 @@ Cuál usar:
 
 ### UVa 321, The New Villa
 
-Enunciado: <https://onlinejudge.org/external/3/321.pdf>
-
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=257>
+El enunciado está en <https://onlinejudge.org/external/3/321.pdf> y el envío
+se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=257>.
 
 Una casa de $r \leq 10$ habitaciones: la $1$ es el hall y la $r$ el
 dormitorio. Hay puertas entre habitaciones e interruptores mal conectados: un
@@ -737,128 +737,287 @@ depende de la habitación *y* de las luces.
 señor Black y el conjunto $L$ de luces prendidas. Hay una arista de un estado
 a otro si un paso permitido lleva del primero al segundo.
 
-Las transiciones desde $(h, L)$:
-
-- Accionar un interruptor de $h$ que controla la luz $l$, con $l \neq h$:
-  lleva a $(h, L \cup \{l\})$ si $l \notin L$ y a $(h, L \setminus \{l\})$ si
-  $l \in L$.
-- Ir a una habitación vecina $j$ con $j \in L$: lleva a $(j, L)$.
+Desde $(h, L)$ se puede accionar un interruptor de $h$ que controla la luz
+$l$, con $l \neq h$, y eso lleva a $(h, L \cup \{l\})$ si $l \notin L$ y a
+$(h, L \setminus \{l\})$ si $l \in L$. También se puede ir a una habitación
+vecina $j$ con $j \in L$, y eso lleva a $(j, L)$.
 
 El inicio es $(1, \{1\})$ y la meta $(r, \{r\})$. Hay $r$ habitaciones por
 $2^r$ conjuntos de luces: con $r = 10$, a lo sumo $10 \cdot 1024 = 10\,240$
 estados. En la villa 1 hay $3 \cdot 2^3 = 24$, y la búsqueda alcanza $12$.
-
 Todos los pasos cuestan $1$, así que la búsqueda en amplitud desde el inicio
-da el camino con menos pasos. En Python, el conjunto $L$ se guarda como una
-tupla de booleanos: `luces[i]` dice si la luz $i$ está prendida. Una tupla
-puede ser clave de un diccionario, y un estado es la tupla `(h, luces)`.
+da el camino con menos pasos.
+
+El conjunto $L$ se guarda en un entero, una máscara de bits: el bit $i-1$ vale
+$1$ si la luz $i$ está prendida. Un estado son dos enteros, la habitación y la
+máscara.
 
 ### La villa 1 como grafo de estados
 
-Los $12$ estados que alcanza la búsqueda, por niveles:
+Los $12$ estados que alcanza la búsqueda, con las letras en el orden en que
+los descubre `321-new-villa.cpp` y la arista por la que se descubre cada uno:
 
-| $d$ | Estados |
-|---|---|
-| $0$ | $(1,\{1\})$ |
-| $1$ | $(1,\{1,2\})$, $(1,\{1,3\})$ |
-| $2$ | $(1,\{1,2,3\})$, $(2,\{1,2\})$, $(3,\{1,3\})$ |
-| $3$ | $(2,\{2\})$, $(2,\{1,2,3\})$, $(3,\{1,2,3\})$ |
-| $4$ | $(2,\{2,3\})$ |
-| $5$ | $(3,\{2,3\})$ |
-| $6$ | $(3,\{3\})$ |
+| $d$ | Estado | $(h, L)$ | Máscara | Llega desde | Acción |
+|---|---|---|---|---|---|
+| $0$ | A | $(1,\{1\})$ | `001` | | |
+| $1$ | B | $(1,\{1,2\})$ | `011` | A | prende 2 |
+| $1$ | C | $(1,\{1,3\})$ | `101` | A | prende 3 |
+| $2$ | D | $(2,\{1,2\})$ | `011` | B | a 2 |
+| $2$ | E | $(1,\{1,2,3\})$ | `111` | B | prende 3 |
+| $2$ | F | $(3,\{1,3\})$ | `101` | C | a 3 |
+| $3$ | G | $(2,\{2\})$ | `010` | D | apaga 1 |
+| $3$ | H | $(2,\{1,2,3\})$ | `111` | E | a 2 |
+| $3$ | I | $(3,\{1,2,3\})$ | `111` | E | a 3 |
+| $4$ | J | $(2,\{2,3\})$ | `110` | H | apaga 1 |
+| $5$ | K | $(3,\{2,3\})$ | `110` | J | a 3 |
+| $6$ | L | $(3,\{3\})$ | `100` | K | apaga 2 |
 
-El camino de $6$ pasos hasta la meta es
-$(1,\{1\})$, prende 2, $(1,\{1,2\})$, prende 3, $(1,\{1,2,3\})$, a 2,
-$(2,\{1,2,3\})$, apaga 1, $(2,\{2,3\})$, a 3, $(3,\{2,3\})$, apaga 2,
-$(3,\{3\})$.
+Tres aristas más llegan a un estado ya descubierto: de C a E por prender $2$,
+de F a I por prender $2$ y de H a I por moverse a $3$. El camino A, B, E, H,
+J, K, L tiene $6$ pasos y es el mismo del enunciado.
 
-### Los sucesores de un estado
+### Máscaras de bits
 
-```python
-def sucesores(estado, puertas, interruptores):
-  # Los estados a un paso de estado, cada uno con el texto de ese paso.
-  (hab, luces) = estado
-  res = []
-  for l in interruptores[hab]:
-    # nunca se apaga la luz de la habitacion donde se esta
-    if l != hab:
-      nuevas = list(luces)
-      nuevas[l] = not nuevas[l]
-      if nuevas[l]:
-        texto = '- Switch on light in room ' + str(l) + '.'
-      else:
-        texto = '- Switch off light in room ' + str(l) + '.'
-      res.append(((hab, tuple(nuevas)), texto))
-  for j in puertas[hab]:
-    # solo se entra a una habitacion con la luz prendida
-    if luces[j]:
-      res.append(((j, luces), '- Move to room ' + str(j) + '.'))
-  return res
+| Conjunto | Bit 2, luz 3 | Bit 1, luz 2 | Bit 0, luz 1 | Entero |
+|---|---|---|---|---|
+| $\{1\}$ | $0$ | $0$ | $1$ | $1$ |
+| $\{1,3\}$ | $1$ | $0$ | $1$ | $4 + 1 = 5$ |
+| $\{2,3\}$ | $1$ | $1$ | $0$ | $4 + 2 = 6$ |
+| $\{3\}$ | $1$ | $0$ | $0$ | $4$ |
+
+El inicio de la villa 1 es $(1, 1)$ y la meta $(3, 4)$. Tres operaciones
+bastan para trabajar con la máscara `L`:
+
+| Operación | Qué hace | En la villa 1 |
+|---|---|---|
+| `1 << i - 1` | la máscara de la luz $i$, con solo el bit $i-1$ prendido; en C++ la resta va antes que `<<` | la luz $3$ es `100` $= 4$ |
+| `L & (1 << i - 1)` | vale la máscara de la luz si está prendida y $0$ si no; la condición es `!= 0`, no `== 1` | `101 & 100` $= 4$: la luz $3$ está prendida |
+| `L ^ (1 << i - 1)` | invierte solo el bit de la luz $i$: la prende si estaba apagada y la apaga si estaba prendida | `101 ^ 010` $= 7$ prende $2$; `111 ^ 001` $= 6$ apaga $1$ |
+
+Si después del `^` el entero subió, la luz se prendió; si bajó, se apagó.
+
+### La implementación
+
+Un estado es un `struct` con la habitación, la máscara de luces y la lista de
+pasos que llevó hasta él. Un `map` guarda la distancia de cada estado
+descubierto, y las puertas y los interruptores van en dos matrices de
+booleanos. La búsqueda en amplitud empieza en $(1, 1)$ y para cuando saca de
+la cola la meta $(r, 2^{r-1})$.
+
+```cpp linenums="1"
+/*
+The New Villa
+https://uva.onlinejudge.org/external/3/321.pdf
+
+BFS - State Space
+
+*/
+
+#include <cstdio>
+#include <iostream>
+#include <math.h>
+#include <string>
+#include <vector>
+#include <queue>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+struct step{
+  string desc; // can be on, off and move
+  int room;
+
+  step(string d, int h){
+    desc = d;
+    room = h;
+  }
+};
+
+struct state{
+  int pos, light;
+  vector<step> steps;
+
+  state(){}
+
+  state(int p, int c){
+    pos = p;
+    light = c;
+    steps = vector<step>();
+  }
+
+  state(int p, int c, vector<step> &pa){
+    pos = p;
+    light = c;
+    steps = pa;
+  }
+};
+
+struct classcomp{
+  bool operator() (const state& est1, const state& est2) const{
+ bool ans = true;
+ if(est1.pos != est2.pos)
+   ans = est1.pos < est2.pos;
+ else
+   ans = est1.light < est2.light;
+ return ans;
+}
+};
+
+map<state, int, classcomp> dist;
+bool roomAdj[11][11], lightAdj[11][11];
+
+void solve(int r, int s, int d, int caso){
+  int i, obj = 1 << r - 1;
+  queue<state> q;
+  state est(1, 1), curr, res;
+  bool flag = false;
+  dist[est] = 0;
+  q.push(est);
+
+  while(!flag && !q.empty()){
+    curr = q.front();
+    q.pop();
+
+    if(curr.pos == r && obj == curr.light){
+      res = curr;
+      flag = true;
+    }
+    else{
+      // verificar posibilidades de desplazarse a otra habitación
+      for(i = 1; i <= r; i++){
+	// se verifica que haya un pasillo hacía la habitación i y que la luz en esa roomitación esté
+	// encendida
+	if(roomAdj[curr.pos][i] && (curr.light & (1 << i - 1)) != 0){
+	  est = state(i, curr.light, curr.steps);
+	  est.steps.push_back(step("move", i));
+
+	  if(dist.find(est) == dist.end()){
+	    q.push(est);
+	    dist[est] = dist[curr] + 1;
+	  }
+	}
+      }
+
+      // verificar posibilidades de encender o apagar una luz en otra habitación
+      for(i = 1; i <= r; i++){
+	// se verifica que haya un switch que permita encencer la luz de la habitación i
+	// y que no sea la misma habitación en la que se está ubicado
+	if(lightAdj[curr.pos][i] && i != curr.pos){
+	  est = state(curr.pos, (curr.light ^ (1 << i - 1)), curr.steps);
+	  est.steps.push_back(step((est.light > curr.light) ? "on" : "off", i));
+
+	  if(dist.find(est) == dist.end()){
+	    q.push(est);
+	    dist[est] = dist[curr] + 1;
+	  }
+	}
+      }
+    }
+  }
+
+  printf("Villa #%d\n", caso);
+
+  if(flag){
+    printf("The problem can be solved in %d steps:\n", dist[res]);
+    for(vector<step>::iterator itAux = res.steps.begin(); itAux != res.steps.end(); itAux++){
+      if(itAux->desc == "on")
+	printf("- Switch on light in room %d.\n", itAux->room);
+      else if(itAux->desc == "off")
+	printf("- Switch off light in room %d.\n", itAux->room);
+      else
+	printf("- Move to room %d.\n", itAux->room);
+    }
+  }
+  else
+    printf("The problem cannot be solved.\n");
+  printf("\n");
+}
+
+int main(){
+  int r, d, s, i, j, ini, fin, caso = 1;
+
+  cin >> r >> d >> s;
+
+  while(r != 0 || d != 0 || s != 0){
+    for(i = 0; i < 11; i++){
+      for(j = 0; j < 11; j++){
+	roomAdj[i][j] = lightAdj[i][j] = false;
+      }
+    }
+    dist.clear();
+
+    for(i = 0; i < d; i++){
+      cin >> ini >> fin;
+      roomAdj[ini][fin] = roomAdj[fin][ini] = true;
+    }
+
+    for(i = 0; i < s; i++){
+      cin >> ini >> fin;
+      lightAdj[ini][fin] = true;
+    }
+
+    solve(r, d, s, caso);
+    ++caso;
+    cin >> r >> d >> s;
+  }
+
+  return 0;
+}
 ```
 
-La lista `nuevas` es una copia de las luces: se cambia una posición y se
-vuelve a tupla.
+Las piezas, por número de línea:
 
-### La búsqueda en amplitud sobre los estados
+- 20 a 28: un paso guarda qué se hizo, `"move"`, `"on"` u `"off"`, y la
+  habitación a la que se movió o cuya luz cambió.
+- 30 a 47: `pos` es la habitación $h$ y `light` la máscara de $L$. Cada estado
+  lleva en `steps` su camino desde el inicio, así que al llegar a la meta no
+  hay que reconstruirlo.
+- 49 a 61: `map` ordena sus claves y un `struct` no trae `<`. El comparador
+  pone primero la habitación menor y, en la misma, la máscara menor; los
+  pasos no entran, así que misma habitación con mismas luces es la misma
+  clave. `roomAdj` marca las puertas y `lightAdj` los interruptores.
+- 63 a 79: `obj` es la máscara de la meta, `1 << (r - 1)`. El inicio es
+  $(1, 1)$, a distancia $0$. La búsqueda saca estados hasta que la línea 75
+  reconoce la meta o la cola se vacía.
+- 80 a 93: moverse a $i$ si hay puerta y el bit $i-1$ está prendido, el `&`.
+- 95 a 108: accionar el interruptor de la luz $i$, con $i$ distinta de la
+  habitación actual; el `^` invierte el bit, y `"on"` u `"off"` sale de
+  comparar las dos máscaras.
 
-```python
-def ssspBFS(s, puertas, interruptores):
-  # d[u]: pasos de s a u; p[u]: (estado anterior, texto del paso).
-  # Un estado que no esta en d no se ha descubierto: costo infinito.
-  q = deque()
-  d, p = {}, {}
-  q.append(s)
-  d[s] = 0
+En las líneas 112 a 127 la
+distancia de la meta es el número de pasos, que se imprimen en el formato del
+enunciado. En las líneas 135 a 152 las matrices y `dist` se limpian antes de
+cada villa, y una puerta se marca en los dos sentidos y un interruptor en uno
+solo.
 
-  while len(q) > 0:
-    v = q.popleft()
-    for (u, texto) in sucesores(v, puertas, interruptores):
-      if u not in d:
-        q.append(u)
-        d[u] = d[v] + 1
-        p[u] = (v, texto)
+Desde A $= (1, 1)$ las puertas no dan nada, porque `1 & 2` y `1 & 4` son $0$.
+Los interruptores dan B con `1 ^ 2 = 3` y C con `1 ^ 4 = 5`, en ese orden,
+porque el `for` recorre $i = 2$ antes que $i = 3$.
 
-  return d, p
-```
+Hay a lo sumo $r \cdot 2^r$ estados, cada uno sale una vez de la cola y los
+dos `for` dan $2r$ candidatos por estado. Cada candidato cuesta una búsqueda
+en `map`, $O(\lg(r \cdot 2^r)) = O(r)$, y la copia de los pasos. Con $r = 10$
+son $10\,240$ estados y unos $200\,000$ candidatos por villa.
 
-Es `ssspBFS` con un solo origen, la misma de la
-[nota de caminos más cortos](../C12/Caminos%20cortos.md). Los estados no son
-`0..n-1`, así que `d` y `p` son diccionarios, y `u not in d` hace las veces de
-`d[u] == float("inf")`. Los sucesores se calculan al sacar cada estado: el
-grafo nunca se construye completo.
+### La búsqueda sobre la villa 1
 
-Cada estado entra una vez a la cola y genera a lo sumo $2r$ sucesores:
-$O(r \cdot 2^r \cdot r)$ pasos, sin contar la copia de las luces, que cuesta
-$O(r)$ por sucesor.
+| Sale (72) | $d$ | Nuevos (88 a 90, 103 a 105) | Ya en `dist` | Cola |
+|---|---|---|---|---|
+| A | $0$ | B, C | | B C |
+| B | $1$ | D, E | A | C D E |
+| C | $1$ | F | E, A | D E F |
+| D | $2$ | G | B | E F G |
+| E | $2$ | H, I | C, B | F G H I |
+| F | $2$ | | C, I | G H I |
 
-### Del árbol a los pasos
+De B sale primero la puerta a $2$, que da D, y después prender $3$, que da E:
+las puertas van antes que los interruptores. De C salen F y, otra vez, E. D
+descubre G al apagar la luz $1$, E descubre H e I por sus dos puertas, y F no
+descubre nada. La meta L sale de la cola con $d = 6$.
 
-```python
-def resolver(r, puertas, interruptores):
-  # (hay, pasos): si se llega a la meta y el texto de cada paso.
-  luces = [False] * (r + 1)
-  luces[1] = True
-  s = (1, tuple(luces))
-  luces = [False] * (r + 1)
-  luces[r] = True
-  meta = (r, tuple(luces))
-  d, p = ssspBFS(s, puertas, interruptores)
-  hay = meta in d
-  pasos = []
-  if hay:
-    x = meta
-    while x != s:
-      (anterior, texto) = p[x]
-      pasos.append(texto)
-      x = anterior
-    pasos.reverse()
-  return (hay, pasos)
-```
-
-Se sube por `p` desde la meta, como con un camino de la amplitud, y se voltea
-la lista. `main` lee las villas e imprime en el formato del enunciado. Con el
-ejemplo del enunciado la salida es igual, línea por línea, a la que trae el
-enunciado:
+Con el ejemplo del enunciado la salida es igual, línea por línea, a la que
+trae el enunciado:
 
 ```text
 Villa #1
@@ -876,8 +1035,12 @@ The problem cannot be solved.
 
 **Consejo.** El estado es la pieza que hay que encontrar: lo que hace falta
 saber para decidir qué pasos son posibles. La trampa está en $r = 1$: el hall
-ya es el dormitorio, y la respuesta es `The problem can be solved in 0 steps:`.
-El juez acepta cualquier solución con el menor número de pasos.
+ya es el dormitorio, la línea 75 reconoce el inicio como meta y la respuesta
+es `The problem can be solved in 0 steps:`. Si hay varias soluciones con el
+menor número de pasos, el enunciado pide una sola.
+
+El grafo de estados, las máscaras y el código línea por línea siguen en la
+[nota de grafos de estado](../C14/Grafos%20de%20estado.md).
 
 ## Problemas de juez
 
@@ -944,8 +1107,8 @@ Cada archivo compila solo y trae al final su ejemplo de entrada:
   negativo.
 - [bfm4.cpp](./codigo/bfm4.cpp): para cuando una ronda no cambia nada.
 - [bfm5.cpp](./codigo/bfm5.cpp): la cola de Moore con `enCola` y `conteo`.
-- [new_villa.py](./codigo/new_villa.py): UVa 321 con la búsqueda en amplitud
-  sobre los estados.
+- [321-new-villa.cpp](./codigo/321-new-villa.cpp): UVa 321 con la búsqueda
+  en amplitud sobre los estados y las luces en una máscara de bits.
 
 ## Ejercicios
 
