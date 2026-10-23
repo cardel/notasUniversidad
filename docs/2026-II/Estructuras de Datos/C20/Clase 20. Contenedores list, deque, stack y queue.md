@@ -235,7 +235,7 @@ La lista ocupa $\Theta(n)$: dato y dos punteros por nodo, más lo que pide cada
 | Nodo de `list<int>` | Bytes | 40 nodos |
 |---|---:|---:|
 | suma de los campos | 20 | 800 |
-| `sizeof(_List_node<int>)` | 24 | 960 |
+| `sizeof(Nodo)` | 24 | 960 |
 
 En la biblioteca de GCC el nodo guarda primero los dos punteros, en los bytes
 0 a 15, y el entero en los bytes 16 a 19. El tamaño del nodo se redondea a un
@@ -962,9 +962,8 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
   `b` y la del 4 antes y después del `splice`, que salen iguales; después
   `a: 1 4 5 2 3`, `b:` y `*cuatro = 4, it en el 4: 1`.
 - [tamano_nodo.cpp](./codigo/tamano_nodo.cpp): el nodo de `list<int>`.
-  Imprime `int 4, puntero 8`, `suma de los campos: 20`, `sizeof(Nodo): 24`,
-  `sizeof(_List_node<int>): 24` y `40 nodos: 800 bytes por campos, 960 por
-  sizeof`.
+  Imprime `int 4, puntero 8`, `suma de los campos: 20`, `sizeof(Nodo): 24` y
+  `40 nodos: 800 bytes por campos, 960 por sizeof`.
 
 **`deque` y adaptadores**
 

@@ -172,12 +172,8 @@ punteros de la estructura.
 
 Un programa inserta $n$ claves distintas y las busca todas en las dos
 estructuras. Compilado con `g++ -Wall -Wextra`, sin optimizaciones, en el
-equipo donde se preparó la sesión:
-
-| $n$ | $m$ | Tabla hash | `map` |
-|---|---|---|---|
-| $10^5$ | 99 991 | 0,005 s | 0,068 s |
-| $10^6$ | 999 983 | 0,076 s | 0,780 s |
+equipo donde se preparó la sesión. Las cifras, al lado de las del
+`unordered_map`, están al final de la sección siguiente.
 
 La tabla hash conviene cuando solo se pregunta si una clave está y qué valor
 tiene. El `map`, cuando la salida va en orden de clave, cuando se pide la menor
@@ -469,16 +465,15 @@ void medirUnordered(int n) {
 
 En esta tabla las tres columnas salen de una misma sesión, con `medir.cpp` para
 la tabla hash y el `map` y con `medir_hash.cpp` para el `unordered_map`, sin
-optimizaciones; cada tiempo es la mediana de tres corridas. Por eso las dos
-primeras columnas no repiten las cifras de la tabla de *Lo que cuesta*, que
-viene de otra corrida.
+optimizaciones; cada tiempo es la mediana de tres corridas.
 
 | $n$ | $m$ | Tabla hash | `map` | `unordered_map` |
 |---|---|---|---|---|
 | $10^5$ | 99 991 | 0,005 s | 0,091 s | 0,033 s |
 | $10^6$ | 999 983 | 0,045 s | 1,018 s | 0,320 s |
 
-El `unordered_map` resulta unas tres veces más rápido que el `map` y unas siete
+La tabla del curso le gana al `map` unas dieciocho veces con $n = 10^5$ y unas
+veintidós con $n = 10^6$. El `unordered_map` resulta unas tres veces más rápido que el `map` y unas siete
 veces más lento que la tabla del curso. La tabla del curso arranca con $m$
 cercano a $n$, nunca crece y su `insertar` no revisa si la clave ya estaba. El
 `unordered_map` empieza con 13 cubetas, crece 17 veces hasta 1 447 153 con
