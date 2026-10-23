@@ -15,6 +15,20 @@ ciclo.
 
 ![](./Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+### Soluciones de programación
+
+Trazas, código en Python y en C++, trampas y costo de UVa 507, UVa 108 y
+UVa 839.
+
+![](./Soluciones-programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+### Soluciones de lógica
+
+Los tres ejercicios resueltos: predicados sobre un arreglo, el invariante de
+un ciclo y los invariantes de UVa 11078 y UVa 507.
+
+![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
 ## Problemas en clase
 
 Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
