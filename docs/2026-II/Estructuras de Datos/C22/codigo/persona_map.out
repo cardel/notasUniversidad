@@ -1,0 +1,8 @@
+25 3000 beto (llego 1)
+25 3000 eva (llego 4)
+30 1500 dario (llego 3)
+30 2000 ana (llego 0)
+30 2000 carla (llego 2)
+size: 5 con operator<, 5 con CompararPersona, 2 con SoloEdad
+SoloEdad: 25 3000 beto -> 4
+SoloEdad: 30 2000 ana -> 3
