@@ -66,9 +66,15 @@ Se publican después de cada sesión.
    y `reversa` con sus costos, el ordenamiento por inserción, los métodos
    predefinidos y `flatten`. Incluye el código escrito en clase. Sus
    [ejercicios](../../actividades/pfc/listas/index.md) están publicados.
-7. Clase 7. Listas II: tuplas, ordenamiento por mezcla y alto orden —
-   22 de octubre. Los
-   [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) ya
+7. [Clase 7. Listas II, 22 de octubre](C7/Clase%207.%20Listas%20II.md): las
+   tuplas y en qué se apartan de la lista, el reconocimiento de patrones sobre
+   una tupla de dos listas, el ordenamiento por mezcla con `splitAt` y `merge`
+   con su traza completa, la suma genérica que se resuelve pasando la
+   operación por parámetro, `map` y el cambio de tipo, `filter` frente a
+   `takeWhile`, `span` con `empaquetar` y `codificar`, y `reduce` y `fold`
+   con la asociatividad que decide cuál de los dos sirve. Incluye el código
+   escrito en clase. Sus
+   [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md)
    están publicados.
 8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
 9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
@@ -158,6 +164,7 @@ ejemplos de los informes.
 |---:|---|---|
 | 1 | [Cifrados clásicos con recursión](https://github.com/EjerciciosClasesCardel/pfc-taller-1-cifrados-clasicos) | jueves 8 de octubre, 23:59 |
 | 2 | [Un robot en la cuadrícula](https://github.com/EjerciciosClasesCardel/pfc-taller-2-robot-en-cuadricula) | jueves 22 de octubre, 23:59 |
+| 3 | [Consulta sobre un registro sísmico](https://github.com/EjerciciosClasesCardel/pfc-taller-3-registro-sismico) | jueves 12 de noviembre, 23:59 |
 
 ## Reglas del código
 
