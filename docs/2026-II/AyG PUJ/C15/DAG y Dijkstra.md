@@ -519,6 +519,10 @@ $4$ y $5$ hay una arista en cada sentido, las dos de peso $6$.
 | $(9, 4)$ | $\mathit{dist}[7] \gets 12$, $\mathit{pred}[7] = 4$ | $(12,7)$ |
 | $(12, 7)$ | nada | vacía |
 
+La columna de la cola lleva todas las parejas metidas, también las que no se
+van a usar. En este grafo no sobra ninguna, porque ningún vértice mejora dos
+veces; el caso contrario es el de la sección siguiente.
+
 La línea 39 mete $(0,3)$, y al sacarla las aristas $(3,2)$ y $(3,6)$ meten dos
 parejas. Cuando sale $(4,2)$, las aristas de $2$ van a $0$, con peso $2$, y a
 $4$, con peso $5$. ¿Qué parejas entran a la cola? Solo $(6,0)$. Por $(2,4)$
@@ -531,12 +535,18 @@ $\langle 3, 6, 5, 4, 7 \rangle$, de peso $2 + 1 + 6 + 3 = 12$.
 
 ### Una pareja vieja
 
-En el grafo de la primera versión, con el código, `dijkstra(G, 7)`. Cuando
-sale $1$, la línea 51 mete $(12, 3)$. Más adelante sale $4$ con $6$ y mete
-$(7, 3)$, y las dos parejas del vértice $3$ quedan en la cola.
+En el grafo de la primera versión, con el código, `dijkstra(G, 7)`. La pareja
+$(12, 3)$ entra cuando sale $1$ y se queda en la cola hasta el final sin que
+nadie la use, porque el camino bueno hasta $3$ aparece después, por $4$. La
+columna de la cola la lleva fila por fila, que es la única forma de ver
+cuándo deja de servir.
 
 | Sale (43) | Línea 45 | `pqueue` después |
 |---|---|---|
+| $(0, 7)$ | $0 = 0$: se procesa | $(2,1)$, $(3,2)$ |
+| $(2, 1)$ | $2 = 2$: se procesa; mete $(12,3)$ | $(3,2)$, $(12,3)$ |
+| $(3, 2)$ | $3 = 3$: se procesa; mete $(5,5)$ | $(5,5)$, $(12,3)$ |
+| $(5, 5)$ | $5 = 5$: se procesa; mete $(6,4)$ y $(6,6)$ | $(6,4)$, $(6,6)$, $(12,3)$ |
 | $(6, 4)$ | $6 = 6$: se procesa; mete $(7,3)$ | $(6,6)$, $(7,3)$, $(12,3)$ |
 | $(6, 6)$ | $6 = 6$: se procesa | $(7,3)$, $(12,3)$ |
 | $(7, 3)$ | $7 = 7$: se procesa | $(12,3)$ |
