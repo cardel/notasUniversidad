@@ -55,6 +55,12 @@ orden.
 $\Theta(\log n)$, pero un código nuevo menor que todos corre a los demás una
 casilla: insertar cuesta $\Theta(n)$.
 
+Con el vector `3 7 9 12` y un 2 que llega, la búsqueda binaria encuentra en dos
+comparaciones que el 2 va en la posición 0, pero antes de escribirlo hay que
+correr el 12, el 9, el 7 y el 3 una casilla a la derecha, empezando por el
+último para no pisar ninguno. Queda `2 3 7 9 12`: dos comparaciones para
+buscar y cuatro movimientos para abrir el hueco, que con $n$ elementos son $n$.
+
 | | Buscar | Insertar un código nuevo | Recorrer en orden |
 |---|---|---|---|
 | Tabla hash | $\Theta(1 + \alpha)$ promedio | $\Theta(1 + \alpha)$ promedio | $\Theta(m + n) + \Theta(n \log n)$ |
@@ -112,6 +118,21 @@ pareja y se compara antes de leer `->second`. `inv.count(112)` da 1 y
 `inv.count(200)` da 0. Dos llamadas seguidas a `inv.erase(305)` devuelven 1 y
 0: sacar una clave que no está es válido. Ninguna de las tres inserta.
 
+`end()` no apunta a la última pareja sino a la casilla que sigue, como la
+puerta de un salón, que queda después del último puesto. El iterador que
+devuelve `find` señala la pareja guardada dentro del `map`; un `int`, en
+cambio, guarda una copia del valor:
+
+```cpp
+map<int, int>::iterator f = inv.find(112);
+int copia = f->second;   // copia el valor: 2
+copia = 9;               // inv[112] sigue en 2
+f->second = 9;           // inv[112] pasa a 9
+```
+
+Cambiar `copia` no toca el `map`; cambiar `f->second` sí. El programa completo
+está en [iterador_valor.cpp](./codigo/iterador_valor.cpp).
+
 ### Recorrer en orden
 
 El recorrido es el de `vector` y `list`: un iterador desde `begin()` hasta
@@ -134,7 +155,10 @@ leen con `scanf("%s", pal)` en el mismo arreglo, todas son la misma clave: con
 `sol mar sol luna mar sol` el `map` termina con una sola pareja, `sol 6`. La
 clave tiene que ser un `string`: `string clave = pal;` copia las letras, y dos
 `string` se comparan en orden alfabético. La misma entrada da `luna 1`, `mar 2`
-y `sol 3`. Para imprimir el `string` con `printf` se usa `c_str()`. Con palabras
+y `sol 3`. Ese orden alfabético compara letra por letra según el código ASCII,
+donde las mayúsculas (65 a 90) van antes que las minúsculas (97 a 122): con
+las claves `carlos`, `Carlos` y `Zoe` el recorrido da `Carlos`, `Zoe` y
+`carlos`. Para imprimir el `string` con `printf` se usa `c_str()`. Con palabras
 de largo $L$, cada comparación cuesta hasta $L$ y cada operación
 $O(L \log n)$.
 
@@ -148,6 +172,12 @@ Como en la búsqueda binaria, cada comparación descarta cerca de la mitad de la
 claves que quedan: con un millón de claves, unas veinte comparaciones, porque
 $\log_2 10^6 \approx 19{,}9$. A diferencia del vector ordenado, insertar no
 corre a nadie.
+
+Es el juego de adivinar un número entre 1 y 100 cuando solo se responde
+*mayor*, *menor* o *es ese*. Se pregunta por 50; si la respuesta es *mayor*,
+quedan 51 a 100 y se pregunta por 75; si ahora es *menor*, quedan 51 a 74. Cada
+pregunta descarta la mitad, y como $2^7 = 128 \ge 100$, siete preguntas
+alcanzan siempre. Probar de uno en uno puede pedir las cien.
 
 | Operación | Tiempo | Por qué |
 |---|---|---|
@@ -301,6 +331,11 @@ int hashMult(int k, int m) {
 }
 ```
 
+La conversión `(long long) t` trunca, es decir, quita los decimales. Si
+$t = 1{,}5$, el truncado es 1 y la parte fraccionaria es $1{,}5 - 1 = 0{,}5$; si
+$t = 3{,}88$, queda $3{,}88 - 3 = 0{,}88$. Como $k$ y $A$ son positivos, truncar
+coincide con tomar el piso, y la resta da $k A \bmod 1$.
+
 Para $k = 123456$ y $m = 10\,000$: $k A = 76300{,}0041\ldots$, la parte
 fraccionaria es $0{,}0041\ldots$, al multiplicarla por $10\,000$ queda
 $41{,}1\ldots$, y $h(k) = 41$. Sobre los múltiplos de 8 con $m = 16$,
@@ -388,7 +423,11 @@ vuelve a colgar todas las claves en sus cubetas nuevas. Eso es un *rehash*.
 | 258 | 541 |
 | 542 | 1 109 |
 
-Entre fila y fila, $\alpha$ sube hasta 1 sin que la tabla crezca. El rehash
+Entre fila y fila, $\alpha$ sube hasta 1 sin que la tabla crezca. El número
+nuevo de cubetas es un primo de al menos el doble de las que había: de 13 se
+pasa a 29, no a 23, que queda por debajo de $2 \cdot 13 = 26$. Tampoco es
+siempre el primo siguiente al doble: de 257 se pasa a 541, aunque 521 ya es
+primo y mayor que 514, porque la biblioteca escoge de una lista fija de primos. El rehash
 recorre las $n$ claves y las cuelga otra vez, $\Theta(n)$ en esa inserción.
 Después de crecer de $m$ a cerca de $2m$ cubetas hacen falta unas $m$
 inserciones más para volver a $\alpha = 1$, así que el costo $\Theta(m)$ del
@@ -714,6 +753,12 @@ lo sumo 3.
 Al revés no se rompe nada. Un hash que solo mira la edad da respuestas
 correctas, pero lentas, como en la tabla de colisiones.
 
+Si la estructura trae un campo que ya identifica a cada persona, como el
+número de cédula, el hash puede mirar solo ese campo. Dos personas iguales
+tienen la misma cédula y caen en la misma cubeta, y dos distintas tienen
+cédulas distintas, así que el campo reparte tan bien como los tres juntos y
+cuesta $\Theta(1)$ en lugar de $\Theta(L)$.
+
 ### Qué le pide cada contenedor a la clave
 
 | | `map` | `unordered_map` |
@@ -956,6 +1001,9 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
 - [inventario.cpp](./codigo/inventario.cpp): el problema del inventario, con
   [entrada](./codigo/inventario.in) y [salida](./codigo/inventario.out).
 - [medir.cpp](./codigo/medir.cpp): el tiempo de la tabla hash y del `map`.
+- [iterador_valor.cpp](./codigo/iterador_valor.cpp): un iterador frente a una
+  copia del valor, y el orden de las claves con mayúsculas, con
+  [salida](./codigo/iterador_valor.out).
 - [unordered_uso.cpp](./codigo/unordered_uso.cpp): el inventario con
   `unordered_map`, la misma interfaz que `map`.
 - [hash_division.cpp](./codigo/hash_division.cpp) y

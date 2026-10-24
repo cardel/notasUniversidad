@@ -187,6 +187,12 @@ los libera con `delete`. `delete` sobre `NULL` no hace nada, así que eliminar u
 código que no está es válido. `buscar` devuelve el puntero de la casilla: o el
 registro, o `NULL`.
 
+El nombre se copia con `strcpy` dentro del arreglo del registro. Si `Registro`
+guardara un `const char *nombre` y `insertar` asignara el puntero, la tabla
+apuntaría al arreglo de quien llamó: cuando ese arreglo se reutiliza para leer
+el siguiente nombre, el registro cambia con él, y cuando se libera, el registro
+apunta a memoria que ya no es suya.
+
 [tabla_uso.cpp](./codigo/tabla_uso.cpp) repite el laboratorio con la tabla:
 
 ```cpp
@@ -234,6 +240,12 @@ El espacio es $\Theta(m)$ punteros, uno por clave *posible*, más $\Theta(n)$
 registros, uno por clave guardada. Como $n \leq m$, el total es
 $\Theta(m) = \Theta(|U|)$: lo fija el universo, no lo que se guarda. Con
 $m = 1000$ y punteros de 8 bytes, la tabla vacía ya ocupa 8000 bytes.
+
+Llena, la cuenta suma los registros. Un `Registro` guarda la clave, un `int` de
+4 bytes, y `nombre[20]`, 20 bytes de un `char` cada uno; con `g++` en una
+máquina de 64 bits, `sizeof(Registro)` da 24. Las 1000 casillas ocupadas piden
+$1000 \cdot 8 + 1000 \cdot 24 = 32\,000$ bytes, y la parte de los punteros no
+baja aunque se borren todos los registros.
 
 ## Pocas claves, universo enorme: la función hash
 
@@ -307,7 +319,15 @@ paso:
 Se reduce en cada paso porque, sin reducir, una palabra de seis letras
 minúsculas ya pasa de $97 \cdot 31^5 \approx 2{,}8 \cdot 10^9$, más de lo que
 cabe en un `int`. Con la reducción, $h < m$ siempre, y el residuo final es el
-mismo. [hash_cadenas.cpp](./codigo/hash_cadenas.cpp) calcula las dos funciones:
+mismo. Con `sol` se comprueba sin la tabla:
+$115 \cdot 31^2 + 111 \cdot 31 + 108 = 114\,064 = 13 \cdot 8774 + 2$. El residuo
+de una suma y el de un producto se pueden sacar de los residuos de sus
+términos, así que reducir en cada vuelta da el mismo 2 con números que se
+quedan en unos cientos. Sin reducir, una palabra de ocho letras como `solecito`
+aporta en su primera letra $115 \cdot 31^7 \approx 3{,}2 \cdot 10^{12}$, unas
+1500 veces el máximo de un `int`.
+
+[hash_cadenas.cpp](./codigo/hash_cadenas.cpp) calcula las dos funciones:
 
 | Palabra | Suma | Polinomio |
 |---|---|---|
@@ -392,6 +412,28 @@ cayeron las demás), CLRS (teoremas 11.1 y 11.2) concluye que una búsqueda que
 falla y una que acierta cuestan, en promedio, $\Theta(1 + \alpha)$: el 1 es
 calcular $h(k)$ y llegar a la casilla, y $\alpha$ es el recorrido.
 
+El cociente $n/m$ se calcula para cualquier función; el hashing uniforme es lo
+que lo vuelve el largo esperado de la lista que se recorre. Sigue siendo un
+promedio: con 70 claves en 7 casillas, $\alpha = 10$, y aun con una buena
+función alguna lista pasa de 10 y otra se queda corta. En el ejemplo, con
+$\alpha \approx 0{,}86$, hay una lista de 3 y cuatro casillas vacías.
+
+Ordenar cada lista no trae búsqueda binaria. Para llegar al nodo del medio de
+una lista enlazada hay que caminar desde la cabeza, y partir en mitades cuesta
+lo mismo que recorrer; la búsqueda binaria pide el acceso por posición en
+$\Theta(1)$ de un arreglo. Con la lista ordenada, una búsqueda que falla se
+detiene en la primera clave mayor, pero sigue en $\Theta(1 + \alpha)$ promedio
+y $\Theta(n)$ en el peor caso, e `insertar` sube de $\Theta(1)$ a
+$\Theta(1 + \alpha)$ porque primero busca el lugar.
+
+Las tablas de las bibliotecas mantienen $\alpha$ acotado agrandándose: cuando
+$\alpha$ pasa de un umbral reservan un arreglo más grande, recalculan $h(k)$ con
+el $m$ nuevo y cuelgan cada clave en su lista nueva. Esa pasada cuesta
+$\Theta(m + n)$ y no ocurre en cada inserción. En un diccionario de Python,
+`d["Carlos"] = 40` sobre una clave que ya estaba reemplaza el valor, como
+`insertar` en la tabla directa: es la misma clave, no una colisión. Dos claves
+distintas que caen en la misma casilla quedan guardadas las dos.
+
 **Teorema.** Si la tabla tiene $m \geq n/2$ casillas, entonces
 $f(n) = 1 + n/m$ es $O(1)$.
 
@@ -454,6 +496,19 @@ Con el método de la división se escoge un primo que no esté cerca de una
 potencia de 2 (CLRS, §11.3). Una potencia de 2 o de 10 usa solo los últimos
 bits o los últimos dígitos de la clave, como la tabla de 100 casillas con los
 documentos.
+
+Multiplicar por $2^j$ corre los bits $j$ lugares a la izquierda:
+$7 = 111_2$ y $7 \cdot 8 = 111000_2 = 32 + 16 + 8 = 56$. Dividir entre $2^j$
+los corre a la derecha, y lo que sale por la derecha es el residuo: $111_2$
+entre 2 da $11_2 = 3$ y sobra el último bit, 1. Con
+$1000 = 1111101000_2$, el residuo módulo 4 son los dos últimos bits,
+$00_2 = 0$, y módulo 64 los seis últimos, $101000_2 = 40$. De ahí salen las
+dos caras de $m = 2^j$. El procesador cambia la división por un
+desplazamiento, que es más barato; y dos claves con los mismos $j$ bits finales
+caen juntas, sin importar el resto. Con un primo lejos de una potencia de 2 o
+de 10, cada bit de la clave influye en el residuo. Ninguna elección de $m$
+evita todos los choques: para cualquier $m$ hay claves que caen en la misma
+casilla.
 
 ## Para el juez
 
