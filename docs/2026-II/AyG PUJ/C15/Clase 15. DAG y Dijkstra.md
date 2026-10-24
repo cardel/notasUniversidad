@@ -38,6 +38,19 @@ respuesta del enunciado.
 
 </div>
 
+## Apuntes de la sesión
+
+- Sumar un peso a $\infty$ desborda si el infinito se escribe como el máximo
+  del tipo. Se usa una cota grande que resista la suma, o se compara antes de
+  sumar.
+- Las parejas viejas se quedan en la cola a propósito. `heapq` solo ofrece
+  meter y sacar la menor; sacar una de la mitad obligaría a recorrerla, y como
+  la pareja vieja carga una distancia mayor siempre sale después de la buena,
+  cuando ya basta con descartarla.
+- Los caminos más cortos entre todos los pares de un DAG salen de repetir la
+  pasada con cada vértice como fuente, y el orden topológico se calcula una
+  sola vez para todas.
+
 ## Ejercicios
 
 Las actividades interactivas de caminos más cortos en DAG y de Dijkstra están

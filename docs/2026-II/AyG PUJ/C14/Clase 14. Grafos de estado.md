@@ -36,6 +36,20 @@ $6$ pasos.
 
 </div>
 
+## Apuntes de la sesión
+
+- En C++ la resta se evalúa antes que el desplazamiento, de modo que
+  `1 << r-1` y `1 << (r-1)` son lo mismo. Compilar las dos formas da el mismo
+  valor, y escribir los paréntesis sale más barato que recordar la tabla de
+  precedencias.
+- El grafo de estados tiene ciclos: prender una luz y apagarla devuelve al
+  vértice de partida. La amplitud sigue dando el camino más corto porque
+  `dist` marca lo ya descubierto y ningún estado se expande dos veces.
+- El estado es una estructura y no un entero, y por eso la tabla de lo
+  visitado pide algo más: `map` necesita un comparador, y `unordered_map`
+  necesita `hash` y `operator==`. Las dos versiones pasan el juez. Codificar
+  la pareja en un solo entero, $h \cdot 2^R + L$, ahorra las dos cosas.
+
 ## Ejercicios
 
 Las actividades interactivas del tema están en la
