@@ -42,6 +42,9 @@ tiene la columna del o exclusivo junto a la tabla de los conectivos; la 24,
 la negación de la implicación, y la 51, los dos órdenes de los
 cuantificadores.
 
+La grabación de la sesión, partida en videos cortos por tema, está en la
+[lista de reproducción del refuerzo](https://www.youtube.com/playlist?list=PLKsjj1jEesqU){ target=_blank rel=noopener }.
+
 ## Código de la sesión
 
 Los programas están en

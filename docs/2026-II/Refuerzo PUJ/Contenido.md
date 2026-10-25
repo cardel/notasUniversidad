@@ -30,17 +30,17 @@ puede trabajar el mismo ejercicio en C.
    las estructuras con lo que cuesta cada operación, la memoria y la pila de
    llamadas, y un recorrido contra dos con UVa 11078.
 2. [24 de octubre. Tramos, matrices, recursión e invariantes](./B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md):
-   el mejor tramo de un arreglo con UVa 507, matrices y acumulados con
-   UVa 108, recursión sobre un árbol con UVa 839, y en lógica predicados e
-   invariantes de ciclo.
-3. 7 de noviembre. Pilas, colas, diccionarios y colas de prioridad: pilas y colas
-   en simulación con UVa 12100, diccionarios y conjuntos con UVa 156, colas
-   de prioridad con UVa 1203, y en lógica los tipos de demostración y las
-   cotas con $O$.
-4. 14 de noviembre. Búsqueda binaria, bisección y entrada a grafos: búsqueda binaria
-   con UVa 10611, bisección sobre la respuesta con UVa 11413, recorrido en
-   amplitud con UVa 924, y en lógica invariantes de ciclo sobre la búsqueda
-   binaria y ciclos del nivel de los parciales.
+   los acumulados y el mejor tramo de un arreglo con UVa 507, en dos horas,
+   los acumulados en dos dimensiones con UVa 108, y en lógica proposiciones,
+   cuantificadores y la definición de $O$.
+3. 7 de noviembre. Recursión, pilas, colas y diccionarios: recursión sobre un
+   árbol con UVa 839, pilas y colas en simulación con UVa 12100, diccionarios
+   y conjuntos con UVa 156, y en lógica predicados e invariantes de ciclo
+   sobre UVa 11078 y UVa 507.
+4. 14 de noviembre. Colas de prioridad, bisección y entrada a grafos: colas de
+   prioridad con UVa 1203, búsqueda binaria y bisección sobre la respuesta con
+   UVa 11413, recorrido en amplitud con UVa 924, y en lógica los tipos de
+   demostración, la cota con $O$ y el invariante de la bisección.
 
 ## Clases en video
 

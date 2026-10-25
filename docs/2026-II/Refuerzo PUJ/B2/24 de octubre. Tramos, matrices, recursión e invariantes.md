@@ -5,6 +5,12 @@ sobre el mejor tramo de un arreglo, los rectángulos de una matriz y la
 recursión sobre un árbol, y una de lógica sobre predicados e invariantes de
 ciclo.
 
+En la sesión UVa 507 ocupó dos horas y UVa 108 la tercera. UVa 839 y la hora
+de invariantes pasan al 7 de noviembre. La hora de lógica fue la de
+proposiciones, cuantificadores y la definición de $O$: las
+[diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener }
+y las [anotadas en la sesión](./logica-anotada.pdf){ target=_blank rel=noopener }.
+
 ## Diapositivas
 
 ### Programación
