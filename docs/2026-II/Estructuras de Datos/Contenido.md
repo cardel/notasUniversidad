@@ -47,6 +47,8 @@ y sus soluciones en Python y C++.
 20. [Clase 20. Contenedores list, deque, stack y queue, 16 de octubre](C20/Clase%2020.%20Contenedores%20list,%20deque,%20stack%20y%20queue.md)
 21. [Clase 21. Tablas de direccionamiento directo y tablas hash, 21 de octubre](C21/Clase%2021.%20Tablas%20de%20direccionamiento%20directo%20y%20tablas%20hash.md)
 22. [Clase 22. El contenedor map y ejercicios, 23 de octubre](C22/Clase%2022.%20El%20contenedor%20map%20y%20ejercicios.md)
+23. [Clase 23. Árboles y árboles binarios, 28 de octubre](C23/Clase%2023.%20%C3%81rboles%20y%20%C3%A1rboles%20binarios.md)
+24. [Clase 24. Árbol binario de búsqueda, 30 de octubre](C24/Clase%2024.%20%C3%81rbol%20binario%20de%20b%C3%BAsqueda.md)
 
 ## Apéndices
 

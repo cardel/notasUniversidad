@@ -1,0 +1,4 @@
+prefija:  * + 3 4 - 5 2 
+infija:   ((3 + 4) * (5 - 2))
+postfija: 3 4 + 5 2 - * 
+valor:    21

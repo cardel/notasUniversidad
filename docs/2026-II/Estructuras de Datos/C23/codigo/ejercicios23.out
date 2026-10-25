@@ -1,0 +1,17 @@
+hojas: 4
+suma: 53
+maximo: 14
+nodos en el nivel 0: 1
+nodos en el nivel 1: 2
+nodos en el nivel 2: 3
+nodos en el nivel 3: 2
+nodos en el nivel 4: 0
+hojas del vacio: 0, suma del vacio: 0
+iguales(a, b): si
+preorden del espejo: 8 10 14 3 6 7 4 1 
+inorden del espejo: 14 10 8 7 6 4 3 1 
+iguales(a, espejo): no
+espejo del espejo, iguales(a, b): si
+iguales(vacio, vacio): si
+preorden de c: 8 3 1 6 4 7 10 14 
+iguales(a, c): no
