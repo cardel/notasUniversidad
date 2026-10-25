@@ -147,17 +147,16 @@ quedan disponibles después para volver sobre el tema.
    la extensión del lenguaje con una forma nueva.
 
 8. [Ejercicios de la clase 7: asignación y paso por referencia](../../actividades/flp/asignacion-y-paso-por-referencia/index.md)
-   Quince actividades, en el orden de los temas de la sesión: qué separa
-   una ligadura de una asignación y cuándo el orden de evaluación cambia el
-   resultado, las producciones de `set` y `begin` en los dos sentidos, las
-   clausuras que comparten celdas frente a las que copiarían valores, el TAD
-   referencia y el ambiente con vectores escritos pieza por pieza, la cadena
-   dibujada con celdas que cambian, las cláusulas de `set` y `begin` en el
-   evaluador, trazas completas con cada asignación marcada, el mismo programa
-   por valor y por referencia, los blancos directos e indirectos con
-   `eval-rand` escrito a mano, los alias y la cadena con `indirect-target`, y
-   la extensión del lenguaje con una forma nueva. Los programas corren con los
-   dos interpretadores de la sesión, que tienen ambientes iniciales distintos.
+   Dieciocho actividades, en el orden de los temas de la sesión: valor y
+   efecto con el orden de evaluación, el almacén con sus operaciones y escrito
+   en código, las referencias explícitas para predecir y para dibujar, las
+   producciones de `set` y `begin`, las clausuras que comparten celdas, las
+   cláusulas del intérprete con asignación, la cadena dibujada con
+   referencias, trazas completas, las celdas que reserva un `letrec`, el
+   ambiente y un intérprete pequeño escritos a mano, y el paso por valor
+   frente al paso por referencia, con los alias, su dibujo y
+   `evaluar-operando` en código. Casi todas dibujan la cadena de ambientes con
+   el almacén debajo y una flecha de cada referencia a su celda.
 
 ## Ejercicios de clase
 
