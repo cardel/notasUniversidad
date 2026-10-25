@@ -146,6 +146,19 @@ quedan disponibles después para volver sobre el tema.
    del ambiente escrito con listas etiquetadas, y el conteo de clausuras más
    la extensión del lenguaje con una forma nueva.
 
+8. [Ejercicios de la clase 7: asignación y paso por referencia](../../actividades/flp/asignacion-y-paso-por-referencia/index.md)
+   Quince actividades, en el orden de los temas de la sesión: qué separa
+   una ligadura de una asignación y cuándo el orden de evaluación cambia el
+   resultado, las producciones de `set` y `begin` en los dos sentidos, las
+   clausuras que comparten celdas frente a las que copiarían valores, el TAD
+   referencia y el ambiente con vectores escritos pieza por pieza, la cadena
+   dibujada con celdas que cambian, las cláusulas de `set` y `begin` en el
+   evaluador, trazas completas con cada asignación marcada, el mismo programa
+   por valor y por referencia, los blancos directos e indirectos con
+   `eval-rand` escrito a mano, los alias y la cadena con `indirect-target`, y
+   la extensión del lenguaje con una forma nueva. Los programas corren con los
+   dos interpretadores de la sesión, que tienen ambientes iniciales distintos.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
