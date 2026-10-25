@@ -29,6 +29,16 @@ un ciclo y los invariantes de UVa 11078 y UVa 507.
 
 ![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+## Sesiones
+
+- [Sesión 2. Tramos, matrices y lógica](./Notas.%20Tramos,%20matrices%20y%20l%C3%B3gica.md):
+  la lectura con `scanf`, los acumulados en una y dos dimensiones, el mejor
+  tramo, UVa 507 y UVa 108, y la hora de lógica con cuantificadores y la
+  definición de $O$.
+- [programacion-anotada.pdf](./programacion-anotada.pdf){ target=_blank rel=noopener }
+  y [logica-anotada.pdf](./logica-anotada.pdf){ target=_blank rel=noopener }:
+  los dos decks con lo escrito durante la sesión y las hojas de tablero.
+
 ## Problemas en clase
 
 Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
