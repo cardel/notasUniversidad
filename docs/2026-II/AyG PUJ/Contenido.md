@@ -50,6 +50,7 @@ anterior, que cubren los mismos temas, siguen disponibles en
 13. [Clase 13. Implementaciones de Bellman-Ford-Moore y grafos de estado — 16 de octubre](C13/Clase%2013.%20Bellman-Ford-Moore.md)
 14. [Clase 14. Grafos de estado, 23 de octubre](C14/Clase%2014.%20Grafos%20de%20estado.md)
 15. [Clase 15. Caminos más cortos en DAG y Dijkstra, 23 de octubre](C15/Clase%2015.%20DAG%20y%20Dijkstra.md)
+16. [Clase 16. Floyd-Warshall y los grafos de estado, 30 de octubre](C16/Clase%2016.%20Floyd-Warshall.md)
 
 ## Clases en video
 
