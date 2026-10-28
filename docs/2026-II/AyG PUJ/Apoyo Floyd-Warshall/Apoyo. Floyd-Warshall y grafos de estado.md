@@ -1,6 +1,6 @@
-# Clase 16. Floyd-Warshall y los grafos de estado · AyG C16
+# Apoyo. Floyd-Warshall y los grafos de estado · AyG
 
-**Viernes 30 de octubre de 2026, grupo B de 7:00 a 9:00 y grupo A de 9:00 a 11:00, con el mismo contenido en las dos sesiones.**
+**Material de apoyo del segundo corte.** El tema lo cubre el profesor titular en sus sesiones; esta página queda para consultarlo después, con el algoritmo desarrollado paso a paso y el código corriendo.
 
 Con todas las parejas de vértices en juego, repetir Bellman-Ford-Moore desde
 cada uno cuesta $\Theta(n^4)$ en un grafo denso. Floyd-Warshall llega al mismo
@@ -33,14 +33,14 @@ la que descubre que la bandera sobra y los deja en $551\,100$.
 
     ---
 
-    El deck de la sesión, con las entradas que cambian marcadas en cada matriz
+    El deck del tema, con las entradas que cambian marcadas en cada matriz
     y el grafo de estados de Super Mario dibujado con sus dos rutas.
 
-    [:octicons-arrow-right-24: Abrir](./clase16-floyd-warshall.pdf)
+    [:octicons-arrow-right-24: Abrir](./apoyo-floyd-warshall.pdf)
 
 </div>
 
-## Apuntes de la sesión
+## Lo que conviene retener
 
 - El ciclo de $k$ va por fuera porque las dos entradas que consulta la
   recurrencia son de la matriz completa del paso anterior. Con $k$ por dentro,

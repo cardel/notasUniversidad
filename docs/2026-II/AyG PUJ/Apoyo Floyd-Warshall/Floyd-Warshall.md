@@ -1,6 +1,6 @@
-# Floyd-Warshall y los grafos de estado · AyG C16
+# Floyd-Warshall y los grafos de estado · AyG
 
-**Viernes 30 de octubre de 2026, grupo B de 7:00 a 9:00 y grupo A de 9:00 a 11:00, con el mismo contenido en las dos sesiones.**
+**Material de apoyo del segundo corte.**
 
 Hasta aquí los caminos más cortos salían de una fuente y la respuesta cabía en
 un arreglo. Ahora se piden todas las parejas, y la respuesta pasa a ser una
@@ -9,12 +9,12 @@ resuelve el problema y a veces es lo que conviene, pero en un grafo denso con
 pesos negativos cuesta $\Theta(n^4)$. Floyd-Warshall llega al mismo resultado
 en $\Theta(n^3)$ y en tres ciclos anidados, porque parte los caminos por otro
 lado: no por cuántas aristas tienen, sino por cuáles vértices se dejan usar
-como intermedios. La sesión lo sigue sobre un grafo de cinco vértices, doce
+como intermedios. Aquí se sigue sobre un grafo de cinco vértices, doce
 aristas y dos pesos negativos, matriz por matriz, y cierra volviendo a
 UVa 10269, *Adventure of Super Mario*, con las seis preguntas que se responden
 de un problema de grafos de estado.
 
-Al terminar la sesión se espera poder:
+Al terminar esta lectura se espera poder:
 
 - Escribir la matriz de pesos de un grafo y decir qué significa cada entrada
   de $D^{(k)}$.
@@ -724,7 +724,7 @@ unidos por vías de doble sentido. Caminar por una vía de longitud $\ell$ toma
 $\ell$. Con la bota puesta se corre en tiempo $0$, a lo sumo $L$ por carrera y
 a lo sumo $K$ carreras en total, y una carrera no atraviesa un castillo.
 
-El ejemplo de la sesión tiene $A = 4$, $B = 2$, $L = 9$ y $K = 1$. Los
+El ejemplo del enunciado tiene $A = 4$, $B = 2$, $L = 9$ y $K = 1$. Los
 castillos son el $5$ y el $6$. Las vías son estas:
 
 ```mermaid
@@ -1164,7 +1164,7 @@ UVa 10269 con el estado de cuatro elementos, y
    $w_{ij} = 1$ en cada arista. ¿Cuánto cuesta en total? Con $n = 500$ y
    $m = 1000$, ¿conviene esto o conviene una amplitud desde cada vértice? Si
    el grafo es desconexo, ¿qué pasa con el máximo y cómo se arregla la cuenta?
-4. **Reconstruir.** Con la matriz `nex` del ejemplo de la sesión, escriba los
+4. **Reconstruir.** Con la matriz `nex` del ejemplo de arriba, escriba los
    caminos más cortos de $1$ a $2$ y de $4$ a $3$, y verifique que su peso
    coincide con $D^{(5)}$. Después escriba la función que recibe `d`, `nex`,
    $i$ y $j$ y devuelve la lista de vértices del camino, o la lista vacía si
