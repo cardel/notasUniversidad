@@ -30,7 +30,7 @@ Al terminar esta lectura se espera poder:
 
 ## Diapositivas
 
-[clase16-floyd-warshall.pdf](./clase16-floyd-warshall.pdf){ target=_blank rel=noopener },
+[apoyo-floyd-warshall.pdf](./apoyo-floyd-warshall.pdf){ target=_blank rel=noopener },
 92 páginas. Las seis matrices del ejemplo llevan en rojo las entradas que
 cambian en cada paso, y el grafo de estados de Super Mario aparece dibujado
 con sus dos rutas.
