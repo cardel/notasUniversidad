@@ -55,6 +55,17 @@ Tree Root*, que pide precisamente ese centro.
   $O(|V| \cdot (|V| + |E|))$. En un árbol el diámetro sale con dos recorridos,
   y eso es lo que viene.
 
+## Ejercicios
+
+Las actividades interactivas del tema están en la
+[página de ejercicios](../../../actividades/ayg-puj/arboles-generalidades/index.md){ target=_blank rel=noopener }:
+reconocer árboles, colgar el mismo árbol libre de cada una de sus raíces,
+seguir una función recursiva con la pila de llamados a la vista, producir
+los cuatro recorridos y reconstruir un árbol con dos de ellos, y calcular
+las excentricidades con el radio, el diámetro y el centro. Los cinco
+ejercicios de las diapositivas, con sus pistas, están al final de la
+[nota](./Generalidades%20de%20arboles.md#ejercicios).
+
 ## Antes de entrar
 
 Los recorridos en profundidad y en amplitud, con el árbol que cada uno deja y
