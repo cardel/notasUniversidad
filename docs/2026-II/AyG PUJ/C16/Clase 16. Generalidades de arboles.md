@@ -9,11 +9,14 @@ cuatro propiedades que se demuestran, y colgarlo de $a$, de $f$ y de $c$ da
 alturas $3$, $4$ y $2$ con las mismas cinco aristas. Después el árbol se mira
 como estructura de datos, con tres maneras de guardarlo, y como definición
 recursiva de dos renglones, de la que `contarNodos` y `altura` salen en cinco
-líneas cada una. Los cuatro recorridos se leen sobre un árbol de diez
-nodos, que produce cuatro salidas distintas con los mismos valores. El cierre
-es la excentricidad sobre un grafo de nueve vértices y diez aristas, con radio
-$2$, diámetro $4$ y un centro de un solo vértice, y el problema UVa 10459, *The
-Tree Root*, que pide precisamente ese centro.
+líneas cada una. Los cuatro recorridos se leen sobre un árbol de diez nodos,
+que produce cuatro salidas distintas con los mismos valores. La excentricidad
+va sobre dos grafos, uno de nueve vértices con radio $2$ y diámetro $4$ y otro
+de once donde el radio sube a $3$ y el diámetro a $6$, y de ahí salen el centro
+y la lectura de qué vértice es central y cuál periférico. El cierre es el
+diámetro de un árbol: la vista recursiva lo calcula en $\Theta(n)$ con la
+altura y el diámetro de cada subárbol, y sobre el árbol de diez nodos da $6$.
+El problema UVa 10459, *The Tree Root*, pide precisamente el centro.
 
 <div class="grid cards" markdown>
 
@@ -24,7 +27,8 @@ Tree Root*, que pide precisamente ese centro.
     Las tres formas de mirar un árbol, las cuatro propiedades con su
     demostración, la terminología con raíz, la especificación recursiva con el
     árbol de una fórmula lógica, los cuatro recorridos con sus salidas, la
-    excentricidad con radio, diámetro y centro, y cinco ejercicios.
+    excentricidad de dos grafos con su radio, su diámetro y su centro, el
+    diámetro de un árbol con la vista recursiva y cinco ejercicios.
 
     [:octicons-arrow-right-24: Entrar](./Generalidades%20de%20arboles.md)
 
@@ -33,7 +37,8 @@ Tree Root*, que pide precisamente ese centro.
     ---
 
     El deck de la sesión, con el árbol de seis vértices y sus tres raíces una
-    al lado de la otra y el grafo de la excentricidad con los nueve valores.
+    al lado de la otra, los dos grafos de la excentricidad con sus valores y la
+    tabla de alturas del árbol de diez nodos.
 
     [:octicons-arrow-right-24: Abrir](./clase16-generalidades-arboles.pdf)
 
@@ -52,8 +57,14 @@ Tree Root*, que pide precisamente ese centro.
 - Posorden es el recorrido que sirve cuando el valor de un nodo depende de sus
   hijos: al llegar a la raíz, los dos subárboles ya están resueltos.
 - Una amplitud por vértice da todas las excentricidades en
-  $O(|V| \cdot (|V| + |E|))$. En un árbol el diámetro sale con dos recorridos,
-  y eso es lo que viene.
+  $O(|V| \cdot (|V| + |E|))$, y Floyd-Warshall las da todas en
+  $\Theta(|V|^3)$. Con la matriz ya calculada, el radio y el diámetro salen en
+  $O(|V|^2)$.
+- Los dos extremos del camino más largo de un árbol son hojas: si uno no lo
+  fuera, su otro vecino alargaría el camino.
+- Con la raíz escogida, el diámetro o pasa por ella, y entonces mide la altura
+  de los dos subárboles más dos, o es el diámetro de uno de los dos. Esos tres
+  candidatos se resuelven en $\Theta(n)$.
 
 ## Ejercicios
 

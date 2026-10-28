@@ -12,11 +12,12 @@ que se demuestran, y ese mismo árbol colgado de tres nodos distintos tiene
 alturas $3$, $4$ y $2$ sin que una sola arista cambie de lugar. Después el
 árbol se vuelve estructura de datos, con tres maneras de guardarlo, y
 definición recursiva de dos renglones, de la que `contarNodos` y `altura` salen
-en cinco líneas cada una. Los cuatro recorridos
-se leen sobre un árbol de diez nodos que produce cuatro salidas distintas con
-los mismos nodos. El cierre es la excentricidad, sobre un grafo de nueve
-vértices y diez aristas con radio $2$, diámetro $4$ y un centro de un solo
-vértice.
+en cinco líneas cada una. Los cuatro recorridos se leen sobre un árbol de diez
+nodos que produce cuatro salidas distintas con los mismos nodos. Después viene
+la excentricidad, sobre dos grafos: uno de nueve vértices con radio $2$ y
+diámetro $4$, y otro de once donde el radio sube a $3$ y el diámetro a $6$. El
+cierre es el diámetro de un árbol, que la vista recursiva calcula en una sola
+pasada y que sobre el árbol de diez nodos vale $6$.
 
 Al terminar la sesión se espera poder:
 
@@ -30,13 +31,15 @@ Al terminar la sesión se espera poder:
   un problema dado.
 - Calcular la excentricidad de cada vértice de un grafo pequeño y de ahí el
   radio, el diámetro y el centro.
+- Calcular el diámetro de un árbol con la altura y el diámetro de cada
+  subárbol, y decir qué cuesta.
 
 ## Diapositivas
 
 [clase16-generalidades-arboles.pdf](./clase16-generalidades-arboles.pdf){ target=_blank rel=noopener },
-58 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
-al lado de la otra y el grafo de la excentricidad con los nueve valores en
-rojo.
+70 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
+al lado de la otra, los dos grafos de la excentricidad con sus valores en rojo
+y la tabla de alturas con la que se arma el diámetro.
 
 ## Dónde habían aparecido ya los árboles
 
@@ -516,8 +519,131 @@ mayor de ellas es $\varepsilon(v)$. Repetirlo desde cada vértice cuesta $O(|V|
 \cdot (|V| + |E|))$, que para los nueve vértices del ejemplo es nada y para un
 grafo de cien mil ya no.
 
+### Otro grafo, once vértices
+
+```mermaid
+graph LR
+  q4((4)) --- q2((2))
+  q2 --- q1((1))
+  q2 --- q3((3))
+  q1 --- q3
+  q1 --- q0((0))
+  q0 --- q5((5))
+  q0 --- q8((8))
+  q8 --- q7((7))
+  q8 --- q9((9))
+  q8 --- q6((6))
+  q6 --- q10((10))
+```
+
+Once vértices numerados de $0$ a $10$ y once aristas, con el triángulo $1$,
+$2$, $3$ como único ciclo. Antes de mirar los valores vale la pena calcular
+seis distancias a mano: $\delta(0,7)$, $\delta(1,10)$, $\delta(6,10)$,
+$\delta(4,7)$, $\delta(8,3)$ y $\delta(9,7)$. Dan $2$, $4$, $1$, $5$, $3$ y
+$2$.
+
+Las once excentricidades quedan así:
+
+| $v$ | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ | $6$ | $7$ | $8$ | $9$ | $10$ |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| $\varepsilon(v)$ | $3$ | $4$ | $5$ | $5$ | $6$ | $4$ | $5$ | $5$ | $4$ | $5$ | $6$ |
+
+El radio es $3$, el diámetro $6$ y el centro $\{0\}$. Una excentricidad baja
+dice que el vértice es central; una alta, que es periférico. El $4$ y el $10$,
+los dos únicos con $6$, son los extremos del camino más largo, que mide seis
+aristas y pasa por el $0$.
+
+### Lo que cuesta calcularlos
+
+Con todas las distancias a la mano el trabajo es recorrer la matriz: si ya se
+tiene $\delta(u,v)$ para toda pareja, el radio y el diámetro salen en
+$O(|V|^2)$.
+
+Cuando no se tienen hay dos caminos. Floyd-Warshall las calcula todas en
+$\Theta(|V|^3)$. Una amplitud desde cada vértice cuesta
+$O(|V| \cdot (|V| + |E|))$, que es mejor cuando el grafo es disperso.
+
 En un árbol se puede mejor. Un árbol tiene $n-1$ aristas y un solo camino entre
-cada pareja, y con eso el diámetro sale con dos recorridos en lugar de $n$.
+cada pareja, y con eso estas medidas no necesitan todas las distancias.
+
+## El diámetro de un árbol
+
+### Lo que tiene de particular un árbol
+
+Cuatro hechos, todos ya vistos. Hay un único camino entre cualquier par de
+nodos. Cualquier nodo puede tomarse como la raíz. Una hoja es cualquier nodo
+que solo tiene un adyacente. Y el diámetro es la longitud de un camino que
+conecta dos hojas.
+
+El último sale de los anteriores. Si un extremo del camino más largo no fuera
+hoja, tendría otro vecino por fuera del camino, y agregarlo alargaría el
+camino. Entonces los dos extremos son hojas.
+
+Queda una pregunta sobre el árbol de diez nodos de los recorridos: ¿cuál es su
+camino más largo y cuánto mide?
+
+### El camino más largo, con la vista recursiva
+
+Es $\langle 2, 10, 5, 8, 6, 1, 9 \rangle$ y mide seis aristas. Pasa por la
+raíz, y de ahí sale el algoritmo.
+
+Con la raíz escogida, el camino más largo del árbol o pasa por la raíz, o no la
+toca y entonces está entero dentro de uno de los dos subárboles. No hay más
+opciones. Si pasa por la raíz, mide la altura del subárbol izquierdo más la del
+derecho, más las dos aristas que los cuelgan de ella. Si no pasa, es el
+diámetro de uno de los dos subárboles.
+
+Eso es dividir, conquistar y combinar. Cada subárbol devuelve dos cosas, su
+altura y su diámetro, y el nodo las combina con un máximo de tres candidatos.
+
+### El código
+
+```python linenums="13"
+def diameter(v):
+  global heights
+  ans, h1, h2, diamLeft, diamRight = None, 0, 0, 0, 0
+  if len(G[v]) == 0:
+    heights[v] = 0
+    ans = 0
+  else:
+    left = G[v][0]
+    diamLeft = diameter(left)
+    heights[v] = heights[left] + 1
+    h1 = heights[left] + 1
+
+    if len(G[v])  > 1:
+      right = G[v][1]
+      diamRight = diameter(right)
+      heights[v] = max(heights[v], heights[right] + 1)
+      h2 = heights[right] + 1
+    ans = max(h1 + h2, diamLeft, diamRight)
+  return ans
+```
+
+El árbol llega aquí como listas de hijos y con la raíz conocida: `G[v]` trae
+los hijos de `v` y nada más, sin la arista de vuelta al padre. La función deja
+en `heights` la altura de cada nodo y devuelve el diámetro. La línea 30 es la
+que escoge entre el camino que pasa por el nodo y los diámetros de los dos
+lados.
+
+### El ejemplo, nodo por nodo
+
+| Nodo | $2$ | $3$ | $7$ | $4$ | $9$ | $10$ | $1$ | $5$ | $6$ |
+|---|---|---|---|---|---|---|---|---|---|
+| Altura | $0$ | $0$ | $0$ | $0$ | $0$ | $1$ | $1$ | $2$ | $2$ |
+
+Las cinco hojas valen $0$ y cada nodo interno toma el mayor de sus hijos más
+uno. En la raíz $8$ la altura es $3$, y el candidato que pasa por ella mide
+$(2+1) + (2+1) = 6$, que les gana a los diámetros de los dos lados. El diámetro
+es $6$, el del camino de $2$ a $9$.
+
+### Lo que cuesta
+
+Cada nodo se resuelve con lo que devolvieron sus hijos y trabajo constante, así
+que el tiempo es $\Theta(n)$ y la pila de llamadas llega a la altura del árbol.
+
+Lo que pide a cambio es la raíz y las aristas en un solo sentido. Si el árbol
+llega sin raíz, se escoge una cualquiera, que para esto da lo mismo.
 
 ## Errores comunes
 
@@ -549,6 +675,9 @@ profundidad y el de niveles sobre el mismo árbol.
 [excentricidad.py](./codigo/excentricidad.py) tiene la amplitud, la
 excentricidad de un vértice y `radioDiametroCentro`, que devuelve los nueve
 valores junto con el radio, el diámetro y el centro.
+[20252-agra-diameterDandCBT.py](./codigo/20252-agra-diameterDandCBT.py) calcula
+el diámetro de un árbol binario que llega como listas de hijos con la raíz
+conocida, y deja de paso la altura de cada nodo en `heights`.
 
 ## Ejercicios
 
@@ -584,9 +713,11 @@ valores junto con el radio, el diámetro y el centro.
 
 ## Lo que sigue
 
-El diámetro de un árbol sale sin pagar $n$ recorridos. Como hay un solo camino
-entre cada pareja, basta uno desde cualquier vértice para encontrar el más
-lejano y otro desde ese; el centro se obtiene pelando hojas.
+Hay otro camino al mismo número, y no pide escoger raíz: desde un vértice
+cualquiera se busca el más lejano, y desde ese se vuelve a buscar. La distancia
+entre los dos es el diámetro. De ahí salen el radio, que vale
+$(\mathit{diam} + 1)/2$, y el centro, que se obtiene quitando las hojas una y
+otra vez hasta que queden uno o dos vértices.
 
 Para investigar:
 
