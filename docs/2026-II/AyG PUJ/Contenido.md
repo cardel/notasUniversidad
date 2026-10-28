@@ -35,26 +35,38 @@ anterior, que cubren los mismos temas, siguen disponibles en
 
 ### Corte 1
 
-1. [Clase 1. Repaso de estructuras de datos y notación asintótica — 31 de julio](C1/Clase%201.%20Repaso%20de%20estructuras%20de%20datos%20y%20notación%20asintótica.md)
-2. [Clase 2. Invariantes de ciclo y divide y vencerás — 21 de agosto](C2/Clase%202.%20Invariantes%20de%20ciclo%20y%20divide%20y%20vencerás.md)
-3. [Clase 3. Búsqueda binaria y bisección — 28 de agosto](C3/Clase%203.%20Busqueda%20binaria%20y%20biseccion.md)
-4. [Clase 4. Invariantes: acumuladores, listas y ciclos anidados — 4 de septiembre](C4/Clase%204.%20Invariantes%20con%20ciclos%20anidados.md)
-5. [Clase 5. Introducción a grafos — semana del 7 de septiembre](C5/Clase%205.%20Introduccion%20a%20grafos.md)
-6. [Clase 6. Representaciones de grafos y recorridos — 11 de septiembre](C6/Clase%206.%20Representaciones%20y%20recorridos.md)
-7. [Clase 7. Grafos implícitos — 18 de septiembre](C7/Clase%207.%20Grafos%20implicitos.md)
-8. [Clase 8. Orden topológico — semana del 21 de septiembre](C8/Clase%208.%20Orden%20topologico.md)
-9. [Clase 9. Conectividad — 25 de septiembre](C9/Clase%209.%20Conectividad.md)
-10. [Clase 10. Orden topológico con la profundidad y el valor low — 2 de octubre](C10/Clase%2010.%20Orden%20topologico%20y%20Tarjan.md)
-11. [Clase 11. Problemas de cortes — 9 de octubre](C11/Clase%2011.%20Problemas%20de%20cortes.md)
-12. [Clase 12. Caminos más cortos: generalidades y la idea de Bellman-Ford-Moore — 16 de octubre](C12/Clase%2012.%20Caminos%20cortos.md)
-13. [Clase 13. Implementaciones de Bellman-Ford-Moore y grafos de estado — 16 de octubre](C13/Clase%2013.%20Bellman-Ford-Moore.md)
-14. [Clase 14. Grafos de estado, 23 de octubre](C14/Clase%2014.%20Grafos%20de%20estado.md)
-15. [Clase 15. Caminos más cortos en DAG y Dijkstra, 23 de octubre](C15/Clase%2015.%20DAG%20y%20Dijkstra.md)
-16. [Clase 16. Generalidades de los árboles, 30 de octubre](C16/Clase%2016.%20Generalidades%20de%20arboles.md)
+Complejidad, invariantes de ciclo, dividir y conquistar, búsqueda binaria y bisección.
+
+- [Clase 1. Repaso de estructuras de datos y notación asintótica — 31 de julio](C1/Clase%201.%20Repaso%20de%20estructuras%20de%20datos%20y%20notación%20asintótica.md)
+- [Clase 2. Invariantes de ciclo y divide y vencerás — 21 de agosto](C2/Clase%202.%20Invariantes%20de%20ciclo%20y%20divide%20y%20vencerás.md)
+- [Clase 3. Búsqueda binaria y bisección — 28 de agosto](C3/Clase%203.%20Busqueda%20binaria%20y%20biseccion.md)
+- [Clase 4. Invariantes: acumuladores, listas y ciclos anidados — 4 de septiembre](C4/Clase%204.%20Invariantes%20con%20ciclos%20anidados.md)
+
+### Corte 2
+
+Grafos: representaciones, recorridos, orden topológico, conectividad, cortes y caminos más cortos.
+
+- [Clase 5. Introducción a grafos — semana del 7 de septiembre](C5/Clase%205.%20Introduccion%20a%20grafos.md)
+- [Clase 6. Representaciones de grafos y recorridos — 11 de septiembre](C6/Clase%206.%20Representaciones%20y%20recorridos.md)
+- [Clase 7. Grafos implícitos — 18 de septiembre](C7/Clase%207.%20Grafos%20implicitos.md)
+- [Clase 8. Orden topológico — semana del 21 de septiembre](C8/Clase%208.%20Orden%20topologico.md)
+- [Clase 9. Conectividad — 25 de septiembre](C9/Clase%209.%20Conectividad.md)
+- [Clase 10. Orden topológico con la profundidad y el valor low — 2 de octubre](C10/Clase%2010.%20Orden%20topologico%20y%20Tarjan.md)
+- [Clase 11. Problemas de cortes — 9 de octubre](C11/Clase%2011.%20Problemas%20de%20cortes.md)
+- [Clase 12. Caminos más cortos: generalidades y la idea de Bellman-Ford-Moore — 16 de octubre](C12/Clase%2012.%20Caminos%20cortos.md)
+- [Clase 13. Implementaciones de Bellman-Ford-Moore y grafos de estado — 16 de octubre](C13/Clase%2013.%20Bellman-Ford-Moore.md)
+- [Clase 14. Grafos de estado, 23 de octubre](C14/Clase%2014.%20Grafos%20de%20estado.md)
+- [Clase 15. Caminos más cortos en DAG y Dijkstra, 23 de octubre](C15/Clase%2015.%20DAG%20y%20Dijkstra.md)
 
 Material de apoyo del corte, que no corresponde a una sesión:
 
 - [Floyd-Warshall y los grafos de estado](Apoyo%20Floyd-Warshall/Apoyo.%20Floyd-Warshall%20y%20grafos%20de%20estado.md)
+
+### Corte 3
+
+Árboles y las estructuras que se construyen sobre ellos.
+
+- [Clase 16. Generalidades de los árboles, 30 de octubre](C16/Clase%2016.%20Generalidades%20de%20arboles.md)
 
 ## Clases en video
 
