@@ -77,6 +77,7 @@ Se publican después de cada sesión.
    [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md)
    están publicados.
 8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
+   Sus [ejercicios](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) están publicados.
 9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
 
 ### Corte 2
@@ -129,6 +130,7 @@ reuniones docentes y jornada de reflexión.
 | 5 | Reconocimiento de patrones | [diez ejercicios: del despacho al árbol de expresiones](../../actividades/pfc/arboles-algebraicos-y-patrones/index.md) |
 | 6 | Listas I: diseño, uso y recursión sobre listas | [cuatro ejercicios: de los dos constructores a la inserción](../../actividades/pfc/listas/index.md) |
 | 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [once ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
+| 8 | Colecciones I: secuencias y conjuntos | [nueve ejercicios: de escoger la colección a las ternas](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) |
 
 ## Ejercicios de clase
 
