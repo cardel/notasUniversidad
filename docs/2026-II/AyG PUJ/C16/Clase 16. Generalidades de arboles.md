@@ -9,7 +9,10 @@ cuatro propiedades que se demuestran, y colgarlo de $a$, de $f$ y de $c$ da
 alturas $3$, $4$ y $2$ con las mismas cinco aristas. Después el árbol se mira
 como estructura de datos, con tres maneras de guardarlo, y como definición
 recursiva de dos renglones, de la que `contarNodos` y `altura` salen en cinco
-líneas cada una. Los cuatro recorridos se leen sobre un árbol de diez nodos,
+líneas cada una. Las cinco maneras de guardarlo se comparan sobre un árbol de
+siete nodos y aridad $3$, y la de hijo izquierdo con hermano derecho resulta
+ser un árbol binario disfrazado, con dos campos por nodo en vez de los
+$\Theta(n \cdot m)$ del arreglo de hijos. Los cuatro recorridos se leen sobre un árbol de diez nodos,
 que produce cuatro salidas distintas con los mismos valores. La excentricidad
 va sobre dos grafos, uno de nueve vértices con radio $2$ y diámetro $4$ y otro
 de once donde el radio sube a $3$ y el diámetro a $6$, y de ahí salen el centro
@@ -25,7 +28,8 @@ El problema UVa 10459, *The Tree Root*, pide precisamente el centro.
     ---
 
     Las tres formas de mirar un árbol, las cuatro propiedades con su
-    demostración, la terminología con raíz, la especificación recursiva con el
+    demostración, la terminología con raíz, el grado contra la aridad, las
+    cinco representaciones con sus costos, la especificación recursiva con el
     árbol de una fórmula lógica, los cuatro recorridos con sus salidas, la
     excentricidad de dos grafos con su radio, su diámetro y su centro, el
     diámetro de un árbol con la vista recursiva y cinco ejercicios.
@@ -37,7 +41,8 @@ El problema UVa 10459, *The Tree Root*, pide precisamente el centro.
     ---
 
     El deck de la sesión, con el árbol de seis vértices y sus tres raíces una
-    al lado de la otra, los dos grafos de la excentricidad con sus valores y la
+    al lado de la otra, el de siete nodos con sus punteros al lado de su
+    lectura binaria, los dos grafos de la excentricidad con sus valores y la
     tabla de alturas del árbol de diez nodos.
 
     [:octicons-arrow-right-24: Abrir](./clase16-generalidades-arboles.pdf)

@@ -37,9 +37,10 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase16-generalidades-arboles.pdf](./clase16-generalidades-arboles.pdf){ target=_blank rel=noopener },
-70 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
-al lado de la otra, los dos grafos de la excentricidad con sus valores en rojo
-y la tabla de alturas con la que se arma el diámetro.
+83 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
+al lado de la otra, el de siete nodos con sus punteros y su lectura binaria,
+los dos grafos de la excentricidad con sus valores en rojo y la tabla de
+alturas con la que se arma el diámetro.
 
 ## Dónde habían aparecido ya los árboles
 
@@ -218,19 +219,204 @@ El grado de un vértice, en el árbol sin raíz, es cuántas aristas toca. Con r
 suele interesar más cuántos hijos tiene, que es el grado menos uno para todos
 los nodos salvo la raíz.
 
+### El grado y la aridad
+
+El grado de un nodo, en el árbol con raíz, es su cantidad de hijos. Una hoja
+tiene grado $0$. La aridad del árbol es el mayor de esos grados, o la cota que
+imponga el problema: un árbol de aridad $2$ es binario, uno de aridad $m$ es
+$m$-ario, y cuando no hay cota se dice que la ramificación es libre.
+
+Saber la aridad decide qué representación cabe. Con aridad $2$ bastan dos
+campos por nodo. Con aridad $m$ conocida y pequeña, un arreglo de $m$ casillas.
+Sin cota, reservar un arreglo por nodo desperdicia memoria o se queda corto, y
+hay que buscar otra cosa.
+
+Hay dos números que se llaman igual y no lo son. En el árbol sin raíz, el grado
+de un nodo cuenta todas sus aristas, incluida la que lo une a su padre. En el
+árbol con raíz cuenta solo los hijos. El mismo nodo tiene grado $3$ en la
+primera lectura y $2$ en la segunda.
+
+### Todo nodo es la raíz de un subárbol
+
+El subárbol de $v$ es $v$ junto con todos sus descendientes y las aristas entre
+ellos. Es conexo, es acíclico y tiene su propia raíz, que es $v$, así que no
+hay nada que lo distinga de un árbol cualquiera salvo que está metido dentro de
+otro.
+
+De ahí sale la forma de escribir funciones sobre árboles: se mira la raíz y se
+le pide lo mismo a cada subárbol. En el árbol de siete nodos de más abajo,
+contar los nodos del subárbol de $b$ da $3$, y el que cuenta es el mismo código
+que devuelve $7$ para el árbol entero.
+
+Un árbol de $n$ nodos tiene exactamente $n$ subárboles, uno por nodo, porque
+cada nodo es la raíz de uno y solo uno.
+
 ### Cómo se guarda
 
-Con listas de adyacencia, como cualquier grafo: `G[v]` trae los vecinos de `v`.
-Sirve cuando el árbol llega sin raíz, que es como lo entregan casi todos los
-problemas de juez, y para recorrerlo sin devolverse basta llevar en la llamada
-de dónde se viene.
+A una representación se le suele pedir cuatro cosas: el padre de un nodo, la
+lista de sus hijos, si es hoja, y la profundidad de un nodo o la altura del
+árbol. Ninguna representación las da todas baratas, y por eso hay varias.
 
-Con un arreglo de padres, donde `padre[v]` guarda el padre de `v` y la raíz
-guarda $-1$. Ocupa $\Theta(n)$ y da el camino hacia la raíz de inmediato, pero
-no da los hijos de un nodo sin recorrer todo el arreglo.
+CLRS presenta tres en su sección 10.4. Para árboles binarios, tres campos por
+nodo: padre, hijo izquierdo e hijo derecho. Para aridad acotada por $m$, un
+arreglo de $m$ hijos por nodo, que ocupa $\Theta(n \cdot m)$ y exige conocer
+$m$ de antemano. Para ramificación libre, hijo izquierdo y hermano derecho. A
+ellas se suman dos que el curso ya venía usando: el arreglo de padres y las
+listas de adyacencia, que son las que entregan casi todos los problemas de juez
+y que sirven cuando el árbol llega sin raíz.
 
-Con listas anidadas, donde el nodo trae adentro a sus hijos. Es la que sigue la
-definición recursiva y la que se usa en el código de esta sesión.
+### El árbol del ejemplo
+
+```mermaid
+graph TD
+  a((a)) --- b((b))
+  a --- c((c))
+  a --- d((d))
+  b --- e((e))
+  b --- f((f))
+  d --- g((g))
+```
+
+Siete nodos. La raíz $a$ tiene tres hijos, así que la aridad es $3$. Las hojas
+son $c$, $e$, $f$ y $g$, y la altura es $2$.
+
+### El arreglo de padres
+
+Un campo por nodo: `padre[x]` guarda el padre de `x`, y la raíz guarda $-1$.
+Las flechas de esta representación van del hijo al padre, al revés de como se
+dibuja el árbol.
+
+```python linenums="14"
+padre      = [-1,  0,  0,  0,  1,  1,  3]
+hijoIzq    = [ 1,  4, -1,  6, -1, -1, -1]
+hermanoDer = [-1,  2,  3, -1,  5, -1, -1]
+```
+
+El espacio es $\Theta(n)$, el padre sale en $O(1)$ y subir hasta la raíz cuesta
+la profundidad del nodo. Lo que no da son los hijos: para saber quiénes son hay
+que recorrer el arreglo entero buscando quién tiene a ese nodo de padre.
+
+### Hijo izquierdo y hermano derecho
+
+Dos campos por nodo, pase lo que pase con la aridad. En `hijoIzq[x]` va el
+primero de los hijos de `x`, y en `hermanoDer[x]`, el siguiente hermano. En el
+dibujo, la flecha continua va al primer hijo y las punteadas encadenan a los
+hermanos:
+
+```mermaid
+graph TD
+  a((a)) --> b((b))
+  b --> e((e))
+  d((d)) --> g((g))
+  b -.-> c((c))
+  c -.-> d
+  e -.-> f((f))
+```
+
+Alcanza con dos campos porque los hijos de un nodo quedan en una lista enlazada
+por `hermanoDer`, y al primero de ellos se llega desde el padre. Cada nodo está
+en una sola de esas listas, así que el espacio es $\Theta(n)$ sin importar el
+grado. Reservar $m$ casillas por nodo, en cambio, cuesta $\Theta(n \cdot m)$ y
+obliga a conocer la aridad: con hijo izquierdo y hermano derecho no hace falta
+ninguna de las dos cosas.
+
+### Lo que se guardó es un árbol binario
+
+Cada nodo guarda dos punteros, que es exactamente lo que guarda un nodo de un
+árbol binario. Leyendo `hijoIzq` como hijo izquierdo y `hermanoDer` como hijo
+derecho, lo que hay en memoria es este otro árbol:
+
+```mermaid
+graph TD
+  a((a)) --> b((b))
+  b --> e((e))
+  b -.-> c((c))
+  e -.-> f((f))
+  c -.-> d((d))
+  d --> g((g))
+```
+
+El dibujo es el mismo de arriba acomodado como árbol binario, y ahí se ve lo
+que cambia: la profundidad deja de ser la del árbol de aridad $3$. El nodo $d$
+está a un paso de $a$ por la izquierda y a tres por la derecha. Un recorrido
+sobre esta estructura tiene que saber cuál de las dos flechas está siguiendo.
+
+### El código de las dos representaciones
+
+```python linenums="21"
+def caminoALaRaiz(x):
+  ans = [x]
+  while padre[x] != -1:
+    x = padre[x]
+    ans.append(x)
+  return ans
+
+def profundidad(x):
+  ans = 0
+  while padre[x] != -1:
+    x = padre[x]
+    ans = ans + 1
+  return ans
+```
+
+```python linenums="35"
+def hijos(x):
+  ans = []
+  v = hijoIzq[x]
+  while v != -1:
+    ans.append(v)
+    v = hermanoDer[v]
+  return ans
+
+def esHoja(x):
+  return hijoIzq[x] == -1
+```
+
+```python linenums="46"
+def altura(x):
+  ans = 0
+  if hijoIzq[x] != -1:
+    mayor = -1
+    for v in hijos(x):
+      h = altura(v)
+      if h > mayor: mayor = h
+    ans = 1 + mayor
+  return ans
+
+def aridad():
+  ans = 0
+  for x in range(len(padre)):
+    if len(hijos(x)) > ans: ans = len(hijos(x))
+  return ans
+```
+
+`hijos` recorre la lista de hermanos hasta que se acaba, y `aridad` toma el
+mayor de los grados. Ninguna de las dos necesita saber de antemano cuántos
+hijos hay. La altura se calcula pidiéndole la suya a cada hijo y quedándose con
+la mayor, que es la misma forma recursiva de todo lo demás.
+
+### Las listas anidadas
+
+Con aridad libre, el nodo se lleva adentro a sus subárboles: la lista arranca
+con el valor y sigue con los subárboles, tantos como haya.
+
+```python linenums="18"
+# el mismo arbol como listas anidadas: [valor, subarbol, ..., subarbol]
+T = ['a', ['b', ['e'], ['f']], ['c'], ['d', ['g']]]
+```
+
+```python linenums="62"
+def contarNodos(A):
+  ans = 1
+  for i in range(1, len(A)):
+    ans = ans + contarNodos(A[i])
+  return ans
+```
+
+El caso base no está escrito. En una hoja la lista tiene un solo elemento, el
+ciclo no da ninguna vuelta y la cuenta queda en $1$. Para árboles binarios la
+idea es la misma con las dos posiciones fijas, que es la gramática de la
+sección siguiente.
 
 ## La especificación recursiva
 
@@ -678,6 +864,10 @@ valores junto con el radio, el diámetro y el centro.
 [20252-agra-diameterDandCBT.py](./codigo/20252-agra-diameterDandCBT.py) calcula
 el diámetro de un árbol binario que llega como listas de hijos con la raíz
 conocida, y deja de paso la altura de cada nodo en `heights`.
+[representaciones.py](./codigo/representaciones.py) tiene el arreglo de padres
+y la pareja hijo izquierdo con hermano derecho sobre el árbol de siete nodos,
+con `hijos`, `esHoja`, `altura`, `aridad` y el `contarNodos` de las listas
+anidadas.
 
 ## Ejercicios
 
