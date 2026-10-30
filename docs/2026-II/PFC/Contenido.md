@@ -76,8 +76,16 @@ Se publican después de cada sesión.
    escrito en clase. Sus
    [ejercicios](../../actividades/pfc/ordenamiento-y-alto-orden/index.md)
    están publicados.
-8. Clase 8. Colecciones I: secuencias y conjuntos — 29 de octubre.
-   Sus [ejercicios](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) están publicados.
+8. [Clase 8. Colecciones I, 29 de octubre](C8/Clase%208.%20Colecciones%20I.md):
+   por qué una lista no se indexa y qué secuencias la relevan, `Array` frente a
+   `Vector` y la actualización en su sitio, los dos agregados, los rangos y lo
+   que guardan, `exists` y `forall`, el test de primalidad con la guarda y por
+   qué basta llegar a la raíz, `flatMap` para combinar dos colecciones sin
+   anidar, las cadenas de texto y los conjuntos sin orden ni repetidos, las
+   expresiones `for` y su traducción, y las fechas válidas de un intervalo de
+   años resueltas de las dos formas. Incluye el código escrito en clase. Sus
+   [ejercicios](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md)
+   están publicados.
 9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
 
 ### Corte 2
