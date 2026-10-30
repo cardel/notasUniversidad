@@ -37,7 +37,7 @@ Al terminar la sesión se espera poder:
 ## Diapositivas
 
 [clase16-generalidades-arboles.pdf](./clase16-generalidades-arboles.pdf){ target=_blank rel=noopener },
-83 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
+94 páginas. Traen el árbol de seis vértices con sus tres raíces dibujadas una
 al lado de la otra, el de siete nodos con sus punteros y su lectura binaria,
 los dos grafos de la excentricidad con sus valores en rojo y la tabla de
 alturas con la que se arma el diámetro.
@@ -768,7 +768,109 @@ camino. Entonces los dos extremos son hojas.
 Queda una pregunta sobre el árbol de diez nodos de los recorridos: ¿cuál es su
 camino más largo y cuánto mide?
 
-### El camino más largo, con la vista recursiva
+### Buscar los dos extremos
+
+El camino más largo del árbol de diez nodos es $\langle 2, 10, 5, 8, 6, 1, 9
+\rangle$, de seis aristas, y sus dos extremos son hojas. La pregunta es si uno
+de ellos se puede encontrar sin probarlos todos. Se toma un vértice cualquiera,
+se busca el más lejano, y resulta que ese vértice no es uno cualquiera.
+
+**Teorema (diámetro de un árbol).** Sea $G = (V,E)$ un árbol y sean $u, v \in
+V$ tales que $\delta(u,v) = \varepsilon(v)$. Entonces $\mathit{diam}(G) =
+\varepsilon(u)$.
+
+En palabras: desde cualquier vértice $v$, el más lejano $u$ es un extremo de un
+camino más largo del árbol, y entonces la excentricidad de ese $u$ ya es el
+diámetro.
+
+La razón es que si $u$ no fuera extremo de ningún camino más largo, el camino
+de $v$ a $u$ y un camino más largo se cruzan o no se cruzan. Si se cruzan,
+cambiar de rama en el cruce da un camino más largo que termina en $u$; si no se
+cruzan, el tramo que los une también lo da. En los dos casos se contradice que
+$u$ fuera el más lejano de $v$. Donde se usa que el grafo es un árbol es en que
+entre dos vértices hay un solo camino, que es lo que hace que esos cruces estén
+bien definidos: en un grafo con ciclos el teorema es falso.
+
+### El algoritmo de las dos pasadas
+
+```text
+ 1  recorrer G desde un nodo cualquiera s y quedarse
+    con el nodo mas lejano u
+ 2  recorrer G desde u y quedarse con el nodo mas
+    lejano w
+ 3  devolver la distancia entre u y w
+```
+
+Cada recorrido cuesta $O(|V| + |E|) = O(n)$ en un árbol, así que el total es
+$\Theta(n)$. Contra las $n$ búsquedas que pedía el caso general, se pasa de
+$O(n^2)$ a $O(n)$. El teorema no pide nada del primer vértice, así que se
+arranca en el $0$ y el resultado es el mismo que arrancando en cualquier otro.
+
+### El código de las dos pasadas
+
+```python linenums="12"
+distMax, nodoMax = None, None
+G = None
+
+def dfsAux(v, p, dist):
+  global distMax, nodoMax
+  dist += 1
+  if dist > distMax: distMax, nodoMax = dist, v
+  for w in  G[v]:
+    if w != p:
+      dfsAux(w, v, dist)
+
+def diameter():
+  global distMax
+  distMax = 0
+
+  #se escoge arbitrariamente iniciar en el nodo 0
+  #el resultado seria el mismo asi se inicie en un nodo diferente
+  dfsAux(0, -1, -1)
+  dfsAux(nodoMax, -1, -1)
+  return distMax
+```
+
+`dfsAux` baja por el árbol sumando uno a `dist` y deja en `nodoMax` el nodo más
+lejano que vio. El parámetro `p` es de dónde viene, y la comparación `w != p`
+es la que evita devolverse por la arista del padre. La primera llamada sale del
+$0$ y deja en `nodoMax` un extremo; la segunda sale de ahí. `distMax` no se
+reinicia entre las dos, y no hace falta, porque lo que mida la segunda nunca es
+menor que lo que midió la primera.
+
+Con un solo nodo ningún `dist` supera el $0$ inicial, `nodoMax` se queda sin
+valor y la segunda llamada falla. Si la entrada admite ese caso, se responde
+$0$ antes de llamar.
+
+### Las dos pasadas, sobre el mismo árbol
+
+| Nodo | $8$ | $5$ | $6$ | $10$ | $7$ | $4$ | $1$ | $2$ | $3$ | $9$ |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Desde $8$ | $0$ | $1$ | $1$ | $2$ | $2$ | $2$ | $2$ | $3$ | $3$ | $3$ |
+| Desde $2$ | $3$ | $2$ | $4$ | $1$ | $3$ | $5$ | $5$ | $0$ | $2$ | $6$ |
+
+Desde el $8$ quedan tres vértices a distancia $3$, y sirve cualquiera de los
+tres: los tres son extremos de un camino más largo. Desde el $2$, el más lejano
+es el $9$ a distancia $6$, y ese es el diámetro. El camino es $\langle 2, 10,
+5, 8, 6, 1, 9 \rangle$, el mismo que encuentra la versión recursiva.
+
+### De ahí sale el radio
+
+Los vértices que quedan en la mitad de un camino más largo son los centros, y
+su excentricidad es el radio. De eso sale una cuenta directa, con división
+entera:
+
+$$
+\mathit{rad}(G) = \frac{\mathit{diam}(G) + 1}{2}
+$$
+
+En el árbol del ejemplo el diámetro es $6$, así que el radio es $3$. Y en
+efecto $\varepsilon(8) = 3$, que es la menor de las diez excentricidades: el
+centro es $\{8\}$, el vértice que queda en la mitad del camino de $2$ a $9$.
+Si el diámetro es par hay un solo centro, y si es impar hay dos, que son los
+dos de la mitad del camino. Nunca hay más.
+
+### La otra forma: con la vista recursiva
 
 Es $\langle 2, 10, 5, 8, 6, 1, 9 \rangle$ y mide seis aristas. Pasa por la
 raíz, y de ahí sale el algoritmo.
@@ -864,6 +966,8 @@ valores junto con el radio, el diámetro y el centro.
 [20252-agra-diameterDandCBT.py](./codigo/20252-agra-diameterDandCBT.py) calcula
 el diámetro de un árbol binario que llega como listas de hijos con la raíz
 conocida, y deja de paso la altura de cada nodo en `heights`.
+[20252-agra-diameter.py](./codigo/20252-agra-diameter.py) es el diámetro con
+dos recorridos sobre listas de adyacencia, sin raíz.
 [representaciones.py](./codigo/representaciones.py) tiene el arreglo de padres
 y la pareja hijo izquierdo con hermano derecho sobre el árbol de siete nodos,
 con `hijos`, `esHoja`, `altura`, `aridad` y el `contarNodos` de las listas

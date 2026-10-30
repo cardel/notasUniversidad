@@ -17,8 +17,11 @@ que produce cuatro salidas distintas con los mismos valores. La excentricidad
 va sobre dos grafos, uno de nueve vértices con radio $2$ y diámetro $4$ y otro
 de once donde el radio sube a $3$ y el diámetro a $6$, y de ahí salen el centro
 y la lectura de qué vértice es central y cuál periférico. El cierre es el
-diámetro de un árbol: la vista recursiva lo calcula en $\Theta(n)$ con la
-altura y el diámetro de cada subárbol, y sobre el árbol de diez nodos da $6$.
+diámetro de un árbol, con dos formas de calcularlo en $\Theta(n)$ que dan $6$
+sobre el árbol de diez nodos: dos recorridos, uno desde cualquier vértice y
+otro desde el más lejano que encuentre, de donde sale también el radio como
+$(\mathit{diam}+1)/2$; y una sola pasada recursiva cuando el árbol ya viene con
+raíz.
 El problema UVa 10459, *The Tree Root*, pide precisamente el centro.
 
 <div class="grid cards" markdown>
@@ -32,7 +35,8 @@ El problema UVa 10459, *The Tree Root*, pide precisamente el centro.
     cinco representaciones con sus costos, la especificación recursiva con el
     árbol de una fórmula lógica, los cuatro recorridos con sus salidas, la
     excentricidad de dos grafos con su radio, su diámetro y su centro, el
-    diámetro de un árbol con la vista recursiva y cinco ejercicios.
+    diámetro de un árbol con dos recorridos y con la vista recursiva, el radio
+    que sale de ahí y cinco ejercicios.
 
     [:octicons-arrow-right-24: Entrar](./Generalidades%20de%20arboles.md)
 
