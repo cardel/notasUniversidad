@@ -5,7 +5,7 @@ avance 10 y la entrega final con sustentación 20.
 
 | Entrega | Cierre |
 |---|---|
-| Avance | viernes 30 de octubre de 2026, 23:59 |
+| Avance | lunes 2 de noviembre de 2026, 23:59 |
 | Final | lunes 16 de noviembre de 2026, 23:59 |
 | Sustentaciones | 18 y 25 de noviembre |
 
