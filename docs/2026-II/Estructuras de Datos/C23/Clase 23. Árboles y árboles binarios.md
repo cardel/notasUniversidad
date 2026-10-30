@@ -149,6 +149,11 @@ Un árbol se maneja con el puntero a su raíz, y el árbol vacío es `NULL`.
 asignaciones. La estructura ocupa $\Theta(n)$, un nodo por dato con el dato y
 dos punteros.
 
+En una máquina de 64 bits el `int` ocupa 4 bytes y cada puntero 8, que suman
+20, pero `sizeof(Nodo)` da 24. El compilador deja 4 bytes de relleno después
+de `dato` para que `izq` empiece en una dirección múltiplo de 8, así que
+$n$ nodos ocupan $24n$ bytes, que sigue siendo $\Theta(n)$.
+
 ### Armar el árbol a mano
 
 ```cpp
@@ -162,6 +167,12 @@ El código empieza por el 6 y deja el 8 para el final porque `crearNodo` recibe
 los dos hijos ya hechos. Para crear el 8 hacen falta el 3 y el 10, y para
 crear el 3 hace falta el 6: el árbol se arma de abajo hacia arriba, y las
 hojas llevan `NULL` en los dos punteros.
+
+El árbol también cabe en una sola expresión,
+`crearNodo(8, crearNodo(3, crearNodo(1, NULL, NULL), crearNodo(6, ...)), ...)`,
+y el orden no cambia: C++ evalúa los argumentos antes de entrar a la función,
+así que el `crearNodo` más interno termina primero. Cada `crearNodo` pide dos
+árboles, y la cadena se detiene donde aparece `NULL`, el árbol vacío.
 
 ## La recursión, desde el árbol
 
@@ -203,6 +214,24 @@ las llamadas: bastó suponer que la llamada sobre un subárbol, que tiene menos
 nodos, devuelve su tamaño, y ocuparse solo de combinar. Las llamadas se
 acaban porque cada una baja un nivel y tarde o temprano llega a un vacío.
 
+Con $T(x)$ para `tamano` sobre el subárbol de $x$ y $T(\emptyset) = 0$, la
+cuenta del árbol de ejemplo se expande de izquierda a derecha:
+
+$$
+\begin{aligned}
+T(8) &= 1 + T(3) + T(10) \\
+     &= 1 + \bigl(1 + T(1) + T(6)\bigr) + T(10) \\
+     &= 1 + \bigl(1 + (1 + 0 + 0) + (1 + T(4) + T(7))\bigr) + T(10) \\
+     &= 1 + \bigl(1 + 1 + (1 + 1 + 1)\bigr) + T(10) = 6 + T(10) \\
+     &= 6 + \bigl(1 + T(\emptyset) + T(14)\bigr) = 6 + 1 + 0 + 1 = 8
+\end{aligned}
+$$
+
+$T(10)$ espera sin abrirse hasta que todo el subárbol izquierdo de 8 queda
+resuelto, y lo primero que se resuelve son los vacíos. La última llamada en
+empezar es la primera en terminar: la recursión guarda lo pendiente en una
+pila, la de llamadas, aunque el código no declare ninguna.
+
 ### La pila de llamadas de tamano(6)
 
 Cada llamada abre un marco en la pila de llamadas con su `r` y lo que lleva
@@ -228,6 +257,14 @@ $h + 2$ marcos de `tamano`: el espacio aparte es $O(h)$. En tiempo, cada nodo
 y cada vacío reciben una llamada que trabaja $\Theta(1)$ sin contar las que
 hace; con $n$ nodos eso da $\Theta(n)$.
 
+El subárbol de 6 tiene altura 1, y la cota da $h + 2 = 3$ marcos, los mismos
+que muestra la tabla en los pasos 3 y 4. Los marcos viven en la pila del
+programa; los nodos, en el montículo (*heap*), porque se crearon con `new`. Un
+depurador lo deja ver: con un punto de parada en `tamano` y un árbol de tres
+nodos (6 con hijos 5 y 10), cada paso agrega o quita un marco en la ventana de
+la pila, y cada marco guarda su propio `r`, cuyo dato y punteros se pueden
+inspeccionar. Mientras el marco de 5 trabaja, el de 6 sigue ahí, esperando.
+
 ### altura
 
 Una hoja tiene altura 0, y la altura de un nodo es 1 más la mayor de las
@@ -244,6 +281,12 @@ $$
 
 En el árbol de ejemplo, `altura(raiz)` da 3, por el camino 8, 3, 6, 4. Cuesta
 lo mismo que `tamano`: $\Theta(n)$ en tiempo y $O(h)$ de pila.
+
+Las alturas salen de abajo hacia arriba. Las hojas 1, 4, 7 y 14 valen 0. El 6
+vale $1 + \max(0, 0) = 1$ y el 3, $1 + \max(0, 1) = 2$, porque se queda con el
+hijo más alto. El 10 tiene un vacío a la izquierda: $1 + \max(-1, 0) = 1$. La
+raíz se queda con el 3 y da $1 + \max(2, 1) = 3$. Donde `tamano` suma los dos
+subárboles, `altura` escoge el mayor.
 
 ### Un caso base en el lugar equivocado
 
@@ -333,6 +376,10 @@ cada nodo al pasar por su izquierda, el inorden al pasar por debajo y el
 posorden al pasar por su derecha. Los tres cuestan $\Theta(n)$ en tiempo, con
 un `printf` por nodo, y $O(h)$ de pila de llamadas.
 
+Las iniciales ayudan a recordarlos: RID para el preorden (raíz, izquierdo,
+derecho), IRD para el inorden e IDR para el posorden. En los tres el izquierdo
+va antes que el derecho; lo único que se mueve es la R.
+
 ### Un árbol para (3 + 4) * (5 - 2)
 
 En un árbol de expresión (Thareja, §9.2.5) las hojas son números y cada nodo
@@ -359,6 +406,28 @@ postfija, la que evalúa una pila de operandos. La prefija y la postfija no
 necesitan paréntesis; la infija sí, porque sin ellos `3 + 4 * 5 - 2` se
 agruparía de otra manera, y por eso `infija` abre un paréntesis antes de bajar
 a la izquierda y lo cierra al volver de la derecha.
+
+La notación prefija se conoce como notación polaca, por Jan Łukasiewicz, y la
+postfija como notación polaca inversa. Lisp escribe en prefija, pero con
+paréntesis: `(+ 1 2 3 4 5 6 7)` suma siete números, porque el paréntesis dice
+dónde terminan los operandos. En el árbol de expresión cada operador tiene
+exactamente dos hijos, y por eso la prefija y la postfija se leen sin
+paréntesis.
+
+Un árbol más grande: un `+` en la raíz con hijo izquierdo $2 * 3$ y, a la
+derecha, otro `+` que suma $7 * 8$ y $12 / 13$. Con las funciones de
+`expresion.cpp`:
+
+```text
+prefija:  + * 2 3 + * 7 8 / 12 13 
+infija:   ((2 * 3) + ((7 * 8) + (12 / 13)))
+postfija: 2 3 * 7 8 * 12 13 / + + 
+valor:    62
+```
+
+El valor es 62 y no $62{,}92\ldots$ porque `dato` es `int`: `12 / 13` es
+división entera y da 0. El árbol tiene once nodos y altura 3, así que
+`evaluar` hace once llamadas y la pila llega a tener cuatro marcos.
 
 `evaluar` es un posorden: primero los dos operandos, después el operador. El
 `+` devuelve 7, el `-` devuelve 3 y el `*` devuelve 21, en $\Theta(n)$ de
