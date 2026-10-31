@@ -12,6 +12,8 @@ miniproyectos y las notas están en el campus virtual de la UAO.
 Se trabajan en el navegador, sin instalar nada, y todos los números que
 muestran se calculan en la página sobre la serie del curso: los pasajeros
 mensuales de los vuelos de Colombia entre enero de 2017 y febrero de 2026.
+Los ajustes de statsmodels y scikit-learn son la excepción: se calcularon
+fuera de la página, y cada actividad dice cuáles son.
 
 1. [Ejercicios de la semana del 16 y 17 de octubre: estacionariedad, ACF y PACF](../../actividades/series-temporales/autocorrelacion/index.md)
    — cinco actividades para las sesiones 3 y 4: la nube de cada mes contra
@@ -28,3 +30,7 @@ mensuales de los vuelos de Colombia entre enero de 2017 y febrero de 2026.
    actividades: el pronóstico de w integrado de vuelta a pasajeros, mes a mes,
    y la rejilla de SARIMA por AIC con los residuos de cinco modelos y su
    prueba de Ljung-Box.
+3. [Ejercicios de la semana del 30 y 31 de octubre: la serie como tabla](../../actividades/series-temporales/serie-como-tabla/index.md)
+   — tres actividades para la sesión 7: los vecinos que KNN escoge para
+   enero de 2025 según k y el objetivo, C, epsilon y el escalador de SVR, y
+   un árbol de regresión de profundidad 1 a 10 frente a un Random Forest.
