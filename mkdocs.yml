@@ -94,6 +94,12 @@ plugins:
   - search:
       lang: es
   - roamlinks
+  # El menú se arma solo a partir de las carpetas, y el orden por omisión es
+  # alfabético: C10 queda antes de C2. Con sort_type natural los números se
+  # comparan como números, así que las clases salen en su orden.
+  - awesome-pages:
+      sort_type: natural
+      order: asc
 
 extra:
   social:
