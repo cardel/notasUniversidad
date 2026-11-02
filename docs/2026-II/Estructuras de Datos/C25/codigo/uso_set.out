@@ -1,0 +1,12 @@
+ 5 17 30 42 63 88   size = 6
+count(17) = 1, count(18) = 0
+find(63) == end(): 0
+erase(17) = 1
+erase(17) = 0
+ 5 30 42 63 88   size = 5
+menor: 5
+mayor: 88
+lower_bound(42) = 42
+upper_bound(42) = 63
+lower_bound(50) = 63
+lower_bound(90) == end(): 1

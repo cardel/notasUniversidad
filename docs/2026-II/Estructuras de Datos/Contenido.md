@@ -49,6 +49,7 @@ y sus soluciones en Python y C++.
 22. [Clase 22. El contenedor map y ejercicios, 23 de octubre](C22/Clase%2022.%20El%20contenedor%20map%20y%20ejercicios.md)
 23. [Clase 23. Árboles y árboles binarios, 28 de octubre](C23/Clase%2023.%20%C3%81rboles%20y%20%C3%A1rboles%20binarios.md)
 24. [Clase 24. Árbol binario de búsqueda, 30 de octubre](C24/Clase%2024.%20%C3%81rbol%20binario%20de%20b%C3%BAsqueda.md)
+25. [Clase 25. Árboles rojinegros y el contenedor set, 4 de noviembre](C25/Clase%2025.%20%C3%81rboles%20rojinegros%20y%20el%20contenedor%20set.md)
 
 ## Apéndices
 
