@@ -54,7 +54,6 @@ Modelos de implementación
 - Nube
 - Hibrido
 - Nube privada
-
 - Nube se encuentra distribuida en diferentes localizaciones fisicas: distribuida y es accesible a lo largo de internet
 - Nube privada: Es una infraestructura local (Ejemplo son los servicios de repositorios de archivos)
 - Esquema hibrido: Es una combinación de nube publica y privado
@@ -67,7 +66,6 @@ Diferencias entre el esquema de la nube y el modelo tradicional
 2. Redes
 3. Informática : Recursos
 4. Almacenamiento
-
 1. Seguridad: En el esquema tradicional es un personal que tiene acceso directo al hardware y configuración ACL (Capas de acceso: ¿Que Equipos pueden acceder a los recursos y como lo hace?,  Firewalls (Reglas de acceso) en el caso de la nube son directamente desde los servicios de gestion de recurso (IAM)
 2. Redes: Modelo tradicional Cables, routers, switches repetidores, etc Modelo de Nube: APlicaciones o servicios para configurar redes virtuales con los componente equivalentes  las redes fisicas.
 3. Recursos (Informatica) Modelo Tradicional: Servidores y equipos, Modelo de la nube: Maquinas virtual (Virtualizacion total / paravirtualizacion)

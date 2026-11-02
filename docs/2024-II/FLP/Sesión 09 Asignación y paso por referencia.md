@@ -13,7 +13,6 @@ Paradigma procedural / imperativo
 
 - Programas tienen estado (cambios en las variables)
 - Secuencialidad
-
 - Asignación: Posibilidad de cambiar las variables
 - Secuencialidad: Posibilidad de ejecutar instrucciones de acuerdo a su orden
 

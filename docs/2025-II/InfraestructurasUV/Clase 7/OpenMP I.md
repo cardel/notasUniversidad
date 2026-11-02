@@ -141,19 +141,15 @@ OpenMP permite paralelización en sistemas multinúcleo, pero el rendimiento dep
 2. **Optimizar patrones de acceso a memoria:**
    - Preferir acceso por filas en arreglos 2D
    - Mantener datos contiguos para cada hilo
-
 3. **Minimizar falsa compartición:**
    - Alinear datos en límites de línea de cache
    - Usar relleno (padding) entre datos de diferentes hilos
-
 4. **Considerar la jerarquía de memoria:**
    - Dividir trabajo en chunks que caben en cache L1/L2
    - Balancear carga computacional vs acceso a memoria
-
 5. **Evaluar overhead vs beneficio:**
    - Paralelizar solo loops con suficiente trabajo
    - Medir speedup real considerando sincronización
-
 6. **Usar directivas de OpenMP apropiadas:**
    - `reduction` para operaciones acumulativas
    - `schedule` para optimizar distribución de trabajo

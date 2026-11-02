@@ -31,7 +31,6 @@ a.metodo(4)
 
 1. Primero hay relación entre padre e hijas, el padre usualmente es un trait o un clase abstracta
 2. Hay despacho dinamico de metodos (al ejecutar un metodo en ejecución puede ser que se ejecute una hija u otra)
-
 1. Un trait es equivalante a una interfaz, pero que permite definiciones
 2. Un trait a diferencia de una clase abstracta NO HEREDA NADA
 3. 

@@ -59,7 +59,6 @@ graph TD
     *   Ahora en `G1` podemos resolver `+(10, 20) = 30`.
     *   La asignación `set u = 30` modifica la celda de `a` a **30**. `g` retorna 30.
     *   **Estado actual:** `a = 30`, `b = 20`.
-
 3.  **Segunda llamada `(g b f)`:** Se crea el ambiente `G2` donde `u` es una referencia a `b` (valor 20) y `v` es una referencia a `f`.
 4.  **En `G2` se evalúa `+(u, (v u))`:**
     *   Primero se evalúa `u` → 20.
@@ -70,7 +69,6 @@ graph TD
     *   En `G2` resolvemos `+(20, 40) = 60`.
     *   La asignación `set u = 60` modifica la celda de `b` a **60**. `g` retorna 60.
     *   **Estado final:** `a = 30`, `b = 60`.
-
 5.  **Evaluación final en `env2`:** Se calcula `+((g a f), (g b f))` → `+(30, 60)` = **90**.
 
 ---

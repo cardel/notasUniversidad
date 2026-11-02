@@ -63,7 +63,6 @@ llorar(objPollito, "Gane funcional")
 3. **Consistencia estructural**: Mantiene el esquema de dos "parámetros":
    - `this` (implícito, instancia de clase)
    - Parámetro explícito del método
-
 4. **Reutilización**: Facilita la creación de funciones especializadas:
 ```scala
 val duplicar = f(2)_  // Función que multiplica por 2

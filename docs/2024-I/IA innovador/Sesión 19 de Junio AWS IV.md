@@ -4,7 +4,6 @@
 
 - Certificación AWS https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/?ch=sec&sec=rmg&d=1
 - Certificación Google https://cloud.google.com/learn/certification/machine-learning-engineer
-
 - Certificación Microsoft [https://learn.microsoft.com/es-es/credentials/certifications/azure-ai-engineer/?practice-assessment-type=certification](https://learn.microsoft.com/es-es/credentials/certifications/azure-ai-engineer/?practice-assessment-type=certification)
 - Recursos laborales
     - [https://jobs.careers.microsoft.com](https://jobs.careers.microsoft.com/)

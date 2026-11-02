@@ -19,7 +19,6 @@ Algunos ejemplos de problemas NP Completos incluyen:
 - **Problema de la Coloreabilidad de Grafos:** Determinar si un grafo puede ser coloreado con un número dado de colores sin que dos vértices adyacentes compartan el mismo color.
 - **Problema del Conjunto Dominante (Dominating Set Problem):** Encontrar un conjunto mínimo de vértices en un grafo tal que todos los demás vértices estén adyacentes a al menos uno de los vértices del conjunto.
 - **Corte Mínimo (Minimum Cut):** Determinar el menor número de aristas que deben eliminarse en un grafo para dividirlo en dos componentes conectados.
-
 - **Optimización de rutas de entrega:** Encontrar la mejor ruta para una flota de camiones que debe realizar entregas en múltiples ubicaciones, minimizando el tiempo o el costo de transporte. Este problema está relacionado con el Problema del Viajero (TSP).
 - **Planificación de horarios:** Asignar horarios a clases, exámenes o reuniones de manera que no haya conflictos y se cumplan restricciones específicas. Esto es similar a problemas de coloreabilidad de grafos.
 - **Diseño de circuitos electrónicos:** Minimizar el número de compuertas lógicas en un circuito digital mientras se asegura que funcione correctamente para todas las entradas posibles. Este tipo de problema puede ser modelado como SAT o 3-SAT.

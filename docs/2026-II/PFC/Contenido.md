@@ -49,7 +49,6 @@ Se publican después de cada sesión.
    infija, operadores como métodos y su precedencia, precondiciones con
    `require` y el modelo de sustitución con clases. Incluye el código escrito
    en clase.
-
 5. [Clase 5. Reconocimiento de patrones — 8 de octubre](C5/Clase%205.%20Reconocimiento%20de%20patrones.md)
    — el conjunto de enteros como árbol binario, clases abstractas y despacho
    dinámico, el objeto único, traits y por qué no hay herencia múltiple, el
