@@ -237,6 +237,16 @@ el $k$ que aterriza en el caso base y despeje la cota.
    expansión funciona igual y explica por qué un ciclo simple es
    $\Theta(n)$.
 
+## Ejercicios interactivos
+
+El árbol de recursión, nivel por nivel, está en la
+[página de recurrencias](../../../actividades/ayg-puj/recurrencias/index.md):
+
+- [arbol](../../../actividades/ayg-puj/recurrencias/arbol.html){ target=_blank rel=noopener }: elija una
+  de tres recurrencias y escriba, nivel por nivel, cuántos nodos hay, cuánto
+  trabaja cada uno y cuánto cuesta el nivel; después, el número de niveles,
+  el total y su clase $\Theta$.
+
 ## Referencias
 
 - T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein. *Introduction to
