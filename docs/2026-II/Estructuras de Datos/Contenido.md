@@ -50,6 +50,7 @@ y sus soluciones en Python y C++.
 23. [Clase 23. Árboles y árboles binarios, 28 de octubre](C23/Clase%2023.%20%C3%81rboles%20y%20%C3%A1rboles%20binarios.md)
 24. [Clase 24. Árbol binario de búsqueda, 30 de octubre](C24/Clase%2024.%20%C3%81rbol%20binario%20de%20b%C3%BAsqueda.md)
 25. [Clase 25. El contenedor set y los montículos, 4 de noviembre](C25/Clase%2025.%20El%20contenedor%20set%20y%20los%20mont%C3%ADculos.md)
+26. [Clase 26. Heapsort y cola de prioridad: ejercicios, 6 de noviembre](C26/Ejercicios.md)
 
 ## Apéndices
 
