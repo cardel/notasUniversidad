@@ -1248,6 +1248,12 @@ leer quién se queja ahorra la mitad de la depuración.
 4. Corra `desborde.c` cambiando `int` por `long` y por `unsigned int`.
    ¿En qué valor da la vuelta cada uno?
 
+## Ejercicios interactivos
+
+Las actividades para trabajar en el navegador, ordenadas por los temas de la
+sesión, están en [Ejercicios interactivos](./Ejercicios.md). Los programas y
+los valores no son los de la sesión: mismo tema, ronda nueva.
+
 ## Código de la clase
 
 Compilación y ejecución de cada archivo:

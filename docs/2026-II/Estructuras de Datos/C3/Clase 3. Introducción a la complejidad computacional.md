@@ -728,6 +728,12 @@ $n = 4$ muestra el patrón.
 3. Compile `suma_hasta` con y sin `-O2` y mire la diferencia. ¿Cambió $T$?
 4. Resuelva los ejercicios 2 y de cierre.
 
+## Ejercicios interactivos
+
+Las actividades para trabajar en el navegador, ordenadas por los temas de la
+sesión, están en [Ejercicios interactivos](./Ejercicios.md). Los programas y los
+arreglos no son los de la sesión: mismo tema, ronda nueva.
+
 ## Código de la clase
 
 Compilación y ejecución:
