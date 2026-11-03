@@ -1015,10 +1015,11 @@ sesión, están en la [página de ejercicios](./Ejercicios.md). Las claves y los
 
 ## Lo que sigue
 
-Los árboles rojinegros (CLRS, cap. 13): cada nodo lleva un color, y al insertar
-y borrar se recolorea y se rota para que la altura nunca pase de
-$2 \log_2(n + 1)$. Con ellos, buscar, insertar y borrar cuestan $O(\log n)$ en
-cualquier orden de llegada. Es lo que hay dentro de `map` y `set`.
+El contenedor `set`, que guarda las claves en un árbol binario de búsqueda que
+la biblioteca mantiene balanceado: buscar, insertar y borrar cuestan
+$O(\log n)$ siempre, y recorrerlo da las claves en orden. Después, los
+montículos: un árbol binario completo guardado en un arreglo, donde la clave
+mayor siempre está en la raíz.
 
 ## Código de la sesión
 
@@ -1052,7 +1053,7 @@ su entrada y su salida.
   Algorithms*, 4.ª ed. MIT Press, 2022. Apéndice B.5, árboles; §10.3,
   representación de árboles con raíz; capítulo 12, árboles binarios de búsqueda
   (§12.1, definición y recorridos; §12.2, buscar, mínimo, máximo y sucesor;
-  §12.3, insertar y borrar); capítulo 13, árboles rojinegros.
+  §12.3, insertar y borrar).
 - R. Thareja. *Data Structures Using C*, 2.ª ed. Oxford University Press, 2014.
   Capítulo 9, *Trees*; capítulo 10, *Efficient Binary Trees*: §10.1, árboles
   binarios de búsqueda, y §10.2, sus operaciones.

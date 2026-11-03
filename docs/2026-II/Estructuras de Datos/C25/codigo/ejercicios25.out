@@ -1,9 +1,15 @@
-s: 4 9 15 22 30 41 57
 contarRango(10, 40) = 3
 contarRango(15, 22) = 2
 contarRango(42, 56) = 0
-masCercano(26) = 22
-masCercano(12) = 9
-masCercano(1) = 4
-masCercano(99) = 57
-borrarMenores(20): 22 30 41 57
+esMonticulo(A) = 1
+esMonticulo(B) = 0
+esMonticulo(C) = 1
+insertar(10): 10
+insertar(20): 20 10
+insertar(30): 30 10 20
+insertar(40): 40 30 20 10
+insertar(50): 50 40 20 10 30
+insertar(60): 60 40 50 10 30 20
+insertar(70): 70 40 60 10 30 20 50
+bajarSoloIzq: 42 25 40 12 31 18 7 5 9
+esMonticulo = 0

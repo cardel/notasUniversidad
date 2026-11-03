@@ -1,0 +1,10 @@
+inicial:          45 31 40 12 25 18 7 5 9
+insertar(42):     45 42 40 12 31 18 7 5 9 25
+maximo() = 45
+extraerMax() = 45: 42 31 40 12 25 18 7 5 9
+salen en orden:   42 40 31 25 18 12 9 7 5
+atender: 40
+atender: 27
+atender: 27
+atender: 15
+pendientes (1): 8

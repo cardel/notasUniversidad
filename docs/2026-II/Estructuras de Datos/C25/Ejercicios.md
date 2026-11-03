@@ -1,62 +1,20 @@
 # Ejercicios · Estructuras C25
 
-El árbol rojinegro y el contenedor `set`: por qué un ABB con claves en orden
-se vuelve una lista, las cinco reglas, las rotaciones, la inserción caso por
-caso, el árbol que hay dentro de `map` y las operaciones del `set`. Cada
-enlace abre una actividad que se trabaja directo en el navegador, en el mismo
-orden de los temas de la
-[sesión](./Clase%2025.%20%C3%81rboles%20rojinegros%20y%20el%20contenedor%20set.md).
-Los árboles, las secuencias y los programas no son los de la sesión: mismo
-tema, ronda nueva. Las más exigentes son `casos` e `insertar`.
+El contenedor `set` y los montículos: las operaciones del `set` y sus bordes,
+cuándo conviene frente a otros contenedores, y el montículo de máximos guardado
+en un arreglo, con insertar subiendo, extraer bajando y lo que cuesta cada
+operación. Cada enlace abre una actividad que se trabaja directo en el
+navegador, en el mismo orden de los temas de la
+[sesión](./Clase%2025.%20El%20contenedor%20set%20y%20los%20mont%C3%ADculos.md).
+Los árboles, los arreglos y los programas no son los de la sesión: mismo tema,
+ronda nueva. Las más exigentes son `errores` y `compuestas`.
 
-## El problema: claves que llegan en orden
+## Repaso: el ABB y las claves en orden
 
-### [reconstruir](../../../actividades/estructuras-de-datos/arbol-rojinegro/reconstruir.html){ target=_blank rel=noopener }
+### [forma](../../../actividades/estructuras-de-datos/arbol-binario-busqueda/forma.html){ target=_blank rel=noopener }
 
-Un contador de radicados que arma una lista en el ABB, las comparaciones que
-cuesta, lo que cobra reconstruir el árbol balanceado tras cada inserción y lo
-que de verdad hace falta.
-
-## Las cinco reglas
-
-### [reglas](../../../actividades/estructuras-de-datos/arbol-rojinegro/reglas.html){ target=_blank rel=noopener }
-
-Cinco árboles coloreados para decidir si son rojinegros y qué regla rompen, uno
-de ellos con un rojo de un solo hijo, y la coloración que arregla al que falla.
-
-### [alturanegra](../../../actividades/estructuras-de-datos/arbol-rojinegro/alturanegra.html){ target=_blank rel=noopener }
-
-La altura negra de tres nodos, el camino más largo frente al más corto y la
-cota 2 log₂(n + 1) con 4095 claves.
-
-## Rotaciones
-
-### [rotar](../../../actividades/estructuras-de-datos/arbol-rojinegro/rotar.html){ target=_blank rel=noopener }
-
-Una rotación a la derecha en la raíz y otra a la izquierda en un nodo interno:
-los tres enlaces que cambian, el subárbol que cambia de padre, el inorden que se
-conserva y lo que cuesta.
-
-## Insertar y borrar
-
-### [casos](../../../actividades/estructuras-de-datos/arbol-rojinegro/casos.html){ target=_blank rel=noopener }
-
-Cinco claves que entran rojas a un árbol pequeño: decidir si no pasa nada, si
-el tío rojo pide recolorear o si hay que rotar una o dos veces, y cómo queda.
-
-### [insertar](../../../actividades/estructuras-de-datos/arbol-rojinegro/insertar.html){ target=_blank rel=noopener }
-
-Los códigos 5 19 9 28 38 48 45 59 55 en un rojinegro vacío: el árbol tras las
-cuatro primeras, los casos de cada clave, el árbol final y la comparación con el
-ABB de la misma secuencia.
-
-## Lo que hay dentro de `map`
-
-### [dentromap](../../../actividades/estructuras-de-datos/arbol-rojinegro/dentromap.html){ target=_blank rel=noopener }
-
-Un `map` de rutas visto como el rojinegro que lo guarda: por qué el recorrido
-sale en orden, a dónde va `++it` y cuánto puede medir el árbol con trescientas mil
-de claves.
+Las mismas claves insertadas en cuatro órdenes distintos: la altura de cada
+árbol y lo que cuesta armarlo cuando llegan en orden.
 
 ## El contenedor `set`
 
@@ -67,21 +25,58 @@ con `count`, avanza con `++it` desde `find` y borra con `erase`.
 
 ### [bordes](../../../actividades/estructuras-de-datos/contenedor-set/bordes.html){ target=_blank rel=noopener }
 
-Las salidas de un tren: `lower_bound` y `upper_bound`, la salida anterior a un
-minuto, cuántas caen en un intervalo y la trampa del `lower_bound` de
-`<algorithm>`.
+Las salidas de un tren con `lower_bound` y `upper_bound`, la salida anterior a
+un minuto, cuántas caen en un intervalo y lo que cuesta el `lower_bound` de
+`<algorithm>` sobre un `set`.
 
 ### [elegir](../../../actividades/estructuras-de-datos/contenedor-set/elegir.html){ target=_blank rel=noopener }
 
 Cinco situaciones para escoger entre `set`, `map`, `unordered_map` y un
 `vector` ordenado una sola vez, con lo que falla en cada alternativa.
 
+## Montículos
+
+### [urgente](../../../actividades/estructuras-de-datos/monticulo/urgente.html){ target=_blank rel=noopener }
+
+Una sala de urgencias que atiende por prioridad: qué se atiende, qué queda,
+cuántas comparaciones paga el arreglo sin orden y cuántas casillas corre el
+ordenado.
+
+### [completo](../../../actividades/estructuras-de-datos/monticulo/completo.html){ target=_blank rel=noopener }
+
+Cuáles de cuatro árboles son completos, el padre y los hijos de una casilla con
+índices desde 0, y el paso del árbol al arreglo y del arreglo al árbol.
+
+### [cuales](../../../actividades/estructuras-de-datos/monticulo/cuales.html){ target=_blank rel=noopener }
+
+Cinco arreglos para decidir si son montículos de máximos, entre ellos uno con
+una clave menor que la raíz que igual rompe el orden, uno con claves iguales y
+un montículo de mínimos.
+
+### [insertar](../../../actividades/estructuras-de-datos/monticulo/insertar.html){ target=_blank rel=noopener }
+
+Tres claves que llegan a un montículo de once: el árbol y el arreglo en cada
+intercambio, la traza en una tabla y una clave igual a su padre.
+
+### [extraer](../../../actividades/estructuras-de-datos/monticulo/extraer.html){ target=_blank rel=noopener }
+
+Dos extracciones paso a paso, el empate entre dos hijos iguales y lo que deja
+un `bajar` que solo mira el hijo izquierdo.
+
+### [errores](../../../actividades/estructuras-de-datos/monticulo/errores.html){ target=_blank rel=noopener }
+
+Bajar con el primer hijo mayor, subir con el padre en `i / 2` y extraer
+subiendo hijos: qué arreglo deja cada versión y qué se rompe.
+
+### [costos](../../../actividades/estructuras-de-datos/monticulo/costos.html){ target=_blank rel=noopener }
+
+La altura para 12, 200 y 70 000 claves, cuántos intercambios hacen insertar y
+extraer en un árbol lleno, y por qué el montículo cabe en un arreglo.
+
 ## Para el juez
 
 ### [compuestas](../../../actividades/estructuras-de-datos/contenedor-set/compuestas.html){ target=_blank rel=noopener }
 
-*UVa 10391, Compound Words*, con un `set<string>`. Enunciado:
-<https://onlinejudge.org/external/103/10391.pdf>. Envío:
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1332>.
-Por qué una palabra de tres partes no sale, qué estrategia se descarta por
-tiempo, qué imprime un diccionario propio y cuántos cortes se prueban.
+UVa 10391, Compound Words, con un `set<string>`: por qué una palabra de tres
+partes no sale, qué estrategia se descarta por tiempo y cuántos cortes se
+prueban.
