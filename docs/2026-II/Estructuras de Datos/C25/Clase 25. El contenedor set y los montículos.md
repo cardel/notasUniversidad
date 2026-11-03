@@ -654,8 +654,7 @@ Cada solución lee la entrada de ejemplo del enunciado y reproduce su salida:
 ### UVa 10815, Andy's First Dictionary
 
 *UVa 10815, Andy's First Dictionary*:
-<https://onlinejudge.org/external/108/10815.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1756>.
+<https://vjudge.net/problem/UVA-10815>, donde también se envía.
 
 Cada palabra, en minúscula, entra a un `set<string>`, y el recorrido final sale
 en orden alfabético.
@@ -686,8 +685,7 @@ Solución: [uva10815.cpp](./codigo/uva10815.cpp), [entrada](./codigo/uva10815.in
 
 ### UVa 11849, CD
 
-*UVa 11849, CD*: <https://onlinejudge.org/external/118/11849.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2949>.
+*UVa 11849, CD*: <https://vjudge.net/problem/UVA-11849>, donde también se envía.
 
 Los discos de Jack entran a un `set<int>` y cada uno de Jill suma su `count`.
 
@@ -779,7 +777,7 @@ su entrada y su salida.
 - R. Thareja. *Data Structures Using C*, 2.ª ed. Oxford University Press, 2014.
   Capítulo 12, *Heaps*: §12.1, *Binary Heaps*, p. 361; §12.1.1, insertar,
   p. 362; §12.1.2, borrar, p. 364.
-- UVa Online Judge. Problema 10815, *Andy's First Dictionary*:
-  <https://onlinejudge.org/external/108/10815.pdf>.
-- UVa Online Judge. Problema 11849, *CD*:
-  <https://onlinejudge.org/external/118/11849.pdf>.
+- UVa, en Virtual Judge. Problema 10815, *Andy's First Dictionary*:
+  <https://vjudge.net/problem/UVA-10815>.
+- UVa, en Virtual Judge. Problema 11849, *CD*:
+  <https://vjudge.net/problem/UVA-11849>.
