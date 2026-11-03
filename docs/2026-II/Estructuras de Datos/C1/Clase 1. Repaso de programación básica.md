@@ -352,6 +352,12 @@ Del cierre de las diapositivas:
 3. Reescribir los ciclos de `Ejercicio.cpp` con `while` y verificar que la
    salida no cambia.
 
+## Ejercicios interactivos
+
+Las actividades para trabajar en el navegador, ordenadas por los temas de la
+sesión, están en [Ejercicios interactivos](./Ejercicios.md). Los programas y los
+valores no son los de la sesión: mismo tema, ronda nueva.
+
 ## Código de la clase
 
 - [Mayor.cpp](codigo/Mayor.cpp)
