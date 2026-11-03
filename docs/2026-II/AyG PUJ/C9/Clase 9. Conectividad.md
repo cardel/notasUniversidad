@@ -32,7 +32,7 @@ y los puentes, las piezas que sostienen la conexión.
     de tres componentes, los dos triángulos unidos por un puente y el dirigido
     donde Kosaraju pinta cuatro componentes.
 
-    [:octicons-arrow-right-24: Abrir](clase09-conectividad.pdf)
+    [:octicons-arrow-right-24: Abrir](./clase09-conectividad.pdf)
 
 </div>
 

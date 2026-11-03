@@ -26,7 +26,7 @@ amplitud.
     Definiciones, los cinco tipos, terminología, el teorema del apretón de
     manos, las familias, topologías, subgrafos y complementos.
 
-    [:octicons-arrow-right-24: Diapositivas](clase06-repaso.pdf)
+    [:octicons-arrow-right-24: Diapositivas](./clase06-repaso.pdf)
 
 </div>
 

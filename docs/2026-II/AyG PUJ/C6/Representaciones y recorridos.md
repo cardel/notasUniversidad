@@ -8,10 +8,10 @@ después: cómo se recorre un grafo, en profundidad y en amplitud.
 
 ## Diapositivas
 
-[Repaso de grafos](clase06-repaso.pdf){ target=_blank } — definiciones, los
+[Repaso de grafos](./clase06-repaso.pdf){ target=_blank } — definiciones, los
 cinco tipos, terminología, familias, topologías y complementos.
 
-[Representaciones y recorridos](clase06-representaciones.pdf){ target=_blank }
+[Representaciones y recorridos](./clase06-representaciones.pdf){ target=_blank }
 — la clase.
 
 ## Los dos grafos

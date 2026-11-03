@@ -11,7 +11,7 @@ hacen falta dos recorridos y el grafo con las aristas al revés.
 
 ## Diapositivas
 
-[Conectividad](clase09-conectividad.pdf){ target=_blank rel=noopener } — 128
+[Conectividad](./clase09-conectividad.pdf){ target=_blank rel=noopener } — 128
 páginas: las 127 láminas con las anotaciones de la sesión y una de tablero.
 Los tres grafos de ejemplo van dibujados lámina por lámina: el no dirigido de
 ocho vértices y tres componentes, los dos triángulos unidos por un puente, y

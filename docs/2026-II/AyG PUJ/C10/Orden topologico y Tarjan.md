@@ -24,7 +24,7 @@ Al terminar la sesión se espera poder:
 
 ## Diapositivas
 
-[clase10-tarjan.pdf](clase10-tarjan.pdf){ target=_blank rel=noopener }, 86
+[clase10-tarjan.pdf](./clase10-tarjan.pdf){ target=_blank rel=noopener }, 86
 páginas. Los tres grafos de ejemplo van dibujados: el plan de estudios de siete
 materias, el dirigido de ocho vértices de la conectividad con $d/low$ escrito
 debajo de cada vértice, y el no dirigido de tres triángulos con el puente
@@ -334,7 +334,7 @@ $1$.
 
 El mismo grafo con un componente más, donde los dos $low$ sí coinciden, y los
 catorce pasos de la ejecución están en
-[esta página](tarjan-valor-low.pdf){ target=_blank rel=noopener }.
+[esta página](../../../actividades/ayg-puj/orden-topologico-dfs-low/tarjan-valor-low.pdf){ target=_blank rel=noopener }.
 
 Para $low$ solo importan las comparaciones entre tiempos de descubrimiento, así
 que el reloj avanza solo al descubrir y $v.d$ va de $1$ a $|V|$: es el orden en

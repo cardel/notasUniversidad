@@ -8,7 +8,7 @@ entrada y salida, qué es el grafo, el algoritmo, el código y el costo.
 
 ## Diapositivas
 
-[Grafos implícitos](clase07-implicitos.pdf){ target=_blank } — 69 páginas: las 67 láminas anotadas en clase y dos de tablero.
+[Grafos implícitos](./clase07-implicitos.pdf){ target=_blank } — 69 páginas: las 67 láminas anotadas en clase y dos de tablero.
 
 ## Lo que cuestan los recorridos
 

@@ -33,7 +33,7 @@ de quitar las piezas una por una.
     El deck de la sesión, con el código de las tres piezas en sus dos formas,
     la recursiva y la de pila explícita.
 
-    [:octicons-arrow-right-24: Abrir](clase10-tarjan.pdf)
+    [:octicons-arrow-right-24: Abrir](./clase10-tarjan.pdf)
 
 </div>
 

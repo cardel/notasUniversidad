@@ -28,7 +28,7 @@ un imperio.
     Las 67 láminas con las anotaciones de la sesión y dos páginas de tablero
     con los casos de la muestra de Poor Trade Advisor.
 
-    [:octicons-arrow-right-24: Abrir](clase07-implicitos.pdf)
+    [:octicons-arrow-right-24: Abrir](./clase07-implicitos.pdf)
 
 </div>
 

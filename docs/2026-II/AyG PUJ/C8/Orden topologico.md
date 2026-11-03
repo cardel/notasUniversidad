@@ -10,7 +10,7 @@ cuando no puede, que el grafo tiene un ciclo.
 
 ## Diapositivas
 
-[Orden topológico](clase08-orden-topologico.pdf){ target=_blank } — 72
+[Orden topológico](./clase08-orden-topologico.pdf){ target=_blank } — 72
 páginas: las 71 láminas con las anotaciones de la sesión y una de tablero.
 La ejecución del algoritmo va lámina por lámina: en cada una, un color por
 vértice —blanco pendiente, naranja en la cola, verde ya emitido— y el

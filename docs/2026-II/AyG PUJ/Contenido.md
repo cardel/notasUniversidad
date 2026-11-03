@@ -22,7 +22,7 @@ y sus soluciones en Python y C++.
 
 ## Programa del curso
 
-[Programa y cronograma (PDF)](Contenido.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+[Programa y cronograma (PDF)](./Contenido.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Notas de clase
 
