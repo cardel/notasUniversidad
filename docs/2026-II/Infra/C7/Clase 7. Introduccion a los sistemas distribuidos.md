@@ -11,6 +11,18 @@ qué contesta un sistema cuando la red se parte en dos.
 
 <div class="grid cards" markdown>
 
+-   :material-sitemap:{ .lg .middle } **Estilos de arquitectura y diagnóstico de red**
+
+    ---
+
+    Los siete estilos con los que se describe un sistema distribuido, dónde
+    vive el estado en cada uno y qué cuesta, con la ley de Conway y la
+    observabilidad; y las dos medidas con las que se diagnostica un enlace,
+    con lo que se espera de cada tipo de red y por qué una transferencia real
+    siempre queda por debajo.
+
+    [:octicons-arrow-right-24: Entrar](./Estilos%20de%20arquitectura%20y%20diagnostico%20de%20red.md)
+
 -   :material-format-list-checks:{ .lg .middle } **Ejercicios**
 
     ---
