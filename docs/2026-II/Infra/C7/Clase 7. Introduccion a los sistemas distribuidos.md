@@ -15,11 +15,12 @@ qué contesta un sistema cuando la red se parte en dos.
 
     ---
 
-    Ocho actividades en el navegador, dos por tema de la sesión: lo que cuesta
-    cruzar la red y el orden de los eventos sin un reloj común, escalar a lo
-    alto o a lo ancho y repartir claves entre nodos, los nueves de
-    disponibilidad y la cadena de servicios, y el teorema CAP con los quórums
-    de lectura y escritura.
+    Diez actividades en el navegador: lo que cuesta cruzar la red y el orden de
+    los eventos sin un reloj común, escalar a lo alto o a lo ancho y repartir
+    claves entre nodos, los nueves de disponibilidad y la cadena de servicios,
+    el teorema CAP con los quórums y dos réplicas que divergen y vuelven a
+    juntarse, y los siete estilos de arquitectura sobre diez sistemas
+    conocidos.
 
     [:octicons-arrow-right-24: Entrar](../../../actividades/infra/sistemas-distribuidos/index.md)
 
