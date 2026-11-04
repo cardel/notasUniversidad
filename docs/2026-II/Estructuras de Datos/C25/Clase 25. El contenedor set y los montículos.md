@@ -464,57 +464,6 @@ De vuelta a los pedidos:
 Con $n$ pedidos que llegan y se atienden, el montículo hace todo en
 $O(n \log n)$; el arreglo sin orden, en $\Theta(n^2)$ en el peor caso.
 
-## Ejercicios
-
-### Contar en un rango
-
-Con un `set<int>` y sin recorrerlo entero, `contarRango(s, a, b)` cuenta las
-claves en $[a, b]$:
-
-```cpp
-// Claves en [a, b]: se baja hasta a y se camina hasta pasar b.
-int contarRango(set<int> &s, int a, int b) {
-  int cuenta = 0;
-  set<int>::iterator it = s.lower_bound(a);
-  set<int>::iterator fin = s.upper_bound(b);
-  while (it != fin) {
-    cuenta = cuenta + 1;
-    ++it;
-  }
-  return cuenta;
-}
-```
-
-Con `s = {4, 9, 15, 22, 30, 41, 57}`, en $[10, 40]$ hay 3: 15, 22 y 30. En
-$[42, 56]$ no hay ninguna: los dos iteradores apuntan al 57 y el ciclo no da
-ninguna vuelta. Cuesta $O(\log n + m)$, con $m$ las claves del rango: dos
-bajadas por el árbol y $m$ avances.
-
-### ¿Es un montículo?
-
-`esMonticulo(a)` dice si un `vector<int>` es un montículo de máximos:
-
-```cpp
-// Cada casilla desde la 1 se compara con su padre, una sola vez.
-bool esMonticulo(vector<int> &a) {
-  bool res = true;
-  int i = 1;
-  while (i < (int) a.size() && res) {
-    if (a[(i - 1) / 2] < a[i]) {
-      res = false;
-    }
-    i = i + 1;
-  }
-  return res;
-}
-```
-
-Con `60 35 50 20 30 50 10` responde que sí: el 50 de la casilla 5 es igual a su
-padre, y eso se permite. Con `60 35 50 20 38 45 10` responde que no, porque la
-casilla 4 tiene el 38 y su padre, la casilla 1, el 35. Con `60 50 40 30 20 10`
-responde que sí: un arreglo de mayor a menor siempre es un montículo. Cuesta
-$\Theta(n)$ en el peor caso y $O(1)$ de espacio aparte.
-
 ## Para practicar en casa
 
 ### Propuesto 1: el más cercano
@@ -529,22 +478,22 @@ Con un `set`, quiten de una vez todas las claves menores que $x$, sin un
 ciclo. `erase(desde, hasta)` con `begin()` y `lower_bound(x)`:
 $O(\log n + m)$.
 
-### Propuesto 3: extraer a mano
+### Propuesto 3: UVa 10815, Andy's First Dictionary
+
+Las palabras distintas de un texto, en minúscula y en orden alfabético, con un
+`set<string>`. El enunciado, las trampas y la lectura están en
+[Para el juez](#uva-10815-andys-first-dictionary).
+
+### Propuesto 4: extraer a mano
 
 Sobre el montículo `70 40 60 10 30 20 50`, extraigan el máximo tres veces y
 dibujen el árbol y el arreglo después de cada una. La primera extracción deja
 `60 40 50 10 30 20`.
 
-### Propuesto 4: montículo de mínimos
+### Propuesto 5: montículo de mínimos
 
 Cambien `monticulo.h` para que la raíz sea el menor. Cambian las dos
 comparaciones de `subir` y las dos de `bajar`, y `maximo` pasa a ser `minimo`.
-
-### Ejercicio de cierre
-
-Llegan números uno por uno y, después de cada uno, hay que imprimir la mediana
-de los que han llegado. ¿Cómo se haría con dos montículos, uno de máximos y
-otro de mínimos? ¿Cuánto cuesta cada llegada?
 
 ## Para el juez
 
