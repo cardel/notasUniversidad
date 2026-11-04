@@ -1,3 +1,0 @@
-set:           7 12 31 50 64   (5 distintos)
-sort + unique: 7 12 31 50 64   (5 distintos)
-map<int,bool>: 7 12 31 50 64   (5 distintos)

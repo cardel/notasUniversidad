@@ -3,7 +3,7 @@
 Miércoles 4 de noviembre de 2026, de 17:00 a 19:00.
 
 El árbol binario de búsqueda cuesta $O(h)$ por operación, y cuando las claves
-llegan en orden degenera en lista: con 32 000 claves, altura 31 999. `map` y
+llegan en orden degenera en lista: con $n$ claves, altura $n - 1$. `map` y
 `set` guardan sus claves en un árbol binario de búsqueda que la biblioteca
 mantiene balanceado, y por eso cuestan $O(\log n)$ con cualquier orden de
 llegada. La primera parte de la sesión presenta `set`, el contenedor de claves
@@ -24,30 +24,13 @@ máximos en C++ sobre un `vector`.
 
 ![](./clase25.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
-## Repaso: el ABB y las claves en orden
+## Repaso: el árbol binario de búsqueda
 
 En un ABB, buscar, insertar y borrar bajan por un solo camino y cuestan $O(h)$,
 y todo árbol binario de $n$ nodos cumple
 $\lfloor \log_2 n \rfloor \le h \le n - 1$. Las claves del 10 al 70 insertadas
 como `40 20 60 10 30 50 70` dan altura 2; insertadas en orden, una lista de
 altura 6.
-
-`medir_set.cpp` inserta `1, 2, ..., n` en el ABB de `abb.h` y en un `set`, y
-mide el tiempo de procesador, sin optimizar, en el equipo donde se preparó la
-sesión. Del `set` solo se mide el tiempo, porque la biblioteca no deja ver su
-árbol.
-
-| $n$ | altura del ABB | segundos ABB | segundos `set` |
-|---:|---:|---:|---:|
-| 1 000 | 999 | 0,0008 | 0,0003 |
-| 4 000 | 3 999 | 0,0128 | 0,0016 |
-| 16 000 | 15 999 | 0,2021 | 0,0069 |
-| 32 000 | 31 999 | 0,7989 | 0,0142 |
-
-Cuando $n$ se dobla, el ABB multiplica su tiempo por cerca de 4: la $i$-ésima
-clave baja $i - 1$ niveles, y en total son $\Theta(n^2)$ comparaciones. El
-`set` lo dobla, porque hace $n$ inserciones de $O(\log n)$. Con 32 000 claves es
-56 veces más rápido, y un millón de claves en orden le toman 0,58 segundos.
 
 ### Lo que hay dentro de map y set
 
@@ -173,44 +156,6 @@ claves que están en $[a, b]$.
 | recorrido completo | $\Theta(n)$ | cada arista se baja una vez y se sube una vez |
 | `erase(desde, hasta)` de $m$ claves | $O(\log n + m)$ | se quitan de a una, sin volver a buscar |
 | espacio de la estructura | $\Theta(n)$ | un nodo por clave, con punteros al padre y a los dos hijos |
-
-### Los distintos, de tres maneras
-
-`distintos.cpp` imprime los códigos distintos de
-`31 12 50 12 7 31 31 64 7 50`, de menor a mayor, con un `set`, con `sort` y
-`unique` sobre un `vector`, y con un `map<int, bool>`. Las tres dan
-`7 12 31 50 64`, 5 distintos.
-
-```cpp
-// se copian los n, se ordenan y unique deja al frente los distintos
-void conVector() {
-  vector<int> v(codigos, codigos + N);
-  sort(v.begin(), v.end());
-  vector<int>::iterator fin = unique(v.begin(), v.end());
-  v.erase(fin, v.end());
-  printf("sort + unique:");
-  int i = 0;
-  while (i < (int) v.size()) {
-    printf(" %d", v[i]);
-    i = i + 1;
-  }
-  printf("   (%d distintos)\n", (int) v.size());
-}
-```
-
-`unique` deja al frente un representante de cada grupo de iguales *seguidos*
-y devuelve dónde terminan; por eso va después de `sort`. El `erase` del
-`vector` corta lo que sobra. Con $n$ códigos y $d$ distintos:
-
-| Forma | Tiempo | Espacio | Por qué |
-|---|---|---|---|
-| `set` | $O(n \log d)$ | $\Theta(d)$ | $n$ inserciones en un árbol de a lo sumo $d$ claves |
-| `sort` + `unique` | $\Theta(n \log n)$ | $\Theta(n)$ | copia los $n$, ordena y recorre una vez |
-| `map<int, bool>` | $O(n \log d)$ | $\Theta(d)$ | el mismo árbol, con un `bool` de más en cada nodo |
-
-Si los códigos llegan todos juntos, `sort` y `unique` bastan. Si llegan de a
-uno y entre llegada y llegada se pregunta si un código ya está, el `set`
-responde en $O(\log d)$ sin reordenar nada.
 
 ### ¿set, map o unordered_map?
 
@@ -344,10 +289,7 @@ mayor o igual (CLRS, §6.5; Thareja, §12.1.1).
 | 4 | 1 | $42 > 31$ | intercambiar, $i = 1$ |
 | 1 | 0 | $42 < 45$ | detenerse |
 
-Queda `45 42 40 12 31 18 7 5 9 25`. Al subir, solo la pareja de la clave nueva y
-su padre puede estar fuera de orden. El padre que baja era mayor o igual que
-todo lo que tenía debajo, así que sigue siéndolo, y cuando la clave nueva ya no
-es mayor que su padre todas las parejas cumplen. Se hace a lo sumo un
+Queda `45 42 40 12 31 18 7 5 9 25`. Se hace a lo sumo un
 intercambio por nivel: $\lfloor \log_2 (n + 1) \rfloor$ con la clave nueva
 contada, y los hace todos una clave mayor que todas, como un 46. Un 3, en
 cambio, entra bajo el 25 y no hace ninguno.
@@ -573,25 +515,6 @@ casilla 4 tiene el 38 y su padre, la casilla 1, el 35. Con `60 50 40 30 20 10`
 responde que sí: un arreglo de mayor a menor siempre es un montículo. Cuesta
 $\Theta(n)$ en el peor caso y $O(1)$ de espacio aparte.
 
-### Claves en orden
-
-En un montículo vacío se insertan `10 20 30 40 50 60 70`, en ese orden:
-
-```text
-insertar(10): 10
-insertar(20): 20 10
-insertar(30): 30 10 20
-insertar(40): 40 30 20 10
-insertar(50): 50 40 20 10 30
-insertar(60): 60 40 50 10 30 20
-insertar(70): 70 40 60 10 30 20 50
-```
-
-Cada clave nueva es la mayor de todas y sube hasta la raíz: 0, 1, 1, 2, 2, 2 y
-2 intercambios, 10 en total. La altura queda en $\lfloor \log_2 7 \rfloor = 2$,
-y el ABB de las mismas claves es una lista de altura 6. En el montículo, el
-orden de llegada cambia qué clave queda en cada casilla, pero nunca la forma.
-
 ## Para practicar en casa
 
 ### Propuesto 1: el más cercano
@@ -606,39 +529,16 @@ Con un `set`, quiten de una vez todas las claves menores que $x$, sin un
 ciclo. `erase(desde, hasta)` con `begin()` y `lower_bound(x)`:
 $O(\log n + m)$.
 
-### Propuesto 3: siguiente libre
-
-Un `set` guarda los casilleros ocupados. Para un $x$ dado, impriman el menor
-casillero libre $\ge x$. Se empieza en `lower_bound(x)` y se avanza el iterador
-mientras la clave sea la esperada $x, x + 1, \ldots$
-
-### Propuesto 4: extraer a mano
+### Propuesto 3: extraer a mano
 
 Sobre el montículo `70 40 60 10 30 20 50`, extraigan el máximo tres veces y
 dibujen el árbol y el arreglo después de cada una. La primera extracción deja
 `60 40 50 10 30 20`.
 
-### Propuesto 5: montículo de mínimos
+### Propuesto 4: montículo de mínimos
 
 Cambien `monticulo.h` para que la raíz sea el menor. Cambian las dos
 comparaciones de `subir` y las dos de `bajar`, y `maximo` pasa a ser `minimo`.
-
-### Propuesto 6: ¿dónde está el menor?
-
-En un montículo de máximos de $n$ claves, ¿en qué casillas puede estar la
-menor? En una hoja, porque una clave con hijos tiene al menos uno menor o
-igual. Las hojas son las casillas $\lfloor n/2 \rfloor$ a $n - 1$.
-
-### Propuesto 7: los k más urgentes
-
-Impriman los $k$ pedidos más urgentes sin sacarlos del montículo. Se puede
-copiar el montículo y extraer $k$ veces, en $O(n + k \log n)$. ¿Se puede sin
-copiarlo entero?
-
-### Propuesto 8: cambiar una urgencia
-
-Un pedido de la casilla $i$ se vuelve más urgente. La clave solo puede quedar
-mayor que su padre, así que se sube desde $i$, en $O(\log n)$.
 
 ### Ejercicio de cierre
 
@@ -683,33 +583,6 @@ cada comparación de dos palabras mira hasta $L$ letras.
 Solución: [uva10815.cpp](./codigo/uva10815.cpp), [entrada](./codigo/uva10815.in),
 [salida](./codigo/uva10815.out).
 
-### UVa 11849, CD
-
-*UVa 11849, CD*: <https://vjudge.net/problem/UVA-11849>, donde también se envía.
-
-Los discos de Jack entran a un `set<int>` y cada uno de Jill suma su `count`.
-
-Jack tiene $N$ discos y Jill $M$, con $N, M \le 10^6$ y a lo sumo una copia de
-cada título. Llegan los números de catálogo de Jack en orden creciente y
-después los de Jill, también en orden, enteros positivos hasta $10^9$, y se
-imprime cuántos títulos tienen los dos. La entrada trae varios casos y termina
-con `0 0`. Con Jack `1 2 3` y Jill `1 2 4` la salida es `2`. Cuesta
-$O((N + M) \log N)$ y $\Theta(N)$ de espacio; con $10^6$ y $10^6$ tardó 1,19
-segundos sin optimizar, en el equipo donde se preparó la sesión.
-
-!!! warning "Las trampas"
-
-    - $N$ y $M$ pueden ser 0 por separado, y la entrada termina solo cuando los
-      dos lo son: `while (n != 0 || m != 0)`. Un caso `0 2` imprime 0 y no es
-      el final.
-    - Hasta dos millones de números por caso: se leen con `scanf`.
-    - Las dos listas llegan ordenadas. Dos índices que avanzan a la vez, como
-      al mezclar, cuentan los comunes en $\Theta(N + M)$ sin guardar nada; el
-      `set` funciona, pero no aprovecha ese orden.
-
-Solución: [uva11849.cpp](./codigo/uva11849.cpp), [entrada](./codigo/uva11849.in),
-[salida](./codigo/uva11849.out).
-
 ## Lo que se vio
 
 - `map` y `set` guardan las claves en un ABB que la biblioteca mantiene
@@ -747,15 +620,10 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
 
 - [arbol_binario.h](./codigo/arbol_binario.h),
   [pila_arbol.h](./codigo/pila_arbol.h) y [abb.h](./codigo/abb.h): el árbol
-  binario y el ABB de los temas anteriores, que `medir_set.cpp` incluye.
-- [medir_set.cpp](./codigo/medir_set.cpp): claves en orden en el ABB y en el
-  `set`, con [salida](./codigo/medir_set.out).
+  binario y el ABB de los temas anteriores.
 - [uso_set.cpp](./codigo/uso_set.cpp): `insert`, `count`, `find`, `erase`,
   `begin`, `lower_bound` y `upper_bound` sobre la lista de asistencia, con
   [salida](./codigo/uso_set.out).
-- [distintos.cpp](./codigo/distintos.cpp): los códigos distintos con `set`,
-  con `sort` y `unique` y con `map<int, bool>`, con
-  [salida](./codigo/distintos.out).
 - [monticulo.h](./codigo/monticulo.h): la clase `Monticulo` sobre un
   `vector<int>`, con `insertar`, `maximo`, `extraerMax`, `vacio`, `tamano` e
   `imprimir`.
@@ -779,5 +647,3 @@ su entrada y su salida.
   p. 362; §12.1.2, borrar, p. 364.
 - UVa, en Virtual Judge. Problema 10815, *Andy's First Dictionary*:
   <https://vjudge.net/problem/UVA-10815>.
-- UVa, en Virtual Judge. Problema 11849, *CD*:
-  <https://vjudge.net/problem/UVA-11849>.
