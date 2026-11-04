@@ -580,6 +580,25 @@ cada comparación de dos palabras mira hasta $L$ letras.
       todas las minúsculas.
     - Un trozo puede medir 200 caracteres, así que el arreglo lleva 201.
 
+La lectura: `scanf("%200s", trozo)` devuelve 1 mientras lea un trozo y deja de
+hacerlo al llegar al fin de la entrada, así que el ciclo no necesita saber
+cuántas líneas hay.
+
+```cpp
+#include <cstdio>
+
+int main() {
+  char trozo[201];
+  // lee trozo por trozo hasta el fin de la entrada
+  while (scanf("%200s", trozo) == 1) {
+    // partir el trozo en rachas de letras
+    // y guardar cada palabra en minúscula
+  }
+  // imprimir las palabras guardadas, una por línea
+  return 0;
+}
+```
+
 Solución: [uva10815.cpp](./codigo/uva10815.cpp), [entrada](./codigo/uva10815.in),
 [salida](./codigo/uva10815.out).
 
