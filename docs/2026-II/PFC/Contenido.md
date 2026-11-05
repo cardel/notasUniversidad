@@ -85,7 +85,9 @@ Se publican después de cada sesión.
    años resueltas de las dos formas. Incluye el código escrito en clase. Sus
    [ejercicios](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md)
    están publicados.
-9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre.
+9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre. Sus
+   [ejercicios](../../actividades/pfc/colecciones-mapas-y-flujos/index.md)
+   están publicados.
 
 ### Corte 2
 
@@ -138,6 +140,7 @@ reuniones docentes y jornada de reflexión.
 | 6 | Listas I: diseño, uso y recursión sobre listas | [cuatro ejercicios: de los dos constructores a la inserción](../../actividades/pfc/listas/index.md) |
 | 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [once ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
 | 8 | Colecciones I: secuencias y conjuntos | [once ejercicios: de escoger la colección a las ternas](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) |
+| 9 | Colecciones II: mapas y flujos | [seis ejercicios: de las consultas a la criba](../../actividades/pfc/colecciones-mapas-y-flujos/index.md) |
 
 ## Ejercicios de clase
 
