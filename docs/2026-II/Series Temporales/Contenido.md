@@ -15,8 +15,8 @@ mensuales de los vuelos de Colombia entre enero de 2017 y febrero de 2026.
 Los ajustes de statsmodels y scikit-learn son la excepción: se calcularon
 fuera de la página, y cada actividad dice cuáles son.
 
-1. [Ejercicios de la semana del 16 y 17 de octubre: estacionariedad, ACF y PACF](../../actividades/series-temporales/autocorrelacion/index.md)
-   — cinco actividades para las sesiones 3 y 4: la nube de cada mes contra
+1. [Ejercicios de la semana del 16 y 17 de octubre: estacionariedad, ACF y PACF](../../actividades/series-temporales/autocorrelacion/index.md).
+   Cinco actividades: la nube de cada mes contra
    el de k meses antes, tres correlogramas para reconocer antes de
    diferenciar, las casillas d y D con su ACF y su valor p de ADF, el ancho
    de la banda de un correlograma y lo que le pasa al diferenciar, y el φ de
@@ -30,7 +30,16 @@ fuera de la página, y cada actividad dice cuáles son.
    actividades: el pronóstico de w integrado de vuelta a pasajeros, mes a mes,
    y la rejilla de SARIMA por AIC con los residuos de cinco modelos y su
    prueba de Ljung-Box.
-3. [Ejercicios de la semana del 30 y 31 de octubre: la serie como tabla](../../actividades/series-temporales/serie-como-tabla/index.md)
-   — tres actividades para la sesión 7: los vecinos que KNN escoge para
+3. [Ejercicios de la semana del 30 y 31 de octubre: la serie como tabla](../../actividades/series-temporales/serie-como-tabla/index.md).
+   Tres actividades: los vecinos que KNN escoge para
    enero de 2025 según k y el objetivo, C, epsilon y el escalador de SVR, y
    un árbol de regresión de profundidad 1 a 10 frente a un Random Forest.
+4. Ejercicios de la semana del 6 y 7 de noviembre: ensambles de árboles y validación temporal.
+   [Ensambles de árboles](../../actividades/series-temporales/ensambles/index.md),
+   dos actividades: un árbol con su profundidad y su hoja mínima frente a un
+   Random Forest de 10 a 300 árboles, y la tasa, los árboles y la
+   profundidad de XGBoost con el pronóstico de 2025.
+   [Validación temporal](../../actividades/series-temporales/validacion-temporal/index.md),
+   dos actividades: los pliegues de `TimeSeriesSplit` según `n_splits`,
+   `test_size` y `gap`, y la rejilla de profundidad y tasa de XGBoost con el
+   MAE de validación frente al del *backtest*.
