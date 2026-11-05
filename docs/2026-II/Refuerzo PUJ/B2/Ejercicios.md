@@ -1,11 +1,12 @@
 # Ejercicios · Refuerzo PUJ 24 de octubre
 
-Ocho actividades para trabajar en el navegador lo que se vio en la
-[sesión del 24 de octubre](./24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md).
-Las tres primeras recorren paso a paso los problemas de clase y la cuarta
-pregunta por el costo de las soluciones. Las cuatro últimas son de lógica:
-encontrar el invariante de un ciclo, escribirlo como fórmula y demostrarlo en
-tres pasos.
+Ocho actividades para trabajar en el navegador. Las dos primeras recorren paso
+a paso los problemas de la
+[sesión del 24 de octubre](./24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md),
+y `tamano` pregunta por el costo de las soluciones. `movil` y las cuatro
+últimas son de los temas de la
+[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md): UVa 839 y el invariante de un ciclo, escrito
+como fórmula y demostrado en tres pasos.
 
 ## [mejor-tramo](../../../actividades/estructuras-de-datos/recorridos-arreglos/mejor-tramo.html){ target=_blank rel=noopener }
 

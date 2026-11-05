@@ -29,13 +29,13 @@ puede trabajar el mismo ejercicio en C.
 1. [17 de octubre. Estructuras y un recorrido](./B1/17%20de%20octubre.%20Estructuras%20y%20un%20recorrido.md):
    las estructuras con lo que cuesta cada operación, la memoria y la pila de
    llamadas, y un recorrido contra dos con UVa 11078.
-2. [24 de octubre. Tramos, matrices, recursión e invariantes](./B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md):
+2. [24 de octubre. Tramos, matrices y lógica](./B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md):
    los acumulados y el mejor tramo de un arreglo con UVa 507, en dos horas,
    los acumulados en dos dimensiones con UVa 108, y en lógica proposiciones,
    cuantificadores y la definición de $O$.
-3. 7 de noviembre. Recursión, pilas, colas y diccionarios: recursión sobre un
-   árbol con UVa 839, pilas y colas en simulación con UVa 12100, diccionarios
-   y conjuntos con UVa 156, y en lógica predicados e invariantes de ciclo
+3. [7 de noviembre. Recursión, colas y diccionarios](./B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md):
+   recursión sobre un árbol con UVa 839, colas en simulación con UVa 12100,
+   diccionarios y conjuntos con UVa 156, y en lógica invariantes de ciclo
    sobre UVa 11078 y UVa 507.
 4. 14 de noviembre. Colas de prioridad, bisección y entrada a grafos: colas de
    prioridad con UVa 1203, búsqueda binaria y bisección sobre la respuesta con

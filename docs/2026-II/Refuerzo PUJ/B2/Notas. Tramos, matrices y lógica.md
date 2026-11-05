@@ -785,7 +785,7 @@ cambia el problema.
 La recursión sobre un árbol con UVa 839, *Not so Mobile*, y los invariantes
 de ciclo pasan a la siguiente sesión. El enunciado, el envío y el consejo
 están en la
-[página de la sesión](./24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#hora-3-uva-839-not-so-mobile),
+[página del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#hora-1-uva-839-not-so-mobile),
 y la solución en las [soluciones](./Soluciones.md).
 
 Queda propuesto el ejercicio 6 del deck de lógica, en la página 82 de

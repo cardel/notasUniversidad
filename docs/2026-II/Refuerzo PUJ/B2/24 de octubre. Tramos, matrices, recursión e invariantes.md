@@ -1,39 +1,30 @@
 # 24 de octubre · Refuerzo PUJ
 
-**Tramos, matrices, recursión e invariantes.** Tres horas de programación
-sobre el mejor tramo de un arreglo, los rectángulos de una matriz y la
-recursión sobre un árbol, y una de lógica sobre predicados e invariantes de
-ciclo.
+**Tramos y matrices.** Tres horas de programación sobre el mejor tramo de un
+arreglo y los rectángulos de una matriz, y una de lógica sobre proposiciones,
+cuantificadores y la definición de $O$.
 
-En la sesión UVa 507 ocupó dos horas y UVa 108 la tercera. UVa 839 y la hora
-de invariantes pasan al 7 de noviembre. La hora de lógica fue la de
-proposiciones, cuantificadores y la definición de $O$: las
-[diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener }
-y las [anotadas en la sesión](./logica-anotada.pdf){ target=_blank rel=noopener }.
+UVa 507 ocupó dos horas y UVa 108 la tercera. La recursión sobre un árbol con
+UVa 839 y los invariantes de ciclo pasan a la
+[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md).
+La hora de lógica usó las
+[diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener };
+están también las [anotadas en la sesión](./logica-anotada.pdf){ target=_blank rel=noopener }.
 
 ## Diapositivas
 
 ### Programación
 
+El deck trae también UVa 839, que se trabaja el 7 de noviembre.
+
 ![](./Programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
-
-### Lógica
-
-![](./Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ### Soluciones de programación
 
-Trazas, código en Python y en C++, trampas y costo de UVa 507, UVa 108 y
-UVa 839.
+Trazas, código en Python y en C++, trampas y costo de UVa 507 y UVa 108. El
+PDF trae también la solución de UVa 839.
 
 ![](./Soluciones-programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
-
-### Soluciones de lógica
-
-Los tres ejercicios resueltos: predicados sobre un arreglo, el invariante de
-un ciclo y los invariantes de UVa 11078 y UVa 507.
-
-![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Sesiones
 
@@ -51,7 +42,7 @@ Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
 cuántas veces corre cada ciclo o cuántas llamadas hay, y el total en $O$
 frente a los límites del enunciado.
 
-### Hora 1. UVa 507, Jill Rides Again
+### Horas 1 y 2. UVa 507, Jill Rides Again
 
 - Enunciado: <https://onlinejudge.org/external/5/507.pdf>
 - Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=448>
@@ -68,7 +59,7 @@ un trabajo fijo por vuelta, así que el total es $\Theta(s)$ por ruta. Probar
 todos los tramos son unos $2 \cdot 10^8$ con $s = 20\,000$, y el juez da
 3 segundos para el archivo entero.
 
-### Hora 2. UVa 108, Maximum Sum
+### Hora 3. UVa 108, Maximum Sum
 
 - Enunciado: <https://onlinejudge.org/external/1/108.pdf>
 - Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=44>
@@ -86,53 +77,22 @@ mejor tramo: $O(N^3)$, del orden de $10^6$ pasos con $N = 100$, y
 $\Theta(N^2)$ de memoria. Con la tabla de acumulados en dos dimensiones y
 todos los rectángulos el costo es $O(N^4)$.
 
-### Hora 3. UVa 839, Not so Mobile
-
-- Enunciado: <https://onlinejudge.org/external/8/839.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=780>
-
-Un móvil es una barra con un objeto en cada extremo, y está en equilibrio si
-$W_l \times D_l = W_r \times D_r$. Un peso 0 dice que de ese extremo cuelga
-un submóvil, descrito en las líneas que siguen: primero el izquierdo y después
-el derecho. El parámetro de la recursión es la barra que se está leyendo. El
-extremo con objeto es el caso base y el de peso 0 el caso recursivo; la
-función devuelve el peso del submóvil y si está en equilibrio, y el árbol de
-llamadas tiene la forma del móvil. La trampa está en la lectura: aunque un
-submóvil ya haya dado `NO`, la función lee todas sus líneas, porque las que
-queden sin leer se tomarían como el caso siguiente. Tampoco basta revisar la
-barra de arriba: puede estar en equilibrio con sus submóviles desequilibrados.
-
-Costo: el tamaño es el número $n$ de barras, que el enunciado no acota. Hay
-una llamada por barra, cada una con un trabajo fijo (leer cuatro números,
-comparar dos productos y sumar dos pesos), así que el total es $\Theta(n)$ por
-caso, lo mismo que leer la entrada. La pila llega a la altura del móvil, unos
-$\log_2 n$ marcos si el árbol está lleno y $n$ si es una cadena; por eso la
-solución en Python sube el límite de recursión.
+UVa 839, *Not so Mobile*, con su enunciado, su envío, su consejo y su costo, se
+trabaja en la
+[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#hora-1-uva-839-not-so-mobile).
 
 ## Lógica
 
-Predicados y cuantificadores sobre un arreglo, con su dominio y el rango de
-los índices, y el tramo vacío, que es lo que hace funcionar la
-inicialización. Después, el invariante de ciclo escrito como fórmula y
-demostrado en tres pasos: inicialización, estabilidad y terminación. El
-primer ejemplo es la suma de un arreglo; los siguientes son los ciclos de los
-problemas resueltos.
+Proposiciones y conectivos; la implicación con su recíproca y su
+contrarrecíproca; predicados y cuantificadores sobre las posiciones de un
+arreglo, con dominio y rango; la traducción a fórmula de propiedades del mundo
+real y de los arreglos. Con eso se leyó la definición de $O$: existen $c > 0$ y
+$k \geq 0$ tales que $f(n) \leq c\,g(n)$ para todo $n \geq k$. El recorrido
+completo está en las
+[notas de la sesión](./Notas.%20Tramos,%20matrices%20y%20l%C3%B3gica.md#logica).
 
-- UVa 11078, al empezar la vuelta $j$ con $1 \leq j \leq n$:
-  $\mathit{mayor} = \max\{a_i : 0 \leq i < j\}$ y
-  $\mathit{mejor} = \max(\{a_0 - a_1\} \cup \{a_i - a_k : 0 \leq i < k < j\})$.
-  El término $a_0 - a_1$ sale del valor inicial de $\mathit{mejor}$; sin él la
-  fórmula falla en el primer chequeo, porque no hay ninguna pareja con
-  $k < 1$.
-- UVa 507 sin el desempate, al empezar la vuelta $k$ con $0 \leq k \leq m$:
-  $\mathit{suma}$ es el máximo entre 0 y las sumas $\sum_{t=i}^{k-1} v_t$ con
-  $0 \leq i < k$, y $\mathit{mejor}$ es el máximo entre 0 y las sumas
-  $\sum_{t=i}^{l} v_t$ con $0 \leq i \leq l < k$. El invariante de
-  $\mathit{mejor}$ no se demuestra sin el de $\mathit{suma}$.
-
-El cierre son ejercicios del nivel de los parciales de Árboles y Grafos: cuatro
-fórmulas candidatas para un ciclo, y decidir cuál se sostiene, cuál se cumple
-pero no alcanza y cuál se cae con un contraejemplo.
+Los invariantes de ciclo de UVa 11078 y UVa 507 se trabajan en la
+[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#logica).
 
 ## Tarea
 
@@ -193,9 +153,9 @@ costaría $\Theta(n)$ por nivel y llevaría el total a $\Theta(n^2)$.
 
 ## Para seguir
 
-- [Soluciones](./Soluciones.md) de UVa 839 y de los tres problemas de la tarea,
+- [Soluciones](./Soluciones.md) de los tres problemas de la tarea y de UVa 839,
   con la idea, la complejidad y el código en Python y C++. Las de UVa 507 y
   UVa 108 están en las [soluciones del 17 de octubre](../B1/Soluciones.md).
 - [Ejercicios interactivos](./Ejercicios.md) sobre el mejor tramo, los
-  acumulados, el móvil, los invariantes de los problemas de clase y el costo de
-  las soluciones.
+  acumulados y el costo de las soluciones, con el móvil y los invariantes que
+  se trabajan el 7 de noviembre.
