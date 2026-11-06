@@ -1,87 +1,56 @@
 # Ejercicios · Refuerzo PUJ 7 de noviembre
 
 Actividades para trabajar en el navegador los temas de la
-[sesión del 7 de noviembre](./7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md).
+[sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md).
+Las tres primeras acompañan a los problemas que se resuelven en clase.
 
-## Recursión sobre un árbol
+## Bisección: encontrar la función
 
-### [movil](../../../actividades/ayg-puj/recursion/movil.html){ target=_blank rel=noopener }
+### [la escalera y el factor de fuerza](../../../actividades/ayg-puj/busqueda-binaria/escalera.html){ target=_blank rel=noopener }
 
-UVa 839: seguir la función recursiva lectura por lectura, con el móvil
-dibujado a la izquierda y la pila de llamadas a la derecha. En cada barra se
-elige el caso, y en cada retorno se escribe el peso y si está en equilibrio.
+UVa 12032, el problema de la hora 1. Se predice la fuerza mínima mirando la
+escalera y después corre el código de la sesión, las dos funciones: la que
+simula la subida, que es la función de decisión, y la que la bisecta. Cuatro
+escaleras, entre ellas una donde la respuesta no es el salto más grande.
 
-### [llamadas](../../../actividades/estructuras-de-datos/recursion-arboles/llamadas.html){ target=_blank rel=noopener }
+### [buscar](../../../actividades/ayg-puj/busqueda-binaria/buscar.html){ target=_blank rel=noopener }
 
-`contarPares` sobre un árbol de cinco nodos: lo que devuelve cada llamada, la
-pila marco por marco y cuántos marcos conviven.
+La búsqueda binaria sobre un arreglo ordenado, división por división, con las
+posiciones descartadas tachándose. Es la mecánica que después se aplica sobre
+una función de decisión en vez de sobre un arreglo.
 
-### [costos de un recorrido](../../../actividades/estructuras-de-datos/recursion-arboles/costos.html){ target=_blank rel=noopener }
+## Bisección: cuando la función ya viene dada
 
-Llamadas, altura y marcos en árboles llenos y degenerados, y cuántos marcos
-caben en una pila de 1 MB.
+### [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
 
-### [columnas](../../../actividades/estructuras-de-datos/recorridos-arbol/columnas.html){ target=_blank rel=noopener }
+UVa 10341, el problema de la hora 2, atacado en diez tarjetas que se abren una
+tras otra: entender la entrada, nombrar la función, demostrar término a término
+que decrece, mirar el rango, decidir si la solución existe, fijar la tolerancia
+y recién ahí escribir código. La tarjeta de la monotonía es la que decide el
+problema.
 
-Un árbol que llega en preorden con $-1$ en cada vacío, leído número por número,
-y la suma de los datos de cada columna. Es la forma de la entrada de UVa 699.
+### [biseccion](../../../actividades/ayg-puj/busqueda-binaria/biseccion.html){ target=_blank rel=noopener }
 
-## Pilas y colas
+La bisección sobre una función continua, con tres funciones distintas, para ver
+qué pasa cuando el objetivo queda fuera del rango.
 
-### [disciplinas](../../../actividades/estructuras-de-datos/tad-lista-pila-cola/disciplinas.html){ target=_blank rel=noopener }
+## Dividir y vencerás
 
-Seis situaciones, entre ellas una impresora compartida: decir qué disciplina
-de atención le sirve a cada una.
+### [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
 
-### [con una cola](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/cola.html){ target=_blank rel=noopener }
+UVa 10810, el problema de la hora 3. Se predice el número de parejas sobre un
+arreglo chico y después corre el código de la sesión, con las dos posiciones de
+la mezcla marcadas y el aporte de cada elemento que sale de la derecha.
 
-Tres situaciones donde importa el orden de llegada. La primera es una baraja
-que descarta una carta y pasa la siguiente al fondo, como en UVa 10935.
+### [mezclar](../../../actividades/ayg-puj/recursion/mezclar.html){ target=_blank rel=noopener }
 
-### [con una pila](../../../actividades/estructuras-de-datos/ejercicios-tad-lista-pila-cola/pila.html){ target=_blank rel=noopener }
+La mezcla sola, escritura por escritura, con su pareja de invariantes. Es el
+paso de combinación del ejercicio anterior, sin el conteo encima.
 
-Dos problemas donde importa lo último que llegó.
+### [ordenar](../../../actividades/ayg-puj/recursion/ordenar.html){ target=_blank rel=noopener }
 
-### [dos clases](../../../actividades/estructuras-de-datos/contenedores-list-deque-stack-queue/dosclases.html){ target=_blank rel=noopener }
-
-Una mesa de ayuda que atiende primero los bloqueos y después las consultas:
-qué se imprime y qué cuesta una fila única contra dos colas.
-
-### [vaciar por el frente](../../../actividades/estructuras-de-datos/contenedores-list-deque-stack-queue/vaciar.html){ target=_blank rel=noopener }
-
-Tiempos medidos de sacar $n$ elementos por el frente de un `vector`, un `deque`
-y una `list`, primero con la predicción y después con las cifras.
-
-## Diccionarios y conjuntos
-
-### [palabras](../../../actividades/estructuras-de-datos/contenedor-map/palabras.html){ target=_blank rel=noopener }
-
-Un `map` de palabras fila por fila y su recorrido en orden alfabético.
-
-### [combinacion](../../../actividades/estructuras-de-datos/contenedor-map/combinacion.html){ target=_blank rel=noopener }
-
-Cursos ordenados y pegados en una clave, y cuántos estudiantes ganan cuando hay
-empate. Es la idea de UVa 11286.
-
-### [tabla hash o map](../../../actividades/estructuras-de-datos/contenedor-map/elegir.html){ target=_blank rel=noopener }
-
-Cuántas comparaciones hace el `map` y qué estructura conviene en cuatro
-situaciones.
-
-### [buscar en una tabla hash](../../../actividades/estructuras-de-datos/tabla-hash/buscar.html){ target=_blank rel=noopener }
-
-Cuántas comparaciones hace cada búsqueda con encadenamiento y qué puntero
-cambia al eliminar.
-
-### [el hash de una cadena](../../../actividades/estructuras-de-datos/tabla-hash/cadenas.html){ target=_blank rel=noopener }
-
-La suma de los códigos y el polinomio en base 31 sobre `mar` y `ram`: la suma
-no ve el orden, y toda palabra choca con sus anagramas.
-
-### [qué contenedor](../../../actividades/estructuras-de-datos/contenedor-set/elegir.html){ target=_blank rel=noopener }
-
-Cinco situaciones para escoger entre `set`, `map`, `unordered_map` y un vector
-ordenado.
+El ordenamiento por mezcla completo, con el árbol de llamadas a la vista: de
+dónde sale la recurrencia y por qué hay logarítmicos niveles.
 
 ## Costo
 

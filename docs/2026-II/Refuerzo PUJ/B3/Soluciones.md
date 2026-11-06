@@ -1,76 +1,82 @@
 # Soluciones · Refuerzo PUJ 7 de noviembre
 
-UVa 12100, UVa 156 y los tres problemas de la tarea de la
-[sesión del 7 de noviembre](./7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md),
+UVa 12032, UVa 10341 y UVa 10810 y los tres problemas de la tarea de la
+[sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
-archivos están también en la carpeta `codigo/`. La solución de
-[UVa 839](../B2/Soluciones.md#hora-3-uva-839-not-so-mobile) está con las del
-24 de octubre.
+archivos están también en la carpeta `codigo/`.
 
-## Hora 2. UVa 12100, Printer Queue
+## Hora 1. UVa 12032, The Monkey and the Oiled Bamboo
 
 ### Idea
 
-Cada elemento de la cola es un par: la prioridad y si es el trabajo propio. Se saca el frente y se miran los contadores de las prioridades mayores. Si alguno es positivo, el par vuelve al final. Si no, se descuenta su contador, pasa un minuto, y la simulación termina cuando el par impreso es el marcado.
-
-`cuenta[p]` guarda cuántos trabajos de prioridad `p` siguen en la cola, y solo baja al imprimir, porque rotar un trabajo no lo saca de ella. En Python el par es una tupla dentro de un `deque`; en C++, un `pair<int, bool>` dentro de una `queue`. El ciclo usa la bandera `impreso` como condición de salida. Comparar la prioridad en lugar de la marca da 2 en vez de 5 en el tercer caso de la muestra, y cobrar un minuto por rotar da 1, 7 y 7 en vez de 1, 2 y 5.
+Encontrar el mínimo directamente obliga a razonar sobre todos los saltos a la
+vez. La pregunta que sí se contesta de una pasada es *¿se llega arriba
+empezando con fuerza $k$?*: se simula la subida llevando la fuerza actual, cada
+salto se compara contra ella y el que la iguala la gasta en uno. Es monótona,
+porque con $k+1$ ningún salto que cabía deja de caber. Los límites son el salto
+más grande, que hay que dar, y ese mismo más $n$, porque cada salto baja la
+fuerza a lo sumo en uno.
 
 ### Complejidad
 
-Cada impresión deja a lo más $n$ rotaciones por delante, así que hay a lo más $n^2$ pasos con trabajo constante: $O(n^2)$ por caso, con memoria $\Theta(n)$. Con una lista de Python sacando del frente, cada paso paga $\Theta(n)$ y el total sube a $O(n^3)$.
+$\Theta(n \log(\max s_i + n))$ por caso: cada vuelta de la bisección recorre
+los saltos una vez.
 
 ### Python
 
-Archivo: [printer-queue.py](./codigo/printer-queue.py)
-
 ```python
-# UVa 12100 - Printer Queue
 import sys
-from collections import deque
 
 
-def hay_mayor_prioridad(cuenta, p):
-    hay = False
-    for q in range(p + 1, 10):
-        if cuenta[q] > 0:
-            hay = True
-    return hay
+def alcanza(saltos, k):
+    # Con fuerza inicial k, ¿se llega al último peldaño?
+    fuerza = k
+    puede = True
+    for s in saltos:
+        if s > fuerza:
+            puede = False
+        elif s == fuerza:
+            fuerza = fuerza - 1
+    return puede
 
 
-# cola de pares (prioridad, es_mio); cuenta[p] dice cuántos trabajos
-# de prioridad p siguen en la cola
-def minutos_hasta_imprimir(prioridades, m):
-    cola = deque()
-    cuenta = [0] * 10
-    for i in range(len(prioridades)):
-        cola.append((prioridades[i], i == m))
-        cuenta[prioridades[i]] = cuenta[prioridades[i]] + 1
-    minutos = 0
-    impreso = False
-    while not impreso:
-        p, es_mio = cola.popleft()
-        if hay_mayor_prioridad(cuenta, p):
-            cola.append((p, es_mio))
+def minimaFuerza(saltos):
+    # El menor k que cumple alcanza(saltos, k).
+    lo = max(saltos)
+    hi = lo + len(saltos)
+    while lo < hi:
+        medio = (lo + hi) // 2
+        if alcanza(saltos, medio):
+            hi = medio
         else:
-            cuenta[p] = cuenta[p] - 1
-            minutos = minutos + 1
-            impreso = es_mio
-    return minutos
+            lo = medio + 1
+    return lo
 
 
 def main():
     datos = sys.stdin.read().split()
-    casos = int(datos[0])
-    pos = 1
-    for c in range(casos):
+    pos = 0
+    casos = int(datos[pos])
+    pos = pos + 1
+    caso = 1
+    salida = []
+    while caso <= casos:
         n = int(datos[pos])
-        m = int(datos[pos + 1])
-        pos = pos + 2
-        prioridades = []
-        for i in range(n):
-            prioridades.append(int(datos[pos + i]))
-        pos = pos + n
-        print(minutos_hasta_imprimir(prioridades, m))
+        pos = pos + 1
+        alturas = []
+        i = 0
+        while i < n:
+            alturas.append(int(datos[pos]))
+            pos = pos + 1
+            i = i + 1
+        saltos = [alturas[0]]
+        i = 1
+        while i < n:
+            saltos.append(alturas[i] - alturas[i - 1])
+            i = i + 1
+        salida.append('Case ' + str(caso) + ': ' + str(minimaFuerza(saltos)))
+        caso = caso + 1
+    print('\n'.join(salida))
 
 
 main()
@@ -78,114 +84,128 @@ main()
 
 ### C++
 
-Archivo: [printer-queue.cpp](./codigo/printer-queue.cpp)
-
 ```cpp
-// UVa 12100 - Printer Queue
 #include <cstdio>
-#include <queue>
-#include <utility>
 #include <vector>
 
 using namespace std;
 
-bool hayMayorPrioridad(const vector<int>& cuenta, int p) {
-    bool hay = false;
-    for (int q = p + 1; q < 10; q++) {
-        if (cuenta[q] > 0) {
-            hay = true;
-        }
+bool alcanza(const vector<int> &saltos, int k) {
+  // Con fuerza inicial k, se llega al ultimo peldano?
+  int fuerza = k;
+  bool puede = true;
+  for (size_t i = 0; i < saltos.size(); i++) {
+    if (saltos[i] > fuerza) {
+      puede = false;
+    } else if (saltos[i] == fuerza) {
+      fuerza = fuerza - 1;
     }
-    return hay;
+  }
+  return puede;
 }
 
-// cola de pares (prioridad, es_mio); cuenta[p] dice cuántos trabajos
-// de prioridad p siguen en la cola
-int minutosHastaImprimir(const vector<int>& prioridades, int m) {
-    queue<pair<int, bool> > cola;
-    vector<int> cuenta(10, 0);
-    for (int i = 0; i < (int) prioridades.size(); i++) {
-        cola.push(make_pair(prioridades[i], i == m));
-        cuenta[prioridades[i]] = cuenta[prioridades[i]] + 1;
+int minimaFuerza(const vector<int> &saltos) {
+  // El menor k que cumple alcanza(saltos, k).
+  int lo = 0;
+  for (size_t i = 0; i < saltos.size(); i++) {
+    if (saltos[i] > lo) {
+      lo = saltos[i];
     }
-    int minutos = 0;
-    bool impreso = false;
-    while (!impreso) {
-        pair<int, bool> trabajo = cola.front();
-        cola.pop();
-        if (hayMayorPrioridad(cuenta, trabajo.first)) {
-            cola.push(trabajo);
-        } else {
-            cuenta[trabajo.first] = cuenta[trabajo.first] - 1;
-            minutos = minutos + 1;
-            impreso = trabajo.second;
-        }
+  }
+  int hi = lo + (int)saltos.size();
+  while (lo < hi) {
+    int medio = lo + (hi - lo) / 2;
+    if (alcanza(saltos, medio)) {
+      hi = medio;
+    } else {
+      lo = medio + 1;
     }
-    return minutos;
+  }
+  return lo;
 }
 
 int main() {
-    int casos;
-    scanf("%d", &casos);
-    for (int c = 0; c < casos; c++) {
-        int n, m;
-        scanf("%d %d", &n, &m);
-        vector<int> prioridades(n);
-        for (int i = 0; i < n; i++) {
-            scanf("%d", &prioridades[i]);
-        }
-        printf("%d\n", minutosHastaImprimir(prioridades, m));
+  int casos;
+  scanf("%d", &casos);
+  for (int caso = 1; caso <= casos; caso++) {
+    int n;
+    scanf("%d", &n);
+    vector<int> alturas(n);
+    for (int i = 0; i < n; i++) {
+      scanf("%d", &alturas[i]);
     }
-    return 0;
+    vector<int> saltos;
+    saltos.push_back(alturas[0]);
+    for (int i = 1; i < n; i++) {
+      saltos.push_back(alturas[i] - alturas[i - 1]);
+    }
+    printf("Case %d: %d\n", caso, minimaFuerza(saltos));
+  }
+  return 0;
 }
 ```
 
-## Hora 3. UVa 156, Ananagrams
+## Hora 2. UVa 10341, Solve It
 
 ### Idea
 
-Se lee palabra por palabra hasta el `#`, se guarda cada palabra y se suma uno a la cuenta de su clave. Al final se ordenan las palabras originales y se imprimen las que tienen cuenta 1 en su clave.
-
-`clave(palabra)` devuelve las letras en minúscula y ordenadas; en C++ usa `tolower` y `sort` sobre una copia. La lectura va por palabras, con `split` en Python y `scanf("%s", leida)` en C++, de modo que los saltos de línea y los espacios sobrantes no cambian nada. Armar la clave sin pasar a minúscula da 16 palabras en vez de 7 en la muestra. El enunciado no resuelve una palabra repetida ni la pareja `a` y `A`; con esta clave ambas cuentan como anagramas.
+La función viene dada, así que lo que queda es comprobarle dos cosas.
+Derivando, cada sumando de $f'$ es menor o igual que cero en $[0,1]$ por los
+rangos del enunciado, de modo que $f$ no crece y hay a lo sumo una raíz. Y hay
+raíz exactamente cuando $f(0) \geq 0 \geq f(1)$: sin esa comprobación el ciclo
+igual termina y devuelve un número que no es raíz de nada. Cien vueltas dejan
+el intervalo en $2^{-100}$ del original y evitan discutir la tolerancia.
 
 ### Complejidad
 
-$O(n\,L \log L)$ para las claves y $O(n \log n)$ comparaciones para ordenar la salida. Comparar una palabra con todas las demás pagaría $\Theta(n^2)$ comparaciones de claves.
+Cien evaluaciones por caso, o sea constante; el total es lineal en la cantidad
+de casos.
 
 ### Python
 
-Archivo: [ananagrams.py](./codigo/ananagrams.py)
-
 ```python
-# UVa 156 - Ananagrams
+import math
 import sys
 
 
-def clave(palabra):
-    # las letras en minúscula y ordenadas: dos anagramas dan la misma clave
-    letras = sorted(palabra.lower())
-    resultado = ""
-    for c in letras:
-        resultado = resultado + c
-    return resultado
+def f(p, q, r, s, t, u, x):
+    # El lado izquierdo de la ecuación, evaluado en x.
+    return (p * math.exp(-x) + q * math.sin(x) + r * math.cos(x)
+            + s * math.tan(x) + t * x * x + u)
+
+
+def resolver(p, q, r, s, t, u):
+    # f es decreciente en [0, 1]: hay raíz solo si f(0) >= 0 >= f(1).
+    if f(p, q, r, s, t, u, 0.0) < 0.0 or f(p, q, r, s, t, u, 1.0) > 0.0:
+        respuesta = 'No solution'
+    else:
+        lo = 0.0
+        hi = 1.0
+        vuelta = 0
+        while vuelta < 100:
+            medio = (lo + hi) / 2.0
+            if f(p, q, r, s, t, u, medio) > 0.0:
+                lo = medio
+            else:
+                hi = medio
+            vuelta = vuelta + 1
+        respuesta = '%.4f' % ((lo + hi) / 2.0)
+    return respuesta
 
 
 def main():
-    datos = sys.stdin.read().split()
-    palabras = []
-    cuenta = {}
-    i = 0
-    while i < len(datos) and datos[i] != "#":
-        k = clave(datos[i])
-        if k in cuenta:
-            cuenta[k] = cuenta[k] + 1
-        else:
-            cuenta[k] = 1
-        palabras.append(datos[i])
-        i = i + 1
-    for p in sorted(palabras):
-        if cuenta[clave(p)] == 1:
-            print(p)
+    salida = []
+    for linea in sys.stdin:
+        datos = linea.split()
+        if len(datos) == 6:
+            p = int(datos[0])
+            q = int(datos[1])
+            r = int(datos[2])
+            s = int(datos[3])
+            t = int(datos[4])
+            u = int(datos[5])
+            salida.append(resolver(p, q, r, s, t, u))
+    print('\n'.join(salida))
 
 
 main()
@@ -193,47 +213,165 @@ main()
 
 ### C++
 
-Archivo: [ananagrams.cpp](./codigo/ananagrams.cpp)
+```cpp
+#include <cmath>
+#include <cstdio>
+
+double f(int p, int q, int r, int s, int t, int u, double x) {
+  // El lado izquierdo de la ecuacion, evaluado en x.
+  return p * exp(-x) + q * sin(x) + r * cos(x) + s * tan(x) + t * x * x + u;
+}
+
+int main() {
+  int p, q, r, s, t, u;
+  while (scanf("%d %d %d %d %d %d", &p, &q, &r, &s, &t, &u) == 6) {
+    if (f(p, q, r, s, t, u, 0.0) < 0.0 || f(p, q, r, s, t, u, 1.0) > 0.0) {
+      printf("No solution\n");
+    } else {
+      double lo = 0.0, hi = 1.0;
+      for (int vuelta = 0; vuelta < 100; vuelta++) {
+        double medio = (lo + hi) / 2.0;
+        if (f(p, q, r, s, t, u, medio) > 0.0) {
+          lo = medio;
+        } else {
+          hi = medio;
+        }
+      }
+      printf("%.4f\n", (lo + hi) / 2.0);
+    }
+  }
+  return 0;
+}
+```
+
+## Hora 3. UVa 10810, Ultra-QuickSort
+
+### Idea
+
+Cada intercambio de vecinos arregla exactamente una pareja fuera de orden, así
+que lo que se pide es el número de parejas $(i,j)$ con $i<j$ y $a_i > a_j$. Las
+de un tramo se reparten en tres clases: las dos puntas en la mitad izquierda,
+las dos en la derecha, y una en cada mitad. Las dos primeras son el mismo
+problema más chico; la tercera se cuenta al mezclar, porque cuando sale un
+elemento de la derecha todos los pendientes de la izquierda son mayores que él.
+
+### Complejidad
+
+$T(n) = 2T(n/2) + \Theta(n)$, o sea $\Theta(n \log n)$. El contador va en
+`long long`. Medido con $n = 499\,999$: 0,20 s en C++ y 5,1 s en Python, así
+que al juez se envía la de C++.
+
+### Python
+
+```python
+import sys
+
+
+def mezclar(a, aux, ini, medio, fin):
+    # Mezcla a[ini:medio) con a[medio:fin) y cuenta las parejas que cruzan:
+    # cada elemento que sale de la derecha aporta los que faltan a la izquierda.
+    i = ini
+    j = medio
+    k = ini
+    cruzadas = 0
+    while k < fin:
+        if i < medio and (j >= fin or a[i] <= a[j]):
+            aux[k] = a[i]
+            i = i + 1
+        else:
+            aux[k] = a[j]
+            j = j + 1
+            cruzadas = cruzadas + (medio - i)
+        k = k + 1
+    a[ini:fin] = aux[ini:fin]
+    return cruzadas
+
+
+def contar(a, aux, ini, fin):
+    # Ordena a[ini:fin) en el lugar y devuelve cuántas inversiones tenía.
+    total = 0
+    if fin - ini > 1:
+        medio = (ini + fin) // 2
+        total = contar(a, aux, ini, medio)
+        total = total + contar(a, aux, medio, fin)
+        total = total + mezclar(a, aux, ini, medio, fin)
+    return total
+
+
+def main():
+    datos = sys.stdin.buffer.read().split()
+    pos = 0
+    salida = []
+    n = int(datos[pos])
+    pos = pos + 1
+    while n != 0:
+        a = [0] * n
+        i = 0
+        while i < n:
+            a[i] = int(datos[pos])
+            pos = pos + 1
+            i = i + 1
+        aux = [0] * n
+        salida.append(str(contar(a, aux, 0, n)))
+        n = int(datos[pos])
+        pos = pos + 1
+    sys.stdout.write('\n'.join(salida) + '\n')
+
+
+main()
+```
+
+### C++
 
 ```cpp
-// UVa 156 - Ananagrams
-#include <algorithm>
-#include <cctype>
 #include <cstdio>
-#include <map>
-#include <string>
 #include <vector>
 
 using namespace std;
 
-// las letras en minúscula y ordenadas: dos anagramas dan la misma clave
-string clave(const string& palabra) {
-    string k = palabra;
-    for (int i = 0; i < (int) k.size(); i++) {
-        k[i] = tolower(k[i]);
+long long mezclar(vector<int> &a, vector<int> &aux, int ini, int medio, int fin) {
+  // Mezcla a[ini:medio) con a[medio:fin) y cuenta las parejas fuera de orden.
+  int i = ini, j = medio, k = ini;
+  long long cruzadas = 0;
+  while (k < fin) {
+    if (i < medio && (j >= fin || a[i] <= a[j])) {
+      aux[k] = a[i];
+      i = i + 1;
+    } else {
+      aux[k] = a[j];
+      j = j + 1;
+      cruzadas = cruzadas + (medio - i);
     }
-    sort(k.begin(), k.end());
-    return k;
+    k = k + 1;
+  }
+  for (k = ini; k < fin; k++) {
+    a[k] = aux[k];
+  }
+  return cruzadas;
+}
+
+long long contar(vector<int> &a, vector<int> &aux, int ini, int fin) {
+  // Ordena a[ini:fin) en el lugar y devuelve cuantas inversiones tenia.
+  long long total = 0;
+  if (fin - ini > 1) {
+    int medio = (ini + fin) / 2;
+    total = contar(a, aux, ini, medio);
+    total = total + contar(a, aux, medio, fin);
+    total = total + mezclar(a, aux, ini, medio, fin);
+  }
+  return total;
 }
 
 int main() {
-    char leida[100];
-    vector<string> palabras;
-    map<string, int> cuenta;
-    int ok = scanf("%s", leida);
-    while (ok == 1 && leida[0] != '#') {
-        string p = leida;
-        cuenta[clave(p)] = cuenta[clave(p)] + 1;
-        palabras.push_back(p);
-        ok = scanf("%s", leida);
+  int n;
+  while (scanf("%d", &n) == 1 && n != 0) {
+    vector<int> a(n), aux(n);
+    for (int i = 0; i < n; i++) {
+      scanf("%d", &a[i]);
     }
-    sort(palabras.begin(), palabras.end());
-    for (int i = 0; i < (int) palabras.size(); i++) {
-        if (cuenta[clave(palabras[i])] == 1) {
-            printf("%s\n", palabras[i].c_str());
-        }
-    }
-    return 0;
+    printf("%lld\n", contar(a, aux, 0, n));
+  }
+  return 0;
 }
 ```
 

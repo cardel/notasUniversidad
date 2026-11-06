@@ -4,9 +4,9 @@
 arreglo y los rectángulos de una matriz, y una de lógica sobre proposiciones,
 cuantificadores y la definición de $O$.
 
-UVa 507 ocupó dos horas y UVa 108 la tercera. La recursión sobre un árbol con
-UVa 839 y los invariantes de ciclo pasan a la
-[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md).
+UVa 507 ocupó dos horas y UVa 108 la tercera. Los invariantes de ciclo pasan a
+la [sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md), y la recursión sobre un árbol
+con UVa 839 queda como problema propuesto.
 La hora de lógica usó las
 [diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener };
 están también las [anotadas en la sesión](./logica-anotada.pdf){ target=_blank rel=noopener }.
@@ -44,8 +44,7 @@ frente a los límites del enunciado.
 
 ### Horas 1 y 2. UVa 507, Jill Rides Again
 
-- Enunciado: <https://onlinejudge.org/external/5/507.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=448>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-507>
 
 El mejor tramo que termina en cada parada se obtiene del que terminaba en la
 anterior: se alarga, salvo cuando la suma ya es negativa y conviene empezar de
@@ -61,8 +60,7 @@ todos los tramos son unos $2 \cdot 10^8$ con $s = 20\,000$, y el juez da
 
 ### Hora 3. UVa 108, Maximum Sum
 
-- Enunciado: <https://onlinejudge.org/external/1/108.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=44>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-108>
 
 Con la fila de arriba y la de abajo fijas, la suma de cada columna entre las
 dos forma un arreglo de $N$ valores, y el mejor rectángulo con esas filas es
@@ -77,9 +75,9 @@ mejor tramo: $O(N^3)$, del orden de $10^6$ pasos con $N = 100$, y
 $\Theta(N^2)$ de memoria. Con la tabla de acumulados en dos dimensiones y
 todos los rectángulos el costo es $O(N^4)$.
 
-UVa 839, *Not so Mobile*, con su enunciado, su envío, su consejo y su costo, se
-trabaja en la
-[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#hora-1-uva-839-not-so-mobile).
+UVa 839, *Not so Mobile*, queda como problema propuesto. El enunciado y el
+envío están en <https://vjudge.net/problem/UVA-839> y la solución, en las
+[soluciones de esta sesión](./Soluciones.md#hora-3-uva-839-not-so-mobile).
 
 ## Lógica
 
@@ -92,7 +90,7 @@ completo está en las
 [notas de la sesión](./Notas.%20Tramos,%20matrices%20y%20l%C3%B3gica.md#logica).
 
 Los invariantes de ciclo de UVa 11078 y UVa 507 se trabajan en la
-[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#logica).
+[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
 
 ## Tarea
 
@@ -101,8 +99,7 @@ esa sesión. Cada solución va con su costo.
 
 ### Base. UVa 100, The 3n + 1 problem
 
-- Enunciado: <https://onlinejudge.org/external/1/100.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=36>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-100>
 
 Una función aplica la regla hasta llegar a 1 y cuenta los números que
 imprime; otra recorre el rango del menor al mayor y se queda con el máximo.
@@ -118,8 +115,7 @@ cientos de pasos: $O((b - a + 1) \cdot L)$ por pareja y $O(1)$ de memoria.
 
 ### Intermedio. UVa 10189, Minesweeper
 
-- Enunciado: <https://onlinejudge.org/external/101/10189.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1130>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10189>
 
 Por cada casilla sin mina se cuentan las minas de sus ocho vecinas, con los
 dos desplazamientos recorriendo $-1, 0, 1$ y la comprobación de borde antes
@@ -133,8 +129,7 @@ que no crece con el campo: $O(nm)$ por campo, con $O(nm)$ de memoria.
 
 ### Exigente. UVa 620, Cellular Structure
 
-- Enunciado: <https://onlinejudge.org/external/6/620.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=561>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-620>
 
 Una cadena sana es `A`, una sana seguida de `AB`, o `B` seguida de una sana y
 de `A`. La función recibe el rango $[ini, fin]$ de la cadena: el caso base es

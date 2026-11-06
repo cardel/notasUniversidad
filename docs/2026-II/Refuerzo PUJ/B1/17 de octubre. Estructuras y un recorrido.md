@@ -29,8 +29,7 @@ arreglos y matrices, y una de lógica sobre proposiciones y predicados.
 
 ### UVa 11078, Open Credit System
 
-- Enunciado: <https://onlinejudge.org/external/110/11078.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2019>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-11078>
 
 Se busca el mayor valor de $a_i - a_j$ con $i < j$, donde el índice menor es
 el estudiante más antiguo. El parámetro es la posición $j$: para cada una, la
@@ -48,8 +47,7 @@ problemas con su consejo.
 
 ### UVa 507, Jill Rides Again
 
-- Enunciado: <https://onlinejudge.org/external/5/507.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=448>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-507>
 
 Cada ruta trae $s - 1$ valores, uno por tramo entre paradas, y se pide el
 tramo continuo de mayor suma. El parámetro es el valor donde termina el tramo.
@@ -63,8 +61,7 @@ salida es `Route r has no nice parts`.
 
 ### UVa 108, Maximum Sum
 
-- Enunciado: <https://onlinejudge.org/external/1/108.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=44>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-108>
 
 La matriz es de $N \times N$, con $N \le 100$, y se pide el subrectángulo de
 mayor suma. Probar cada rectángulo con acumulados en dos dimensiones cuesta

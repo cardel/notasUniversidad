@@ -256,8 +256,7 @@ recorre la traza paso a paso.
 
 ## UVa 507: Jill Rides Again
 
-- Enunciado: <https://onlinejudge.org/external/5/507.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=448>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-507>
 
 Jill recorre en bicicleta una parte de una ruta de bus y quiere la de mayor
 suma de *niceness*, el valor que le da a cada calle entre dos paradas; ningún
@@ -477,8 +476,7 @@ llena la tabla y lee rectángulos.
 
 ## UVa 108: Maximum Sum
 
-- Enunciado: <https://onlinejudge.org/external/1/108.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=44>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-108>
 
 La entrada es una sola matriz de $N \times N$, con $N \le 100$ y valores en
 $[-127, 127]$, y la salida es la mayor suma de un subrectángulo, un bloque de
@@ -782,11 +780,11 @@ cambia el problema.
 
 ## Lo que sigue
 
-La recursión sobre un árbol con UVa 839, *Not so Mobile*, y los invariantes
-de ciclo pasan a la siguiente sesión. El enunciado, el envío y el consejo
-están en la
-[página del 7 de noviembre](../B3/7%20de%20noviembre.%20Recursi%C3%B3n,%20colas%20y%20diccionarios.md#hora-1-uva-839-not-so-mobile),
-y la solución en las [soluciones](./Soluciones.md).
+Los invariantes de ciclo pasan a la
+[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md). La recursión sobre un árbol con
+UVa 839, *Not so Mobile*, queda como problema propuesto: el enunciado y el
+envío están en <https://vjudge.net/problem/UVA-839> y la solución, en las
+[soluciones](./Soluciones.md).
 
 Queda propuesto el ejercicio 6 del deck de lógica, en la página 82 de
 [logica-anotada.pdf](./logica-anotada.pdf){ target=_blank rel=noopener }:

@@ -641,8 +641,7 @@ consigo misma.
 
 ## UVa 11078: Open Credit System
 
-- Enunciado: <https://onlinejudge.org/external/110/11078.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2019>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-11078>
 
 Un curso tiene $n$ estudiantes numerados por antigüedad: si $i < j$, el
 estudiante $i$ es más antiguo que el $j$. Todos presentaron una prueba de

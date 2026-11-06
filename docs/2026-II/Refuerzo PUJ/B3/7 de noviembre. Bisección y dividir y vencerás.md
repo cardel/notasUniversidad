@@ -1,10 +1,12 @@
 # 7 de noviembre · Refuerzo PUJ
 
-**Recursión, colas y diccionarios.** Tres horas de programación: la recursión
-sobre un árbol con UVa 839, una simulación con cola en UVa 12100 y un
-diccionario con una clave por grupo de palabras en UVa 156. En la hora de
-lógica se plantean los invariantes de ciclo de UVa 11078 y queda en papel el
-ejercicio de UVa 507.
+**Bisección y dividir y vencerás.** Las tres horas de programación apoyan los
+temas prácticos del parcial 1 de Árboles y Grafos. La primera es cómo se
+encuentra la función de decisión, con el punto 1 del parcial como ejemplo
+trabajado y UVa 12032 como ejercicio; la segunda, qué hacer cuando la función
+ya viene escrita, con UVa 10341; la tercera, cómo se plantea dividir y vencerás
+y de dónde sale la recursión, con UVa 10810. En la hora de lógica se plantean
+los invariantes de ciclo de UVa 11078 y queda en papel el ejercicio de UVa 507.
 
 La sesión empieza con la revisión de la
 [tarea del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea).
@@ -21,7 +23,7 @@ La sesión empieza con la revisión de la
 
 ### Soluciones de programación
 
-Las soluciones de UVa 839, UVa 12100 y UVa 156.
+Las soluciones de UVa 12032, UVa 10341 y UVa 10810.
 
 ![](./Soluciones-programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
@@ -40,20 +42,20 @@ de esta sesión:
 
 | Problema | Python | C++ |
 |---|---|---|
-| UVa 839 | [lectura_839.py](./codigo/lectura_839.py) | [lectura_839.cpp](./codigo/lectura_839.cpp) |
-| UVa 12100 | [lectura_12100.py](./codigo/lectura_12100.py) | [lectura_12100.cpp](./codigo/lectura_12100.cpp) |
-| UVa 156 | [lectura_156.py](./codigo/lectura_156.py) | [lectura_156.cpp](./codigo/lectura_156.cpp) |
+| UVa 12032 | [lectura_12032.py](./codigo/lectura_12032.py) | [lectura_12032.cpp](./codigo/lectura_12032.cpp) |
+| UVa 10341 | [lectura_10341.py](./codigo/lectura_10341.py) | [lectura_10341.cpp](./codigo/lectura_10341.cpp) |
+| UVa 10810 | [lectura_10810.py](./codigo/lectura_10810.py) | [lectura_10810.cpp](./codigo/lectura_10810.cpp) |
 
 Se copia la muestra del enunciado en `1.in` y su salida en `1.out`, y se corre
 el archivo de lectura para ver en qué orden llega la entrada. Después se
 cambian sus impresiones por la solución y se compara contra la muestra:
 
 ```text
-g++ -std=c++17 -Wall -Wextra lectura_12100.cpp -o solucion
+g++ -std=c++17 -Wall -Wextra lectura_12032.cpp -o solucion
 ./solucion < 1.in > salida.out
 diff salida.out 1.out
 
-python3 lectura_12100.py < 1.in > salida.out
+python3 lectura_12032.py < 1.in > salida.out
 diff salida.out 1.out
 ```
 
@@ -64,74 +66,81 @@ salida se arma con `print` y `%`, como en los archivos de lectura.
 ## Problemas en clase
 
 Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
-cuántas veces corre cada ciclo o cuántas llamadas hay, y el total en $O$
-frente a los límites del enunciado.
+cuántas veces corre cada ciclo y el total en $O$ frente a los límites del
+enunciado.
 
-### Hora 1. UVa 839, Not so Mobile
+### Hora 1. UVa 12032, The Monkey and the Oiled Bamboo
 
-- Enunciado: <https://onlinejudge.org/external/8/839.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=780>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-12032>
+- Actividad: [la escalera y el factor de fuerza](../../../actividades/ayg-puj/busqueda-binaria/escalera.html){ target=_blank rel=noopener }
 
-Un móvil es una barra con un objeto en cada extremo, y está en equilibrio si
-$W_l \times D_l = W_r \times D_r$. Un peso 0 dice que de ese extremo cuelga
-un submóvil, descrito en las líneas que siguen: primero el izquierdo y después
-el derecho. El parámetro de la recursión es la barra que se está leyendo. El
-extremo con objeto es el caso base y el de peso 0 el caso recursivo; la
-función devuelve el peso del submóvil y si está en equilibrio, y el árbol de
-llamadas tiene la forma del móvil. La trampa está en la lectura: aunque un
-submóvil ya haya dado `NO`, la función lee todas sus líneas, porque las que
-queden sin leer se tomarían como el caso siguiente. Tampoco basta revisar la
-barra de arriba: puede estar en equilibrio con sus submóviles desequilibrados.
+Una escalera tiene $n$ peldaños a alturas $r_1 < \dots < r_n$ y se sube de uno
+en uno. Se arranca con un factor de fuerza $k$: ningún salto puede medir más de
+$k$, y el salto que mide exactamente $k$ baja el factor en uno. Se pide el menor
+$k$ con el que se llega arriba.
 
-Costo: el tamaño es el número $n$ de barras, que el enunciado no acota. Hay
-una llamada por barra, cada una con un trabajo fijo (leer cuatro números,
-comparar dos productos y sumar dos pesos), así que el total es $\Theta(n)$ por
-caso, lo mismo que leer la entrada. La pila llega a la altura del móvil, unos
-$\log_2 n$ marcos si el árbol está lleno y $n$ si es una cadena; por eso la
-solución en Python sube el límite de recursión.
+Buscar el mínimo directamente obliga a razonar sobre todos los saltos a la vez.
+La pregunta que sí se contesta de una pasada es la otra, *¿se llega arriba
+empezando con fuerza $k$?*, y se responde simulando la subida. Es monótona,
+porque con $k+1$ ningún salto que cabía deja de caber, así que los candidatos
+quedan partidos en dos tramos y lo que se busca es el borde. Los límites son el
+salto más grande, que hay que dar, y ese mismo más $n$, porque cada salto baja
+la fuerza a lo sumo en uno.
 
-### Hora 2. UVa 12100, Printer Queue
+Costo: cada vuelta de la bisección recorre los saltos una vez, y hay
+logarítmicas vueltas en el rango de $k$, de modo que es
+$\Theta(n \log(\max s_i + n))$ por caso.
 
-- Enunciado: <https://onlinejudge.org/external/121/12100.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3252>
+### Hora 2. UVa 10341, Solve It
 
-La impresora saca el primer trabajo: si en la cola queda alguno de prioridad
-mayor, lo manda al final, y si no, lo imprime. El parámetro es $n$, el tamaño
-de la cola, con $m$ señalando el trabajo propio. Las prioridades solo van de 1
-a 9, así que nueve contadores dicen en tiempo constante si queda alguna mayor,
-sin recorrer la cola. La trampa está en $m$, que deja de servir en cuanto la
-cola rota. Varios trabajos pueden tener la misma prioridad, de modo que la
-marca del trabajo propio viaja con él en un par. El tiempo también engaña:
-imprimir toma un minuto y rotar no toma ninguno.
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10341>
+- Actividad: [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
 
-Costo: el tamaño es $n$, con $n \le 100$ y hasta 100 casos. Cada impresión deja
-a lo más $n$ rotaciones por delante, así que hay a lo más $n^2$ pasos con
-trabajo fijo: $O(n^2)$ por caso y $\Theta(n)$ de memoria. Con una lista de
-Python sacando del frente, cada paso paga $\Theta(n)$ y el total sube a
-$O(n^3)$.
+Dados seis enteros con $0 \leq p, r \leq 20$ y $-20 \leq q, s, t \leq 0$, se
+busca $x$ en $[0,1]$ con
+$p e^{-x} + q \sin x + r \cos x + s \tan x + t x^2 + u = 0$, con cuatro
+decimales, o `No solution` si no hay.
 
-### Hora 3. UVa 156, Ananagrams
+Aquí la función viene dada y lo que queda es comprobarle dos cosas. La monotonía
+sale de derivar: cada sumando de
+$f'(x) = -p e^{-x} + q \cos x - r \sin x + s \sec^2 x + 2tx$ es menor o igual
+que cero en $[0,1]$ por los rangos del enunciado, así que $f$ no crece y hay a
+lo sumo una raíz. Y los extremos deciden si existe: hay raíz exactamente cuando
+$f(0) \geq 0 \geq f(1)$. Esa es la trampa, porque sin esa comprobación el ciclo
+igual termina y devuelve un número que no es raíz de nada. Cien vueltas dejan el
+intervalo en $2^{-100}$ del original.
 
-- Enunciado: <https://onlinejudge.org/external/1/156.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=92>
+Costo: cien evaluaciones por caso, o sea constante; con hasta 2100 líneas de
+entrada el total es lineal en la cantidad de casos.
 
-Dos palabras son anagramas exactamente cuando sus letras, en minúscula y
-ordenadas, dan la misma cadena. Esa cadena es la clave de un diccionario, y
-basta contar cuántas palabras caen en cada una. El parámetro es $n$, el número
-de palabras. La trampa es que la clave ignora las mayúsculas y la salida no:
-se imprime la palabra como venía, y el orden es el de los códigos de carácter,
-con las mayúsculas antes que las minúsculas. La lectura va por palabras, porque
-una línea trae varias y puede empezar con espacios.
+### Hora 3. UVa 10810, Ultra-QuickSort
 
-Costo: el tamaño es $n \le 1000$, con $L \le 20$ letras por palabra. Las claves
-cuestan $O(n\,L \log L)$ y ordenar la salida $O(n \log n)$ comparaciones. Con
-el diccionario cada palabra se cuenta en $O(1)$ promedio; comparar cada palabra
-con todas las demás pagaría $\Theta(n^2)$ comparaciones de claves.
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10810>
+- Actividad: [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
+
+Dada una lista de $n < 500\,000$ enteros distintos, se pide cuántos
+intercambios de elementos vecinos hacen falta para dejarla ordenada. Como cada
+intercambio arregla exactamente una pareja fuera de orden, lo que se pide es el
+número de parejas $(i,j)$ con $i<j$ y $a_i > a_j$, y contarlas una por una
+cuesta $\Theta(n^2)$.
+
+Las parejas de un tramo se reparten en tres clases: las dos puntas en la mitad
+izquierda, las dos en la derecha, y una en cada mitad. Las dos primeras son el
+mismo problema sobre la mitad del tamaño, y ahí está la recursión; el caso base
+es un tramo de un elemento. La tercera se cuenta mientras se mezclan las dos
+mitades ya ordenadas: cuando sale un elemento de la derecha, todos los que
+siguen pendientes en la izquierda son mayores que él. Que las mitades queden
+ordenadas es lo que permite contar esa clase en una sola pasada.
+
+Costo: $T(n) = 2T(n/2) + \Theta(n)$, o sea $\Theta(n \log n)$. El contador va
+en `long long`, porque en el peor caso la respuesta llega al orden de $10^{11}$.
+Medido con $n = 499\,999$, la versión de C++ tarda 0,20 s y la de Python 5,1 s,
+así que al juez se envía la de C++.
 
 ## Lógica
 
 El ciclo de partida es el de
-UVa 11078, Open Credit System (<https://onlinejudge.org/external/110/11078.pdf>).
+UVa 11078, Open Credit System (<https://vjudge.net/problem/UVA-11078>).
 Recibe $a[0..n-1]$ con $n \geq 2$ y devuelve
 $\max\{a[s] - a[t] : 0 \leq s < t < n\}$:
 
@@ -189,7 +198,7 @@ salida pedida.
 
 ### Ejercicio en papel: UVa 507 sin el desempate
 
-UVa 507, Jill Rides Again (<https://onlinejudge.org/external/5/507.pdf>), sin
+UVa 507, Jill Rides Again (<https://vjudge.net/problem/UVA-507>), sin
 el desempate por longitud y por inicio. La entrada es $v[0..n-1]$, las calles
 de la ruta, y la salida es la mayor suma de un tramo de calles seguidas, o 0 si
 ninguno es positivo:
@@ -234,8 +243,7 @@ esa sesión. Cada solución va con su costo.
 
 ### Base. UVa 10935, Throwing cards away I
 
-- Enunciado: <https://onlinejudge.org/external/109/10935.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1876>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10935>
 
 Mientras queden al menos dos cartas, se bota la de arriba y la siguiente pasa
 al fondo. El parámetro es $n$, el número de cartas. Cada ronda solo toca los
@@ -246,8 +254,7 @@ y la primera línea es `Discarded cards:` sin espacio después de los dos puntos
 
 ### Intermedio. UVa 11286, Conformity
 
-- Enunciado: <https://onlinejudge.org/external/112/11286.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2261>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-11286>
 
 El parámetro es $n$, el número de estudiantes, con $n \le 10\,000$ y cinco
 cursos cada uno. Una combinación no depende del orden: al ordenar los cinco
@@ -257,8 +264,7 @@ si varias combinaciones empatan en la mayor popularidad, se suman todas.
 
 ### Exigente. UVa 699, The Falling Leaves
 
-- Enunciado: <https://onlinejudge.org/external/6/699.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=640>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-699>
 
 El parámetro es $t$, el número de nodos. La entrada ya viene en preorden, y la
 columna de un hijo solo depende de la de su padre: la función lee el subárbol
@@ -269,8 +275,8 @@ en blanco va también después del último caso.
 
 ## Para seguir
 
-- [Soluciones](./Soluciones.md) de UVa 12100, UVa 156 y los tres problemas de la
-  tarea, con la idea, la complejidad y el código en Python y C++. Las de UVa 839
-  están en las [soluciones del 24 de octubre](../B2/Soluciones.md#hora-3-uva-839-not-so-mobile).
-- [Ejercicios interactivos](./Ejercicios.md) sobre recursión, colas y pilas,
-  diccionarios, costo e invariantes.
+- [Soluciones](./Soluciones.md) de UVa 12032, UVa 10341 y UVa 10810 y de los
+  tres problemas de la tarea, con la idea, la complejidad y el código en Python
+  y C++.
+- [Ejercicios interactivos](./Ejercicios.md) sobre bisección, dividir y
+  vencerás, costo e invariantes.
