@@ -75,8 +75,9 @@ Las actividades interactivas del tema están en la
 [página de ejercicios](../../../actividades/ayg-puj/centro-arbol/index.md){ target=_blank rel=noopener }:
 descartar candidatos sin calcular, predecir la fila de excentricidades después
 de pelar una capa, seguir el algoritmo línea por línea con los grados a la
-vista, traducir vueltas a radio y a diámetro en cuatro árboles, y decidir qué
-le pasa a cuatro versiones cambiadas del código. Los ejercicios de la sesión,
+vista, traducir vueltas a radio y a diámetro en cuatro árboles, decidir qué le
+pasa a cuatro versiones cambiadas del código, y probar cada corte del problema
+de juez para ver por qué los dos pedazos se vuelven a unir por sus centros. Los ejercicios de la sesión,
 con sus pistas y los dos problemas de juez, están al final de la
 [nota](./El%20centro%20de%20un%20arbol.md#ejercicios).
 

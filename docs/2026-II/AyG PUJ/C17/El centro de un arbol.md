@@ -258,9 +258,7 @@ pasos y no kilómetros; los dos recorridos sí, cambiando el conteo de aristas
 por la suma de pesos. La entrada viene en bloques separados por una línea en
 blanco y no dice cuántos pueblos hay.
 
-Enunciado: <https://onlinejudge.org/external/103/10308.pdf>
-
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1249>
+Enunciado y envío: <https://vjudge.net/problem/UVA-10308>
 
 ### UVa 11695 — Flight Planning
 
@@ -274,9 +272,32 @@ mejor que se puede hacer, y entonces el diámetro queda en el mayor entre $d_1$,
 $d_2$ y $\lceil d_1/2 \rceil + \lceil d_2/2 \rceil + 1$. Con $n \leq 2500$
 alcanza con probar las $n-1$ aristas y resolver cada mitad en tiempo lineal.
 
-Enunciado: <https://onlinejudge.org/external/116/11695.pdf>
+La entrada trae el número de casos; cada caso, $n$ y después $n-1$ líneas con
+un par de ciudades. Con `scanf` alcanzan dos ciclos:
 
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2742>
+```cpp
+int casos;
+scanf("%d", &casos);
+for (int caso = 0; caso < casos; caso++) {
+  int n;
+  scanf("%d", &n);
+  vector<int> a(n - 1), b(n - 1);
+  for (int i = 0; i < n - 1; i++) {
+    scanf("%d %d", &a[i], &b[i]);
+  }
+}
+```
+
+Las ciudades vienen numeradas desde 1, así que o se les resta uno al leerlas o
+se reservan $n+1$ casillas. La salida son tres líneas por caso: el diámetro
+nuevo, el vuelo que se quita y el que se pone.
+
+Para practicarlo antes está la
+[actividad del tema](../../../actividades/ayg-puj/centro-arbol/vuelos.html){ target=_blank rel=noopener },
+que prueba cada corte sobre tres redes y muestra los dos pedazos con su
+diámetro y su centro.
+
+Enunciado y envío: <https://vjudge.net/problem/UVA-11695>
 
 ## Referencias
 
