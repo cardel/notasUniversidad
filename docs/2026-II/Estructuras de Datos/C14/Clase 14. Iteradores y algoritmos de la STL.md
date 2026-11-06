@@ -610,8 +610,7 @@ enunciado y el enlace de envío, que es donde el juez responde.
 
 ### UVa 10474 — Where is the Marble?
 
-- Enunciado: <https://onlinejudge.org/external/104/10474.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1415>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10474>
 
 $N$ canicas numeradas y $Q$ consultas. Para cada consulta $x$ hay que decir en
 qué posición, contando desde 1, está la **primera** canica con ese número una
@@ -629,8 +628,7 @@ posiciones que no existen.
 
 ### UVa 11849 — CD
 
-- Enunciado: <https://onlinejudge.org/external/118/11849.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2949>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-11849>
 
 Jack tiene $N$ discos y Jill $M$, cada lista en orden creciente y sin
 repetidos, con hasta un millón de números cada una y valores hasta $10^9$. La
@@ -646,8 +644,7 @@ alcanza a pasar pero es más lento que avanzar los dos iteradores.
 
 ### UVa 10008 — What's Cryptanalysis?
 
-- Enunciado: <https://onlinejudge.org/external/100/10008.pdf>
-- Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=949>
+- Enunciado y envío: <https://vjudge.net/problem/UVA-10008>
 
 Contar cuántas veces aparece cada letra en un texto, sin distinguir mayúsculas
 de minúsculas, e imprimir las letras que aparecen de mayor a menor frecuencia;
@@ -826,8 +823,8 @@ Todos los programas traen sus `using std::nombre` debajo de los `#include`.
   <https://en.cppreference.com/w/cpp/algorithm/unique>,
   <https://en.cppreference.com/w/cpp/algorithm/accumulate>
 - UVa Online Judge, problema 10474, Where is the Marble?
-  <https://onlinejudge.org/external/104/10474.pdf>
+  <https://vjudge.net/problem/UVA-10474>
 - UVa Online Judge, problema 11849, CD.
-  <https://onlinejudge.org/external/118/11849.pdf>
+  <https://vjudge.net/problem/UVA-11849>
 - UVa Online Judge, problema 10008, What's Cryptanalysis?
-  <https://onlinejudge.org/external/100/10008.pdf>
+  <https://vjudge.net/problem/UVA-10008>

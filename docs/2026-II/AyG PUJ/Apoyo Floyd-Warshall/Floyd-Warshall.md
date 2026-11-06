@@ -715,9 +715,9 @@ puede dar el paso.
 
 ### UVa 10269, Adventure of Super Mario
 
-El enunciado está en <https://onlinejudge.org/external/102/10269.pdf> y el
+El enunciado está en <https://vjudge.net/problem/UVA-10269> y el
 envío se hace en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1210>.
+<https://vjudge.net/problem/UVA-10269>.
 
 Hay $A$ aldeas, numeradas de $1$ a $A$, y $B$ castillos, de $A+1$ a $A+B$,
 unidos por vías de doble sentido. Caminar por una vía de longitud $\ell$ toma
@@ -857,7 +857,7 @@ fila de la tabla.
 ```python linenums="1"
 """
 Adventures of Super Mario
-https://onlinejudge.org/external/102/10269.pdf
+https://vjudge.net/problem/UVA-10269
 
 Dijkstra - SSSP
 
@@ -1007,7 +1007,7 @@ envía al juez.
 ```python linenums="1"
 """
 Adventures of Super Mario
-https://onlinejudge.org/external/102/10269.pdf
+https://vjudge.net/problem/UVA-10269
 
 Dijkstra - SSSP
 
@@ -1085,9 +1085,9 @@ castillo.
 
 ### UVa 11463, Commandos
 
-El enunciado está en <https://onlinejudge.org/external/114/11463.pdf> y el
+El enunciado está en <https://vjudge.net/problem/UVA-11463> y el
 envío se hace en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2458>.
+<https://vjudge.net/problem/UVA-11463>.
 
 Un grafo sin pesos y dos lugares fijos, el de salida y el del encuentro. Para
 cada edificio se suma la distancia desde la salida y la distancia hasta el
@@ -1099,9 +1099,9 @@ caso de un solo edificio, donde la respuesta es $0$.
 
 ### UVa 821, Page Hopping
 
-El enunciado está en <https://onlinejudge.org/external/8/821.pdf> y el envío
+El enunciado está en <https://vjudge.net/problem/UVA-821> y el envío
 se hace en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=762>.
+<https://vjudge.net/problem/UVA-821>.
 
 Se pide el promedio de las distancias entre todas las parejas de una red de
 páginas, que es fuertemente conexa.
@@ -1112,9 +1112,9 @@ $(i,i)$.
 
 ### UVa 10171, Meeting Prof. Miguel
 
-El enunciado está en <https://onlinejudge.org/external/101/10171.pdf> y el
+El enunciado está en <https://vjudge.net/problem/UVA-10171> y el
 envío se hace en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1112>.
+<https://vjudge.net/problem/UVA-10171>.
 
 Dos personas se mueven por las mismas calles con reglas distintas, y hay que
 encontrar dónde se encuentran con el menor costo entre los dos.
@@ -1125,9 +1125,9 @@ Los lugares son letras y hay que pasarlas a índices.
 
 ### UVa 11367, Full Tank?
 
-El enunciado está en <https://onlinejudge.org/external/113/11367.pdf> y el
+El enunciado está en <https://vjudge.net/problem/UVA-11367> y el
 envío se hace en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2352>.
+<https://vjudge.net/problem/UVA-11367>.
 
 Un carro con tanque de capacidad $c$ recorre un grafo de ciudades donde el
 combustible cuesta distinto en cada una. Se pide el menor gasto de un origen a
@@ -1222,4 +1222,4 @@ Para investigar:
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
   caminos más cortos entre todas las parejas y grafos de estados.
 - UVa Online Judge, problemas 821, 10171, 10269, 11367 y 11463.
-  <https://onlinejudge.org>
+  <https://vjudge.net>

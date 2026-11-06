@@ -1,5 +1,5 @@
 # UVa 10765 - Doves and Bombs
-# https://onlinejudge.org/external/107/10765.pdf
+# https://vjudge.net/problem/UVA-10765
 #
 # El valor paloma de una estacion es en cuantos componentes queda la red al
 # quitarla: uno por cada subarbol que se desprende, mas el pedazo que se

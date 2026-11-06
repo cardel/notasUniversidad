@@ -498,8 +498,8 @@ lista, con una decisión distinta en tres líneas.
 ## Para el juez
 
 **UVa 732 — Anagrams by Stack**,
-<https://onlinejudge.org/external/7/732.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=673>.
+<https://vjudge.net/problem/UVA-732>. Envío en
+<https://vjudge.net/problem/UVA-732>.
 
 Cada caso trae dos palabras, la de entrada y la de salida. Hay que imprimir
 todas las secuencias de las letras `i` y `o` que convierten la primera en la

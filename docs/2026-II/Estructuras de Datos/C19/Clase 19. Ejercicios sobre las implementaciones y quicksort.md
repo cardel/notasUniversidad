@@ -930,9 +930,9 @@ Cuál escoger:
 
 ### UVa 10041 — Vito's Family
 
-*UVa 10041 — Vito's Family*, <https://onlinejudge.org/external/100/10041.pdf>.
+*UVa 10041 — Vito's Family*, <https://vjudge.net/problem/UVA-10041>.
 Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=982>.
+<https://vjudge.net/problem/UVA-10041>.
 
 La casa de Vito va en la mediana de las direcciones: se ordena con quicksort y
 se suman las distancias a $s[r/2]$.
@@ -960,9 +960,9 @@ entra igual.
 
 ### UVa 10905 — Children's Game
 
-*UVa 10905 — Children's Game*, <https://onlinejudge.org/external/109/10905.pdf>.
+*UVa 10905 — Children's Game*, <https://vjudge.net/problem/UVA-10905>.
 Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1846>.
+<https://vjudge.net/problem/UVA-10905>.
 
 Quicksort con otra comparación: $p$ va antes que $q$ si $p$ seguido de $q$
 forma un número mayor que $q$ seguido de $p$.

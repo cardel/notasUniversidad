@@ -772,9 +772,9 @@ cuesta $\Theta(1)$ en lugar de $\Theta(L)$.
 
 ### UVa 11286, Conformity
 
-*UVa 11286, Conformity*: <https://onlinejudge.org/external/112/11286.pdf>.
+*UVa 11286, Conformity*: <https://vjudge.net/problem/UVA-11286>.
 Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2261>.
+<https://vjudge.net/problem/UVA-11286>.
 
 Un `map<long long, int>` que cuenta combinaciones de cursos.
 
@@ -797,9 +797,9 @@ estudiantes de las combinaciones que la alcanzan. $O(n \log n)$ por caso.
 
 ### UVa 10295, Hay Points
 
-*UVa 10295, Hay Points*: <https://onlinejudge.org/external/102/10295.pdf>.
+*UVa 10295, Hay Points*: <https://vjudge.net/problem/UVA-10295>.
 Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1236>.
+<https://vjudge.net/problem/UVA-10295>.
 
 Un `map<string, double>` con el diccionario, consultado con `find`.
 
@@ -1053,6 +1053,6 @@ su entrada y su salida.
   <https://en.cppreference.com/w/cpp/container/unordered_map>. Cubetas, factor
   de carga, rehash e invalidación de iteradores.
 - UVa Online Judge. Problema 11286, *Conformity*:
-  <https://onlinejudge.org/external/112/11286.pdf>.
+  <https://vjudge.net/problem/UVA-11286>.
 - UVa Online Judge. Problema 10295, *Hay Points*:
-  <https://onlinejudge.org/external/102/10295.pdf>.
+  <https://vjudge.net/problem/UVA-10295>.

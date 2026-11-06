@@ -1,5 +1,5 @@
 # UVa 610 - Street Directions
-# https://onlinejudge.org/external/6/610.pdf
+# https://vjudge.net/problem/UVA-610
 #
 # Se orienta cada calle para que la ciudad quede fuertemente conexa. La
 # profundidad orienta las aristas de arbol del padre al hijo y las de

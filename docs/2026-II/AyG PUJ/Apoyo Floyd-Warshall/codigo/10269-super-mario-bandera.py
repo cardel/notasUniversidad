@@ -1,6 +1,6 @@
 """
 Adventures of Super Mario
-https://onlinejudge.org/external/102/10269.pdf
+https://vjudge.net/problem/UVA-10269
 
 Dijkstra - SSSP
 

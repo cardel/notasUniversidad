@@ -702,8 +702,8 @@ Cuál usar:
 
 ### UVa 321, The New Villa
 
-El enunciado está en <https://onlinejudge.org/external/3/321.pdf> y el envío
-se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=257>.
+El enunciado está en <https://vjudge.net/problem/UVA-321> y el envío
+se hace en <https://vjudge.net/problem/UVA-321>.
 
 Una casa de $r \leq 10$ habitaciones: la $1$ es el hall y la $r$ el
 dormitorio. Hay puertas entre habitaciones e interruptores mal conectados: un
@@ -807,7 +807,7 @@ la cola la meta $(r, 2^{r-1})$.
 ```cpp linenums="1"
 /*
 The New Villa
-https://uva.onlinejudge.org/external/3/321.pdf
+https://vjudge.net/problem/UVA-321
 
 BFS - State Space
 
@@ -1046,9 +1046,7 @@ El grafo de estados, las máscaras y el código línea por línea siguen en la
 
 ### UVa 558, Wormholes
 
-Enunciado: <https://onlinejudge.org/external/5/558.pdf>
-
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=499>
+Enunciado y envío: <https://vjudge.net/problem/UVA-558>
 
 Hasta $1000$ sistemas y $2000$ agujeros de gusano dirigidos, cada uno con un
 salto en el tiempo $t$, con $-1000 \leq t \leq 1000$. Desde el sistema $0$ se
@@ -1062,9 +1060,7 @@ lista de adyacencia se vacía antes de leer el siguiente.
 
 ### UVa 11280, Flying to Fredericton
 
-Enunciado: <https://onlinejudge.org/external/112/11280.pdf>
-
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2255>
+Enunciado y envío: <https://vjudge.net/problem/UVA-11280>
 
 Hasta $100$ ciudades y $1000$ vuelos con costo; puede haber varios entre las
 mismas dos ciudades. Para cada consulta, un máximo de escalas: el costo más
@@ -1185,4 +1181,4 @@ Para investigar:
   Press, 1959, pp. 285-292.
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
   Bellman-Ford y su variante con cola; grafos de estados.
-- UVa Online Judge, problemas 321, 558 y 11280. <https://onlinejudge.org>
+- UVa Online Judge, problemas 321, 558 y 11280. <https://vjudge.net>

@@ -341,8 +341,8 @@ $\blacksquare$
 
 ## UVa 10305 — Ordering Tasks
 
-Enunciado: <https://onlinejudge.org/external/103/10305.pdf>. Envío:
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1246>.
+Enunciado: <https://vjudge.net/problem/UVA-10305>. Envío:
+<https://vjudge.net/problem/UVA-10305>.
 
 John tiene $n$ tareas, numeradas de $1$ a $n$, y $m$ relaciones de
 precedencia: la tarea $i$ debe ejecutarse antes que la $j$. Hay que imprimir

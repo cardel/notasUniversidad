@@ -594,8 +594,7 @@ de software, y vale la pena resolverlos con la mano ya caliente.
 
 ### UVa 673 — Parentheses Balance
 
-Enunciado: <https://onlinejudge.org/external/6/673.pdf>
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=614>
+Enunciado y envío: <https://vjudge.net/problem/UVA-673>
 
 Cadenas hechas solo de `()` y `[]`. Una cadena es correcta si es vacía, si es
 la concatenación de dos correctas, o si es `(A)` o `[A]` con `A` correcta. Es
@@ -611,8 +610,7 @@ final antes de recorrerla.
 
 ### UVa 10935 — Throwing cards away I
 
-Enunciado: <https://onlinejudge.org/external/109/10935.pdf>
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1876>
+Enunciado y envío: <https://vjudge.net/problem/UVA-10935>
 
 Un mazo con las cartas $1, \ldots, n$ en orden, la 1 arriba. Mientras queden
 al menos dos: se descarta la de arriba y la que queda arriba pasa al fondo.
@@ -638,8 +636,7 @@ carta menos la primera; y se lee hasta encontrar el `0`.
 
 ### UVa 514 — Rails
 
-Enunciado: <https://onlinejudge.org/external/5/514.pdf>
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=455>
+Enunciado y envío: <https://vjudge.net/problem/UVA-514>
 
 Los vagones $1, \ldots, N$ llegan en ese orden por la vía A a una estación de
 una sola vía sin salida y siguen por la vía B; el que entró no vuelve a A y
@@ -761,4 +758,4 @@ necesita:
 - R. Thareja. *Data Structures Using C*. Oxford University Press, 2018.
   Capítulo 7 (pilas y sus aplicaciones), capítulo 8 (colas).
 - N. Kalicharan. *Data Structures in C*. 2008. Capítulo 4 (pilas y colas).
-- UVa Online Judge, problemas 673, 10935 y 514. <https://onlinejudge.org>
+- UVa Online Judge, problemas 673, 10935 y 514. <https://vjudge.net>

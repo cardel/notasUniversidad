@@ -1,6 +1,6 @@
 /*
 The New Villa
-https://uva.onlinejudge.org/external/3/321.pdf
+https://vjudge.net/problem/UVA-321
 
 BFS - State Space
 

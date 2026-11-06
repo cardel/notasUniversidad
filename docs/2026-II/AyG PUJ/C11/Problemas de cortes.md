@@ -465,8 +465,8 @@ Con esos tres datos las preguntas del enunciado se contestan en un recorrido:
 
 #### El problema
 
-Enunciado: <https://onlinejudge.org/external/6/610.pdf>.
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=551>.
+Enunciado: <https://vjudge.net/problem/UVA-610>.
+Envío: <https://vjudge.net/problem/UVA-610>.
 
 Hay $n$ intersecciones ($2 \leq n \leq 1000$) y $m$ calles de doble vía, a lo
 sumo una por cada par. Hay que convertir en una vía tantas calles como se
@@ -754,8 +754,8 @@ $1$–$2$–$4$ en el otro.
 
 #### El problema
 
-Enunciado: <https://onlinejudge.org/external/107/10765.pdf>.
-Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1706>.
+Enunciado: <https://vjudge.net/problem/UVA-10765>.
+Envío: <https://vjudge.net/problem/UVA-10765>.
 
 Una red conexa de $n$ estaciones ($3 \leq n \leq 10000$) unidas por vías. El
 *valor paloma* de una estación es en cuántos pedazos queda la red al
@@ -1664,20 +1664,20 @@ deja los dos pedazos más parejos, con el cálculo en $\Theta(V+E)$.
 ### Para enviar al juez
 
 - **UVa 610 — Street Directions.**
-  Enunciado: <https://onlinejudge.org/external/6/610.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=551>.
+  Enunciado: <https://vjudge.net/problem/UVA-610>.
+  Envío: <https://vjudge.net/problem/UVA-610>.
   El parámetro es la calle: hay que decidir cuáles se orientan. La propiedad
   está en que un puente no puede ser de una vía. La trampa es el formato:
   línea en blanco tras el número de caso y una línea con `#` al cerrar.
 - **UVa 10765 — Doves and Bombs.**
-  Enunciado: <https://onlinejudge.org/external/107/10765.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1706>.
+  Enunciado: <https://vjudge.net/problem/UVA-10765>.
+  Envío: <https://vjudge.net/problem/UVA-10765>.
   El parámetro es la estación y la propiedad es el conteo de hijos con
   $w.low \geq v.d$. La trampa es doble: el `-1 -1` que cierra las vías y los
   $10000$ vértices, que obligan a la pila explícita.
 - **UVa 796 — Critical Links.**
-  Enunciado: <https://onlinejudge.org/external/7/796.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=737>.
+  Enunciado: <https://vjudge.net/problem/UVA-796>.
+  Envío: <https://vjudge.net/problem/UVA-796>.
   Pide la lista de puentes ordenada, con el extremo menor primero. Sirve para
   probar la primera de las tres pasadas por separado, antes de armar el árbol.
 
@@ -1706,9 +1706,9 @@ sacar un componente al cerrar un punto de articulación.
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
   puntos de articulación, puentes y orientación de grafos.
 - UVa 610 — Street Directions.
-  <https://onlinejudge.org/external/6/610.pdf>.
+  <https://vjudge.net/problem/UVA-610>.
 - UVa 10765 — Doves and Bombs.
-  <https://onlinejudge.org/external/107/10765.pdf>.
+  <https://vjudge.net/problem/UVA-10765>.
 
 ## Lo que se trabajó en clase
 

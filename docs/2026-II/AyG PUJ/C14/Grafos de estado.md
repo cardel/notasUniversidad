@@ -34,8 +34,8 @@ los conjuntos de luces y después con las máscaras.
 
 ### UVa 321, The New Villa
 
-El enunciado está en <https://onlinejudge.org/external/3/321.pdf> y el envío
-se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=257>.
+El enunciado está en <https://vjudge.net/problem/UVA-321> y el envío
+se hace en <https://vjudge.net/problem/UVA-321>.
 
 Una casa tiene $r \leq 10$ habitaciones: la $1$ es el hall y la $r$ el
 dormitorio. Hay puertas entre habitaciones e interruptores mal conectados,
@@ -306,7 +306,7 @@ números de línea son los que citan las diapositivas y el resto de la nota.
 ```cpp linenums="1"
 /*
 The New Villa
-https://uva.onlinejudge.org/external/3/321.pdf
+https://vjudge.net/problem/UVA-321
 
 BFS - State Space
 
@@ -839,4 +839,4 @@ Para investigar:
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
   grafos de estados; Capítulo 2: máscaras de bits.
 - UVa Online Judge, problema 321, The New Villa.
-  <https://onlinejudge.org/external/3/321.pdf>
+  <https://vjudge.net/problem/UVA-321>

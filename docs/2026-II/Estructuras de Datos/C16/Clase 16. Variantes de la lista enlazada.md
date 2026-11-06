@@ -833,8 +833,8 @@ $\Theta(n \log n) + \Theta(n) = \Theta(n \log n)$, que es menos.
 ## Para el juez
 
 **UVa 11462 — Age Sort**,
-<https://onlinejudge.org/external/114/11462.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2457>.
+<https://vjudge.net/problem/UVA-11462>. Envío en
+<https://vjudge.net/problem/UVA-11462>.
 
 Varios casos. Cada uno trae $n$ edades de los habitantes de un país y hay que
 imprimirlas en orden ascendente, separadas por espacio, una línea por caso. El
@@ -853,8 +853,8 @@ no sobre la cantidad, y eso permite ordenar sin comparar y en $\Theta(n)$.
 Averiguar cómo es el ejercicio que deja planteado la sesión de tablas hash.
 
 **UVa 10810 — Ultra-QuickSort**,
-<https://onlinejudge.org/external/108/10810.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1751>.
+<https://vjudge.net/problem/UVA-10810>. Envío en
+<https://vjudge.net/problem/UVA-10810>.
 
 Varios casos, cada uno con $n < 500\,000$ enteros entre 0 y 999 999 999, uno
 por línea, y el archivo termina con $n = 0$. Para cada caso hay que imprimir

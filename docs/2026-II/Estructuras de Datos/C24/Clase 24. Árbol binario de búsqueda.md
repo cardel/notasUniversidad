@@ -906,7 +906,7 @@ Solución: [aizu_alds1_8_b.cpp](./codigo/aizu_alds1_8_b.cpp),
 
 ### UVa 12347, Binary Search Tree
 
-*UVa 12347, Binary Search Tree*: <https://onlinejudge.org/external/123/12347.pdf>.
+*UVa 12347, Binary Search Tree*: <https://vjudge.net/problem/UVA-12347>.
 Envío en <https://vjudge.net/problem/UVA-12347>.
 
 Insertar las claves en el orden del preorden reconstruye el mismo ABB, y basta
@@ -967,7 +967,7 @@ Solución: [aizu_alds1_8_c.cpp](./codigo/aizu_alds1_8_c.cpp),
 
 ### Reto: UVa 10821, Constructing BST
 
-*UVa 10821, Constructing BST*: <https://onlinejudge.org/external/108/10821.pdf>.
+*UVa 10821, Constructing BST*: <https://vjudge.net/problem/UVA-10821>.
 Envío en <https://vjudge.net/problem/UVA-10821>.
 
 La raíz es la menor clave que deja caber al subárbol derecho en la altura que
@@ -1062,6 +1062,6 @@ su entrada y su salida.
   <https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_8_B> y
   <https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_8_C>.
 - UVa Online Judge. Problema 12347, *Binary Search Tree*:
-  <https://onlinejudge.org/external/123/12347.pdf>.
+  <https://vjudge.net/problem/UVA-12347>.
 - UVa Online Judge. Problema 10821, *Constructing BST*:
-  <https://onlinejudge.org/external/108/10821.pdf>.
+  <https://vjudge.net/problem/UVA-10821>.

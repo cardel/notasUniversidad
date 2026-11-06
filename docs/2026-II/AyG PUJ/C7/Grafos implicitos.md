@@ -167,8 +167,8 @@ profundidad con pila explícita son las versiones que corren.
 
 ## UVa 10977 — Enchanted Forest
 
-Enunciado en <https://onlinejudge.org/external/109/10977.pdf>; envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1918>.
+Enunciado en <https://vjudge.net/problem/UVA-10977>; envío en
+<https://vjudge.net/problem/UVA-10977>.
 
 Un bosque de $R \times C$ intersecciones. Se entra por $(1,1)$ y se sale por
 $(R,C)$, moviendo una unidad por paso. Hay $m$ posiciones bloqueadas y $n$
@@ -231,8 +231,8 @@ para recorrerlo.
 
 ## UVa 627 — The Net
 
-Enunciado en <https://onlinejudge.org/external/6/627.pdf>; envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=568>.
+Enunciado en <https://vjudge.net/problem/UVA-627>; envío en
+<https://vjudge.net/problem/UVA-627>.
 
 Una red de a lo sumo 300 enrutadores. Cada uno tiene su lista de enrutadores
 visibles, en orden ascendente. Por consulta —origen y destino— la ruta con
@@ -299,8 +299,8 @@ guion y después por las comas, aceptando la lista vacía de `2-`.
 
 ## UVa 11749 — Poor Trade Advisor
 
-Enunciado en <https://onlinejudge.org/external/117/11749.pdf>; envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2849>.
+Enunciado en <https://vjudge.net/problem/UVA-11749>; envío en
+<https://vjudge.net/problem/UVA-11749>.
 
 $n$ ciudades y $m$ carreteras bidireccionales, cada una con una ganancia anual
 (PPA). Una provincia es un conjunto conexo y no vacío de carreteras con sus
@@ -475,4 +475,4 @@ Seis interactivos, siete en papel y cinco para programar: están en la
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Sección 4.2
   y su tratamiento de las cuadrículas como grafos implícitos.
 - Universidad de Valladolid Online Judge: problemas 627, 10977 y 11749.
-  <https://onlinejudge.org>
+  <https://vjudge.net>

@@ -858,25 +858,25 @@ $3 \cdot 10^{10}$ pasos a unos $3 \cdot 10^{5}$.
 ## Problemas de juez
 
 - **UVa 796 — Critical Links.**
-  Enunciado: <https://onlinejudge.org/external/7/796.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=737>.
+  Enunciado: <https://vjudge.net/problem/UVA-796>.
+  Envío: <https://vjudge.net/problem/UVA-796>.
   Pide los puentes de una red. La lista de salida va ordenada y cada puente
   con el extremo menor primero. El grafo puede venir desconectado y con
   vértices sin aristas, así que el ciclo externo arranca en todos.
 - **UVa 315 — Network.**
-  Enunciado: <https://onlinejudge.org/external/3/315.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=251>.
+  Enunciado: <https://vjudge.net/problem/UVA-315>.
+  Envío: <https://vjudge.net/problem/UVA-315>.
   Pide cuántos puntos de articulación hay. La trampa está en la lectura: cada
   línea trae un vértice seguido de sus vecinos, en cantidad variable, y una
   línea con un $0$ solo cierra el caso.
 - **UVa 247 — Calling Circles.**
-  Enunciado: <https://onlinejudge.org/external/2/247.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=183>.
+  Enunciado: <https://vjudge.net/problem/UVA-247>.
+  Envío: <https://vjudge.net/problem/UVA-247>.
   Los círculos de llamadas son los componentes fuertemente conexos. Los
   nombres se traducen a números con un diccionario antes de correr Tarjan.
 - **UVa 11838 — Come and Go.**
-  Enunciado: <https://onlinejudge.org/external/118/11838.pdf>.
-  Envío: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2938>.
+  Enunciado: <https://vjudge.net/problem/UVA-11838>.
+  Envío: <https://vjudge.net/problem/UVA-11838>.
   Pregunta si la ciudad es fuertemente conexa. Hay calles de una vía y de
   doble vía ($P = 2$ agrega las dos direcciones). Basta ver si Tarjan saca un
   solo componente.

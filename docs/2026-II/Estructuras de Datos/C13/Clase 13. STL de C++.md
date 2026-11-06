@@ -323,8 +323,8 @@ tiempo y $\Theta(1)$ aparte de la cola.
 
 ### UVa 673 en vivo: lo que costó fue la entrada
 
-Enunciado: <https://onlinejudge.org/external/6/673.pdf>. Envío:
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=614>.
+Enunciado: <https://vjudge.net/problem/UVA-673>. Envío:
+<https://vjudge.net/problem/UVA-673>.
 
 Es `balanceado` tal cual, y así quedó la pila: apertura, `push`; cierre con la
 pila vacía, falso; cierre con pila, se lee el tope, se compara con `cierre` y
@@ -593,5 +593,5 @@ Todos los programas traen sus `using std::nombre` debajo de los `#include`.
   <https://en.cppreference.com/w/cpp/container/stack>,
   <https://en.cppreference.com/w/cpp/algorithm/sort>
 - UVa Online Judge, problema 673, Parentheses Balance.
-  <https://onlinejudge.org/external/6/673.pdf>
+  <https://vjudge.net/problem/UVA-673>
 - udebug, casos de prueba del problema 673. <https://www.udebug.com/UVa/673>

@@ -636,8 +636,8 @@ de servir y entra Dijkstra, como en Super Mario.
 
 ### El problema
 
-El enunciado está en <https://onlinejudge.org/external/102/10269.pdf> y el
-envío se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1210>.
+El enunciado está en <https://vjudge.net/problem/UVA-10269> y el
+envío se hace en <https://vjudge.net/problem/UVA-10269>.
 
 Hay $A$ aldeas, numeradas de $1$ a $A$, y $B$ castillos, de $A+1$ a $A+B$,
 unidos por $M$ vías de doble sentido. Caminar por una vía de longitud $\ell$
@@ -768,7 +768,7 @@ entrada estándar e imprime un tiempo por caso.
 ```python linenums="1"
 """
 Adventures of Super Mario
-https://onlinejudge.org/external/102/10269.pdf
+https://vjudge.net/problem/UVA-10269
 
 Dijkstra - SSSP
 
@@ -954,8 +954,8 @@ carrera que empieza en ese castillo.
 
 ### UVa 10986, Sending email
 
-El enunciado está en <https://onlinejudge.org/external/109/10986.pdf> y el
-envío se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1927>.
+El enunciado está en <https://vjudge.net/problem/UVA-10986> y el
+envío se hace en <https://vjudge.net/problem/UVA-10986>.
 
 Hay $n \leq 20\,000$ servidores y $m \leq 50\,000$ cables de doble sentido,
 con latencias de $0$ a $10\,000$. Se pide el menor tiempo de $S$ a $T$, o
@@ -968,8 +968,8 @@ la salida lleva `Case #x:` delante.
 
 ### UVa 1112, Mice and Maze
 
-El enunciado está en <https://onlinejudge.org/external/11/1112.pdf> y el
-envío se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3553>.
+El enunciado está en <https://vjudge.net/problem/UVA-1112> y el
+envío se hace en <https://vjudge.net/problem/UVA-1112>.
 
 Hay $N \leq 100$ celdas y pasajes de un solo sentido, cada uno con un tiempo.
 En cada celda hay un ratón que sigue el camino más rápido a la salida $E$.
@@ -982,8 +982,8 @@ líneas en blanco entre casos, a la entrada y a la salida.
 
 ### UVa 10000, Longest Paths
 
-El enunciado está en <https://onlinejudge.org/external/100/10000.pdf> y el
-envío se hace en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=941>.
+El enunciado está en <https://vjudge.net/problem/UVA-10000> y el
+envío se hace en <https://vjudge.net/problem/UVA-10000>.
 
 Se da un grafo dirigido sin ciclos de $n \leq 100$ vértices y un punto de
 partida $s$. Se pide la longitud del camino más largo que sale de $s$ y el
@@ -1090,4 +1090,4 @@ Para investigar:
 - Halim, Halim, Effendy. *Competitive Programming 4*. Lulu, 2020. Capítulo 4:
   caminos más cortos desde una fuente y grafos de estados.
 - UVa Online Judge, problemas 1112, 10000, 10269 y 10986.
-  <https://onlinejudge.org>
+  <https://vjudge.net>

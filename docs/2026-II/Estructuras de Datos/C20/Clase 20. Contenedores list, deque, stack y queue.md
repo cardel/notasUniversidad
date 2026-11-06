@@ -655,8 +655,8 @@ Tiempos en segundos:
 ### UVa 11988 — Broken Keyboard (a.k.a. Beiju Text)
 
 *UVa 11988 — Broken Keyboard (a.k.a. Beiju Text)*,
-<https://onlinejudge.org/external/119/11988.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3139>.
+<https://vjudge.net/problem/UVA-11988>. Envío en
+<https://vjudge.net/problem/UVA-11988>.
 
 El texto es una `list<char>` y el cursor un iterador: cada letra entra con
 `insert(cursor, c)` en $\Theta(1)$.
@@ -684,9 +684,9 @@ cuesta $\Theta(1)$: $\Theta(n)$ por línea.
 
 ### UVa 12207 — That is Your Queue
 
-*UVa 12207 — That is Your Queue*, <https://onlinejudge.org/external/122/12207.pdf>.
+*UVa 12207 — That is Your Queue*, <https://vjudge.net/problem/UVA-12207>.
 Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3359>.
+<https://vjudge.net/problem/UVA-12207>.
 
 Un `deque<int>` con solo los primeros $\min(P, C)$ ciudadanos: `N` rota el
 frente al final y `E x` lo saca de su puesto y lo pone al frente.

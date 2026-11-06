@@ -567,8 +567,8 @@ enlazada simple no entra en la discusión: encolar le cuesta $\Theta(n)$.
 
 ## Para el juez
 
-*UVa 540 — Team Queue*, <https://onlinejudge.org/external/5/540.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=481>.
+*UVa 540 — Team Queue*, <https://vjudge.net/problem/UVA-540>. Envío en
+<https://vjudge.net/problem/UVA-540>.
 
 Una fila donde cada quien se pone detrás del último de su equipo. Con 200 000
 órdenes, una cola que cueste $\Theta(n)$ por operación no entra en el tiempo:
@@ -654,11 +654,11 @@ líneas `#ifndef`, `#define` y `#endif`.
 
 De más accesible a más exigente. Las diapositivas traen, para cada uno, qué pide, cómo atacarlo y la trampa del enunciado.
 
-- *UVa 10935 — Throwing cards away I*, <https://onlinejudge.org/external/109/10935.pdf>. Envío en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1876>. Una sola cola: se descarta el frente y el siguiente pasa al final.
-- *UVa 11034 — Ferry Loading IV*, <https://onlinejudge.org/external/110/11034.pdf>. Envío en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1975>. Dos colas, una por orilla; el ferri mide en metros y los carros en centímetros.
-- *UVa 12100 — Printer Queue*, <https://onlinejudge.org/external/121/12100.pdf>. Envío en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3252>. Una cola de posiciones y un arreglo de prioridades; solo una mayor manda al final.
-- *UVa 10901 — Ferry Loading III*, <https://onlinejudge.org/external/109/10901.pdf>. Envío en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1842>. Dos colas con tiempo de llegada; la salida va en el orden de la entrada.
-- *UVa 11995 — I Can Guess the Data Structure!*, <https://onlinejudge.org/external/119/11995.pdf>. Envío en <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3146>. Pila, cola y cola de prioridad simuladas a la vez; puede no ser ninguna o ser varias.
+- *UVa 10935 — Throwing cards away I*, <https://vjudge.net/problem/UVA-10935>. Envío en <https://vjudge.net/problem/UVA-10935>. Una sola cola: se descarta el frente y el siguiente pasa al final.
+- *UVa 11034 — Ferry Loading IV*, <https://vjudge.net/problem/UVA-11034>. Envío en <https://vjudge.net/problem/UVA-11034>. Dos colas, una por orilla; el ferri mide en metros y los carros en centímetros.
+- *UVa 12100 — Printer Queue*, <https://vjudge.net/problem/UVA-12100>. Envío en <https://vjudge.net/problem/UVA-12100>. Una cola de posiciones y un arreglo de prioridades; solo una mayor manda al final.
+- *UVa 10901 — Ferry Loading III*, <https://vjudge.net/problem/UVA-10901>. Envío en <https://vjudge.net/problem/UVA-10901>. Dos colas con tiempo de llegada; la salida va en el orden de la entrada.
+- *UVa 11995 — I Can Guess the Data Structure!*, <https://vjudge.net/problem/UVA-11995>. Envío en <https://vjudge.net/problem/UVA-11995>. Pila, cola y cola de prioridad simuladas a la vez; puede no ser ninguna o ser varias.
 
 ### UVa 10935 — Throwing cards away I
 

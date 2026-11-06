@@ -21,7 +21,7 @@ veredictos está en el
 [Apéndice A](../A1/Apéndice%20A.%20El%20juez%20automático.md); en clase
 se recorrió en vivo con un problema clásico de los jueces en línea,
 *The 3n + 1 problem*, UVa 100:
-<https://onlinejudge.org/external/1/100.pdf>.
+<https://vjudge.net/problem/UVA-100>.
 
 El problema se apoya en una regla simple. A partir de un entero $n$ se
 genera una secuencia: si $n$ es par, el siguiente término es $n/2$; si

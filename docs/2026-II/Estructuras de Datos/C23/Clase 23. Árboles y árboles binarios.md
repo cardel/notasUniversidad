@@ -808,7 +808,7 @@ ejemplos del enunciado: [entrada 1](./codigo/aizu_alds1_7_d.in) y
 y [salida 2](./codigo/aizu_alds1_7_d_2.out).
 
 El mismo problema llega con letras en *UVa 536, Tree Recovery*:
-<https://onlinejudge.org/external/5/536.pdf>, con envío en
+<https://vjudge.net/problem/UVA-536>, con envío en
 <https://vjudge.net/problem/UVA-536>. Cada línea trae el preorden y el inorden
 como dos palabras de letras mayúsculas distintas, y se imprime el posorden sin
 espacios. No se da el número de casos, así que se lee hasta el fin de la
@@ -816,7 +816,7 @@ entrada, y la posición de cada letra en el inorden cabe en un arreglo de 26.
 
 ### UVa 699, The Falling Leaves
 
-*UVa 699, The Falling Leaves*: <https://onlinejudge.org/external/6/699.pdf>.
+*UVa 699, The Falling Leaves*: <https://vjudge.net/problem/UVA-699>.
 Envío en <https://vjudge.net/problem/UVA-699>.
 
 La lectura misma es el recorrido: cada número se suma en su columna mientras
@@ -966,6 +966,6 @@ su entrada y su salida.
 - Aizu Online Judge. ALDS1_7_D, *Reconstruction of a Tree*:
   <https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_7_D>.
 - UVa Online Judge. Problema 699, *The Falling Leaves*:
-  <https://onlinejudge.org/external/6/699.pdf>.
+  <https://vjudge.net/problem/UVA-699>.
 - UVa Online Judge. Problema 536, *Tree Recovery*:
-  <https://onlinejudge.org/external/5/536.pdf>.
+  <https://vjudge.net/problem/UVA-536>.

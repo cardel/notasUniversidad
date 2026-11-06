@@ -515,8 +515,8 @@ casilla.
 ### UVa 484: The Department of Redundancy Department
 
 *UVa 484, The Department of Redundancy Department*:
-<https://onlinejudge.org/external/4/484.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=425>.
+<https://vjudge.net/problem/UVA-484>. Envío en
+<https://vjudge.net/problem/UVA-484>.
 
 Una tabla hash con encadenamiento cuyo nodo guarda la clave y un contador.
 
@@ -688,8 +688,8 @@ $\Theta(1)$ (CLRS, §11.2).
 ### Propuesto para el juez: UVa 442, Matrix Chain Multiplication
 
 *UVa 442, Matrix Chain Multiplication*,
-<https://onlinejudge.org/external/4/442.pdf>. Envío en
-<https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=383>.
+<https://vjudge.net/problem/UVA-442>. Envío en
+<https://vjudge.net/problem/UVA-442>.
 
 Llegan $n \leq 26$ matrices, cada una con una letra mayúscula, sus filas y sus
 columnas. Después, hasta el fin de archivo, una expresión por línea con
@@ -789,6 +789,6 @@ Las soluciones de los problemas de juez están en *Para el juez* y en
   Capítulo 15, *Hashing and Collision*: §15.2 tablas hash; §15.4.1 método
   de la división; §15.5.2 resolución de colisiones por encadenamiento.
 - UVa Online Judge. Problema 484, *The Department of Redundancy Department*:
-  <https://onlinejudge.org/external/4/484.pdf>.
+  <https://vjudge.net/problem/UVA-484>.
 - UVa Online Judge. Problema 442, *Matrix Chain Multiplication*:
-  <https://onlinejudge.org/external/4/442.pdf>.
+  <https://vjudge.net/problem/UVA-442>.

@@ -725,8 +725,8 @@ casi siempre hay una bisección escondida.
 ### Problemas de juez en línea
 
 **UVa 11909 — Soya Milk.**
-Enunciado: <https://onlinejudge.org/external/119/11909.pdf>
-Enviar: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=3060>
+Enunciado: <https://vjudge.net/problem/UVA-11909>
+Enviar: <https://vjudge.net/problem/UVA-11909>
 
 Una caja de leche de dimensiones $l \times w \times h$ se inclina un
 ángulo $\theta$; hay que hallar el volumen que queda adentro.
@@ -738,8 +738,8 @@ conocido es creciente, así que se halla con bisección continua. Dibuje
 los dos casos antes de escribir una línea de código.
 
 **UVa 11646 — Athletics Track.**
-Enunciado: <https://onlinejudge.org/external/116/11646.pdf>
-Enviar: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=2693>
+Enunciado: <https://vjudge.net/problem/UVA-11646>
+Enviar: <https://vjudge.net/problem/UVA-11646>
 
 Una pista de dos rectas y dos arcos, con proporción largo : ancho dada,
 debe medir 400 metros.
@@ -750,8 +750,8 @@ bisección continua sobre un rango generoso. Verifique la monotonía antes
 de confiar en el descarte.
 
 **UVa 714 — Copying Books.**
-Enunciado: <https://onlinejudge.org/external/7/714.pdf>
-Enviar: <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=655>
+Enunciado: <https://vjudge.net/problem/UVA-714>
+Enviar: <https://vjudge.net/problem/UVA-714>
 
 $K$ escribas copian libros consecutivos; hay que minimizar las páginas
 del escriba más cargado.

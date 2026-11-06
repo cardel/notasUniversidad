@@ -999,8 +999,8 @@ anidadas.
 5. **UVa 10459, The Tree Root.** Dado un árbol, hay que decir cuáles vértices
    dan la menor altura al colgarlo de ellos y cuáles la mayor. Los primeros son
    el centro y los segundos son las hojas más lejanas. Enunciado en
-   <https://onlinejudge.org/external/104/10459.pdf> y envío en
-   <https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=25&page=submit_problem&problemid=1400>.
+   <https://vjudge.net/problem/UVA-10459> y envío en
+   <https://vjudge.net/problem/UVA-10459>.
    Colgar el árbol de $v$ y mirar su altura es lo mismo que calcular
    $\varepsilon(v)$. Con $n$ hasta unos pocos miles, una amplitud desde cada
    vértice alcanza; con más, hay que esperar al algoritmo de dos recorridos.
@@ -1029,4 +1029,4 @@ Para investigar:
   propiedades de los árboles, diámetro y centro.
 - van Steen, M. *Graph Theory and Complex Networks*. Maarten van Steen, 2010.
   Capítulo 5: árboles, excentricidad y centro.
-- UVa Online Judge, problema 10459. <https://onlinejudge.org>
+- UVa Online Judge, problema 10459. <https://vjudge.net>
