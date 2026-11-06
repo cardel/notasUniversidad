@@ -781,7 +781,7 @@ cambia el problema.
 ## Lo que sigue
 
 Los invariantes de ciclo pasan a la
-[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md). La recursión sobre un árbol con
+[sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md). La recursión sobre un árbol con
 UVa 839, *Not so Mobile*, queda como problema propuesto: el enunciado y el
 envío están en <https://vjudge.net/problem/UVA-839> y la solución, en las
 [soluciones](./Soluciones.md).

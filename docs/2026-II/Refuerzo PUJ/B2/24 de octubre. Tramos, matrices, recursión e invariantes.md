@@ -5,7 +5,7 @@ arreglo y los rectángulos de una matriz, y una de lógica sobre proposiciones,
 cuantificadores y la definición de $O$.
 
 UVa 507 ocupó dos horas y UVa 108 la tercera. Los invariantes de ciclo pasan a
-la [sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md), y la recursión sobre un árbol
+la [sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md), y la recursión sobre un árbol
 con UVa 839 queda como problema propuesto.
 La hora de lógica usó las
 [diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener };
@@ -15,7 +15,7 @@ están también las [anotadas en la sesión](./logica-anotada.pdf){ target=_blan
 
 ### Programación
 
-El deck trae también UVa 839, que se trabaja el 7 de noviembre.
+El deck trae también UVa 839, que queda como problema propuesto.
 
 ![](./Programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
@@ -90,7 +90,7 @@ completo está en las
 [notas de la sesión](./Notas.%20Tramos,%20matrices%20y%20l%C3%B3gica.md#logica).
 
 Los invariantes de ciclo de UVa 11078 y UVa 507 se trabajan en la
-[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
+[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica).
 
 ## Tarea
 

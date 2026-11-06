@@ -1,7 +1,7 @@
 # Ejercicios · Refuerzo PUJ 7 de noviembre
 
 Actividades para trabajar en el navegador los temas de la
-[sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md).
+[sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md).
 Las actividades de `tope`, `palitos` y la escalera corren el código de los tres
 problemas que se resuelven en clase.
 
@@ -48,39 +48,6 @@ escaleras, entre ellas una donde la respuesta no es el salto más grande.
 La búsqueda binaria sobre un arreglo ordenado, división por división, con las
 posiciones descartadas tachándose. Es la mecánica que después se aplica sobre
 una función de decisión en vez de sobre un arreglo.
-
-## Problema extra: cuando la función ya viene dada
-
-### [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
-
-UVa 10341, atacado en diez tarjetas que se abren una
-tras otra: entender la entrada, nombrar la función, demostrar término a término
-que decrece, mirar el rango, decidir si la solución existe, fijar la tolerancia
-y recién ahí escribir código. La tarjeta de la monotonía es la que decide el
-problema.
-
-### [biseccion](../../../actividades/ayg-puj/busqueda-binaria/biseccion.html){ target=_blank rel=noopener }
-
-La bisección sobre una función continua, con tres funciones distintas, para ver
-qué pasa cuando el objetivo queda fuera del rango.
-
-## Problema extra: dividir y vencerás
-
-### [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
-
-UVa 10810. Se predice el número de parejas sobre un
-arreglo chico y después corre el código de la sesión, con las dos posiciones de
-la mezcla marcadas y el aporte de cada elemento que sale de la derecha.
-
-### [mezclar](../../../actividades/ayg-puj/recursion/mezclar.html){ target=_blank rel=noopener }
-
-La mezcla sola, escritura por escritura, con su pareja de invariantes. Es el
-paso de combinación del ejercicio anterior, sin el conteo encima.
-
-### [ordenar](../../../actividades/ayg-puj/recursion/ordenar.html){ target=_blank rel=noopener }
-
-El ordenamiento por mezcla completo, con el árbol de llamadas a la vista: de
-dónde sale la recurrencia y por qué hay logarítmicos niveles.
 
 ## Costo
 

@@ -20,11 +20,7 @@ Las parejas fuera de orden del arreglo $a[ini..fin)$ se reparten en tres grupos 
 
 Los dos primeros grupos son el mismo problema sobre la mitad del tamaño, y ahí está la recursión. El tercero es lo que hay que saber combinar, y se cuenta gratis mientras se mezclan las dos mitades ya ordenadas: cuando sale un elemento de la derecha, todos los que quedan pendientes en la izquierda son mayores que él, así que aporta tantas parejas como elementos le falten a la izquierda.
 
-Que las mitades queden ordenadas no es un extra: es lo que permite contar el tercer grupo en una sola pasada. De ahí la recurrencia
-
-$$T(n) = 2T(n/2) + \Theta(n),$$
-
-que resuelve en $\Theta(n \log n)$.
+Que las mitades queden ordenadas permite contar el tercer grupo en una sola pasada. Hay $\log_2 n$ niveles de llamadas y en cada uno la mezcla mueve los $n$ elementos una vez, de modo que el total es $\Theta(n \log n)$.
 
 El caso base es un tramo de un elemento o vacío, que no tiene ninguna pareja.
 

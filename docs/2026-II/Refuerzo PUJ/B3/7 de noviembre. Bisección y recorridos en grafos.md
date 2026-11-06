@@ -1,7 +1,6 @@
 # 7 de noviembre · Refuerzo PUJ
 
-**Bisección y recorridos en grafos.** Las tres horas de programación preparan
-los ejercicios prácticos del parcial 1 de Árboles y Grafos. La primera es cómo se
+**Bisección y recorridos en grafos.** La primera hora de programación es cómo se
 encuentra la función de decisión, con UVa 12032; la segunda, el recorrido en
 amplitud con tope de pasos, con UVa 336; la tercera, el recorrido en profundidad
 y los ciclos en un grafo dirigido, con UVa 11686. En la hora de lógica se plantean
@@ -44,8 +43,6 @@ de esta sesión:
 | UVa 12032 | [lectura_12032.py](./codigo/lectura_12032.py) | [lectura_12032.cpp](./codigo/lectura_12032.cpp) |
 | UVa 336 | [lectura_336.py](./codigo/lectura_336.py) | [lectura_336.cpp](./codigo/lectura_336.cpp) |
 | UVa 11686 | [lectura_11686.py](./codigo/lectura_11686.py) | [lectura_11686.cpp](./codigo/lectura_11686.cpp) |
-| UVa 10341, extra | [lectura_10341.py](./codigo/lectura_10341.py) | [lectura_10341.cpp](./codigo/lectura_10341.cpp) |
-| UVa 10810, extra | [lectura_10810.py](./codigo/lectura_10810.py) | [lectura_10810.cpp](./codigo/lectura_10810.cpp) |
 
 El fragmento se copia dentro de un programa con sus `#include` y su `main` en C++,
 o con `import sys` en Python, y se completa con la solución. Después se copia la
@@ -196,77 +193,6 @@ Costo: $\Theta(n + m)$ por caso. Medida con `ulimit -s` de 8192 KB, la recursiva
 C++ revienta con 87 826 nodos de profundidad y el enunciado admite un millón, así que
 al juez se envía la versión con pila, `pick-up-sticks-pila.cpp`.
 
-## Problemas extra
-
-Dos problemas más, para quien quiera seguir con la bisección y con dividir y vencerás.
-
-### UVa 10341, Solve It
-
-- Enunciado y envío: <https://vjudge.net/problem/UVA-10341>
-- Actividad: [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
-
-Dados seis enteros con $0 \leq p, r \leq 20$ y $-20 \leq q, s, t \leq 0$, se
-busca $x$ en $[0,1]$ con
-$p e^{-x} + q \sin x + r \cos x + s \tan x + t x^2 + u = 0$, con cuatro
-decimales, o `No solution` si no hay.
-
-Aquí la función viene dada y lo que queda es comprobarle dos cosas. La monotonía
-sale de derivar: cada sumando de
-$f'(x) = -p e^{-x} + q \cos x - r \sin x + s \sec^2 x + 2tx$ es menor o igual
-que cero en $[0,1]$ por los rangos del enunciado, así que $f$ no crece y hay a
-lo sumo una raíz. Y los extremos deciden si existe: hay raíz exactamente cuando
-$f(0) \geq 0 \geq f(1)$. Esa es la trampa, porque sin esa comprobación el ciclo
-igual termina y devuelve un número que no es raíz de nada. Cien vueltas dejan el
-intervalo en $2^{-100}$ del original.
-
-La entrada se lee así en C++, y comparar contra seis detecta el fin del archivo:
-
-```cpp
-int p, q, r, s, t, u;
-while (scanf("%d %d %d %d %d %d", &p, &q, &r, &s, &t, &u) == 6) {
-  /* resolver este caso */
-}
-```
-
-Costo: cien evaluaciones por caso, o sea constante; con hasta 2100 líneas de
-entrada el total es lineal en la cantidad de casos.
-
-### UVa 10810, Ultra-QuickSort
-
-- Enunciado y envío: <https://vjudge.net/problem/UVA-10810>
-- Actividad: [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
-
-Dada una lista de $n < 500\,000$ enteros distintos, se pide cuántos
-intercambios de elementos vecinos hacen falta para dejarla ordenada. Como cada
-intercambio arregla exactamente una pareja fuera de orden, lo que se pide es el
-número de parejas $(i,j)$ con $i<j$ y $a_i > a_j$, y contarlas una por una
-cuesta $\Theta(n^2)$.
-
-Las parejas de un tramo se reparten en tres clases: las dos puntas en la mitad
-izquierda, las dos en la derecha, y una en cada mitad. Las dos primeras son el
-mismo problema sobre la mitad del tamaño, y ahí está la recursión; el caso base
-es un tramo de un elemento. La tercera se cuenta mientras se mezclan las dos
-mitades ya ordenadas: cuando sale un elemento de la derecha, todos los que
-siguen pendientes en la izquierda son mayores que él. Que las mitades queden
-ordenadas es lo que permite contar esa clase en una sola pasada.
-
-La entrada se lee así en C++, con el auxiliar reservado una vez por caso:
-
-```cpp
-int n;
-while (scanf("%d", &n) == 1 && n != 0) {
-  vector<int> a(n), aux(n);
-  for (int i = 0; i < n; i++) {
-    scanf("%d", &a[i]);
-  }
-}
-```
-
-Costo: $T(n) = 2T(n/2) + \Theta(n)$, o sea $\Theta(n \log n)$. El contador va
-en `long long`, porque en el peor caso la respuesta llega al orden de $10^{11}$.
-Medido con $n = 499\,999$, la versión de C++ tarda 0,20 s y la de Python 5,1 s,
-así que al juez se envía la de C++.
-
 ## Lógica
 
 El ciclo de partida es el de
@@ -405,8 +331,7 @@ en blanco va también después del último caso.
 
 ## Para seguir
 
-- [Soluciones](./Soluciones.md) de UVa 12032, UVa 336 y UVa 11686, de los problemas
-  extra UVa 10341 y UVa 10810 y de los tres problemas de la tarea, con la idea, la
-  complejidad y el código en Python y C++.
-- [Ejercicios interactivos](./Ejercicios.md) sobre recorridos, bisección, dividir y
-  vencerás, costo e invariantes.
+- [Soluciones](./Soluciones.md) de UVa 12032, UVa 336 y UVa 11686 y de los tres
+  problemas de la tarea, con la idea, la complejidad y el código en Python y C++.
+- [Ejercicios interactivos](./Ejercicios.md) sobre recorridos, bisección, costo e
+  invariantes.
