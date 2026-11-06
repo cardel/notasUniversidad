@@ -33,10 +33,11 @@ puede trabajar el mismo ejercicio en C.
    los acumulados y el mejor tramo de un arreglo con UVa 507, en dos horas,
    los acumulados en dos dimensiones con UVa 108, y en lógica proposiciones,
    cuantificadores y la definición de $O$.
-3. [7 de noviembre. Bisección y dividir y vencerás](./B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md):
-   encontrar la función de decisión con UVa 12032, la función ya dada con
-   UVa 10341, dividir y vencerás y la recursión con UVa 10810, y en lógica
-   invariantes de ciclo sobre UVa 11078 y UVa 507.
+3. [7 de noviembre. Bisección y recorridos en grafos](./B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md):
+   encontrar la función de decisión con UVa 12032, el recorrido en amplitud con
+   tope de pasos con UVa 336, el recorrido en profundidad y los ciclos en un
+   grafo dirigido con UVa 11686, y en lógica invariantes de ciclo sobre UVa 11078
+   y UVa 507. UVa 10341 y UVa 10810 quedan como problemas extra.
 4. 14 de noviembre. Colas de prioridad, bisección y entrada a grafos: colas de
    prioridad con UVa 1203, búsqueda binaria y bisección sobre la respuesta con
    UVa 11413, recorrido en amplitud con UVa 924, y en lógica los tipos de

@@ -1,11 +1,10 @@
 # 7 de noviembre · Refuerzo PUJ
 
-**Bisección y dividir y vencerás.** Las tres horas de programación apoyan los
-temas prácticos del parcial 1 de Árboles y Grafos. La primera es cómo se
-encuentra la función de decisión, con el punto 1 del parcial como ejemplo
-trabajado y UVa 12032 como ejercicio; la segunda, qué hacer cuando la función
-ya viene escrita, con UVa 10341; la tercera, cómo se plantea dividir y vencerás
-y de dónde sale la recursión, con UVa 10810. En la hora de lógica se plantean
+**Bisección y recorridos en grafos.** Las tres horas de programación preparan
+los ejercicios prácticos del parcial 1 de Árboles y Grafos. La primera es cómo se
+encuentra la función de decisión, con UVa 12032; la segunda, el recorrido en
+amplitud con tope de pasos, con UVa 336; la tercera, el recorrido en profundidad
+y los ciclos en un grafo dirigido, con UVa 11686. En la hora de lógica se plantean
 los invariantes de ciclo de UVa 11078 y queda en papel el ejercicio de UVa 507.
 
 La sesión empieza con la revisión de la
@@ -23,7 +22,7 @@ La sesión empieza con la revisión de la
 
 ### Soluciones de programación
 
-Las soluciones de UVa 12032, UVa 10341 y UVa 10810.
+Las soluciones de UVa 12032, UVa 336 y UVa 11686.
 
 ![](./Soluciones-programacion.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
@@ -35,33 +34,35 @@ La traza, los invariantes y los tres pasos del ejercicio de UVa 507.
 
 ## Archivos de lectura
 
-Cada problema de clase tiene un programa que lee la entrada e imprime lo que
-leyó, sin resolver nada. Están en la carpeta
+Cada problema de clase tiene un fragmento con la lectura de la entrada y un
+comentario donde va el algoritmo. Están en la carpeta
 [codigo](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/Refuerzo%20PUJ/B3/codigo)
 de esta sesión:
 
 | Problema | Python | C++ |
 |---|---|---|
 | UVa 12032 | [lectura_12032.py](./codigo/lectura_12032.py) | [lectura_12032.cpp](./codigo/lectura_12032.cpp) |
-| UVa 10341 | [lectura_10341.py](./codigo/lectura_10341.py) | [lectura_10341.cpp](./codigo/lectura_10341.cpp) |
-| UVa 10810 | [lectura_10810.py](./codigo/lectura_10810.py) | [lectura_10810.cpp](./codigo/lectura_10810.cpp) |
+| UVa 336 | [lectura_336.py](./codigo/lectura_336.py) | [lectura_336.cpp](./codigo/lectura_336.cpp) |
+| UVa 11686 | [lectura_11686.py](./codigo/lectura_11686.py) | [lectura_11686.cpp](./codigo/lectura_11686.cpp) |
+| UVa 10341, extra | [lectura_10341.py](./codigo/lectura_10341.py) | [lectura_10341.cpp](./codigo/lectura_10341.cpp) |
+| UVa 10810, extra | [lectura_10810.py](./codigo/lectura_10810.py) | [lectura_10810.cpp](./codigo/lectura_10810.cpp) |
 
-Se copia la muestra del enunciado en `1.in` y su salida en `1.out`, y se corre
-el archivo de lectura para ver en qué orden llega la entrada. Después se
-cambian sus impresiones por la solución y se compara contra la muestra:
+El fragmento se copia dentro de un programa con sus `#include` y su `main` en C++,
+o con `import sys` en Python, y se completa con la solución. Después se copia la
+muestra del enunciado en `1.in` y su salida en `1.out`, y se compara:
 
 ```text
-g++ -std=c++17 -Wall -Wextra lectura_12032.cpp -o solucion
+g++ -std=c++17 -Wall -Wextra solucion.cpp -o solucion
 ./solucion < 1.in > salida.out
 diff salida.out 1.out
 
-python3 lectura_12032.py < 1.in > salida.out
+python3 solucion.py < 1.in > salida.out
 diff salida.out 1.out
 ```
 
 Si `diff` no imprime nada, las dos salidas coinciden y el programa ya se puede
 enviar al juez. El juez corre una versión antigua de Python 3, así que la
-salida se arma con `print` y `%`, como en los archivos de lectura.
+salida se arma con `print` y `%`.
 
 ## Problemas en clase
 
@@ -87,11 +88,119 @@ quedan partidos en dos tramos y lo que se busca es el borde. Los límites son el
 salto más grande, que hay que dar, y ese mismo más $n$, porque cada salto baja
 la fuerza a lo sumo en uno.
 
+La entrada se lee así en C++:
+
+```cpp
+int casos;
+scanf("%d", &casos);
+for (int caso = 1; caso <= casos; caso++) {
+  int n;
+  scanf("%d", &n);
+  vector<int> alturas(n);
+  for (int i = 0; i < n; i++) {
+    scanf("%d", &alturas[i]);
+  }
+}
+```
+
 Costo: cada vuelta de la bisección recorre los saltos una vez, y hay
 logarítmicas vueltas en el rango de $k$, de modo que es
 $\Theta(n \log(\max s_i + n))$ por caso.
 
-### Hora 2. UVa 10341, Solve It
+### Hora 2. UVa 336, A Node Too Far
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-336>
+- Actividad: [el recorrido con tope de pasos](../../../actividades/ayg-puj/representaciones-y-recorridos/tope.html){ target=_blank rel=noopener }
+
+Cada mensaje de una red lleva un campo TTL. La estación que lo recibe le resta
+uno y lo reenvía solo si el resultado no es cero, de modo que el mensaje llega a
+los nodos a distancia menor o igual al TTL. Cada red trae sus conexiones y
+después consultas `nodo TTL`, y por cada una se imprime cuántos nodos quedan por
+fuera.
+
+El parámetro es el TTL, un tope de pasos sobre una red de $V \le 30$ nodos. El
+recorrido en amplitud visita los nodos por distancia creciente: la primera vez
+que toca un nodo, `dist` ya es la distancia mínima, así que basta con no expandir
+los que llegaron a distancia TTL. El nodo de partida cuenta como alcanzado,
+incluso con TTL 0. La trampa está en los números de los nodos. Pueden ser
+cualquier entero positivo, y por eso hace falta un diccionario de número a
+índice. Además, el PDF no descarta que una consulta nombre un nodo ausente de la
+red; en ese caso ningún nodo es alcanzable y la respuesta es el total de la red.
+El contador de casos sigue de una red a la siguiente, y la frase de salida
+escribe `1 nodes`.
+
+La entrada se lee así en C++:
+
+```cpp
+int conexiones;
+int caso = 0;
+while (scanf("%d", &conexiones) == 1 && conexiones != 0) {
+  for (int i = 0; i < conexiones; i++) {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    /* aquí va el diccionario de número a índice */
+  }
+  int nodo, ttl;
+  while (scanf("%d %d", &nodo, &ttl) == 2 && (nodo != 0 || ttl != 0)) {
+    caso = caso + 1;
+    /* aquí va el recorrido en amplitud */
+  }
+}
+```
+
+Los pares vienen varios por línea, y `scanf("%d", ...)` se salta los espacios y
+los saltos de línea por igual. El ciclo de consultas se detiene cuando los dos
+valores son cero: `35 0` es una consulta válida.
+
+Costo: $O(V + E)$ por consulta, con $V \le 30$ y $E \le 435$.
+
+### Hora 3. UVa 11686, Pick up sticks
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11686>
+- Actividad: [los tres estados y los ciclos](../../../actividades/ayg-puj/orden-topologico-dfs-low/palitos.html){ target=_blank rel=noopener }
+
+Hay $n$ palitos numerados de 1 a $n$ y $m$ pares `a b`, cada uno con el significado
+de que `a` está encima de `b`, con $1 \le n, m \le 1\,000\,000$. Un palito se
+recoge cuando ya se recogieron todos los que tiene encima. Por caso se imprime un
+orden de recogida, un palito por línea, o `IMPOSSIBLE`. El enunciado acepta
+cualquier orden correcto.
+
+El parámetro es $n + m$, y la profundidad de la recursión puede llegar a $n$. Cada
+nodo pasa por tres estados: sin visitar, en el camino actual y terminado. Hay ciclo
+exactamente cuando una arista llega a un nodo del camino actual. Y cuando un nodo
+termina, todo lo que sale de él ya terminó, de modo que el inverso del orden de
+terminación respeta todas las aristas. La trampa es doble: con solo dos estados, un
+nodo ya terminado parece un ciclo, y una cadena de un millón de palitos revienta la
+pila de llamadas de la versión recursiva.
+
+La entrada se lee así en C++:
+
+```cpp
+int n, m;
+while (scanf("%d %d", &n, &m) == 2 && (n != 0 || m != 0)) {
+  vector<vector<int> > adj(n + 1);
+  for (int i = 0; i < m; i++) {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    adj[a].push_back(b);
+  }
+  /* aquí va el recorrido en profundidad */
+}
+```
+
+Las aristas se leen todas antes de recorrer, incluso si ya se ve un ciclo en las
+primeras: las que queden sin leer se tomarían como el caso siguiente. Los palitos se
+numeran desde 1, y por eso `adj` tiene $n + 1$ listas.
+
+Costo: $\Theta(n + m)$ por caso. Medida con `ulimit -s` de 8192 KB, la recursiva de
+C++ revienta con 87 826 nodos de profundidad y el enunciado admite un millón, así que
+al juez se envía la versión con pila, `pick-up-sticks-pila.cpp`.
+
+## Problemas extra
+
+Dos problemas más, para quien quiera seguir con la bisección y con dividir y vencerás.
+
+### UVa 10341, Solve It
 
 - Enunciado y envío: <https://vjudge.net/problem/UVA-10341>
 - Actividad: [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
@@ -110,10 +219,19 @@ $f(0) \geq 0 \geq f(1)$. Esa es la trampa, porque sin esa comprobación el ciclo
 igual termina y devuelve un número que no es raíz de nada. Cien vueltas dejan el
 intervalo en $2^{-100}$ del original.
 
+La entrada se lee así en C++, y comparar contra seis detecta el fin del archivo:
+
+```cpp
+int p, q, r, s, t, u;
+while (scanf("%d %d %d %d %d %d", &p, &q, &r, &s, &t, &u) == 6) {
+  /* resolver este caso */
+}
+```
+
 Costo: cien evaluaciones por caso, o sea constante; con hasta 2100 líneas de
 entrada el total es lineal en la cantidad de casos.
 
-### Hora 3. UVa 10810, Ultra-QuickSort
+### UVa 10810, Ultra-QuickSort
 
 - Enunciado y envío: <https://vjudge.net/problem/UVA-10810>
 - Actividad: [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
@@ -131,6 +249,18 @@ es un tramo de un elemento. La tercera se cuenta mientras se mezclan las dos
 mitades ya ordenadas: cuando sale un elemento de la derecha, todos los que
 siguen pendientes en la izquierda son mayores que él. Que las mitades queden
 ordenadas es lo que permite contar esa clase en una sola pasada.
+
+La entrada se lee así en C++, con el auxiliar reservado una vez por caso:
+
+```cpp
+int n;
+while (scanf("%d", &n) == 1 && n != 0) {
+  vector<int> a(n), aux(n);
+  for (int i = 0; i < n; i++) {
+    scanf("%d", &a[i]);
+  }
+}
+```
 
 Costo: $T(n) = 2T(n/2) + \Theta(n)$, o sea $\Theta(n \log n)$. El contador va
 en `long long`, porque en el peor caso la respuesta llega al orden de $10^{11}$.
@@ -275,8 +405,8 @@ en blanco va también después del último caso.
 
 ## Para seguir
 
-- [Soluciones](./Soluciones.md) de UVa 12032, UVa 10341 y UVa 10810 y de los
-  tres problemas de la tarea, con la idea, la complejidad y el código en Python
-  y C++.
-- [Ejercicios interactivos](./Ejercicios.md) sobre bisección, dividir y
+- [Soluciones](./Soluciones.md) de UVa 12032, UVa 336 y UVa 11686, de los problemas
+  extra UVa 10341 y UVa 10810 y de los tres problemas de la tarea, con la idea, la
+  complejidad y el código en Python y C++.
+- [Ejercicios interactivos](./Ejercicios.md) sobre recorridos, bisección, dividir y
   vencerás, costo e invariantes.

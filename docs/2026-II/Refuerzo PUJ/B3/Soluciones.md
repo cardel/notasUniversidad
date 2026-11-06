@@ -1,6 +1,7 @@
 # Soluciones · Refuerzo PUJ 7 de noviembre
 
-UVa 12032, UVa 10341 y UVa 10810 y los tres problemas de la tarea de la
+UVa 12032, UVa 336 y UVa 11686, los problemas extra UVa 10341 y UVa 10810 y los
+tres problemas de la tarea de la
 [sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`.
@@ -145,7 +146,393 @@ int main() {
 }
 ```
 
-## Hora 2. UVa 10341, Solve It
+## Hora 2. UVa 336, A Node Too Far
+
+### Idea
+
+Se construye la lista de adyacencia y se corre un recorrido en amplitud por
+consulta, con una cola y un arreglo de distancias que arranca en $-1$. El recorrido
+visita los nodos por distancia creciente, así que la condición `dist[u] < ttl` deja
+en la cola los nodos a distancia TTL sin expandirlos. La respuesta es el total de
+nodos menos los alcanzados, y el nodo de partida cuenta como alcanzado, incluso con
+TTL 0. `indiceDe` traduce el número del nodo a un índice entre 0 y $V - 1$, y `main`
+pregunta si el nodo está antes de llamar a `bfs`: un nodo ausente no alcanza a
+ninguno.
+
+### Complejidad
+
+$O(V + E)$ por consulta para el recorrido, con $V \le 30$ y $E \le 435$. Cada
+búsqueda en el diccionario cuesta $O(\log V)$ en C++ y $O(1)$ en promedio en Python.
+
+### Python
+
+Archivo: [a-node-too-far.py](./codigo/a-node-too-far.py)
+
+```python
+import sys
+from collections import deque
+
+
+def indiceDe(indice, adj, nodo):
+    # El índice del nodo; si es la primera vez que aparece, se le asigna uno.
+    if nodo not in indice:
+        indice[nodo] = len(indice)
+        adj.append([])
+    return indice[nodo]
+
+
+def bfs(adj, inicio, ttl):
+    # Cuántos nodos quedan a distancia menor o igual a ttl desde inicio.
+    dist = [-1] * len(adj)
+    cola = deque()
+    dist[inicio] = 0
+    cola.append(inicio)
+    alcanzados = 1
+    while len(cola) > 0:
+        u = cola.popleft()
+        if dist[u] < ttl:
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    alcanzados = alcanzados + 1
+                    cola.append(v)
+    return alcanzados
+
+
+def main():
+    datos = sys.stdin.read().split()
+    pos = 0
+    caso = 0
+    salida = []
+    conexiones = int(datos[pos])
+    pos = pos + 1
+    while conexiones != 0:
+        indice = {}
+        adj = []
+        i = 0
+        while i < conexiones:
+            ia = indiceDe(indice, adj, int(datos[pos]))
+            ib = indiceDe(indice, adj, int(datos[pos + 1]))
+            pos = pos + 2
+            adj[ia].append(ib)
+            adj[ib].append(ia)
+            i = i + 1
+        nodo = int(datos[pos])
+        ttl = int(datos[pos + 1])
+        pos = pos + 2
+        while nodo != 0 or ttl != 0:
+            caso = caso + 1
+            alcanzados = 0
+            if nodo in indice:
+                alcanzados = bfs(adj, indice[nodo], ttl)
+            salida.append('Case ' + str(caso) + ': ' + str(len(adj) - alcanzados)
+                          + ' nodes not reachable from node ' + str(nodo)
+                          + ' with TTL = ' + str(ttl) + '.')
+            nodo = int(datos[pos])
+            ttl = int(datos[pos + 1])
+            pos = pos + 2
+        conexiones = int(datos[pos])
+        pos = pos + 1
+    print('\n'.join(salida))
+
+
+main()
+```
+
+### C++
+
+Archivo: [a-node-too-far.cpp](./codigo/a-node-too-far.cpp)
+
+```cpp
+#include <cstdio>
+#include <map>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+int indiceDe(map<int, int> &indice, vector<vector<int> > &adj, int nodo) {
+  // El indice del nodo; si es la primera vez que aparece, se le asigna uno.
+  if (indice.count(nodo) == 0) {
+    int nuevo = (int)indice.size();
+    indice[nodo] = nuevo;
+    adj.push_back(vector<int>());
+  }
+  return indice[nodo];
+}
+
+int bfs(const vector<vector<int> > &adj, int inicio, int ttl) {
+  // Cuantos nodos quedan a distancia menor o igual a ttl desde inicio.
+  vector<int> dist(adj.size(), -1);
+  queue<int> cola;
+  dist[inicio] = 0;
+  cola.push(inicio);
+  int alcanzados = 1;
+  while (!cola.empty()) {
+    int u = cola.front();
+    cola.pop();
+    if (dist[u] < ttl) {
+      for (size_t i = 0; i < adj[u].size(); i++) {
+        int v = adj[u][i];
+        if (dist[v] == -1) {
+          dist[v] = dist[u] + 1;
+          alcanzados = alcanzados + 1;
+          cola.push(v);
+        }
+      }
+    }
+  }
+  return alcanzados;
+}
+
+int main() {
+  int conexiones;
+  int caso = 0;
+  while (scanf("%d", &conexiones) == 1 && conexiones != 0) {
+    map<int, int> indice;
+    vector<vector<int> > adj;
+    for (int i = 0; i < conexiones; i++) {
+      int a, b;
+      scanf("%d %d", &a, &b);
+      int ia = indiceDe(indice, adj, a);
+      int ib = indiceDe(indice, adj, b);
+      adj[ia].push_back(ib);
+      adj[ib].push_back(ia);
+    }
+    int nodo, ttl;
+    while (scanf("%d %d", &nodo, &ttl) == 2 && (nodo != 0 || ttl != 0)) {
+      caso = caso + 1;
+      int alcanzados = 0;
+      if (indice.count(nodo) > 0) {
+        alcanzados = bfs(adj, indice[nodo], ttl);
+      }
+      printf("Case %d: %d nodes not reachable from node %d with TTL = %d.\n",
+             caso, (int)adj.size() - alcanzados, nodo, ttl);
+    }
+  }
+  return 0;
+}
+```
+
+## Hora 3. UVa 11686, Pick up sticks
+
+### Idea
+
+Cada nodo pasa por tres estados: sin visitar, en el camino actual y terminado. Una
+arista hacia un nodo en camino cierra un ciclo, porque desde ese nodo ya se había
+bajado hasta el actual. Una arista hacia un nodo terminado no cierra nada por sí sola:
+ese nodo ya revisó todo lo que sale de él, y si pudiera volver al actual, la arista de
+regreso ya se habría detectado. `orden` recibe cada nodo al terminar, y `main` lo
+imprime del último al primero. El recorrido arranca desde todo nodo sin visitar,
+porque el grafo puede tener varias componentes.
+
+### Complejidad
+
+$\Theta(n + m)$ por caso en las tres soluciones. La memoria adicional del recorrido es
+$\Theta(n)$, en la pila de llamadas o en el `vector`. Medida con `ulimit -s` de
+8192 KB, la recursiva de C++ pasó con 86 851 nodos de profundidad y reventó con
+87 826, así que al juez se envía la versión con pila. La de Python tampoco se envía:
+en Python 3.8, con el mismo límite de recursión, reventó con 10 968.
+
+### Python
+
+Archivo: [pick-up-sticks.py](./codigo/pick-up-sticks.py)
+
+```python
+import sys
+
+SIN_VISITAR = 0
+EN_CAMINO = 1
+TERMINADO = 2
+
+
+def dfs(adj, color, orden, u):
+    # Recorre lo que sale de u y devuelve si encontró un ciclo.
+    hayCiclo = False
+    color[u] = EN_CAMINO
+    for v in adj[u]:
+        if color[v] == EN_CAMINO:
+            hayCiclo = True
+        elif color[v] == SIN_VISITAR:
+            if dfs(adj, color, orden, v):
+                hayCiclo = True
+    color[u] = TERMINADO
+    orden.append(u)
+    return hayCiclo
+
+
+def main():
+    sys.setrecursionlimit(1100000)
+    datos = sys.stdin.buffer.read().split()
+    pos = 0
+    salida = []
+    n = int(datos[pos])
+    m = int(datos[pos + 1])
+    pos = pos + 2
+    while n != 0 or m != 0:
+        adj = [[] for u in range(n + 1)]
+        i = 0
+        while i < m:
+            adj[int(datos[pos])].append(int(datos[pos + 1]))
+            pos = pos + 2
+            i = i + 1
+        color = [SIN_VISITAR] * (n + 1)
+        orden = []
+        hayCiclo = False
+        u = 1
+        while u <= n:
+            if color[u] == SIN_VISITAR:
+                if dfs(adj, color, orden, u):
+                    hayCiclo = True
+            u = u + 1
+        if hayCiclo:
+            salida.append('IMPOSSIBLE')
+        else:
+            orden.reverse()
+            salida.append('\n'.join([str(u) for u in orden]))
+        n = int(datos[pos])
+        m = int(datos[pos + 1])
+        pos = pos + 2
+    print('\n'.join(salida))
+
+
+main()
+```
+
+### C++, recursiva
+
+Archivo: [pick-up-sticks.cpp](./codigo/pick-up-sticks.cpp)
+
+```cpp
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+const int SIN_VISITAR = 0;
+const int EN_CAMINO = 1;
+const int TERMINADO = 2;
+
+void dfs(const vector<vector<int> > &adj, vector<int> &color,
+         vector<int> &orden, bool &hayCiclo, int u) {
+  // Recorre lo que sale de u; una arista a un nodo en camino cierra un ciclo.
+  color[u] = EN_CAMINO;
+  for (size_t i = 0; i < adj[u].size(); i++) {
+    int v = adj[u][i];
+    if (color[v] == EN_CAMINO) {
+      hayCiclo = true;
+    } else if (color[v] == SIN_VISITAR) {
+      dfs(adj, color, orden, hayCiclo, v);
+    }
+  }
+  color[u] = TERMINADO;
+  orden.push_back(u);
+}
+
+int main() {
+  int n, m;
+  while (scanf("%d %d", &n, &m) == 2 && (n != 0 || m != 0)) {
+    vector<vector<int> > adj(n + 1);
+    for (int i = 0; i < m; i++) {
+      int a, b;
+      scanf("%d %d", &a, &b);
+      adj[a].push_back(b);
+    }
+    vector<int> color(n + 1, SIN_VISITAR);
+    vector<int> orden;
+    bool hayCiclo = false;
+    for (int u = 1; u <= n; u++) {
+      if (color[u] == SIN_VISITAR) {
+        dfs(adj, color, orden, hayCiclo, u);
+      }
+    }
+    if (hayCiclo) {
+      printf("IMPOSSIBLE\n");
+    } else {
+      for (int i = n - 1; i >= 0; i--) {
+        printf("%d\n", orden[i]);
+      }
+    }
+  }
+  return 0;
+}
+```
+
+### C++, con pila
+
+`siguiente[u]` recuerda cuál arista de `u` toca revisar, el dato que en la recursiva
+guarda la variable `i` de cada llamada. Imprime los mismos órdenes que la recursiva.
+
+Archivo: [pick-up-sticks-pila.cpp](./codigo/pick-up-sticks-pila.cpp)
+
+```cpp
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+const int SIN_VISITAR = 0;
+const int EN_CAMINO = 1;
+const int TERMINADO = 2;
+
+void dfs(const vector<vector<int> > &adj, vector<int> &color,
+         vector<size_t> &siguiente, vector<int> &orden, bool &hayCiclo,
+         int inicio) {
+  // La pila guarda el camino actual; siguiente[u] es la arista de u que
+  // toca revisar, lo que en la recursiva guarda la variable i de cada llamada.
+  vector<int> pila;
+  color[inicio] = EN_CAMINO;
+  pila.push_back(inicio);
+  while (!pila.empty()) {
+    int u = pila.back();
+    if (siguiente[u] < adj[u].size()) {
+      int v = adj[u][siguiente[u]];
+      siguiente[u] = siguiente[u] + 1;
+      if (color[v] == EN_CAMINO) {
+        hayCiclo = true;
+      } else if (color[v] == SIN_VISITAR) {
+        color[v] = EN_CAMINO;
+        pila.push_back(v);
+      }
+    } else {
+      color[u] = TERMINADO;
+      orden.push_back(u);
+      pila.pop_back();
+    }
+  }
+}
+
+int main() {
+  int n, m;
+  while (scanf("%d %d", &n, &m) == 2 && (n != 0 || m != 0)) {
+    vector<vector<int> > adj(n + 1);
+    for (int i = 0; i < m; i++) {
+      int a, b;
+      scanf("%d %d", &a, &b);
+      adj[a].push_back(b);
+    }
+    vector<int> color(n + 1, SIN_VISITAR);
+    vector<size_t> siguiente(n + 1, 0);
+    vector<int> orden;
+    bool hayCiclo = false;
+    for (int u = 1; u <= n; u++) {
+      if (color[u] == SIN_VISITAR) {
+        dfs(adj, color, siguiente, orden, hayCiclo, u);
+      }
+    }
+    if (hayCiclo) {
+      printf("IMPOSSIBLE\n");
+    } else {
+      for (int i = n - 1; i >= 0; i--) {
+        printf("%d\n", orden[i]);
+      }
+    }
+  }
+  return 0;
+}
+```
+
+## Problema extra. UVa 10341, Solve It
 
 ### Idea
 
@@ -244,7 +631,7 @@ int main() {
 }
 ```
 
-## Hora 3. UVa 10810, Ultra-QuickSort
+## Problema extra. UVa 10810, Ultra-QuickSort
 
 ### Idea
 
