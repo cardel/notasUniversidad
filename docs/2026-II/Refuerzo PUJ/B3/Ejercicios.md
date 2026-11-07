@@ -5,6 +5,20 @@ Actividades para trabajar en el navegador los temas de la
 Las actividades de `tope`, `palitos` y la escalera corren el código de los tres
 problemas que se resuelven en clase.
 
+## Cómo se plantea la solución
+
+### [repartir textos entre empleados](../../../actividades/ayg-puj/busqueda-binaria/turnos.html){ target=_blank rel=noopener }
+
+Bisección sobre la respuesta: preguntas de planteamiento, y después se mueven `lo` y `hi` sobre la fila de textos hasta 1700.
+
+### [una rejilla con zonas prohibidas](../../../actividades/ayg-puj/grafos-implicitos/zonas.html){ target=_blank rel=noopener }
+
+Se marcan las zonas con la distancia euclidiana y se avanza el frente de la cola sobre el tablero, decidiendo qué vecinas entran.
+
+### [dos colores](../../../actividades/ayg-puj/representaciones-y-recorridos/colores.html){ target=_blank rel=noopener }
+
+Se escoge el color de cada nodo con la pila de llamadas a la vista, hasta ver el choque en el triángulo y el pedazo que queda sin mirar.
+
 ## Recorrido en amplitud con tope de pasos
 
 ### [el recorrido con tope de pasos](../../../actividades/ayg-puj/representaciones-y-recorridos/tope.html){ target=_blank rel=noopener }

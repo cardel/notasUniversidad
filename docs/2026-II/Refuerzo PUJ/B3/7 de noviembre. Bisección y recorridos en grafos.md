@@ -31,6 +31,32 @@ La traza, los invariantes y los tres pasos del ejercicio de UVa 507.
 
 ![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+## Cómo se plantea la solución
+
+![](./Planteamiento.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+**Transcribir textos.** Hay que repartir textos en orden entre *k* empleados de
+modo que el más cargado lleve lo menos posible. La bisección corre sobre los
+valores posibles de la respuesta, y cada candidato se comprueba con una pasada por
+los textos. El cuidado está en los límites: si `lo` arranca por debajo del texto
+más largo, el programa responde un tope imposible.
+Actividad: [repartir textos entre empleados](../../../actividades/ayg-puj/busqueda-binaria/turnos.html){ target=_blank rel=noopener }.
+Código: [transcribir.py](./codigo/transcribir.py) y [transcribir.cpp](./codigo/transcribir.cpp).
+
+**El bosque.** Una rejilla con casillas bloqueadas y criaturas cuya zona se calcula
+con una distancia. El peligro depende solo de las criaturas, así que se marca una
+vez y el recorrido en amplitud queda igual al de un tablero con paredes. El enunciado
+dice *en cualquier dirección*, y escoger cómo se mide cambia la respuesta.
+Actividad: [una rejilla con zonas prohibidas](../../../actividades/ayg-puj/grafos-implicitos/zonas.html){ target=_blank rel=noopener }.
+Código: [bosque.py](./codigo/bosque.py) y [bosque.cpp](./codigo/bosque.cpp).
+
+**Dos colores.** Se decide si un grafo es bipartito con un recorrido en profundidad.
+Pintado el primer nodo, el color de cada vecino queda forzado: basta recorrer una vez
+y anotar si una arista une dos nodos iguales. Como el grafo puede venir en varios
+pedazos, se arranca desde cada nodo que siga sin color.
+Actividad: [dos colores](../../../actividades/ayg-puj/representaciones-y-recorridos/colores.html){ target=_blank rel=noopener }.
+Código: [bipartito.py](./codigo/bipartito.py) y [bipartito.cpp](./codigo/bipartito.cpp).
+
 ## Archivos de lectura
 
 Cada problema de clase tiene un fragmento con la lectura de la entrada y un
