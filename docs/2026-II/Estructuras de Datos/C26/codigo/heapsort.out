@@ -1,0 +1,17 @@
+arreglo:           16 44 13 58 37 92 75 11 64
+tras bajar(3):     16 44 13 64 37 92 75 11 58
+tras bajar(2):     16 44 92 64 37 13 75 11 58
+tras bajar(1):     16 64 92 58 37 13 75 11 44
+tras bajar(0):     92 64 75 58 37 13 16 11 44
+intercambios: 6
+subiendo:          92 64 75 44 37 13 58 11 16
+intercambios: 8
+n = 31: construir 26, subiendo 98
+n = 1048575: construir 1048555, subiendo 18874370
+montículo:         68 57 46 24 15 34
+ronda fin = 5:     57 34 46 24 15 68
+ronda fin = 4:     46 34 15 24 57 68
+ronda fin = 3:     34 24 15 46 57 68
+ronda fin = 2:     24 15 34 46 57 68
+ronda fin = 1:     15 24 34 46 57 68
+sin acortar:       68 57 24 46 34 15

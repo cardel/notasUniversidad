@@ -1,0 +1,13 @@
+maximo() = 61
+extraerMax() = 88
+extraerMax() = 61
+tamano() = 3, maximo() = 70
+top() = 90, size() = 5
+tras pop(): top() = 64
+salen: 64 52 37 15
+salen: 9 55 55 71 83
+atender: llegada 3, gravedad 4
+atender: llegada 5, gravedad 4
+atender: llegada 1, gravedad 3
+atender: llegada 4, gravedad 3
+atender: llegada 2, gravedad 1

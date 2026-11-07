@@ -1,0 +1,5 @@
+tope: 6  tamano: 3
+tope: 3  tamano: 2
+ 10 20 35 50   n = 4
+ 10 20 50   n = 3
+obtener(1): 20
