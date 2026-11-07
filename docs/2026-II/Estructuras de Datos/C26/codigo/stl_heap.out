@@ -1,0 +1,14 @@
+arreglo:       36 81 49 95 53 77 91
+is_heap: 0
+make_heap:     95 81 91 36 53 77 49
+is_heap: 1
+push_back(88): 95 81 91 36 53 77 49 88
+push_heap:     95 88 91 81 53 77 49 36
+pop_heap:      91 88 77 81 53 36 49 95
+back() = 95
+pop_back:      91 88 77 81 53 36 49
+sort_heap:     36 49 53 77 81 88 91
+is_heap: 0
+min make_heap: 36 53 49 95 81 77 91
+sale el menor: 36
+min pop_back:  49 53 77 95 81 91

@@ -1,11 +1,12 @@
 # Ejercicios · Estructuras C26
 
 Heapsort y la cola de prioridad: construir un montículo a partir de un arreglo
-cualquiera en Θ(n), ordenar con él sin arreglo auxiliar, el TAD cola de
-prioridad y el contenedor `priority_queue`. Cada enlace abre una actividad que
-se trabaja directo en el navegador, en el orden de los temas de la sesión. Los
-arreglos y los programas son una ronda nueva sobre el mismo tema. Las más
-exigentes son `ordenar` y `priority-queue`.
+cualquiera en Θ(n), ordenar con él sin arreglo auxiliar, las funciones de
+montículo de la STL, el TAD cola de prioridad y el contenedor
+`priority_queue`. Cada enlace abre una actividad que se trabaja directo en el
+navegador, en el orden de los temas de la sesión. Los arreglos y los programas
+son una ronda nueva sobre el mismo tema. Las más exigentes son `ordenar` y
+`priority-queue`.
 
 ## Construir un montículo
 
@@ -22,6 +23,14 @@ contra las inserciones una por una.
 Seis claves ordenadas paso a paso, por qué el máximo va a a[fin], dos rondas a
 mano, lo que pasa con dos claves iguales y lo que heapsort tiene frente a merge
 sort y quicksort.
+
+## El montículo en la STL
+
+### [stl-heap](../../../actividades/estructuras-de-datos/monticulo/stl-heap.html){ target=_blank rel=noopener }
+
+Lo que deja cada llamada de `make_heap`, `push_heap` y `pop_heap` sobre un
+`vector`, en qué orden van con `push_back` y `pop_back`, cómo se ordena con
+`sort_heap` y el montículo de mínimos con `greater<int>()`.
 
 ## El TAD cola de prioridad
 

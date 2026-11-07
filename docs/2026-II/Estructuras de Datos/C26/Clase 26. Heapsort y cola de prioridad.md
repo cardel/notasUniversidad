@@ -7,13 +7,16 @@ insertar y extraer el máximo en $O(\log n)$. La sesión lo lleva a tres usos.
 El primero es construirlo a partir de un arreglo cualquiera: insertando las
 claves una por una cuesta $O(n \log n)$, y bajando cada casilla con hijos, de
 la última a la raíz, cuesta $\Theta(n)$. El segundo es ordenar con él dentro
-del mismo arreglo, y ese algoritmo se llama heapsort. El tercero es el TAD cola de prioridad,
-que atiende siempre la clave más urgente, y su versión de la STL,
-`priority_queue`.
+del mismo arreglo, y ese algoritmo se llama heapsort. La STL trae las dos
+cosas como funciones de `<algorithm>`, `make_heap` y `sort_heap`, junto con
+`push_heap` y `pop_heap`. El tercero es el TAD cola de prioridad, que atiende
+siempre la clave más urgente, y su versión de la STL, `priority_queue`, hecha
+sobre esas funciones.
 
 Al terminar, el objetivo es poder seguir a mano `construir` y `heapsort` con
 el árbol y el arreglo en cada paso, demostrar que `construir` cuesta
-$\Theta(n)$, dar el contrato de la cola de prioridad con el costo de cada
+$\Theta(n)$, usar las funciones de montículo de `<algorithm>` en el orden que
+piden, dar el contrato de la cola de prioridad con el costo de cada
 operación en tres implementaciones, y usar `priority_queue` con enteros, con
 un comparador que deja el menor arriba y con registros que definen
 `operator<`.
@@ -247,6 +250,115 @@ Frente a los otros dos algoritmos que ordenan un arreglo:
 | merge sort sobre un arreglo | $\Theta(n \log n)$ | $\Theta(n)$ | mezclar copia las mitades (CLRS, §2.3) |
 | heapsort | $\Theta(n \log n)$ | $\Theta(1)$ | `construir` y $n - 1$ bajadas en el mismo arreglo |
 
+## El montículo en la STL
+
+`<algorithm>` trae cinco funciones que trabajan sobre un rango de un `vector`,
+dado por dos iteradores, y lo mantienen en orden de montículo de máximos. No
+guardan nada aparte: reordenan las casillas del rango, y cada una corresponde a
+algo que ya se construyó en la sesión.
+
+| Función | Lo que hace, con lo que se vio en clase |
+|---|---|
+| `make_heap(b, e)` | `construir`: baja cada casilla con hijos, desde $\lfloor n/2 \rfloor - 1$ hasta la raíz |
+| `push_heap(b, e)` | `subir` la última casilla del rango |
+| `pop_heap(b, e)` | una ronda de heapsort: cambia la raíz con la última casilla y baja la nueva raíz en un rango una casilla más corto |
+| `sort_heap(b, e)` | el ciclo de heapsort, sobre un rango que ya es montículo |
+| `is_heap(b, e)` | revisa cada casilla contra su padre |
+
+Ninguna cambia el tamaño del `vector`; eso lo hacen `push_back` y `pop_back`, y
+el orden de las llamadas importa. Para agregar va primero `push_back` y después
+`push_heap`, que sube la clave que quedó al final. Para sacar va primero
+`pop_heap`, que deja el máximo al final, y después `pop_back`, que lo quita.
+
+```cpp
+// Arma el montículo y agrega una clave.
+void armarYAgregar(vector<int> &v) {
+  imprimir("arreglo:", v);
+  printf("is_heap: %d\n", (int) is_heap(v.begin(), v.end()));
+  make_heap(v.begin(), v.end());
+  imprimir("make_heap:", v);
+  printf("is_heap: %d\n", (int) is_heap(v.begin(), v.end()));
+  v.push_back(88);
+  imprimir("push_back(88):", v);
+  push_heap(v.begin(), v.end());
+  imprimir("push_heap:", v);
+}
+
+// Saca el máximo y ordena lo que queda.
+void sacarYOrdenar(vector<int> &v) {
+  pop_heap(v.begin(), v.end());
+  imprimir("pop_heap:", v);
+  printf("back() = %d\n", v.back());
+  v.pop_back();
+  imprimir("pop_back:", v);
+  sort_heap(v.begin(), v.end());
+  imprimir("sort_heap:", v);
+  printf("is_heap: %d\n", (int) is_heap(v.begin(), v.end()));
+}
+```
+
+Con las claves `36 81 49 95 53 77 91`:
+
+```text
+arreglo:       36 81 49 95 53 77 91
+is_heap: 0
+make_heap:     95 81 91 36 53 77 49
+is_heap: 1
+push_back(88): 95 81 91 36 53 77 49 88
+push_heap:     95 88 91 81 53 77 49 36
+pop_heap:      91 88 77 81 53 36 49 95
+back() = 95
+pop_back:      91 88 77 81 53 36 49
+sort_heap:     36 49 53 77 81 88 91
+is_heap: 0
+```
+
+`make_heap` deja el mismo arreglo que `construir`. `push_heap` sube el 88 por
+encima del 36 y del 81, como `subir`. `pop_heap` cambia el 95 con el 36, baja
+el 36 en las siete primeras casillas y deja el 95 en `v[7]`, donde `back()` lo
+lee antes del `pop_back`. `sort_heap` ordena las siete que quedan, y el
+resultado ya no es un montículo de máximos. La norma de C++ no fija el arreglo
+exacto que dejan estas funciones; con g++ y claves distintas coincide con el de
+las funciones de la sesión, y con claves repetidas el desempate puede ser otro.
+
+!!! warning "El orden de las llamadas"
+
+    Con el vector en `95 88 91 81 53 77 49 36`, un `pop_back` antes de
+    `pop_heap` saca el 36, la última casilla, y el 95 se queda. Quitar una hoja
+    no rompe el montículo, así que nada lo delata. Y un `push_heap` antes del
+    `push_back` deja la clave nueva fuera del rango, sin subir.
+
+### El de mínimos con greater<int>()
+
+`greater<int>()`, de `<functional>`, compara con `a > b`, como `MenorArriba`, y
+deja el menor arriba. Cada llamada sobre ese rango lleva el mismo comparador.
+
+```cpp
+// Con greater<int>() el menor queda en w[0].
+void minimos() {
+  int claves[7] = {36, 81, 49, 95, 53, 77, 91};
+  vector<int> w(claves, claves + 7);
+  make_heap(w.begin(), w.end(), greater<int>());
+  imprimir("min make_heap:", w);
+  pop_heap(w.begin(), w.end(), greater<int>());
+  printf("sale el menor: %d\n", w.back());
+  w.pop_back();
+  imprimir("min pop_back:", w);
+}
+```
+
+Queda `36 53 49 95 81 77 91`, con el 36 en `w[0]`; `pop_heap` lo lleva al
+final, y tras el `pop_back` quedan `49 53 77 95 81 91`.
+
+| Función | Costo | Por qué |
+|---|---|---|
+| `make_heap` | $\Theta(n)$ | a lo sumo $3n$ comparaciones, por el mismo argumento de `construir` |
+| `push_heap` | $O(\log n)$ | la última clave sube por un camino de largo $\lfloor \log_2 n \rfloor$ |
+| `pop_heap` | $O(\log n)$ | un intercambio y una bajada |
+| `sort_heap` | $O(n \log n)$ | $n - 1$ veces lo de `pop_heap` |
+| `is_heap` | $O(n)$ | cada casilla contra su padre, hasta la primera que falle |
+| espacio aparte | $\Theta(1)$ | todo pasa dentro del mismo `vector` |
+
 ## El TAD cola de prioridad
 
 En una sala de urgencias cada paciente recibe al llegar una gravedad de 1 a 5.
@@ -304,8 +416,9 @@ en el peor caso y el montículo $O(n \log n)$.
 
 ## El contenedor priority_queue
 
-`priority_queue<T>` se incluye con `#include <queue>` y por dentro es un
-montículo de máximos sobre un `vector`.
+`priority_queue<T>` se incluye con `#include <queue>` y está hecha sobre las
+funciones de la sección anterior: guarda un `vector`, `push` es `push_back` y
+`push_heap`, y `pop` es `pop_heap` y `pop_back`.
 
 ```cpp
 // push, top, pop, size y empty: sale siempre el mayor.
@@ -397,10 +510,10 @@ por llegada, el orden entre iguales lo decidiría la biblioteca.
 
 | Operación | Costo | Por qué |
 |---|---|---|
-| `push(k)` | $O(\log n)$ | `push_back` y la clave sube, como en `insertar` |
-| `pop()` | $O(\log n)$ | la última pasa a la raíz y baja |
+| `push(k)` | $O(\log n)$ | `push_back` y `push_heap` |
+| `pop()` | $O(\log n)$ | `pop_heap` y `pop_back` |
 | `top()`, `size()`, `empty()` | $\Theta(1)$ | `top` lee la casilla 0 |
-| `priority_queue<int> pq(v.begin(), v.end())` | $\Theta(n)$ | arma el montículo desde un rango con a lo sumo $3n$ comparaciones, como `construir` |
+| `priority_queue<int> pq(v.begin(), v.end())` | $\Theta(n)$ | copia el rango y llama `make_heap` |
 | espacio | $\Theta(n)$ | las claves en el `vector`, sin punteros |
 
 `priority_queue` no tiene iteradores: para ver todas las claves hay que
@@ -499,6 +612,9 @@ y [salida](./codigo/uva10954.out).
 - Heapsort cambia el máximo con `a[fin]` y baja la nueva raíz en un montículo
   una casilla más corto: $O(n \log n)$ en el peor caso y $\Theta(1)$ de espacio
   aparte, sin ser estable.
+- `make_heap`, `push_heap`, `pop_heap` y `sort_heap` hacen sobre un `vector`
+  lo de `construir`, `subir`, una ronda de heapsort y heapsort; el tamaño lo
+  cambian `push_back` antes de `push_heap` y `pop_back` después de `pop_heap`.
 - La cola de prioridad promete insertar, consultar y extraer la clave mayor;
   con un montículo cuestan $O(\log n)$, $\Theta(1)$ y $O(\log n)$, y eso es
   `priority_queue`, que con un comparador deja el menor arriba.
@@ -531,6 +647,9 @@ g++ -Wall -Wextra archivo.cpp -o archivo && ./archivo
 - [uso_cola.cpp](./codigo/uso_cola.cpp): el TAD sobre `Monticulo` y
   `priority_queue` con enteros, con `MenorArriba` y con `Paciente`, con
   [salida](./codigo/uso_cola.out).
+- [stl_heap.cpp](./codigo/stl_heap.cpp): `make_heap`, `push_heap`,
+  `pop_heap`, `sort_heap` e `is_heap` sobre un `vector`, y el de mínimos con
+  `greater<int>()`, con [salida](./codigo/stl_heap.out).
 - [monticulo_min.h](./codigo/monticulo_min.h): el montículo de mínimos,
   `monticulo.h` con las comparaciones al revés.
 
@@ -543,5 +662,7 @@ entrada y su salida.
   Algorithms*, 4.ª ed. MIT Press, 2022. Capítulo 6, *Heapsort*: §6.1,
   montículos; §6.3, construir un montículo; §6.4, el algoritmo heapsort; §6.5,
   colas de prioridad. §2.3, merge sort.
+- cppreference. *std::make_heap*, *std::push_heap*, *std::pop_heap*,
+  *std::sort_heap* y *std::priority_queue*: <https://en.cppreference.com/w/cpp/algorithm/make_heap>.
 - UVa, en Virtual Judge. Problema 10954, *Add All*:
   <https://vjudge.net/problem/UVA-10954>.
