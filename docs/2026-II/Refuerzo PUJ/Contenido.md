@@ -34,10 +34,9 @@ puede trabajar el mismo ejercicio en C.
    los acumulados en dos dimensiones con UVa 108, y en lógica proposiciones,
    cuantificadores y la definición de $O$.
 3. [7 de noviembre. Bisección y recorridos en grafos](./B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md):
-   encontrar la función de decisión con UVa 12032, el recorrido en amplitud con
-   tope de pasos con UVa 336, el recorrido en profundidad y los ciclos en un
-   grafo dirigido con UVa 11686, y en lógica invariantes de ciclo sobre UVa 11078
-   y UVa 507.
+   encontrar la función de decisión con UVa 11516 y UVa 12032, el recorrido en
+   amplitud con tope de pasos con UVa 336, y el recorrido en profundidad y los
+   ciclos en un grafo dirigido, con UVa 11686 para resolver en casa.
 4. [14 de noviembre. Colas de prioridad, bisección y dividir y vencerás](./B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md):
    colas de prioridad con UVa 1203, bisección con la función dada en UVa 10341 y
    sobre la respuesta en UVa 11413, de dónde sale la recursión en dividir y

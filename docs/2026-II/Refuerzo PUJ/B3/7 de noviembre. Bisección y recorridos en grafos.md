@@ -1,10 +1,12 @@
 # 7 de noviembre · Refuerzo PUJ
 
-**Bisección y recorridos en grafos.** La primera hora de programación es cómo se
-encuentra la función de decisión, con UVa 12032; la segunda, el recorrido en
-amplitud con tope de pasos, con UVa 336; la tercera, el recorrido en profundidad
-y los ciclos en un grafo dirigido, con UVa 11686. En la hora de lógica se plantean
-los invariantes de ciclo de UVa 11078 y queda en papel el ejercicio de UVa 507.
+**Bisección y recorridos en grafos.** La primera hora de programación fue cómo
+se encuentra la función de decisión, con el ejemplo de las antenas en una calle,
+que es UVa 11516, y la segunda, UVa 12032. La tercera fue el recorrido en
+amplitud con tope de pasos, con UVa 336, y cerró con el recorrido en profundidad
+y los ciclos en un grafo dirigido; UVa 11686 queda para resolver en casa. La hora
+de lógica, con los invariantes de ciclo de UVa 11078 y el ejercicio en papel de
+UVa 507, no se dio; sus diapositivas y sus soluciones siguen abajo.
 
 La sesión empieza con la revisión de la
 [tarea del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea).
@@ -30,6 +32,18 @@ Las soluciones de UVa 12032, UVa 336 y UVa 11686.
 La traza, los invariantes y los tres pasos del ejercicio de UVa 507.
 
 ![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+## Sesiones
+
+- [Sesión 3. Bisección y recorridos](./Notas.%20Bisecci%C3%B3n%20y%20recorridos.md):
+  la bisección sobre la respuesta con UVa 11516 y UVa 12032, el recorrido en
+  amplitud con tope y UVa 336, y el recorrido en profundidad con tres estados y
+  UVa 11686.
+- [programacion-anotada.pdf](./programacion-anotada.pdf){ target=_blank rel=noopener }:
+  el deck de programación con lo escrito durante la sesión y las hojas de
+  tablero.
+- La grabación, partida en videos cortos por tema, está en la
+  [lista de reproducción del refuerzo](https://www.youtube.com/playlist?list=PLKsjj1jEesqU){ target=_blank rel=noopener }.
 
 ## Cómo se plantea la solución
 
