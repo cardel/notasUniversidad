@@ -55,7 +55,7 @@ Se publican después de cada sesión.
 
 7. [Clase 7. Introducción a los sistemas distribuidos, 3 y 5 de noviembre](C7/Clase%207.%20Introduccion%20a%20los%20sistemas%20distribuidos.md):
    lo que cuesta cruzar la red, escalar a lo alto o a lo ancho, los nueves de
-   disponibilidad y el teorema CAP, con ocho ejercicios en el navegador.
+   disponibilidad y el teorema CAP, con diez ejercicios en el navegador.
 
 ## Clases en video
 

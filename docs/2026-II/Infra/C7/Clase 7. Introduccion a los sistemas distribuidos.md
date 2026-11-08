@@ -11,6 +11,19 @@ qué contesta un sistema cuando la red se parte en dos.
 
 <div class="grid cards" markdown>
 
+-   :material-lan:{ .lg .middle } **Introducción a los sistemas distribuidos**
+
+    ---
+
+    Lo que se vio en la sesión, con las mediciones que se hicieron en vivo: la
+    latencia contra dos destinos y la traza de saltos, el ancho de banda contra
+    la propia máquina, los nueves de disponibilidad y lo que cuesta
+    encadenarlos, el consenso por mayoría, los relojes que no coinciden, y el
+    teorema CAP contado desde los 43 segundos que le costaron a GitHub un día
+    entero.
+
+    [:octicons-arrow-right-24: Entrar](./Introduccion%20a%20los%20sistemas%20distribuidos.md)
+
 -   :material-sitemap:{ .lg .middle } **Estilos de arquitectura y diagnóstico de red**
 
     ---
