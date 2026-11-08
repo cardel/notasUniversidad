@@ -85,7 +85,14 @@ Se publican después de cada sesión.
    años resueltas de las dos formas. Incluye el código escrito en clase. Sus
    [ejercicios](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md)
    están publicados.
-9. Clase 9. Colecciones II: mapas y flujos — 5 de noviembre. Sus
+9. [Clase 9. Colecciones II: mapas y flujos, 5 de noviembre](C9/Clase%209.%20Colecciones%20II.md):
+   una consulta con `for` leída como una consulta de base de datos, con los
+   generadores de `FROM`, los filtros de `WHERE` y el `yield` de `SELECT`;
+   agrupar con `groupBy`; el tipo `Map` y qué hacer cuando la clave no está,
+   con `get`, `Option` y `getOrElse`; el segundo primo entre 1000 y 10000 como
+   el problema que obliga a calcular por demanda; `LazyList` y lo que queda sin
+   evaluar; los flujos infinitos; la criba de Eratóstenes; y los capicúas
+   primos. Incluye el código escrito en clase. Sus
    [ejercicios](../../actividades/pfc/colecciones-mapas-y-flujos/index.md)
    están publicados.
 
