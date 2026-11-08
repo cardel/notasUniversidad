@@ -362,6 +362,14 @@ que se agregaron a la orden de compilación.
 
 ![](attachments/2026-10-06-Note-16-10.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
+La segunda sesión del tema volvió sobre el modelo de memoria de un programa,
+que es lo que explica qué comparte un hilo y qué no: la pila de cada hilo, el
+montículo que todos ven y el código. Al lado, los contextos dentro del
+procesador, con la pila, la unidad aritmética, el contador de programa y el
+registro de instrucción, y las variables locales viviendo en el contexto.
+
+![](attachments/2026-10-08-Note-11-18.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
 ## Lo que quedó pendiente
 
 Los ejercicios prácticos de OpenMP quedaron para la casa: reparto, `schedule`,
