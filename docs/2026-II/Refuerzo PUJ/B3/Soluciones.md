@@ -1,10 +1,148 @@
 # Soluciones · Refuerzo PUJ 7 de noviembre
 
-UVa 12032, UVa 336, UVa 11686 y los
+UVa 11516, UVa 12032, UVa 336, UVa 11686 y los
 tres problemas de la tarea de la
 [sesión del 7 de noviembre](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`.
+
+## Antenas en una calle. UVa 11516, WiFi
+
+### Idea
+
+Probar dónde poner las antenas obliga a manejar posiciones reales. La pregunta
+que sí se contesta de una pasada es *¿alcanzan $n$ antenas si cada una cubre un
+tramo de $a$ metros?*: con las casas ordenadas, se pone un tramo desde la primera
+casa sin cubrir, que cubre hasta $\text{casa} + a$, y se cuentan los tramos. Es
+monótona, porque con tramos más largos cada antena cubre más. Se busca sobre el
+ancho $a$, el doble de la distancia: las casas están en posiciones enteras, así
+que el mejor ancho es entero y la respuesta, $a/2$, termina en `.0` o en `.5`.
+Los límites son $0$ y la distancia entre la primera y la última casa. Las casas
+llegan sin ordenar.
+
+### Complejidad
+
+$\Theta(m \log m)$ por caso: ordenar cuesta $m \log m$ y la bisección da unas
+veinte vueltas de $\Theta(m)$, porque el ancho no pasa de un millón.
+
+### Python
+
+```python
+import sys
+
+
+def antenasNecesarias(casas, ancho):
+    # Cuántas antenas hacen falta si cada una cubre un tramo de 'ancho' metros.
+    # casas viene ordenada; cada antena se pone para la primera casa sin cubrir.
+    antenas = 1
+    cubreHasta = casas[0] + ancho
+    for c in casas:
+        if c > cubreHasta:
+            antenas = antenas + 1
+            cubreHasta = c + ancho
+    return antenas
+
+
+def menorAncho(casas, n):
+    # El menor ancho entero con el que alcanzan n antenas.
+    lo = 0
+    hi = casas[-1] - casas[0]
+    while lo < hi:
+        medio = (lo + hi) // 2
+        if antenasNecesarias(casas, medio) <= n:
+            hi = medio
+        else:
+            lo = medio + 1
+    return lo
+
+
+def main():
+    datos = sys.stdin.read().split()
+    pos = 0
+    casos = int(datos[pos])
+    pos = pos + 1
+    salida = []
+    caso = 0
+    while caso < casos:
+        n = int(datos[pos])
+        m = int(datos[pos + 1])
+        pos = pos + 2
+        casas = []
+        i = 0
+        while i < m:
+            casas.append(int(datos[pos]))
+            pos = pos + 1
+            i = i + 1
+        casas.sort()
+        ancho = menorAncho(casas, n)
+        # la distancia máxima es la mitad del ancho: termina en .0 o en .5
+        if ancho % 2 == 0:
+            salida.append(str(ancho // 2) + '.0')
+        else:
+            salida.append(str(ancho // 2) + '.5')
+        caso = caso + 1
+    print('\n'.join(salida))
+
+
+main()
+```
+
+### C++
+
+```cpp
+#include <algorithm>
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+int antenasNecesarias(const vector<int> &casas, int ancho) {
+  // Cuántas antenas hacen falta si cada una cubre un tramo de 'ancho' metros.
+  // casas viene ordenado; cada antena se pone para la primera casa sin cubrir.
+  int antenas = 1;
+  int cubreHasta = casas[0] + ancho;
+  for (size_t i = 1; i < casas.size(); i++) {
+    if (casas[i] > cubreHasta) {
+      antenas = antenas + 1;
+      cubreHasta = casas[i] + ancho;
+    }
+  }
+  return antenas;
+}
+
+int menorAncho(const vector<int> &casas, int n) {
+  // El menor ancho entero con el que alcanzan n antenas.
+  int lo = 0;
+  int hi = casas[casas.size() - 1] - casas[0];
+  while (lo < hi) {
+    int medio = lo + (hi - lo) / 2;
+    if (antenasNecesarias(casas, medio) <= n) {
+      hi = medio;
+    } else {
+      lo = medio + 1;
+    }
+  }
+  return lo;
+}
+
+int main() {
+  int casos;
+  scanf("%d", &casos);
+  for (int caso = 0; caso < casos; caso++) {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    vector<int> casas(m);
+    for (int i = 0; i < m; i++) {
+      scanf("%d", &casas[i]);
+    }
+    sort(casas.begin(), casas.end());
+    int ancho = menorAncho(casas, n);
+    // la distancia máxima es la mitad del ancho: termina en .0 o en .5
+    printf("%.1f\n", ancho / 2.0);
+  }
+  return 0;
+}
+```
 
 ## Hora 1. UVa 12032, The Monkey and the Oiled Bamboo
 

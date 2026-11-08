@@ -80,6 +80,7 @@ de esta sesión:
 
 | Problema | Python | C++ |
 |---|---|---|
+| UVa 11516 | [lectura_11516.py](./codigo/lectura_11516.py) | [lectura_11516.cpp](./codigo/lectura_11516.cpp) |
 | UVa 12032 | [lectura_12032.py](./codigo/lectura_12032.py) | [lectura_12032.cpp](./codigo/lectura_12032.cpp) |
 | UVa 336 | [lectura_336.py](./codigo/lectura_336.py) | [lectura_336.cpp](./codigo/lectura_336.cpp) |
 | UVa 11686 | [lectura_11686.py](./codigo/lectura_11686.py) | [lectura_11686.cpp](./codigo/lectura_11686.cpp) |
@@ -106,6 +107,18 @@ salida se arma con `print` y `%`.
 Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
 cuántas veces corre cada ciclo y el total en $O$ frente a los límites del
 enunciado.
+
+### Antenas en una calle. UVa 11516, WiFi
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11516>
+- Enunciado resumido y explicación: [wifi.md](./codigo/wifi.md)
+
+Una calle recta tiene $m$ casas en posiciones enteras y se ponen $n$ antenas en
+cualquier punto. Se pide la menor distancia máxima entre una casa y su antena
+más cercana, con un decimal. Es el ejemplo de las diapositivas. La función de
+decisión pregunta si alcanzan $n$ antenas cuando cada una cubre un tramo de $a$
+metros, y se busca sobre ese ancho entero, que es el doble de la distancia. La
+trampa es que las casas llegan sin ordenar.
 
 ### Hora 1. UVa 12032, The Monkey and the Oiled Bamboo
 
@@ -371,7 +384,7 @@ en blanco va también después del último caso.
 
 ## Para seguir
 
-- [Soluciones](./Soluciones.md) de UVa 12032, UVa 336 y UVa 11686 y de los tres
+- [Soluciones](./Soluciones.md) de UVa 11516, UVa 12032, UVa 336 y UVa 11686 y de los tres
   problemas de la tarea, con la idea, la complejidad y el código en Python y C++.
 - [Ejercicios interactivos](./Ejercicios.md) sobre recorridos, bisección, costo e
   invariantes.
