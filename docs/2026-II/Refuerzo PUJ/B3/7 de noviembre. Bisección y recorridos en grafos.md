@@ -10,9 +10,6 @@ UVa 507, no se dio y pasa al
 [14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
 Sus diapositivas y sus soluciones siguen abajo.
 
-La sesión empieza con la revisión de la
-[tarea del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea).
-
 ## Diapositivas
 
 ### Programación
