@@ -101,6 +101,12 @@ porque el 5 es hijo izquierdo del 4, y también lo detecta. B lo engaña: cada
 nodo cumple con sus hijos, ya que el 9 es mayor que su padre 3, pero el 9 está
 en el subárbol izquierdo del 8 y es mayor que 8.
 
+A primera vista C también parece ABB: el 7 tiene al 4 a la izquierda y al 9 a
+la derecha, y el 4 tiene al 6 a la derecha. Falla un nodo de abajo, el 5, que
+es hijo izquierdo del 4 y es mayor que él. Para descartar un árbol basta un
+nodo que no cumpla; para aceptarlo hay que revisarlos todos, y en B esa
+revisión tiene que comparar el 9 con el 8, que no es su padre.
+
 !!! warning "El error de mirar solo a los hijos"
 
     La definición habla de todo el subárbol, no de los hijos inmediatos. En los
@@ -115,6 +121,11 @@ que la raíz, luego la raíz, luego las mayores. Dentro de cada subárbol pasa l
 mismo, así que nadie sale de su lugar, y el árbol de las trazas imprime
 `1 3 4 6 7 8 10 13 14`. El árbol del repaso era un ABB. El `map` recorre sus
 claves en orden por la misma razón: por dentro guarda un árbol de búsqueda.
+
+En este árbol las hojas están en el último nivel o en el penúltimo: el 1 a
+profundidad 2, y el 4, el 7 y el 13 a profundidad 3, con $h = 3$. Ningún camino
+de la raíz a una hoja es mucho más largo que otro, y con esa forma cualquier
+búsqueda termina en pocos pasos.
 
 ### El ABB en C++
 
@@ -269,6 +280,11 @@ Si `k == r->dato`, ninguna rama se ejecuta y se devuelve `r` sin cambios: un
 repetido se ignora. La primera llamada también asigna,
 `raiz = insertar(raiz, k)`, y con el árbol vacío esa es la única forma de que
 `raiz` deje de ser `NULL` (CLRS, §12.3).
+
+Ignorar el repetido es una decisión de esta versión del árbol y no sale de la
+definición: CLRS manda los iguales a uno de los dos lados y los guarda. La que
+se toma aquí es la misma de `map` y `set`, que tampoco guardan dos veces una
+clave; un `insert` de una clave que ya está deja el contenedor igual.
 
 ### Por qué r->izq = insertar(r->izq, k) reengancha el árbol
 
@@ -493,6 +509,14 @@ compara 3 veces. `forma.cpp` imprime:
 El inorden es el mismo y la forma no. Insertar en orden creciente arma una
 lista enlazada con un puntero inútil por nodo.
 
+Para que el árbol degenere no hace falta que las claves lleguen ordenadas. Con
+`1 7 2 6 3 5 4`, cada clave cae entre las dos anteriores y queda debajo de la
+última: el 7 a la derecha del 1, el 2 a la izquierda del 7, el 6 a la derecha
+del 2, y así hasta el 4, que entra a la izquierda del 5. Es otra cadena de
+altura 6, que zigzaguea en vez de bajar siempre por el mismo lado. La altura
+mínima sale de insertar primero la clave del medio y después, de la misma
+forma, las de cada mitad, como en `4 2 6 1 3 5 7`.
+
 ### Cuánto puede medir h
 
 **Teorema.** Todo árbol binario con $n \ge 1$ nodos tiene altura $h$ con
@@ -594,7 +618,8 @@ en lista. Frente al registro de carnés:
     llamadas de 8 MB que Linux da por omisión.
 
 Contra eso están los árboles que se reacomodan al insertar y al borrar para
-que $h$ quede en $O(\log n)$.
+que $h$ quede en $O(\log n)$. El más usado es el árbol rojinegro (CLRS,
+cap. 13), y es el que guardan por dentro `map` y `set` en la biblioteca de GCC.
 
 ## Ejercicios con recursión
 

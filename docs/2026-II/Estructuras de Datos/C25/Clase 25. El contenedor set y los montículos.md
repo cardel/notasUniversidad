@@ -49,6 +49,15 @@ el `set`, solo la clave.
 | la primera clave $\ge x$ | $O(h)$ | $O(\log n)$ con `lower_bound` | no la tiene |
 | lo que pide de la clave | `<` | `<` | una función hash y `==` |
 
+En la biblioteca de GCC ese árbol balanceado es un árbol rojinegro (CLRS,
+cap. 13). La columna de `unordered_map` viene de la tabla hash: la función hash
+lleva cada clave a una casilla, y las claves que caen en la misma casilla se
+encadenan en una lista. Con hash uniforme simple esa lista mide en promedio
+$\alpha = n/m$, el factor de carga, con $n$ claves y $m$ casillas, y de ahí el
+$O(1)$ en promedio cuando la tabla crece con $n$. Las claves quedan donde las
+pone la función hash y no en orden, por eso recorrerlas en orden pide copiarlas
+y ordenarlas.
+
 ## El contenedor set
 
 Una lista de asistencia trae el código de cada estudiante cada vez que entra
@@ -136,6 +145,11 @@ y retrocederlo una vez da el mayor.
 el árbol, sin un arreglo ordenado, y entre los dos queda el rango de las
 claves que están en $[a, b]$.
 
+Para las claves entre 30 y 63, ambos incluidos, el rango empieza en
+`lower_bound(30)`, que apunta al 30, y termina justo antes de
+`upper_bound(63)`, que apunta al 88. Son el 30, el 42 y el 63. Con
+`lower_bound(63)` como final, el 63 quedaría por fuera.
+
 !!! warning "No sirve el de <algorithm>"
 
     `lower_bound(s.begin(), s.end(), x)` compila, pero sobre un `set` avanza el
@@ -156,6 +170,15 @@ claves que están en $[a, b]$.
 | recorrido completo | $\Theta(n)$ | cada arista se baja una vez y se sube una vez |
 | `erase(desde, hasta)` de $m$ claves | $O(\log n + m)$ | se quitan de a una, sin volver a buscar |
 | espacio de la estructura | $\Theta(n)$ | un nodo por clave, con punteros al padre y a los dos hijos |
+
+La fila de `++it` es la que engaña: avanzar un iterador parece $\Theta(1)$,
+como en un arreglo, pero el `set` es un árbol. En el ABB que deja insertar
+`8 3 10 1 6 14 4 7 13`, el sucesor del 7 es el 8, y para llegar hay que subir
+del 7 al 6, del 6 al 3 y del 3 al 8: tres aristas, toda la altura. Del 8 al 10,
+en cambio, se baja una sola arista, al mínimo del subárbol derecho. Un paso
+cuesta $O(\log n)$ en el árbol balanceado del `set`, pero en el recorrido
+completo cada arista se baja una vez y se sube una vez, y los $n$ pasos suman
+$\Theta(n)$.
 
 ### ¿set, map o unordered_map?
 
@@ -227,6 +250,15 @@ y Thareja ponen la raíz en la casilla 1, y entonces el padre es
 $\lfloor i/2 \rfloor$ y los hijos $2i$ y $2i + 1$; aquí se cuenta desde 0, como
 en un `vector`.
 
+La fórmula del hijo izquierdo sale de contar. En el orden por niveles, los
+hijos de las casillas $0, \ldots, i - 1$ ocupan las casillas $1$ a $2i$, dos por
+cada una, y el primer hijo de $i$ es el que sigue: $2i + 1$; el segundo,
+$2i + 2$. Del 0 se pasa al 1 y al 2, del 1 al 3 y al 4, del 2 al 5 y al 6, y
+con $i = 3$ el hijo izquierdo queda en $2 \cdot 3 + 1 = 7$. El padre deshace la
+cuenta: $\lfloor (7 - 1)/2 \rfloor = 3$ y $\lfloor (8 - 1)/2 \rfloor = 3$. Con
+la posición basta para moverse por el árbol, y no hace falta un nodo con
+punteros.
+
 En el arreglo `45 31 40 12 25 18 7 5 9`, con $n = 9$, la casilla 1 (el 31)
 tiene hijos en 3 y 4 (12 y 25) y su padre es la casilla 0. La casilla 4 (el 25)
 tendría hijos en 9 y 10, fuera del arreglo: es una hoja. El 40 está en la
@@ -289,7 +321,13 @@ mayor o igual (CLRS, §6.5; Thareja, §12.1.1).
 | 4 | 1 | $42 > 31$ | intercambiar, $i = 1$ |
 | 1 | 0 | $42 < 45$ | detenerse |
 
-Queda `45 42 40 12 31 18 7 5 9 25`. Se hace a lo sumo un
+Queda `45 42 40 12 31 18 7 5 9 25`. En cada nivel basta comparar con el
+padre, sin mirar al hermano. El padre que baja ya era mayor o igual que todo
+lo que tenía debajo: el 31 queda en la casilla 4 encima del 25, que ya era su
+hijo. Y el 42, en la casilla 1, recibe como hijo izquierdo al 12, que estaba
+bajo el 31 y por eso tampoco lo supera.
+
+Se hace a lo sumo un
 intercambio por nivel: $\lfloor \log_2 (n + 1) \rfloor$ con la clave nueva
 contada, y los hace todos una clave mayor que todas, como un 46. Un 3, en
 cambio, entra bajo el 25 y no hace ninguno.
