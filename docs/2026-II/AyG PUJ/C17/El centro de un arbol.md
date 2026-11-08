@@ -141,9 +141,15 @@ def centroArbol(arbol):
 ```
 
 Cada vértice entra a una capa a lo sumo una vez y cada arista se mira dos
-veces, una por cada punta, de modo que el costo es $\Theta(n)$. Contra los
-$\Theta(n^2)$ de una amplitud por vértice, la diferencia se nota rápido: con
-$100\,000$ vértices son $10^{10}$ pasos contra $100\,000$.
+veces, una por cada punta, de modo que el costo es $\Theta(n)$.
+
+La comparación con la vía directa sale de una cuenta corta. Un recorrido en
+amplitud cuesta $\Theta(V+E)$ y hacer uno desde cada vértice, $\Theta(V(V+E))$,
+que en un grafo ralo queda en $\Theta(V^2)$ y en uno denso en $\Theta(V^3)$. Un
+árbol es lo más ralo que hay, $|E| = |V| - 1$, así que el número de aristas
+deja de pesar y todo se escribe en función de $n$: $\Theta(n^2)$ por el lado de
+las excentricidades contra $\Theta(n)$ por el del pelado. Con $100\,000$
+vértices son $10^{10}$ pasos contra $100\,000$.
 
 ## La traza
 
@@ -272,6 +278,29 @@ mejor que se puede hacer, y entonces el diámetro queda en el mayor entre $d_1$,
 $d_2$ y $\lceil d_1/2 \rceil + \lceil d_2/2 \rceil + 1$. Con $n \leq 2500$
 alcanza con probar las $n-1$ aristas y resolver cada mitad en tiempo lineal.
 
+El techo de la mitad del diámetro es el radio del pedazo, así que la cuenta se
+escribe con lo que el pelado ya devuelve:
+
+$$\mathit{nuevo} = \max(d_1,\ d_2,\ r_1 + r_2 + 1).$$
+
+El camino de nueve ciudades, de la $0$ a la $8$, deja ver de dónde sale el
+mínimo. Cada fila es un vuelo cancelado:
+
+| vuelo que se quita | pedazo de la izquierda | pedazo de la derecha | diámetro nuevo |
+|---|---|---|---|
+| $0-1$ | $d = 0$, $r = 0$ | $d = 7$, $r = 4$ | 7 |
+| $1-2$ | $d = 1$, $r = 1$ | $d = 6$, $r = 3$ | 6 |
+| $2-3$ | $d = 2$, $r = 1$ | $d = 5$, $r = 3$ | **5** |
+| $3-4$ | $d = 3$, $r = 2$ | $d = 4$, $r = 2$ | **5** |
+| $4-5$ | $d = 4$, $r = 2$ | $d = 3$, $r = 2$ | **5** |
+| $5-6$ | $d = 5$, $r = 3$ | $d = 2$, $r = 1$ | **5** |
+| $6-7$ | $d = 6$, $r = 3$ | $d = 1$, $r = 1$ | 6 |
+| $7-8$ | $d = 7$, $r = 4$ | $d = 0$, $r = 0$ | 7 |
+
+El diámetro baja de 8 a 5 y hay cuatro vuelos que lo consiguen, todos alrededor
+del centro. El enunciado acepta cualquiera de las respuestas óptimas, así que
+dos programas correctos pueden cancelar vuelos distintos.
+
 La entrada trae el número de casos; cada caso, $n$ y después $n-1$ líneas con
 un par de ciudades. Con `scanf` alcanzan dos ciclos:
 
@@ -298,6 +327,43 @@ que prueba cada corte sobre tres redes y muestra los dos pedazos con su
 diámetro y su centro.
 
 Enunciado y envío: <https://vjudge.net/problem/UVA-11695>
+
+#### La solución
+
+El pelado de la sesión resuelve cada pedazo. Para cada vuelo cancelado se
+delimita el pedazo con un recorrido que no cruza el vuelo quitado, se cuentan
+los grados dentro de él y se pela: de las vueltas y de cuántos centros quedaron
+salen el radio y el diámetro, igual que en el resto de la nota. Después los dos
+pedazos se combinan con la cuenta de arriba.
+
+- [En Python](./codigo/20262-agra-flightplanning.py)
+- [En C++](./codigo/20262-agra-flightplanning.cpp)
+- [En C++, más rápida](./codigo/20262-agra-flightplanning-optimizado.cpp)
+
+La tercera no cambia el algoritmo. Un solo recorrido en profundidad por caso
+numera el árbol en preorden y cuenta el tamaño de cada subárbol, de modo que al
+quitar el vuelo $(a,b)$ el pedazo del hijo se reconoce porque su número de
+preorden cae en el intervalo del hijo, y cuántas ciudades tiene ya está
+contado. Con eso los dos pedazos se pelan a la vez y cada vuelo cancelado
+cuesta un barrido del árbol en lugar de cuatro recorridos. Sobre veinte casos
+de 2500 ciudades al azar baja de 4,58 s a 0,66 s.
+
+La de Python no pasa el juez. Medido sobre un caso de 2500 ciudades en fila,
+que es el peor:
+
+| | un caso de 2500 ciudades |
+|---|---|
+| Python | 6,6 s |
+| C++ | 0,32 s |
+| C++, la más rápida | 0,13 s |
+
+El límite son quince segundos para todos los casos y pueden venir hasta
+diecinueve, de modo que el presupuesto es de 0,79 s por caso: Python se lo
+gasta ocho veces con un solo caso. Entre los dos lenguajes hay un factor de
+veinte con el algoritmo idéntico, y apretar el código no cierra eso. Para que
+entrara habría que contestar todos los vuelos en dos recorridos del árbol en
+vez de medirlos uno por uno, que es $\Theta(n)$ por caso en lugar de
+$\Theta(n^2)$.
 
 ## Referencias
 

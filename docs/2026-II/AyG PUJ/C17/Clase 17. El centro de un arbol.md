@@ -40,9 +40,12 @@ la sesión usando las tres medidas a la vez.
 
     ---
 
-    El deck de la sesión, con el árbol de once vértices pelado capa por capa,
-    la tabla del camino de cinco donde cada excentricidad baja uno, el código
-    con los grados y el contraejemplo del camino de cuatro.
+    El deck de la sesión tal como quedó anotado en clase, con el árbol de once
+    vértices pelado capa por capa, la tabla del camino de cinco donde cada
+    excentricidad baja uno, el código con los grados y el contraejemplo del
+    camino de cuatro. Entre la lámina del teorema y la siguiente va la página
+    de tablero donde quedó escrito $\mathcal{C}(T) = \mathcal{C}(T \setminus L)$
+    con sus dos casos base dibujados.
 
     [:octicons-arrow-right-24: Abrir](./clase17-centro-arbol.pdf)
 
@@ -68,6 +71,14 @@ la sesión usando las tres medidas a la vez.
   largo cae en un vértice y con diámetro impar cae entre dos.
 - El pelado cuenta pasos, no pesos. En un árbol con longitudes sirven los dos
   recorridos, no el pelado.
+- Una amplitud cuesta $\Theta(V+E)$ y hacerlas todas $\Theta(V(V+E))$, que en un
+  grafo ralo es $\Theta(V^2)$ y en uno denso $\Theta(V^3)$. Un árbol es ralo y
+  ahí el número de aristas deja de pesar.
+- El radio y el diámetro se miden en aristas y el centro es un conjunto de
+  vértices. Son dos cosas que se cuentan distinto.
+- En *Flight Planning* el mismo programa pasa en C++ y no en Python. La
+  diferencia medida es de veinte veces sobre un caso de 2500 ciudades, con el
+  algoritmo idéntico en los dos.
 
 ## Ejercicios
 
@@ -79,7 +90,9 @@ vista, traducir vueltas a radio y a diámetro en cuatro árboles, decidir qué l
 pasa a cuatro versiones cambiadas del código, y probar cada corte del problema
 de juez para ver por qué los dos pedazos se vuelven a unir por sus centros. Los ejercicios de la sesión,
 con sus pistas y los dos problemas de juez, están al final de la
-[nota](./El%20centro%20de%20un%20arbol.md#ejercicios).
+[nota](./El%20centro%20de%20un%20arbol.md#ejercicios), y ahí mismo quedó la
+[solución de *Flight Planning*](./El%20centro%20de%20un%20arbol.md#la-solucion)
+en Python y en C++, con lo que tarda cada una.
 
 ## Antes de entrar
 
