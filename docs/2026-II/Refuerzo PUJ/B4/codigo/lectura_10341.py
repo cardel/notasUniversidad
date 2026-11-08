@@ -1,3 +1,5 @@
+import sys
+
 for linea in sys.stdin:
     datos = linea.split()
     if len(datos) == 6:

@@ -1,3 +1,5 @@
+import sys
+
 datos = sys.stdin.buffer.read().split()
 pos = 0
 n = int(datos[pos])

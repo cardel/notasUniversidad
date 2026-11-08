@@ -1,3 +1,5 @@
+import sys
+
 datos = sys.stdin.read().split()
 pos = 0
 while pos < len(datos):
