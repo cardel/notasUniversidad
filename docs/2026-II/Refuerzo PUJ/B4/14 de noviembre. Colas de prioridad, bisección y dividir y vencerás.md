@@ -4,8 +4,8 @@
 programación usa la cola de prioridad con UVa 1203. La segunda sigue con la
 bisección, primero con la función dada en UVa 10341 y después sobre la respuesta
 en UVa 11413. La tercera muestra de dónde sale la recursión en dividir y vencerás,
-con UVa 10810. En la hora de lógica se ven los tipos de demostración, la cota con
-$O$ y el invariante de la bisección de UVa 11413.
+con UVa 10810. La hora de lógica es la que no se dio el 7 de noviembre: los
+invariantes de ciclo de UVa 11078 y el ejercicio en papel de UVa 507.
 
 La sesión empieza con la revisión de la
 [tarea del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#tarea).
@@ -173,30 +173,13 @@ así que al juez se envía la de C++.
 
 ## Lógica
 
-Una demostración se escribe en cuatro partes: el teorema, la estrategia, el
-desarrollo y la conclusión. La de un invariante es por inducción sobre las vueltas
-del ciclo: la inicialización es el caso base, la estabilidad es el paso inductivo
-y la terminación es lo que el invariante dice al salir. Con la misma forma se ven
-la demostración directa y la por contradicción, con un ejemplo sobre arreglos para
-cada una.
-
-Después va una cota de $O$ grande en cuatro partes, exhibiendo los testigos $c$ y
-$k$: $2n^2 + 3n \in O(n^2)$.
-
-La hora cierra con el invariante de la bisección de UVa 11413. Con
-$c_0, \ldots, c_{n-1}$ los recipientes y $S$ su suma, la búsqueda va sobre
-$[l, r]$, que empieza en $[\max_i c_i, S]$, y $\mathit{alcanza}(t)$ dice si el
-recorrido voraz usa a lo más $m$ contenedores de capacidad $t$:
-
-$$
-(\forall t \mid \max_i c_i \leq t < l : \neg\,\mathit{alcanza}(t)) \wedge \mathit{alcanza}(r)
-$$
-
-Al inicio el rango del cuantificador es vacío, y $S$ alcanza porque un solo
-contenedor lo recibe todo. Cada vuelta prueba el punto medio $t$: si alcanza, $r$
-baja a $t$; si no, $l$ sube a $t + 1$, y la monotonía mantiene las dos partes. El
-ciclo termina porque $r - l$ baja en cada vuelta, y al salir, con $l = r$, la
-capacidad $l$ es la respuesta.
+Invariantes de ciclo escritos como fórmula y demostrados en tres pasos:
+inicialización, estabilidad y terminación. El ciclo de partida es el de UVa 11078,
+con las variables `mayor` y `mejor`, y el ejercicio en papel es el ciclo de UVa 507
+sin el desempate. Las [diapositivas](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica), las
+[soluciones](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#soluciones-de-logica) y el
+[desarrollo de los dos ciclos](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica_1) están en la página del 7 de
+noviembre.
 
 ## Tarea
 

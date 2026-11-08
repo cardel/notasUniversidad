@@ -12,8 +12,8 @@ sus trampas, unos cuarenta para resolverlo en el computador y diez para su
 costo: de qué depende el tamaño de la entrada, cuántas veces corre
 cada ciclo y el total en $O$. La idea o la estructura que hace falta se
 recuerda cuando el problema la pide. La hora de lógica se trabaja en papel:
-predicados y cuantificadores, los tipos de demostración, la cota con $O$
-grande y, en dos horas, el invariante de ciclo, planteado sobre los ciclos de
+predicados y cuantificadores, la definición de $O$
+grande y el invariante de ciclo, planteado sobre los ciclos de
 los problemas de clase. Las sesiones del 24 de octubre y del 7 y 14 de noviembre dejan tres problemas de tarea,
 que se revisan al comenzar el siguiente.
 
@@ -40,8 +40,8 @@ puede trabajar el mismo ejercicio en C.
 4. [14 de noviembre. Colas de prioridad, bisección y dividir y vencerás](./B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md):
    colas de prioridad con UVa 1203, bisección con la función dada en UVa 10341 y
    sobre la respuesta en UVa 11413, de dónde sale la recursión en dividir y
-   vencerás con UVa 10810, y en lógica los tipos de demostración, la cota con $O$
-   y el invariante de la bisección.
+   vencerás con UVa 10810, y en lógica los invariantes de ciclo de UVa 11078 y
+   UVa 507.
 
 ## Clases en video
 

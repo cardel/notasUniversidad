@@ -6,7 +6,9 @@ que es UVa 11516, y la segunda, UVa 12032. La tercera fue el recorrido en
 amplitud con tope de pasos, con UVa 336, y cerró con el recorrido en profundidad
 y los ciclos en un grafo dirigido; UVa 11686 queda para resolver en casa. La hora
 de lógica, con los invariantes de ciclo de UVa 11078 y el ejercicio en papel de
-UVa 507, no se dio; sus diapositivas y sus soluciones siguen abajo.
+UVa 507, no se dio y pasa al
+[14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
+Sus diapositivas y sus soluciones siguen abajo.
 
 La sesión empieza con la revisión de la
 [tarea del 24 de octubre](../B2/24%20de%20octubre.%20Tramos,%20matrices,%20recursi%C3%B3n%20e%20invariantes.md#tarea).
@@ -248,7 +250,7 @@ al juez se envía la versión con pila, `pick-up-sticks-pila.cpp`.
 
 ## Lógica
 
-El ciclo de partida es el de
+Esta hora se trabaja el 14 de noviembre. El ciclo de partida es el de
 UVa 11078, Open Credit System (<https://vjudge.net/problem/UVA-11078>).
 Recibe $a[0..n-1]$ con $n \geq 2$ y devuelve
 $\max\{a[s] - a[t] : 0 \leq s < t < n\}$:

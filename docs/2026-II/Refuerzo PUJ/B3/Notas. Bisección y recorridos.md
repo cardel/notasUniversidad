@@ -9,7 +9,7 @@ salto que gasta fuerza y la solución, que se envió al juez. Después vino el
 recorrido en amplitud, con la cola en orden de distancia, el contagio desde
 dos focos y UVa 336, *A Node Too Far*. Al final se presentó el recorrido en
 profundidad con sus tres estados y UVa 11686, *Pick up sticks*, que queda para
-resolver en casa con la solución ya mostrada. La hora de lógica no se dio.
+resolver en casa con la solución ya mostrada. La hora de lógica no se dio y pasa al 14 de noviembre.
 
 Al terminar la sesión se espera poder:
 
@@ -485,8 +485,10 @@ Costo: $\Theta(n + m)$ por caso.
 ## Lo que sigue
 
 La hora de lógica, con los invariantes de ciclo de UVa 11078 y el ejercicio en
-papel de UVa 507, no se dio. Sus diapositivas y sus soluciones están en la
-[página de la sesión](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md).
+papel de UVa 507, no se dio y pasa al
+[14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
+Sus diapositivas y sus soluciones están en la
+[página de la sesión](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica).
 
 Queda propuesto UVa 714, *Copying Books*, que el deck trae al final: repartir
 libros en orden entre escribas para que el que más copie copie lo menos

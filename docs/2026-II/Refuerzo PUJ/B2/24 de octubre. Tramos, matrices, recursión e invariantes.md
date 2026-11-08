@@ -5,7 +5,7 @@ arreglo y los rectángulos de una matriz, y una de lógica sobre proposiciones,
 cuantificadores y la definición de $O$.
 
 UVa 507 ocupó dos horas y UVa 108 la tercera. Los invariantes de ciclo pasan a
-la [sesión del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md), y la recursión sobre un árbol
+la [sesión del 14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica), y la recursión sobre un árbol
 con UVa 839 queda como problema propuesto.
 La hora de lógica usó las
 [diapositivas del 17 de octubre](../B1/Logica.pdf){ target=_blank rel=noopener };
@@ -90,7 +90,7 @@ completo está en las
 [notas de la sesión](./Notas.%20Tramos,%20matrices%20y%20l%C3%B3gica.md#logica).
 
 Los invariantes de ciclo de UVa 11078 y UVa 507 se trabajan en la
-[hora de lógica del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica).
+[hora de lógica del 14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
 
 ## Tarea
 
@@ -153,4 +153,4 @@ costaría $\Theta(n)$ por nivel y llevaría el total a $\Theta(n^2)$.
   UVa 108 están en las [soluciones del 17 de octubre](../B1/Soluciones.md).
 - [Ejercicios interactivos](./Ejercicios.md) sobre el mejor tramo, los
   acumulados y el costo de las soluciones, con el móvil y los invariantes que
-  se trabajan el 7 de noviembre.
+  se trabajan el 14 de noviembre.
