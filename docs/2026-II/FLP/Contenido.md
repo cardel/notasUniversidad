@@ -69,7 +69,11 @@ Se publican después de cada sesión.
 
 ### Corte 2
 
-*Aún no hay clases publicadas.*
+7. [Clase 7. Asignación y paso por referencia, 27 de octubre](C7/Clase%207.%20Asignaci%C3%B3n%20y%20paso%20por%20referencia.md)
+   El contador que no se puede escribir sin estado, el almacén y sus celdas
+   numeradas, las referencias explícitas con `newref`, `deref` y `setref`, el
+   aliasing, las referencias implícitas con `set`, y las dos políticas de paso
+   de parámetros con los programas que las distinguen.
 
 ## Actividades interactivas
 
