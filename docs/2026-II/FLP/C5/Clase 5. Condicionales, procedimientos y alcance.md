@@ -310,6 +310,10 @@ sino el resultado de aplicarla. Los valores que salieron fueron `t = 6`,
 Un aviso sobre la herramienta: al pedirle el caso de la variable libre que no
 existe, no muestra el error como debería. El interpretador real sí lo reporta.
 
+[Ejercicios · FLP C5](../../../actividades/flp/procedimientos-y-alcance-estatico/index.md){ target=_blank rel=noopener }:
+ocho actividades sobre los temas de la sesión, para volver sobre ellas después
+de clase.
+
 ## Los apuntes del tablero
 
 Las cuatro hojas de la sesión, con los dos ejercicios de `let` con
