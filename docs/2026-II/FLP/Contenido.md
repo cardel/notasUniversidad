@@ -162,6 +162,16 @@ quedan disponibles después para volver sobre el tema.
    `evaluar-operando` en código. Casi todas dibujan la cadena de ambientes con
    el almacén debajo y una flecha de cada referencia a su celda.
 
+9. [Ejercicios de la clase 8: chequeo de tipos](../../actividades/flp/chequeo-de-tipos/index.md)
+   Cuatro actividades en el orden de los temas de la sesión. Las dos primeras
+   se responden escogiendo: qué tipo tiene cada expresión y cómo se escribe el
+   tipo de un procedimiento, y luego qué exige cada regla, cuál falla en siete
+   programas que el chequeador rechaza y qué habría hecho la máquina con ellos
+   si los dejaran correr. Las dos últimas piden escribir código que corre en
+   la página: el TAD tipo con su escritura, los asteriscos entre los
+   parámetros y `apply-tenv`, y después la regla del condicional y la de la
+   aplicación con los tipos ya calculados.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
