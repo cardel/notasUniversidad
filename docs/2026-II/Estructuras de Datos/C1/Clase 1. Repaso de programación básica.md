@@ -10,7 +10,7 @@ semestre se construye encima.
 
 ## Diapositivas
 
-![](clase01.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase01.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Compilar y ejecutar desde la terminal
 

@@ -16,7 +16,7 @@ aparece en todas las tablas, y cómo se demuestra que algo pertenece a él?
 Esta versión incluye lo que se dibujó en el tablero durante la clase, en las
 páginas donde apareció.
 
-![](clase01.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase01.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Elegir estructura es elegir un costo
 
