@@ -56,6 +56,10 @@ Se publican después de cada sesión.
 7. [Clase 7. Introducción a los sistemas distribuidos, 3 y 5 de noviembre](C7/Clase%207.%20Introduccion%20a%20los%20sistemas%20distribuidos.md):
    lo que cuesta cruzar la red, escalar a lo alto o a lo ancho, los nueves de
    disponibilidad y el teorema CAP, con diez ejercicios en el navegador.
+8. [Clase 8. Docker: imágenes y contenedores, 10 y 12 de noviembre](C8/Clase%208.%20Docker,%20imagenes%20y%20contenedores.md):
+   el contenedor como proceso del anfitrión, namespaces y cgroups, las capas y
+   la caché del `Dockerfile`, puertos, volúmenes y redes, con once ejercicios
+   en el navegador.
 
 ## Clases en video
 
