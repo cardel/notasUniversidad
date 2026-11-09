@@ -34,6 +34,11 @@ un minuto, cuántas caen en un intervalo y lo que cuesta el `lower_bound` de
 Cinco situaciones para escoger entre `set`, `map`, `unordered_map` y un
 `vector` ordenado una sola vez, con lo que falla en cada alternativa.
 
+### [compuestas](../../../actividades/estructuras-de-datos/contenedor-set/compuestas.html){ target=_blank rel=noopener }
+
+UVa 10391 con un `set<string>`: qué palabras del diccionario salen, cuántos
+cortes se prueban en cada una y en qué orden queda la salida.
+
 ## Montículos
 
 ### [urgente](../../../actividades/estructuras-de-datos/monticulo/urgente.html){ target=_blank rel=noopener }
@@ -67,3 +72,8 @@ un `bajar` que solo mira el hijo izquierdo.
 
 La altura para 12, 200 y 70 000 claves, cuántos intercambios hacen insertar y
 extraer en un árbol lleno, y por qué el montículo cabe en un arreglo.
+
+### [errores](../../../actividades/estructuras-de-datos/monticulo/errores.html){ target=_blank rel=noopener }
+
+Tres versiones con una línea cambiada: bajar con el primer hijo mayor, subir
+con el padre en `i / 2` y extraer subiendo hijos, con lo que deja cada una.
