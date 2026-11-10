@@ -1,19 +1,107 @@
 # 14 de noviembre · Refuerzo PUJ
 
-**Colas de prioridad, bisección y dividir y vencerás.** La primera hora de
-programación usa la cola de prioridad con UVa 1203. La segunda sigue con la
-bisección, primero con la función dada en UVa 10341 y después sobre la respuesta
-en UVa 11413. La tercera muestra de dónde sale la recursión en dividir y vencerás,
-con UVa 10810. La hora de lógica es la que no se dio el 7 de noviembre: los
-invariantes de ciclo de UVa 11078 y el ejercicio en papel de UVa 507.
+**Planteamiento e invariantes de ciclo.** Las tres horas de programación muestran
+cómo se plantea la solución de un problema antes de escribir código: la bisección
+sobre la respuesta para repartir textos entre empleados, el recorrido en amplitud
+sobre una rejilla con zonas prohibidas y el recorrido en profundidad que pinta un
+grafo con dos colores. La hora de lógica trabaja los invariantes de ciclo de
+UVa 11078 y el ejercicio en papel de UVa 507, con el deck del 7 de noviembre.
 
-La sesión empieza con la revisión de la
-[tarea del 7 de noviembre](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#tarea).
+## Diapositivas
 
-## Archivos de lectura
+### Programación
 
-Cada problema de clase tiene un fragmento con la lectura de la entrada y un
-comentario donde va el algoritmo. Están en la carpeta
+![](./Planteamiento.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+### Soluciones de programación
+
+Cada uno de los tres problemas resuelto paso a paso, con su traza y su costo.
+
+![](./Soluciones-planteamiento.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+### Lógica
+
+![](../B3/Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+### Soluciones de lógica
+
+Los invariantes del ejercicio de UVa 507 con su traza y sus tres pasos.
+
+![](../B3/Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+## Problemas en clase
+
+El código de los tres, en Python y en C++, está en la carpeta `codigo/` de la
+sesión del 7 de noviembre. Cada problema cierra con su costo.
+
+### Hora 1. Bisección sobre la respuesta: transcribir textos
+
+Hay que repartir textos en orden entre *k* empleados, cada uno con un tramo seguido
+de textos, de modo que el más cargado lleve el menor número posible de páginas. En
+vez de buscar el reparto óptimo se pregunta si alcanza con un tope de *t* páginas
+por empleado, y una pasada por los textos lo responde: el empleado actual recibe el
+texto siguiente mientras quepa, y si no cabe entra otro empleado. Si *t* alcanza,
+cualquier tope mayor también, y esa monotonía permite bisecar entre el texto más
+largo y la suma de todos. La trampa está en la cota inferior: si `lo` arranca por
+debajo del texto más largo, el programa responde un tope que ningún reparto cumple.
+
+- Actividad: [repartir textos entre empleados](../../../actividades/ayg-puj/busqueda-binaria/turnos.html){ target=_blank rel=noopener }
+- Código: [transcribir.py](../B3/codigo/transcribir.py) y [transcribir.cpp](../B3/codigo/transcribir.cpp)
+
+Costo: con $n$ textos que suman $S$ páginas, cada comprobación da $n$ pasos y la
+bisección corre $O(\log S)$ veces, así que el total es $O(n \log S)$.
+
+### Hora 2. Amplitud sobre una rejilla con zonas prohibidas: el bosque
+
+Se pide el menor número de pasos para cruzar una rejilla de la esquina superior
+izquierda a la inferior derecha. Hay casillas bloqueadas y criaturas, cada una con
+una posición y un radio, y no se puede pisar ninguna casilla dentro del radio de
+una criatura. El peligro depende solo de las criaturas y no del camino, así que se
+marca una vez antes del recorrido, y el recorrido en amplitud queda igual al de un
+tablero con paredes. La trampa está en la zona: el enunciado dice *en cualquier
+dirección*, y medir la distancia de una forma o de otra cambia qué casillas quedan
+prohibidas y, con ellas, la respuesta.
+
+- Actividad: [una rejilla con zonas prohibidas](../../../actividades/ayg-puj/grafos-implicitos/zonas.html){ target=_blank rel=noopener }
+- Código: [bosque.py](../B3/codigo/bosque.py) y [bosque.cpp](../B3/codigo/bosque.cpp)
+
+Costo: con una rejilla de $R \times C$, el recorrido visita cada casilla una vez y
+mira cuatro vecinas, $O(RC)$. Marcar una criatura de radio $r$ revisa a lo más
+$(2r + 1)^2$ casillas.
+
+### Hora 3. Profundidad modificada: dos colores
+
+Se decide si los nodos de un grafo se pueden pintar con dos colores de modo que
+ninguna arista una dos nodos del mismo color. El recorrido en profundidad lleva el
+color además de la marca de visitado: pintado el primer nodo, el color de cada
+vecino queda forzado, y basta recorrer una vez y anotar si alguna arista une dos
+nodos iguales. La trampa es que el grafo puede venir en varios pedazos, así que el
+recorrido arranca desde cada nodo que siga sin color.
+
+- Actividad: [dos colores](../../../actividades/ayg-puj/representaciones-y-recorridos/colores.html){ target=_blank rel=noopener }
+- Código: [bipartito.py](../B3/codigo/bipartito.py) y [bipartito.cpp](../B3/codigo/bipartito.cpp)
+
+Costo: con $V$ nodos y $A$ aristas, cada nodo se pinta una vez y cada lista de
+vecinos se revisa una vez, $O(V + A)$.
+
+## Lógica
+
+Invariantes de ciclo escritos como fórmula y demostrados en tres pasos:
+inicialización, estabilidad y terminación. El ciclo de partida es el de UVa 11078,
+con las variables `mayor` y `mejor`, y el ejercicio en papel es el ciclo de UVa 507
+sin el desempate. Las diapositivas y sus soluciones están arriba; el
+[desarrollo de los dos ciclos](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica)
+está en la página del 7 de noviembre.
+
+## Para seguir
+
+Problemas propuestos para trabajar por cuenta propia. Cada solución va con su
+costo y se envía al juez.
+
+### Archivos de lectura
+
+UVa 1203, UVa 10341, UVa 11413 y UVa 10810 tienen un fragmento con la lectura
+de la entrada y un comentario donde va el algoritmo. Están en la carpeta
 [codigo](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/Refuerzo%20PUJ/B4/codigo)
 de esta sesión:
 
@@ -34,13 +122,7 @@ g++ -std=c++17 -Wall -Wextra solucion.cpp -o solucion
 diff salida.out 1.out
 ```
 
-## Problemas en clase
-
-Cada problema cierra con su costo: de qué depende el tamaño de la entrada,
-cuántas veces corre cada ciclo y el total en $O$ frente a los límites del
-enunciado.
-
-### Hora 1. UVa 1203, Argus
+### Propuesto. UVa 1203, Argus
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-1203>
 
@@ -71,7 +153,7 @@ Costo: con $q$ consultas la cola nunca pasa de $q$ pares. Llenarla son $q$
 inserciones, y el ciclo de salida corre $K$ veces con una extracción y una
 inserción, de modo que el total es $O((q + K) \log q)$.
 
-### Hora 2. UVa 10341, Solve It
+### Propuesto. UVa 10341, Solve It
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10341>
 - Actividad: [resolver un problema de juez](../../../actividades/ayg-puj/busqueda-binaria/resolver.html){ target=_blank rel=noopener }
@@ -102,7 +184,7 @@ while (scanf("%d %d %d %d %d %d", &p, &q, &r, &s, &t, &u) == 6) {
 Costo: cien evaluaciones por caso, o sea constante; con hasta 2100 líneas de
 entrada el total es lineal en la cantidad de casos.
 
-### Hora 2. UVa 11413, Fill the Containers
+### Propuesto. UVa 11413, Fill the Containers
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11413>
 
@@ -134,7 +216,7 @@ Costo: con $n$ recipientes que suman $S$, el recorrido voraz da $n$ pasos y la
 bisección sobre $[\max, S]$ corre $O(\log S)$ veces, así que el total es
 $O(n \log S)$ y no depende de $m$.
 
-### Hora 3. UVa 10810, Ultra-QuickSort
+### Propuesto. UVa 10810, Ultra-QuickSort
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10810>
 - Actividad: [contar parejas fuera de orden](../../../actividades/ayg-puj/recursion/inversiones.html){ target=_blank rel=noopener }
@@ -171,21 +253,7 @@ en `long long`, porque en el peor caso la respuesta llega al orden de $10^{11}$.
 Medido con $n = 499\,999$, la versión de C++ tarda 0,20 s y la de Python 5,1 s,
 así que al juez se envía la de C++.
 
-## Lógica
-
-Invariantes de ciclo escritos como fórmula y demostrados en tres pasos:
-inicialización, estabilidad y terminación. El ciclo de partida es el de UVa 11078,
-con las variables `mayor` y `mejor`, y el ejercicio en papel es el ciclo de UVa 507
-sin el desempate. Las [diapositivas](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica), las
-[soluciones](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#soluciones-de-logica) y el
-[desarrollo de los dos ciclos](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica_1) están en la página del 7 de
-noviembre.
-
-## Tarea
-
-Se envía al juez, y cada solución va con su costo.
-
-### Base. UVa 10954, Add All
+### Propuesto. UVa 10954, Add All
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10954>
 
@@ -209,7 +277,7 @@ while (scanf("%d", &n) == 1 && n != 0) {
 Costo: el ciclo corre $N - 1$ veces, con dos extracciones y una inserción en
 $O(\log N)$ cada una, $O(N \log N)$.
 
-### Intermedio. UVa 10611, The Playboy Chimp
+### Propuesto. UVa 10611, The Playboy Chimp
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10611>
 
@@ -239,7 +307,7 @@ Costo: cada búsqueda parte el rango a la mitad en cada vuelta, $O(N + Q \log N)
 la lectura. Recorrer el arreglo en cada consulta es $O(NQ)$, unos
 $1{,}25 \times 10^9$ pasos con $N = 50\,000$ y $Q = 25\,000$.
 
-### Exigente. UVa 11624, Fire!
+### Propuesto. UVa 11624, Fire!
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11624>
 
@@ -275,8 +343,6 @@ El espacio antes de `%c` se salta el salto de línea.
 
 Costo: cada recorrido visita cada casilla una vez y mira cuatro vecinas, $O(RC)$
 por caso, con hasta $10^6$ casillas.
-
-## Para seguir
 
 ### Propuesto. UVa 924, Spreading the News
 
@@ -321,5 +387,5 @@ $O(T\,(V + A))$ con $T$ fuentes.
 
 - [Soluciones](./Soluciones.md) de UVa 1203, UVa 10341, UVa 11413 y UVa 10810, con
   la idea, la complejidad y el código en Python y C++.
-- [Ejercicios interactivos](./Ejercicios.md) sobre colas de prioridad, bisección y
-  dividir y vencerás.
+- [Ejercicios interactivos](./Ejercicios.md) sobre bisección, recorridos en
+  rejillas y en grafos, colas de prioridad y dividir y vencerás.

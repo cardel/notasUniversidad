@@ -7,8 +7,9 @@ amplitud con tope de pasos, con UVa 336, y cerró con el recorrido en profundida
 y los ciclos en un grafo dirigido; UVa 11686 queda para resolver en casa. La hora
 de lógica, con los invariantes de ciclo de UVa 11078 y el ejercicio en papel de
 UVa 507, no se dio y pasa al
-[14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
-Sus diapositivas y sus soluciones siguen abajo.
+[14 de noviembre](../B4/14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md#logica).
+Sus diapositivas y sus soluciones siguen abajo. Las tres horas de programación
+del 14 de noviembre resuelven los problemas de *Cómo se plantea la solución*.
 
 ## Diapositivas
 

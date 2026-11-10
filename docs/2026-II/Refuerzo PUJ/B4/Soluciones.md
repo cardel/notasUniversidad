@@ -1,11 +1,11 @@
 # Soluciones · Refuerzo PUJ 14 de noviembre
 
-UVa 1203, UVa 10341, UVa 11413 y UVa 10810 de la
-[sesión del 14 de noviembre](./14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md),
+UVa 1203, UVa 10341, UVa 11413 y UVa 10810, los problemas propuestos de la
+[sesión del 14 de noviembre](./14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`.
 
-## Hora 1. UVa 1203, Argus
+## UVa 1203, Argus
 
 ### Idea
 
@@ -93,7 +93,7 @@ int main() {
 }
 ```
 
-## Hora 2. UVa 10341, Solve It
+## UVa 10341, Solve It
 
 ### Idea
 
@@ -192,7 +192,7 @@ int main() {
 }
 ```
 
-## Hora 2. UVa 11413, Fill the Containers
+## UVa 11413, Fill the Containers
 
 ### Idea
 
@@ -313,7 +313,7 @@ int main() {
 }
 ```
 
-## Hora 3. UVa 10810, Ultra-QuickSort
+## UVa 10810, Ultra-QuickSort
 
 ### Idea
 

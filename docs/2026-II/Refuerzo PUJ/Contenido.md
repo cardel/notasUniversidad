@@ -14,8 +14,8 @@ cada ciclo y el total en $O$. La idea o la estructura que hace falta se
 recuerda cuando el problema la pide. La hora de lógica se trabaja en papel:
 predicados y cuantificadores, la definición de $O$
 grande y el invariante de ciclo, planteado sobre los ciclos de
-los problemas de clase. Las sesiones del 24 de octubre y del 7 y 14 de noviembre dejan tres problemas de tarea,
-que se revisan al comenzar el siguiente.
+los problemas de clase. Las sesiones del 24 de octubre y del 7 de noviembre dejan tres problemas de
+tarea cada una.
 
 Las soluciones vienen en Python y en C++. Quien llega de Estructuras de Datos
 puede trabajar el mismo ejercicio en C.
@@ -37,11 +37,11 @@ puede trabajar el mismo ejercicio en C.
    encontrar la función de decisión con UVa 11516 y UVa 12032, el recorrido en
    amplitud con tope de pasos con UVa 336, y el recorrido en profundidad y los
    ciclos en un grafo dirigido, con UVa 11686 para resolver en casa.
-4. [14 de noviembre. Colas de prioridad, bisección y dividir y vencerás](./B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md):
-   colas de prioridad con UVa 1203, bisección con la función dada en UVa 10341 y
-   sobre la respuesta en UVa 11413, de dónde sale la recursión en dividir y
-   vencerás con UVa 10810, y en lógica los invariantes de ciclo de UVa 11078 y
-   UVa 507.
+4. [14 de noviembre. Planteamiento e invariantes de ciclo](./B4/14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md):
+   cómo se plantea la solución de tres problemas, la bisección sobre la respuesta
+   para transcribir textos, el recorrido en amplitud sobre una rejilla con zonas
+   prohibidas y el recorrido en profundidad para pintar con dos colores, y en
+   lógica los invariantes de ciclo de UVa 11078 y UVa 507.
 
 ## Clases en video
 

@@ -486,9 +486,12 @@ Costo: $\Theta(n + m)$ por caso.
 
 La hora de lógica, con los invariantes de ciclo de UVa 11078 y el ejercicio en
 papel de UVa 507, no se dio y pasa al
-[14 de noviembre](../B4/14%20de%20noviembre.%20Colas%20de%20prioridad,%20bisecci%C3%B3n%20y%20dividir%20y%20vencer%C3%A1s.md#logica).
+[14 de noviembre](../B4/14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md#logica).
 Sus diapositivas y sus soluciones están en la
 [página de la sesión](./7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica).
+Las tres horas de programación de esa sesión resuelven los problemas de
+planteamiento: transcribir textos con bisección sobre la respuesta, el bosque
+con el recorrido en amplitud y los dos colores con el recorrido en profundidad.
 
 Queda propuesto UVa 714, *Copying Books*, que el deck trae al final: repartir
 libros en orden entre escribas para que el que más copie copie lo menos
