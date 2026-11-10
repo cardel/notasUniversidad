@@ -1,7 +1,7 @@
 # Soluciones · Refuerzo PUJ 14 de noviembre
 
 UVa 1203, UVa 10341, UVa 11413 y UVa 10810, los problemas propuestos de la
-[sesión del 14 de noviembre](./14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md),
+[sesión](./14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md),
 cada uno con la idea, lo que cuesta y el código en Python y en C++. Los
 archivos están también en la carpeta `codigo/`.
 

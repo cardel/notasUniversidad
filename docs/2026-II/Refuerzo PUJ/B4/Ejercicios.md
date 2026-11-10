@@ -1,7 +1,7 @@
 # Ejercicios · Refuerzo PUJ 14 de noviembre
 
 Actividades para trabajar en el navegador los temas de la
-[sesión del 14 de noviembre](./14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md).
+[sesión](./14%20de%20noviembre.%20Planteamiento%20e%20invariantes%20de%20ciclo.md).
 Las tres primeras corren el código de los problemas que se resuelven en clase, y
 las de invariantes acompañan a la hora de lógica. Las de colas de prioridad,
 bisección y dividir y vencerás van con los problemas propuestos.

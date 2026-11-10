@@ -5,7 +5,7 @@ cómo se plantea la solución de un problema antes de escribir código: la bisec
 sobre la respuesta para repartir textos entre empleados, el recorrido en amplitud
 sobre una rejilla con zonas prohibidas y el recorrido en profundidad que pinta un
 grafo con dos colores. La hora de lógica trabaja los invariantes de ciclo de
-UVa 11078 y el ejercicio en papel de UVa 507, con el deck del 7 de noviembre.
+UVa 11078 y el ejercicio en papel de UVa 507.
 
 ## Diapositivas
 
@@ -21,18 +21,18 @@ Cada uno de los tres problemas resuelto paso a paso, con su traza y su costo.
 
 ### Lógica
 
-![](../B3/Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ### Soluciones de lógica
 
 Los invariantes del ejercicio de UVa 507 con su traza y sus tres pasos.
 
-![](../B3/Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./Soluciones-logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Problemas en clase
 
-El código de los tres, en Python y en C++, está en la carpeta `codigo/` de la
-sesión del 7 de noviembre. Cada problema cierra con su costo.
+El código de los tres, en Python y en C++, está en la carpeta `codigo/`. Cada
+problema cierra con su costo.
 
 ### Hora 1. Bisección sobre la respuesta: transcribir textos
 
@@ -46,7 +46,7 @@ largo y la suma de todos. La trampa está en la cota inferior: si `lo` arranca p
 debajo del texto más largo, el programa responde un tope que ningún reparto cumple.
 
 - Actividad: [repartir textos entre empleados](../../../actividades/ayg-puj/busqueda-binaria/turnos.html){ target=_blank rel=noopener }
-- Código: [transcribir.py](../B3/codigo/transcribir.py) y [transcribir.cpp](../B3/codigo/transcribir.cpp)
+- Código: [transcribir.py](./codigo/transcribir.py) y [transcribir.cpp](./codigo/transcribir.cpp)
 
 Costo: con $n$ textos que suman $S$ páginas, cada comprobación da $n$ pasos y la
 bisección corre $O(\log S)$ veces, así que el total es $O(n \log S)$.
@@ -63,7 +63,7 @@ dirección*, y medir la distancia de una forma o de otra cambia qué casillas qu
 prohibidas y, con ellas, la respuesta.
 
 - Actividad: [una rejilla con zonas prohibidas](../../../actividades/ayg-puj/grafos-implicitos/zonas.html){ target=_blank rel=noopener }
-- Código: [bosque.py](../B3/codigo/bosque.py) y [bosque.cpp](../B3/codigo/bosque.cpp)
+- Código: [bosque.py](./codigo/bosque.py) y [bosque.cpp](./codigo/bosque.cpp)
 
 Costo: con una rejilla de $R \times C$, el recorrido visita cada casilla una vez y
 mira cuatro vecinas, $O(RC)$. Marcar una criatura de radio $r$ revisa a lo más
@@ -79,7 +79,7 @@ nodos iguales. La trampa es que el grafo puede venir en varios pedazos, así que
 recorrido arranca desde cada nodo que siga sin color.
 
 - Actividad: [dos colores](../../../actividades/ayg-puj/representaciones-y-recorridos/colores.html){ target=_blank rel=noopener }
-- Código: [bipartito.py](../B3/codigo/bipartito.py) y [bipartito.cpp](../B3/codigo/bipartito.cpp)
+- Código: [bipartito.py](./codigo/bipartito.py) y [bipartito.cpp](./codigo/bipartito.cpp)
 
 Costo: con $V$ nodos y $A$ aristas, cada nodo se pinta una vez y cada lista de
 vecinos se revisa una vez, $O(V + A)$.
@@ -89,9 +89,7 @@ vecinos se revisa una vez, $O(V + A)$.
 Invariantes de ciclo escritos como fórmula y demostrados en tres pasos:
 inicialización, estabilidad y terminación. El ciclo de partida es el de UVa 11078,
 con las variables `mayor` y `mejor`, y el ejercicio en papel es el ciclo de UVa 507
-sin el desempate. Las diapositivas y sus soluciones están arriba; el
-[desarrollo de los dos ciclos](../B3/7%20de%20noviembre.%20Bisecci%C3%B3n%20y%20recorridos%20en%20grafos.md#logica)
-está en la página del 7 de noviembre.
+sin el desempate. Las diapositivas y sus soluciones están arriba.
 
 ## Para seguir
 
