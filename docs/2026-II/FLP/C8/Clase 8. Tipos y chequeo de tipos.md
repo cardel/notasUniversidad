@@ -12,6 +12,75 @@ parámetro y `letrec` declara además el del resultado.
 El chequeador no responde qué va a pasar. Responde si puede garantizar que
 nada falle por tipos, que es menos y es decidible.
 
+## Dónde se miran los tipos
+
+Un tipo dice qué valores admite una expresión y qué operaciones tienen sentido
+sobre ella. Un error de tipo es aplicar una operación a un valor cuyas
+características difieren de las que esperaba.
+
+Los lenguajes se reparten en dos ejes, y conviene no confundirlos:
+
+| | Qué hace |
+|---|---|
+| Estático | Decide los tipos antes de ejecutar. Java, Haskell, ML |
+| Dinámico | Etiqueta los valores durante la ejecución. Python, Racket |
+| Fuertemente tipado | No deja pasar una operación entre tipos que no encajan |
+| Débilmente tipado | Convierte de forma implícita, o ignora |
+
+Los dos ejes son independientes, y de ahí salen los casos que sorprenden.
+JavaScript es dinámico y débil, y su igualdad `==` convierte antes de comparar,
+con lo cual deja de ser transitiva:
+
+```javascript
+"0" == 0     // true,  la cadena se convierte a número
+0  == []     // true,  el arreglo se convierte a "" y de ahí a 0
+"0" == []    // false, aquí los dos lados ya son cadenas y se comparan como texto
+```
+
+Las tres comparaciones usan la misma regla. En las dos primeras uno de los
+lados es un número, así que la conversión termina en número; en la tercera los
+dos lados acaban siendo cadenas y la comparación se queda en el texto. Por eso
+el lenguaje ofrece `===`, que compara sin convertir.
+
+Python es dinámico y fuerte, y ahí la diferencia se ve de inmediato: `3 * "5"`
+repite la cadena cinco veces, pero `"3" * "5"` falla, porque multiplicar dos
+cadenas no significa nada y el lenguaje no se inventa una conversión.
+
+El costo del tipado dinámico es que cada operación comprueba en tiempo de
+ejecución, y el error aparece tarde. La alternativa es mirar los tipos antes de
+ejecutar, y para eso hacen falta dos cosas: saber de dónde salen los tipos de
+las variables ligadas, y una regla por cada forma del lenguaje.
+
+## Qué es y qué no es un error de tipo
+
+Son errores de tipo, y el chequeador los atrapa:
+
+- Aplicar un entero o un booleano como si fuera un procedimiento.
+- Aplicar un procedimiento o una primitiva a un número incorrecto de argumentos.
+- Pasarle a una primitiva un argumento del tipo que no espera.
+- Usar un valor que no es booleano como prueba de un condicional.
+
+No son errores de tipo, y el chequeador no dice nada de ellos:
+
+- La división por cero, que es un error de ejecución.
+- Que un programa no termine.
+- El acceso a una estructura vacía.
+
+La distinción no es un detalle. El chequeador promete que ninguna operación va
+a fallar por tipos, y eso es menos de lo que uno quisiera, pero es decidible.
+
+## La anotación que escribe el programador y el tipo que manipula el chequeador
+
+Son dos cosas distintas y se confunden con facilidad. La **expresión de tipo**
+es lo que se escribe en el programa: `int`, `bool`, `(int * int -> bool)`. El
+**tipo** es el valor abstracto que el chequeador compara, construido con
+`atomic-type` y `proc-type`. Entre los dos está `expand-type-expression`, que
+convierte la anotación escrita en el tipo que las reglas manejan.
+
+De vuelta, `type-to-external-form` toma un tipo y lo deja legible. Sin él, el
+tipo de un procedimiento se imprime como el árbol que de verdad es, y con él
+queda `(int * int -> bool)`, que es como se escribe en el programa.
+
 ## La regla de la aplicación
 
 `type-of-application` recibe el tipo del operador y la lista de tipos de los
@@ -28,6 +97,21 @@ Cumplidas las tres, el tipo de la aplicación es el tipo de resultado del
 procedimiento. De ahí sale la lectura que conviene tener a mano: un
 procedimiento de tipo `(int * int -> bool)` recibe dos enteros y entrega un
 booleano, y aplicarlo a dos enteros es una expresión de tipo `bool`.
+
+Las primitivas pasan por esta misma regla, porque su tipo se declara como el
+de un procedimiento: `+` es `(int * int -> int)`, `add1` es `(int -> int)` y
+`zero?` es `(int -> bool)`. Una aplicación y una primitiva terminan las dos en
+`type-of-application`; lo único que cambia es de dónde sale el tipo del
+operador.
+
+Los tres rechazos de esta regla se ven con el mismo programa cambiado tres
+veces:
+
+```text
+let f = proc (int x) x in (5 f)        el operador no es un procedimiento
+let f = proc (bool x) x in (f 10)      el argumento es int y el parámetro bool
+let f = proc (int x) x in (f 10 20)    sobra un argumento
+```
 
 ## La regla del letrec
 
@@ -134,6 +218,19 @@ programa pasa el chequeo y entrega 120.
    coincide con el que espera el parámetro.
 5. Aplicar un procedimiento da su tipo de resultado: a un `(int * int -> bool)`
    se le mandan dos enteros y entrega un booleano.
+
+## Lo que el chequeador no alcanza
+
+Aprobar no es garantizar que el programa termine. Un `letrec` cuyo caso base
+nunca se cumple pasa el chequeo con el tipo que declare y se queda dando
+vueltas: basta cambiar la prueba por `false` para que la recursión no encuentre
+salida. Decidir si un programa termina no se puede hacer mirándolo, y el
+chequeador no lo intenta.
+
+Tampoco alcanza para expresiones a las que no hay tipo que asignarles.
+`proc (int x) (x x)` aplica `x` a sí mismo, de modo que `x` tendría que ser a la
+vez un entero y un procedimiento que recibe ese entero, y no hay anotación que
+cumpla las dos cosas.
 
 ## Ejercicios de la segunda mitad
 
