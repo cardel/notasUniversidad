@@ -75,6 +75,11 @@ Se publican después de cada sesión.
    aliasing, las referencias implícitas con `set`, y las dos políticas de paso
    de parámetros con los programas que las distinguen.
 
+8. [Clase 8. Tipos y chequeo de tipos, 10 de noviembre](C8/Clase%208.%20Tipos%20y%20chequeo%20de%20tipos.md)
+   La regla de la aplicación y la del `letrec`, el factorial tipado paso a
+   paso, cinco intentos que el chequeador rechaza con el mensaje que da cada
+   uno, y las cinco cosas que hay que verificar siempre.
+
 ## Actividades interactivas
 
 Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
