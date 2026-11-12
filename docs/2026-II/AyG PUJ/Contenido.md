@@ -68,6 +68,7 @@ Material de apoyo del corte, que no corresponde a una sesión:
 
 - [Clase 16. Generalidades de los árboles, 30 de octubre](C16/Clase%2016.%20Generalidades%20de%20arboles.md)
 - [Clase 17. El centro de un árbol, 6 de noviembre](C17/Clase%2017.%20El%20centro%20de%20un%20arbol.md)
+- [Clase 18. Árboles de cubrimiento mínimo, 13 de noviembre](C18/Clase%2018.%20Arboles%20de%20cubrimiento%20minimo.md)
 
 ## Clases en video
 
