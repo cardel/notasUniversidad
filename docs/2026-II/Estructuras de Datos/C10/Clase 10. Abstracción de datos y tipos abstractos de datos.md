@@ -21,7 +21,7 @@ preserva.
 
 ## Diapositivas
 
-![](clase10.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase10.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Antes de entrar: la factorización de la arena
 

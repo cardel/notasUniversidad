@@ -18,7 +18,7 @@ en ejecución.
 
 ## Diapositivas
 
-![](clase08.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase08.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que quedó del manejo de memoria
 

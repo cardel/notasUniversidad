@@ -11,7 +11,7 @@ la última, y la ataca sin cronómetro: contando instrucciones.
 
 ## Diapositivas
 
-![](clase03.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase03.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El problema del que salió todo
 

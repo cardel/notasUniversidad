@@ -21,7 +21,7 @@ sobre un arreglo ocupa $\Theta(n)$.
 
 ## Diapositivas
 
-![](clase16.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase16.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que compró el puntero al último
 

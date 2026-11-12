@@ -25,7 +25,7 @@ en el mejor y en el peor caso.
 
 ## Diapositivas
 
-![](clase15.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase15.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El proyecto del curso
 

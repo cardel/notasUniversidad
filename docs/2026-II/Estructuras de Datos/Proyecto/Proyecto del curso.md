@@ -11,7 +11,7 @@ avance 10 y la entrega final con sustentación 20.
 
 ## Enunciado
 
-![](20262-estr-proyecto.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./20262-estr-proyecto.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Cómo se trabaja
 

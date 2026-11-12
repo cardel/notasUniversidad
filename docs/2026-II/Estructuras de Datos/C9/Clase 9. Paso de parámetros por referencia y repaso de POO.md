@@ -20,7 +20,7 @@ deducir el rango de un tipo a partir de sus bits.
 
 ## Diapositivas
 
-![](clase09.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase09.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## La fila de mayor suma
 

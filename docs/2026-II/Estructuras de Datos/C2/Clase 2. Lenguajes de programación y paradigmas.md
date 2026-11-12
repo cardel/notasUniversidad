@@ -11,7 +11,7 @@ archivo de texto de un programa que corre.
 
 ## Diapositivas
 
-![](clase02.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase02.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Repaso: objetos, clases y relaciones
 

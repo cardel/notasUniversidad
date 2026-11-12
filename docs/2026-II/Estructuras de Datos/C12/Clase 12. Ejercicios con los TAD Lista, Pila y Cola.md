@@ -19,7 +19,7 @@ tiempo y en espacio a partir de los costos de las operaciones del contrato.
 
 ## Diapositivas
 
-![](clase12.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase12.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## La Tarea 2
 

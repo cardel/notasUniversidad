@@ -11,7 +11,7 @@ todo lo visto, la notación $O$.
 
 ## Diapositivas
 
-![](clase05.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase05.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El estreno de la arena
 

@@ -21,7 +21,7 @@ en tiempo y en espacio de cada operación en cada combinación.
 
 ## Diapositivas
 
-![](clase17.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase17.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El proyecto del curso
 

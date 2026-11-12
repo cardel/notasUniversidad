@@ -24,7 +24,7 @@ operación de un iterador y cada algoritmo de la sesión.
 
 ## Diapositivas
 
-![](clase14.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase14.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que dejó la STL
 

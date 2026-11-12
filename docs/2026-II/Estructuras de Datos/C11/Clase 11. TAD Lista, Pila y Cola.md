@@ -19,7 +19,7 @@ cada operación y cada función escrita sobre ella.
 
 ## Diapositivas
 
-![](clase11.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase11.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Tres maneras de guardar muchos
 

@@ -23,7 +23,7 @@ barata cuando el contrato ofrece dos caminos.
 
 ## Diapositivas
 
-![](clase13.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase13.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que dejaron los contratos
 

@@ -18,7 +18,7 @@ programa ajeno.
 
 ## Diapositivas
 
-![](clase07.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase07.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El servidor cansado
 

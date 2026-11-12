@@ -22,7 +22,7 @@ El juez del curso es **DOMjudge 7.0.3** y vive en
 
 ## Diapositivas
 
-![](arena.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./arena.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Qué hace el servidor con un envío
 

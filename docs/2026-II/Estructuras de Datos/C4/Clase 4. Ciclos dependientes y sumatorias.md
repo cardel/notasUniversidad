@@ -9,7 +9,7 @@ la clase pasada tiene una letra menuda que toca leer con cuidado.
 
 ## Diapositivas
 
-![](clase04.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase04.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Video de la clase
 

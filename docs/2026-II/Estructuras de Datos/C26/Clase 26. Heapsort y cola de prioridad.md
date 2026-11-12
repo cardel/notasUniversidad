@@ -119,6 +119,12 @@ con raíz en $i$. La traza sobre el arreglo del ejemplo:
 | `bajar(1)` | 44 | 64, luego 58 | 2 | `16 64 92 58 37 13 75 11 44` |
 | `bajar(0)` | 16 | 92, luego 75 | 2 | `92 64 75 58 37 13 16 11 44` |
 
+En `bajar(0)` es fácil detenerse antes de tiempo. Después de cambiar con el
+92, el 16 queda en la casilla 2, con hijos 13 y 75, y ahí todavía es menor que
+el 75. Por eso `bajar` sigue hasta que la clave es mayor que sus dos hijos o
+llega a una hoja. Que los dos subárboles ya fueran montículos es lo que
+permite que un solo recorrido hacia abajo baste.
+
 Con `construirSubiendo` el mismo arreglo queda `92 64 75 44 37 13 58 11 16`,
 con 8 intercambios en vez de 6. Los dos arreglos son montículos de máximos:
 la propiedad no fija un único orden, y la raíz es el 92 en los dos.
@@ -164,6 +170,13 @@ Cada vuelta de `bajar` hace dos comparaciones, y hay una vuelta por
 intercambio más la última de cada llamado, así que las comparaciones son a lo
 sumo $2(2n + n/2) = 5n$: tiempo $O(n)$ con $c = 5$ y $k = 1$. El ciclo visita
 $\lfloor n/2 \rfloor$ casillas, y por eso tampoco baja de lineal: $\Theta(n)$.
+!!! warning "La distancia $h - d$ no es constante"
+
+    Un atajo tentador dice que cada clave baja $h - d$ niveles y que eso es
+    una constante. No lo es: va de 0 en las hojas a $h$ en la raíz. Lo que
+    hace lineal la suma es que los niveles con recorridos largos tienen
+    pocas casillas, y eso solo se ve sumando nivel por nivel, como arriba.
+
 Con 31 claves en orden creciente la cota da exactamente lo medido:
 $2^4 (1/2 + 2/4 + 3/8 + 4/16) = 26$ intercambios.
 
@@ -452,7 +465,9 @@ salen: 64 52 37 15
 
     `int x = pq.pop();` no compila: `pop` es `void`. Primero se lee con
     `top()` y después se saca con `pop()`, y las dos exigen que la cola no
-    esté vacía.
+    esté vacía. Que `pop` no devuelva valor no lo hace *in place*: esa
+    palabra describe un algoritmo que trabaja sin memoria auxiliar
+    proporcional a la entrada, como heapsort.
 
 ### El menor arriba
 

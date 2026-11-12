@@ -14,7 +14,7 @@ este curso el vocabulario de trabajo es $O$.
 
 ## Diapositivas
 
-![](clase06.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+![](./clase06.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## El punto de partida
 
