@@ -39,10 +39,12 @@ $90 - 39 = 51$.
 
     ---
 
-    El deck de la sesión, con el grafo de siete vértices pintado corte por
-    corte, las dos trazas lado a lado, el código de Kruskal y el de las dos
-    versiones de Prim, y el triángulo donde el árbol de caminos más cortos
-    resulta más caro que el árbol mínimo.
+    El deck de la sesión. Cada algoritmo va con su tabla y, al lado, los seis
+    dibujos del grafo con lo que lleva aceptado en cada paso: en Kruskal se
+    ven los pedazos sueltos que después se pegan, y en Prim una sola pieza que
+    se estira. Además, el corte detrás de un paso de cada uno, el código, y el
+    triángulo donde el árbol de caminos más cortos sale más caro que el
+    mínimo.
 
     [:octicons-arrow-right-24: Abrir](./clase18-arboles-cubrimiento-minimo.pdf)
 

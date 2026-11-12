@@ -490,6 +490,12 @@ práctica no se usa.
 | costo | $O(\lvert E\rvert \log \lvert E\rvert)$ | $O(\lvert E\rvert \log \lvert V\rvert)$, o $O(\lvert V\rvert^2)$ |
 | le conviene | grafos ralos | grafos densos |
 
+Dibujados paso a paso sobre el mismo grafo, los dos se distinguen de una
+mirada: lo que Kruskal lleva aceptado son varios pedazos sueltos que solo al
+final se pegan, mientras que lo de Prim es siempre una sola pieza que se
+estira. Esa es la diferencia entre descubrir un corte nuevo cada vez y
+mantenerlo fijo en el borde del árbol.
+
 En un grafo denso, con $|E|$ cerca de $|V|^2$, la búsqueda lineal de Prim
 cuesta $|V|^2$ sin logaritmo ni estructura de por medio, mientras que ordenar
 $|V|^2$ aristas sale más caro. En un grafo ralo pasa lo contrario, y además
