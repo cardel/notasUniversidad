@@ -148,6 +148,7 @@ reuniones docentes y jornada de reflexión.
 | 7 | Listas II: tuplas, ordenamiento por mezcla y alto orden | [once ejercicios: de las tuplas a fold](../../actividades/pfc/ordenamiento-y-alto-orden/index.md) |
 | 8 | Colecciones I: secuencias y conjuntos | [once ejercicios: de escoger la colección a las ternas](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) |
 | 9 | Colecciones II: mapas y flujos | [seis ejercicios: de las consultas a la criba](../../actividades/pfc/colecciones-mapas-y-flujos/index.md) |
+| 10 | Principios y abstracciones de la concurrencia | [nueve ejercicios: de las intercalaciones a Monte Carlo](./C10/Ejercicios.md) |
 
 ## Ejercicios de clase
 
