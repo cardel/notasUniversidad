@@ -98,10 +98,9 @@ Se publican después de cada sesión.
 
 ### Corte 2
 
-10. Clase 10. Principios de concurrencia y paralelismo — 12 de noviembre.
-11. Clase 11. Abstracciones para la concurrencia — 19 de noviembre.
-12. Clase 12. Complejidad de la concurrencia, paralelismo de tareas y de
-    datos — 26 de noviembre.
+10. Clase 10. Principios y abstracciones de la concurrencia — 12 de noviembre.
+11. Clase 11. Complejidad de la concurrencia — 19 de noviembre.
+12. Clase 12. Paralelismo de tareas y de datos — 26 de noviembre.
 
 ## Clases en video
 
@@ -168,8 +167,8 @@ reporta en el Campus Virtual antes de terminar la clase.
 | 8 | [Colecciones I: secuencias, flatMap, for y conjuntos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-09-expresiones-for) |
 | 9 | [Colecciones II: índice, frecuencias, flujos y criba](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-10-maps-y-evaluacion-perezosa) |
 | 10 | [Principios de concurrencia: intercalaciones, carrera y medida](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-11-condiciones-de-carrera) |
-| 11 | [Abstracciones: parallel, umbral, task y Monte Carlo](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-12-parallel-y-task) |
-| 12 | [Complejidad: reduce paralelo, Amdahl y ScalaMeter](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-13-benchmark-scalameter) |
+| 10 | [Abstracciones: parallel, umbral, task y Monte Carlo](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-12-parallel-y-task) |
+| 11 | [Complejidad: reduce paralelo, Amdahl y ScalaMeter](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-13-benchmark-scalameter) |
 | 12 | [Paralelismo de tareas y de datos](https://github.com/EjerciciosClasesCardel/pfc-ejercicio-14-divide-y-venceras-paralelo) |
 
 ## Talleres
