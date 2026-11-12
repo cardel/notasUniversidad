@@ -43,3 +43,13 @@ fuera de la página, y cada actividad dice cuáles son.
    dos actividades: los pliegues de `TimeSeriesSplit` según `n_splits`,
    `test_size` y `gap`, y la rejilla de profundidad y tasa de XGBoost con el
    MAE de validación frente al del *backtest*.
+5. Ejercicios de la semana del 13 y 14 de noviembre: redes neuronales en PyTorch.
+   [El perceptrón multicapa](../../actividades/series-temporales/mlp/index.md),
+   dos actividades: las curvas de pérdida de entrenamiento y validación según
+   el tamaño de la capa oculta y la tasa de aprendizaje, y el pronóstico de
+   2025 según las épocas, con y sin invertir el escalado.
+   [Redes recurrentes](../../actividades/series-temporales/recurrentes/index.md),
+   tres actividades: la ventana de doce meses que lee la red, mes por mes y
+   como tensor; la RNN y la LSTM según los pasos de la ventana y el tamaño
+   del estado, con el pronóstico de 2025; y qué le pasa al MLP y a la LSTM
+   cuando se barajan los rezagos.
