@@ -612,6 +612,44 @@ El caso de ejemplo del enunciado es el grafo de esta sesión, con sus once
 calles sumando $90$ metros. El árbol mínimo pesa $39$, así que la respuesta es
 $90 - 39 = 51$: lo que se ahorra es todo lo que no entra al árbol.
 
+#### La entrada del caso de ejemplo
+
+Antes del código conviene ver la entrada al lado del dibujo. El caso del
+enunciado es este:
+
+```text
+7 11
+0 1 7
+0 3 5
+1 2 8
+1 3 9
+1 4 7
+2 4 5
+3 4 15
+3 5 6
+4 5 8
+4 6 9
+5 6 11
+0 0
+```
+
+| la línea | qué dice | en el dibujo |
+|---|---|---|
+| `7 11` | siete cruces y once calles | el tamaño del grafo |
+| `0 1 7` | calle entre el cruce 0 y el 1, de siete metros | la arista $(0,1)$ con peso $7$ |
+| `3 4 15` | calle entre el 3 y el 4, de quince metros | la arista $(3,4)$, la más larga |
+| `0 0` | no viene otro caso | fin de la entrada |
+
+Las once tripletas son las once aristas del grafo de la sesión, en el mismo
+orden en que aparecen en la tabla de pesos. Los cruces vienen numerados desde
+$0$, de modo que el grafo tiene vértices $0$ a $m-1$ y no hace falta restarle
+uno a nada. Antes de la línea `0 0` puede venir otro caso completo, con su
+propia primera línea y sus propias calles.
+
+La salida es una línea por caso. Para este, las once calles suman $90$ metros,
+el árbol de cubrimiento mínimo pesa $39$, y lo que se puede apagar es
+$90 - 39 = 51$.
+
 #### Cómo leer la entrada
 
 ```cpp
