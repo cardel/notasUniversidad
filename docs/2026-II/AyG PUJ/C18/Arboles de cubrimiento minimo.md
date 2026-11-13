@@ -32,6 +32,16 @@ amortizado de una operación es $O(\alpha(n))$, donde $\alpha$ es la inversa de
 la función de Ackermann, que para cualquier $n$ que quepa en un computador no
 pasa de $4$.
 
+### Las tres operaciones, en tres elementos
+
+Con `make_set(1)`, `make_set(2)` y `make_set(3)` quedan tres árboles de un solo
+nodo, cada uno apuntándose a sí mismo y con rango $0$. `union(1, 2)` encuentra
+las raíces $1$ y $2$, que vienen iguales de rango, así que cuelga la segunda de
+la primera y el rango de $1$ sube a $1$. `union(2, 3)` pide unir $2$ con $3$,
+pero lo que se cuelga es la raíz de $2$, que ya es $1$: el $3$ queda bajo el $1$
+y no bajo el $2$. Al final `find_set` devuelve $1$ para los tres, y por eso los
+tres están en el mismo conjunto.
+
 ### El bosque, con un ejemplo
 
 Cada elemento guarda a quién apunta, y la raíz es quien se apunta a sí mismo.
