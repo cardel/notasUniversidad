@@ -32,11 +32,68 @@ amortizado de una operación es $O(\alpha(n))$, donde $\alpha$ es la inversa de
 la función de Ackermann, que para cualquier $n$ que quepa en un computador no
 pasa de $4$.
 
+### El bosque, con un ejemplo
+
+Cada elemento guarda a quién apunta, y la raíz es quien se apunta a sí mismo.
+Sobre los nueve elementos del ejemplo del curso, después de las uniones
+$(5,1)$, $(1,3)$, $(7,2)$, $(4,8)$, $(6,9)$, $(3,2)$ y $(8,9)$, el bosque
+queda en dos árboles:
+
+| raíz | cuelgan de ella | más abajo | rango |
+|---|---|---|---|
+| 5 | 1, 3, 7 | 2, bajo el 7 | 2 |
+| 4 | 8, 6 | 9, bajo el 6 | 2 |
+
+Las siete llamadas, una por una:
+
+| | llamado | raíces | rangos | qué cambia |
+|---|---|---|---|---|
+| 1 | `union(5, 1)` | 5, 1 | 0 = 0 | `p[1] = 5` y el rango de 5 sube a 1 |
+| 2 | `union(1, 3)` | 5, 3 | 1 > 0 | `p[3] = 5` y el rango se queda |
+| 3 | `union(7, 2)` | 7, 2 | 0 = 0 | `p[2] = 7` y el rango de 7 sube a 1 |
+| 4 | `union(4, 8)` | 4, 8 | 0 = 0 | `p[8] = 4` y el rango de 4 sube a 1 |
+| 5 | `union(6, 9)` | 6, 9 | 0 = 0 | `p[9] = 6` y el rango de 6 sube a 1 |
+| 6 | `union(3, 2)` | 5, 7 | 1 = 1 | `p[7] = 5` y el rango de 5 sube a 2 |
+| 7 | `union(8, 9)` | 4, 6 | 1 = 1 | `p[6] = 4` y el rango de 4 sube a 2 |
+
+Dos cosas se leen en las columnas del medio. Lo que se cuelga son las raíces y
+no los argumentos: la sexta línea pide unir 3 con 2, y lo que se mueve es el 7
+debajo del 5. Y el rango sube en un solo caso, cuando los dos llegan iguales;
+la segunda línea dice por qué, porque ahí el 3 se cuelga de un árbol que ya era
+más alto, así que la altura no cambió y el rango tampoco.
+
+Preguntar si $2$ y $3$ están en el mismo conjunto es subir desde cada uno
+hasta su raíz y comparar: los dos llegan a $5$, así que sí. El rango es una
+cota de la altura y no el tamaño, y por eso el de $5$ es $2$ aunque de él
+cuelguen cuatro elementos.
+
+Al llamar `find_set(9)` el recorrido pasa por $6$ y llega a $4$, y al volver
+reengancha a $9$ directamente bajo $4$. El árbol pierde un nivel sin que nadie
+lo haya pedido, y la siguiente consulta sobre $9$ cuesta un solo salto. Esa es
+la compresión de caminos: no se hace en una pasada aparte, se hace mientras se
+busca.
+
 Lo único que hace falta recordar es que **dos elementos están en el mismo
 conjunto si `find_set` les devuelve la misma raíz**. Esa es, palabra por
 palabra, la pregunta de si dos ciudades ya quedaron conectadas. El detalle de
 la estructura, con su ejemplo paso a paso, está en la
 [nota de conjuntos disjuntos del semestre anterior](../../../2026-I/AyG%20PUJ/C29/Clase%2029%20Union%20Find.md).
+
+### Fuera de Kruskal
+
+La pregunta que los conjuntos disjuntos contestan barato es si dos elementos ya
+se alcanzan, sobre una red a la que le van llegando enlaces. Con un recorrido
+cada pregunta cuesta $O(V + E)$ y hay que volver a recorrer en cuanto entre un
+enlace nuevo; aquí la pregunta cuesta $O(\alpha(n))$ y el enlace nuevo es una
+unión.
+
+De ahí salen tres usos que no tienen que ver con árboles de cubrimiento. En
+segmentación de imágenes hay un elemento por píxel, se unen los vecinos de
+color parecido y cada conjunto queda una región. En percolación se unen las
+celdas abiertas de un material poroso y la pregunta es si el borde de arriba
+quedó en el mismo conjunto que el de abajo. Y un laberinto se genera tumbando
+paredes mientras los dos lados estén en conjuntos distintos, que es Kruskal con
+pesos al azar.
 
 ## El problema
 
@@ -501,6 +558,16 @@ cuesta $|V|^2$ sin logaritmo ni estructura de por medio, mientras que ordenar
 $|V|^2$ aristas sale más caro. En un grafo ralo pasa lo contrario, y además
 Kruskal no necesita tener el grafo armado: le basta la lista de aristas tal
 como viene de la entrada, que es como suelen llegar los problemas de juez.
+
+Eso explica dónde corre cada uno. Kruskal es el que está dentro del
+agrupamiento por enlace simple y de la segmentación de imágenes: ahí el dato
+son las diferencias entre pares y lo que se busca son los pedazos que quedan al
+dejar de unir, que es justo lo que Kruskal tiene a medio camino. Prim sirve
+cuando el peso no está escrito sino que se calcula al momento, como la
+distancia entre $n$ puntos del plano: con búsqueda lineal cuesta $|V|^2$ sin
+guardar una sola arista, mientras que Kruskal tendría que generar y ordenar las
+$n(n-1)/2$. Y el árbol de Prim crece desde un punto, que es el orden en que un
+tendido se instala en terreno.
 
 ### Lo que no cambia el árbol
 

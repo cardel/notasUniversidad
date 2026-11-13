@@ -39,10 +39,11 @@ $90 - 39 = 51$.
 
     ---
 
-    El deck de la sesión. Cada algoritmo va con su tabla y, al lado, los seis
-    dibujos del grafo con lo que lleva aceptado en cada paso: en Kruskal se
-    ven los pedazos sueltos que después se pegan, y en Prim una sola pieza que
-    se estira. Además, el corte detrás de un paso de cada uno, el código, y el
+    El deck de la sesión. Abre con el bosque de conjuntos disjuntos dibujado,
+    con los rangos anotados y el antes y el después de una búsqueda que aplana
+    el camino. Cada algoritmo va con su tabla y, al lado, los seis dibujos del
+    grafo con lo que lleva aceptado en cada paso: en Kruskal se ven los pedazos
+    sueltos que después se pegan, y en Prim una sola pieza que se estira. Además, el corte detrás de un paso de cada uno, el código, y el
     triángulo donde el árbol de caminos más cortos sale más caro que el
     mínimo.
 
@@ -52,6 +53,10 @@ $90 - 39 = 51$.
 
 ## Apuntes de la sesión
 
+- El rango de una raíz acota la altura de su árbol, no cuántos elementos
+  cuelgan de ella. Con cuatro hijos directos el rango sigue siendo 1.
+- La compresión de caminos no va en una pasada aparte: ocurre mientras se
+  busca la raíz, y por eso una unión también deja el bosque más plano.
 - La respuesta nunca tiene ciclos: de un ciclo se puede quitar cualquier arista
   y los dos extremos se siguen alcanzando por el otro lado. Por eso es un árbol
   y tiene $|V|-1$ aristas.
@@ -84,7 +89,9 @@ $90 - 39 = 51$.
 ## Ejercicios
 
 Las actividades interactivas del tema están en la
-[página de ejercicios](../../../actividades/ayg-puj/arboles-cubrimiento-minimo/index.md){ target=_blank rel=noopener }.
+[página de ejercicios](../../../actividades/ayg-puj/arboles-cubrimiento-minimo/index.md){ target=_blank rel=noopener },
+y las de la estructura sobre la que se apoya Kruskal, en la
+[página de conjuntos disjuntos](../../../actividades/ayg-puj/union-find/index.md){ target=_blank rel=noopener }.
 Los ejercicios de la sesión, con sus pistas y los tres problemas de juez con
 enunciado completo, están al final de la
 [nota](./Arboles%20de%20cubrimiento%20minimo.md#ejercicios), y ahí mismo quedó
