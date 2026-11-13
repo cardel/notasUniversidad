@@ -79,7 +79,7 @@ palabra, la pregunta de si dos ciudades ya quedaron conectadas. El detalle de
 la estructura, con su ejemplo paso a paso, está en la
 [nota de conjuntos disjuntos del semestre anterior](../../../2026-I/AyG%20PUJ/C29/Clase%2029%20Union%20Find.md).
 
-### Fuera de Kruskal
+### Para qué más sirven
 
 La pregunta que los conjuntos disjuntos contestan barato es si dos elementos ya
 se alcanzan, sobre una red a la que le van llegando enlaces. Con un recorrido
