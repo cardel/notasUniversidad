@@ -98,7 +98,17 @@ Se publican después de cada sesión.
 
 ### Corte 2
 
-10. Clase 10. Principios y abstracciones de la concurrencia — 12 de noviembre.
+10. [Clase 10. Principios y abstracciones de la concurrencia, 12 de noviembre](C10/Clase%2010.%20Principios%20y%20abstracciones%20de%20la%20concurrencia.md):
+   qué tiene cada hilo y qué comparte con los demás; el no determinismo de dos
+   operaciones sobre el mismo valor; el generador de identificadores que pierde
+   una actualización cuando dos hilos leen antes de escribir; la jerarquía de
+   caché y por qué la visibilidad no se arregla ordenando instrucciones; el
+   cerrojo con `synchronized` y el contador que llega a 2000; el speedup de
+   2,80 frente al 4 que darían cuatro núcleos; `parallel` y los parámetros por
+   nombre; el umbral de divide y vencerás; `task` y dónde va el `join`; y Monte
+   Carlo sin estado compartido. Sus
+   [ejercicios](../../actividades/pfc/concurrencia-hilos-y-carrera/index.md)
+   están publicados.
 11. Clase 11. Complejidad de la concurrencia — 19 de noviembre.
 12. Clase 12. Paralelismo de tareas y de datos — 26 de noviembre.
 
