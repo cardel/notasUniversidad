@@ -332,6 +332,13 @@ Las once aristas en orden ascendente son
 $$(0,3,5),\ (2,4,5),\ (3,5,6),\ (0,1,7),\ (1,4,7),\ (1,2,8),$$
 $$(4,5,8),\ (1,3,9),\ (4,6,9),\ (5,6,11),\ (3,4,15).$$
 
+Hay cuatro pesos repetidos, y entre iguales el orden lo decide la lista de
+entrada, porque el `sorted` de Python es estable: como las aristas están
+escritas por vértice de origen, $(0,3,5)$ queda antes que $(2,4,5)$ y
+$(0,1,7)$ antes que $(1,4,7)$. Ese desempate no cambia la respuesta. Los
+dieciséis órdenes posibles dan este mismo árbol, y lo único que cambia es si
+se miran ocho aristas o nueve.
+
 Antes de leer la tabla vale predecir cuáles entran y en cuál se completa el
 árbol.
 
@@ -810,15 +817,6 @@ longitud pase o no de $r$, y el número de estados sale de contar cuántas
 aristas del árbol son largas: si el árbol tiene $n-1$ aristas y $k$ de ellas
 son vías férreas, los estados son $k+1$. Con $n = 1000$ son casi medio millón
 de aristas, así que conviene ordenarlas una sola vez.
-
-## Lo que sigue
-
-Lo que viene usa un árbol para responder preguntas sobre pedazos de un arreglo:
-la suma de las posiciones de $i$ a $j$, o el mínimo, con el arreglo cambiando
-entre pregunta y pregunta. Con el arreglo quieto, las sumas acumuladas
-contestan cualquier rango en una resta; la pregunta para investigar es qué les
-pasa cuando una posición cambia, y qué se gana guardando la suma de cada mitad,
-y de cada mitad de la mitad, en vez de la de cada prefijo.
 
 ## Referencias
 
