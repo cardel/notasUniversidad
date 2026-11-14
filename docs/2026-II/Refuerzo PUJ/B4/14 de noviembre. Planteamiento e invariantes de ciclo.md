@@ -148,6 +148,7 @@ vecinos se revisa una vez, $O(V + A)$.
 #### En el computador: UVa 10004, Bicoloring
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10004>
+- Actividad: [UVa 10004 paso a paso](../../../actividades/ayg-puj/representaciones-y-recorridos/bicoloring.html){ target=_blank rel=noopener }
 - Enunciado resumido, lectura y trampas: [bicoloring.md](./codigo/bicoloring.md)
 - Solución: [bicoloring.py](./codigo/bicoloring.py) y [bicoloring.cpp](./codigo/bicoloring.cpp)
 

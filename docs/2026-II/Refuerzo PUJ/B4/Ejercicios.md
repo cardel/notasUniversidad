@@ -20,6 +20,12 @@ Se marcan las zonas con la distancia euclidiana y se avanza el frente de la cola
 
 Se escoge el color de cada nodo con la pila de llamadas a la vista, hasta ver el choque en el triángulo y el pedazo que queda sin mirar.
 
+### [UVa 10004, Bicoloring](../../../actividades/ayg-puj/representaciones-y-recorridos/bicoloring.html){ target=_blank rel=noopener }
+
+El código de dos colores sobre los casos del juez: antes de cada nodo se predice su
+color o el choque, y al final de cada caso la salida, `BICOLORABLE.` o
+`NOT BICOLORABLE.`
+
 ## Recorridos: tipos de arista y ciclos
 
 ### [los tipos de arista](../../../actividades/ayg-puj/orden-topologico-dfs-low/aristas.html){ target=_blank rel=noopener }
