@@ -201,6 +201,8 @@ diff salida.out 1.out
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11080>
 - Lectura: [lectura_11080.py](./codigo/lectura_11080.py) y [lectura_11080.cpp](./codigo/lectura_11080.cpp)
+- Enunciado resumido y trampas: [place-the-guards.md](./codigo/place-the-guards.md)
+- Solución: [place-the-guards.py](./codigo/place-the-guards.py) y [place-the-guards.cpp](./codigo/place-the-guards.cpp)
 
 Se ponen guardias en los cruces de modo que cada cruce y cada calle queden
 vigilados, sin dos guardias en los extremos de una misma calle, y se pide el menor
