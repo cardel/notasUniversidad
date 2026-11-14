@@ -42,6 +42,14 @@ casilla apunta a un objeto que vive en otra parte de la memoria. Por eso una
 lista puede guardar cualquier tipo, y `notas[i]` cuesta $\Theta(1)$, como en el
 `vector`.
 
+En Python todo valor es un objeto, también los enteros y los booleanos.
+`sys.getsizeof(8)` da 28 bytes en una máquina de 64 bits, contra los 4 de un
+`int` de C++: el objeto lleva su tipo y su cuenta de referencias. A cambio, un
+entero no se desborda; crece con su valor, y `(2**100)**2` se calcula exacto.
+Cada casilla de la lista es una referencia de 8 bytes, y el objeto al que
+apunta vive aparte. De ahí que Python gaste más memoria y tiempo que C++ en
+las mismas operaciones, aunque los costos asintóticos sean los mismos.
+
 ### Cuando el arreglo se llena
 
 Si queda casilla libre, `append` escribe ahí. Si no, pide un arreglo más grande
@@ -327,6 +335,15 @@ orden sale de `sorted`, en $\Theta(n \log n)$.
     cambiara después de entrar, su hash ya no apuntaría a su casilla. Una tupla
     sí puede ser clave.
 
+Un `set` también hace las operaciones de conjuntos. Con `a = {1, 2, 3, 4}` y
+`b = {1, 2, 4, 5}`, la unión `a | b` es `{1, 2, 3, 4, 5}`, la intersección
+`a & b` es `{1, 2, 4}` y la diferencia `a - b` es `{3}`. Con $n$ y $m$
+elementos y cada búsqueda en $O(1)$ promedio, la unión recorre los dos,
+$O(n + m)$; la intersección recorre el menor y busca en el otro,
+$O(\min(n, m))$; la diferencia recorre `a`, $O(n)$.
+`x in a` pregunta por un elemento, pero `a[0]` da error: un `set` no tiene
+posiciones.
+
 ## heapq: el montículo de Python
 
 `heapq` no es una clase: son funciones que trabajan sobre una `list`
@@ -580,6 +597,12 @@ Las preguntas, en el orden en que se hacen:
 
 La biblioteca estándar de Python no trae un árbol binario de búsqueda
 balanceado: el orden de clave sale de `sorted`.
+
+La elección cambia el orden del costo, no una constante. Buscar en un arreglo
+ordenado con búsqueda binaria cuesta $O(\log n)$ y recorriéndolo, $O(n)$. En
+los grafos, que vienen después, el camino más corto de Dijkstra cuesta
+$O(V^2)$ si el siguiente vértice se busca en una lista y
+$O((V + E) \log V)$ con una cola de prioridad.
 
 ### El botón atrás
 
