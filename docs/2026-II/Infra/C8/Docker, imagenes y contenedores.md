@@ -90,12 +90,42 @@ Dos identificadores distintos, uno por cada árbol de procesos. Dentro del
 contenedor se pueden usar las mismas herramientas de siempre, `ps`, `top`,
 `hostname`, y todas contestan sobre lo que el namespace deja ver.
 
+El anfitrión, en cambio, no ve un bulto: ve cada proceso del contenedor por
+separado, con su propio número en la numeración de la máquina. Un contenedor
+que arranque tres procesos aparece como tres procesos en el `ps` del anfitrión,
+y el que adentro es el número uno es el que `docker inspect` devuelve en
+`.State.Pid`. Eso funciona porque en Linux los procesos también son archivos,
+bajo `/proc`, y el namespace solo cambia qué parte de ese árbol se alcanza
+desde dentro.
+
 De ahí sale la idea que conviene no perder: **Docker no inventa el
 aislamiento**, lo pide prestado al núcleo. Cuando alguien se escapa de un
 contenedor, la falla no está en Docker, está en el núcleo de Linux.
 
-Un detalle de instalación que ahorra escribir `sudo` en cada orden: la cuenta
-tiene que pertenecer al grupo `docker`.
+### Aislado no es seguro
+
+El aislamiento separa, pero no blinda. El namespace de usuarios es el mismo a
+los dos lados mientras no se diga otra cosa, así que `root` dentro del
+contenedor es `root` de la máquina, y un proceso que se salga del namespace de
+montaje sale con esos permisos. De ahí tres costumbres.
+
+La primera es no correr la aplicación como `root`. En el `Dockerfile` se crea
+una cuenta sin privilegios y se cambia a ella antes del `CMD`:
+
+```dockerfile
+RUN useradd --create-home appuser
+USER appuser
+```
+
+La segunda es no montar el sistema de archivos del anfitrión dentro de un
+contenedor ni pasarle el socket de Docker, porque cualquiera de las dos le
+entrega la máquina entera a quien esté adentro.
+
+La tercera es de instalación, y conviene saber qué significa. Pertenecer al
+grupo `docker` evita escribir `sudo` en cada orden, pero quien puede hablarle
+al demonio puede levantar un contenedor que monte todo el disco, así que ese
+grupo equivale a `root` en esa máquina. Lo que de verdad baja el privilegio es
+el modo sin raíz, donde el propio demonio corre sin ser `root`.
 
 ## Lo que el contenedor ve y lo que puede consumir
 
@@ -219,7 +249,9 @@ locales que no sirven dentro de la imagen. Lo que no debe entrar se escribe en
 un archivo `.dockerignore`, igual que se hace con `.gitignore`.
 
 Agregar una instrucción **al final** del `Dockerfile` no invalida nada de lo de
-arriba: se ejecuta esa sola y el resto sigue viniendo de la caché.
+arriba: se ejecuta esa sola y el resto sigue viniendo de la caché. Y cuando hay
+que comprobar que la imagen se construye de cero, `docker build --no-cache`
+ignora todas las capas guardadas y vuelve a ejecutar cada instrucción.
 
 ### Errores que se pagan después
 
@@ -246,6 +278,24 @@ Un contenedor se crea, arranca, se puede pausar, se detiene y se elimina:
 docker create   docker start   docker stop   docker pause   docker rm
 docker ps       # los que están corriendo
 docker ps -a    # todos, incluidos los detenidos
+```
+
+Parar y pausar no son lo mismo: el detenido termina sus procesos y los vuelve a
+arrancar con el siguiente `docker start`, mientras que el pausado los deja
+congelados donde estaban.
+
+`docker ps -a` lista los contenedores que existen, corriendo o detenidos. Los
+que se borraron no salen, porque dejaron de existir:
+
+```bash
+docker rm -f db
+docker ps -a --filter name=db --filter name=efimero --format 'table {{.Names}}\t{{.Status}}'
+```
+
+```
+NAMES     STATUS
+efimero   Up 9 seconds
+db2       Up 32 seconds
 ```
 
 Las banderas de `docker run` que se usaron:
@@ -309,9 +359,35 @@ una nota
 cat: /tmp/nota.txt: No such file or directory
 ```
 
-El segundo contenedor es otro y no ve nada de lo que escribió el primero. Lo
-que tenga que durar va en un **volumen**, que se comporta como un disco que se
-conecta al contenedor:
+El segundo contenedor es otro y no ve nada de lo que escribió el primero.
+
+Lo que mata esa capa es borrar el contenedor, no detenerlo. El mismo
+contenedor parado y vuelto a arrancar encuentra lo suyo donde lo dejó:
+
+```bash
+docker exec efimero sh -c 'echo "una nota" > /tmp/nota.txt'
+docker stop efimero && docker start efimero
+docker exec efimero cat /tmp/nota.txt
+```
+
+```
+una nota
+```
+
+Recreado desde la imagen, no:
+
+```bash
+docker rm -f efimero
+docker run -d --name efimero python:3.12-slim sleep 300
+docker exec efimero cat /tmp/nota.txt
+```
+
+```
+cat: /tmp/nota.txt: No such file or directory
+```
+
+Lo que tenga que durar va en un **volumen**, que se comporta como un disco que
+se conecta al contenedor:
 
 ```bash
 docker volume create datos
@@ -328,16 +404,70 @@ El primer contenedor escribió y desapareció; el segundo encontró el archivo. 
 volúmenes se listan con `docker volume ls`, se miran con `docker volume inspect`
 y los que no use nadie se borran con `docker volume prune`.
 
-El caso que obliga a entenderlos es una base de datos. PostgreSQL guarda sus
-datos en `/var/lib/postgresql/data`, así que sin un volumen montado ahí, cada
-vez que el contenedor se cae y vuelve a levantarse la base amanece vacía. El
-proyecto final pide volúmenes justamente por esto.
+Un volumen es una carpeta del disco del anfitrión, y `docker volume inspect`
+dice cuál:
+
+```bash
+docker volume inspect datos --format '{{.Mountpoint}}'
+```
+
+```
+/var/lib/docker/volumes/datos/_data
+```
+
+De ahí se sigue algo que hay que tener claro antes de confiarle datos: el
+volumen vive en esa máquina y no viaja con la imagen. Cambiar de computador
+deja los datos atrás, y moverlos es un trabajo aparte.
+
+El caso que obliga a entenderlos es una base de datos. PostgreSQL guarda lo
+suyo en `/var/lib/postgresql/data`, así que basta montar un volumen ahí para
+que la base sobreviva al contenedor:
+
+```bash
+docker volume create pgdata
+docker run -d --name db -e POSTGRES_PASSWORD=ejemplo \
+    -v pgdata:/var/lib/postgresql/data postgres:16
+docker exec db psql -U postgres -c "create table nota (texto text);"
+docker exec db psql -U postgres -c "insert into nota values ('persiste');"
+docker rm -f db
+docker run -d --name db2 -e POSTGRES_PASSWORD=ejemplo \
+    -v pgdata:/var/lib/postgresql/data postgres:16
+docker exec db2 psql -U postgres -c "select * from nota;"
+```
+
+```
+CREATE TABLE
+INSERT 0 1
+  texto
+----------
+ persiste
+(1 row)
+```
+
+El contenedor que creó la tabla ya no existe y la fila sigue ahí. Sin el
+volumen, el segundo contenedor inicializa la base desde cero y la consulta
+falla con `relation "nota" does not exist`. El proyecto final pide volúmenes
+justamente por esto.
 
 ## Redes
 
 Una red de Docker es un puente virtual con su propio espacio de nombres de red,
-que decide quién alcanza a quién. La de por defecto es `bridge`, y por ahí los
-contenedores salen a internet por NAT.
+que decide quién alcanza a quién. Una instalación nueva trae tres:
+
+```bash
+docker network ls
+```
+
+```
+NETWORK ID     NAME      DRIVER    SCOPE
+3348fa7ac315   bridge    bridge    local
+cafd577edf74   host      host      local
+04a729d115d0   none      null      local
+```
+
+`bridge` es la de por defecto y por ahí los contenedores salen a internet por
+NAT; `host` pone al contenedor en la pila de red del anfitrión, sin aislarlo;
+y `none` lo deja sin más red que su propio bucle local.
 
 NAT es lo que evitó que las direcciones IPv4 se acabaran: un grupo de máquinas
 comparte una dirección pública y se distinguen por el puerto. Con unos 65.535
@@ -361,7 +491,9 @@ ocurre y hay que andar con direcciones.
 
 Y ahí aparece el otro uso, que es aislar: si la base de datos vive solo en la
 red `app` y únicamente la API publica un puerto hacia fuera, la base no es
-alcanzable desde la máquina ni desde internet.
+alcanzable desde la máquina ni desde internet. Un contenedor que ya está
+corriendo se suma a una red con `docker network connect app <contenedor>`, sin
+volver a crearlo.
 
 ## Publicar una imagen
 
@@ -398,7 +530,10 @@ varios:
   hace.
 
 De ahí salen las dos piezas que siguen, Docker Compose para describir el
-conjunto en un archivo, y Kubernetes para la orquestación sobre varias máquinas.
+conjunto en un archivo, y Kubernetes para la orquestación sobre varias
+máquinas. La palabra viene de donde parece: en una orquesta cada músico sabe
+tocar lo suyo y con eso no basta, porque alguien tiene que decidir quién entra,
+cuándo y en qué orden para que aquello suene.
 
 ## Para seguir
 

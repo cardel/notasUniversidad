@@ -17,12 +17,13 @@ que tiene que sobrevivir cuando el contenedor se borre.
     ---
 
     Lo que se vio en la sesión, con las trazas que devolvieron las órdenes: el
-    mismo proceso numerado a los dos lados del namespace, los 1,5 núcleos del
-    cgroup frente a los doce que informa `nproc`, el `Dockerfile` del servicio
-    que se levantó en clase y el orden que le cuesta tres veces más a una
-    reconstrucción, qué significa escuchar en `0.0.0.0`, el archivo que
-    desaparece con el contenedor y el que sobrevive en un volumen, y el nombre
-    que se resuelve solo dentro de una red creada a mano.
+    mismo proceso numerado a los dos lados del namespace, por qué `root` dentro
+    es `root` fuera, los 1,5 núcleos del cgroup frente a los doce que informa
+    `nproc`, el `Dockerfile` del servicio que se levantó en clase y el orden
+    que le cuesta tres veces más a una reconstrucción, qué significa escuchar
+    en `0.0.0.0`, el archivo que sobrevive a un reinicio y se pierde al recrear
+    el contenedor, la tabla de PostgreSQL que persiste en su volumen, y el
+    nombre que se resuelve solo dentro de una red creada a mano.
 
     [:octicons-arrow-right-24: Entrar](./Docker,%20imagenes%20y%20contenedores.md)
 
