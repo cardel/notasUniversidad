@@ -144,6 +144,21 @@ recorrido arranca desde cada nodo que siga sin color.
 Costo: con $V$ nodos y $A$ aristas, cada nodo se pinta una vez y cada lista de
 vecinos se revisa una vez, $O(V + A)$.
 
+
+#### En el computador: UVa 10004, Bicoloring
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10004>
+- Enunciado resumido, lectura y trampas: [bicoloring.md](./codigo/bicoloring.md)
+- Solución: [bicoloring.py](./codigo/bicoloring.py) y [bicoloring.cpp](./codigo/bicoloring.cpp)
+
+Es el mismo problema de dos colores con la entrada de un juez: varios casos, cada
+uno con $n$ nodos y $l$ aristas, hasta un $n = 0$, y la salida `BICOLORABLE.` o
+`NOT BICOLORABLE.` El grafo es conexo, así que un solo recorrido desde 0 pinta
+todos los nodos. La trampa es crear de nuevo los colores y las listas en cada
+caso.
+
+Costo: $O(n + l)$ por caso.
+
 ## Lógica
 
 Invariantes de ciclo escritos como fórmula y demostrados en tres pasos:
@@ -158,7 +173,7 @@ costo y se envía al juez.
 
 ### Archivos de lectura
 
-UVa 1203, UVa 10341, UVa 11413 y UVa 10810 tienen un fragmento con la lectura
+UVa 1203, UVa 10341, UVa 11413, UVa 10810 y UVa 11080 tienen un fragmento con la lectura
 de la entrada y un comentario donde va el algoritmo. Están en la carpeta
 [codigo](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/Refuerzo%20PUJ/B4/codigo)
 de esta sesión:
@@ -169,6 +184,7 @@ de esta sesión:
 | UVa 10341 | [lectura_10341.py](./codigo/lectura_10341.py) | [lectura_10341.cpp](./codigo/lectura_10341.cpp) |
 | UVa 11413 | [lectura_11413.py](./codigo/lectura_11413.py) | [lectura_11413.cpp](./codigo/lectura_11413.cpp) |
 | UVa 10810 | [lectura_10810.py](./codigo/lectura_10810.py) | [lectura_10810.cpp](./codigo/lectura_10810.cpp) |
+| UVa 11080 | [lectura_11080.py](./codigo/lectura_11080.py) | [lectura_11080.cpp](./codigo/lectura_11080.cpp) |
 
 El fragmento se copia dentro de un programa con sus `#include` y su `main` en C++,
 o con `import sys` en Python, y se completa con la solución. La muestra del
@@ -179,6 +195,21 @@ g++ -std=c++17 -Wall -Wextra solucion.cpp -o solucion
 ./solucion < 1.in > salida.out
 diff salida.out 1.out
 ```
+
+### Propuesto. UVa 11080, Place the Guards
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11080>
+- Lectura: [lectura_11080.py](./codigo/lectura_11080.py) y [lectura_11080.cpp](./codigo/lectura_11080.cpp)
+
+Se ponen guardias en los cruces de modo que cada cruce y cada calle queden
+vigilados, sin dos guardias en los extremos de una misma calle, y se pide el menor
+número de guardias, o `-1` si no se puede. Los guardias de un pedazo del grafo son
+justamente uno de los dos colores, así que en cada pedazo se pinta con dos colores
+y se suma el color menos usado. Las trampas: el grafo puede venir en varios
+pedazos, así que el coloreo arranca desde cada nodo sin color; si un pedazo choca
+la respuesta es `-1`; y un cruce sin calles necesita su propio guardia.
+
+Costo: $O(v + e)$ por caso.
 
 ### Propuesto. UVa 1203, Argus
 
