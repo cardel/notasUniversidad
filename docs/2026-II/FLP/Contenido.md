@@ -183,7 +183,29 @@ Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
 es la dirección del fork con el identificador del último commit, que se
 reporta en el Campus Virtual antes de terminar la clase.
 
-*Aún no hay ejercicios publicados.*
+Uno por tema, en el orden en que se vieron:
+
+1. Recursión y ligadura:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-01-recursion-y-ligadura`
+2. Representación de datos:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-02-representacion-datos`
+3. Sintaxis abstracta:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-03-sintaxis-abstracta`
+4. Literales y primitivas:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-04-literales-primitivas`
+5. Procedimientos:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-05-procedimientos`
+6. Recursión:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-06-recursion`
+7. Asignación:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-07-asignacion`
+8. Chequeo de tipos:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-08-chequeo-tipos`
+
+Cada uno llega con el interpretador de su sesión resuelto hasta donde iba, los
+huecos por llenar y la batería que dice si va bien. Las pruebas corren con
+`raco test pruebas/`, y al hacer fork hay que entrar a la pestaña Actions y
+habilitar los workflows para que se ejecuten solas en cada push.
 
 ## Clases en video
 
