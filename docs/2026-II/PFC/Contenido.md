@@ -194,6 +194,7 @@ ejemplos de los informes.
 | 1 | [Cifrados clásicos con recursión](https://github.com/EjerciciosClasesCardel/pfc-taller-1-cifrados-clasicos) | jueves 8 de octubre, 23:59 |
 | 2 | [Un robot en la cuadrícula](https://github.com/EjerciciosClasesCardel/pfc-taller-2-robot-en-cuadricula) | jueves 22 de octubre, 23:59 |
 | 3 | [Consulta sobre un registro sísmico](https://github.com/EjerciciosClasesCardel/pfc-taller-3-registro-sismico) | jueves 12 de noviembre, 23:59 |
+| 4 | [Simulación de partículas en paralelo](https://github.com/EjerciciosClasesCardel/pfc-taller-4-simulacion-particulas) | jueves 26 de noviembre, 23:59 |
 
 ## Reglas del código
 
