@@ -66,6 +66,36 @@ siempre conserva la arista que le llega desde el anterior.
 
 Costo: contar los grados y vaciar la cola recorren cada arista una vez, $O(V + A)$.
 
+#### En el computador: UVa 10305, Ordering Tasks
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-10305>
+- Actividad: [tareas](../../../actividades/ayg-puj/orden-topologico-kahn/tareas.html){ target=_blank rel=noopener }
+- Enunciado resumido, lectura y trampas: [ordering-tasks.md](./codigo/ordering-tasks.md)
+- Solución: [ordering-tasks.py](./codigo/ordering-tasks.py) y [ordering-tasks.cpp](./codigo/ordering-tasks.cpp)
+
+Tareas con relaciones de precedencia, sin ciclos: se imprime cualquier orden en que
+se puedan hacer. Es Kahn tal cual, y el orden en que las tareas salen de la cola es
+la respuesta. El grado de entrada se cuenta al leer: con cada relación `i j` se suma
+1 a `entrada[j]`. Con la muestra sale `1 4 2 5 3`, la del enunciado.
+
+Costo: $O(n + m)$ por caso.
+
+#### En el computador: UVa 11686, Pick up sticks, con Kahn
+
+- Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11686>
+- Actividad: [ciclo](../../../actividades/ayg-puj/orden-topologico-kahn/ciclo.html){ target=_blank rel=noopener }
+- Solución: [pick-up-sticks-kahn.py](./codigo/pick-up-sticks-kahn.py) y [pick-up-sticks-kahn.cpp](./codigo/pick-up-sticks-kahn.cpp)
+
+El mismo problema de los tres estados, ahora con amplitud. Un palito se recoge
+cuando ya se recogieron los que tiene encima, así que su grado de entrada es cuántos
+lo tapan. El orden en que salen de la cola es la respuesta, y si no salen los $n$
+palitos hay un ciclo y se imprime `IMPOSSIBLE`. Sin recursión no hay pila que
+reviente: la cadena de un millón de palitos tarda 0,3 s en C++ y 2,0 s en Python. El
+orden que da no es el de la profundidad, y el juez acepta cualquiera que respete los
+pares.
+
+Costo: $O(n + m)$ por caso.
+
 ### Para el computador: recorrer sin usar caminos cerrados
 
 Hay lugares con nombre unidos por caminos de sentido único, algunos cerrados, y un

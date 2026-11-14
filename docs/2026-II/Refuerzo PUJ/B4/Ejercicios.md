@@ -47,6 +47,11 @@ Los grados de entrada y la cola, paso a paso.
 
 La cola se vacía antes de tiempo: cuántos nodos alcanzan a salir y quiénes se quedan.
 
+### [tareas](../../../actividades/ayg-puj/orden-topologico-kahn/tareas.html){ target=_blank rel=noopener }
+
+UVa 10305, Ordering Tasks, con otra instancia: la lectura, la lista de adyacencia
+que construye y el orden que imprime Kahn.
+
 ## Invariantes de ciclo
 
 ### [sumar](../../../actividades/ayg-puj/recursion/sumar.html){ target=_blank rel=noopener }
