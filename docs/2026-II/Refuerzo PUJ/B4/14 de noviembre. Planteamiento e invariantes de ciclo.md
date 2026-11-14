@@ -201,6 +201,7 @@ diff salida.out 1.out
 
 - Enunciado y envío, con cuenta de vjudge: <https://vjudge.net/problem/UVA-11080>
 - Lectura: [lectura_11080.py](./codigo/lectura_11080.py) y [lectura_11080.cpp](./codigo/lectura_11080.cpp)
+- Actividad: [UVa 11080 paso a paso](../../../actividades/ayg-puj/representaciones-y-recorridos/guardias.html){ target=_blank rel=noopener }
 - Enunciado resumido y trampas: [place-the-guards.md](./codigo/place-the-guards.md)
 - Solución: [place-the-guards.py](./codigo/place-the-guards.py) y [place-the-guards.cpp](./codigo/place-the-guards.cpp)
 

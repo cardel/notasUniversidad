@@ -26,6 +26,12 @@ El código de dos colores sobre los casos del juez: antes de cada nodo se predic
 color o el choque, y al final de cada caso la salida, `BICOLORABLE.` o
 `NOT BICOLORABLE.`
 
+### [UVa 11080, Place the Guards](../../../actividades/ayg-puj/representaciones-y-recorridos/guardias.html){ target=_blank rel=noopener }
+
+Los guardias son uno de los dos colores de cada pedazo: se pinta cada pedazo, se
+escoge cuántos guardias aporta y al final la salida, que es `-1` si algún pedazo
+choca.
+
 ## Recorridos: tipos de arista y ciclos
 
 ### [los tipos de arista](../../../actividades/ayg-puj/orden-topologico-dfs-low/aristas.html){ target=_blank rel=noopener }
