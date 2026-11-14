@@ -177,6 +177,16 @@ quedan disponibles después para volver sobre el tema.
    parámetros y `apply-tenv`, y después la regla del condicional y la de la
    aplicación con los tipos ya calculados.
 
+10. [Ejercicios de la clase 9: inferencia de tipos](../../actividades/flp/inferencia-de-tipos/index.md)
+   Cinco actividades en el orden de los temas de la sesión: qué cambia cuando
+   la anotación se escribe `?` y el tipo se deduce, qué es una variable de
+   tipo y cuándo dos partes del programa tienen que llevar la misma, cómo se
+   genera el sistema de ecuaciones de un programa ecuación por ecuación, cómo
+   se resuelve ese sistema unificando, y qué tipo infiere el interpretador
+   para una expresión dada. La de ecuaciones sube de una sola ecuación hasta
+   cinco, y la de unificación cierra con el chequeo de ocurrencia, que es lo
+   que hace fallar a `proc (? x) (x x)`.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
