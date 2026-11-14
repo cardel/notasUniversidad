@@ -20,6 +20,21 @@ Se marcan las zonas con la distancia euclidiana y se avanza el frente de la cola
 
 Se escoge el color de cada nodo con la pila de llamadas a la vista, hasta ver el choque en el triángulo y el pedazo que queda sin mirar.
 
+## Recorridos: tipos de arista y ciclos
+
+### [los tipos de arista](../../../actividades/ayg-puj/orden-topologico-dfs-low/aristas.html){ target=_blank rel=noopener }
+
+Antes de que la profundidad pinte cada arista hay que predecir si es de árbol, de
+retroceso, de avance o cruzada, en un grafo dirigido y en el mismo sin flechas.
+
+### [kahn](../../../actividades/ayg-puj/orden-topologico-kahn/kahn.html){ target=_blank rel=noopener }
+
+Los grados de entrada y la cola, paso a paso.
+
+### [ciclo](../../../actividades/ayg-puj/orden-topologico-kahn/ciclo.html){ target=_blank rel=noopener }
+
+La cola se vacía antes de tiempo: cuántos nodos alcanzan a salir y quiénes se quedan.
+
 ## Invariantes de ciclo
 
 ### [sumar](../../../actividades/ayg-puj/recursion/sumar.html){ target=_blank rel=noopener }

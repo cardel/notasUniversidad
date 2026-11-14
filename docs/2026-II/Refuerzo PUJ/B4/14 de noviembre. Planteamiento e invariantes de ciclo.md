@@ -4,7 +4,10 @@
 cómo se plantea la solución de un problema antes de escribir código: la bisección
 sobre la respuesta para repartir textos entre empleados, el recorrido en amplitud
 sobre una rejilla con zonas prohibidas y el recorrido en profundidad que pinta un
-grafo con dos colores. La hora de lógica trabaja los invariantes de ciclo de
+grafo con dos colores. La profundidad se completa con los tipos de arista que
+encuentra en un grafo dirigido y en uno no dirigido, y la amplitud con dos usos más:
+detectar ciclos con los grados de entrada y recorrer sin usar caminos cerrados. La
+hora de lógica trabaja los invariantes de ciclo de
 UVa 11078 y el ejercicio en papel de UVa 507.
 
 ## Diapositivas
@@ -19,7 +22,64 @@ Cada uno de los tres problemas resuelto paso a paso, con su traza y su costo.
 
 ![](./Soluciones-planteamiento.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
-### Lógica
+### Recorridos: tipos de arista, ciclos y caminos cerrados
+
+![](./Recorridos.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+### Soluciones de recorridos
+
+El código de cada recorrido en Python y en C++, con sus bordes, su costo y la traza
+del ejercicio de los caminos cerrados.
+
+![](./Soluciones-recorridos.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
+#### Los tipos de arista en un recorrido en profundidad
+
+Cuando la profundidad mira una arista $u \to v$, el estado de $v$ dice qué clase
+de arista es. Si $v$ está blanco, es de **árbol** y el recorrido baja a $v$. Si
+está gris, $v$ es un ancestro de $u$ en el camino actual: es de **retroceso**, y
+esa arista cierra un ciclo. Si está negro, ya terminó: es de **avance** cuando
+$u.d < v.d$ y **cruzada** cuando $u.d > v.d$. En un grafo dirigido aparecen los
+cuatro tipos y hay ciclo exactamente cuando aparece una de retroceso.
+
+En un grafo no dirigido cada arista está en las dos listas, y solo aparecen
+aristas de árbol y de retroceso. La arista de vuelta al padre no cuenta: sin el
+parámetro `padre`, cada arista de árbol se confundiría con un ciclo. Y cuando un
+nodo encuentra a un vecino negro, es la misma arista de retroceso vista desde el
+otro extremo.
+
+- Actividad: [los tipos de arista](../../../actividades/ayg-puj/orden-topologico-dfs-low/aristas.html){ target=_blank rel=noopener }
+- Código: [aristas.py](./codigo/aristas.py), [aristas.cpp](./codigo/aristas.cpp), [aristas_no_dirigido.py](./codigo/aristas_no_dirigido.py) y [aristas_no_dirigido.cpp](./codigo/aristas_no_dirigido.cpp)
+
+Costo: cada nodo se visita una vez y cada lista se recorre una vez, $O(V + A)$.
+
+### Ciclos con amplitud: los grados de entrada
+
+Se cuenta cuántas aristas llegan a cada nodo y se ponen en una cola los que no
+tienen ninguna. Al sacar un nodo se baja en uno el grado de sus vecinos, y entra a
+la cola el que llega a cero. Si salen todos los nodos, no hay ciclo; si no, los que
+se quedan son los del ciclo y los que dependen de él, porque un nodo de un ciclo
+siempre conserva la arista que le llega desde el anterior.
+
+- Actividades: [kahn](../../../actividades/ayg-puj/orden-topologico-kahn/kahn.html){ target=_blank rel=noopener } y [ciclo](../../../actividades/ayg-puj/orden-topologico-kahn/ciclo.html){ target=_blank rel=noopener }
+- Código: [kahn.py](./codigo/kahn.py) y [kahn.cpp](./codigo/kahn.cpp)
+
+Costo: contar los grados y vaciar la cola recorren cada arista una vez, $O(V + A)$.
+
+### Para el computador: recorrer sin usar caminos cerrados
+
+Hay lugares con nombre unidos por caminos de sentido único, algunos cerrados, y un
+lugar de partida. Se pide la lista de lugares a los que se llega sin usar un camino
+cerrado, cada uno una vez. Los nombres pasan a índices con un diccionario, los
+caminos cerrados se guardan como pares en un conjunto, y el recorrido no toma una
+arista cuyo par esté ahí. La trampa: cerrar el camino de A a B no cierra el de B
+a A.
+
+- Código: [cerrados.py](./codigo/cerrados.py) y [cerrados.cpp](./codigo/cerrados.cpp)
+
+Costo: $O(V + A)$ del recorrido, más la consulta al conjunto por cada arista.
+
+## Lógica
 
 ![](./Logica.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
