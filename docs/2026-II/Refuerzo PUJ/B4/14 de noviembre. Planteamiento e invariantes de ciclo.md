@@ -10,6 +10,19 @@ detectar ciclos con los grados de entrada y recorrer sin usar caminos cerrados. 
 hora de lógica trabaja los invariantes de ciclo de
 UVa 11078 y el ejercicio en papel de UVa 507.
 
+## Sesión
+
+- [Sesión 4. Recorridos, Kahn e invariantes](./Notas.%20Recorridos%2C%20Kahn%20e%20invariantes.md):
+  los tipos de arista del recorrido en profundidad, UVa 11080 resuelto con dos
+  colores, Kahn con UVa 10305 y los invariantes de la mayor diferencia hacia
+  adelante.
+- [recorridos-anotada.pdf](./recorridos-anotada.pdf){ target=_blank rel=noopener }
+  y [logica-anotada.pdf](./logica-anotada.pdf){ target=_blank rel=noopener }:
+  los decks de recorridos y de lógica con lo escrito durante la sesión y las
+  hojas de tablero.
+- La grabación, partida en videos cortos por tema, está en la
+  [lista de reproducción del refuerzo](https://www.youtube.com/playlist?list=PLKsjj1jEesqU){ target=_blank rel=noopener }.
+
 ## Diapositivas
 
 ### Programación
