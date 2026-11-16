@@ -60,3 +60,10 @@ fuera de la página, y cada actividad dice cuáles son.
    mes a mes en 2025; sobre qué modelo base vale un híbrido, según la
    autocorrelación de su residuo; y la `Conv1d` según el núcleo y el número
    de filtros.
+7. Ejercicios de la semana del 20 y 21 de noviembre: autoatención y Transformers.
+   [Autoatención y Transformers](../../actividades/series-temporales/atencion/index.md),
+   cuatro actividades: la cuenta de un cabezal de atención sobre cuatro meses,
+   con consultas, claves, valores, puntajes y pesos; la tabla de senos y
+   cosenos de la posición y los pesos que aprendió el Transformer de la
+   sesión; los parámetros de la red contra los 110 meses de la serie; y qué
+   modelo usar para pronosticar diciembre de 2025.
