@@ -53,3 +53,10 @@ fuera de la página, y cada actividad dice cuáles son.
    como tensor; la RNN y la LSTM según los pasos de la ventana y el tamaño
    del estado, con el pronóstico de 2025; y qué le pasa al MLP y a la LSTM
    cuando se barajan los rezagos.
+6. Ejercicios de la semana del 20 y 21 de noviembre: redes convolucionales e híbridos.
+   [Redes convolucionales e híbridos](../../actividades/series-temporales/convolucionales/index.md),
+   cuatro actividades: el filtro de tres pesos sobre la ventana, con el mapa
+   que deja y los pesos que aprende; el SARIMA con una red sobre su residuo,
+   mes a mes en 2025; sobre qué modelo base vale un híbrido, según la
+   autocorrelación de su residuo; y la `Conv1d` según el núcleo y el número
+   de filtros.
