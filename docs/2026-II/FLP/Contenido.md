@@ -80,6 +80,13 @@ Se publican después de cada sesión.
    paso, cinco intentos que el chequeador rechaza con el mensaje que da cada
    uno, y las cinco cosas que hay que verificar siempre.
 
+9. [Clase 9. Inferencia de tipos, 17 de noviembre](C9/Clase%209.%20Inferencia%20de%20tipos.md)
+   El hueco que deja `?`, la variable de tipo con su contenedor de una sola
+   escritura, las ecuaciones que genera cada forma del lenguaje, la
+   unificación con sus seis casos y los tres errores con el mensaje de cada
+   uno, por qué la identidad no admite dos usos distintos, y dos exámenes
+   viejos resueltos.
+
 ## Actividades interactivas
 
 Se trabajan en el navegador, sin instalar nada. Cada sesión deja la suya, y
@@ -211,6 +218,8 @@ Uno por tema, en el orden en que se vieron:
    `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-07-asignacion`
 8. Chequeo de tipos:
    `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-08-chequeo-tipos`
+9. Inferencia de tipos:
+   `https://github.com/EjerciciosClasesCardel/flp-2026-2-tema-09-inferencia`
 
 Cada uno llega con el interpretador de su sesión resuelto hasta donde iba, los
 huecos por llenar y la batería que dice si va bien. Las pruebas corren con
