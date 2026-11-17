@@ -239,6 +239,10 @@ las reglas de tipamiento una por una, el TAD del tipo, qué alcanza a decidir
 el chequeador antes de correr y por qué rechaza programas que habrían
 funcionado.
 
+## Los apuntes del tablero
+
+![](attachments/2026-11-10-Note-11-39-FLP.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
+
 ## Lo que sigue
 
 El chequeador funciona porque el programador anota los tipos, y esas

@@ -140,6 +140,40 @@ de ese procedimiento es `ta`, llena `t1` con `int`. El sistema queda resuelto:
 int
 ```
 
+![El ejercicio del tablero: el programa de func y res, las ecuaciones tfunc = tf * tx -> t1 y tf = int * bool -> t1, los recuadros con tx = int, t3 = int y t4 = bool, el tipo de f resuelto en int * bool -> int, y la salida del interpretador](imagenes/ecuaciones-func-tablero.png)
+
+## Un segundo ejemplo
+
+```text
+let f = proc (? x, ? y, ? z) if (x y) then *(z, 2) else z
+in let g = proc (? m) if m then true else false
+       k = 5
+   in let tp = (f g true k) in f
+```
+
+Aquí el primer parámetro de `f` se usa como procedimiento sin que nada diga de
+qué tipo es, y el que lo decide es `g`, que llega en la aplicación:
+
+```text
+tf = tx * ty * tz -> t1          por la regla del proc
+tx = ty -> t2                    porque (x y) aplica x a y
+t2 = bool                        la prueba del if
+tz = int, t1 = int               porque *(z,2) pide enteros y la otra rama es z
+tg = tm -> t4                    el proc de g
+tm = bool, t4 = bool             su cuerpo es un if entre true y false
+tx = tg, ty = bool, tz = tk      la aplicación (f g true k)
+```
+
+De la última fila sale todo: `tx` queda en `(bool -> bool)`, `ty` en `bool` y
+`tz` en `int`, que es lo que ya decía `k = 5`.
+
+```text
+> … in f    → ((bool -> bool) * bool * int -> int)
+> … in g    → (bool -> bool)
+```
+
+![El ejercicio del tablero: el programa con f de tres parámetros, g y k, la cadena de ecuaciones en rojo, los recuadros con t2 = bool, tm = bool, tk = int y tg = bool -> bool, y el resultado tf = (bool -> bool) * bool * int -> int](imagenes/ecuaciones-f-g-k-tablero.png)
+
 ## La unificación
 
 `check-equal-type!` recibe dos tipos y los vuelve iguales, llenando variables si
@@ -253,6 +287,8 @@ uno de ellos es `d`, de modo que `td` tendría que ser a la vez un procedimiento
 de tres argumentos y el primero de esos tres. En la primera ecuación `td` es un
 procedimiento y en la segunda es lo que reciba, y las dos no se pueden cumplir.
 
+![El ejercicio del tablero: el programa del examen, las ecuaciones de g y de h en azul, td = td * tc * tc, el desarrollo que deja td igual a un procedimiento de tres argumentos y a int al mismo tiempo, y la conclusión de que no es posible unificar](imagenes/examen-2017-tablero.png)
+
 Queda abierto qué habría que cambiarle al programa para que tipe, sin tocar la
 cantidad de parámetros. La pista es que `z` no se usa en ningún lado.
 
@@ -300,6 +336,10 @@ asignarlo antes de usar la variable.
 qué cambia cuando la anotación es `?`, qué es una variable de tipo y cuándo dos
 partes del programa llevan la misma, cómo se genera el sistema de ecuaciones y
 cómo se resuelve unificando, con el chequeo de ocurrencia al final.
+
+## Los apuntes del tablero
+
+![](attachments/2026-11-17-Note-09-45-FLP.pdf){ type=application/pdf style="min-height:70vh;width:100%" }
 
 ## Lo que sigue
 
