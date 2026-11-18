@@ -158,6 +158,7 @@ reuniones docentes y jornada de reflexión.
 | 8 | Colecciones I: secuencias y conjuntos | [once ejercicios: de escoger la colección a las ternas](../../actividades/pfc/colecciones-secuencias-y-conjuntos/index.md) |
 | 9 | Colecciones II: mapas y flujos | [seis ejercicios: de las consultas a la criba](../../actividades/pfc/colecciones-mapas-y-flujos/index.md) |
 | 10 | Principios y abstracciones de la concurrencia | [nueve ejercicios: de las intercalaciones a Monte Carlo](./C10/Ejercicios.md) |
+| 11 | Complejidad de la concurrencia | [seis ejercicios: del trabajo y la profundidad al calentamiento de la JVM](./C11/Ejercicios.md) |
 
 ## Ejercicios de clase
 
