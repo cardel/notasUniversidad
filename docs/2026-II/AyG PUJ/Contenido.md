@@ -70,6 +70,16 @@ Material de apoyo del corte, que no corresponde a una sesión:
 - [Clase 17. El centro de un árbol, 6 de noviembre](C17/Clase%2017.%20El%20centro%20de%20un%20arbol.md)
 - [Clase 18. Árboles de cubrimiento mínimo, 13 de noviembre](C18/Clase%2018.%20Arboles%20de%20cubrimiento%20minimo.md)
 
+Los ejercicios interactivos del corte, para resolver en el navegador:
+
+- [Generalidades de los árboles](../../actividades/ayg-puj/arboles-generalidades/index.md){ target=_blank rel=noopener }
+- [El centro de un árbol](../../actividades/ayg-puj/centro-arbol/index.md){ target=_blank rel=noopener }
+- [Árboles de cubrimiento mínimo](../../actividades/ayg-puj/arboles-cubrimiento-minimo/index.md){ target=_blank rel=noopener }
+  y [conjuntos disjuntos](../../actividades/ayg-puj/union-find/index.md){ target=_blank rel=noopener }
+- [Árboles de segmentos](../../actividades/ayg-puj/arboles-de-segmentos/index.md){ target=_blank rel=noopener }:
+  la construcción, la consulta, la actualización, el valor más frecuente de un rango,
+  Potentiometers y la comparación contra el arreglo de prefijos
+
 ## Clases en video
 
 Las grabaciones de cada sesión están en la lista de reproducción del curso,
