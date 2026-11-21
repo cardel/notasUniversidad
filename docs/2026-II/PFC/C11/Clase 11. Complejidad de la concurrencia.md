@@ -356,7 +356,9 @@ parte el segmento hasta el umbral con `sumaSegPar`, prueba siete valores entre
 desviación.
 
 `parallel` y `task` salen del paquete `common` de la plantilla del curso;
-`withWarmer` y `measure`, de ScalaMeter.
+`withWarmer` y `measure`, de ScalaMeter, que la plantilla ya declara en su
+`build.gradle`. Los dos archivos van en `app/src/main/scala/taller/` y corren
+con `./gradlew run`.
 
 ## Ejercicios de la segunda mitad
 
@@ -366,16 +368,6 @@ calentamiento de la JVM. El trabajo y la profundidad salen de contar las
 operaciones del recorrido, la tabla de Amdahl de evaluar la fórmula para cada
 fracción y cada cantidad de núcleos, y las medias y las medianas de las listas
 de tiempos que se midieron en la sesión.
-
-## El código de la clase
-
-Los dos programas que se escribieron en vivo están en
-[`codigo/`](https://github.com/cardel/notasUniversidad/tree/master/docs/2026-II/PFC/C11/codigo),
-uno por sesión. El de la mañana mide la suma secuencial, con dos, cuatro y ocho
-hilos, con cuatro tareas y con umbral sobre cuatro valores; el de la tarde mide
-el secuencial, dos y cuatro hilos, y barre siete umbrales. Los dos van en
-`app/src/main/scala/taller/` de la plantilla del curso, que ya trae ScalaMeter
-en su `build.gradle`, y corren con `./gradlew run`.
 
 ## Los apuntes del tablero
 
