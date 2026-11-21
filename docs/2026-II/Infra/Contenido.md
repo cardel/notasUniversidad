@@ -63,7 +63,8 @@ Se publican después de cada sesión.
 9. [Clase 9. Docker Compose y Swarm, 17 y 19 de noviembre](C9/Clase%209.%20Docker%20Compose%20y%20Swarm.md):
    de tres `docker run` a un solo archivo, lo que sobrevive a `docker compose
    down`, el escalado y su techo, y el clúster con sus réplicas repartidas y
-   su actualización por lotes, con ocho ejercicios en el navegador.
+   su actualización por lotes, con los apuntes de la sesión, los cinco
+   ejemplos que se levantaron y ocho ejercicios en el navegador.
 
 ## Clases en video
 

@@ -13,6 +13,24 @@ actualización que se hace por lotes sin tumbar el servicio.
 
 <div class="grid cards" markdown>
 
+-   :material-docker:{ .lg .middle } **Docker Compose y Swarm**
+
+    ---
+
+    Lo que se vio en la sesión, con las trazas que devolvieron las órdenes: el
+    archivo que desaparece con el contenedor y los tres sitios donde algo
+    puede durar, el nombre que nadie traduce en la red por defecto, las cinco
+    órdenes manuales que pasan a un `compose.yml`, la columna de puertos donde
+    la base y la caché aparecen sin dirección delante, el contador que sube de
+    1 a 2 y vuelve a 1 cuando el servicio no declaró volumen, las dos filas
+    que sobreviven en el volumen de PostgreSQL, los 30 segundos que tarda un
+    sondeo en dar por caída a la base, los cinco contenedores de `--scale
+    web=3`, el nodo solitario que ya aparece como líder, las tres tareas
+    repartidas entre tres nodos y los tres lotes de una actualización
+    progresiva.
+
+    [:octicons-arrow-right-24: Entrar](./Docker%20Compose%20y%20Swarm.md)
+
 -   :material-format-list-checks:{ .lg .middle } **Ejercicios**
 
     ---
@@ -29,6 +47,18 @@ actualización que se hace por lotes sin tumbar el servicio.
     progresiva sobre seis réplicas.
 
     [:octicons-arrow-right-24: Entrar](../../../actividades/infra/docker-compose/index.md)
+
+-   :material-console:{ .lg .middle } **Código**
+
+    ---
+
+    Los cinco ejemplos que se levantaron: los tres servicios con su red y su
+    volumen en un solo archivo, la cadena de dependencias con el sondeo de
+    salud y la migración que corre una vez, el clúster de un nodo con sus dos
+    tokens de unión, el stack con réplicas restringidas a los workers, y la
+    actualización por lotes de dos con su vuelta a la versión anterior.
+
+    [:octicons-arrow-right-24: Entrar](./codigo/README.md)
 
 </div>
 

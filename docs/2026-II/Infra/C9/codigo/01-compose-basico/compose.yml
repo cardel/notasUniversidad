@@ -1,0 +1,35 @@
+services:
+  web:
+    build: ./app
+    ports:
+      - "8080:5000"
+    environment:
+      DB_HOST: db
+      DB_PASSWORD: ejemplo
+      DB_NAME: demo
+    depends_on:
+      - db
+      - cache
+    networks:
+      - app-net
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_PASSWORD: ejemplo
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  cache:
+    image: redis:7-alpine
+    networks:
+      - app-net
+
+volumes:
+  pgdata:
+
+networks:
+  app-net:

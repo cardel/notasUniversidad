@@ -1,0 +1,17 @@
+services:
+  web:
+    image: nginx:1.27-alpine   # nueva version
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 5s
+        order: start-first
+        failure_action: rollback
+        monitor: 10s
+        max_failure_ratio: 0.34
+      rollback_config:
+        parallelism: 2
+        delay: 3s
