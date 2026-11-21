@@ -109,7 +109,19 @@ Se publican después de cada sesión.
    Carlo sin estado compartido. Sus
    [ejercicios](../../actividades/pfc/concurrencia-hilos-y-carrera/index.md)
    están publicados.
-11. Clase 11. Complejidad de la concurrencia — 19 de noviembre.
+11. [Clase 11. Complejidad de la concurrencia, 19 de noviembre](C11/Clase%2011.%20Complejidad%20de%20la%20concurrencia.md):
+   analizar frente a medir; el trabajo y la profundidad de una expresión, con
+   la regla que cambia la suma por el máximo en `parallel`; los ocho enteros
+   sumados en cadena y en árbol, con las mismas siete operaciones y
+   profundidad 7 contra 3; el tope que crece como n sobre log n al crecer la
+   entrada; las recurrencias de `segmentRec` en paralelo; la estimación del
+   tiempo con P núcleos y las dos cotas que la sostienen; la ley de Amdahl
+   evaluada en Python, con la tabla donde cada fila se aplana; el
+   calentamiento de la JVM y los tres warmers de ScalaMeter; la corrida de la
+   clase, con 3,552057 ms en secuencial y speedups de 1,95, 3,60 y 4,33 para
+   dos, cuatro y ocho hilos; y el umbral, con su mínimo en 10000. Incluye los
+   apuntes del tablero y el código de las dos sesiones. Sus
+   [ejercicios](C11/Ejercicios.md) están publicados.
 12. Clase 12. Paralelismo de tareas y de datos — 26 de noviembre.
 
 ## Clases en video
