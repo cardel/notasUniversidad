@@ -122,6 +122,12 @@ El arreglo de diez posiciones ocupa $19$ vértices, que es $2N - 1$, con hojas a
 profundidad $3$ y a profundidad $4$. El árbol queda perfecto solo cuando $N$ es
 potencia de dos, y $10$ no lo es.
 
+Los $2N - 1$ salen de la forma del árbol y no de contar este dibujo. Las hojas
+son $N$, una por posición, y todo vértice interno tiene exactamente dos hijos,
+porque la partición nunca deja un lado vacío. Un árbol binario así tiene un
+vértice interno menos que hojas, de modo que los internos son $N - 1$ y el total
+queda en $2N - 1$. La cuenta vale aunque el árbol no quede perfecto.
+
 ### Cómo se numeran los vértices
 
 La raíz es el vértice $0$ y los hijos de $v$ son $2v + 1$ y $2(v + 1)$. Ningún
