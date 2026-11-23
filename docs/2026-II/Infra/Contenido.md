@@ -65,6 +65,12 @@ Se publican después de cada sesión.
    down`, el escalado y su techo, y el clúster con sus réplicas repartidas y
    su actualización por lotes, con los apuntes de la sesión, los cinco
    ejemplos que se levantaron y ocho ejercicios en el navegador.
+10. [Clase 10. Kubernetes, 24 y 26 de noviembre](C10/Clase%2010.%20Kubernetes.md):
+    el estado deseado y el ciclo que lo reconcilia, el manifiesto línea por
+    línea, el plano de control con su `etcd`, el Pod y el Deployment que lo
+    repone, la actualización progresiva con su techo y su piso, y el Service
+    como dirección estable de un conjunto de réplicas, con ocho ejercicios en
+    el navegador.
 
 ## Clases en video
 
