@@ -194,6 +194,16 @@ quedan disponibles después para volver sobre el tema.
    cinco, y la de unificación cierra con el chequeo de ocurrencia, que es lo
    que hace fallar a `proc (? x) (x x)`.
 
+11. [Ejercicios de la clase 10: objetos](../../actividades/flp/objetos/index.md)
+   Cinco actividades sobre los dos interpretadores de objetos. Las tres
+   primeras van por la gramática nueva con `class`, `method`, `new` y `send`,
+   por lo que queda en memoria al construir un objeto en cada representación, y
+   por el marco que arma un método, donde los campos entran por referencia y de
+   ahí que un `set` adentro cambie el objeto. Las dos últimas son las largas:
+   de dónde arranca la búsqueda en un `send` frente a un `super`, y qué cambia
+   al pasar a la representación plana, con los dos programas donde los dos
+   interpretadores dejan de coincidir.
+
 ## Ejercicios de clase
 
 Cada sesión tiene su repositorio. Se resuelve haciendo un fork, y la entrega
