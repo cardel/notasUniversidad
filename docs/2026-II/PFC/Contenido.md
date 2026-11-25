@@ -122,7 +122,8 @@ Se publican después de cada sesión.
    dos, cuatro y ocho hilos; y el umbral, con su mínimo en 10000. Incluye los
    apuntes del tablero y el código de las dos sesiones. Sus
    [ejercicios](C11/Ejercicios.md) están publicados.
-12. Clase 12. Paralelismo de tareas y de datos — 26 de noviembre.
+12. Clase 12. Paralelismo de tareas y de datos, 26 de noviembre. Sus
+   [ejercicios](./C12/Ejercicios.md) están publicados.
 
 ## Clases en video
 
@@ -171,6 +172,7 @@ reuniones docentes y jornada de reflexión.
 | 9 | Colecciones II: mapas y flujos | [seis ejercicios: de las consultas a la criba](../../actividades/pfc/colecciones-mapas-y-flujos/index.md) |
 | 10 | Principios y abstracciones de la concurrencia | [nueve ejercicios: de las intercalaciones a Monte Carlo](./C10/Ejercicios.md) |
 | 11 | Complejidad de la concurrencia | [seis ejercicios: del trabajo y la profundidad al calentamiento de la JVM](./C11/Ejercicios.md) |
+| 12 | Paralelismo de tareas y de datos | [siete ejercicios: del mergeSort paralelo a las colecciones paralelas](./C12/Ejercicios.md) |
 
 ## Ejercicios de clase
 
